@@ -70,7 +70,28 @@
 				<string>org.gradle.source</string>
 				<string>com.jetbrain.source</string>
 				<string>public.source-code</string>
-				<string>php-script</string>
+				<string>public.xml</string>
+				<string>my.public.xml</string>
+				<string>com.netscape.javascript-source</string>
+				<string>com.microsoft.c-sharp</string>
+				<string>com.microsoft.f-sharp</string>
+				<string>com.apple.applescript.script</string>
+				<string>public.php-script</string>
+				<string>com.apple.property-list</string>
+				<string>org.tug.tex</string>
+				<string>public.plain-text</string>
+				<string>com.sun.java-class</string>
+				<string>org.vim.vim-script</string>
+				<string>public.text</string>
+				<string>dyn.ah62d4rv4ge81g6pq</string>
+				<string>dyn.ah62d4rv4ge8007a</string>
+				<string>dyn.ah62d4rv4ge80s6xbqv0gn</string>
+				<string>dyn.ah62d4rv4ge81g25brvuu</string>
+				<string>dyn.ah62d4rv4ge80g62</string>
+				<string>dyn.ah62d4rv4ge80w5pq</string>
+				<string>dyn.ah62d4rv4ge80s52</string>
+				<string>public.shell-script</string>
+				<string>public.script</string>
 			</array>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
@@ -1142,6 +1163,21 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>php</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.xml</string>
+			</array>
+			<key>UTTypeIdentifier</key>
+			<string>my.public.xml</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>xml</string>
 				</array>
 			</dict>
 		</dict>
