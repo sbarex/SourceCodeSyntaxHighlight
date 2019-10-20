@@ -115,7 +115,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		8311D9A3235CDAA1006DC138 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = QLExt/README.md; sourceTree = SOURCE_ROOT; };
+		8311D9A3235CDAA1006DC138 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		8311D9A6235CE0A8006DC138 /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings.png; sourceTree = "<group>"; };
 		83592345235599F6001506B6 /* QLExt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QLExt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		83592348235599F6001506B6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -187,6 +187,8 @@
 		8359233C235599F6001506B6 = {
 			isa = PBXGroup;
 			children = (
+				8311D9A3235CDAA1006DC138 /* README.md */,
+				8311D9A6235CE0A8006DC138 /* settings.png */,
 				83592347235599F6001506B6 /* QLExt */,
 				8359236023559A2B001506B6 /* QLExtension */,
 				8359237C23563BDF001506B6 /* XPCService */,
@@ -208,8 +210,6 @@
 		83592347235599F6001506B6 /* QLExt */ = {
 			isa = PBXGroup;
 			children = (
-				8311D9A3235CDAA1006DC138 /* README.md */,
-				8311D9A6235CE0A8006DC138 /* settings.png */,
 				835923CE2357A4F6001506B6 /* examples */,
 				835923E9235A022C001506B6 /* NSColor+ext.swift */,
 				8359239623564FE5001506B6 /* QLExtRelease.entitlements */,
