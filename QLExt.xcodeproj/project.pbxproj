@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8311D9A7235CE0A8006DC138 /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 8311D9A6235CE0A8006DC138 /* settings.png */; };
-		8311D9A9235CE6D7006DC138 /* extensions.png in Resources */ = {isa = PBXBuildFile; fileRef = 8311D9A8235CE6D7006DC138 /* extensions.png */; };
 		83592349235599F6001506B6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83592348235599F6001506B6 /* AppDelegate.swift */; };
 		8359234B235599F6001506B6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8359234A235599F6001506B6 /* ViewController.swift */; };
 		8359234D235599F9001506B6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8359234C235599F9001506B6 /* Assets.xcassets */; };
@@ -385,8 +383,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8311D9A9235CE6D7006DC138 /* extensions.png in Resources */,
-				8311D9A7235CE0A8006DC138 /* settings.png in Resources */,
 				835923DF23585DD9001506B6 /* example.html in Resources */,
 				8359234D235599F9001506B6 /* Assets.xcassets in Resources */,
 				83592350235599F9001506B6 /* Main.storyboard in Resources */,
@@ -612,7 +608,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = QLExt/QLExt.entitlements;
 				CODE_SIGN_IDENTITY = "-";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -624,6 +620,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = sbarex.QLExt;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -635,7 +632,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = QLExt/QLExtRelease.entitlements;
 				CODE_SIGN_IDENTITY = "-";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -647,6 +644,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = sbarex.QLExt;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
@@ -656,7 +654,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = QLExtension/QLExtension.entitlements;
 				CODE_SIGN_IDENTITY = "-";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = QLExtension/Info.plist;
@@ -668,6 +666,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = sbarex.QLExt.QLExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -678,7 +677,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = QLExtension/QLExtension.entitlements;
 				CODE_SIGN_IDENTITY = "-";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = QLExtension/Info.plist;
@@ -690,6 +689,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = sbarex.QLExt.QLExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -699,7 +699,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "-";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -708,6 +708,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = sbarex.XPCService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = "";
@@ -720,7 +721,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = XPCService/XPCServiceRelease.entitlements;
 				CODE_SIGN_IDENTITY = "-";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -729,6 +730,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = sbarex.XPCService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = "";
