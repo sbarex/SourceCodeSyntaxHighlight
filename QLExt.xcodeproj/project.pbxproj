@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8311D9A7235CE0A8006DC138 /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 8311D9A6235CE0A8006DC138 /* settings.png */; };
 		83592349235599F6001506B6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83592348235599F6001506B6 /* AppDelegate.swift */; };
 		8359234B235599F6001506B6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8359234A235599F6001506B6 /* ViewController.swift */; };
 		8359234D235599F9001506B6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8359234C235599F9001506B6 /* Assets.xcassets */; };
@@ -114,6 +115,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		8311D9A3235CDAA1006DC138 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = QLExt/README.md; sourceTree = SOURCE_ROOT; };
+		8311D9A6235CE0A8006DC138 /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings.png; sourceTree = "<group>"; };
 		83592345235599F6001506B6 /* QLExt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QLExt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		83592348235599F6001506B6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8359234A235599F6001506B6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -205,6 +208,8 @@
 		83592347235599F6001506B6 /* QLExt */ = {
 			isa = PBXGroup;
 			children = (
+				8311D9A3235CDAA1006DC138 /* README.md */,
+				8311D9A6235CE0A8006DC138 /* settings.png */,
 				835923CE2357A4F6001506B6 /* examples */,
 				835923E9235A022C001506B6 /* NSColor+ext.swift */,
 				8359239623564FE5001506B6 /* QLExtRelease.entitlements */,
@@ -377,6 +382,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8311D9A7235CE0A8006DC138 /* settings.png in Resources */,
 				835923DF23585DD9001506B6 /* example.html in Resources */,
 				8359234D235599F9001506B6 /* Assets.xcassets in Resources */,
 				83592350235599F9001506B6 /* Main.storyboard in Resources */,
