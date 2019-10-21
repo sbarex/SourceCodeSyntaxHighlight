@@ -90,6 +90,7 @@
 				<string>org.omg.ecore</string>
 				<string>org.rdf.source</string>
 				<string>org.sbarex.dart</string>
+				<string>org.sbarex.xml</string>
 				<string>org.scala.source</string>
 				<string>org.tug.tex</string>
 				<string>org.vim.vim-script</string>
@@ -114,7 +115,6 @@
 				<string>public.xsd</string>
 				<string>public.yaml</string>
 				<string>tk.tcl.tcl-source</string>
-				<string>my.xml</string>
 				<string>dyn.ah62d4rv4ge81g6pq</string>
 				<string>dyn.ah62d4rv4ge8007a</string>
 				<string>dyn.ah62d4rv4ge80s6xbqv0gn</string>
