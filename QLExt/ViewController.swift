@@ -145,22 +145,7 @@ class ViewController: NSViewController {
                         html = "unknown error (\(error!))"
                     }
                 } else {
-                    if let t = String(data: response, encoding: String.Encoding.utf8) {
-                        html = t.trimmingCharacters(in: CharacterSet.newlines)
-                    } else if let t = String(data: response, encoding: String.Encoding.utf32) {
-                        html = t.trimmingCharacters(in: CharacterSet.newlines)
-                    } else {
-                        var s: NSString?
-                        let e = NSString.stringEncoding(for: response, encodingOptions: [StringEncodingDetectionOptionsKey.fromWindowsKey: true], convertedString: &s, usedLossyConversion: nil)
-                        if e != 0, s != nil {
-                            html = (s! as String).trimmingCharacters(in: CharacterSet.newlines)
-                        } else if e != 0, let t = String(data: response, encoding: String.Encoding(rawValue: e)) {
-                            html = t
-                        } else {
-                            html = "Unable to convert data to utf string!"
-                        }
-                    }
-                    
+                    html = response.decodeToString().trimmingCharacters(in: CharacterSet.newlines)
                 }
                 
                 DispatchQueue.main.async {

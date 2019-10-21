@@ -18,6 +18,8 @@
 		8311D9C1235DBDC7006DC138 /* example.ts in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8311D9BE235DBCB3006DC138 /* example.ts */; };
 		8311D9C2235DBDC7006DC138 /* example.py in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8311D9BD235DBC32006DC138 /* example.py */; };
 		8311D9C5235DBF29006DC138 /* example.plist in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8311D9C3235DBF0E006DC138 /* example.plist */; };
+		8311D9C7235DE6D7006DC138 /* Data+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8311D9C6235DE6D7006DC138 /* Data+Ext.swift */; };
+		8311D9C8235DE6D7006DC138 /* Data+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8311D9C6235DE6D7006DC138 /* Data+Ext.swift */; };
 		83592349235599F6001506B6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83592348235599F6001506B6 /* AppDelegate.swift */; };
 		8359234B235599F6001506B6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8359234A235599F6001506B6 /* ViewController.swift */; };
 		8359234D235599F9001506B6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8359234C235599F9001506B6 /* Assets.xcassets */; };
@@ -149,6 +151,7 @@
 		8311D9BE235DBCB3006DC138 /* example.ts */ = {isa = PBXFileReference; explicitFileType = text; path = example.ts; sourceTree = "<group>"; };
 		8311D9BF235DBD51006DC138 /* example.yaml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = example.yaml; sourceTree = "<group>"; };
 		8311D9C3235DBF0E006DC138 /* example.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = example.plist; sourceTree = "<group>"; };
+		8311D9C6235DE6D7006DC138 /* Data+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Ext.swift"; sourceTree = "<group>"; };
 		83592345235599F6001506B6 /* QLExt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QLExt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		83592348235599F6001506B6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8359234A235599F6001506B6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -254,6 +257,7 @@
 				8359234E235599F9001506B6 /* Main.storyboard */,
 				83592351235599F9001506B6 /* Info.plist */,
 				835923C623576506001506B6 /* PreferencesController.swift */,
+				8311D9C6235DE6D7006DC138 /* Data+Ext.swift */,
 			);
 			path = QLExt;
 			sourceTree = "<group>";
@@ -461,6 +465,7 @@
 				8359239F23570C5C001506B6 /* QLCError.swift in Sources */,
 				835923F0235A5EBA001506B6 /* QLCSettings.swift in Sources */,
 				835923EA235A022C001506B6 /* NSColor+ext.swift in Sources */,
+				8311D9C7235DE6D7006DC138 /* Data+Ext.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -469,6 +474,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				835923F1235A6F16001506B6 /* NSColor+ext.swift in Sources */,
+				8311D9C8235DE6D7006DC138 /* Data+Ext.swift in Sources */,
 				8359236223559A2B001506B6 /* PreviewViewController.swift in Sources */,
 				835923EF235A5EB9001506B6 /* QLCSettings.swift in Sources */,
 				8359239E23570C5B001506B6 /* QLCError.swift in Sources */,
