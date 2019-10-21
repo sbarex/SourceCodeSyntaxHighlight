@@ -9,11 +9,15 @@
 import Cocoa
 import Quartz
 import WebKit
-import os.log
+import OSLog
 
 import XPCService
 
 class PreviewViewController: NSViewController, QLPreviewingController {
+    private let log = {
+        return OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "quicklook-extension-qlcolorcode")
+    }()
+    
     override var nibName: NSNib.Name? {
         return NSNib.Name("PreviewViewController")
     }
@@ -103,7 +107,12 @@ class PreviewViewController: NSViewController, QLPreviewingController {
                     if let e = error {
                         text = NSAttributedString(string: e.localizedDescription)
                     } else {
-                        text = NSAttributedString(rtf: response, documentAttributes: nil) ?? NSAttributedString(string: "Unable to convert data to rtf.")
+                        let t =  NSAttributedString(rtf: response, documentAttributes: nil)
+                        text = t ?? NSAttributedString(string: "Unable to convert data to rtf.")
+                        if t == nil {
+                            os_log(OSLogType.error, log: self.log, "Unable to parse response data to rtf!")
+                            os_log(OSLogType.error, log: self.log, "Data length = %{public}d; data = %{public}@", response.count, String(data: response, encoding: .utf8) ?? "")
+                        }
                     }
                     
                     textView.textStorage?.setAttributedString(text)
@@ -134,7 +143,21 @@ class PreviewViewController: NSViewController, QLPreviewingController {
                             html = "unknown error (\(error!))"
                         }
                     } else {
-                        html = (String(data: response, encoding: String.Encoding.utf8) ?? "Unable to convert data!").trimmingCharacters(in: CharacterSet.newlines)
+                        if let t = String(data: response, encoding: String.Encoding.utf8) {
+                            html = t.trimmingCharacters(in: CharacterSet.newlines)
+                        } else {
+                            var s: NSString?
+                            let e = NSString.stringEncoding(for: response, encodingOptions: [StringEncodingDetectionOptionsKey.fromWindowsKey: true], convertedString: &s, usedLossyConversion: nil)
+                            if e != 0, s != nil {
+                                html = (s! as String).trimmingCharacters(in: CharacterSet.newlines)
+                            } else if e != 0, let t = String(data: response, encoding: String.Encoding(rawValue: e)) {
+                                html = t
+                            } else {
+                                html = "Unable to convert data to utf string!"
+                                os_log(OSLogType.error, log: self.log, "Unable to convert response data to html utf8 encoded string!")
+                                os_log(OSLogType.error, log: self.log, "Data length = %{public}d", response.count)
+                            }
+                        }
                     }
                     
                     let preferences = WKPreferences()

@@ -7,6 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8311D9AC235DA0E4006DC138 /* example.json in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8311D9AA235D99B8006DC138 /* example.json */; };
+		8311D9B0235DA127006DC138 /* example.fsx in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8311D9AE235DA124006DC138 /* example.fsx */; };
+		8311D9B3235DB8D7006DC138 /* example.c in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8311D9B1235DB8CA006DC138 /* example.c */; };
+		8311D9B6235DB970006DC138 /* example.cpp in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8311D9B4235DB93C006DC138 /* example.cpp */; };
+		8311D9B9235DBB44006DC138 /* example.m in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8311D9B8235DBB28006DC138 /* example.m */; };
+		8311D9BA235DBB47006DC138 /* example.dart in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8311D9B7235DB9C7006DC138 /* example.dart */; };
+		8311D9BC235DBBE2006DC138 /* example.pl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8311D9BB235DBBC9006DC138 /* example.pl */; };
+		8311D9C0235DBDC7006DC138 /* example.yaml in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8311D9BF235DBD51006DC138 /* example.yaml */; };
+		8311D9C1235DBDC7006DC138 /* example.ts in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8311D9BE235DBCB3006DC138 /* example.ts */; };
+		8311D9C2235DBDC7006DC138 /* example.py in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8311D9BD235DBC32006DC138 /* example.py */; };
+		8311D9C5235DBF29006DC138 /* example.plist in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8311D9C3235DBF0E006DC138 /* example.plist */; };
 		83592349235599F6001506B6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83592348235599F6001506B6 /* AppDelegate.swift */; };
 		8359234B235599F6001506B6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8359234A235599F6001506B6 /* ViewController.swift */; };
 		8359234D235599F9001506B6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8359234C235599F9001506B6 /* Assets.xcassets */; };
@@ -31,7 +42,6 @@
 		835923BF23571FB7001506B6 /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835923BE23571FB7001506B6 /* Document.swift */; };
 		835923C723576506001506B6 /* PreferencesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835923C623576506001506B6 /* PreferencesController.swift */; };
 		835923D92358597C001506B6 /* example.php in CopyFiles */ = {isa = PBXBuildFile; fileRef = 835923CF2357A524001506B6 /* example.php */; };
-		835923DF23585DD9001506B6 /* example.html in Resources */ = {isa = PBXBuildFile; fileRef = 835923DE23585DD9001506B6 /* example.html */; };
 		835923E423585E11001506B6 /* example.sh in CopyFiles */ = {isa = PBXBuildFile; fileRef = 835923DA23585DAE001506B6 /* example.sh */; };
 		835923E523585E13001506B6 /* example.css in CopyFiles */ = {isa = PBXBuildFile; fileRef = 835923DC23585DC5001506B6 /* example.css */; };
 		835923E623585E16001506B6 /* example.js in CopyFiles */ = {isa = PBXBuildFile; fileRef = 835923E023585DE7001506B6 /* example.js */; };
@@ -108,6 +118,17 @@
 				835923E823585E27001506B6 /* example.html in CopyFiles */,
 				835923E623585E16001506B6 /* example.js in CopyFiles */,
 				835923E723585E18001506B6 /* example.xml in CopyFiles */,
+				8311D9AC235DA0E4006DC138 /* example.json in CopyFiles */,
+				8311D9B0235DA127006DC138 /* example.fsx in CopyFiles */,
+				8311D9C0235DBDC7006DC138 /* example.yaml in CopyFiles */,
+				8311D9C1235DBDC7006DC138 /* example.ts in CopyFiles */,
+				8311D9C2235DBDC7006DC138 /* example.py in CopyFiles */,
+				8311D9BC235DBBE2006DC138 /* example.pl in CopyFiles */,
+				8311D9BA235DBB47006DC138 /* example.dart in CopyFiles */,
+				8311D9B9235DBB44006DC138 /* example.m in CopyFiles */,
+				8311D9B6235DB970006DC138 /* example.cpp in CopyFiles */,
+				8311D9C5235DBF29006DC138 /* example.plist in CopyFiles */,
+				8311D9B3235DB8D7006DC138 /* example.c in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -117,6 +138,17 @@
 		8311D9A3235CDAA1006DC138 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		8311D9A6235CE0A8006DC138 /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings.png; sourceTree = "<group>"; };
 		8311D9A8235CE6D7006DC138 /* extensions.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = extensions.png; sourceTree = "<group>"; };
+		8311D9AA235D99B8006DC138 /* example.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = example.json; sourceTree = "<group>"; };
+		8311D9AE235DA124006DC138 /* example.fsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = example.fsx; sourceTree = "<group>"; };
+		8311D9B1235DB8CA006DC138 /* example.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = example.c; sourceTree = "<group>"; };
+		8311D9B4235DB93C006DC138 /* example.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = example.cpp; sourceTree = "<group>"; };
+		8311D9B7235DB9C7006DC138 /* example.dart */ = {isa = PBXFileReference; explicitFileType = text; path = example.dart; sourceTree = "<group>"; };
+		8311D9B8235DBB28006DC138 /* example.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = example.m; sourceTree = "<group>"; };
+		8311D9BB235DBBC9006DC138 /* example.pl */ = {isa = PBXFileReference; lastKnownFileType = text.script.perl; path = example.pl; sourceTree = "<group>"; };
+		8311D9BD235DBC32006DC138 /* example.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = example.py; sourceTree = "<group>"; };
+		8311D9BE235DBCB3006DC138 /* example.ts */ = {isa = PBXFileReference; explicitFileType = text; path = example.ts; sourceTree = "<group>"; };
+		8311D9BF235DBD51006DC138 /* example.yaml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = example.yaml; sourceTree = "<group>"; };
+		8311D9C3235DBF0E006DC138 /* example.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = example.plist; sourceTree = "<group>"; };
 		83592345235599F6001506B6 /* QLExt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QLExt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		83592348235599F6001506B6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8359234A235599F6001506B6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -273,6 +305,17 @@
 				835923DE23585DD9001506B6 /* example.html */,
 				835923E023585DE7001506B6 /* example.js */,
 				835923E223585DFB001506B6 /* example.xml */,
+				8311D9AA235D99B8006DC138 /* example.json */,
+				8311D9AE235DA124006DC138 /* example.fsx */,
+				8311D9BF235DBD51006DC138 /* example.yaml */,
+				8311D9BE235DBCB3006DC138 /* example.ts */,
+				8311D9BD235DBC32006DC138 /* example.py */,
+				8311D9BB235DBBC9006DC138 /* example.pl */,
+				8311D9B7235DB9C7006DC138 /* example.dart */,
+				8311D9B8235DBB28006DC138 /* example.m */,
+				8311D9B4235DB93C006DC138 /* example.cpp */,
+				8311D9C3235DBF0E006DC138 /* example.plist */,
+				8311D9B1235DB8CA006DC138 /* example.c */,
 			);
 			path = examples;
 			sourceTree = "<group>";
@@ -383,7 +426,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				835923DF23585DD9001506B6 /* example.html in Resources */,
 				8359234D235599F9001506B6 /* Assets.xcassets in Resources */,
 				83592350235599F9001506B6 /* Main.storyboard in Resources */,
 			);

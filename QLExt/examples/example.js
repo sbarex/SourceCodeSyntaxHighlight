@@ -1,3 +1,5 @@
+// JS Example file
+
 var globalVar;
 /**
  * Constructor for <code>AjaxRequest</code> class

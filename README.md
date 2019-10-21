@@ -1,11 +1,12 @@
 #  Quicklook extension for source files
 
 This project is a test to develop a system extension for MacOS 10.15 Catalina for previewing source files.
-
-It's based on the [anthonygelibert/QLColorCode](https://github.com/anthonygelibert/QLColorCode) qlgenerator which uses deprecated APIs in MacOS 10.15.
-
+It's based on the [anthonygelibert/QLColorCode](https://github.com/anthonygelibert/QLColorCode).
 Inside it uses [Highlight](http://www.andre-simon.de/doku/highlight/en/highlight.php) to render source code with syntax highlighting.
 To install Highlight, download the library manually, or use Homebrew `brew install highlight`.
+
+MacOS 10.15 Catalina has deprecated the qlgenerator APIs. Moreover a .qlgenerator package inside Library/QuickLook now must be notarized to works. 
+For this reason I tried to migrate the QLColorCode code using the new quicklook extension system.
 
 This project consists of these components:
 

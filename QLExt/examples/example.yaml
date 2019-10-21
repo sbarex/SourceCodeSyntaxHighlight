@@ -1,0 +1,30 @@
+---
+# A list of tasty fruits
+- Apple
+- Orange
+- Strawberry
+- Mango
+
+
+# Employee records
+-  martin:
+    foo: "{{ variable }}/additional/string/literal"
+    name: Martin D'vloper
+    job: Developer
+    skills:
+      - python
+      - perl
+      - pascal
+-  tabitha:
+    name: Tabitha Bitumen
+    job: Developer
+    skills:
+      - lisp
+      - fortran
+      - erlang
+
+---
+martin: {name: Martin D'vloper, job: Developer, skill: Elite}
+['Apple', 'Orange', 'Strawberry', 'Mango']
+
+
