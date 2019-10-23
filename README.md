@@ -31,4 +31,4 @@ After the first execution, the quicklook extension will be available among those
 
 ![ System preferences/Extensions](extensions.png)
 
-For now this extension don't provide a thumbnail service for the icon. I don't think a preview of the contents in the icon is a necessary feature for the source files. I rather think it would be more useful to have a distinctive file type icon.
+For now this extension don't provide a thumbnail service for the Finder icon. I don't think a preview of the contents in the icon is a necessary feature for the source files. I rather think it would be more useful to have a distinctive file type icon.

@@ -1267,6 +1267,24 @@
 				</array>
 			</dict>
 		</dict>
+		<dict>
+			<key>UTTypeIdentifier</key>
+			<string>public.xml</string>
+			<key>UTTypeConformsTo</key>
+			<string>public.text</string>
+			<key>UTTypeDescription</key>
+			<string>XML text</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.mime-type</key>
+				<array>
+					<string>application/xml</string>
+					<string>text/xml</string>
+				</array>
+				<key>public.filename-extension</key>
+				<string>xml</string>
+			</dict>
+		</dict>
 	</array>
 </dict>
 </plist>
