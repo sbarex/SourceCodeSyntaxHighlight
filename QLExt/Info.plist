@@ -9,6 +9,8 @@
 		<dict>
 			<key>CFBundleTypeName</key>
 			<string>Source files</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>com.adobe.actionscript</string>
@@ -106,8 +108,6 @@
 				<string>dyn.ah62d4rv4ge80w5pq</string>
 				<string>dyn.ah62d4rv4ge80s52</string>
 			</array>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
 			<key>NSDocumentClass</key>
 			<string>$(PRODUCT_MODULE_NAME).Document</string>
 		</dict>
@@ -126,6 +126,10 @@
 	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
+	<key>CFBundleSupportedPlatforms</key>
+	<array>
+		<string>MacOSX</string>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>LSApplicationCategoryType</key>
@@ -320,15 +324,15 @@
 			<string>http://www.microsoft.com/</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
-				<key>public.mime-type</key>
-				<array>
-					<string>text/plain</string>
-					<string>application/x-typescript</string>
-				</array>
 				<key>public.filename-extension</key>
 				<array>
 					<string>tsx</string>
 					<string>ts</string>
+				</array>
+				<key>public.mime-type</key>
+				<array>
+					<string>text/plain</string>
+					<string>application/x-typescript</string>
 				</array>
 			</dict>
 		</dict>
@@ -1122,14 +1126,13 @@
 			</dict>
 		</dict>
 		<dict>
-			<key>UTTypeDescription</key>
-			<string>Dart Source File</string>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>org.sbarex.dart</string>
-				<string>public.source-code</string>
 				<string>public.text</string>
+				<string>public.source-code</string>
 			</array>
+			<key>UTTypeDescription</key>
+			<string>Dart Source File</string>
 			<key>UTTypeIdentifier</key>
 			<string>org.sbarex.dart</string>
 			<key>UTTypeTagSpecification</key>
@@ -1143,11 +1146,8 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>public.xml</string>
 				<string>public.text</string>
-				<string>public.data</string>
-				<string>public.item</string>
-				<string>public.content</string>
+				<string>public.xml</string>
 			</array>
 			<key>UTTypeIdentifier</key>
 			<string>org.sbarex.xml</string>
@@ -1287,21 +1287,21 @@
 	<key>UTImportedTypeDeclarations</key>
 	<array>
 		<dict>
-			<key>UTTypeIdentifier</key>
-			<string>public.xml</string>
 			<key>UTTypeConformsTo</key>
 			<string>public.text</string>
 			<key>UTTypeDescription</key>
 			<string>XML text</string>
+			<key>UTTypeIdentifier</key>
+			<string>public.xml</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
+				<key>public.filename-extension</key>
+				<string>xml</string>
 				<key>public.mime-type</key>
 				<array>
 					<string>application/xml</string>
 					<string>text/xml</string>
 				</array>
-				<key>public.filename-extension</key>
-				<string>xml</string>
 			</dict>
 		</dict>
 	</array>
