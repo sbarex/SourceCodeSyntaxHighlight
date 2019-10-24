@@ -1,6 +1,6 @@
 //
-//  main.swift
-//  XPCService
+//  SCSHXPCServiceDelegate.swift
+//  SCSHXPCService
 //
 //  Created by sbarex on 15/10/2019.
 //  Copyright © 2019 sbarex. All rights reserved.
@@ -22,8 +22,12 @@
 
 import Foundation
 
-let delegate = XPCServiceDelegate()
-
-let listener = NSXPCListener.service()
-listener.delegate = delegate
-listener.resume()
+class XPCServiceDelegate: NSObject, NSXPCListenerDelegate {
+    func listener(_ listener: NSXPCListener, shouldAcceptNewConnection newConnection: NSXPCConnection) -> Bool {
+        let exportedObject = SCSHXPCService()
+        newConnection.exportedInterface = NSXPCInterface(with: SCSHXPCServiceProtocol.self)
+        newConnection.exportedObject = exportedObject
+        newConnection.resume()
+        return true
+    }
+}

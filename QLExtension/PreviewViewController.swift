@@ -1,35 +1,35 @@
 //
 //  PreviewViewController.swift
-//  QLExtension
+//  SourceCodeSyntaxHighlightExtension
 //
 //  Created by sbarex on 15/10/2019.
 //  Copyright © 2019 sbarex. All rights reserved.
 //
 //
-//  This file is part of QLExt.
-//  QLExt is free software: you can redistribute it and/or modify
+//  This file is part of SourceCodeSyntaxHighlight.
+//  SourceCodeSyntaxHighlight is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
 //  (at your option) any later version.
 //
-//  QLExt is distributed in the hope that it will be useful,
+//  SourceCodeSyntaxHighlight is distributed in the hope that it will be useful,
 //  but WITHOUT ANY WARRANTY; without even the implied warranty of
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 //  GNU General Public License for more details.
 //
 //  You should have received a copy of the GNU General Public License
-//  along with QLExt. If not, see <http://www.gnu.org/licenses/>.
+//  along with SourceCodeSyntaxHighlight. If not, see <http://www.gnu.org/licenses/>.
 
 import Cocoa
 import Quartz
 import WebKit
 import OSLog
 
-import XPCService
+import SourceCodeSyntaxHighlightXPCService
 
 class PreviewViewController: NSViewController, QLPreviewingController {
     private let log = {
-        return OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "quicklook-extension-qlcolorcode")
+        return OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "quicklook.scsh-extension")
     }()
     
     override var nibName: NSNib.Name? {
@@ -61,22 +61,22 @@ class PreviewViewController: NSViewController, QLPreviewingController {
         // Call the completion handler so Quick Look knows that the preview is fully loaded.
         // Quick Look will display a loading spinner while the completion handler is not called.
         
-        let connection = NSXPCConnection(serviceName: "sbarex.XPCService")
-        connection.remoteObjectInterface = NSXPCInterface(with: XPCServiceProtocol.self)
+        let connection = NSXPCConnection(serviceName: "org.sbarex.SourceCodeSyntaxHighlight.XPCService")
+        connection.remoteObjectInterface = NSXPCInterface(with: SCSHXPCServiceProtocol.self)
         connection.resume()
         
         guard let service = connection.remoteObjectProxyWithErrorHandler({ error in
             print("Received error:", error)
-            handler(QLCError.xpcGenericError(error: error))
-        }) as? XPCServiceProtocol else {
-            handler(QLCError.xpcGenericError(error: nil))
+            handler(SCSHError.xpcGenericError(error: error))
+        }) as? SCSHXPCServiceProtocol else {
+            handler(SCSHError.xpcGenericError(error: nil))
             return
         }
         
         service.colorize(url: url, overrideSettings: nil) { (response, settings, error) in
-            let format = settings[QLCSettings.Key.format.rawValue] as? String ?? QLCFormat.html.rawValue
+            let format = settings[SCSHSettings.Key.format.rawValue] as? String ?? SCSHFormat.html.rawValue
             DispatchQueue.main.async {
-                if format == QLCFormat.rtf.rawValue {
+                if format == SCSHFormat.rtf.rawValue {
                     let textScrollView = NSScrollView(frame: self.view.bounds)
                     textScrollView.autoresizingMask = [.height, .width]
                     textScrollView.hasHorizontalScroller = true
@@ -111,7 +111,7 @@ class PreviewViewController: NSViewController, QLPreviewingController {
                     textScrollView.documentView = textView
                     
                     // The rtf parser don't apply (why?) the page packground.
-                    if let c = settings[QLCSettings.Key.rtfBackgroundColor.rawValue] as? String, let color = NSColor(fromHexString: c) {
+                    if let c = settings[SCSHSettings.Key.rtfBackgroundColor.rawValue] as? String, let color = NSColor(fromHexString: c) {
                         textView.backgroundColor = color
                     } else {
                         textView.backgroundColor = .clear
@@ -133,7 +133,7 @@ class PreviewViewController: NSViewController, QLPreviewingController {
                 } else {
                     let html: String
                     if let _ = error {
-                        if let e = error as? QLCError {
+                        if let e = error as? SCSHError {
                             switch e {
                             case .shellError(let cmd, let exitCode, let stdOut, let stdErr, let message):
                                 var s = ""
