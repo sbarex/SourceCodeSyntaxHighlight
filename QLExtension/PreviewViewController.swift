@@ -166,7 +166,7 @@ class PreviewViewController: NSViewController, QLPreviewingController {
                     }
                     
                     let preferences = WKPreferences()
-                    preferences.javaScriptEnabled = false
+                    preferences.javaScriptEnabled = settings[SCSHSettings.Key.commandsToolbar.rawValue] as? Bool ?? false
 
                     // Create a configuration for the preferences
                     let configuration = WKWebViewConfiguration()

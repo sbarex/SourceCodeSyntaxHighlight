@@ -32,21 +32,23 @@ class PreferencesController: NSViewController, NSFontChanging {
     @IBOutlet weak var pathControl: NSPathCell!
     @IBOutlet weak var browseButton: NSButton!
     
+    @IBOutlet weak var modePopupButton: NSPopUpButton!
+    
+    @IBOutlet weak var wrapPopupButton: NSPopUpButton!
+    @IBOutlet weak var lineLengthTextField: NSTextField!
+    @IBOutlet weak var lineLengthLabel: NSTextField!
+    
+    @IBOutlet weak var lineNumbersPopupButton: NSPopUpButton!
+    
+    @IBOutlet weak var tabsPopupButton: NSPopUpButton!
+    @IBOutlet weak var spacesSlider: NSSlider!
+    
     @IBOutlet weak var lightThemePopup: NSPopUpButton!
     @IBOutlet weak var darkThemePopup: NSPopUpButton!
     
-    @IBOutlet weak var htmlFormatButton: NSButton!
-    @IBOutlet weak var rtfFormatButton: NSButton!
-    @IBOutlet weak var colorLightControl: NSColorWell!
-    @IBOutlet weak var colorDarkControl: NSColorWell!
-    
-    @IBOutlet weak var lineNumbersButton: NSButton!
-    
-    @IBOutlet weak var tabToSpaceButton: NSButton!
-    @IBOutlet weak var spacesSlider: NSSlider!
-    
     @IBOutlet weak var extraArgumentsTextField: NSTextField!
     @IBOutlet weak var exampleFormatButton: NSPopUpButton!
+    @IBOutlet weak var commandsToolbarButton: NSButton!
     
     @IBOutlet weak var webView: WKWebView!
     @IBOutlet weak var textScrollView: NSScrollView!
@@ -57,9 +59,6 @@ class PreferencesController: NSViewController, NSFontChanging {
     
     @IBOutlet weak var refreshButton: NSButton!
     @IBOutlet weak var saveButton: NSButton!
-    
-    @objc dynamic var lightTheme: String = "XCode IDE"
-    @objc dynamic var darkTheme: String = "XCode IDE"
     
     var service: SCSHXPCServiceProtocol? {
         return (NSApplication.shared.delegate as? AppDelegate)?.service
@@ -121,21 +120,44 @@ class PreferencesController: NSViewController, NSFontChanging {
                 self.browseButton.isEnabled = true
                 
                 let format = self.settings?[SCSHSettings.Key.format.rawValue] as? String ?? "html"
-                self.htmlFormatButton.isEnabled = true
-                self.htmlFormatButton.state = format == "html" ? .on : .off
+                self.modePopupButton.isEnabled = true
+                self.modePopupButton.selectItem(at: format == "html" ? 0 : 1)
                 
-                self.rtfFormatButton.isEnabled = true
-                self.rtfFormatButton.state = format == "rtf" ? .on : .off
-                self.colorLightControl.isEnabled = self.rtfFormatButton.state == .on
-                self.colorDarkControl.isEnabled = self.rtfFormatButton.state == .on
+                if let i = self.settings?[SCSHSettings.Key.wordWrap.rawValue] as? Int, let ln = SCSHWordWrap(rawValue: i) {
+                    switch ln {
+                    case .off:
+                        self.wrapPopupButton.selectItem(at: 0)
+                    case .simple:
+                        self.wrapPopupButton.selectItem(at: 1)
+                    case .standard:
+                        self.wrapPopupButton.selectItem(at: 2)
+                    }
+                } else {
+                    self.wrapPopupButton.selectItem(at: 0)
+                }
+                self.wrapPopupButton.isEnabled = true
                 
-                self.lineNumbersButton.isEnabled = true
-                self.lineNumbersButton.state = (self.settings?[SCSHSettings.Key.lineNumbers.rawValue] as? Int) != 0 ? .on : .off
+                self.lineLengthLabel.isHidden = self.wrapPopupButton.indexOfSelectedItem == 0
+                self.lineLengthTextField.isHidden = self.lineLengthLabel.isHidden
+                self.lineLengthTextField.integerValue = self.settings?[SCSHSettings.Key.lineLength.rawValue] as? Int ?? 80
                 
-                self.tabToSpaceButton.isEnabled = true
+                if let v = self.settings?[SCSHSettings.Key.lineNumbers.rawValue] as? Bool {
+                    if !v {
+                        self.lineNumbersPopupButton.selectItem(at: 0)
+                    } else {
+                        self.lineNumbersPopupButton.selectItem(at: self.settings?[SCSHSettings.Key.lineNumbersOmittedWrap.rawValue] as? Bool ?? true ? 2 : 1)
+                    }
+                } else {
+                    self.lineNumbersPopupButton.selectItem(at: 0)
+                }
+                self.lineNumbersPopupButton.isEnabled = true
+                self.lineNumbersPopupButton.menu?.item(at: 2)?.isEnabled = self.wrapPopupButton.indexOfSelectedItem != 0
+                
                 let spaces = self.settings?[SCSHSettings.Key.tabSpaces.rawValue] as? Int ?? 0
-                self.tabToSpaceButton.state = spaces > 0 ? .on : .off
+                self.tabsPopupButton.isEnabled = true
+                self.tabsPopupButton.selectItem(at: spaces > 0 ? 1 : 0)
                 self.spacesSlider.isEnabled = spaces > 0
+                self.spacesSlider.isHidden = spaces <= 0
                 self.spacesSlider.integerValue = spaces > 0 ? spaces : 4
                 
                 self.extraArgumentsTextField.isEnabled = true
@@ -161,19 +183,9 @@ class PreferencesController: NSViewController, NSFontChanging {
                     self.darkThemePopup.addItem(withTitle: desc)
                     if name == self.settings?[SCSHSettings.Key.lightTheme.rawValue] as? String {
                         lightIndex = i
-                        if let color = theme.value(forKey: "bg-color") as? String, let c = NSColor(fromHexString: color) {
-                            self.colorLightControl.color = c
-                        } else {
-                            self.colorLightControl.color = .clear
-                        }
                     }
                     if name == self.settings?[SCSHSettings.Key.darkTheme.rawValue] as? String {
                         darkIndex = i
-                        if let color = theme.value(forKey: "bg-color") as? String, let c = NSColor(fromHexString: color) {
-                            self.colorDarkControl.color = c
-                        } else {
-                            self.colorDarkControl.color = .clear
-                        }
                     }
                     i += 1
                 }
@@ -188,8 +200,9 @@ class PreferencesController: NSViewController, NSFontChanging {
                 self.themeControl.isEnabled = self.examples.count > 0
                 self.refreshButton.isEnabled = self.examples.count > 0
                 
-                self.webView.isHidden = self.htmlFormatButton.state == .off
-                self.textScrollView.isHidden = self.rtfFormatButton.state == .off
+                self.webView.isHidden = self.modePopupButton.indexOfSelectedItem != 0
+                self.textScrollView.isHidden = !self.webView.isHidden
+                self.commandsToolbarButton.isEnabled = !self.webView.isHidden
                 
                 self.refresh(nil)
             }
@@ -204,27 +217,35 @@ class PreferencesController: NSViewController, NSFontChanging {
          self.fontText.stringValue = String(format:"%@ %.1f pt", self.settings?[ff] as? String ?? "??", self.settings?[fp] as? Float ?? 10)
     }
     
-    @IBAction func handleConvertSpace(_ sender: NSButton) {
-        self.spacesSlider.isEnabled = sender.state == .on
+    @IBAction func handleConvertTabsToSpaces(_ sender: NSPopUpButton) {
+        self.spacesSlider.isEnabled = sender.indexOfSelectedItem == 1
+        self.spacesSlider.isHidden = !self.spacesSlider.isEnabled
     }
 
-    @IBAction func handleFormatChange(_ sender: NSButton) {
-        self.webView.isHidden = self.htmlFormatButton.state == .off
-        self.textScrollView.isHidden = self.rtfFormatButton.state == .off
-        self.colorLightControl.isEnabled = self.rtfFormatButton.state == .on
-        self.colorDarkControl.isEnabled = self.rtfFormatButton.state == .on
+    @IBAction func handleFormatChange(_ sender: NSPopUpButton) {
+        self.webView.isHidden = sender.indexOfSelectedItem != 0
+        self.textScrollView.isHidden = sender.indexOfSelectedItem == 0
+        self.commandsToolbarButton.isEnabled = !self.webView.isHidden
+        refresh(nil)
+    }
+
+    @IBAction func handleWordWrapChange(_ sender: NSPopUpButton) {
+        self.lineLengthTextField.isHidden = sender.indexOfSelectedItem == 0
+        self.lineLengthLabel.isHidden = sender.indexOfSelectedItem == 0
+        
+        if sender.indexOfSelectedItem == 0 {
+            if self.lineNumbersPopupButton.indexOfSelectedItem == 2 {
+                self.lineNumbersPopupButton.selectItem(at: 1)
+            }
+            self.lineNumbersPopupButton.menu?.item(at: 2)?.isEnabled = false
+        } else {
+            self.lineNumbersPopupButton.menu?.item(at: 2)?.isEnabled = true
+        }
+        
         refresh(nil)
     }
     
     @IBAction func handleThemeChange(_ sender: NSPopUpButton) {
-        let colorControl = sender == self.lightThemePopup ? self.colorLightControl : self.colorDarkControl
-        
-        if let c = self.themes[sender.indexOfSelectedItem]["bg-color"] as? String, let color = NSColor(fromHexString: c) {
-            colorControl?.color = color
-        } else {
-            colorControl?.color = .clear
-        }
-        
         if (sender == self.lightThemePopup && self.themeControl.selectedSegment == 0) || sender == self.darkThemePopup && self.themeControl.selectedSegment == 1 {
             self.refresh(sender)
         }
@@ -278,17 +299,36 @@ class PreferencesController: NSViewController, NSFontChanging {
     
     private func getCurrentSettings() -> [String: Any] {
         var settings: [String: Any] = [
-            SCSHSettings.Key.lineNumbers.rawValue: self.lineNumbersButton.state == .on,
+            SCSHSettings.Key.lineNumbers.rawValue: self.lineNumbersPopupButton.indexOfSelectedItem > 0,
+            SCSHSettings.Key.lineNumbersOmittedWrap.rawValue: self.lineNumbersPopupButton.indexOfSelectedItem == 2,
             
-            SCSHSettings.Key.tabSpaces.rawValue: self.tabToSpaceButton.state == .on ? self.spacesSlider.integerValue : 0,
+            SCSHSettings.Key.wordWrap.rawValue: self.wrapPopupButton.indexOfSelectedItem,
+            SCSHSettings.Key.lineLength.rawValue: self.lineLengthTextField.integerValue,
+            
+            SCSHSettings.Key.tabSpaces.rawValue: self.tabsPopupButton.indexOfSelectedItem == 1 ? self.spacesSlider.integerValue : 0,
             
             SCSHSettings.Key.extraArguments.rawValue: self.extraArgumentsTextField.stringValue,
-            SCSHSettings.Key.format.rawValue: self.htmlFormatButton.state == .on ? "html" : "rtf",
+            SCSHSettings.Key.format.rawValue: self.modePopupButton.indexOfSelectedItem == 0 ? "html" : "rtf",
+            SCSHSettings.Key.commandsToolbar.rawValue: self.commandsToolbarButton.state == .on,
         ]
-        if self.themes.count > 0, let t = self.themes[self.lightThemePopup.indexOfSelectedItem]["name"] as? String {
+        
+        let lightTheme: [String: Any]
+        if self.themes.count > 0, let t = self.themes[self.lightThemePopup.indexOfSelectedItem] as? [String: Any] {
+            lightTheme = t
+        } else {
+            lightTheme = [:]
+        }
+        let darkTheme: [String: Any]
+        if self.themes.count > 0, let t = self.themes[self.darkThemePopup.indexOfSelectedItem] as? [String: Any] {
+            darkTheme = t
+        } else {
+            darkTheme = [:]
+        }
+        
+        if let t = lightTheme["name"] as? String {
             settings[SCSHSettings.Key.lightTheme.rawValue] = t
         }
-        if self.themes.count > 0, let t = self.themes[self.darkThemePopup.indexOfSelectedItem]["name"] as? String {
+        if let t = darkTheme["name"] as? String {
             settings[SCSHSettings.Key.darkTheme.rawValue] = t
         }
         
@@ -302,10 +342,9 @@ class PreferencesController: NSViewController, NSFontChanging {
             settings[SCSHSettings.Key.fontSize.rawValue] = v
         }
         
-        if self.rtfFormatButton.state == .on {
-            settings[SCSHSettings.Key.rtfLightBackgroundColor.rawValue] = self.colorLightControl.color.toHexString()
-            settings[SCSHSettings.Key.rtfDarkBackgroundColor.rawValue] = self.colorDarkControl.color.toHexString()
-        }
+        settings[SCSHSettings.Key.rtfLightBackgroundColor.rawValue] = lightTheme["bg-color"] as? String ?? ""
+            
+        settings[SCSHSettings.Key.rtfDarkBackgroundColor.rawValue] = darkTheme["bg-color"] as? String ?? ""
         
         return settings
     }
@@ -328,7 +367,7 @@ class PreferencesController: NSViewController, NSFontChanging {
         
         let url = self.examples[self.exampleFormatButton.indexOfSelectedItem]
         
-        if self.htmlFormatButton.state == .on {
+        if self.modePopupButton.indexOfSelectedItem == 0 {
             webView.isHidden = true
             service?.htmlColorize(url: url, overrideSettings: settings as NSDictionary) { (html, extra, error) in
                 DispatchQueue.main.async {

@@ -28,6 +28,7 @@ class Document: NSDocument {
     override init() {
         super.init()
         // Add your subclass-specific initialization here.
+        self.hasUndoManager = false
     }
 
     override class var autosavesInPlace: Bool {

@@ -27,6 +27,17 @@ enum SCSHFormat: String {
     case rtf
 }
 
+enum SCSHLineNumbers {
+    case hidden
+    case visible(omittingWrapLines: Bool)
+}
+
+enum SCSHWordWrap: Int {
+    case off
+    case simple
+    case standard
+}
+
 struct SCSHSettings {
     public struct Key: Hashable, Equatable, RawRepresentable {
         public var rawValue: String
@@ -62,6 +73,16 @@ struct SCSHSettings {
         static let lineNumbers: Self = {
             return Self("line-numbers")
         }()
+        static let lineNumbersOmittedWrap: Self = {
+            return Self("line-numbers-omitted-wrap")
+        }()
+        
+        static let wordWrap: Self = {
+            return Self("word-wrap")
+        }()
+        static let lineLength: Self = {
+            return Self("line-length")
+        }()
         
         static let tabSpaces: Self = {
             return Self("tab-spaces")
@@ -87,6 +108,10 @@ struct SCSHSettings {
             return Self("font-size")
         }()
         
+        static let commandsToolbar: Self = {
+            return Self("commands-toolbar")
+        }()
+        
         static let debug: Self = {
             return Self("debug")
         }()
@@ -107,7 +132,10 @@ struct SCSHSettings {
     var rtfBackgroundColor: String?
     
     /// Show line number.
-    var lineNumbers: Bool = true
+    var lineNumbers: SCSHLineNumbers = .visible(omittingWrapLines: true)
+    var wordWrap: SCSHWordWrap = .standard
+    var lineLength: Int = 80
+    
     /// Number of spaces use for a tab. Set to 0 to disable converting tab to spaces.
     var tabSpaces: Int = 4
     
@@ -122,6 +150,7 @@ struct SCSHSettings {
     var fontFamily: String = "Menlo"
     var fontSize: Float = 10
     
+    var commandsToolbar = false
     var debug = false
     
     /// Domain for storing defaults.
@@ -143,7 +172,14 @@ struct SCSHSettings {
         self.darkTheme = defaultsDomain[Key.darkTheme.rawValue] as? String ?? "edit-xcode"
         self.rtfDarkBackgroundColor = defaultsDomain[Key.rtfDarkBackgroundColor.rawValue] as? String ?? "#000000"
         
-        self.lineNumbers = defaultsDomain[Key.lineNumbers.rawValue] as? Bool ?? true
+        if let ln = defaultsDomain[Key.lineNumbers.rawValue] as? Bool {
+            self.lineNumbers = ln ? .visible(omittingWrapLines: defaultsDomain[Key.lineNumbersOmittedWrap.rawValue] as? Bool ?? true) : .hidden
+        } else {
+            self.lineNumbers = .visible(omittingWrapLines: true)
+        }
+        self.wordWrap = SCSHWordWrap(rawValue: defaultsDomain[Key.wordWrap.rawValue] as? Int ?? 0) ?? .off
+        self.lineLength = defaultsDomain[Key.lineLength.rawValue] as? Int ?? 80
+        
         self.tabSpaces = defaultsDomain[Key.tabSpaces.rawValue] as? Int ?? 4
         
         self.format = SCSHFormat(rawValue: defaultsDomain[Key.format.rawValue] as? String ?? "") ?? .html
@@ -153,6 +189,8 @@ struct SCSHSettings {
         
         self.fontFamily = defaultsDomain[Key.fontFamily.rawValue] as? String ?? "Menlo"
         self.fontSize = defaultsDomain[Key.fontSize.rawValue] as? Float ?? 10
+        
+        self.commandsToolbar = defaultsDomain[Key.commandsToolbar.rawValue] as? Bool ?? false
     }
     
     /// Save the settings to the defauls preferences.
@@ -169,13 +207,25 @@ struct SCSHSettings {
         defaultsDomain[Key.darkTheme.rawValue] = darkTheme
         defaultsDomain[Key.rtfLightBackgroundColor.rawValue] = rtfLightBackgroundColor
         defaultsDomain[Key.rtfDarkBackgroundColor.rawValue] = rtfDarkBackgroundColor
-        defaultsDomain[Key.lineNumbers.rawValue] = lineNumbers
+        
+        switch lineNumbers {
+        case .hidden:
+            defaultsDomain[Key.lineNumbers.rawValue] = false
+        case .visible(let omittingWrapLines):
+            defaultsDomain[Key.lineNumbers.rawValue] = true
+            defaultsDomain[Key.lineNumbersOmittedWrap.rawValue] = omittingWrapLines
+        }
+        
+        defaultsDomain[Key.wordWrap.rawValue] = self.wordWrap.rawValue
+        defaultsDomain[Key.lineLength.rawValue] = self.lineLength
+        
         defaultsDomain[Key.tabSpaces.rawValue] = tabSpaces
         defaultsDomain[Key.highlightPath.rawValue] = highlightProgramPath
         defaultsDomain[Key.format.rawValue] = format.rawValue
         defaultsDomain[Key.extraArguments.rawValue] = extra
         defaultsDomain[Key.fontFamily.rawValue] = fontFamily
         defaultsDomain[Key.fontSize.rawValue] = fontSize
+        defaultsDomain[Key.commandsToolbar.rawValue] = commandsToolbar
         
         let userDefaults = UserDefaults()
         userDefaults.setPersistentDomain(defaultsDomain, forName: d)
@@ -193,14 +243,25 @@ struct SCSHSettings {
             Key.rtfLightBackgroundColor.rawValue: self.rtfLightBackgroundColor,
             Key.rtfDarkBackgroundColor.rawValue: self.rtfDarkBackgroundColor,
         
-            Key.lineNumbers.rawValue: self.lineNumbers,
+            Key.wordWrap.rawValue: self.wordWrap.rawValue,
+            Key.lineLength.rawValue: self.lineLength,
+            
             Key.tabSpaces.rawValue: self.tabSpaces,
             
             Key.extraArguments.rawValue: self.extra,
         
             Key.fontFamily.rawValue: self.fontFamily,
             Key.fontSize.rawValue: self.fontSize,
+            
+            Key.commandsToolbar.rawValue: self.commandsToolbar,
         ]
+        switch self.lineNumbers {
+        case .hidden:
+            r[Key.lineNumbers.rawValue] = false
+        case .visible(let omittingWrapLines):
+            r[Key.lineNumbers.rawValue] = true
+            r[Key.lineNumbersOmittedWrap.rawValue] = omittingWrapLines
+        }
         if let v = self.theme {
             r[Key.theme.rawValue] = v
         }
@@ -235,8 +296,16 @@ struct SCSHSettings {
         }
         
         if let v = data[Key.lineNumbers.rawValue] as? Bool {
-            self.lineNumbers = v
+            self.lineNumbers = v ? .visible(omittingWrapLines: data[Key.lineNumbersOmittedWrap.rawValue] as? Bool ?? true) : .hidden
         }
+        
+        if let v = data[Key.wordWrap.rawValue] as? Int {
+            self.wordWrap = SCSHWordWrap(rawValue: v) ?? .off
+        }
+        if let v = data[Key.lineLength.rawValue] as? Int {
+            self.lineLength = v
+        }
+        
         if let v = data[Key.tabSpaces.rawValue] as? Int {
             self.tabSpaces = v
         }
@@ -254,6 +323,10 @@ struct SCSHSettings {
         }
         if let v = data[Key.fontSize.rawValue] as? Float {
             self.fontSize = v
+        }
+        
+        if let v = data[Key.commandsToolbar.rawValue] as? Bool {
+            self.commandsToolbar = v
         }
     }
     
@@ -289,7 +362,18 @@ struct SCSHSettings {
         final_settings.extra = override?[Key.extraArguments.rawValue] as? String ?? self.extra
         
         // Show line numbers.
-        final_settings.lineNumbers = override?[Key.lineNumbers.rawValue] as? Bool ?? self.lineNumbers
+        if let v = override?[Key.lineNumbers.rawValue] as? Bool {
+            final_settings.lineNumbers = v ? .visible(omittingWrapLines: override?[Key.lineNumbersOmittedWrap.rawValue] as? Bool ?? true) : .hidden
+        } else {
+            final_settings.lineNumbers = self.lineNumbers
+        }
+        
+        if let v = override?[Key.wordWrap.rawValue] as? Int, let ww = SCSHWordWrap(rawValue: v) {
+            final_settings.wordWrap = ww
+        } else {
+            final_settings.lineLength = self.lineLength
+        }
+        final_settings.lineLength = override?[Key.lineLength.rawValue] as? Int ?? self.lineLength
         
         // Convert tab to spaces.
         final_settings.tabSpaces = override?[Key.tabSpaces.rawValue] as? Int ?? self.tabSpaces
@@ -299,6 +383,8 @@ struct SCSHSettings {
        
         // Font size.
         final_settings.fontSize = override?[Key.fontSize.rawValue] as? Float ?? self.fontSize
+        
+        final_settings.commandsToolbar = override?[Key.commandsToolbar.rawValue] as? Bool ?? self.commandsToolbar
         
         // Debug
         final_settings.debug = override?[Key.debug.rawValue] as? Bool ?? debug

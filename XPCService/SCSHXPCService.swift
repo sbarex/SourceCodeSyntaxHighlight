@@ -183,8 +183,20 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
         env["extraHLFlags"] = custom_settings.extra
         
         // Show line numbers.
-        if custom_settings.lineNumbers {
+        switch custom_settings.lineNumbers {
+        case .hidden:
+            break
+        case .visible(let omittingWrapLines):
             env["extraHLFlags"]! += " --line-numbers"
+            if omittingWrapLines {
+                env["extraHLFlags"]! += " --wrap-no-numbers"
+            }
+        }
+        
+        // Word wrap and line length.
+        if custom_settings.wordWrap != .off {
+            env["extraHLFlags"]! += " --line-length=\(custom_settings.lineLength)"
+            env["extraHLFlags"]! += custom_settings.wordWrap == .simple ? " -V" : " -W"
         }
         
         // Convert tab to spaces.
@@ -212,6 +224,10 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
         env["extraHLFlags"]! += " -O \(format)"
         if format == SCSHFormat.rtf.rawValue {
             env["extraHLFlags"]! += " --page-color --char-styles"
+        } else {
+            if custom_settings.commandsToolbar, let plugin = Bundle.main.path(forResource: "outhtml_gotoline", ofType: "lua") {
+                env["extraHLFlags"]! += " --plug-in=\(plugin)"
+            }
         }
         
         /// Command to execute.

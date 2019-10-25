@@ -165,7 +165,7 @@ class ViewController: NSViewController {
                 DispatchQueue.main.async {
                     if self.webView == nil {
                         let preferences = WKPreferences()
-                        preferences.javaScriptEnabled = false
+                        preferences.javaScriptEnabled = true
 
                         // Create a configuration for the preferences
                         let configuration = WKWebViewConfiguration()
