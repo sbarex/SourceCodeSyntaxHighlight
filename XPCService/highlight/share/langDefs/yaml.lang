@@ -1,0 +1,106 @@
+Description="Ansible YAML"
+
+Categories = {"markup"}
+
+Identifiers=[[ ([\w][\S]+?\:) ]]
+
+Digits = [[ [\W](\d*[\.]?\d+(?:[eE][\-\+]\d+)?)(?![\w]) ]]
+
+Keywords={
+  {
+  Id=1,
+    List={ },  -- see OnStateChange comment
+  },
+  {
+  Id=2,
+    List={
+           -- /usr/share/pyshared/ansible/playbook/task.py
+           'action', 'always_run', 'any_errors_fatal', 'args', 'become', 'become_method', 'become_pass',
+           'become_user', 'changed_when', 'delay', 'delegate_to', 'environment', 'failed_when',
+           'first_available_file', 'ignore_errors', 'local_action', 'meta', 'name', 'no_log',
+           'notify', 'register', 'remote_user', 'retries', 'run_once', 'su', 'su_pass', 'su_user',
+           'sudo', 'sudo_pass', 'sudo_user', 'tags', 'transport', 'until', 'when',           
+         },
+  },
+
+  { Id=3,
+    List={
+           -- /usr/share/pyshared/ansible/playbook/play.py    
+
+    	   'accelerate', 'accelerate_ipv6', 'accelerate_port',
+	   'force_handlers', 'gather_facts',
+	   'handlers', 'hosts', 'roles', 'serial', 
+           'vars', 'vars_files', 'vars_prompt', 
+           'vault_password',
+
+	   '_ds', '_handlers', '_play_hosts', '_tasks', 'basedir',
+           'default_vars', 'included_roles', 'max_fail_pct', 'playbook', 'remote_port',
+           'role_vars', 'vars_file_vars',
+           
+           'connection', 'include', 'max_fail_percentage', 'port', 'post_tasks',
+           'pre_tasks', 'role_names', 'tasks', 'user',
+
+	   'role', -- not listed explicitely
+
+  	   -- find /usr/share/pyshared/ansible/modules/ -name '*.py' -printf "%f\n"|cut -d. -f1|sed 's;$;:;'|sort -u
+
+           "a10_server", "a10_service_group", "a10_virtual_server", "accelerate", "acl", "add_host", "airbrake_deployment", "alternatives", "apache2_module",
+           "apt", "apt_key", "apt_repository", "apt_rpm", "assemble", "assert", "async_status", "async_wrapper", "at", "authorized_key", "azure", "bigip_facts",
+           "bigip_monitor_http", "bigip_monitor_tcp", "bigip_node", "bigip_pool", "bigip_pool_member", "bigpanda", "boundary_meter", "bower", "bzr", "campfire",
+           "capabilities", "cloudformation", "command", "composer", "copy", "cpanm", "cron", "crypttab", "datadog_event", "debconf", "debug", "digital_ocean",
+           "digital_ocean_domain", "digital_ocean_sshkey", "django_manage", "dnf", "dnsimple", "dnsmadeeasy", "docker", "docker_image", "easy_install", "ec2",
+           "ec2_ami", "ec2_ami_search", "ec2_asg", "ec2_eip", "ec2_elb", "ec2_elb_lb", "ec2_facts", "ec2_group", "ec2_key", "ec2_lc", "ec2_metric_alarm",
+           "ec2_scaling_policy", "ec2_snapshot", "ec2_tag", "ec2_vol", "ec2_vpc", "ejabberd_user", "elasticache", "facter", "fail", "fetch", "file", "filesystem",
+           "fireball", "firewalld", "flowdock", "gce", "gce_img", "gce_lb", "gce_net", "gce_pd", "gc_storage", "gem", "getent", "get_url", "git", "github_hooks",
+           "glance_image", "gluster_volume", "group", "group_by", "grove", "haproxy", "hg", "hipchat", "homebrew", "homebrew_cask", "homebrew_tap", "hostname",
+           "htpasswd", "include_vars", "ini_file", "irc", "jabber", "jboss", "jira", "kernel_blacklist", "keystone_user", "known_hosts", "layman",
+           "librato_annotation", "lineinfile", "linode", "lldp", "locale_gen", "logentries", "lvg", "lvol", "lxc_container", "macports", "mail", "modprobe",
+           "mongodb_user", "monit", "mount", "mqtt", "mysql_db", "mysql_replication", "mysql_user", "mysql_variables", "nagios", "netscaler", "newrelic_deployment",
+           "nexmo", "nova_compute", "nova_keypair", "npm", "ohai", "openbsd_pkg", "open_iscsi", "openvswitch_bridge", "openvswitch_port", "opkg", "osx_say", "ovirt",
+           "pacman", "pagerduty", "patch", "pause", "ping", "pingdom", "pip", "pkg5", "pkg5_publisher", "pkgin", "pkgng", "pkgutil", "portage", "portinstall",
+           "postgresql_db", "postgresql_ext", "postgresql_lang", "postgresql_privs", "postgresql_user", "quantum_floating_ip", "quantum_floating_ip_associate",
+           "quantum_network", "quantum_router", "quantum_router_gateway", "quantum_router_interface", "quantum_subnet", "rabbitmq_parameter", "rabbitmq_plugin",
+           "rabbitmq_policy", "rabbitmq_user", "rabbitmq_vhost", "raw", "rax", "rax_cbs", "rax_cbs_attachments", "rax_cdb", "rax_cdb_database", "rax_cdb_user",
+           "rax_clb", "rax_clb_nodes", "rax_dns", "rax_dns_record", "rax_facts", "rax_files", "rax_files_objects", "rax_identity", "rax_keypair", "rax_meta",
+           "rax_network", "rax_queue", "rax_scaling_group", "rax_scaling_policy", "rds", "rds_param_group", "rds_subnet_group", "redhat_subscription", "redis",
+           "replace", "rhn_channel", "rhn_register", "riak", "rollbar_deployment", "route53", "rpm_key", "s3", "script", "seboolean", "selinux", "service",
+           "set_fact", "setup", "shell", "slack", "slurp", "snmp_facts", "sns", "stackdriver", "stat", "subversion", "supervisorctl", "svc", "svr4pkg", "swdepot",
+           "synchronize", "sysctl", "template", "twilio", "typetalk", "ufw", "unarchive", "uptimerobot", "uri", "urpmi", "user", "virt", "vsphere_guest", "wait_for",
+           "win_chocolatey", "win_copy", "win_feature", "win_file", "win_get_url", "win_group", "win_msi", "win_ping", "win_service", "win_stat", "win_template",
+           "win_updates", "win_user", "xattr", "yum", "zabbix_group", "zabbix_maintenance", "zfs", "zypper", "zypper_repository"
+        },
+  },
+
+  -- command's parameter names
+  { Id=4,
+    Regex=[[([a-z0-9]+)=]],
+  },
+}
+
+Strings={
+  Delimiter=[["|']], 
+  Interpolation=[[ \{\{(.*?)\}\} ]],
+}
+
+Comments={
+  { Block=false,
+    Delimiter= { [[#]] },
+  },
+}
+
+-- |or|and|not|true|false|yes|no -> keyword group
+Operators=[[\(|\)|\[|\]|<|>|\=|\-|\,|\&|\!|\*|\%|\+|\%|\||{|}]]
+
+IgnoreCase=true
+
+-- resolve issue with unknown identifiers ending with : (see empty kw group 1)
+-- keyword group cannot be returned, use the first one to highlight tokens which are not listed in group 2 or 3
+
+function OnStateChange(oldState, newState, token, kwgroup)
+  if newState==HL_STANDARD and string.sub(token,-1)==":" 
+     and not Keywords[1].List[token] and not Keywords[2].List[token] then
+    return HL_KEYWORD
+  end
+  
+  return newState
+end

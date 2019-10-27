@@ -1,0 +1,30 @@
+
+Description="Backus-Naur Form"
+
+Categories = {"protocol"}
+
+Identifiers=[[ [-a-zA-Z_]+|<[-a-zA-Z_]+> ]]
+
+Keywords={
+  { Id=1,
+    Regex=[[ ^[ \t]*([-a-zA-Z_]+|<[-a-zA-Z_]+>)\s*[:=] ]],
+  },
+}
+
+Strings={
+  Delimiter=[["]],
+}
+
+IgnoreCase=false
+
+Comments={
+  { Block=false,
+    Delimiter= { [[//]] },
+  },
+  { Block=true,
+    Nested=false,
+    Delimiter= { [[\/\*]],[[\*\/]],}
+  }
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\.|\:|\=]]

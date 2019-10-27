@@ -1,0 +1,25 @@
+
+Description="SuperX++"
+
+Categories = {"source"}
+
+Keywords={
+  { Id=1,
+    Regex=[[<!?\/?\w+>?|>]],
+  },
+  { Id=2,
+    Regex=[[([-\w]+)="]],
+  },
+  { Id=3,
+    Regex=[[\&\#?\w+;]],
+  },
+  { Id=4,
+    List={"bool", "date", "double", "float", "int", "long", "short", "string", "void"},
+  },
+}
+
+Strings={
+  Delimiter=[["]],
+}
+
+IgnoreCase=false

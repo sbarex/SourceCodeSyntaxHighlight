@@ -1,0 +1,35 @@
+
+Description="Nginx configuration"
+
+Categories = {"config"}
+
+Keywords={  
+  { Id=1,
+    Regex=[[(\w+).*\{]]
+  },
+  { Id=2,
+    Regex=[[^\s*(\w+).*\;]]
+  },
+  { Id=3,
+    Regex=[[$\w+?]]
+  },
+
+}
+
+Digits=[[\d*[\.\_]?\d+[dysmkg]? ]]
+
+Strings = {
+  Delimiter=[[']],
+   Interpolation=[[\$\w+]],
+}
+
+Comments = {
+   {
+     Block=false,
+     Delimiter = { [[#]] }
+   }
+}
+
+IgnoreCase=false
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\.|\:|\&|<|>|\!|=|\/|\*|\%|\+|\-|\~|\||\^]]

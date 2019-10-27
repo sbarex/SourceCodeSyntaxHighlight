@@ -1,0 +1,47 @@
+
+Description="Lisp"
+
+Categories = {"source"}
+
+Identifiers=[[ [a-zA-Z_][\w\-]* ]]
+
+Keywords={
+  { Id=1,
+    Regex=[[\(([\w\-\_]+)]],
+  },
+      { Id=2,
+    Regex=[[ def(un|method)\s+([\w\-]+)]], Group=2
+  },
+}
+
+Strings={
+  Delimiter=[[ "|\[\w+\]|\[/\w+\] ]],
+}
+
+Comments={
+  { Block=false,
+    Delimiter= { [[;]] },
+  },
+  { Block=true,
+    Nested=false,
+    Delimiter= { [[\;\|]],[[\|\;]],}
+  }
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\:|\&|<|>|\!|\+|\=|\/|\*|\'|\@|\#|\`]]
+
+-- fix recognition of $
+function OnStateChange(oldState, newState, token)
+  
+   --recognize hereDoc multine strings
+   if oldState==HL_STANDARD and newState==HL_STRING then
+      exitDelim = string.match(token, "%[(%a+)%]")
+      if exitDelim then exitDelim = "[/"..exitDelim.."]" end
+   end
+   if oldState==HL_STRING and token==exitDelim  then
+      exitDelim=nil
+      return HL_STRING_END
+   end
+
+   return newState
+end

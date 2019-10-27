@@ -1,0 +1,39 @@
+
+Description="Fortran 90"
+
+Categories = {"source"}
+
+Digits=[[ (?:0x|0X)[0-9a-fA-F]+|\d*[\.\_]?\d+(?:[eE][\-\+]\d+)?[lLuUbfdm]* ]]
+
+Keywords={
+  { Id=1,
+    List={"accept", "endmap", "pause",   "assign", "endstructure", "pointer",   "automatic", "endunion", "print",   "backspace", "entry", "program",
+          "blockdata", "equivalence", "read",   "byte", "external", "readonly",   "call", "find", "real",   "character", "format", "record", "close",
+          "function", "return",   "common", "goto", "rewind",   "complex", "if", "rewrite",   "continue", "implicit", "save",   "data", "implicitnone",
+          "shared",   "decode", "implicitundefined", "static",   "definefile", "include", "stop",   "delete", "inquire", "structure",   "dimension", "integer",
+          "subroutine",   "do", "intrinsic", "then",   "doublecomplex", "key", "to",   "doubleprecision", "logical", "type",   "else", "map", "undefined",
+          "elseif", "namelist", "union",   "encode", "none", "unlock",   "end", "nospanblocks", "virtual",   "enddo", "open", "volatile", "endfile", "options",
+          "while",   "endif", "parameter", "write", "module", "interface", "use", "contains", "stop", "recursive"},
+  },
+  { Id=2,
+    List={"integer", "real", "double", "precision", "complex", "logical", "character"},
+  },
+  { Id=4,
+    Regex=[[(\w+)\s*\(]],
+  },
+}
+
+Strings={
+  Delimiter=[["|']],
+}
+
+IgnoreCase=true
+
+Comments={
+  { Block=false,
+    Delimiter= { [[!]] },
+  },
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\:|\&|<|>|\-|\+|\=|\/|\*|\%|\+|\-|\.|\$]]
+

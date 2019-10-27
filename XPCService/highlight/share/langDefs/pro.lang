@@ -1,0 +1,53 @@
+
+Description="Prolog"
+
+Categories = {"source", "functional"}
+
+Keywords={
+  { Id=1,
+    List={"true", "fail", "at_end_of_stream", "nl", "repeat", "halt", "is", "rem", "mod"},
+  },
+  { Id=2,
+    List={"call", "catch", "throw", "unify_with_occurs_check", "var", "atom", 
+        "integer", "float", "atomic", "compound", "nonvar", "number", "functor", "arg", 
+        "copy_term", "clause", "current_predicate", "asserta", "assertz", "retract", 
+        "abolish", "findall", "bagof", "setof", "current_input", "current_output", 
+        "set_input", "set_output", "open", "close", "stream_property", 
+        "at_end_of_stream", "set_stream_position", "get_char", "get_code", "peek_char", 
+        "peek_code", "put_char", "put_code", "nl", "get_byte", "peek_byte", "put_byte", 
+        "read_term", "read", "write_term", "write", "writeq", "write_canonical", "op", 
+        "current_op", "char_conversion", "current_char_conversion", "once", 
+        "atom_length", "atom_concat", "sub_atom", "atom_chars", "atom_codes", 
+        "char_code", "number_chars", "number_codes", "set_prolog_flag", 
+        "current_prolog_flag", "halt", "sin", "cos", "atan", "exp", "log", "sqrt"},
+  },
+  { Id=3,
+    Regex=[[0(')\w+]],
+  },
+  { Id=4,
+    Regex=[[(\w+)\s*\(]],
+  },
+}
+
+Strings={
+  Delimiter=[["|']],
+  Interpolation=[[ ~\w+ ]]
+}
+
+IgnoreCase=false
+
+Comments={
+  { Block=false,
+    Delimiter= { [[%]] },
+  },
+  { Block=true,
+    Nested=false,
+    Delimiter= { [[\/\*]],[[\*\/]],}
+  }
+}
+
+PreProcessor={
+  Prefix=[[#]],
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\:|\&|<|>|\!|\=|\/|\*|\+|\-|\.|\|]]

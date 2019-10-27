@@ -1,0 +1,24 @@
+
+Description="Vim Dark Editor"
+
+Categories = {"dark", "vim"}
+
+Default        = { Colour="#0f930f" }
+Canvas         = { Colour="#000000" }
+Number         = { Colour="#e64ce6" }
+Escape         = { Colour="#f8d1d1" }
+String         = { Colour="#c641c6" }
+StringPreProc  = { Colour="#c641c6" }
+BlockComment   = { Colour="#53fcfc" }
+PreProcessor   = { Colour="#53fcfc" }
+LineNum        = { Colour="#ffff54" }
+Operator       = { Colour="#ffffff" }
+LineComment = BlockComment
+Interpolation  = Escape
+
+Keywords = {
+  { Colour= "#d0d045" },
+  { Colour= "#69c789" },
+  { Colour= "#d0d045" },
+  { Colour= "#ffffff" },
+}

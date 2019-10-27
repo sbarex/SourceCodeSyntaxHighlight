@@ -1,0 +1,58 @@
+
+Description="ADA95"
+
+Categories = {"source"}
+
+
+Keywords={
+    { Id=1,
+      List={"abort", "else", "new", "return", "abs", "elsif", "not", "reverse", 
+            "abstract", "end", "null", "accept", "entry", "select", "access", "exception", 
+            "separate", "aliased", "exit", "of", "subtype", "all", "or", "and", "for", 
+            "others", "tagged", "array", "function", "out", "task", "at", "terminate", 
+            "generic", "package", "then", "begin", "goto", "pragma", "type", "body", 
+            "private", "if", "procedure", "case", "in", "protected", "until", "constant", 
+            "is", "use", "raise", "declare", "range", "when", "delay", "limited", "record", 
+            "while", "delta", "loop", "rem", "with", "digits", "renames", "do", "mod", 
+            "requeue", "xor"},
+      },
+    { Id=2,
+      List={"boolean", "integer", "natural", "positive", "float", "character", 
+            "string", "duration", "short_integer", "long_integer", "short_float", 
+            "long_float"},
+      },
+    { Id=3,
+      List={"wide_character", "wide_string", "short_short_integer", "long_long_integer", 
+            "short_short_float", "long_long_float"},
+      },
+    { Id=4,
+      List={"true", "false"},
+      },
+    { Id=4,
+      Regex=[[ [\w\)]+('\w+) ]],
+      },
+    { Id=4,
+      Regex=[[''']],
+      }
+}
+
+-- Workaround: distinguish string delimiters and event markers
+-- (same eymbol: ')
+
+--workaround for special string '''
+
+Strings={
+    Delimiter=[["|']],
+    Escape = [[ \\[^'] ]]
+}
+
+IgnoreCase=true
+
+Comments={
+    { Block=false,
+      Delimiter= { [[\-\-]] },
+      },
+    }
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-|\.]]
+

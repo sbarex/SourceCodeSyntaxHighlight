@@ -1,0 +1,52 @@
+
+Description="Nemerle"
+
+Categories = {"source"}
+
+Digits=[[ (?:0x|0X)[0-9a-fA-F]+|\d*[\.\_]?\d+(?:[eE][\-\+]\d+)?[lLuUbfdm]* ]]
+
+Keywords={
+  { Id=1,
+    List={"_", "abstract", "and", "array", "as", "base", "catch", "class", 
+            "def", "delegate", "do", "else", "enum", "event", "extern", "finally", "for", 
+            "foreach", "fun", "if", "implements", "in", "interface", "internal", "lock", 
+            "macro", "match", "module", "mutable", "namespace", "new", "out", "override", 
+            "params", "private", "protected", "public", "ref", "sealed", "static", "struct", 
+            "syntax", "this", "throw", "try", "type", "typeof", "unless", "using", 
+            "variant", "virtual", "void", "when", "where", "while", "assert", "ignore"}, 
+  },
+  { Id=2,
+    List={"array", "float", "int", "string", "void", "uint", "long", "ulong", "short", 
+            "decimal", "byte", "sbyte", "ushort", "double", "list"},
+  },
+  { Id=3,
+    List={"true", "false", "null"},
+  },
+  { Id=4,
+    Regex=[[(\w+)\s*\(]],
+  },
+}
+
+Strings={
+  Delimiter=[["|']],
+  RawPrefix="@",
+  Interpolation=[[ %\w|\$\w+ ]],
+}
+
+IgnoreCase=false
+
+Comments={
+  { Block=false,
+    Delimiter= { [[\/\/]] },
+  },
+  { Block=true,
+    Nested=false,
+    Delimiter= { [[\/\*]],[[\*\/]],}
+  }
+}
+
+PreProcessor={
+  Prefix=[[#]],
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\:|\.|\&|<|>|\!|\=|\/|\*|\%|\+|\-|\|]]

@@ -1,0 +1,38 @@
+
+Description="Eiffel"
+
+Categories = {"source"}
+
+Keywords={
+  { Id=1,
+    List={"agent", "alias", "all", "and", "as", "assign", "check", "class", 
+        "convert", "create", "current", "debug", "deferred", "do", "else", "elseif", 
+        "end", "ensure", "expanded", "export", "external", "false", "feature", "from", 
+        "frozen", "if", "implies", "indexing", "infix", "inherit", "inspect", 
+        "invariant", "is", "like", "local", "loop", "not", "obsolete", "old", "once", 
+        "or", "prefix", "precursor", "pure", "redefine", "reference", "rename", 
+        "require", "rescue", "result", "retry", "separate", "then", "true", "tuple", 
+        "undefine", "creation", "until", "insert"},
+  },
+  { Id=2,
+    List={"integer", "real", "double", "character", "", "boolean", "string"},
+  },
+  { Id=4,
+    Regex=[[(\w+)\s*\(]],
+  },
+}
+
+Strings={
+  Delimiter=[["|']],
+  Escape=[=[ %\d{3}|\\x[[:xdigit:]]{2}|%[nNtvbrfa%\?'"]|%$ ]=]
+}
+
+IgnoreCase=true
+
+Comments={
+  { Block=false,
+    Delimiter= { [[--]] },
+  },
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\:|\&|<|>|\!|\-|\+|\=|\/|\*|\+|\-|\.]]

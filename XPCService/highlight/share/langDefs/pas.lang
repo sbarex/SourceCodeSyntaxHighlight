@@ -1,0 +1,70 @@
+Description="Pascal"
+
+Categories = {"source"}
+
+Digits=[[ (?:0x|0X|\$)[0-9a-fA-F]+|\d*[\.\_]?\d+(?:[eE][\-\+]\d+)?[lLuUbfdm]* ]]
+
+Keywords={
+  { Id=1,
+    List={"absolute", "abstract", "and", "array", "as", "asm", "assembler", "automated", 
+          "begin", "case", "cdecl", "class", "const", "constructor", "destructor", "dispid", 
+          "dispinterface", "div",   "dynamic", "end", "except", "export", "exports", "external", 
+          "far", "file", "finalization", "finally", "forward", "function", "goto", 
+          "implementation", "in", "initialization", "inherited", "inline", "interface", 
+          "is", "label", "library", "message", "mod", "near", "nil", "not", "object", 
+          "of", "or", "out", "override", "packed", "pascal", "private", "procedure", 
+          "program", "property", "protected", "public", "published", "raise", "record", 
+          "register",  "resourcestring", "safecall", "set", "shl", "shr", "stdcall", 
+          "threadvar", "try", "type", "unit", "uses", "var", "virtual", "xor",
+          "if", "else", "then", "downto", "do", "for", "repeat", "while", "to", "until", "with"},
+  },
+  { Id=2,
+    List={"boolean", "char", "integer", "pointer", "real", "text", "true", "false", "cardinal", 
+          "longint", "byte", "word", "single", "double", "int64","string"},
+  },
+  { Id=4,
+    Regex=[[(\w+)\s*\(]],
+  },
+}
+
+Strings={
+  Delimiter=[["|']],
+  Escape="#[[:digit:]]+"
+}
+
+IgnoreCase=true
+
+Comments={
+  { Block=false,
+    Delimiter= { [[//]] },
+  },
+  { Block=true,
+    Nested=false,
+    Delimiter= { [[\{(?!\$)]],[[\}]] }
+  },
+  { Block=true,
+    Nested=false,
+    Delimiter= { [[\(\*]],[[\*\)]] }
+  }
+}
+
+PreProcessor = {
+  Prefix=[[{]],
+  Continuation="\x13",
+}
+
+NestedSections = {
+  { 
+    Lang="assembler", 
+    Delimiter= { [[asm]], [[end;]] } 
+  }
+}
+
+Operators=[[\(|\)|\[|\]|,|;|:|&|<|>|\!|\=|\/|\*|\%|\+|\-|\@|\.|\^]]
+
+function OnStateChange(oldState, newState, token)
+   if token=="}" and oldState==HL_PREPROC then
+      return HL_PREPROC_END
+   end   
+   return newState
+end

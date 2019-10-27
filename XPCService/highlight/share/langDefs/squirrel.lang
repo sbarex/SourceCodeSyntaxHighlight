@@ -1,0 +1,34 @@
+
+Description="Squirrel"
+
+Categories = {"source"}
+
+Keywords={
+  { Id=1,
+    List={"break", "catch", "clone", "continue", "case", "delegate", "delete", 
+            "default", "do", "else", "local", "for", "function", "foreach", "if", "in",
+            "long", "null", "return", "resume", "switch", "this", "throw", "try", 
+            "typeof", "while", "yield"},
+  },
+  { Id=4,
+    Regex=[[(\w+)\s*\(]],
+  },
+}
+
+Strings={
+  Delimiter=[["|']],
+}
+
+IgnoreCase=false
+
+Comments={
+  { Block=false,
+    Delimiter= { [[\/\/]] },
+  },
+  { Block=true,
+    Nested=false,
+    Delimiter= { [[\/\*]],[[\*\/]],}
+  }
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-|\.]]

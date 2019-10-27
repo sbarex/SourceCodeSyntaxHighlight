@@ -1,0 +1,43 @@
+
+Description="MaxScript"
+
+Categories = {"source", "script"}
+
+
+Keywords={
+  { Id=1,
+    List={"about", "animate", "as", "at", "by", "case", "catch", "collect", 
+        "continue", "coordsys", "default", "do", "else", "exit", "fn", "for", 
+        "function", "global", "group", "if", "in", "level", "local", "local", "mapped", 
+        "max", "of", "on", "parent", "persistent", "pivot", "return", "selection", 
+        "set", "struct", "then", "throw", "time", "to", "try", "undo", "where", "while", 
+        "with", "with", "world", "true", "false", "on", "off", "ok", "undefined", 
+        "unsupplied", "or", "and", "not"},
+  },
+  { Id=2,
+    List={"utility", "rollout", "label", "button", "edittext", "combobox", 
+        "dropdownlist", "listbox", "spinner", "slider", "pickbutton", "pushbutton", 
+        "checkbutton", "macrobutton", "radiobuttons", "checkbox", "colorpicker", 
+        "mapbutton", "materialbutton", "progressbar", "timer", "bitmap", "rcmenu", 
+        "menuitem", "separator", "submenu", "macroscript", "tool", "plugin", 
+        "parameters"},
+  },
+}
+
+Strings={
+  Delimiter=[["]],
+}
+
+IgnoreCase=false
+
+Comments={
+  { Block=false,
+    Delimiter= { [[\-\-]] },
+  },
+  { Block=true,
+    Nested=false,
+    Delimiter= { [[\/\*]],[[\*\/]],}
+  }
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-]]

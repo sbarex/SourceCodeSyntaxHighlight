@@ -1,0 +1,41 @@
+
+Description="Notation3 (N3), N-Triples, Turtle, SPARQL"
+
+Categories = {"source"}
+
+Keywords={
+  { Id=4,
+    Regex=[[@\w+|\^\^<[^>]+?>]],
+  },
+  { Id=1,
+    Regex=[[<[!?]?(?!\-\-)\/?[\w\:\-\/\.\+\-\#\@\?\=\_\~\;\,\%\$\&]+>?|[/?]?>]],
+    Group=0,
+  },
+  { Id=2,
+    Regex=[[(\w+)\:]],
+    Group=1,
+  },
+  { Id=3,
+    Regex=[[\:(\w+)]],
+    Group=1,
+  },
+  { Id=4,
+    Regex=[[(?<!\?)\w+]],
+  },
+}
+
+Strings={
+  Delimiter=[["""|"]],
+  RawPrefix="r",
+  Escape="\\\\[ntvbrfa\\\\\\?'\"]|\\\\\\d{3}|\\\\x[[:xdigit:]]{2}|\\\\u[[:xdigit:]]{4}"
+}
+
+Comments={
+  { Block=false,
+    Delimiter= { [[#]] },
+  },
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\.|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-|\~|\|]]
+
+IgnoreCase=true

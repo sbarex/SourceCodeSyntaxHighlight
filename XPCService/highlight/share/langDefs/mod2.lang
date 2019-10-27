@@ -1,0 +1,118 @@
+
+Description="Modula2"
+
+Categories = {"source"}
+
+
+Keywords={
+  { Id=1,
+    List={"GENERIC", "AND",  "ARRAY",  "BEGIN",  "BY",  "CASE",  "CONST",  
+        "DEFINITION",  "DIV",  "DO",  "ELSE", "ELSIF",  "END",  "EXCEPT",  "EXIT",  
+        "EXPORT",  "FINALLY",  "FOR",  "FORWARD",  "FROM",  "IF",  "IMPLEMENTATION", 
+        "IMPORT",  "IN",  "LOOP",  "MOD",  "MODULE",  "NOT",  "OF",  "OR",  "PACKEDSET", 
+        "POINTER",  "PROCEDURE", "QUALIFIED",  "RECORD",  "REM",  "REPEAT",  "RETRY",  
+        "RETURN",  "SET",  "THEN",  "TO", "TYPE",  "UNTIL",  "VAR", "WHILE",  "WITH"},
+  },
+  { Id=2,
+    List={"ABS",  "BITSET",  "BOOLEAN",   "CAP",  "CARDINAL",  "CHAR",  "CHR",  
+        "DEC",  "DISPOSE", "EXCL",  "FALSE",  "FLOAT",  "HALT",  "HIGH",  "INC",  
+        "INCL",  "INTEGER",  "LONGCARD", "LONGINT",  "LONGREAL", "MAX",  "MIN",  "NEW",  
+        "NIL",  "ODD", "ORD",  "PROC",  "REAL",  "SIZE",  "TRUE",  "TRUNC",  "TSIZE", 
+        "VAL"},
+  },
+    
+  { Id=3,
+    Regex=[[(\w+?)\s*\(]],
+  },
+  
+  -- Modula dialect selector 
+  { Id=4,
+    Regex=[[ \(\*\!m2(r10|iso)\*\) ]], Group=0
+  },
+}
+
+Strings={
+  Delimiter=[["|']],
+}
+
+Comments={
+
+  { Block=true,
+    Nested=false,
+    Delimiter= { [[\(\*]],[[\*\)]],}
+  }
+}
+
+IgnoreCase=false
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-]]
+
+
+function OnStateChange(oldState, newState, token, kwID)
+
+   if newState==HL_KEYWORD and kwID==4 then
+      
+      -- ISO additional reserved words
+      if token=="(*!m2iso*)" then
+      
+        AddKeyword("CMPLX", 2)
+        AddKeyword("COMPLEX", 2)
+        AddKeyword("IM", 2)
+        AddKeyword("INT", 2)
+        AddKeyword("INTERRUPTIBLE", 2)
+        AddKeyword("LENGTH", 2)
+        AddKeyword("LFLOAT", 2)
+        AddKeyword("LONGCOMPLEX", 2)
+        AddKeyword("PROTECTION", 2)
+        AddKeyword("RE", 2)
+        AddKeyword("UNINTERRUBTIBLE", 2)
+      end
+      
+      -- R10 additional reserved words
+      if token=="(*!m2r10*)" then
+      
+        AddKeyword("ENUM", 1)
+        AddKeyword("IMMUTABLE", 1)
+        AddKeyword("IS", 1)
+        AddKeyword("OPAQUE", 1)
+        AddKeyword("VARIADIC", 1)
+        AddKeyword("BYCOPY", 1)
+        AddKeyword("BYREF", 1)
+        AddKeyword("CLASS", 1)
+        AddKeyword("CONTINUE", 1)
+        AddKeyword("CRITICAL", 1)
+        AddKeyword("INOUT", 1)
+        AddKeyword("METHOD", 1)
+        AddKeyword("ON", 1)
+        AddKeyword("OPTIONAL", 1)
+        AddKeyword("OUT", 1)
+        AddKeyword("PRIVATE", 1)
+        AddKeyword("PROTECTED", 1)
+        AddKeyword("PROTOCOL", 1)
+        AddKeyword("PUBLIC", 1)
+        AddKeyword("SUPER", 1)
+        AddKeyword("TRY", 1)
+        
+        AddKeyword("INRANGE", 2)
+        AddKeyword("LENGTH", 2)
+        AddKeyword("OCTET", 2)
+        AddKeyword("PRED", 2)
+        AddKeyword("READ", 2)
+        AddKeyword("SUCC", 2)
+        AddKeyword("TMAX", 2)
+        AddKeyword("TMIN", 2)
+        AddKeyword("WRITE", 2)
+        AddKeyword("UNICHAR", 2)
+
+        AddKeyword("WRITEF", 2)
+        AddKeyword("UNICHAR", 2)
+        AddKeyword("OBJECT", 2)
+        AddKeyword("YES", 2)
+        AddKeyword("NO", 2)
+        
+     end
+      
+   end
+   
+   return newState
+end

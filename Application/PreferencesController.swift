@@ -25,12 +25,10 @@ import WebKit
 import SourceCodeSyntaxHighlightXPCService
 
 class PreferencesController: NSViewController, NSFontChanging {
-    private var themes: [NSDictionary] = []
-    
+    // MARK: - Outlets
     @IBOutlet weak var progressIndicator: NSProgressIndicator!
     
-    @IBOutlet weak var pathControl: NSPathCell!
-    @IBOutlet weak var browseButton: NSButton!
+    @IBOutlet weak var highlightPathPopup: NSPopUpButton!
     
     @IBOutlet weak var modePopupButton: NSPopUpButton!
     
@@ -60,13 +58,20 @@ class PreferencesController: NSViewController, NSFontChanging {
     @IBOutlet weak var refreshButton: NSButton!
     @IBOutlet weak var saveButton: NSButton!
     
+    // MARK: - attributes
     var service: SCSHXPCServiceProtocol? {
         return (NSApplication.shared.delegate as? AppDelegate)?.service
     }
     
     var settings: [String: Any]?
-    var examples: [URL] = []
+    /// List of highlight presents on the system.
+    private var highlightPaths: [(path: String, ver: String, embedded: Bool)] = []
+    /// List of themes.
+    private var themes: [NSDictionary] = []
+    /// List of example files.
+    private var examples: [URL] = []
     
+    // MARK: - Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -74,8 +79,8 @@ class PreferencesController: NSViewController, NSFontChanging {
         let macosThemeLight = (defaults.string(forKey: "AppleInterfaceStyle") ?? "Light") == "Light"
         self.themeControl.selectedSegment = macosThemeLight ? 0 : 1
         
+        // Populate the example files list.
         self.exampleFormatButton.removeAllItems()
-        
         if let examplesDirURL = Bundle.main.url(forResource: "examples", withExtension: nil) {
             let fileManager = FileManager.default
             if let files = try? fileManager.contentsOfDirectory(at: examplesDirURL, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles]) {
@@ -91,14 +96,7 @@ class PreferencesController: NSViewController, NSFontChanging {
             service.getSettings() {
                 self.settings = $0 as? [String: Any]
                 
-                self.updateInternalState(n: 1)
-            }
-            
-            service.getThemes() { (results, error) in
-                self.themes = results
-                
-                self.updateInternalState(n: 1)
-                // print(results)
+                self.processNextInitTask()
             }
         }
     }
@@ -108,21 +106,86 @@ class PreferencesController: NSViewController, NSFontChanging {
        view.window!.styleMask.remove(.resizable)
     }
 
-    
     private var internal_state = 0
-    private func updateInternalState(n: Int) {
-        internal_state += n
+    private func processNextInitTask() {
+        internal_state += 1
         
-        if internal_state == 2 {
+        switch internal_state {
+        case 1:
             DispatchQueue.main.async {
-                self.pathControl.isEnabled = true
-                self.pathControl.url = URL(fileURLWithPath: self.settings?[SCSHSettings.Key.highlightPath.rawValue] as? String ?? "")
-                self.browseButton.isEnabled = true
+                // Fetch highlight path.
+                self.highlightPaths = []
+                self.service?.locateHighlight { (paths) in
+                    let currentHighlightPath = self.settings?[SCSHSettings.Key.highlightPath.rawValue] as? String
+                    var found = false
+                    for info in paths {
+                        guard info.count == 3, let path = info[0] as? String, let ver = info[1] as? String, let embedded = info[2] as? Bool else {
+                            continue
+                        }
+                        self.highlightPaths.append((path: embedded ? "-" : path, ver: ver, embedded: embedded))
+                        
+                        if let p = currentHighlightPath, (p == "-" && embedded) || p == path {
+                            if embedded {
+                                self.settings?[SCSHSettings.Key.highlightPath.rawValue] = "-"
+                            }
+                            found = true
+                        }
+                    }
+                    if !found, let p = currentHighlightPath {
+                        // Append current customized path.
+                        self.highlightPaths.append((path: p, ver: "", embedded: false))
+                    }
+                    
+                    self.processNextInitTask()
+                }
+            }
+            
+        case 2:
+            // Fetch themes.
+            DispatchQueue.main.async {
+                self.service?.getThemes(highlight: self.settings?[SCSHSettings.Key.highlightPath.rawValue] as? String ?? "-") { (results, error) in
+                    self.themes = results
+                    
+                    self.processNextInitTask()
+                    // print(results)
+                }
+            }
+            
+        case 3:
+            // Intialize all gui controls.
+            DispatchQueue.main.async {
+                // Highlight Path
+                self.highlightPathPopup.removeAllItems()
                 
-                let format = self.settings?[SCSHSettings.Key.format.rawValue] as? String ?? "html"
+                let currentHighlightPath = self.settings?[SCSHSettings.Key.highlightPath.rawValue] as? String
+                for (i, path) in self.highlightPaths.enumerated() {
+                    let m = NSMenuItem(title: "\(path.embedded ? "Internal" : path.path) (ver. \(path.ver))", action: nil, keyEquivalent: "")
+                    m.tag = i
+                    self.highlightPathPopup.menu?.addItem(m)
+                    if currentHighlightPath == path.path {
+                        self.highlightPathPopup.select(m)
+                    }
+                    if path.embedded && self.highlightPaths.count > 1 {
+                        let sep = NSMenuItem.separator()
+                        sep.tag = -2
+                        self.highlightPathPopup.menu?.addItem(sep)
+                    }
+                }
+                let sep = NSMenuItem.separator()
+                sep.tag = -2
+                self.highlightPathPopup.menu?.addItem(sep)
+                
+                let m = NSMenuItem(title: "other…", action: nil, keyEquivalent: "")
+                m.tag = -1
+                self.highlightPathPopup.menu?.addItem(m)
+                self.highlightPathPopup.isEnabled = true
+                
+                // HTML/RTF format
+                let format = self.settings?[SCSHSettings.Key.format.rawValue] as? String ?? SCSHFormat.html.rawValue
                 self.modePopupButton.isEnabled = true
-                self.modePopupButton.selectItem(at: format == "html" ? 0 : 1)
+                self.modePopupButton.selectItem(at: format == SCSHFormat.html.rawValue ? 0 : 1)
                 
+                // Word wrap.
                 if let i = self.settings?[SCSHSettings.Key.wordWrap.rawValue] as? Int, let ln = SCSHWordWrap(rawValue: i) {
                     switch ln {
                     case .off:
@@ -137,10 +200,12 @@ class PreferencesController: NSViewController, NSFontChanging {
                 }
                 self.wrapPopupButton.isEnabled = true
                 
+                // Line length.
                 self.lineLengthLabel.isHidden = self.wrapPopupButton.indexOfSelectedItem == 0
                 self.lineLengthTextField.isHidden = self.lineLengthLabel.isHidden
                 self.lineLengthTextField.integerValue = self.settings?[SCSHSettings.Key.lineLength.rawValue] as? Int ?? 80
                 
+                // Line numbers.
                 if let v = self.settings?[SCSHSettings.Key.lineNumbers.rawValue] as? Bool {
                     if !v {
                         self.lineNumbersPopupButton.selectItem(at: 0)
@@ -153,6 +218,7 @@ class PreferencesController: NSViewController, NSFontChanging {
                 self.lineNumbersPopupButton.isEnabled = true
                 self.lineNumbersPopupButton.menu?.item(at: 2)?.isEnabled = self.wrapPopupButton.indexOfSelectedItem != 0
                 
+                // Tab/spaces.
                 let spaces = self.settings?[SCSHSettings.Key.tabSpaces.rawValue] as? Int ?? 0
                 self.tabsPopupButton.isEnabled = true
                 self.tabsPopupButton.selectItem(at: spaces > 0 ? 1 : 0)
@@ -160,145 +226,86 @@ class PreferencesController: NSViewController, NSFontChanging {
                 self.spacesSlider.isHidden = spaces <= 0
                 self.spacesSlider.integerValue = spaces > 0 ? spaces : 4
                 
+                // Extra.
                 self.extraArgumentsTextField.isEnabled = true
                 self.extraArgumentsTextField.stringValue = self.settings?[SCSHSettings.Key.extraArguments.rawValue] as? String ?? ""
                 
-                self.updateFont()
+                // Refresh font label.
+                self.refreshFontPanel()
                 
-                self.saveButton.isEnabled = true
+                // Poppulate theme list.
+                self.updateThemes()
                 
-                self.lightThemePopup.isEnabled = self.themes.count > 0
-                self.lightThemePopup.removeAllItems()
-                self.darkThemePopup.isEnabled = self.themes.count > 0
-                self.darkThemePopup.removeAllItems()
+                self.commandsToolbarButton.isEnabled = self.modePopupButton.indexOfSelectedItem != 0
                 
-                var i = 0
-                var lightIndex = -1
-                var darkIndex = -1
-                for theme in self.themes {
-                    let name = theme.value(forKey: "name") as! String
-                    let desc = theme.value(forKey: "desc") as! String
-                    
-                    self.lightThemePopup.addItem(withTitle: desc)
-                    self.darkThemePopup.addItem(withTitle: desc)
-                    if name == self.settings?[SCSHSettings.Key.lightTheme.rawValue] as? String {
-                        lightIndex = i
-                    }
-                    if name == self.settings?[SCSHSettings.Key.darkTheme.rawValue] as? String {
-                        darkIndex = i
-                    }
-                    i += 1
-                }
-                if lightIndex >= 0 {
-                    self.lightThemePopup.selectItem(at: lightIndex)
-                }
-                if darkIndex >= 0 {
-                    self.darkThemePopup.selectItem(at: darkIndex)
-                }
-                
+                // Example preview.
                 self.exampleFormatButton.isEnabled = self.examples.count > 0
                 self.themeControl.isEnabled = self.examples.count > 0
                 self.refreshButton.isEnabled = self.examples.count > 0
                 
                 self.webView.isHidden = self.modePopupButton.indexOfSelectedItem != 0
                 self.textScrollView.isHidden = !self.webView.isHidden
-                self.commandsToolbarButton.isEnabled = !self.webView.isHidden
+                
+                self.saveButton.isEnabled = true
                 
                 self.refresh(nil)
             }
-        }
-    }
-    
-    private func updateFont() {
-        let ff = SCSHSettings.Key.fontFamily.rawValue
-        let fp = SCSHSettings.Key.fontSize.rawValue
-        self.fontText.stringValue = String(format:"%@ %.1f pt", self.settings?[ff] as? String ?? "", self.settings?[fp] as? Float ?? 10)
-        
-         self.fontText.stringValue = String(format:"%@ %.1f pt", self.settings?[ff] as? String ?? "??", self.settings?[fp] as? Float ?? 10)
-    }
-    
-    @IBAction func handleConvertTabsToSpaces(_ sender: NSPopUpButton) {
-        self.spacesSlider.isEnabled = sender.indexOfSelectedItem == 1
-        self.spacesSlider.isHidden = !self.spacesSlider.isEnabled
-    }
-
-    @IBAction func handleFormatChange(_ sender: NSPopUpButton) {
-        self.webView.isHidden = sender.indexOfSelectedItem != 0
-        self.textScrollView.isHidden = sender.indexOfSelectedItem == 0
-        self.commandsToolbarButton.isEnabled = !self.webView.isHidden
-        refresh(nil)
-    }
-
-    @IBAction func handleWordWrapChange(_ sender: NSPopUpButton) {
-        self.lineLengthTextField.isHidden = sender.indexOfSelectedItem == 0
-        self.lineLengthLabel.isHidden = sender.indexOfSelectedItem == 0
-        
-        if sender.indexOfSelectedItem == 0 {
-            if self.lineNumbersPopupButton.indexOfSelectedItem == 2 {
-                self.lineNumbersPopupButton.selectItem(at: 1)
-            }
-            self.lineNumbersPopupButton.menu?.item(at: 2)?.isEnabled = false
-        } else {
-            self.lineNumbersPopupButton.menu?.item(at: 2)?.isEnabled = true
-        }
-        
-        refresh(nil)
-    }
-    
-    @IBAction func handleThemeChange(_ sender: NSPopUpButton) {
-        if (sender == self.lightThemePopup && self.themeControl.selectedSegment == 0) || sender == self.darkThemePopup && self.themeControl.selectedSegment == 1 {
-            self.refresh(sender)
-        }
-    }
-    
-    @IBAction func browseAcrion(_ sender: Any) {
-        let openPanel = NSOpenPanel()
-        openPanel.canChooseFiles = true
-        openPanel.canChooseDirectories = false
-        openPanel.resolvesAliases = false
-        openPanel.showsHiddenFiles = true
-        if let s = self.settings?[SCSHSettings.Key.highlightPath.rawValue] as? String {
-            let url = URL(fileURLWithPath: s, isDirectory: false)
-            openPanel.directoryURL = url.deletingLastPathComponent()
-        }
-        openPanel.beginSheetModal(for: self.view.window!) { (result) -> Void in
-            if result == .OK, let url = openPanel.url {
-                self.pathControl.url = url
-            }
-        }
-    }
-    
-    @IBAction func chooseFont(_ sender: Any) {
-        let fontPanel = NSFontPanel.shared
-        if let font = NSFont(name: self.settings?[SCSHSettings.Key.fontFamily.rawValue] as? String ?? "Menlo", size: self.settings?[SCSHSettings.Key.fontSize.rawValue] as? CGFloat ?? 10) {
-            fontPanel.setPanelFont(font, isMultiple: false)
-        }
-        fontPanel.makeKeyAndOrderFront(self)
-    }
-    
-    func changeFont(_ sender: NSFontManager?) {
-        guard let fontManager = sender else {
+        default:
             return
         }
+    }
+    
+    /// Update the theme popups.
+    private func updateThemes() {
+        self.lightThemePopup.removeAllItems()
+        self.darkThemePopup.removeAllItems()
         
-        let font = fontManager.convert(NSFont.systemFont(ofSize: 13.0))
-        if let family = font.familyName {
-            self.settings?[SCSHSettings.Key.fontFamily.rawValue] = family
-        } else {
-            self.settings?[SCSHSettings.Key.fontFamily.rawValue] = font.fontName
+        var i = 0
+        var lightIndex = -1
+        var darkIndex = -1
+        for theme in self.themes {
+            let name = theme.value(forKey: "name") as! String
+            let desc = theme.value(forKey: "desc") as! String
+            
+            self.lightThemePopup.addItem(withTitle: desc)
+            self.darkThemePopup.addItem(withTitle: desc)
+            if name == self.settings?[SCSHSettings.Key.lightTheme.rawValue] as? String {
+                lightIndex = i
+            }
+            if name == self.settings?[SCSHSettings.Key.darkTheme.rawValue] as? String {
+                darkIndex = i
+            }
+            i += 1
         }
-        self.settings?[SCSHSettings.Key.fontSize.rawValue] = Float(font.pointSize)
+        if lightIndex >= 0 {
+            self.lightThemePopup.selectItem(at: lightIndex)
+        }
+        if darkIndex >= 0 {
+            self.darkThemePopup.selectItem(at: darkIndex)
+        }
         
-        self.updateFont()
+        self.lightThemePopup.isEnabled = self.themes.count > 0
+        self.darkThemePopup.isEnabled = self.themes.count > 0
+        if self.themes.count == 0 {
+            self.lightThemePopup.addItem(withTitle: "No theme available")
+            self.darkThemePopup.addItem(withTitle: "No theme available")
+        }
     }
     
-    func validModesForFontPanel(_ fontPanel: NSFontPanel) -> NSFontPanel.ModeMask
-    {
-        return [.collection, .face, .size]
+    /// Update font preview.
+    private func refreshFontPanel() {
+        let ff: String = self.settings?[SCSHSettings.Key.fontFamily.rawValue] as? String ?? ""
+        let fp: Float = self.settings?[SCSHSettings.Key.fontSize.rawValue] as? Float ?? 10
+        self.fontText.stringValue = String(format:"%@ %.1f pt", ff, fp)
+        
+        self.fontText.font = NSFont(name: ff, size: CGFloat(fp))
     }
     
+    /// Get current font.
     private func getCurrentSettings() -> [String: Any] {
         var settings: [String: Any] = [
+            SCSHSettings.Key.highlightPath.rawValue: self.settings?[SCSHSettings.Key.highlightPath.rawValue] as? String ?? "-",
+            
             SCSHSettings.Key.lineNumbers.rawValue: self.lineNumbersPopupButton.indexOfSelectedItem > 0,
             SCSHSettings.Key.lineNumbersOmittedWrap.rawValue: self.lineNumbersPopupButton.indexOfSelectedItem == 2,
             
@@ -332,9 +339,6 @@ class PreferencesController: NSViewController, NSFontChanging {
             settings[SCSHSettings.Key.darkTheme.rawValue] = t
         }
         
-        if let v = self.pathControl.url?.path {
-            settings[SCSHSettings.Key.highlightPath.rawValue] = v
-        }
         if let v = self.settings?[SCSHSettings.Key.fontFamily.rawValue] as? String {
             settings[SCSHSettings.Key.fontFamily.rawValue] = v
         }
@@ -349,6 +353,142 @@ class PreferencesController: NSViewController, NSFontChanging {
         return settings
     }
     
+    // MARK: - Actions
+    @IBAction func handleConvertTabsToSpaces(_ sender: NSPopUpButton) {
+        self.spacesSlider.isEnabled = sender.indexOfSelectedItem == 1
+        self.spacesSlider.isHidden = !self.spacesSlider.isEnabled
+    }
+
+    /// Handle format output change.
+    @IBAction func handleFormatChange(_ sender: NSPopUpButton) {
+        self.webView.isHidden = sender.indexOfSelectedItem != 0
+        self.textScrollView.isHidden = sender.indexOfSelectedItem == 0
+        self.commandsToolbarButton.isEnabled = !self.webView.isHidden
+        refresh(nil)
+    }
+
+    /// Handle word wrap change.
+    @IBAction func handleWordWrapChange(_ sender: NSPopUpButton) {
+        self.lineLengthTextField.isHidden = sender.indexOfSelectedItem == 0
+        self.lineLengthLabel.isHidden = sender.indexOfSelectedItem == 0
+        
+        if sender.indexOfSelectedItem == 0 {
+            if self.lineNumbersPopupButton.indexOfSelectedItem == 2 {
+                self.lineNumbersPopupButton.selectItem(at: 1)
+            }
+            self.lineNumbersPopupButton.menu?.item(at: 2)?.isEnabled = false
+        } else {
+            self.lineNumbersPopupButton.menu?.item(at: 2)?.isEnabled = true
+        }
+        
+        refresh(nil)
+    }
+    
+    /// Handle theme change.
+    @IBAction func handleThemeChange(_ sender: NSPopUpButton) {
+        if (sender == self.lightThemePopup && self.themeControl.selectedSegment == 0) || sender == self.darkThemePopup && self.themeControl.selectedSegment == 1 {
+            self.refresh(sender)
+        }
+    }
+    
+    /// Handle highlight theme change.
+    @IBAction func handleHighLightPath(_ sender: NSPopUpButton) {
+        var changed = false
+        if sender.indexOfSelectedItem == sender.numberOfItems - 1 {
+            // Browse for a custom path.
+            let openPanel = NSOpenPanel()
+            openPanel.canChooseFiles = true
+            openPanel.canChooseDirectories = false
+            openPanel.resolvesAliases = false
+            openPanel.showsHiddenFiles = true
+            if let s = self.settings?[SCSHSettings.Key.highlightPath.rawValue] as? String {
+                let url = URL(fileURLWithPath: s, isDirectory: false)
+                openPanel.directoryURL = url.deletingLastPathComponent()
+            }
+            openPanel.beginSheetModal(for: self.view.window!) { (result) -> Void in
+                if result == .OK, let url = openPanel.url {
+                    self.highlightPaths.append((path: url.path, ver: "", embedded: false))
+                    
+                    let m = NSMenuItem(title: url.path, action: nil, keyEquivalent: "")
+                    m.tag = self.highlightPaths.count-1
+                    self.highlightPathPopup.menu?.insertItem(m, at: sender.numberOfItems-1)
+                    sender.select(m)
+                    
+                    self.settings?[SCSHSettings.Key.highlightPath.rawValue] = url.path
+                    changed = true
+                } else {
+                    // Restore previous selected path.
+                    if let i = self.highlightPaths.firstIndex(where: { $0.path == self.settings?[SCSHSettings.Key.highlightPath.rawValue] as? String }), let m = sender.menu?.item(withTag: i) {
+                        sender.select(m)
+                    } else {
+                        sender.selectItem(at: 0)
+                    }
+                }
+            }
+        } else {
+            if let i = sender.selectedItem?.tag, i >= 0, i < self.highlightPaths.count {
+                self.settings?[SCSHSettings.Key.highlightPath.rawValue] = self.highlightPaths[i].path
+                changed = true
+            }
+        }
+        
+        guard changed else {
+            return
+        }
+        
+        refresh()
+        
+        self.lightThemePopup.removeAllItems()
+        self.lightThemePopup.isEnabled = false
+        self.lightThemePopup.addItem(withTitle: "loading…")
+        
+        self.darkThemePopup.removeAllItems()
+        self.darkThemePopup.isEnabled = false
+        self.darkThemePopup.addItem(withTitle: "loading…")
+        
+        self.service?.getThemes(highlight: self.settings?[SCSHSettings.Key.highlightPath.rawValue] as? String ?? "-") { (results, error) in
+            self.themes = results
+            
+            DispatchQueue.main.async {
+                self.updateThemes()
+            }
+            // print(results)
+        }
+    }
+    
+    /// Show panel to chose a new font.
+    @IBAction func chooseFont(_ sender: Any) {
+        let fontPanel = NSFontPanel.shared
+        if let font = NSFont(name: self.settings?[SCSHSettings.Key.fontFamily.rawValue] as? String ?? "Menlo", size: self.settings?[SCSHSettings.Key.fontSize.rawValue] as? CGFloat ?? 10) {
+            fontPanel.setPanelFont(font, isMultiple: false)
+        }
+        fontPanel.makeKeyAndOrderFront(self)
+    }
+    
+    /// Handle the selection of a font.
+    func changeFont(_ sender: NSFontManager?) {
+        guard let fontManager = sender else {
+            return
+        }
+        
+        let font = fontManager.convert(NSFont.systemFont(ofSize: 13.0))
+        if let family = font.familyName {
+            self.settings?[SCSHSettings.Key.fontFamily.rawValue] = family
+        } else {
+            self.settings?[SCSHSettings.Key.fontFamily.rawValue] = font.fontName
+        }
+        self.settings?[SCSHSettings.Key.fontSize.rawValue] = Float(font.pointSize)
+        
+        self.refreshFontPanel()
+    }
+    
+    /// Customize font panel.
+    func validModesForFontPanel(_ fontPanel: NSFontPanel) -> NSFontPanel.ModeMask
+    {
+        return [.collection, .face, .size]
+    }
+    
+    /// Refresh the preview panel.
     @IBAction func refresh(_ sender: Any? = nil) {
         guard self.exampleFormatButton.itemArray.count > 0 else {
             return
@@ -371,7 +511,7 @@ class PreferencesController: NSViewController, NSFontChanging {
             webView.isHidden = true
             service?.htmlColorize(url: url, overrideSettings: settings as NSDictionary) { (html, extra, error) in
                 DispatchQueue.main.async {
-                    self.webView.loadHTMLString(error != nil ? error!.localizedDescription : html, baseURL: nil)
+                    self.webView.loadHTMLString(html, baseURL: nil)
                     self.progressIndicator.stopAnimation(self)
                     self.webView.isHidden = false
                 }
@@ -381,7 +521,7 @@ class PreferencesController: NSViewController, NSFontChanging {
             service?.rtfColorize(url: url, overrideSettings: settings as NSDictionary) { (response, effective_settings, error) in
                 let text: NSAttributedString
                 if let e = error {
-                    text = NSAttributedString(string: e.localizedDescription)
+                    text = NSAttributedString(string: String(data: response, encoding: .utf8) ?? e.localizedDescription)
                 } else {
                     text = NSAttributedString(rtf: response, documentAttributes: nil) ?? NSAttributedString(string: "Conversion error!")
                 }
@@ -400,6 +540,7 @@ class PreferencesController: NSViewController, NSFontChanging {
         }
     }
     
+    /// Save the settings.
     @IBAction func saveAction(_ sender: Any) {
         let settings = self.getCurrentSettings()
         

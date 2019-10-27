@@ -1,0 +1,34 @@
+
+Description="SPIN SQL"
+
+Categories = {"database"}
+
+Keywords={
+  { Id=1,
+    list={"assert", "init", "priority", "proctype", "provided", "active", 
+        "break", "do", "else", "empty", "enabled", "eval", "fi", "full", "goto", "if", 
+        "inline", "len", "nempty", "nfull", "od", "of", "printf", "run", "skip", 
+        "timeout", "xr", "xs", "unless", "_last", "_pid", "cond_expr", "false", "np_", 
+        "pc_value", "stdin", "true", "accept", "end", "progress", "atomic", "d_step", 
+        "hidden", "ltl", "never", "notrace", "trace", "show"},
+  },
+  { Id=2,
+    List={"bit", "bool", "byte", "chan", "int", "local", "mtype", "short", 
+            "typedef", "unsigned"},
+  },
+}
+
+Strings={
+  Delimiter=[["]],
+}
+
+Comments={
+  { Block=true,
+    Nested=false,
+    Delimiter= { [[\/\*]],[[\*\/]],}
+  }
+}
+
+IgnoreCase=true
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-]]

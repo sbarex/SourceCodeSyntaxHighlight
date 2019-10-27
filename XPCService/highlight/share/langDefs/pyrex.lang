@@ -1,0 +1,47 @@
+
+Description="Pyrex"
+
+Categories = {"source", "script"}
+
+
+Keywords={
+  { Id=1,
+    List={"global", "nextgroup", "pythonfunction", "skipwhite", "contained", 
+        "chr", "cmp", "coerce", "compile", "complex", "delattr", "dir", "divmod", 
+        "eval", "execfile", "filter", "getattr", "globals", "hasattr", "hash", "hex", 
+        "id", "input", "intern", "isinstance", "issubclass", "len", "list", "locals", 
+        "long", "map", "max", "min", "oct", "open", "ord", "pow", "range", "raw_input", 
+        "reduce", "reload", "repr", "round", "setattr", "slice", "str", "tuple", "type", 
+        "vars", "xrange", "apply", "sizeof", "abs", "callable", "exec"},
+  },
+  { Id=2,
+    List={"import", "from", "self", "public", "extern", "struct", "as", "break", 
+        "continue", "del", "except", "finally", "pass", "print", "raise", "return", 
+        "lambda", "class", "try", "assert", "def", "for", "while", "if", "elif", "else", 
+        "and", "in", "is", "not", "or", "cdef", "ctypedef"},
+  },
+  { Id=3,
+    List={"arithmeticerror", "assertionerror", "attributeerror", "eoferror", 
+        "exception", "floatingpointerror", "ioerror", "importerror", "indexerror", 
+        "keyerror", "keyboardinterrupt", "lookuperror", "memoryerror", "nameerror", 
+        "notimplementederror", "oserror", "overflowerror", "runtimeerror", 
+        "standarderror", "syntaxerror", "systemerror", "systemexit", "typeerror", 
+        "valueerror", "zerodivisionerror", "environmenterror", "void", "char", "int", 
+        "float", "object"},
+  },
+}
+
+Strings={
+  Delimiter=[["""|'''|"|']],
+  RawPrefix="r",
+}
+
+IgnoreCase=true
+
+Comments={
+  { Block=false,
+    Delimiter= { [[#]] },
+  },
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\.|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-]]

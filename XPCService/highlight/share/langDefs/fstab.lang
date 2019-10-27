@@ -1,0 +1,41 @@
+
+Description="fstab config file"
+
+Categories = {"config"}
+
+
+Keywords={
+  { Id=1,
+   List= { "ext2", "ext3", "ext4", "ntfs-3g", "proc", "auto", "ntfs", "swap", "btrfs", "none"
+          }
+  },
+  -- fstab partition UUIDs
+  { Id=4,
+    Regex=[[ [a-z0-9]{8}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{12}|[a-z0-9]{4}\-[a-z0-9]{4} ]]
+  },
+ { Id=2,
+    Regex=[[\d[\d.]*]]
+  },
+  { Id=3,
+    Regex=[[/\S+|/]]
+  },
+}
+
+Strings={
+  Delimiter=[["|']],
+}
+
+Comments={
+  { Block=false,
+    Delimiter={ [[#]] },
+  },
+  { Block=false,
+    Delimiter={ [[^;]] },
+  },
+}
+
+Operators=[[\,|\;|\.|\:|\~]]
+
+Digits=[[\d*\.?\d+ ]]
+
+Identifiers=[[ [a-zA-Z_\-][\w\-]* ]]

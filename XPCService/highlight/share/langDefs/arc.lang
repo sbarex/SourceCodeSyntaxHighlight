@@ -1,0 +1,79 @@
+
+Description="Arc"
+
+Categories = {"source"}
+
+Identifiers=[[ [a-zA-Z_][\w\-\/]* ]]
+
+Keywords={
+    { Id=1,
+      List={"def", "defhook", "defmem", "defop", "defops", "defset", "deftem", "mac"},
+      },
+    { Id=2,
+      List={"drain", "each", "for", "forlen", "loop", "noisy-each", "on", "ontable", "while", "whiler", "whilet", "until"},
+      },
+    { Id=3,
+      List={"case", "caselet", "check", "if", "iflet", "when", "whenlet", "unless"},
+      },
+    { Id=4,
+      List={"aand", "abs", "accum", "acons", "addtem", "adjoin", "afn", "after", 
+            "aif", "alist", "all", "alphadig", "alref", "and", "andf", "annotate", "apply", 
+            "assert", "assoc", "atend", "atlet", "atom", "atomic", "atomic-invoke", 
+            "atwith", "atwiths", "avg", "awhen", "bar*", "before", "begins", "best", 
+            "bestn", "blank", "bound", "break-threadcaar", "cache", "cadr", "call-w/stdin", 
+            "call-w/stdout", "car", "carif", "caris", "catch", "ccc", "cddr", "cdr", 
+            "client-ip", "close", "coerce", "commonest", "compare", "complement", "compose", 
+            "consif", "conswhen", "copy", "count", "counts", "current-gc-milliseconds", 
+            "current-process-milliseconds", "cut", "date", "days-since", "dead", "dedup", 
+            "deq", "details", "dir", "dir-exists", "disp", "do", "do1", "dotted", 
+            "downcase", "ellipsize", "empty", "endmatch", "enq", "enq-limit", "ensure-dir", 
+            "ero", "err", "errsafe", "eval", "even", "exact", "expand-metafn-call", 
+            "expand=", "expand=list", "expt", "file-exists", "fill-table", "find", 
+            "findsubseq", "firstn", "firstn-that", "flat", "fn", "for", "forlen", 
+            "fromstring", "headmatch", "hook", "hooks*", "hours-since", "idfn", "in", 
+            "infile", "insert-sorted", "inside", "insort", "insortnew", "inst", "instring", 
+            "intersperse", "is", "isa", "isnt", "iso", "join", "jtime", "keep", "keys", 
+            "kill-thread", "last", "len", "len<", "len>", "let", "list", "listtab", 
+            "litmatch", "load", "load-table", "load-tables", "macex", "macex1", "map", 
+            "map1", "mappend", "maptable", "max", "median", "mem", "memo", "memtable", 
+            "merge", "mergesort", "metafn", "min", "mismatch", "mod", "most", "msec", 
+            "multiple", "multisubst", "n-of", "new-thread", "newstring", "no",  "nonwhite", 
+            "nor", "nthcdr", "num", "number", "obj", "odd", "on-err", "only", "ontree", 
+            "open-socket", "or", "orf", "outfile", "outstring", "pair", "parse-format", 
+            "peekc", "pipe-from", "plural", "point", "pop", "pos", "positive", "posmatch", 
+            "pr", "prall", "prf", "prn", "protect", "prs", "pull", "punc", "push", 
+            "pushnew", "qlen", "qlist", "quasiquote", "queue", "quit", "quote", "rand", 
+            "rand-choice", "rand-string", "random-elt", "range", "read", "read-table", 
+            "readall", "readb", "readc", "readfile", "readfile1", "readline", "readstring1", 
+            "reclist", "recstring", "reduce", "reinsert-sorted", "rem", "rep", "repeat", 
+            "rev", "rfn", "rmfile", "rotate", "round", "roundup", "rreduce", 
+            "safe-load-table", "saferead", "safeset", "save-table", "scar", "scdr", 
+            "seconds", "set", "setforms", "setter", "sig", "since", "single", "sleep", 
+            "socket-accept", "some", "sort", "split", "sqrt", "sread", "sref", "ssexpand", 
+            "ssyntax", "stderr", "stdin", "stdout", "string", "subst", "summing", "swap", 
+            "sym", "system", "table", "tablist", "temload", "temloadall", "templates*", 
+            "templatize", "temread", "testify", "thread", "time", "time10", "to-nearest", 
+            "tokens", "tostring", "trav", "tree-subst", "treewise", "trim", "trues", 
+            "trunc", "tuples", "type", "union", "uniq", "upcase", "urldecode", "vals", 
+            "w/appendfile", "w/bars", "w/infile", "w/instring", "w/outfile", "w/outstring", 
+            "w/socket", "w/stdin", "w/stdout", "w/table", "w/uniq", "warn", "whitec", 
+            "wipe", "with", "withs", "write", "write-table", "writeb", "writec", 
+            "writefile1", "zap"},
+      },
+    }
+
+Strings={
+    Delimiter=[["]],
+    }
+
+Comments={
+    { Block=false,
+      Delimiter= { [[;]] },
+      },
+    { Block=true,
+      Nested=false,
+      Delimiter= { [[\;\|]],[[\|\;]],}
+    }
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\:|\&|<|>|\!|\+|\=|\/|\*|\']]

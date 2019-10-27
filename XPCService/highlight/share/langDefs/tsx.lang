@@ -1,0 +1,38 @@
+
+dofile(HL_LANG_DIR.."ts.lang")
+
+Description="TSX (TypeScript with React)"
+
+Categories = {"script", "javascript"}
+
+
+table.insert(Keywords,
+  { Id=1,
+    Regex=[[<[!?]?(?!\-\-)\/?[\w\:\-]+>?|[/?]?>]],
+    Group=0
+  }
+)
+
+table.insert(Keywords,
+  { Id=1,
+    List={ "from" }
+  }
+)
+
+table.insert(Keywords,
+  { Id=2,
+    Regex=[[([-\w\.\-\:]+)="]],
+  }
+)
+
+table.insert(Keywords,
+  {  Id=3,
+    Regex=[[\{[\w\.]+?\}]],
+  }
+)
+
+table.insert(Keywords,
+  {  Id=4,
+    Regex=[[\&\#?\w+;]],
+  }
+)

@@ -1,0 +1,164 @@
+
+Description="Perl"
+
+Categories = {"source", "script"}
+
+
+--[[==============================================================================
+                                        CHANGELOG                                     
+==================================================================================
+  (2019/01/11 | Highlight v3.49)
+    - fixed Highlighting of variables
+
+  (2018/01/03 | Highlight v3.42)
+    - improved Perl6 support
+    - allow _ in hereDoc delimiter
+--]]
+
+
+--TODO handle '
+Identifiers=[[ [a-zA-Z_][\-\w]* ]]
+
+Keywords={
+  { Id=1,
+    List={"if", "else", "elsif", "unless", "given", "when", "default", "while", "for", "foreach",
+    "do", "until", "continue", "return", "last", "next", "redo", "goto", "break", "exit", "sub",
+    "package", "use", "no", "dump", "require", "BEGIN", "CHECK", "INIT", "END", "UNITCHECK", 
+    "NEXT", "CATCH",  "loop", "class", "in", "say", "loop", "has", "method", "multi", "macro", 
+    "lazy", "gather", "take", "role", "is", "does", "rw" },
+  },
+  { Id=2,
+    Regex=[[ [$@%]\#?[^(\s|\.|\=|\:|\-\>|\"|\'|\(|\[|\)|\]|\{|\}|>|<|\;)]+ ]],
+  },
+  { Id=3,
+    List={"defined", "undef", "eq", "ne", "lt", "gt", "ge", "le", "cmp", "not", 
+    "and", "or", "xor", "bless", "ref", "my", "our", "local", "state", "chomp", 
+    "chop", "chr", "crypt", "index", "rindex", "lc", "lcfirst", "length", "ord", 
+    "pack", "print", "printf", "sprintf", "substr", "uc",
+    "ucfirst", "pos", "quotemeta", "split", "study", "abs", "atan2", "cos", 
+    "exp", "hex", "int", "log", "oct", "rand", "sin", "sqrt", "srand", "splice", 
+    "unshift", "shift", "push", "pop", "join", "reverse", "grep", "map", "sort", 
+    "unpack", "pack", "delete", "each", "exists", "keys",
+    "values", "syscall", "dbmopen", "dbmclose", "binmode", "close", "closedir", 
+    "eof", "fileno", "getc", "stat", "lstat", "read", "readdir", "readline", "pipe", 
+    "rewinddir", "say", "select", "tell", "telldir", "write", "fcntl", "flock", 
+    "ioctl", "open", "opendir", "seek", "seekdir",
+    "sysopen", "sysread", "sysseek", "syswrite", "truncate", "chdir", "chmod", 
+    "chown", "chroot", "glob", "link", "mkdir", "readlink", "rename", "rmdir", "symlink", 
+    "umask", "unlink", "utime", "caller", "die", "wantarray", "vec", "alarm", 
+    "exec", "fork", "getpgrp", "getppid", "getpriority", "kill", "pipe", "setpgrp", 
+    "setpriority", "sleep", "system", "times", "wait", "waitpid", "accept", "bind", 
+    "connect", "getpeername", "getsockname",
+    "getsockopt", "listen", "recv", "send", "setsockopt", "shutdown", "socket", 
+    "socketpair", "msgctl", "msgget", "msgrcv", "msgsnd", "semctl", "semget", 
+    "semop", "shmctl", "shmget", "shmread", "shmwrite", "gethostent", "getnetent", 
+    "getprotoent", "getservent", "setpwent",
+    "setgrent", "sethostent", "setnetent", "setprotoent", "setservent", 
+    "endpwent", "endgrent", "endhostent", "endnetent", "endprotoent", "endservent", 
+    "gethostbyaddr", "gethostbyname", "getnetbyaddr", "getnetbyname", 
+    "getprotobyname", "getprotobynumber", "getservbyname",
+    "getservbyport", "getpwuid", "getpwnam", "getgrgid", "getgrnam", "getlogin", 
+    "getpwent", "getgrent", "gmtime", "localtime", "time", "warn", "formline", 
+    "reset", "scalar", "prototype", "lock", "tied", "untie", "eval", "try", "constant" },
+  },
+  { Id=4,
+	Regex=[[->([a-zA-Z0-9_]+)]],
+	Group=1,
+  },
+  
+  --# Still only covers more common usage but by far not all
+    -- see OnStateChange below
+  { Id=4,
+    Regex=[[\/.*?\/[msixpodualgc]*|m\/.*?\/[msixpodualgc]*|qr\/.*?\/[msixpodual]*|s\/.*?\/.*?\/[msixpodualgcer]*|(?:tr|y)\/.*?\/.*?\/[cdsr]*|m!.*?![msixpodualgc]*|qr!.*?![msixpodual]*|s!.*?!.*?![msixpodualgcer]*|(?:tr|y)!.*?!.*?![cdsr]*|m\?.*?\?[msixpodualgc]*|m\{.*?\}[msixpodualgc]*|qr\{.*?\}[msixpodual]*|s\{.*?\}\s*\{.*?\}[msixpodualgcer]*|(?:tr|y)\{.*?\}\s*\{.*?\}[cdsr]*]],
+    Group=0
+  },
+  
+   { Id=4,
+    Regex=[=[ q[qxwr]?[\[\{\(] ]=]
+  },
+}
+
+-- hereDoc opening delimiter, see OnStateChange to handle end of string
+-- do not allow digits as heredoc delimiters
+Strings={
+  Delimiter=[=["|'|`|<<["']?[\w_]+["']?]=],
+  Interpolation=[[ [@\$%]\w+ ]],
+}
+
+IgnoreCase=false
+
+--sample: https://fossies.org/linux/Time-HiRes/HiRes.pm
+Comments={
+  { Block=true,
+    Nested=false,
+    Delimiter = { [[(?:^=pod|^=head[1234]|^=over|^=item|^=back|^=begin|^=end|^=for|^=encoding)]], [[^=cut\s*\Z]] }  },
+  { Block=false,
+    Delimiter= { [[(?<!\\)#]] },
+  },
+}
+
+--todo for 1..5
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\:|\&|<|>|\!|\@|~|\=|\/|\*|\+|\-|\$|\.|\^|\~|\%|\|]]
+
+-- fix recognition of $ and other Perl perversions
+function OnStateChange(oldState, newState, token, groupID)
+
+   -- resolve issue with regex expression which spans strings like "</i>" + VAR + "</i>"
+   if string.sub(token,1,1)=="/" and oldState==HL_STRING and newState==HL_KEYWORD and groupID == 4 then
+      return HL_REJECT
+   end
+
+   if  (string.sub(token,1,1) =="$" or string.sub(token,1,1) =="@" or string.sub(token,1,1) =="%") 
+      and oldState==HL_STRING and newState==HL_KEYWORD then
+      return HL_INTERPOLATION
+   end
+   
+   --recognize hereDoc multine strings
+   --do not clear hereDoc if token is ",' or `
+   if (oldState==HL_STANDARD or oldState==HL_STRING) and newState==HL_STRING  
+      and not string.find("\"'`", token) then
+      hereDoc = string.match(token, "<<'?\"?([%a_]+)" )
+   end
+
+   if oldState==HL_STRING and token==hereDoc then
+      hereDoc = nil
+      return HL_STRING_END
+   end
+  
+  -- fix issue in CGI.pm testcase (line 1060 ff)
+   if oldState~=HL_STRING and oldState~=HL_INTERPOLATION and oldState~=HL_ESC_SEQ then
+      qString=0
+    end
+    
+   if newState==HL_KEYWORD and (token=="q{" or token=="qq{" or token=="qw{" or token=="qx{")  then
+      qString=1
+      return HL_STRING
+   end
+   
+   if newState==HL_KEYWORD and (token=="q(" or token=="qq(" or token=="qw(" or token=="qx(")  then
+      qString=2
+      return HL_STRING
+   end
+  
+   if newState==HL_KEYWORD and (token=="q[" or token=="qq[" or token=="qw[" or token=="qx[")  then
+      qString=3
+      return HL_STRING
+   end
+  
+  if oldState==HL_STRING and qString==1 and token=="}" then
+      qString=0
+      return HL_STRING_END
+   end
+   
+   if oldState==HL_STRING and qString==2 and token==")" then
+      qString=0
+      return HL_STRING_END
+   end
+
+   if oldState==HL_STRING and qString==3 and token=="]" then
+      qString=0
+      return HL_STRING_END
+   end
+  
+   return newState
+end

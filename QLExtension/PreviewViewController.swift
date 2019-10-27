@@ -117,52 +117,14 @@ class PreviewViewController: NSViewController, QLPreviewingController {
                         textView.backgroundColor = .clear
                     }
                     
-                    let text: NSAttributedString
-                    if let e = error {
-                        text = NSAttributedString(string: e.localizedDescription)
-                    } else {
-                        let t =  NSAttributedString(rtf: response, documentAttributes: nil)
-                        text = t ?? NSAttributedString(string: "Unable to convert data to rtf.")
-                        if t == nil {
-                            os_log(OSLogType.error, log: self.log, "Unable to parse response data to rtf!")
-                            os_log(OSLogType.error, log: self.log, "Data length = %{public}d; data = %{public}@", response.count, String(data: response, encoding: .utf8) ?? "")
-                        }
-                    }
-                    
+                    let text = NSAttributedString(rtf: response, documentAttributes: nil) ?? NSAttributedString(string: "Unable to convert data to rtf.")
                     textView.textStorage?.setAttributedString(text)
                 } else {
-                    let html: String
-                    if let _ = error {
-                        if let e = error as? SCSHError {
-                            switch e {
-                            case .shellError(let cmd, let exitCode, let stdOut, let stdErr, let message):
-                                var s = ""
-                                if let m = message, m.count > 0 {
-                                    s += "<b>\(m)</b><br />"
-                                } else {
-                                    s += "<b>Shell error!</b><br />"
-                                }
-                                s += "<code>\(cmd)</code><br />exitCode: \(exitCode)<br />"
-                                if stdOut.count > 0 {
-                                   s += "<pre>\(stdOut)</pre>"
-                                }
-                                if stdErr.count > 0 {
-                                   s += "<pre style='color: red'>\(stdErr)<pre>"
-                                }
-                                html = s
-                            default:
-                                html = e.localizedDescription.replacingOccurrences(of: "\n", with: "<br />\n")
-                            }
-                        } else {
-                            html = "unknown error (\(error!))"
-                        }
-                    } else {
-                        var lossy = false
-                        html = response.decodeToString(lossy: &lossy).trimmingCharacters(in: CharacterSet.newlines)
-                        
-                        if lossy {
-                            os_log(OSLogType.error, log: self.log, "some bytes cannot be decoded and have been replaced!")
-                        }
+                    var lossy = false
+                    let html = response.decodeToString(lossy: &lossy).trimmingCharacters(in: CharacterSet.newlines)
+                    
+                    if lossy {
+                        os_log(OSLogType.error, log: self.log, "Some bytes cannot be decoded and have been replaced!")
                     }
                     
                     let preferences = WKPreferences()

@@ -1,0 +1,273 @@
+--[[ "asciidoc.lang" v0.0.4 | 2019/01/01 | Highlight v3.48
+********************************************************************************
+*                                                                              *
+*                          AsciiDoc Syntax Definition                          *
+*                                                                              *
+*                              by Tristano Ajmone                              *
+*                                                                              *
+********************************************************************************
+NOTE: Alpha WIP!
+
+Currently implemented elements:
+
+  - Comments.
+--------------------------------------------------------------------------------
+** MANDATORY ELEMENTS **
+The bare minimum definitions required for a langDef file to be valid are:
+  -- Description
+  -- Keywords
+If a langDef file doesn't provide these definitions, Highlight will raise an
+error. All other definitions are optional.
+--------------------------------------------------------------------------------
+** HIGHLIGHT DEFAULTS **
+Highlight provides a default definition to the following syntax elements:
+  -- Identifiers
+  -- Digits
+  -- Escape
+All other definition are empty/false by default.
+--------------------------------------------------------------------------------
+Written by Tristano Ajmone:
+    <tajmone@gmail.com>
+    https://github.com/tajmone
+    https://gitlab.com/tajmone
+Released into the public domain according to the Unlicense terms:
+    http://unlicense.org/
+------------------------------------------------------------------------------]]
+
+Description = "AsciiDoc" -- Syntax description
+
+Categories = {"markup"}
+
+--==============================================================================
+-- SUPPRESSED ELEMENTS
+--==============================================================================
+NeverMatch = [=[ \A(?!x)x ]=] -- Never-Matching RegEx!
+
+Digits = [=[ \A(?!x)x ]=] -- Not needed! but could use them for somithing else!
+--------------------------------------------------------------------------------
+
+--==============================================================================
+-- SYNTAX SETTINGS
+--==============================================================================
+IgnoreCase = false -- Are keywords case-sensitive? (true/false)
+EnableIndentation = false -- Syntax may be reformatted and indented? (true/false)
+Identifiers = [=[ [a-zA-Z_]\w* ]=] -- Highlight's default Identifiers definition
+
+--[[============================================================================
+                                    COMMENTS                                    
+================================================================================
+AsciiDoc comments delimiters must always be placed at beginning of line and end
+the line without other characters.
+------------------------------------------------------------------------------]]
+Comments = {
+  -- Define BLOCK-COMMENTS delimiters
+  { Block  = true,
+    Nested = false,
+    Delimiter = {
+      [=[ ^\/{4}$ ]=], -- ////
+      [=[ ^\/{4}$ ]=]  -- ////
+    }
+  },
+  -- Define SINGLE-LINE-COMMENTS delimiter
+  { Block = false,
+    Delimiter = { [=[ ^\/\/ ]=] } -- //
+  }
+}
+--[[============================================================================
+                                    STRINGS                                     
+================================================================================
+Strings = { Delimiter|DelimiterPairs={Open, Close, Raw?}, Escape?, Interpolation?,
+            RawPrefix?, AssertEqualLength? }
+
+  Delimiter:         String, regular expression which describes string delimiters
+  DelimiterPairs:    List, includes open and close delimiter expressions if not
+                     equal, includes optional Raw flag as boolean which marks
+                     delimiter pair to contain a raw string
+  Escape:            String, regex of escape sequences (optional)
+  Interpolation:     String, regex of interpolation sequences (optional)
+  RawPrefix:         String, defines raw string indicator (optional)
+  AssertEqualLength: Boolean, set true if delimiters must have the same length
+------------------------------------------------------------------------------]]
+
+--[============================================[
+Strings = {
+
+--------------------------------------------------------------------------------
+--                              STRING DELIMITERS                               
+--------------------------------------------------------------------------------
+
+  -- SYMMETRICAL STRINGS DELIMITERS
+  Delimiter = [=[ "|' ]=], -- Double- and single-quote delimiters: " '
+
+  -- ASSYMMETRICAL STRINGS DELIMITERS
+  -- Example: Lua style string-delimiters:
+  DelimiterPairs= {
+    { Open  = [=[ \[=*\[ ]=],  -- [[  [=[  [===[   etc.
+      Close = [=[ \]=*\] ]=],  -- ]]  ]=]  ]===]   etc.
+      Raw = true, -- Are these raw string delimiters? (true/false)
+    }
+  },
+  AssertEqualLength = true,  -- Delimiters must have the same length?
+
+  -- RAW-STRING PREFIX (if language supports it)
+  RawPrefix = "R",           -- Raw string indicator (optional): R (C style)
+--[[----------------------------------------------------------------------------
+                                ESCAPE SEQUENCES                                
+--------------------------------------------------------------------------------
+If the language at hand supports escape sequences, define a RegEx pattern to
+capture them.
+
+    https://en.wikipedia.org/wiki/Escape_sequences_in_C
+
+NOTE: Escape sequences are not restricted to occur inside strings only, they
+      will be matched anywhere in the source code (some languages, like Perl
+      and Bash, allow their use anywhere). Usually this doesn't constitute a
+      problem, but in some languages this uncostrained behaviour might cause
+      false positives matches; in such cases you'll need to restrict escape
+      sequences occurence to inside-strings context only by implementing a
+      custom hook via the OnStateChange() function --- see "Hook Preset #01"
+      further down.                                                         --]]
+
+-- Highlight's default built-in Escape definition:
+  -- Escape = [=[ \\u[[:xdigit:]]{4}|\\\d{3}|\\x[[:xdigit:]]{2}|\\[ntvbrfa\\\?'"] ]=],
+  Escape = NeverMatch,
+--[[----------------------------------------------------------------------------
+                                INTERPOLATION                                   
+--------------------------------------------------------------------------------
+String, regex of interpolation sequences (optional)
+
+To understand interpolation, here is an example from Javascript:
+
+    var apples = 6;
+    console.log(`There are ${apples} apples in the basket!`);
+    
+which will otuput:
+
+    There are 6 apples in the basket!
+
+References:
+    https://en.wikipedia.org/wiki/String_interpolation
+--]]
+  Interpolation = NeverMatch,
+  -- Interpolation = [=[ \$\{.+?\} ]=], -- Javascript Interpolation: ${ ... }
+}
+--]============================================]
+
+
+
+--[[============================================================================
+                                  PREPROCESSOR                                  
+================================================================================
+PreProcessor = { Prefix, Continuation? }
+
+  Prefix:        String, regular expression which describes open delimiter
+  Continuation:  String, contains line continuation character (optional).
+
+NOTE: This element is treated by Highlight parser in a similar way to single-
+      line comments: it swallows up everything from the matching Prefix up to
+      the end of the line -- but unlike comment lines (which can't contain
+      further syntax elements), the parser will still be looking for some 
+      syntax elements (in the current line) which might be reasonably found
+      within a line of preprocessor directives (eg: strings and comments);
+      but once these elements are dealt with, the parser will resume the 
+      PreProcessor state to carry on parsing the rest of the line.
+
+      Furthermore, the Continuation character allows this element to span
+      across multiple line (without the need of an opening and closing pair,
+      unlike multiline comments do).
+PreProcessor = {
+  -- Case sensitive? ** SHOULD TEST!! **
+  Prefix = [=[ (?:include|tag|end) ]=]
+  -- Continuation = "\\", -- Backslash ('\') marks continuation of preprocessor line
+}
+--]]
+
+--[[============================================================================
+                                   OPERATORS                                    
+============================================================================--]]
+-- Operators = [=[ \&|<|>|\!|\||\=|\/|\*|\%|\+|\-|~ ]=] -- Match: &<>!|=/*%+-~ 
+
+
+--[[============================================================================
+                                       KEYWORDS                                   
+================================================================================
+Keywords = { Id, List|Regex, Group? }
+
+  Id:    Integer, keyword group id (values 1-4, can be reused for several keyword
+          groups)
+  List:  List, list of keywords
+  Regex: String, regular expression
+  Group: Integer, capturing group id of regular expression, defines part of regex
+         which should be returned as keyword (optional; if not set, the match
+         with the highest group number is returned (counts from left to right))
+
+NOTE: Keyword group Ids are not limited to 4, you can create as many as you
+      need; but bare in mind that most themes that ship with Highlight usually
+      provide definitions only for Ids 1-4, so in order to syntax-color Keyword
+      groups with Ids greater than 4 you'll need to define a theme that covers
+      their definitions.                                                    --]]
+
+
+Keywords = {
+--------------------------------------------------------------------------------
+--                                  Keywords 1                                  
+--------------------------------------------------------------------------------
+-- NOTE: If you've set `IgnoreCase = false` then all keywords in the list must
+--       be in lowercase otherwise they'll never match! With case-insensitive
+--       languages, Highlight converts to lowercase the token before comparing
+--       it to the entries of the Keywords list, but the list entries are not
+--       manipulated before comparison.
+  -- { Id = 1,
+  --   List = {
+  --     -- Keywords list
+  --     "avracadavrah"
+  --   }
+  -- },
+--------------------------------------------------------------------------------
+--                                  Keywords 2                                  
+--------------------------------------------------------------------------------
+-- Preprocessor Directives
+  { Id = 4,
+    Regex = [=[ (?<!\\)((?:include|ifdef|ifndef|ifeval|endif|tag|end)\:\:) ]=],
+    Group = 1
+  }
+}
+
+-- =============================================================================
+-- Hook Preset #01 -- Escape Sequences Only Inside String
+-- =============================================================================
+
+--[[
+function OnStateChange(oldState, newState, token, kwgroup)
+--  This function ensure that escape sequences outside strings are ignored.
+--  Based on André Simon's reply to Issue #23:
+--  -- https://github.com/andre-simon/highlight/issues/23#issuecomment-332002639
+  if newState==HL_ESC_SEQ and oldState~=HL_STRING  then
+    return HL_REJECT
+  end
+  return newState
+end
+--]]
+
+--[[============================================================================
+                                   CHANGELOG                                   
+================================================================================
+v0.0.4 | 2019/01/01 | Highlight v3.48
+  - Define:
+    - Keywords Id 4 :: Preprocessor Directives
+  - Fix:
+    - Single line Comment: Remove '$'
+  - Suppress:
+    - Keywords Id 1
+v0.0.3 | 2019/01/01 | Highlight v3.48
+  - Suppress: Operators, Strings.
+v0.0.2 | 2019/01/01 | Highlight v3.48
+  - Fix block comments (delimiters must fill the line.)
+  - Suppress Preprocessor.
+v0.0.1 | 2019/01/01 | Highlight v3.48
+  - Define comments (single-line and block).
+  - Suppress some unused elements.
+v0.0.0 | 2019/01/01 | Highlight v3.48
+  - Just the langDef boliterplate.
+
+--]]

@@ -1,0 +1,51 @@
+
+Description="INTERLIS"
+
+Categories = {"source"}
+
+Keywords={
+  { Id=1,
+    List={"ANY", "ARCS", "AREA", "BASE", "BLANK", "CODE", "CONTINUE", "CONTOUR", 
+        "COORD2", "COORD3", "DATE", "DEFAULT", "DEGREES", "DERIVATIVES", "DIM1", "DIM2", 
+        "DOMAIN", "END", "FIX", "FONT", "FORMAT", "FREE", "GRADS", "HALIGNMENT", "I16", 
+        "I32", "IDENT", "LINEATTR", "LINESIZE", "MODEL", "NO", "OPTIONAL", "OVERLAPS", 
+        "PERIPHERY", "POLYLINE", "RADIANS", "STRAIGHTS", "SURFACE", "TABLE", "TEXT", 
+        "TID", "TIDSIZE", "TOPIC", "TRANSFER", "UNDEFINED", "VALIGNMENT", "VERTEX", 
+        "VERTEXINFO", "VIEW", "WITH", "WITHOUT", "ABSTRACT", "ACCORDING", "AGGREGATES", 
+        "AGGREGATION", "ALL", "AND", "ANY", "ANYCLASS", "ANYSTRUCTURE", "ARCS", "AREA", 
+        "AS", "ASSOCIATION", "AT", "ATTRIBUTE", "ATTRIBUTES", "BAG", "BASE", "BASED", 
+        "BASKET", "BINARY", "BLACKBOX", "BOOLEAN", "BY", "CARDINALITY", "CIRCULAR", 
+        "CLASS", "CLOCKWISE", "CONSTRAINT", "CONSTRAINTS", "CONTINUE", "CONTINUOUS", 
+        "CONTRACTED", "COORD", "COUNTERCLOCKWISE", "DEFINED", "DEPENDS", "DERIVED", 
+        "DIRECTED", "DOMAIN", "END", "ENUMTREEVAL", "ENUMVAL", "EQUAL", "EXISTENCE", 
+        "EXTENDED", "EXTENDS", "EXTERNAL", "FINAL", "FIRST", "FORM", "FROM", "FUNCTION", 
+        "GRAPHIC", "HALIGNMENT", "HIDING", "IMPORTS", "IN", "INHERITANCE", "INSPECTION", 
+        "INTERLIS", "JOIN", "LAST", "LINE", "LIST", "LNBASE", "LOCAL", "MANDATORY", 
+        "METAOBJECT", "MODEL", "MTEXT", "NAME", "NOT", "NO", "NULL", "NUMERIC", 
+        "OBJECT", "OF", "OID", "ON", "OR", "ORDERED", "OTHERS", "OVERLAPS", "PARAMETER", 
+        "PARENT", "PI", "POLYLINE", "PROJECTION", "REFERENCE", "REFSYSTEM", "REQUIRED", 
+        "RESTRICTED", "ROTATION", "SET", "SIGN", "STRAIGHTS", "STRUCTURE", 
+        "SUBDIVISION", "SURFACE", "SYMBOLOGY", "TEXT", "THATAREA", "THIS", "THISAREA", 
+        "TO", "TOPIC", "TRANSIENT", "TRANSLATION", "TYPE", "UNDEFINED", "UNION", 
+        "UNIQUE", "UNIT", "UNQUALIFIED", "URI", "VALIGNMENT", "VERSION", "VERTEX", 
+        "VIEW", "WHEN", "WHERE", "WITH", "WITHOUT"},
+  },
+}
+
+Strings={
+  Delimiter=[["|']],
+}
+
+IgnoreCase=false
+
+Comments={
+  { Block=false,
+    Delimiter= { [[\!\!|\/\/]] },
+  },
+  { Block=true,
+    Nested=false,
+    Delimiter= { [[\/\*]],[[\*\/]],}
+  }
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\.|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-|\~]]

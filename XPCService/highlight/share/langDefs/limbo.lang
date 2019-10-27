@@ -1,0 +1,37 @@
+
+Description="Limbo"
+
+Categories = {"source"}
+
+
+Keywords={
+  {  Id=1,
+   List={ "if", "else", "while", "do", "return", "list", "of", 
+          "ref", "load", "import", "include"}
+  },
+
+  { Id=2,
+    List= { "byte","int","big","real", "string" , "array"}
+  },
+  { Id=3,
+    Regex=[[(\w+)\s*\:]]
+  },
+  { Id=4,
+    Regex=[[(\w+)\s*\(]]
+  }
+}
+
+Strings = {
+  Delimiter=[["]]
+}
+
+Comments = {
+   {
+     Block=false,
+     Delimiter = { [[#]] }
+   }
+}
+
+IgnoreCase=false
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\.|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-|\~|\|]]

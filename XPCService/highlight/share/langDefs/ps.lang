@@ -1,0 +1,30 @@
+
+Description="PostScript"
+
+Categories = {"script", "document"}
+
+
+Keywords={
+  { Id=1,
+    List={"pop", "exch", "dup", "copy", "roll", "clear", "count", "mark", "cleartomark", "counttomark", "exec", 
+        "if", "", "ifelse", "for", "repeat", "loop", "exit", "stop", "stopped", "countexecstack", "execstack", "quit", "start"},
+  },
+  { Id=2,
+    List={"adddiv", "idiv", "mod", "mul", "sub", "abs", "ned", "ceiling", "floor", "round", "truncate", "", "sqrt", "atan",
+        "cos", "sin", "expln", "log", "rand", "srand", "", "rrand", "true", "false", "NULL"},
+  },
+}
+
+Strings={
+  Delimiter=[["|']],
+}
+
+IgnoreCase=false
+
+Comments={
+  { Block=false,
+    Delimiter= { [[%]] },
+  },
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\:|\&|<|>|\!|\=|\/|\*|\+|\-]]

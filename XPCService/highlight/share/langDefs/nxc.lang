@@ -1,0 +1,54 @@
+
+Description="Not eXactly C"
+
+Categories = {"source"}
+
+Digits=[[ (?:x|X)[-a-fA-F]+|\d*[\.]?\d+(?:[eE][\-\+]\\d+)?[lLuU]* ]]
+
+Keywords={
+  { Id=1,
+    List={"__RETURN__", "__RETVAL__", "__STRRETVAL__", "__TMPBYTE__", 
+        "__TMPWORD__", "__TMPLONG__", "abs", "asm", "bool", "break", "byte", "case", 
+        "char", "const", "continue", "default", "do", "else", "false", "for", "goto", 
+        "if", "inline", "int", "long", "mutex", "priority", "repeat", "return", 
+        "safecall", "short", "sign", "start", "stop", "string", "struct", "sub", 
+        "switch", "task", "true", "typedef", "", "until", "void", "while"},
+  },
+  { Id=2,
+    List={"bool", "byte", "unsigned", "char", "char", "int", "short", "long", 
+        "long", "mutex", "string", "struct"},
+  },
+
+  { Id=4,
+    Regex=[[(\w+)\s*\(]],
+  },
+}
+
+Strings={
+  Delimiter=[["|']],
+}
+
+IgnoreCase=false
+
+Comments={
+  { Block=false,
+    Delimiter= { [[\/\/]] },
+  },
+  { Block=true,
+    Nested=false,
+    Delimiter= { [[\/\*]],[[\*\/]],}
+  }
+}
+
+PreProcessor={
+  Prefix=[[#]],
+  Continuation="\\",
+}
+
+NestedSections = {
+  { Lang="asm", Delimiter= { [[asm]], [[\}]] } }
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\.|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-|\~]]
+
+EnableIndentation=true

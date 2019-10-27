@@ -1,0 +1,119 @@
+--[[*****************************************************************************
+    *                                                                           *
+    *                          EBNF2 Syntax Definition                          *
+    *                                                                           *
+    *              v1.0.1 (2018/01/18) | Highlight v3.41 | Lua 5.3              *
+    *                                                                           *
+    *                             by Tristano Ajmone                            *
+    *                                                                           *
+    *****************************************************************************
+    Associated file extensions: none
+    Syntax type: EBNF (Extended Backus–Naur form)
+    -----------------------------------------------------------------------------
+    I've created this EBNF syntax definition because I needed to syntax highlight
+    the EBNF code of Polygen Manual, which wasn't being handled properly by the
+    existing Highlight *BNF definitions ("ebnf", "abnf", and "bnf"). So I decided
+    to create my own EBNF syntax by adapting the Polygen Grammars syntax I had
+    just recently created. Some tweaks were required to make it parse properly
+    the EBNF code found in the Polygen Manual (see changelog, at the end).
+
+    Hopefully others might benefit from this new EBNF syntax too. Since there is
+    no universal standard for EBNF notation (EBNF being a family of notations),
+    this definition might be used as a starting point to tailor an ad hoc EBNF
+    syntax matching your needs.
+    -----------------------------------------------------------------------------
+    Written by Tristano Ajmone:
+        <tajmone@gmail.com>
+        https://github.com/tajmone
+    Released into the public domain according to the Unlicense terms:
+        http://unlicense.org/
+    -----------------------------------------------------------------------------
+--]]
+Description="EBNF2"
+
+Categories = {"protocol"}
+
+IgnoreCase=false
+EnableIndentation=false
+---------------------------------------------------------------------------------
+-- DISABLE/OVERRIDE UNUSED SYNTAX ELEMENTS
+---------------------------------------------------------------------------------
+NEVER_MATCH_RE=[=[ \A(?!x)x ]=] -- A Never-Matching RegEx!
+
+Digits=NEVER_MATCH_RE -- Numbers are just text in EBNF!
+
+Identifiers=NEVER_MATCH_RE -- Highlight's default Identifiers RegEx prevents
+-- capturing the Epsilon operator ('_'). Since in this syntax, all identifiers
+-- are defined as RegEx Keywords, and because we don't use any Keywords lists,
+-- we may as well disable Identifiers by defining them as a never-matching RegEx.
+-- NOTE: Defining Identifiers as a never-matching RegEx prevents using Kewyords
+--       lists (the parser will fail to capture them).
+
+-- ==============================================================================
+--                                    COMMENTS
+-- ==============================================================================
+-- OCaml style comments, no nesting: (* ...COMMENT BLOCK... *)
+Comments={
+  { Block=true,
+    Nested=false,
+    Delimiter = {
+      [=[ \(\* ]=], -- Comment start: '(*'
+      [=[ \*\) ]=]  -- Comment end:   '*)'
+    }
+  },
+}
+-- ==============================================================================
+--                                    STRINGS
+-- ==============================================================================
+Strings={
+  -------------------------------------------------------------------------------
+  --                             STRING DELIMITERS
+  -------------------------------------------------------------------------------
+  -- Only double quotes as string delimiter: "...STRING..."
+  Delimiter=[=[ " ]=],
+--[[-----------------------------------------------------------------------------
+                                  ESCAPE SEQUENCES
+   ------------------------------------------------------------------------------
+   Suppress Escape sequences via Never-Matching RegEx                        --]]
+  Escape=NEVER_MATCH_RE
+}
+--[[=============================================================================
+                                     OPERATORS
+    =============================================================================
+    ::=   :=    :   ;   ^   .   ,   _   |   +   -   *   >   <   \
+    >>  <<  (   )   [   ]   {   }
+
+--]]
+Operators=[=[ :|=|\^|\.|\*|\+|-|>|<|\(|\)|\[|]|\{|}|\||,|;|_|\\ ]=]
+-- ==============================================================================
+--                                    KEYWORDS
+-- ==============================================================================
+Keywords={
+  -------------------------------------------------------------------------------
+  --                            Non-Terminal Symbol
+  -------------------------------------------------------------------------------
+  -- Must beging with a capital letter; must not be preceded or followed by a "-"
+  -- (to prevent capturing RegEx ranges like "A-Z" )
+  { Id=1,
+    Regex=[=[ (?<!-)([A-Z][A-Za-z0-9]*)\b(?!-) ]=],
+    Group=1
+  },
+}
+--[[=============================================================================
+                                       CHANGELOG
+=================================================================================
+ v1.0.1 (2018/01/18) | Highlight v3.41)
+    - Changed "PolyGen" to "Polygen" (the author has now officially adopted the
+      latter syntax).
+ v1.0.0 (2018/01/14) | Highlight v3.41)
+    - First release. Created by modifying "polygen.lang" (v1.0.0):
+      - Suppressed Escape Sequences (via Never-Matching RegEx)
+      - Deleted custom OnStateChange() hook function to handle Escape Sequences.
+      - Operators: added "*", and tweaked RegEx.
+      - Keywords:
+        - Removed Keywords Group 2 ("Label Identifier")
+        - Removed Keywords Group 3 ( "Label Selector")
+        - Keywords Group 1 ("Non-Terminal Symbol"): tweaked RegEx to ensure that
+          keyword is not preceded or followed by "-", to avoid capturing RegEx
+          ranges like "A-Z" in EBNF source.
+--]]

@@ -1,0 +1,40 @@
+
+Description="Modelica"
+
+Categories = {"scientific"}
+
+Keywords={
+  { Id=1,
+    List={"annotation", "assert", "block", "class", "connector", "constant", 
+        "discrete", "else", "elseif", "elsewhen", "end", "exit", "extends", "external", 
+        "final", "flow", "for", "function", "if", "in", "inner", "input", "import", 
+        "loop", "model", "nondiscrete", "outer", "output", "package", "parameter", 
+        "record", "redeclare", "replaceable", "return", "size", "terminate", "then", 
+        "type", "when", "while", "algorithm", "equation", "protected", "public", "and",  
+        "false", "not", "or", "true"},
+  },
+  { Id=2,
+    List={"abs", "acos", "asin", "atan", "atan2", "connect", "cos", "cosh", 
+        "cross", "der", "edge", "exp", "initial", "noEvent", "pre", "reinit", "sample", 
+        "sign", "sin", "sinh", "tan", "tanh", "terminal"},
+  },
+}
+
+Strings={
+  Delimiter=[["]],
+}
+
+IgnoreCase=true
+
+Comments={
+  { Block=false,
+    Delimiter= { [[\/\/]] },
+  },
+  { Block=true,
+    Nested=false,
+    Delimiter= { [[\/\*]],[[\*\/]],}
+  }
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-]]
+

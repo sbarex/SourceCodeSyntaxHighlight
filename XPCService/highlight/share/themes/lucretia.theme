@@ -1,0 +1,24 @@
+
+Description="Lucretia"
+
+Categories = {"dark"}
+
+Default        = { Colour="#de9d7c" }
+Canvas         = { Colour="#001C42" }
+Number         = { Colour="#63759C" }
+Escape         = { Colour="#6B924A" }
+String         = { Colour="#E7F3B5" }
+StringPreProc  = { Colour="#E7F3B5" }
+BlockComment   = { Colour="#944D39" }
+LineComment    = { Colour="#AD5D31" }
+PreProcessor   = { Colour="#815d8c" }
+LineNum        = { Colour="#73758C" }
+Operator       = { Colour="#6A7969" }
+Interpolation  = { Colour="#ffffff" }
+
+Keywords = {
+  { Colour= "#907fd4" },
+  { Colour= "#29a655" },
+  { Colour= "#427142" },
+  { Colour= "#A59A39" },
+}

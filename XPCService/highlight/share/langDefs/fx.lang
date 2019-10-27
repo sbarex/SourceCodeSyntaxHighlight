@@ -1,0 +1,44 @@
+
+Description="Java FX"
+
+Categories = {"source"}
+
+
+Keywords={
+  {  Id=1,
+   List={
+        "abstract", "after", "and", "as", "assert", "at", "attribute", "before", "bind",
+        "bound", "break", "catch", "class", "continue", "def", "delete", "else",
+        "exclusive", "extends", "false", "finally", "first", "for", "from", "function",
+        "if", "import", "indexof", "in", "init", "insert", "instanceof", "into",
+        "inverse", "last", "lazy", "mixin", "mod", "new", "not", "null", "on", "or",
+        "override", "package", "postinit", "private", "protected", "public-init",
+        "public", "public-read", "replace", "return", "reverse", "sizeof", "static",
+        "step", "super", "then", "this", "throw", "trigger", "true", "try", "tween",
+        "typeof", "var", "where", "while", "with"
+        }
+  },
+
+  { Id=4,
+    Regex=[[(\w+)\s*\(]]
+  }
+}
+
+Strings = {
+  Delimiter=[["|']]
+}
+
+Comments = {
+   { Block=true,
+     Nested=false,
+     Delimiter = { [[\/\*]], [[\*\/]] }
+   },
+   {
+     Block=false,
+     Delimiter = { [[//]] }
+   }
+}
+
+IgnoreCase=false
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\.|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-|\~|\|]]

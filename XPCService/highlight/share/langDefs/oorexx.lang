@@ -1,0 +1,57 @@
+
+Description="OpenObjectRexx"
+
+Categories = {"source"}
+
+Keywords={
+  { Id=1,
+    List={"address", "additional", "any", "arg", "arguments", "array", "by", 
+    "call", "caseless", "continue", "class", "description", "digits", "do", "drop",
+    "end", "engineering", "error", "exit", "expose", "else", "failure", "for",
+    "forever", "form", "forward", "fuzz", "guard", "halt", "if", "interpret",
+    "iterate", "leave", "lower", "lostdigits", "message", "name", "nop", "nomethod",
+    "nostring", "notready", "novalue", "numeric", "on", "off", "otherwise", "parse",
+    "procedure", "pull", "push", "propagate", "queue", "raise", "reply", "return",
+    "ret", "rc", "say", "scientific", "select", "sigl", "signal", "source",
+    "syntax", "then", "to", "trace", "upper", "until", "use", "user", "version",
+    "when", "while", "with"},
+  },
+  { Id=2,
+    List={"class", "method", "requires", "routine"},
+  },
+  { Id=3,
+    List={"abbrev",  "abs",  "address", "arg",  "b2x",  "beep", 
+    "bitand",  "bitor",  "bitxor",  "c2d",  "c2x",  "center",
+    "changestr", "charin",  "charout",  "chars",  "compare", "condition",
+    "copies", "countstr", "d2c",  "d2x", "datatype", "date", "delstr",
+    "delword",  "digits", "directory", "endlocal",  "errortext", "filespec",
+    "form", "format", "fuzz", "insert", "lastpos",  "left", "length", "linein",
+    "lineout", "lines",  "max",  "min", "overlay", "pos", "queued",
+    "random", "reverse", "right", "rxfuncadd", "rxfuncdrop", "rxfuncquery",
+    "rxqueue", "setlocal",  "sign", "sourceline", "space", "stream", "strip",
+    "substr",  "subword", "symbol", "time", "trace", "translate", "trunc",
+    "userid", "value", "var", "verify", "word", "wordindex", "wordlength",
+    "wordpos",  "words", "x2b",  "x2c",  "x2d",  "xrange"},
+  },
+  { Id=4,
+    Regex=[[(\w+)\s*\:]],
+  },
+}
+
+Strings={
+  Delimiter=[['|"]],
+}
+
+IgnoreCase=true
+
+Comments={
+  { Block=false,
+    Delimiter= { [[\-\-|\#]] },
+  },
+  { Block=true,
+    Nested=false,
+    Delimiter= { [[\/\*]],[[\*\/]],}
+  }
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\.|\:|\&|<|>|\!|=|\/|\*|\%|\+|\-|\~|\||\^]]

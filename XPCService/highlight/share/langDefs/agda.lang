@@ -1,0 +1,37 @@
+
+Description="Agda"
+
+Categories = {"source"}
+
+Keywords={
+    { Id=1,
+      List={"abstract", "case", "concrete", "data", "do", "in", "interface", 
+            "let", "module", "mutual", "of", "open", "native", "package", "postulate", 
+            "private", "public", "sig", "struct", "type", "use", "set", "type", "abstract",  
+            "data", "forall",   "hiding", "import", "in", "infix",     
+            "infixl", "infixr", "let","module", "mutual", "open",     
+            "postulate", "primitive", "private","public","record", "renaming",   
+            "using", "where", "with"},
+      },
+    { Id=2,
+      List={"integer", "int", "float", "double", "bool", "char"},
+      },
+    }
+
+Strings={
+    Delimiter=[["]],
+    }
+
+IgnoreCase=true
+
+Comments={
+    { Block=false,
+      Delimiter= { [[--]] },
+      },
+    { Block=true,
+      Nested=false,
+      Delimiter= { [[\{\-]],[[\-\}]],}
+    }
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-|\.|\']]

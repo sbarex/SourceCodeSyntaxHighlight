@@ -1,0 +1,53 @@
+
+Description="Vala"
+
+Categories = {"source"}
+
+Keywords={
+    { Id=1,
+      List={"if", "else", "switch", "case", "default", "break", "continue", 
+            "return", "for", "foreach", "in", "do", "while", "try", "catch", "finally", 
+            "throw"},
+      },
+    { Id=2,
+      List={"namespace", "interface", "class", "struct", "enum", "signal", 
+            "construct", "callback", "get", "set", "base", "const", "static", "var", "weak", 
+            "virtual", "abstract", "override", "public", "protected", "private", "in", 
+            "out", "ref", "lock", "using", "abstract", "dynamic", "extern", "internal", 
+            "readonly", "sealed", "volatile"},
+      },
+    { Id=3,
+      List={"true", "false", "null", "bool", "byte", "char", "decimal", "double", 
+            "float", "int", "int8", "int16", "int32", "int64", "long", "object", "sbyte", 
+            "short", "string", "uchar", "uint", "uint8", "uint16", "uint32", "uint64", 
+            "ulong", "ushort", "void"},
+      },
+    { Id=4,
+      Regex=[[(\w+)\s*\(]],
+    },
+}
+                       
+Strings={
+    Delimiter=[["|']],
+        }
+
+IgnoreCase=false
+
+Comments={
+    {   Block=false,
+        Delimiter= { [[\/\/]] },
+    },
+    {   Block=true,
+        Nested=false,
+        Delimiter= { [[\/\*]],[[\*\/]],}
+    }
+}
+
+PreProcessor={
+    Prefix=[[#]],
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\.|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-|\~|\|]]
+
+EnableIndentation=false
+                    

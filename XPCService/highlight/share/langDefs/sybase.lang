@@ -1,0 +1,32 @@
+
+Description="Sybase SQL"
+
+Categories = {"database"}
+
+Keywords={
+  { Id=1,
+    Regex=[[sp_\w+]]
+  },
+  { Id=2,
+    Regex=[[xp_\w+]]
+  }
+}
+
+Strings={
+  Delimiter=[["]],
+}
+
+IgnoreCase=true
+
+Comments={
+  { Block=false,
+    Delimiter= { [[\-\-]] },
+  },
+  { Block=true,
+    Nested=false,
+    Delimiter= { [[\/\*]],[[\*\/]],}
+  }
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-]]
+

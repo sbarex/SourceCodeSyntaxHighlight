@@ -1,0 +1,33 @@
+
+Description="Pure"
+
+Categories = {"source"}
+
+Keywords={
+  { Id=1,
+    List={"case", "const", "def", "else", "end", "extern", "if", "infix", 
+            "infixl", "infixr", "let", "namespace", "nonfix", "of", "otherwise", "outfix", 
+            "postfix", "prefix", "private", "public", "then", "using", "when", "with"},
+  },
+  { Id=2,
+    Regex=[[::(\w+)]],
+  },
+}
+
+Strings={
+  Delimiter=[["]],
+}
+
+IgnoreCase=false
+
+Comments={
+  { Block=false,
+    Delimiter= { [[\/\/]] },
+  },
+  { Block=true,
+    Nested=false,
+    Delimiter= { [[\/\*]],[[\*\/]],}
+  }
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-|\.|\'|\#|\@|\$|\\|\~]]

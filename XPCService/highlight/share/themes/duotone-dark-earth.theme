@@ -1,0 +1,66 @@
+--[[                                      2019/05/26 | Highlight v3.51 | Lua 5.3
+================================================================================
+Scheme:   "DuoTone Dark Earth"
+Author:   simurai
+License:  MIT License
+Source:   https://github.com/simurai/duotone-dark-earth-syntax
+================================================================================
+Ported to Highlight by Tristano Ajmone <tajmone@gmail.com>
+    https://github.com/tajmone
+    https://gitlab.com/tajmone
+--------------------------------------------------------------------------------
+Based on the DuoTone Themes project by simurai:
+    http://simurai.com/projects/2016/01/01/duotone-themes
+------------------------------------------------------------------------------]]
+Description = "DuoTone Dark Earth"
+Categories  = {"dark", "duotone"}
+--------------------------------------------------------------------------------
+Canvas         = { Colour = "#2c2826" }
+Default        = { Colour = "#bd987f" }
+LineNum        = { Colour = "#564b43" }
+
+Number         = { Colour = "#fecb52" }
+Operator       = { Colour = "#ffdac2" }
+
+String         = { Colour = "#b09045" }
+Escape         = { Colour = "#ffdac2" }
+Interpolation  = { Colour = "#fecb52" }
+
+PreProcessor   = { Colour = "#98755d" }
+StringPreProc  = String
+
+LineComment    = { Colour = "#705e51", Italic = true }
+BlockComment   = LineComment
+
+Keywords = {
+  { Colour = "#ffdac2" }, --> kwd 1
+  { Colour = "#fecb52" }, --> kwd 2
+  { Colour = "#bd987f" }, --> kwd 3
+  { Colour = "#b09045" }, --> kwd 4
+  { Colour = "#98755d" }, --> kwd 5
+  { Colour = "#726546" }, --> kwd 6
+}
+--[[----------------------------------------------------------------------------
+The MIT License
+
+Copyright (c) 2018 Tristano Ajmone
+Copyright (c) 2015 simurai
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+------------------------------------------------------------------------------]]

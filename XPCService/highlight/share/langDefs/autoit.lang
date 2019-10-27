@@ -1,0 +1,110 @@
+
+Description="AutoIt"
+
+Categories = {"source", "script"}
+
+Keywords={
+  { Id=1,
+    List={"continueloop", "dim", "global", "local", "const", "do", "until", 
+        "exit", "exitloop", "for", "next", "func", "return", "endfunc", "if", "then", 
+        "elseif", "else", "endif", "redim", "select", "case", "endselect", "while", 
+        "wend", "to"},
+  },
+  { Id=2,
+    List={"abs", "acos", "adlibdisable", "adlibenable", "asc", "asin", "assign", 
+        "atan", "autoitsetoption", "autoitwingettitle", "autoitwinsettitle", "bitand", 
+        "bitnot", "bitor", "bitshift", "bitxor", "blockinput", "break", "call", 
+        "cdtray", "chr", "clipget", "clipput", "consolewrite", "controlclick", 
+        "controlcommand", "controldisable", "controlenable", "controlfocus", 
+        "controlgetfocus", "controlgethandle", "controlgetpos", "controlgettext", 
+        "controlhide", "controllistview", "controlmove", "controlsend", 
+        "controlsettext", "controlshow", "cos", "dec", "dircopy", "dircreate", 
+        "dirgetsize", "dirmove", "dirremove", "dllcall", "dllclose", "dllopen", 
+        "drivegetdrive", "drivegetfilesystem", "drivegetlabel", "drivegetserial", 
+        "drivegettype", "drivemapadd", "drivemapdel", "drivemapget", "drivesetlabel", 
+        "drivespacefree", "drivespacetotal", "drivestatus", "envget", "envset", 
+        "envupdate", "eval", "exp", "filechangedir", "fileclose", "filecopy", 
+        "filecreateshortcut", "filedelete", "fileexists", "filefindfirstfile", 
+        "filefindnextfile", "filegetattrib", "filegetlongname", "filegetshortcut", 
+        "filegetshortname", "filegetsize", "filegettime", "filegetversion", 
+        "fileinstall", "filemove", "fileopen", "fileopendialog", "fileread", 
+        "filereadline", "filerecycle", "filerecycleempty", "filesavedialog", 
+        "fileselectfolder", "filesetattrib", "filesettime", "filewrite", 
+        "filewriteline", "ftpsetproxy", "guicreate", "guictrlcreateavi", 
+        "guictrlcreatebutton", "guictrlcreatecheckbox", "guictrlcreatecombo", 
+        "guictrlcreatecontextmenu", "guictrlcreatedate", "guictrlcreatedummy", 
+        "guictrlcreateedit", "guictrlcreategroup", "guictrlcreateicon", 
+        "guictrlcreateinput", "guictrlcreatelabel", "guictrlcreatelist", 
+        "guictrlcreatelistview", "guictrlcreatelistviewitem", "guictrlcreatemenu", 
+        "guictrlcreatemenuitem", "guictrlcreatepic", "guictrlcreateprogress", 
+        "guictrlcreateradio", "guictrlcreateslider", "guictrlcreatetab", 
+        "guictrlcreatetabitem", "guictrlcreatetreeview", "guictrlcreatetreeviewitem", 
+        "guictrlcreateupdown", "guictrldelete", "guictrlgetstate", "guictrlread", 
+        "guictrlrecvmsg", "guictrlsendmsg", "guictrlsendtodummy", "guictrlsetbkcolor", 
+        "guictrlsetcolor", "guictrlsetcursor", "guictrlsetdata", "guictrlsetfont", 
+        "guictrlsetimage", "guictrlsetlimit", "guictrlsetonevent", "guictrlsetpos", 
+        "guictrlsetresizing", "guictrlsetstate", "guictrlsetstyle", "guictrlsettip", 
+        "guidelete", "guigetcursorinfo", "guigetmsg", "guisetbkcolor", "guisetcoord", 
+        "guisetcursor", "guisetfont", "guisethelp", "guiseticon", "guisetonevent", 
+        "guisetstate", "guistartgroup", "guiswitch", "hex", "hotkeyset", "httpsetproxy", 
+        "inetget", "inetgetsize", "inidelete", "iniread", "inireadsection", 
+        "inireadsectionnames", "iniwrite", "inputbox", "int", "isadmin", "isarray", 
+        "isdeclared", "isfloat", "isint", "isnumber", "isstring", "log", "memgetstats", 
+        "mod", "mouseclick", "mouseclickdrag", "mousedown", "mousegetcursor", 
+        "mousegetpos", "mousemove", "mouseup", "mousewheel", "msgbox", "number", "ping", 
+        "pixelchecksum", "pixelgetcolor", "pixelsearch", "processclose", 
+        "processexists", "processlist", "processsetpriority", "processwait", 
+        "processwaitclose", "progressoff", "progresson", "progressset", "random", 
+        "regdelete", "regenumkey", "regenumval", "regread", "regwrite", "round", "run", 
+        "runasset", "runwait", "send", "seterror", "setextended", "shutdown", "sin", 
+        "sleep", "soundplay", "soundsetwavevolume", "splashimageon", "splashoff", 
+        "splashtexton", "sqrt", "statusbargettext", "string", "stringaddcr", 
+        "stringformat", "stringinstr", "stringisalnum", "stringisalpha", 
+        "stringisascii", "stringisdigit", "stringisfloat", "stringisint", 
+        "stringislower", "stringisspace", "stringisupper", "stringisxdigit", 
+        "stringleft", "stringlen", "stringlower", "stringmid", "stringreplace", 
+        "stringright", "stringsplit", "stringstripcr", "stringstripws", 
+        "stringtrimleft", "stringtrimright", "stringupper", "tan", "timerdiff", 
+        "timerinit", "tooltip", "traytip", "ubound", "winactivate", "winactive", 
+        "winclose", "winexists", "wingetcaretpos", "wingetclasslist", 
+        "wingetclientsize", "wingethandle", "wingetpos", "wingetprocess", "wingetstate", 
+        "wingettext", "wingettitle", "winkill", "winlist", "winmenuselectitem", 
+        "winminimizeall", "winminimizeallundo", "winmove", "winsetontop", "winsetstate", 
+        "winsettitle", "winsettrans", "winwait", "winwaitactive", "winwaitclose", 
+        "winwaitnotactive"},
+  },
+  { Id=3,
+    Regex=[[[@$]\w+]],
+  },
+  { Id=4,
+    Regex=[[(\w+)\s*\(]],
+  },
+}
+
+Strings={
+  Delimiter=[["|']],
+}
+
+IgnoreCase=true
+
+Comments={
+  { Block=false,
+    Delimiter= { [[;]] },
+  },
+  { Block=true,
+    Nested=false,
+    Delimiter= { [[\#comments-start]],[[\#comments-end]],}
+  },
+  { Block=true,
+    Nested=false,
+    Delimiter= { [[\#cs]],[[\#ce]],}
+  }
+}
+
+PreProcessor={
+  Prefix=[[#(?!cs|ce|comments\-start|comments\-end).*$]],
+  Group=0
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\.|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-|\~]]
+

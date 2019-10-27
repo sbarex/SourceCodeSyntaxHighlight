@@ -1,0 +1,34 @@
+
+Description="Generic config files"
+
+Categories = {"config"}
+
+Keywords={
+  { Id=1,
+    Regex=[[^\s*[\w@]+]]
+  },
+ { Id=2,
+    Regex=[[\d[\d.]*]]
+  },
+  { Id=3,
+    Regex=[[/\S+|/]]
+  }
+ 
+}
+
+Strings={
+  Delimiter=[["|']],
+}
+
+Comments={
+  { Block=false,
+    Delimiter={ [[#]] },
+  },
+  { Block=false,
+    Delimiter={ [[^;]] },
+  },
+}
+
+Operators=[[\,|\;|\.|\:|\~]]
+
+Digits=[[\d*\.?\d+ ]]

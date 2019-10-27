@@ -1,0 +1,82 @@
+
+Description="AutoHotKey"
+
+Categories = {"source", "script"}
+
+Keywords={
+  { Id=1,
+    List={"autotrim", "blockinput", "break", "click", "clipwait", "continue", 
+        "control", "controlclick", "controlfocus", "controlget", "controlgetfocus", 
+        "controlgetpos", "controlgettext", "controlmove", "controlsend", 
+        "controlsettext", "coordmode", "critical", "detecthiddentext", 
+        "detecthiddenwindows", "dllcall", "drive", "driveget", "drivespacefree", "edit", 
+        "else", "envadd", "envdiv", "envget", "envmult", "envset", "envsub", 
+        "envupdate", "exit", "exitapp", "fileappend", "filecopy", "filecopydir", 
+        "filecreatedir", "filecreateshortcut", "filedelete", "fileinstall", 
+        "filegetattrib", "filegetshortcut", "filegetsize", "filegettime", 
+        "filegetversion", "filemove", "filemovedir", "fileread", "filereadline", 
+        "filerecycle", "filerecycleempty", "fileremovedir", "fileselectfile", 
+        "fileselectfolder", "displays", "filesetattrib", "filesettime", "formattime", 
+        "getkeystate", "gosub", "goto", "groupactivate", "groupadd", "groupclose", 
+        "groupdeactivate", "gui", "guicontrol", "guicontrolget", "hideautoitwin,", 
+        "hotkey", "if", "ifequal/ifnotequal", "ifexist", "ifgreater", "ifgreaterorequal", 
+        "ifinstring", "ifless/iflessorequal", "ifmsgbox", "ifwinactive", "ifwinexist", 
+        "imagesearch", "inidelete", "iniread", "iniwrite", "input", "inputbox", 
+        "keyhistory", "keywait", "leftclick", "leftclickdrag", "listhotkeys", 
+        "listlines", "listvars", "loop", "loop", "loop", "loop", "loop", "menu", 
+        "mouseclick", "mouseclickdrag", "mousegetpos", "mousemove", "msgbox", "onexit", 
+        "onmessage", "outputdebug", "pause", "pixelgetcolor", "pixelsearch", 
+        "postmessage", "process", "progress", "random", "regexmatch", "regexreplace", 
+        "regdelete", "regread", "regwrite", "registercallback", "reload", "repeat", 
+        "endrepeat", "return", "rightclick", "rightclickdrag", "run", "runas", 
+        "runwait", "send", "sendmessage", "sendmode", "setbatchlines", 
+        "setcapslockstate", "setcontroldelay", "setdefaultmousespeed", "setenv", 
+        "setformat", "setkeydelay", "setmousedelay", "setnumlockstate", 
+        "setscrolllockstate", "setstorecapslockmode", "settimer", "settitlematchmode", 
+        "setwindelay", "setworkingdir", "shutdown", "sleep", "sort", "soundbeep", 
+        "soundget", "soundgetwavevolume", "soundplay", "soundset", "soundsetwavevolume", 
+        "splashimage", "splashtexton", "splashtextoff", "splitpath", "statusbargettext", 
+        "statusbarwait", "stringcasesense", "stringgetpos", "stringleft", "stringlen", 
+        "stringlower", "stringmid", "stringreplace", "stringright", "stringsplit", 
+        "stringtrimleft", "stringtrimright", "stringupper", "suspend", "sysget", 
+        "thread", "tooltip", "transform", "traytip", "urldownloadtofile", "var", "var", 
+        "varsetcapacity", "while-loop", "winactivate", "winactivatebottom", "winclose", 
+        "wingetactivestats", "wingetactivetitle", "wingetclass", "winget", "wingetpos", 
+        "wingettext", "wingettitle", "winhide", "winkill", "winmaximize", 
+        "winmenuselectitem", "winminimize", "winminimizeall", "winminimizeallundo", 
+        "winmove", "winrestore", "winset", "winsettitle", "winshow", "winwait", 
+        "winwaitactive", "winwaitclose", "winwaitnotactive"},
+  },
+-- if :: follows, # is part of a hotkey
+  { Id=2,
+    Regex = [[(\#\w+?)\:\:]], Group=1
+  },
+ -- { Id=2,
+ --   Regex=[[ [\#\!\^\+\&\<\>\*\~\$]*[\w\&\s]+?\:\: ]],
+ -- },
+  { Id=3,
+    Regex=[[%\w+?%]],
+  },
+  { Id=4,
+    Regex=[[\:.+?\:\:]],
+  }
+}
+
+Strings={
+  Delimiter=[["]],
+  Escape = [[ `[ntvbrfa\?"] ]],
+}
+
+IgnoreCase=true
+
+Comments={
+  { Block=false,
+    Delimiter= { [[;]] },
+  },
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\:|\&|<|>|\!|\=|\/|\*|\\|\`|%|\.|\+|\-]]
+
+EnableIndentation=true
+
+Digits = [[ (?:0x)[0-9a-fA-F']+|\d*[\.]?\d+(?:[eE]\d+)?[blLuU]* ]]

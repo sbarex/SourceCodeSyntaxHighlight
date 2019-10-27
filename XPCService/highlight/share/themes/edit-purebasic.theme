@@ -1,0 +1,42 @@
+--[[******************************************************************************
+    *                                                                            *
+    *                              PureBASIC Theme                               *
+    *                                                                            *
+    *                             v1.0 - 2016/10/27                              *
+    *                                                                            *
+    ******************************************************************************
+    This theme emulates the native PureBASIC IDE color scheme.
+    Written by Tristano Ajmone <tajmone@gmail.com>
+    https://github.com/tajmone
+    Released into the public domain according to the Unlicense licsense:
+    http://unlicense.org/
+  ]]
+
+Description = "PureBASIC"
+
+Categories = {"light"}
+
+Canvas   = { Colour="#FFFFDF" }         -- "Half and Half"
+
+Default  = { Colour="#000000" }         -- "Black"
+Number   = Default
+Operator = Default
+
+String  = { Colour="#0080FF" }          -- "Azure Radiance"
+Escape  = String
+StringPreProc = Escape
+Interpolation  =  Escape
+
+LineComment = { Colour="#00AAAA" }      -- "Persian Green/Tradewind"
+BlockComment = LineComment
+
+LineNum      = { Colour="#808080" }     -- "Gray"
+
+PreProcessor  = { Colour="#924B72" }    -- not used by PureBASIC syntax
+
+Keywords = {
+  { Colour="#006666" , Bold=true },     -- "Blue Stone"  (PB Keywords)
+  { Colour="#924B72" },                 -- "Cannon Pink" (constants)
+  { Colour="#006666" },                 -- "Blue Stone"  (Procedure calls)
+  String                                -- (Escaped-Strings Prefix "~")
+}

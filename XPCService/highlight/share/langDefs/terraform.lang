@@ -1,0 +1,70 @@
+
+Description="Terraform"
+
+Categories = {"config"}
+
+Digits = [[ (?:0x|0X|0b)[0-9a-fA-F']+|\d*[\.]?\d+(?:[eE][\-\+]\d+)?[lLuU]* ]]
+
+Keywords={
+
+  { Id=1,
+    List= { "variable", "resource", "connection", "data", "vars", "tags", "module", "locals", "provider"
+          }
+  },
+
+ { Id=3,
+    Regex=[[(\w+)\s*\=]]
+  },
+  { Id=2,
+    List= { "false", "true"
+          }
+  }
+
+}
+
+
+-- hereDoc opening delimiter, see OnStateChange to handle end of string
+Strings={
+  Delimiter=[[<<[\-]?\s*["']?\s*[A-Za-z_]+["']?|"|`|']],
+  Interpolation=[[ (\$\{.+?\}) ]]
+}
+
+Comments = {
+   { Block=true,
+     Nested=false,
+     Delimiter = { [[\/\*]], [[\*\/]] }
+   },
+   {
+     Block=false,
+     Delimiter = { [[#]] }
+   }
+}
+
+IgnoreCase=false
+
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-]]
+
+function OnStateChange(oldState, newState, token)
+
+   if oldState==HL_STRING and token==hereDoc then
+      hereDoc = nil
+      return HL_STRING_END
+   end
+      
+   if  (string.sub(token,1,1) =="$" )  and oldState==HL_STRING and newState==HL_KEYWORD then
+      return HL_INTERPOLATION
+   end
+    
+  if hereDoc~=nil then
+    return HL_STRING
+   end
+
+   --recognize hereDoc multine strings
+   if oldState==HL_STANDARD and newState==HL_STRING  then
+      hereDoc = string.match(token, "<<%-?%s*%'?([%-%a%d_]+)" )
+    end
+    
+   return newState
+end
+

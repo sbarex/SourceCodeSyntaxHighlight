@@ -1,0 +1,88 @@
+
+Description="Bash"
+
+Categories = {"script", "shell"}
+
+Identifiers=[[ [a-zA-Z_][\w\-]*(?!\/) ]]
+
+Keywords={
+  { Id=1,
+    List={"case", "in", "esac", "for", "do", "done", "function", "if", "then",
+        "fi", "elif", "else", "select", "time", "until", "while"},
+  },
+  { Id=2,
+    List={"source", "alias", "bind", "break", "builtin", "command", "continue",
+        "declare", "dirs", "disown", "enable", "export", "fc", "fg", "getopts",
+        "hash", "help", "history", "jobs",  "let", "local", "logout", "popd", "printf",
+        "pushd", "pwd", "read", "readonly", "return", "set",  "shift", "shopt",
+        "suspend", "test", "times", "trap", "type", "ulimit", "umask", "unalias",
+        "unset", "wait", "eval", "bg", "cd", "echo", "exec", "exit", "kill"},
+  },
+  { Id=3,
+    List={"ls", "cat", "tac", "rev", "cp", "mv", "rm", "rmdir", "chmod",
+        "chattr", "ln", "find", "xargs", "expr", "date", "zdump", "time", "touch", "at",
+        "batch", "cal", "sleep", "usleep", "hwclock", "clock", "sort", "tsort", "diff",
+        "patch", "diff3", "sdiff", "cmp", "comm", "uniq", "expand", "unexpand", "cat",
+        "paste", "join", "head", "tail", "grep", "egrep", "zgrep", "look", "sed", "awk",
+        "wc", "tr", "fold", "fmt", "ptx", "col", "column", "colrm", "nl", "pr",
+        "gettext", "iconv", "recode", "groff", "lex", "yacc", "tar", "shar", "ar",
+        "cpio", "gzip", "bzip2", "compress", "uncompress", "zip", "unzip", "sq", "file",
+        "which", "whereis", "whatis", "vdir", "shred", "locate", "slocate", "strings",
+        "basename", "dirname", "split", "sum", "cksum", "md5sum", "sha1sum", "uuencode",
+        "uudecode", "crypt", "make", "install", "more", "less", "host", "vrfy",
+        "nslookup", "dig", "traceroute", "ping", "whois", "finger", "ftp", "uucp",
+        "telnet", "rlogin", "rsh", "rcp", "ssh", "write", "mail", "vacation", "tput",
+        "reset", "clear", "script", "factor", "bc", "dc", "jot", "seq", "yes", "banner",
+        "printenv", "lp", "tee", "mkfifo", "pathchk", "dd", "od", "hexdump", "m4"},
+  },
+  
+  -- fixes issue with expressions like ${SHELL="${CONFIG_SHELL-/bin/sh}"}
+  -- the [^\}]+ part fixes issue with "s#@PATH@#/opt/${pkgname}/bin/# ${pkgdir}/etc/profile.d/${pkgname}.sh"
+  { Id=4,
+    Regex=[[\$\{[^\}]+\$\{.+?\}.+?\}|\$\{.+?\} ]],
+  },
+  { Id=4,
+    Regex=[[ \$[\w\#]+ ]],
+  },
+  { Id=2,
+    Regex=[[ \-\-?[\w\-]+ ]],
+  }
+}
+
+-- hereDoc opening delimiter, see OnStateChange to handle end of string
+Strings={
+  Delimiter=[[<<[\-]?\s*["']?\s*[A-Za-z_]+["']?|"|`|']],
+}
+
+IgnoreCase=false
+
+Comments={
+  { Block=false,
+    Delimiter= { [[#]] },
+  },
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-]]
+
+function OnStateChange(oldState, newState, token)
+
+   if oldState==HL_STRING and token==hereDoc then
+      hereDoc = nil
+      return HL_STRING_END
+   end
+      
+   if  (string.sub(token,1,1) =="$" )  and oldState==HL_STRING and newState==HL_KEYWORD then
+      return HL_INTERPOLATION
+   end
+    
+  if hereDoc~=nil then
+    return HL_STRING
+   end
+
+   --recognize hereDoc multine strings
+   if oldState==HL_STANDARD and newState==HL_STRING  then
+      hereDoc = string.match(token, "<<%-?%s*%'?([%-%a%d_]+)" )
+    end
+    
+   return newState
+end

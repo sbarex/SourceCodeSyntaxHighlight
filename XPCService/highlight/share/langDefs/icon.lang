@@ -1,0 +1,38 @@
+
+Description="Icon"
+
+Categories = {"source"}
+
+Keywords={
+  { Id=1,
+    List={"by", "case", "", "create", "default", "do", "else", "every", "if", "initial", "next", "of", "repeat", "then", "to", "until", "while", "break",
+          "end", "fail", "global", "invocable", "link", "local", "procedure", "record", "return", "static", "suspend"},
+  },
+  { Id=2,
+    List={"co-expression", "cset", "tfile", "integer", "list", "null", "real", "set", "string", "table", "window"},
+  },
+  { Id=3,
+    Regex=[[\&\w+]]
+  },
+  { Id=3,
+    Regex=[[\$\w+]]
+  },
+  { Id=4,
+    Regex=[[(\w+)\s*\(]]
+  }
+}
+
+Strings={
+  Delimiter=[["|']],
+}
+
+IgnoreCase=false
+
+Comments={
+  { Block=false,
+    Delimiter= { [[#]] },
+  },
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\:|<|>|\!|\-|\+|\=|\/|\*|\+|\-|\~]]
+

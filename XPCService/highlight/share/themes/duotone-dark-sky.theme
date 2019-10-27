@@ -1,0 +1,66 @@
+--[[                                      2019/05/26 | Highlight v3.51 | Lua 5.3
+================================================================================
+Scheme:   "DuoTone Dark Sky"
+Author:   simurai
+License:  MIT License
+Source:   https://github.com/simurai/duotone-dark-sky-syntax
+================================================================================
+Ported to Highlight by Tristano Ajmone <tajmone@gmail.com>
+    https://github.com/tajmone
+    https://gitlab.com/tajmone
+--------------------------------------------------------------------------------
+Based on the DuoTone Themes project by simurai:
+    http://simurai.com/projects/2016/01/01/duotone-themes
+------------------------------------------------------------------------------]]
+Description = "DuoTone Dark Sky"
+Categories  = {"dark", "duotone"}
+--------------------------------------------------------------------------------
+Canvas         = { Colour = "#2c2734" }
+Default        = { Colour = "#cab2fa" }
+LineNum        = { Colour = "#544d60" }
+
+Number         = { Colour = "#fec38f" }
+Operator       = { Colour = "#f1ebff" }
+
+String         = { Colour = "#b07745" }
+Escape         = { Colour = "#f1ebff" }
+Interpolation  = { Colour = "#fec38f" }
+
+PreProcessor   = { Colour = "#ae91e8" }
+StringPreProc  = String
+
+LineComment    = { Colour = "#715f95", Italic = true }
+BlockComment   = LineComment
+
+Keywords = {
+  { Colour = "#f1ebff" }, --> kwd 1
+  { Colour = "#fec38f" }, --> kwd 2
+  { Colour = "#cab2fa" }, --> kwd 3
+  { Colour = "#b07745" }, --> kwd 4
+  { Colour = "#ae91e8" }, --> kwd 5
+  { Colour = "#765f4c" }, --> kwd 6
+}
+--[[----------------------------------------------------------------------------
+The MIT License
+
+Copyright (c) 2018 Tristano Ajmone
+Copyright (c) 2015 simurai
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+------------------------------------------------------------------------------]]

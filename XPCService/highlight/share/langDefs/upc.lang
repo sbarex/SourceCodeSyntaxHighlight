@@ -1,0 +1,22 @@
+
+dofile(HL_LANG_DIR.."c.lang")
+
+Description="UPC (and C, technically)"
+
+Categories = {"source"}
+
+-- append keywords to C keywords
+table.insert(Keywords,
+  { Id=1,
+    List={"upc_blocksizeof", "upc_elemsizeof", "upc_localsizeof", "shared", 
+          "strict", "relaxed", "upc_barrier", "upc_notify",
+           "upc_wait", "upc_fence"}
+  }
+)
+
+table.insert(Keywords,
+  { Id=2,
+    List={"upc_lock_t"}
+  }
+
+)

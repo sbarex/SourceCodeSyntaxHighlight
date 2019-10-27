@@ -1,0 +1,23 @@
+Description="Darkness"
+
+Categories = {"dark"}
+
+Default        = { Colour="#ffffff" }
+Canvas         = { Colour="#000000" }
+Number         = { Colour="#619de7" }
+Escape         = { Colour="#00abab" }
+String         = { Colour="#abab00", Bold=true }
+StringPreProc  = { Colour="#abab00" }
+BlockComment   = { Colour="#008888" }
+PreProcessor   = { Colour="#1da3cf" }
+LineNum        = { Colour="#888888" }
+Operator       = { Colour="#ff00ff" }
+LineComment = BlockComment
+Interpolation  = { Colour="#DB70B8" }
+
+Keywords = {
+  { Colour= "#ffff00", Bold=true },
+  { Colour= "#00ff00" },
+  { Colour= "#26e0e7" },
+  { Colour= "#f34627" },
+}

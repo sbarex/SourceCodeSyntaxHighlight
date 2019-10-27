@@ -1,0 +1,46 @@
+
+Description="NetRexx"
+
+Categories = {"source"}
+
+Keywords={
+ { Id=1,
+   List={"class", "private", "public", "abstract", "final",
+   "interface", "dependent", "adapter", "deprecated", "extends", "uses",
+   "implements", "method", "native", "returns", "signals", "properties",
+   "private", "public", "inheritable", "constant", "static", "volatile", "unused",
+   "transient", "indirect"},
+   },
+  { Id=2,
+   List={"do", "label", "protect", "catch", "finally", "end", "signal",
+  "if", "then", "else", "select", "case", "when", "otherwise", "loop",
+  "forever", "for", "to", "by", "over", "until", "while", "leave", "iterate",
+  "return", "exit"},
+  },
+  { Id=3,
+   List={"ask", "digits", "form", "null", "source", "this", "super",
+  "parent", "sourceline", "version", "trace", "var", "all", "results", "off",
+  "methods", "package", "import", "numeric", "scientific", "engineering"},
+  },
+  { Id=4,
+    Regex=[[(\w+)\s*\(]],
+  },
+}
+
+Strings={
+  Delimiter=[["|']],
+}
+
+IgnoreCase=false
+
+Comments={
+  { Block=false,
+    Delimiter= { [[\-\-]] },
+  },
+  { Block=true,
+    Nested=false,
+    Delimiter= { [[\/\*]],[[\*\/]],}
+  }
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\.|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-|\~]]

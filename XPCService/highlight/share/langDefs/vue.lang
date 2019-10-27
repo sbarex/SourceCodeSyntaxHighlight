@@ -1,0 +1,21 @@
+
+Description="vue.js (beta)"
+
+Categories = {"script", "javascript"}
+
+Keywords={
+  { Id=1,
+    Regex=[[<[!?]?(?!\-\-)\/?[\w\:\-]+>?|[/?]?>]],
+    Group=0,
+  },
+
+}
+
+
+NestedSections = {
+
+  { Lang="css", Delimiter= { [[<style>]], [[<\/style>]] } },
+  { Lang="js", Delimiter= { [[<script>]], [[<\/script>]] } },
+  { Lang="html", Delimiter= { [[ <template>]], [[<\/template>]]  } },
+}
+

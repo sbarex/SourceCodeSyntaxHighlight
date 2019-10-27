@@ -1,0 +1,49 @@
+
+Description="Miranda"
+
+Categories = {"source"}
+
+
+Identifiers=[[ [a-z][a-zA-Z0-9_']* ]]
+
+Keywords={
+  { Id=1,
+    List={"abstype", "div", "if", "mod", "otherwise", "readvals", "show", 
+        "type", "where", "with", "sys_message", "False", "True", "Appendfile", 
+        "Closefile", "Exit", "Stderr", "Stdout", "System", "Tofile", "abs", "and", 
+        "arctan", "cjustify", "code", "concat", "const", "converse", "cos", "decode", 
+        "digit", "drop", "dropwhile", "entier", "error", "exp", "filemode", "filter", 
+        "foldl", "foldl1", "foldr", "foldr1", "force", "fst", "getenv", "hd", "hugenum", 
+        "id", "index", "init", "integer", "iterate", "last", "lay", "layn", "letter", 
+        "limit", "lines", "ljustify", "log", "log10", "map", "map2", "max", "max2", 
+        "member", "merge", "min", "min2", "mkset", "neg", "numval", "or", "pi", 
+        "postfix", "product", "read", "rep", "repeat", "reverse", "rjustify", "scan", 
+        "seq", "showfloat", "shownum", "showscaled", "sin", "snd", "sort", "spaces", 
+        "sqrt", "subtract", "sum", "system", "take", "takewhile", "tinynum", "tl", 
+        "transpose", "undef", "until", "zip2", "zip3", "zip4", "zip5", "zip6", "zip"},
+  },
+  { Id=2,
+    List={"num", "char", "bool"},
+  },
+  { Id=4, -- Regex which renders type declarations on one line using `::', `==' and `::='
+    Regex=[[(\s*[a-zA-Z][a-zA-Z0-9_']*\s*.*\s*::\s+.*|\s*[a-zA-Z][a-zA-Z0-9_']*\s*[\* ]*\s*==\s+.*|\s*[a-zA-Z][a-zA-Z0-9_']*\s*[\* ]*\s*::=\s+.*)]],
+  },
+}
+
+Strings={
+  Delimiter=[["]],
+}
+
+IgnoreCase=false
+
+Comments={
+  { Block=false,
+    Delimiter= { [[\|\|]] },
+  },
+}
+
+PreProcessor={
+  Prefix=[[%]],
+}
+
+Operators=[[\(|\)|\[|\]|\.|\,|\;|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-|\~|\^]]

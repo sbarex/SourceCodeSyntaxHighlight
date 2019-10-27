@@ -1,0 +1,55 @@
+
+Description="Haskell"
+
+Categories = {"source"}
+
+Keywords={
+  -- Type-level keywords
+  { Id=1,
+    List={"class", "data", "deriving", "instance", "default", "type", "newtype"}
+  },
+  -- Module-level keywords
+  { Id=2,
+    List={"module", "import", "where", "foreign", "qualified", "as", "hiding", "infix", "infixl", "infixr"}
+  },
+  -- Expression-level keywords
+  { Id=4,
+    List={"if", "then", "else", "case", "of", "do", "let", "in"}
+  },
+  -- Special syntax
+  { Id=3,
+    Regex=[[ [\[\](),;}]+|{(?!-) ]]
+  },
+}
+
+Strings={
+  Delimiter=[["|']],
+}
+
+-- Escape sequences only occur inside strings
+-- strings ending with ' should not be confused with identifiers
+-- TDOD check ' and "
+function OnStateChange(oldState, newState, token, kwgroup)
+  if newState==HL_ESC_SEQ and oldState~=HL_STRING or string.match(token, "%a+'" ) and oldState==HL_STRING then
+    return HL_REJECT
+  end
+  
+  return newState
+end
+
+Identifiers=[[ [a-zA-Z][a-zA-Z0-9_']* ]]
+
+IgnoreCase=false
+
+Comments={
+  { Block=false,
+    Delimiter= { [[--]] },
+  },
+  { Block=true,
+    Nested=false,
+    Delimiter= { [[\{\-]],[[\-\}]],}
+  }
+}
+
+Operators=[[ `[a-z][a-zA-Z0-9_']*`|#(?!-})|[!$%&*+\./<=>?@^\|~-]+ ]]
+

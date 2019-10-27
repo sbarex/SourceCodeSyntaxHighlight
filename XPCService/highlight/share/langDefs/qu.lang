@@ -1,0 +1,43 @@
+
+Description="Qu"
+
+Categories = {"source", "script"}
+
+Keywords={
+  { Id=1,
+    List={"abstract", "as", "atomic", "break", "case", "catch", "class", 
+        "const", "continue", "default", "do", "each", "elif", "else", "end", "enum", 
+        "ensure", "final", "finally", "for", "if", "in", "is", "lambda", "local", 
+        "loop", "me", "nil", "once", "pass", "public", "redo", "return", "self", 
+        "static", "struct", "sub", "super", "switch", "throw", "true", "try", "until", 
+        "use", "var", "while", "xor", "yield", "alias", "private", "import", "of", "on", 
+        "to", "from", "swap", "unless"},
+  },
+  { Id=2,
+    List={"bool", "char", "string", "vector", "map", "set", "null", "error", "new"},
+  },
+  { Id=3,
+    List={"or", "and", "not"},
+  },
+  { Id=4,
+    Regex=[[__\w+]],
+  },
+}
+
+Strings={
+  Delimiter=[["|'|`|```]],
+}
+
+IgnoreCase=false
+
+Comments={
+  { Block=false,
+    Delimiter= { [[#]] },
+  },
+  { Block=true,
+    Nested=false,
+    Delimiter= { [[\/\*]],[[\*\/]],}
+  }
+}
+
+Operators=[[\(|\)|\{|\}|\[|\]|\,|\;|\.|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-|\~|\^]]

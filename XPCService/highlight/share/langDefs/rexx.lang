@@ -1,0 +1,85 @@
+
+Description="Rexx"
+
+Categories = {"source", "script"}
+
+Digits=[[ (?:0x|0X)[0-9a-fA-F]+|\d+[\.]?\d*(?:[eE][\-\+]?\d+)?[lLuU]*  ]]
+
+Keywords={
+  { Id=1,
+    List={"address", "additional", "any", "arg", "arguments", "array", "by", 
+	  "call", "caseless", "continue", "class", "description", "digits", "do", "drop", 
+	  "end", "engineering", "error", "exit", "expose", "else", "failure", "for", 
+	  "forever", "form", "forward", "fuzz", "guard", "halt", "if", "interpret", 
+	  "iterate", "leave", "lower", "lostdigits", "message", "name", "nop", "nomethod", 
+	  "nostring", "notready", "novalue", "numeric", "on", "off", "otherwise", "parse", 
+	  "procedure", "pull", "push", "propagate", "queue", "raise", "reply", "return", 
+	  "ret", "rc", "result", "say", "scientific", "select", "sigl", "signal", 
+	  "source", "syntax", "then", "to", "trace", "upper", "until", "use", "user", 
+	  "version", "when", "while", "with"},
+  },
+  { Id=2,
+    List={"abbrev", "abs", "append", "beep", "binary", "bitand", "bitor", 
+	  "bitxor", "both", "b2x", "center", "centre", "changestr", "char", "charin", 
+	  "charout", "chars", "compare", "condition", "copies", "countstr", "close", 
+	  "c2d", "c2x", "datetime", "datatype", "date", "delstr", "delword", "directory", 
+	  "d2c", "d2x", "errortext", "exists", "filespec", "flush", "format", "handle", 
+	  "insert", "lastpos", "left", "length", "line", "linein", "lineout", "lines", 
+	  "max", "min", "nobuffer", "open", "overlay", "pos", "position", "queued", 
+	  "query", "random", "reclength", "read", "replace", "reverse", "right", "seek", 
+	  "sign", "size", "shared", "shareread", "sharewrite", "sourceline", "space", 
+	  "stream", "streamtype", "strip", "subword", "substr", "symbol", "sys", "time", 
+	  "timestamp", "translate", "trunc", "var", "value", "verify", "word", 
+	  "wordindex", "wordlength", "wordpos", "words", "write", "xrange", "x2b", "x2c", 
+	  "x2d","pid", "pprio", "ptime", "rxfuncadd", "rxfuncdrop", "rxfuncquery",
+	  "rxqueue", "rxmessagebox", "rxwinexec", "sysaddrexxmacro", "sysbootdrive", 
+	  "sysclearrexxmacrospace", 
+	  "syscloseeventsem", "sysclosemutexsem", "syscls", "syscreateeventsem", 
+	  "syscreatemutexsem", "syscurpos", "syscurstate", "sysdriveinfo", "sysdrivemap", 
+	  "sysdropfuncs", "sysdroprexxmacro", "sysdumpvariables", "sysfiledelete", 
+	  "sysfilesearch", "sysfilesystemtype", "sysgetfiledatetime", "sysfiletree", 
+	  "sysgetkey", "sysini", "sysloadfuncs", "sysloadrexxmacrospace", "sysmkdir", 
+	  "sysopeneventsem", "sysopenmutexsem", "sysposteventsem", "syspulseeventsem", 
+	  "sysqueryprocess", "sysqueryrexxmacro", "sysreleasemutexsem", 
+	  "sysreorderrexxmacro", "sysrequestmutexsem", "sysreseteventsem", "sysrmdir", 
+	  "syssaverexxmacrospace", "syssearchpath", "syssetfiledatetime", 
+	  "syssetpriority", "syssleep", "sysstemcopy", "sysstemdelete", "syssteminsert", 
+	  "sysstemsort", "sysswitchsession", "syssystemdirectory", "systempfilename", 
+	  "systextscreenread", "systextscreensize", "sysutilversion", "sysvolumelabel", 
+	  "syswaiteventsem", "syswaitnamedpipe", "sysversion", "syswinver"},
+  },
+  { Id=3,
+    List={"externals", "find", "getmsg", "index", "justify", "linesize", 
+	  "listdsi", "msg", "mvsvar", "outtrap", "prompt", "setlang", "storage", 
+	  "syscpus", "sysdsn", "sysvar", "userid", "dbadjust", "dbbracket", "dbcenter", 
+	  "dbcjustify", "dbcs", "dbleft", "dbright", "dbrleft", "dbrright", "dbtodbcs", 
+	  "dbtosbcs", "dbunbracket", "dbvalidate", "dbwidth", "delstack", "dropbuf", 
+	  "execio", "executil", "he", "hi", "ht", "makebuf", "newstack", "qbuf", "qelem", 
+	  "qstack", "rt", "subcom", "te", "ts"},
+  },
+  { Id=4,
+    Regex=[[(\w+)\s*\:]],
+  },
+}
+
+Strings={
+  Delimiter=[["|']],
+  Escape=[[\A(?!x)x]] 
+  -- see http://stackoverflow.com/questions/1723182/a-regex-that-will-never-be-matched-by-anything
+}
+
+IgnoreCase=true
+
+Comments={
+  { 
+    Block=false,
+    Delimiter= { [[\-\-|\#!]] },
+  },
+  { Block=true,
+    Nested=false,
+    Delimiter= { [[\/\*]],[[\*\/]],}
+  }
+}
+
+Operators=[[\(|\)|\[|\]|\.|\,|\;|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-|\||\@]]
+

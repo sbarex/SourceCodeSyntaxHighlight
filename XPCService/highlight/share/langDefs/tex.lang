@@ -1,0 +1,39 @@
+
+Description="TeX and LaTeX"
+
+Categories = {"markup", "document"}
+
+Keywords={
+  { Id=1,
+    Regex=[[\\\w+]],
+  },
+  { Id=2,
+    List={"a4paper", "report", "ngerman", "dvips", "graphicx", "latin1", "inputenc", 
+            "T1", "fontenc", "color", "alltt", "document", "tabbing", "tocdepth"},
+  },
+  { Id=3,
+    Regex=[[\#\d+]],
+  },
+}
+
+IgnoreCase=false
+
+Comments={
+  { Block=false,
+    Delimiter= { [[(?<!\\)%.*$]] },
+  },
+  { Block=true,
+    Nested=false,
+    Delimiter= { [[\(\*]],[[\*\)]],}
+  }
+}
+
+NestedSections = {
+  { Lang="perl", Delimiter= { [[\\perl(?:re)?newcommand\{\\\w+\}\[.*\]\{]], [[\{]] } },
+  { Lang="perl", Delimiter= { [[\\perl(?:re)?newenvironment\{\w+\}\[.*\]\{]], [[\{]] } },
+  { Lang="inc_luatex", Delimiter= { [[\\directlua0?.*?\{]], [[(?<!\{)\}]] } },
+  { Lang="r", Delimiter= { [[<<.*>>=]], [[@]] } },
+}
+
+Operators=[[ \{|\}|\[|\] ]]
+

@@ -1,0 +1,48 @@
+
+Description="Solidity"
+
+Categories = {"source"}
+
+Digits = [[ (?:0x|0X|0b)[0-9a-fA-F']+|\d*[\.]?\d+(?:[eE][\-\+]\d+)?[lLuU]* ]]
+
+Keywords={
+ {  Id=1,
+   List={
+      "pragma", "solidity", "import", "from", "as", "anonymous", "assembly", "assert", "require", "revert", "break", "case", "constructor", "continue", "constant", "payable", "pure", "view", "contract", "interface", "library", "default", "delete", "do", "else", "emit", "enum", "event", "external", "internal", "private", "public", "for", "function", "new", "if", "is", "let", "mapping", "memory|storage", "modifier", "return", "returns", "struct", "super", "switch", "this", "throw", "using", "var", "while",
+      }
+  },
+  { Id=2,
+    List= { 
+      "abstract", "after", "catch", "final", "in", "inline", "match", "of", "relocatable", "static", "try", "type", "typeof", }
+  },
+  { Id=3,
+    List= { 
+     "now", "length", "push", "pop", "balance", "call", "callcode", "delegatecall", "gas", "send", "transfer", "value", "coinbase", "difficulty", "gaslimit", "number", "timestamp", "data", "gas", "sender", "sig", "value", "address"
+    }
+  },
+  { Id=4,
+    Regex=[[(\w+)\s*\(]]
+  }
+}
+
+Strings = {
+  Delimiter=[["|']]
+}
+
+Comments = {
+   { Block=true,
+     Nested=false,
+     Delimiter = { [[\/\*]], [[\*\/]] }
+   },
+   {
+     Block=false,
+     Delimiter = { [[//]] }
+   }
+}
+
+IgnoreCase=false
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\.|\:|\&|<|>|\!|=|\/|\*|\%|\+|\-|\~|\||\^|\?]]
+
+EnableIndentation=true
+

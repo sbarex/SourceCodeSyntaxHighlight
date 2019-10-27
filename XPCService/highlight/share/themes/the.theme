@@ -1,0 +1,25 @@
+-- Theme created by Mark Hessling
+
+Description="the"
+
+Categories = {"light"}
+
+Default        = { Colour="#000000" }
+Canvas         = { Colour="#ffffff" }
+Number         = { Colour="#ff0000", Bold=true }
+Escape         = { Colour="#000000", Bold=true }
+String         = { Colour="#00cdcd" }
+StringPreProc  = { Colour="#00cdcd"}
+BlockComment   = { Colour="#00ff00", Italic=true }
+LineComment    = { Colour="#00ff00", Italic=true }
+PreProcessor   = { Colour="#ff0000" }
+LineNum        = { Colour="#008800" }
+Operator       = { Colour="#000000" }
+Interpolation  = String
+
+Keywords = {
+  { Colour= "#0000ff" },
+  { Colour= "#880088" },
+  { Colour= "#0000ff" },
+  { Colour= "#ff0000" },
+}

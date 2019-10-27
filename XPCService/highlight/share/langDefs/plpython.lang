@@ -1,0 +1,11 @@
+-- Load PL/SQL definition
+dofile(HL_LANG_DIR.."sql.lang")
+
+Description="PL/Python"
+
+Categories = {"database"}
+
+
+NestedSections = {
+  { Lang="python", Delimiter= { [[\$\$]], [[\$\$\s+LANGUAGE]] } },
+}

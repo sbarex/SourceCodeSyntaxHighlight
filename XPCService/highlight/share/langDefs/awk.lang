@@ -1,0 +1,36 @@
+
+Description="(G)AWK"
+
+Categories = {"source", "script"}
+
+Keywords={
+  { Id=1,
+    List={"begin", "break", "close", "continue", "delete", "do", "else", "end", 
+        "exit", "for", "getline", "gsub", "if", "index", "length", "match", "next", 
+        "print", "printf", "return", "split", "sprintf", "sub", "substr", "system", 
+        "tolower", "toupper", "while"},
+  },
+  { Id=2,
+    List={"argc", "argind", "argv", "convfmt", "environ", "errno", 
+        "fieldwidths", "filename", "fnr", "fs", "ignorecase", "nf", "nr", "ofmt", "ofs", 
+        "ors", "rlength", "rs", "rstart", "rt", "subset"},
+  },
+  { Id=3,
+    List={"function"},
+  },
+}
+
+Strings={
+  Delimiter=[["|']],
+  Escape=[[ [\\%]\d{3}|[\\%]x\d{2}|[\\%][ntvbrfa\\\?'"%] ]]
+}
+
+IgnoreCase=true
+
+Comments={
+  { Block=false,
+    Delimiter= { [[#]] },
+  },
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\:|\&|<|>|\!\=|\/|\*|\||\+|\-]]

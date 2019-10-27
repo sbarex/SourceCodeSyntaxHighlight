@@ -1,0 +1,55 @@
+
+Description="Dart"
+
+Categories = {"source"}
+
+Keywords={
+  {  Id=1,
+   List={ "assert", "break", "case", "catch", "class", "const", "continue",
+          "default", "do", "else", "extends", "false", "final", "finally", 
+          "for", "if", "in", "is", "new", "null", "return", "super", "switch", 
+          "this", "throw", "true", "try", "var", "void", "while", 
+          "static", "const", "new"
+        }
+  },
+  { Id=2,
+    List={ "num", "int", "double", "bool" }
+  },
+  
+  { Id=2,
+    Regex=[[[A-Z][a-z_-]+]]
+  },
+
+
+  { Id=3,
+    Regex=[[(#\w+)\s*\(]]
+  },
+
+  { Id=4,
+    Regex=[[(\w+)\s*\(]]
+  }
+}
+
+Strings = {
+  Delimiter=[['|"]],
+  RawPrefix="r",
+  Interpolation=[[\$\w+|\$\{.+?\}]],
+  Escape = [[ \\u\d{4}|\\x?\d{3}|\\\w|\\[\'\\\"] ]]
+}
+
+Comments = {
+   { Block=true,
+     Nested=true,
+     Delimiter = { [[\/\*]], [[\*\/]] }
+   },
+   {
+     Block=false,
+     Delimiter = { [[//]] }
+   }
+}
+
+IgnoreCase=false
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\.|\:|\&|<|>|\!|=|\/|\*|\%|\+|\-|\~|\||\^]]
+
+EnableIndentation=false

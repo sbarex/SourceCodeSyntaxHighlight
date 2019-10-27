@@ -1,0 +1,54 @@
+
+Description="Elixir"
+
+Categories = {"source"}
+
+Digits = [[ (?:0x|0X|0b)[0-9a-fA-F']+|\d*[\.]?\d+(?:[eE][\-\+]\d+)?[lLuU]* ]]
+
+Keywords={
+  {  Id=1,
+   List={
+    "for", "case", "when", "with", "cond", "if", "unless", "try", "receive", "send",
+    "exit", "raise", "throw", "after", "rescue", "catch", "else",
+    "quote", "unquote", "super", "spawn", "spawn_link", "spawn_monitor",
+    "import", "require", "alias", "use", "do", "end", "assert", "def", 
+    "defp", "defmodule", "assert_raise", "test", "in"
+
+   }
+  },
+  { Id=2,
+    List= { 
+    "is_atom", "is_binary", "is_bitstring", "is_boolean", "is_float", "is_function", 
+    "is_integer", "is_list", "is_map", "is_nil", "is_number", "is_pid", "is_port", 
+    "is_reference", "is_tuple", "abs", "binary_part", "bit_size", "byte_size", "div", 
+    "elem", "hd", "length", "map_size", "node", "rem", "round", "tl", "trunc", 
+    "tuple_size", " self", "true", "false", "nil"
+
+    }
+  },
+  { Id=3,
+    Regex=[[ [\:@][a-z]\w+ ]]
+  },
+  { Id=4,
+    Regex=[[(\w+)\s*\(]]
+  }
+}
+
+
+Strings={
+  Delimiter=[["""|'''|"|']],
+  RawPrefix="r",
+  Escape=[=[\\[ntvbrfa\\\?'"]|\\\d{3}|\\x[[:xdigit:]]{2}]=],
+  Interpolation=[[ #\{\w+\} ]]
+}
+
+Comments = {
+   {
+     Block=false,
+     Delimiter = { [[ # ]] }
+   }
+}
+
+IgnoreCase=false
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\.|\:|\&|<|>|\!|=|\/|\*|\%|\+|\-|\~|\||\^|\?]]

@@ -1,0 +1,37 @@
+
+Description="Oz"
+
+Categories = {"source"}
+
+Keywords={
+  { Id=1,
+    List={"andthen",  "at",  "attr",  "case",  "catch",  "choice", "class",  
+        "cond",  "declare",  "define",  "dis", "div",  "else",  "elsecase",  "elseif",  
+        "end", "export",  "fail",  "false",  "feat",  "finally",  "from", "fun",  
+        "functor",  "if",  "import",  "in",  "local", "lock",  "meth",  "mod",  "not",  
+        "of",  "or",  "orelse", "prepare",  "proc",  "prop",  "raise",  "require", 
+        "self",  "skip",  "then",  "thread",  "true",  "try", "unit", "for", "do"},
+  },
+
+  { Id=4,
+    Regex=[[(\w+)\s*\(]],
+  },
+}
+
+Strings={
+  Delimiter=[["]],
+}
+
+IgnoreCase=false
+
+Comments={
+  { Block=false,
+    Delimiter= { [[%]] },
+  },
+  { Block=true,
+    Nested=true,
+    Delimiter= { [[\/\*]],[[\*\/]],}
+  }
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\.|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-|\~|\#|\@]]

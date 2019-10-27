@@ -1,0 +1,51 @@
+
+Description="Ceylon"
+
+Categories = {"source"}
+
+Keywords={
+  {  Id=1,
+   List={ "assembly", "module", "package", "import", "alias", "class", 
+	  "interface", "object", "given", "value", "assign", "void", "function", "new", 
+	  "of", "extends", "satisfies", "abstracts", "in", "out", "return", "break", 
+	  "continue", "throw", "assert", "dynamic", "if", "else", "switch", "case", "for", 
+	  "while", "try", "catch", "finally", "then", "let", "this", "outer", "super", 
+	  "is", "exists", "nonempty"}
+  },
+  { Id=2,
+    List= { "shared", "formal", "abstract", "actual", "variable"
+          }
+  },
+  { Id=3,
+    List= { "String", "Integer", "Float", "Boolean", "Element", "Object", "Decimal", "Whole", "List"
+          }
+  },
+  { Id=4,
+    Regex=[[(\w+)\s*\(]]
+  }
+}
+
+Strings = {
+  Delimiter=[["""|"|']],
+  RawPrefix="R",
+  Interpolation=[[ ``[\w\(\)]+?``|\\\{.+?\} ]],
+}
+
+Comments = {
+   { Block=true,
+     Nested=false,
+     Delimiter = { [[\/\*]], [[\*\/]] }
+   },
+   {
+     Block=false,
+     Delimiter = { [[//|\#\!]] }
+   }
+}
+
+IgnoreCase=false
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\.|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-|\~|\||\?]]
+
+Digits=[[ [\d\.\_]*\d+(?:[eE][\-\+]?\d+)?[kMGTPmunpf]*|#[[:alnum:]\_]+|\$[01_]+ ]]
+
+EnableIndentation=true

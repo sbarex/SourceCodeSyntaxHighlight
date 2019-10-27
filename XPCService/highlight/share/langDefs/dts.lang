@@ -1,0 +1,42 @@
+
+Description="Device Tree Source"
+
+Categories = {"config"}
+
+Keywords={
+  {  Id=1,
+   Regex=[[([\w-]+(@.+)?)\s*\{]],
+   Group=1
+  },
+  { Id=2,
+    List= { "compatible", "reg", "interrupts", "cpus", "external-bus", "ranges"
+          }
+  },
+  { Id=3,
+     Regex=[[\/[\w\-]+\/]]
+  },
+  { Id=4,
+    Regex=[[#[\w\-]+]]
+  }
+}
+
+Identifiers=[[ [a-zA-Z_][\w\-]* ]]
+
+Strings = {
+  Delimiter=[["]],
+}
+
+Comments = {
+   { Block=true,
+     Nested=false,
+     Delimiter = { [[\/\*]], [[\*\/]] }
+   },
+   {
+     Block=false,
+     Delimiter = { [[//]] }
+   }
+}
+
+IgnoreCase=false
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\.|\:|\&|<|>|\!|=|\/|\*|\%|\+|\-|\~|\||\^]]

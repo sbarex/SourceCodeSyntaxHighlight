@@ -1,0 +1,38 @@
+
+Description="Meson"
+
+Categories = {"config"}
+
+Keywords={
+ {  Id=1,
+   List={  "if", "elif", "else", "endif", "foreach", "endforeach",
+        }
+  },
+  { Id=2,
+    List= { "and", "not", "or", "in", "continue", "break",
+      }
+  },
+  { Id=3,
+    List= { "false", "true"
+          }
+  },
+  { Id=4,
+    Regex=[[(\w+)\s*\(]]
+  }
+}
+
+Strings = {
+   Delimiter=[["""|'''|"|']],
+}
+
+Comments = {
+   
+   {
+     Block=false,
+     Delimiter = { [[#]] }
+   }
+}
+
+IgnoreCase=false
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\.|\:|\&|<|>|\!|=|\/|\*|\%|\+|\-|\~|\||\^|\?]]

@@ -1,0 +1,181 @@
+
+Description="Ruby"
+
+Categories = {"script"}
+
+Identifiers=[[ [a-zA-Z_][\w\-]* ]]
+
+Digits=[[ (?:0x|0X|0b)[0-9a-fA-F]+|\d*[\.\_]?\d+(?:[eE][\-\+]\d+)?[lLuU]? ]]
+
+Keywords={
+  { Id=1,
+    List={"alias", "and", "begin", "begin", "break", "case", "class", "def", 
+          "defined", "loop", "do", "else", "elsif", "end", "end", "ensure", 
+          "false", "for", "if", "in", "module", "next", "nil", "not", "or", 
+          "redo", "rescue", "retry", "return", "require", "self", "super", 
+          "then", "true", "undef", "unless", "until", "when", "while", 
+          "yield", "true", "false", "nil", "stdin", "stdout", "stderr", "env", 
+          "argf", "argv", "data", "version", "ruby-release-date", 
+          "ruby-platform", "include", "extend", "eval", "private", "raise", "throw"},
+  },
+  { Id=3,
+   List = {"TRUE","FALSE","NIL","STDIN","STDOUT","STDERR","ENV","ARGF","ARGV",
+           "DATA","RUBY_VERSION","RUBY_RELEASE_DATE","RUBY_PLATFORM"}
+  },
+  { Id=2,
+    Regex=[[[\$\@][\/\w]+]],
+  },
+  
+  -- see OnStateChange below
+  { Id=3,
+    Regex=[[m?\/.*?\/|(s|tr)\/.*?\/.*?\/[cegimosx]*]],
+    Group=0,
+  },
+  { Id=3,
+    Regex=[[\:\:?\w+]],
+  },
+  { Id=4,
+    Regex=[[(\w+)\s*\(]],
+  },
+  
+  --see OnStateChange
+  { Id=5,
+    Regex = [[ [#]\{[^}]*?\} ]],
+  },
+}
+
+-- hereDoc opening delimiter, see OnStateChange to handle end of string
+Strings={
+  Delimiter=[["|'|`|<<[\-~"'`]?[\w_]+["'`]?]],
+  Interpolation = [[ [%]\{[^}]*?\} ]],
+  
+  DelimiterPairs= {
+    { Open=[[%q\(]], Close=[[\)]] },
+    { Open=[[%Q\(]], Close=[[\)]] },
+    
+    { Open=[[%Q\!]], Close=[[\!]] },
+    { Open=[[%Q\+]], Close=[[\+]] },
+    { Open=[[%Q\[]], Close=[=[ \] ]=] },
+
+    
+    { Open=[[%\(]], Close=[[\)]] },
+    { Open=[[%x\(]], Close=[[\)]] },
+    { Open=[[%q\{]], Close=[[\}]] },
+    { Open=[[%Q\{]], Close=[[\}]] },
+    { Open=[[%\{]], Close=[[\}]] },
+    { Open=[[%x\{]], Close=[[\}]] },
+ }
+  
+}
+
+IgnoreCase=false
+
+Comments={
+  { Block=false,
+    Delimiter= { [[#]] },
+  },
+  { Block=true,
+    Nested=false,
+    Delimiter= { [[\=begin]],[[\=end]] }
+  }
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\:|\.|\&|<|>|\!|\-|\+|\/|\*|\=|\?|\%|\|]]
+
+-- resolve issue with # which starts comments and extrapolation sequences in strings
+function OnStateChange(oldState, newState, token, groupID)
+
+  
+   
+   if oldState~=HL_STRING and newState==HL_INTERPOLATION then
+      return HL_REJECT
+   end
+   
+   if oldState==HL_STRING and token==hereDoc then
+      hereDoc = nil
+      return HL_STRING_END
+   end
+      
+   if hereDoc~=nil then
+    return HL_STRING
+   end
+   
+   --resolve issue with #{} sequence within strings
+   if oldState==HL_STRING and newState==HL_KEYWORD and groupID==5 then
+      return HL_INTERPOLATION
+   end
+   
+   -- resolve issue with regex expression which spans strings like "</i>" + VAR + "</i>"
+   if string.sub(token,1,1)=="/" and oldState==HL_STRING and newState==HL_KEYWORD then
+      return HL_REJECT
+   end
+      
+   --recognize hereDoc multine strings (including squiggly heredoc)
+   --do not clear hereDoc if token is ",' or `
+   if (oldState==HL_STANDARD or oldState==HL_STRING) and newState==HL_STRING 
+       and not string.find("\"'`", token) then
+      hereDoc = string.match(token, "<<[%-~\"'`]?([%a_]+)" )
+   end
+   
+   -- fix quoted string termination
+   --if oldState~=HL_STRING  then
+   --   qString=0
+   -- end
+    
+   if newState==HL_STRING and (token=="%q(" or token=="%Q(" or token=="%(" or token=="%x(" ) then
+      qString=1
+      return HL_STRING
+   end
+ 
+  if newState==HL_STRING and (token=="%q{" or token=="%Q{" or token=="%{" or token=="%x{" ) then
+      qString=2
+      return HL_STRING
+   end
+   
+   if newState==HL_STRING and  token=="%Q!"  then
+      qString=3
+      return HL_STRING
+   end
+   
+   if newState==HL_STRING and  token=="%Q["  then
+      qString=4
+      return HL_STRING
+   end
+   if newState==HL_STRING and  token=="%Q+"  then
+      qString=5
+      return HL_STRING
+   end
+   
+   if oldState==HL_STRING and qString==1 and token==")" then
+      qString=0
+      return HL_STRING_END
+   end
+   
+   if oldState==HL_STRING and qString==2 and token=="}" then
+      qString=0
+      return HL_STRING_END
+   end
+
+   if oldState==HL_STRING and qString==3 and token=="!" then
+      qString=0
+      return HL_STRING_END
+   end
+
+   if oldState==HL_STRING and qString==4 and token=="]" then
+      qString=0
+      return HL_STRING_END
+   end
+
+   if oldState==HL_STRING and qString==5 and token=="+" then
+      qString=0
+      return HL_STRING_END
+   end
+
+  -- https://fossies.org/linux/misc/puppet-5.3.2.tar.gz/puppet-5.3.2/lib/puppet/indirector/hiera.rb?m=t  
+  
+   if token==")" or token=="}" or token=="{"  and oldState~=HL_STRING then
+      return HL_OPERATOR
+   end
+   
+   return newState
+end

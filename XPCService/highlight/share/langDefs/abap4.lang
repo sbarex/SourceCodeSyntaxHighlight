@@ -1,0 +1,70 @@
+
+Description="ABAP/4"
+
+Categories = {"source"}
+
+Identifiers=[[ [a-zA-Z_][\w\-]* ]]
+
+Keywords={
+  { Id=1,
+    List={"abs", "acos", "add", "add-corresponding", "adjacent", "all", "and",
+          "analyzer", "append", "ascending", "asin", "at", "atan", "authority-check",
+          "avg", "back", "begin", "between", "binary", "blank", "block", "break-point",
+          "by", "ca", "call", "case", "catch", "ceil", "centered", "change", "check",
+          "checkbox", "clear", "clear:", "close", "cn", "cnt", "co", "collect", "color",
+          "commit", "communication", "compute", "concatenate", "condense", "constants",
+          "constants:", "continue", "control", "controls", "convert", "copy", "cos",
+          "cosh", "count", "country", "cp", "currency", "customer-function", "data",
+          "data:", "dataset", "decimals", "define", "default", "delete", "descending",
+          "describe", "dialog", "distinct", "div", "divide", "divide-", "corresponding",
+          "do", "duplicates", "editor-call", "else", "elseif", "end", "endcatch",
+          "end-of-definition", "end-of-page", "end-of-selection", "endat", "endcase",
+          "enddo", "endform", "endfunction", "endif", "endloop", "endmodule", "endon",
+          "endprovide", "endselect", "endwhile", "entries", "eq", "exceptions", "exec",
+          "exit", "exp", "exponent", "export", "exporting", "extended", "extract",
+          "fetch", "field-group", "field-symbols", "field-symbols:", "floor", "for",
+          "form", "format", "frac", "frame", "free", "from", "function", "function-",
+          "pool", "ge", "generate", "get", "gt", "hide", "hotspot", "header", "heading.",
+          "heading", "icon", "if", "import", "importing", "in", "include", "index",
+          "infotypes", "initial", "initialization", "input", "insert", "into",
+          "intensified", "inverse", "is", "key", "language", "le", "leave",
+          "left-justified", "like", "line", "line-count", "line-size", "lines",
+          "list-processing", "load", "local", "local", "locale", "log", "log10", "loop",
+          "lt", "message-id", "message", "m", "margin", "max", "min", "mod", "mode",
+          "modify", "module", "move", "move-corresponding", "multiply",
+          "multiply-corresponding", "na", "ne", "new-line", "new-page", "no-gap",
+          "no-heading", "no-scrolling", "no-sign", "no-title", "no-zero", "not", "np",
+          "ns", "no", "standard", "page", "heading", "o", "obligatory", "occurs", "of",
+          "off", "on", "open", "or", "order", "output", "overlay", "pack", "parameters",
+          "parameters:", "perform", "pf-status", "position", "print", "print-", "control",
+          "program", "provide", "put", "page", "radiobutton", "raise", "raising",
+          "ranges", "read", "receive", "refresh", "reject", "replace", "report",
+          "reserve", "reset", "right-", "justified", "rollback", "round", "run", "scan",
+          "screen", "scroll", "scroll-boundary", "search", "select", "select-options",
+          "select-options:", "selection-screen", "selection-", "screen:",
+          "selection-table", "set", "shift", "sign", "sin", "select", "single", "sinh",
+          "skip", "sort", "space", "split", "sql", "sqrt", "standard",
+          "start-of-selection", "statics", "stop", "strlen", "structure", "submit",
+          "substract", "substract-corresponding", "sum", "suppress", "dialog", "symbol",
+          "syntax-check", "syntax-trace", "system-exceptions", "table", "tables",
+          "tables:", "tan", "tanh", "then", "time", "title", "titlebar", "to",
+          "top-of-page", "transaction", "transfer", "translate", "trunc", "type-pools",
+          "type-pool", "types", "type", "uline", "under", "unit", "unpack", "update",
+          "user-command", "using", "value", "when", "where", "while", "window", "with",
+          "with-title", "work", "write", "write-to"},
+  },
+}
+
+Strings={
+  Delimiter=[[']],
+}
+
+IgnoreCase=true
+
+Comments={
+  { Block=false,
+    Delimiter= { [[\*]], [[\"]] },
+  },
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-|\.]]

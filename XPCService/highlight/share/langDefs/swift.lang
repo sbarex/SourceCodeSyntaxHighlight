@@ -1,0 +1,73 @@
+
+Description="Swift"
+
+Categories = {"source"}
+
+Keywords={
+  {  Id=1,
+   List= {"class", "deinit", "enum", "extension", "func", "import", "init",
+          "internal", "let", "operator", "private", "protocol", "public", "static",
+          "struct", "subscript", "typealias", "var", "fileprivate", "open", "final",
+          "break", "case", "continue", "default", "do", "else", "fallthrough", 
+          "for", "if", "in", "return", "switch", "where", "while", "try","throw","catch",
+          "guard", "mutating", "throws"
+        }
+  },
+  { Id=2,
+    List= { "as", "dynamicType", "false", "is", "nil", "self", "Self", "super", 
+            "true", "__COLUMN__", "__FILE__", "__FUNCTION__", "__LINE__",
+            "Bool", "UInt", "Int", "Int8", "Float", "Double", "Character", "String"
+        }
+  },
+  { Id=3,
+    Regex=[[ (let|var)\s+(\w+)]], Group=2
+  },
+  { Id=4,
+    Regex=[[(\w+)\s*\(]]
+  },
+  
+  { Id=2,
+    Regex=[[@\w+]]
+  }
+}
+
+-- add keywords to list 3
+function OnStateChange(oldState, newState, token, kwgroup)
+   if newState==HL_KEYWORD and kwgroup==3 then
+        AddKeyword(token, 3)
+   end
+   return newState
+end
+
+Identifiers=[[ [a-zA-Z_]\w* ]]
+
+Digits=[[ (?:0x|0o|0b)[0-9a-fA-F]+|\d*[\.\_]?\d+(?:[eE][\-\+]\d+)? ]]
+
+Strings = {
+  Delimiter=[["]],
+  Interpolation = [[ \\\(.+?\)\)? ]],
+  RawPrefix="R",
+  Escape = [[ \\t|\\0|\\t|\\v|\\r|\\"|\\'|\\u\{[0-9a-fA-F]+\} ]],
+}
+
+Comments = {
+   { Block=true,
+     Nested=true,
+     Delimiter = { [[\/\*]], [[\*\/]] }
+   },
+   {
+     Block=false,
+     Delimiter = { [[//]] }
+   }
+}
+
+IgnoreCase=false
+
+PreProcessor = {
+  Prefix=[[#]],
+  Continuation="\\",
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\.|\:|\&|<|>|\!|=|\/|\*|\%|\+|\-|\~|\||\^]]
+
+EnableIndentation=false

@@ -1,0 +1,23 @@
+Description="Sourceforge.net"
+
+Categories = {"light"}
+
+Default        = { Colour="#555555" }
+Canvas         = { Colour="#f8f8f8" }
+Number         = { Colour="#666666" }
+Escape         = { Colour="#BA2121" }
+String         = { Colour="#BA2121" }
+StringPreProc  = { Colour="#BC7A00" }
+BlockComment   = { Colour="#408080", Italic=true }
+PreProcessor   = { Colour="#BC7A00" }
+LineNum        = { Colour="#000000" }
+Operator       = Default
+LineComment = BlockComment
+Interpolation  = { Colour="#BA2121" }
+
+Keywords = {
+  { Colour= "#008000", Bold=true },
+  { Colour= "#B00040" },
+  { Colour= "#B00040" },
+  { Colour= "#555555" },
+}

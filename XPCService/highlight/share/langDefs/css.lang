@@ -1,0 +1,43 @@
+Description="CSS"
+
+Categories = {"markup"}
+
+Identifiers=[[ [a-zA-Z_][\w\-]* ]]
+
+Digits=[=[ \#[[:xdigit:]]{3,6}|\d*\.?\d+?\w* ]=]
+
+Keywords={
+  { Id=1,
+    Regex=[[ ([\w-]+)\s*\: ]]
+  },
+  { Id=2,
+    Regex=[[^@[\w-]+]],
+  },
+  { Id=3,
+    Regex=[[^\s*(\..+?)\s*\{]],
+  },
+  { Id=4,
+    Regex=[[ ^\s*(#[\w-]+) ]]
+  },
+  { Id=4,
+    Regex=[[ url\(([\w\.\/]+)\) ]]
+  },
+}
+
+Strings={
+  Delimiter=[["|']],
+  Escape= [=[ \\[[:xdigit:]]{4} ]=],
+}
+
+Comments={
+  { Block=true,
+    Nested=true,
+    Delimiter= { [[\/\*]],[[\*\/]],}
+  }
+}
+
+
+IgnoreCase=true
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-|\.|~]]
+

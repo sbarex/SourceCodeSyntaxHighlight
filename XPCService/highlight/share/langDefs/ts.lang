@@ -1,0 +1,57 @@
+
+Description="TypeScript"
+
+Categories = {"script", "javascript"}
+
+
+Digits=[[ (?:0x)[0-9a-fA-F]+|(?:0b)[01]+|(?:0o)[0-8]+|\d*[\.]?\d+(?:[eE][\-\+]\d+)?[lLuU]* ]]
+
+Keywords={
+  {  Id=1,
+   List={ "import", "export", "arguments", "this", "let", "var", "yield", "delete", "new", "instanceof", "typeof", "alert", 
+          "confirm", "prompt", "status", "self", "top", "parent", "if", "else", "switch", "do", "while", "for", "in", "break",
+          "continue", "case", "default", "return",
+          "with", "try", "catch", "throw", "finally", "Error", "EvalError", "RangeError", "ReferenceError", "SyntaxError", "TypeError",
+          "URIError", "declare", "as",
+          "interface", "module", "abstract", "enum", "export", "interface", "static", "extends", "super", "final",
+          "native", "synchronized", "class", "package", "throws", "const", "goto", "private", "transient", "debugger", "implements",
+          "protected", "volatile",
+          "double", "import", "public", "function", "type", "readonly", "is", "async", "await", "namespace", "of"
+        }
+  },
+  { Id=2,
+    List={  "any", "number", "string", "bool", "Array", "Boolean", "Date", "Function", "Infinity", "Math", "Number", "NaN", "Object",
+            "Packages", "RegExp", "String",
+            "true", "false", "null", "undefined", "int", "short", "boolean", "float", "char", "long", "byte", "void", "never"
+        }
+  },
+  { Id=3,
+    Regex=[[(^\w+):]]
+  },
+
+  { Id=4,
+    Regex=[[(\w+)\s*\(]]
+  }
+}
+
+Strings = {
+  Delimiter=[[`|'|"]],
+  Interpolation=[[ \$\{.+?\} ]],
+}
+
+Comments = {
+   { Block=true,
+     Nested=false,
+     Delimiter = { [[\/\*]], [[\*\/]] }
+   },
+   {
+     Block=false,
+     Delimiter = { [[//]] }
+   }
+}
+
+IgnoreCase=false
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\.|\:|\&|<|>|\!|=|\/|\*|\%|\+|\-|\~|\||\^|\?]]
+
+EnableIndentation=true

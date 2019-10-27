@@ -1,0 +1,25 @@
+
+-- a highlight lang definition for javascript regexes, by Jess Austin
+
+Description = "Javascript Regex"
+
+Categories = {"source", "script"}
+
+Keywords = {
+   { -- backslash literals
+     Id = 1,
+     Regex = [=[\\.]]=]
+   },
+   { -- character classes
+     Id = 2,
+     Regex = [[ (\:(alnum|alpha|blank|cntrl|graph|print|punct|xdigit|unicode|word|space|digit|lower|upper)\:) ]], Group=1
+   }
+}
+
+Strings = { -- character sets
+  DelimiterPairs = { { Open = "\\[", Close = "\\]" } },
+  Escape = [=[\\u\{[[:xdigit:]]+\}|\\u[[:xdigit:]]{4}|\\x[[:xdigit:]]{2}|\\c[A-Z]|\\[[bBdDsSwWtrnvf0]]=],
+}
+
+Operators = [[\.|\+|\*|\^|\$|\||\?:|\?=|\?!|\?|\(|\)]]
+Digits = [[\{\d+,?\d*\}]] -- integer quantifierso

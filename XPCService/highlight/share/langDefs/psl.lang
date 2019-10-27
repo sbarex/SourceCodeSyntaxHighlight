@@ -1,0 +1,52 @@
+
+Description="PATROL"
+
+Categories = {"source"}
+
+Keywords={
+  { Id=1,
+    List={"else", "elsif", "exit", "export", "foreach", "function", "if",
+        "last", "local", "main", "next", "requires", "return", "switch", "while"},
+  },
+  { Id=2,
+    List={"acos", "annotate", "annotate_get", "asctime", "asin", "atan", 
+        "blackout", "cat", "ceil", "chan_exists", "change_state", "close", 
+        "cond_signal", "cond_wait", "console_type", "convert_date", "cos", "cosh", 
+        "create", "date", "debugger", "destroy", "destroy_lock", "difference", 
+        "event_archive", "event_catalog_get", "event_check", "event_query", 
+        "event_range_manage", "event_range_query", "event_report", "event_schedule", 
+        "event_trigger", "event_trigger2", "execute", "exists", "exp", "fabs", "file", 
+        "floor", "fmod", "fopen", "fseek", "ftell", "full_discovery", "get", 
+        "get_chan_info", "getenv", "getpid", "get_ranges", "get_vars", "grep", 
+        "history", "history_get_retention", "index", "int", "internal", "intersection", 
+        "in_transition", "isnumber", "is_var", "kill", "length", "lines", "lock", "log", 
+        "loge", "log10", "ntharg", "nthargf", "nthline", "nthlinef", "num_consoles", 
+        "pconfig", "popen", "pow", "print", "printf", "proc_exists", "process", 
+        "Pslexecute", "random", "read", "readln", "refresh_parameters", 
+        "remote_close", "remote_event_query", "remote_event_trigger", 
+        "remote_file_send", "remote_open", "response", "", "response_get_value", 
+        "rindex", "set", "share", "sin", "sinh", "sleep", "snmp_agent_config", 
+        "snmp_agent_stop", "snmp_close", "snmp_config", "_snmp_debug", "snmp_get", 
+        "snmp_get_next", "snmp_h_get", "snmp__h_get_next", "snmp_h_set", "snmp_open", 
+        "snmp_set", "snmp_trap_ignore", "snmp_trap_listen", "snmp_trap_raise_std_trap", 
+        "snmp_trap_receive", "snmp_trap_register_im", "snmp_trap_send", "snmp_walk", 
+        "sort", "sprintf", "sqrt", "srandom", "subset", "substr", "system", "tail", 
+        "tanh", "time", "tmpnam", "tolower", "toupper", "trim", "union", "unique", 
+        "unlock", "unset", "va_arg", "va_start", "write"},
+  },
+}
+
+Strings={
+  Delimiter=[["]],
+}
+
+IgnoreCase=true
+
+Comments={
+  { Block=false,
+    Delimiter= { [[#]] },
+  },
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-]]
+

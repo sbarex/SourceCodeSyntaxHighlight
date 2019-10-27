@@ -1,0 +1,29 @@
+
+Description="INI"
+
+Categories = {"config"}
+
+Keywords={
+  { Id=1,
+    Regex=[[^\s*(\[.+\])]],
+  },
+  { Id=2,
+    Regex=[[^\s*([^=#]+)\s*=]],
+  },
+  { Id=3,
+    Regex=[[^\s*[\[^=#]+\s*=\s*(\S.*)]],
+  },
+}
+
+Strings={
+  Delimiter=[["]],
+}
+
+Comments={
+  { Block=false,
+    Delimiter= { [[^\s*([;#].*)]] },
+  },
+}
+
+Operators=[[\(|\)|\{|\}|\,|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-|\[|\] ]]
+

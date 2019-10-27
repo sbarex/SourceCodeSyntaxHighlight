@@ -1,0 +1,52 @@
+
+Description="TTCN3"
+
+Categories = {"protocol"}
+
+
+Keywords={
+  { Id=1,
+    List={"if", "else", "while", "for", "do", "return", "log", "testcase", 
+        "runs", "on", "module", "repeat", "stop", "function", "template", "import", 
+        "from", "alt", "trigger", "send", "match", "timeout", "setverdict", 
+        "getverdict", "true", "false", "not", "and", "or", "mod", "not4b", "and4b", 
+        "or4b", "xor4b", "start", "stop", "running", "read", "none", "pass", "fail", 
+        "error", "inconc"},
+  },
+  { Id=2,
+    List={"boolean", "byte", "char", "integer", "float", "double", "timer", 
+        "record", "unsignedbyte", "unsignedchar", "unsignedshort", "unsignedlong", 
+        "short", "long", "charstring", "component"},
+  },
+  { Id=3,
+    List={"type", "const", "var"},
+  },
+  { Id=4,
+    Regex=[[(\w+)\s*\(]],
+  },
+}
+
+Strings={
+  Delimiter=[["|']],
+}
+
+IgnoreCase=false
+
+Comments={
+  { Block=false,
+    Delimiter= { [[\/\/]] },
+  },
+  { Block=true,
+    Nested=false,
+    Delimiter= { [[\/\*]],[[\*\/]],}
+  }
+}
+
+PreProcessor={
+  Prefix=[[#]],
+  Continuation="\\",
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\.|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-|\~]]
+
+EnableIndentation=true

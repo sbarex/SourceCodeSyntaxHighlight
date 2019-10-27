@@ -1,0 +1,118 @@
+
+Description="QML"
+
+Categories = {"markup"}
+
+Keywords={
+  {  Id=1,
+   List={"import", "color","bool","coordinate","date","double","enumeration","font","geocircle",
+         "georectangle","geoshape","int","list","matrix4x4","point","real","rect","size","string",
+         "url","var","variant","vector2d","vector3d","vector4d","true","false", "if", "else", "function", "signal", "property"}
+  },
+  { Id=2,
+    List= {"Accelerometer","AccelerometerReading","Accessible","Action","Address","Affector"
+    ,"Age","Altimeter","AltimeterReading","AmbientLightReading","AmbientLightSensor"
+    ,"AmbientTemperatureReading","AmbientTemperatureSensor","AnchorAnimation",
+    "AnchorChanges","AngleDirection","AnimatedImage","AnimatedSprite","Animation",
+    "AnimationController","Animator","ApplicationWindow","ApplicationWindowStyle",
+    "AttenuationModelInverse","AttenuationModelLinear","Attractor","Audio",
+    "AudioCategory","AudioEngine","AudioListener","AudioSample","Behavior","Binding"
+    ,"Blend","BluetoothDiscoveryModel","BluetoothService","BluetoothSocket",
+    "BorderImage","BrightnessContrast","BusyIndicator","BusyIndicatorStyle","Button"
+    ,"ButtonStyle","Calendar","CalendarStyle","Camera","CameraCapture",
+    "CameraExposure","CameraFlash","CameraFocus","CameraImageProcessing",
+    "CameraRecorder","Canvas","CanvasGradient","CanvasImageData","CanvasPixelArray",
+    "Category","CategoryModel","CheckBox","CheckBoxStyle","CloseEvent",
+    "ColorAnimation","ColorDialog","ColorOverlay","Colorize","Column","ColumnLayout"
+    ,"ComboBox","ComboBoxStyle","Compass","CompassReading","Component",
+    "ConicalGradient","Connections","ContactDetail","ContactDetails","Context2D",
+    "CoordinateAnimation","CumulativeDirection","CustomParticle",
+    "Date","DelegateModel","DelegateModelGroup","Desaturate","Dialog",
+    "Direction","DirectionalBlur","Displace","DistanceReading","DistanceSensor",
+    "DoubleValidator","Drag","DragEvent","DropArea","DropShadow","DwmFeatures",
+    "EditorialModel","EllipseShape","Emitter","EnginioClient",
+    "EnginioModel","EnginioOAuth2Authentication","EnginioReply","ExclusiveGroup",
+    "ExtendedAttributes","FastBlur","FileDialog","FinalState",
+    "Flickable","Flipable","Flow","FocusScope","FolderListModel","FontDialog",
+    "FontLoader","FontMetrics","Friction","GammaAdjust","GaussianBlur",
+    "GeocodeModel","Glow","Gradient","GradientStop","Gravity","Grid","GridLayout",
+    "GridMesh","GridView","GroupBox","GroupGoal","Gyroscope","GyroscopeReading",
+    "HistoryState","HolsterReading",
+    "HolsterSensor","HueSaturation","IRProximityReading","IRProximitySensor","Icon",
+    "Image","ImageModel","ImageParticle","InnerShadow","Instantiator","IntValidator"
+    ,"Item","ItemGrabResult","ItemParticle","JumpList","JumpListCategory",
+    "JumpListDestination","JumpListLink","JumpListSeparator","KeyEvent",
+    "KeyNavigation","Keys","Label","Layout","LayoutMirroring","LevelAdjust",
+    "LightReading","LightSensor","LineShape","LinearGradient","ListElement",
+    "ListModel","ListView","Loader","Locale","Location","Magnetometer",
+    "MagnetometerReading","Map","MapCircle","MapGestureArea","MapItemView",
+    "MapPinchEvent","MapPolygon","MapPolyline","MapQuickItem","MapRectangle",
+    "MapRoute","MapType","MaskShape","MaskedBlur","Matrix4x4","MediaPlayer","Menu",
+    "MenuBar","MenuBarStyle","MenuItem","MenuSeparator","MenuStyle","MessageDialog",
+    "MouseArea","MouseEvent","MultiPointTouchArea","NdefFilter",
+    "NdefMimeRecord","NdefRecord","NdefTextRecord","NdefUriRecord","NearField",
+    "Number","NumberAnimation","ObjectModel","OpacityAnimator","OpacityMask",
+    "OpenGLInfo","OrientationReading","OrientationSensor","Package",
+    "ParallelAnimation","ParentAnimation","ParentChange","Particle","ParticleGroup",
+    "ParticlePainter","ParticleSystem","Path","PathAnimation","PathArc",
+    "PathAttribute","PathCubic","PathCurve","PathElement","PathInterpolator",
+    "PathLine","PathPercent","PathQuad","PathSvg","PathView","PauseAnimation",
+    "PinchArea","PinchEvent","Place","PlaceAttribute","PlaceSearchModel",
+    "PlaceSearchSuggestionModel","PlayVariation","Plugin","PluginParameter",
+    "PointDirection","Position","PositionSource","Positioner","PressureReading",
+    "PressureSensor","ProgressBar","ProgressBarStyle","PropertyAction",
+    "PropertyAnimation","PropertyChanges","ProximityReading","ProximitySensor",
+    "QAbstractState","QAbstractTransition","QSignalTransition","Qt",
+    "QtMultimedia","QtObject","QtPositioning","quaternion","RadialBlur",
+    "RadialGradient","Radio","RadioButton","RadioButtonStyle","RadioData","Ratings",
+    "Rectangle","RectangleShape","RectangularGlow","RecursiveBlur","RegExpValidator"
+    ,"Repeater","ReviewModel","Rotation","RotationAnimation","RotationAnimator",
+    "RotationReading","RotationSensor","Route","RouteManeuver","RouteModel",
+    "RouteQuery","RouteSegment","Row","RowLayout","Scale",
+    "ScaleAnimator","Screen","ScriptAction","ScrollView","ScrollViewStyle","Sensor",
+    "SensorGesture","SensorGlobal","SensorReading","SequentialAnimation","Settings",
+    "ShaderEffect","ShaderEffectSource","Shape","SignalSpy","SignalTransition",
+    "Slider","SliderStyle","SmoothedAnimation","Sound","SoundEffect","SoundInstance"
+    ,"SpinBox","SpinBoxStyle","SplitView","SpringAnimation","Sprite","SpriteGoal",
+    "SpriteSequence","Stack","StackView","StackViewDelegate","State",
+    "StateChangeScript","StateGroup","StateMachine","StatusBar","StatusBarStyle",
+    "String","Supplier","Switch","SwitchStyle","SystemPalette","Tab"
+    ,"TabView","TabViewStyle","TabWidget","TableView","TableViewColumn",
+    "TableViewStyle","TapReading","TapSensor","TargetDirection","TaskbarButton",
+    "TestCase","Text","TextArea","TextAreaStyle","TextEdit","TextField",
+    "TextFieldStyle","TextInput","TextMetrics","ThresholdMask","ThumbnailToolBar",
+    "ThumbnailToolButton","TiltReading","TiltSensor","TimeoutTransition","Timer",
+    "ToolBar","ToolBarStyle","ToolButton","Torch","TouchPoint","TrailEmitter",
+    "Transform","Transition","Translate","Turbulence","U","UniformAnimator","User",
+    "Vector3dAnimation","Video","VideoOutput","ViewTransition",
+    "VisualDataGroup","VisualDataModel","VisualItemModel","Wander","WebChannel","WebEngineLoadRequest",
+    "WebEngineView","WebLoadRequest","WebSocket","WebSocketServer","WebView",
+    "WheelEvent","Window","WorkerScript","XAnimator","XmlListModel","XmlRole",
+    "YAnimator","ZoomBlur"}
+  },
+  { Id=3,
+    Regex=[[(\w+)\s*\:]]
+  },
+  { Id=4,
+    Regex=[[(\w+)\s*\(]]
+  }
+}
+
+Strings = {
+  Delimiter=[["]]
+}
+
+Comments = {
+   { Block=true,
+     Nested=false,
+     Delimiter = { [[\/\*]], [[\*\/]] }
+   },
+   {
+     Block=false,
+     Delimiter = { [[//]] }
+   }
+}
+
+IgnoreCase=false
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\.|\:|\&|<|>|\!|=|\/|\*|\%|\+|\-|\~|\||\^]]

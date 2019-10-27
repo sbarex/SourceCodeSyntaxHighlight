@@ -1,0 +1,44 @@
+
+Description="Make"
+
+Categories = {"config", "script"}
+
+Identifiers=[[ [a-zA-Z_][\w\d\-]* ]]
+
+Keywords={
+  { Id=1,
+    List={"addprefix", "addsuffix", "basename", "dir", "filter", "filter-out", "findstring", "firstword", "foreach", "join", 
+          "notdir", "origin", "patsubst", "shell", "sort", "strip", "subst", "suffix", "wildcard", "word", "words", "all_cflags", 
+          "ar", "arflags", "as", "asflags", "cc", "cflags", "co", "coflags", "cpp", "cppflags", "ctangle", "cweave", "cxx",
+          "cxxflags", "fc", "fflags", "force", "get", "gflags", "install_data", "install_program", "ld", "ldflags", "lex",
+          "lflags", "makeinfo", "pc", "pflags", "rflags", "rm", "tags", "tangle", "tex", "texi2dvi", "weave", "yacc", "yaccr",
+          "yflags", "all", "bindir", "check", "clean", "clobber", "datadir", "dist", "distclean", "dvi", "exec_prefix", 
+          "includedir", "info", "infodir", "install", "installcheck", "installdirs", "libdir", "man0dir", "man0ext", "man1dir",
+          "man1ext", "man2dir", "man2ext", "man3dir", "man3ext", "man4dir", "man4ext", "man5dir", "man5ext", "man6dir", "man6ext",
+          "man7dir", "man7ext", "man8dir", "man8ext", "man9dir", "man9ext", "mandir", "manext", 
+          "mostlyclean", "oldincludedir", "prefix", "print", "realclean", "shar", "srcdir", "statedir", "tar", "test", "uninstall"},
+  },
+  { Id=2,
+    List={"define", "else", "endef", "endif", "export", "ifdef", "ifeq", "ifndef", "ifneq", "include", "override", "unexport"},
+  },
+  { Id=3,
+    Regex=[[(\$\{(\w+)\})]],
+  },
+  { Id=4,
+    Regex=[[\$\w+]],
+  }
+}
+
+Strings={
+  Delimiter=[["|'|`]],
+}
+
+IgnoreCase=false
+
+Comments={
+  { Block=false,
+    Delimiter= { [[#]] },
+  },
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-|\$]]

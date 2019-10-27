@@ -1,0 +1,33 @@
+
+Description="Yaiff"
+
+Categories = {"source"}
+
+Keywords={
+  { Id=1,
+    List={"def", "final", "class", "public", "private", "interface", "else", "if", "const", "return"},
+  },
+  { Id=2,
+    List={"UInt8", "", "Int8"},
+  },
+  { Id=3,
+    Regex=[[@\w+]],
+  },
+  { Id=4,
+    Regex=[[(\w+)\s*\(]],
+  },
+}
+
+Strings={
+  Delimiter=[["|']],
+}
+
+IgnoreCase=false
+
+Comments={
+  { Block=false,
+    Delimiter= { [[#(?!#).*]] },
+  },
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\.|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-|\~|\?]]

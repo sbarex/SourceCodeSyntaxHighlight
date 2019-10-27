@@ -1,0 +1,82 @@
+
+--https://gitlab.com/saalen/highlight/merge_requests/85
+
+Description="Slim (experimental)"
+
+Categories = {"template"}
+
+Keywords={
+
+    {   Id=1,
+        Regex=[[^\s*(([.#]?[\w]+[\:\-]*)+)]],
+        Group=1,
+    },
+    {   Id=2,
+        Regex=[[([-\w\.\-\:]+)=]],
+    },
+    {   Id=3,
+        Regex=[[^\s*([-']|==?)\s*?]],
+    },
+    {   Id=3,
+        Regex=[[.(=).]],
+    },
+    {   Id=4,
+        Regex = [[ [#]\{.*?\} ]],
+    },
+    {   Id=4,
+        Regex = [[ [#]\{\{.*?\}\} ]],
+    }
+}
+
+Strings={
+
+    Delimiter=[["|'|`|\|]],
+    Interpolation = [[ [#]\{[^}]*?\} ]],
+   -- DelimiterPairs= {{ Open=[[ \( ]], Close=[[ \) ]] }},
+}
+
+Comments={
+
+    { Block=false,
+    Delimiter= { [[^\s*(/)]] },
+    },
+
+    { Block=true,
+    Nested=false,
+    Delimiter= { [[<!\-\-]],[[\-\->]] }
+    }
+}
+
+IgnoreCase=true
+
+specialString = 0
+lastColumn=-1
+wsPrefix = nil
+
+-- new args in 3.50: lineno and column
+function OnStateChange(oldState, newState, token, groupID, lineno, column)
+   
+    if specialString == 0 and newState==HL_STRING and token=='|' then
+        specialString = 1
+        return newState
+    end
+    
+    if specialString==1 and newState==HL_STANDARD and wsPrefix == nil  then
+        
+        if #token > 1 and not string.match(token, "^%s") then
+            wsPrefix = token
+            lastColumn = column
+            return HL_STRING
+        end
+    end
+
+    if specialString==1  and (lastColumn > column)  then       
+        wsPrefix = nil
+        specialString=0
+        -- experimental syntax: second arg with state to define a reject continuation hint
+        return HL_REJECT, HL_STRING_END
+    elseif lastColumn == column and wsPrefix==token then 
+        return HL_STRING
+    end
+    
+end

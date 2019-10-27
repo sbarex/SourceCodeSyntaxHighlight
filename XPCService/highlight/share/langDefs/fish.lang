@@ -1,0 +1,106 @@
+
+Description="Fish"
+
+Categories = {"script", "shell"}
+
+Identifiers=[[ [a-zA-Z_][\w\-]*(?!\/) ]]
+
+Keywords={
+    {
+        Id=1,
+        List={
+            "and", "begin", "break", "breakpoint", "case", "else", "end",
+            "for", "function", "if", "not", "or", "return", "switch", "test",
+            "while"
+        },
+    },
+    {
+        Id=2,
+        List={
+            "abbr", "alias", "argparse", "bg", "bind", "block", "builtin",
+            "cd", "cdh", "command", "commandline", "complete", "contains",
+            "count", "dirh", "dirs", "disown", "echo", "emit", "eval", "exec",
+            "exit", "false", "fg", "fish", "fish_breakpoint_prompt",
+            "fish_config", "fish_indent", "fish_key_reader",
+            "fish_mode_prompt", "fish_opt", "fish_prompt",
+            "fish_right_prompt", "fish_update_completions", "fish_vi_mode",
+            "funced", "funcsave", "functions", "help", "history", "isatty",
+            "jobs", "math", "nextd", "open", "popd", "prevd", "printf",
+            "prompt_pwd", "psub", "pushd", "pwd", "random", "read",
+            "realpath", "set", "set_color", "source", "status", "string",
+            "suspend", "trap", "true", "type", "ulimit", "umask", "vared",
+            "wait"
+        },
+    },
+    {
+        Id=3,
+        List={
+            "ls", "cat", "tac", "rev", "cp", "mv", "rm", "rmdir", "chmod",
+            "chattr", "ln", "find", "xargs", "expr", "date", "zdump", "time",
+            "touch", "at", "batch", "cal", "sleep", "usleep", "hwclock",
+            "clock", "sort", "tsort", "diff", "patch", "diff3", "sdiff",
+            "cmp", "comm", "uniq", "expand", "unexpand", "cat", "paste",
+            "join", "head", "tail", "grep", "egrep", "zgrep", "look", "sed",
+            "awk", "wc", "tr", "fold", "fmt", "ptx", "col", "column", "colrm",
+            "nl", "pr", "gettext", "iconv", "recode", "groff", "lex", "yacc",
+            "tar", "shar", "ar", "cpio", "gzip", "bzip2", "compress",
+            "uncompress", "zip", "unzip", "sq", "file", "which", "whereis",
+            "whatis", "vdir", "shred", "locate", "slocate", "strings",
+            "basename", "dirname", "split", "sum", "cksum", "md5sum",
+            "sha1sum", "uuencode", "uudecode", "crypt", "make", "install",
+            "more", "less", "host", "vrfy", "nslookup", "dig", "traceroute",
+            "ping", "whois", "finger", "ftp", "uucp", "telnet", "rlogin",
+            "rsh", "rcp", "ssh", "write", "mail", "vacation", "tput", "reset",
+            "clear", "script", "factor", "bc", "dc", "jot", "seq", "yes",
+            "banner", "printenv", "lp", "tee", "mkfifo", "pathchk", "dd",
+            "od", "hexdump", "m4"
+        },
+    },
+
+    {
+        Id=4,
+        Regex=[[ \$[\w\#]+ ]],
+    },
+    {
+        Id=2,
+        Regex=[[ \-\-?[\w\-]+ ]],
+    }
+}
+
+-- hereDoc opening delimiter, see OnStateChange to handle end of string
+Strings={
+    Delimiter=[[<<[\-]?\s*["']?\s*[A-Za-z_]+["']?|"|`|']],
+}
+
+IgnoreCase=false
+
+Comments={
+    {
+        Block=false,
+        Delimiter= { [[#]] },
+    },
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-]]
+
+function OnStateChange(oldState, newState, token)
+    if oldState==HL_STRING and token==hereDoc then
+        hereDoc = nil
+        return HL_STRING_END
+    end
+
+    if  (string.sub(token,1,1) =="$" )  and oldState==HL_STRING and newState==HL_KEYWORD then
+        return HL_INTERPOLATION
+    end
+
+    if hereDoc~=nil then
+        return HL_STRING
+    end
+
+    --recognize hereDoc multine strings
+    if oldState==HL_STANDARD and newState==HL_STRING  then
+        hereDoc = string.match(token, "<<%-?%s*%'?([%-%a%d_]+)" )
+    end
+
+    return newState
+end

@@ -1,0 +1,57 @@
+
+Description="ColdFusion MX"
+
+Categories = {"source"}
+
+Keywords={
+  { Id=1,
+    List={"3Dcfabort", "cfapplet", "cfapplication", "cfargument", "cfassociate", 
+            "cfbreak", "cfcache", "cfcase", "cfcatch", "cfchart", "cfchartdata", 
+            "cfchartseries", "cfcol", "cfcollection", "", "cfcomponent", "cfcontent", 
+            "cfcookie", "cfdefaultcase", "cfdirectory", "cfdump", "cfelse", "cfelseif", 
+            "cferror", "cfexecute", "cfexit", "cffile", "cfflush", "cfform", "cfftp", 
+            "cffunction", "cfgrid", "cfgridcolumn", "cfgridrow", "cfgridupdate", "cfheader", 
+            "cfhtmlhead", "cfhttp", "cfhttpparam=", "cfif", "cfimport", "cfinclude", 
+            "cfindex", "cfinput", "cfinsert", "cfinvoke", "cfinvokeargument", "cfldap", 
+            "cflocation", "cflock", "cflog", "cflogin", "cfloginuser", "cflogout", "cfloop", 
+            "cfmail", "", "cfmailparam", "cfmailpart", "cfmodule", "cfobject", 
+            "cfobjectcache", "cfoutput", "cfparam", "cfpop", "cfprocessingdirective", 
+            "cfprocparam", "cfprocresult", "cfproperty", "cfquery", "cfqueryparam", 
+            "cfregistry", "cfreport", "cfrethrow", "cfreturn", "cfsavecontent", 
+            "cfschedule", "cfscript", "cfsearch", "cfselect", "cfset", "cfsetting", 
+            "cfsilent", "cfslider", "cfstoredproc", "cfswitch", "cftable", "cftextinput", 
+            "cfthrow", "cftrace", "cftransaction", "cftree", "cftreeitem", "cftry", 
+            "cfupdate", "cfwddx", "cfxml"},
+  },
+  { Id=1,
+    Regex=[[<!?\/?\w+>?|/?>]],
+  },
+  { Id=2,
+    Regex=[[([-\w]+)="]],
+  },
+  { Id=3,
+    Regex=[[\&\#?\w+;]],
+  },
+  { Id=4,
+    Regex=[[\#\w+]],
+  },
+}
+
+Strings={
+  Delimiter=[["|']],
+}
+
+IgnoreCase=true
+
+Comments={
+  { Block=false,
+    Delimiter= { [[//]] },
+  },
+  { Block=true,
+    Nested=true,
+    Delimiter= { [[<!\-\-\-]],[[\-\-\->]] }
+  }
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\:|\&|\!|\=|\/|\*|\%|\+|\-|\.]]
+

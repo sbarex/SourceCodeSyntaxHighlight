@@ -1,0 +1,43 @@
+
+Description="Kotlin"
+
+Categories = {"source"}
+
+Keywords={
+  {  Id=1,
+   List={"package", "as", "typealias", "class", "this", "super", "val", "var", 
+            "fun", "for", "null", "true", "false", "is", "in", "throw", "return", "break", 
+            "continue", "object", "if", "try", "else", "while", "do", "when", "interface", 
+            "yield", "typeof", "yield", "typeof", "import", "internal", "private", "protected", 
+            "public", "override",  "open",  "final",  "abstract",  "final",  
+            "enum",  "open",  "annotation"}
+  },
+  {  Id=2,
+   List={"Any","Unit", "String", "Array", "Int", "Boolean", "Char", "Long", "Double",
+         "Float", "Short", "Byte" }
+  },
+  { Id=3,
+    Regex=[[@\w+]]
+  },
+  { Id=4,
+    Regex=[[(\w+)\s*\(]]
+  }
+}
+
+Strings = {
+  Delimiter=[['|`|"]],
+    Interpolation=[[ [%$]\w+|\$\{.+?\} ]],
+}
+
+Comments = {
+   { Block=true,
+     Nested=false,
+     Delimiter = { [[\/\*]], [[\*\/]] }
+   },
+   {
+     Block=false,
+     Delimiter = { [[//]] }
+   }
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\.|\:|\&|<|>|\!|=|\/|\*|\%|\+|\-|\~|\||\^]]

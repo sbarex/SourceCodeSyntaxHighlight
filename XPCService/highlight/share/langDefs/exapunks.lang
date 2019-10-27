@@ -1,0 +1,68 @@
+--////////////// || 1.0.1:19.04.25:HL3.50:Lua5.3 || by Tristano Ajmone:
+--// EXAPUNKS // || EXA Virtual Machine Language || https://github.com/tajmone
+--////////////// || www.zachtronics.com/exapunks || http://unlicense.org/
+--------------------------------------------------------------------------------
+Description = "EXAPUNKS"  Categories = {"assembly", "fictional"}
+IgnoreCase  = true        EnableIndentation = false --[[
+--------------------------------------------------------------------------------
+EXA code is the fictional Assembly language used in the EXAPUNKS video game to
+program EXAs (EXecution Agents) and the TEC Redshift Player game console.
+
+The Redshift Player console from the EXAPUNK game can be donwloaded freely from
+Steam, to play Redshift games created by other EXAPUNKS players:
+
+    https://store.steampowered.com/app/948420/EXAPUNKS_TEC_Redshift_Player/
+--------------------------------------------------------------------------------
+There is no official file extension for EXA files, but the following are common:
+    .exapunks
+    .exa
+--------------------------------------------------------------------------------
+Shebang:  @jwortmann, in his SublimeText syntax, proposed using the following
+          pattern for autodetection on the first line:
+
+          ^(?i:NOTE\sEXAPUNKS)\b
+
+See: https://github.com/jwortmann/exapunks-syntax
+------------------------------------------------------------------------------]]
+Comments = {{
+  Block=false,
+  Nested=false,
+  Delimiter = { [[ (?i:;|NOTE) ]] }}} -->  ';' or 'NOTE'
+Operators = [=[ (>|<|\=) ]=]          -->  '<' '>' '='
+Digits    = [=[ (\-?\d{1,4})\b ]=]    -->  Clamp x4. Inc. '-'
+Keywords = {{
+  ------------------------------------------------------------------------------
+  Id = 1, List = {                                       -- EXA Instructions | 1
+  ------------------------------------------------------------------------------
+    "addi", "copy", "divi", "drop", "eof",  "file", "fjmp", "grab", "halt",
+    "host", "jump", "kill", "link", "make", "mark", "mode", "modi", "mrd",
+    "muli", "noop", "rand", "repl", "seek", "subi", "swiz", "test", "tjmp",
+    "void", "wipe", -- additional instructions for Redshift Homebrew:
+    "wait", "data" }},{
+  ------------------------------------------------------------------------------
+  Id = 2, List = {   "x", "t", "f", "m"   }},{              -- EXA Registers | 2
+  ------------------------------------------------------------------------------
+  Id = 3,                                              -- Hardware Registers | 3
+  ------------------------------------------------------------------------------
+    Regex = [=[ (#[\w]+) ]=],
+    Group = 1 },{
+  ------------------------------------------------------------------------------
+  Id = 4,                                                          -- Labels | 4
+  ------------------------------------------------------------------------------
+  -- Consider a label any token following MARK, JUMP, TJMP or FJMP.
+    Regex = [=[ ^(?i)(mark|jump|[ft]jmp)\s*(\w+) ]=],
+    Group = 2 },{
+  ------------------------------------------------------------------------------
+  Id = 5,                                                          -- Macros | 5
+  ------------------------------------------------------------------------------
+    Regex = [=[ (?i)(@(rep|end|\{)|,|})  ]=], -- '@REP'  '@END' '@{' ',' '}'
+    Group = 1 }}
+
+--[[ CHANGELOG
+1.0.1 (2019/04/25) Highlight 3.50
+  - Amend comments descriptions.
+
+1.0.0 (2019/04/13) Highlight 3.50
+  - First release
+
+--]]

@@ -1,0 +1,49 @@
+
+Description="Pony"
+
+Categories = {"source"}
+
+--Digits = [[ (?:0x|0X|0b)[0-9a-fA-F']+|\d*[\.]?\d+(?:[eE][\-\+]\d+)?[lLuU]* ]]
+
+Keywords={
+  {  Id=1,
+    List={ "actor", "as", "be", "box", "break", "class", "compile_error", "continue", "consume", "do", "else", "elseif", "embed", 
+            "end", "error", "for", "fun", "if", "ifdef", "in", "interface", "is", "iso", "lambda", "let", "match", "new", "object",
+            "primitive", "recover", "ref", "repeat", "return", "tag", "then", "this", "trait", "trn", "try", "type", "until", "use", 
+            "var", "val", "where", "while", "with"}
+  },
+  { Id=2,
+    List= { "Bool", "ISize", "ILong", "I8", "I16", "I32", "I64", "I128", "USize", "ULong", "U8", "U16", "U32", "U64", "U128", "F32", "F64", 
+            "String", "true", "false"}
+  },
+  { Id=3,
+    Regex=[[\w+']]
+  },
+  { Id=4,
+    Regex=[[(\w+)\s*\(]]
+  }
+}
+
+Strings={
+  Delimiter=[["""|"]],
+ -- RawPrefix="r",
+ -- Escape=[=[\\[ntvbrfa\\\?'"]|\\\d{3}|\\x[[:xdigit:]]{2}]=],
+ -- Interpolation=[[ %[%#0\-\+\ diouxXeEfFgGcrs]+|%\(\w+\)[sd]? ]]
+}
+
+Comments = {
+   { Block=true,
+     Nested=true,
+     Delimiter = { [[\/\*]], [[\*\/]] }
+   },
+   {
+     Block=false,
+     Delimiter = { [[//]] }
+   }
+}
+
+IgnoreCase=false
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\.|\:|\&|<|>|\!|=|\/|\*|\%|\+|\-|\~|\||\^]]
+
+EnableIndentation=false

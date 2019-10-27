@@ -1,0 +1,42 @@
+
+Description="TCSH"
+
+Categories = {"script", "shell"}
+
+
+Identifiers=[[ [a-zA-Z_\@][\w\-]* ]]
+
+Keywords={
+  { Id=1,
+    List={"return", "if", "endif", "then", "else", "switch", "endsw", "while", 
+            "end", "foreach", "do", "done", "", "eval", "exec", "exit", "fg", "goto", 
+            "glob", "hashstat", "history", "jobs", "kill", "limit", "login", "logout", 
+            "nohup", "notify", "nice", "onintr", "popd", "pushd", "printenv", "read", 
+            "rehash", "repeat", "set", "setenv", "shift", "source", "suspend", "time", 
+            "umask", "unalias", "unhash", "unlimit", "unset", "unsetenv", "wait", "alloc", 
+            "bindkey", "builtins", "complete", "echotc", "filetest", "hup", "log", "sched", 
+            "settc", "setty", "stop", "telltc", "uncomplete", "where", "which", "dirs", 
+            "ls-F", "@"},
+  },
+  { Id=2,
+    Regex=[[\$\S+]],
+  },
+  { Id=3,
+    Regex=[[(\$\{\w+\})]],
+  },
+
+}
+
+Strings={
+  Delimiter=[["|']],
+}
+
+IgnoreCase=false
+
+Comments={
+  { Block=false,
+    Delimiter= { [[#]] },
+  },
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-]]

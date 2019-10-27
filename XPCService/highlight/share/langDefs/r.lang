@@ -1,0 +1,31 @@
+Description="R"
+
+Categories = {"source", "scientific"}
+
+Identifiers=[[ [a-zA-Z_\.][\w]* ]]
+
+Keywords={
+  { Id=1,
+    List={"if", "else", "repeat", "while", "function", "for", "in", "next", "break", "ifelse", "switch"},
+  },
+  { Id=2,
+    List={"NULL", "NA", "Inf", "NaN", "TRUE", "T", "FALSE", "F"},
+  },
+  { Id=4,
+    Regex=[[([\w+_\.]+)\s*\(]],
+  }  
+}
+
+Strings={
+  Delimiter=[["|']],
+}
+
+Comments={
+  { Block=false,
+    Delimiter= { [[#]] },
+  },
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-|\~|\|]]
+
+EnableIndentation=true

@@ -1,0 +1,38 @@
+
+Description="Oberon"
+
+Categories = {"source"}
+
+Keywords={
+  { Id=1,
+    List={"ARRAY", "BEGIN", "CASE", "CONST", "DIV", "DO", "ELSE", "ELSIF", "END", 
+          "EXIT", "IF", "IMPORT", "IN", "IS", "LOOP", "MOD", "MODULE", "NIL", 
+          "OF", "OR", "", "PROCEDURE", "RECORD", "REPEAT", "RETURN", "THEN", "TO", 
+          "TYPE", "UNTIL", "VAR", "WHILE", "WITH", "ABS", "ODD", "CAP", "ASH", 
+          "LEN", "MAX", "MIN", "SIZE", "ORD", "CHR", "SHORT", "LONG", "ENTIER", 
+          "INC", "DEC", "INCL", "EXCL", "COPY", "NEW", "HALT", "ADR", "BIT", 
+          "CC", "LSH", "ROT", "VAL", "GET", "PUT", "MOVE", "NEW", "FOR"},
+  },
+  { Id=2,
+    List={"BOOLEAN", "CHAR", "SHORTINT", "INTEGER", "LONGINT", "REAL", 
+          "LONGREAL", "SET", "ARRAY", "RECORD", "POINTER", "BYTE"},
+  },
+  { Id=4,
+    Regex=[[(\w+)\s*\(]],
+  },
+}
+
+Strings={
+  Delimiter=[["]],
+}
+
+Comments={
+  { Block=true,
+    Nested=false,
+    Delimiter= { [[\(\*]],[[\*\)]],}
+  }
+}
+
+IgnoreCase=false
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\:|\&|<|>|\!|\=|\/|\*|\.|\+|\-|\#]]

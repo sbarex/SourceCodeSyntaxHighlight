@@ -1,0 +1,40 @@
+-- a highlight lang definition for coffeescript's block regexes, by Jess Austin
+Description = "Coffeescript Block Regex"
+
+Categories = {"source", "script"}
+
+
+Keywords = {
+   { -- backslash literals
+     Id = 1,
+     Regex = [=[\\[][0-9'"\\.?()]]=]
+   },
+   { -- interpolation
+     Id = 2,
+     Regex = [[#\{.*}]]
+   },
+   
+}
+
+Comments = {
+  {
+    Block = false,
+    Delimiter = { [[#]] }
+  }
+}
+
+Strings = { -- actually, character sets
+  DelimiterPairs = { { Open = "\\[\\^?", Close = "\\]" } },
+  Escape = [=[\\u\{[[:xdigit:]]+\}|\\u[[:xdigit:]]{4}|\\x[[:xdigit:]]{2}|\\c[A-Z]|\\[[bBdDsSwWtrnvf0]]=]
+}
+
+Operators = [[\.|\+|\*|\^|\$|\||\?:|\?=|\?!|\?|\(|\)]]
+Digits = [[\{\d+,?\d*\}]] -- integer quantifiers
+
+-- maybe this would be a better way to do interpolation? I can't get it to work
+--NestedSections = {
+--  {
+--    Lang = "coffee",
+--    Delimiter = { [[#\{]], [[}]] }
+--  }
+--}

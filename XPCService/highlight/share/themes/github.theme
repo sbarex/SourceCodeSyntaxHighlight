@@ -1,0 +1,24 @@
+
+Description="Github Source View"
+
+Categories = {"light"}
+
+Default        = { Colour="#000000" }
+Canvas         = { Colour="#ffffff" }
+Number         = { Colour="#0086b3" }
+Escape         = { Colour="#183691" }
+String         = { Colour="#183691" }
+StringPreProc  = { Colour="#183691" }
+BlockComment   = { Colour="#969896" }
+PreProcessor   = { Colour="#a71d5d" }
+LineNum        = { Colour="#b2b2b2" }
+Operator       = { Colour="#000000" }
+LineComment = BlockComment
+Interpolation  = { Colour="#183691" }
+
+Keywords = {
+  { Colour= "#a71d5d" },
+  { Colour= "#0086b3" },
+  { Colour= "#0086b3" },
+  { Colour= "#0086b3" },
+}

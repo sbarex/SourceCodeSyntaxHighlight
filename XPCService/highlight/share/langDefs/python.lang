@@ -1,0 +1,72 @@
+Description="Python"
+
+Categories = {"source", "script"}
+
+Digits=[[ (?:0x|0X|0o|0O|0b|0B)[0-9a-fA-F\_]+|\d*[\.\_]?[\d\_]+(?:[eE][\-\+]\d+)?[lLuU]* ]]
+
+Keywords={
+  { Id=1,
+    List={  "break", "continue", "del", "except", "exec", "finally", "pass", 
+            "print", "raise", "return", "try", "global", "assert", "lambda", "yield", "def", 
+            "class", "for", "while", "if", "elif", "else", "and", "in", "is", "not", "or", 
+            "import", "from", "as", "async", "await", "None", "True", "False"}
+  },
+  { Id=2,
+    List={  "bool", "bytes", "enumerate", "set", "frozenset", "help", "reversed", "sorted", 
+            "sum", "Ellipsis", "NotImplemented", "__import__", "abs", "apply", "buffer", 
+            "callable", "chr", "classmethod", "cmp", "coerce", "compile", "complex", 
+            "delattr", "dict", "dir", "divmod", "eval", "execfile", "file", "filter", 
+            "float", "getattr", "globals", "hasattr", "hash", "hex", "id", "input", "int", 
+            "intern", "isinstance", "issubclass", "iter", "len", "list", "locals", "long", 
+            "map", "max", "min", "object", "oct", "open", "ord", "pow", "property", "range", 
+            "raw_input", "reduce", "reload", "repr", "round", "setattr", "slice", 
+            "staticmethod", "str", "super", "tuple", "type", "unichr", "unicode", "vars", 
+            "xrange", "zip"}
+  },
+  -- decorators:
+  { Id=2,
+    Regex=[[@[\w\.]+]],
+  },
+  { Id=3,
+    List={  "ArithmeticError", "AssertionError", "AttributeError", 
+            "DeprecationWarning", "EOFError", "EnvironmentError", "Exception", 
+            "FloatingPointError", "IOError", "ImportError", "IndentationError", 
+            "IndexError", "KeyError", "KeyboardInterrupt", "LookupError", "MemoryError", 
+            "NameError", "NotImplementedError", "OSError", "OverflowError", 
+            "OverflowWarning", "ReferenceError", "RuntimeError", "RuntimeWarning", 
+            "StandardError", "StopIteration", "SyntaxError", "SyntaxWarning", "SystemError", 
+            "SystemExit", "TabError", "TypeError", "UnboundLocalError", "UnicodeError", 
+            "UnicodeEncodeError", "UnicodeDecodeError", "UnicodeTranslateError", 
+            "UserWarning", "ValueError", "Warning", "WindowsError", "ZeroDivisionError"}
+  },
+  { Id=4,
+    Regex=[[(\w+)\s*\(]],
+  },
+}
+
+Strings={
+  Delimiter=[["""|'''|"|']],
+  RawPrefix="r",
+  Escape=[=[\\[ntvbrfa\\\?'"]|\\\d{3}|\\x[[:xdigit:]]{2}]=],
+  Interpolation=[[ %[%#0\-\+diouxXeEfFgGcrs]+|%\(\w+\)[sd]?|\{\w+\} ]]
+}
+
+IgnoreCase=false
+
+Comments={
+  { Block=false,
+    Delimiter= { [[#]] },
+  },
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\.|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-|\@]]
+
+
+function OnStateChange(oldState, newState, token, groupID)
+   if oldState==HL_STANDARD and string.sub(token,1,1)=="%" then
+      return HL_OPERATOR
+   end
+
+   return newState
+end
+

@@ -1,0 +1,54 @@
+
+Description="Objective C"
+
+Categories = {"source"}
+
+
+Keywords={
+  { Id=1,
+    List={"goto", "break", "return", "continue", "asm", "case", "default", "if", 
+        "else", "switch", "while", "for", "do", "sizeof", "typeof", "typedef", "inline", 
+        "stdcall", "auto", "cdecl", "class", "const_cast", "delete", "dynamic_cast", 
+        "explicit", "extern", "friend", "goto", "inline", "mutable", "namespace", "new", 
+        "operator", "pascal", "register", "reinterpret_cast", "private", "protected", 
+        "public", "static_cast", "template", "this", "throw", "try", "catch", "typeid", 
+        "using", "virtual", "volatile", "true", "false", "id", "Class", "SEL", "IMP", 
+        "BOOL", "oneway", "in", "out", "inout", "bycopy", "byref", "self", "super", 
+        "nil", "NIL", "TRUE", "FALSE"},
+  },
+  { Id=2,
+    List={"int", "long", "short", "char", "void", "signed", "unsigned", "float", 
+        "double", "size_t", "wchar_t", "ptrdiff_t", "sig_atomic_t", "fpos_t", "clock_t", 
+        "time_t", "va_list", "jmp_buf", "FILE", "DIR", "div_t", "ldiv_t", "static", 
+        "register", "auto", "volatile", "extern", "const", "bool", "struct", "union", 
+        "enum"},
+  },
+  { Id=3,
+    Regex=[[@\w+]],
+  },
+  { Id=4,
+    Regex=[[(\w+)\s*\(]],
+  },
+}
+
+Strings={
+  Delimiter=[["|']],
+}
+
+IgnoreCase=false
+
+Comments={
+  { Block=false,
+    Delimiter= { [[\/\/]] },
+  },
+  { Block=true,
+    Nested=false,
+    Delimiter= { [[\/\*]],[[\*\/]],}
+  }
+}
+
+PreProcessor={
+  Prefix=[[#]],
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-]]

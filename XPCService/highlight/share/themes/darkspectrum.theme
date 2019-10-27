@@ -1,0 +1,23 @@
+Description = "vim darkspectrum"
+
+Categories = {"dark", "vim"}
+
+Default	= { Colour="#efefef" }
+Canvas	= { Colour="#2A2A2A" }
+Number	= { Colour="#fce94f" }
+Escape	= { Colour="#e9b96e" }
+String	= { Colour="#fce94f" }
+BlockComment	= { Colour="#8a8a8a" }
+StringPreProc = String
+LineComment   = BlockComment
+Operator      = Default
+LineNum      = BlockComment
+PreProcessor      = Default
+Interpolation  = { Colour="#69C8DB" }
+
+Keywords = {
+  { Colour="#ffffff" , Bold=true},
+  { Colour="#8ae234" , Bold=true},
+  { Colour="#34e3e3" },
+  { Colour="#efefef" },
+}

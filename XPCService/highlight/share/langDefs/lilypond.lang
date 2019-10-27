@@ -1,0 +1,34 @@
+
+Description="Lilypond"
+
+Categories = {"source"}
+
+
+Identifiers=[[ ([a-z]+)\d* ]]
+
+Keywords={
+  { Id=1,
+    List={"c", "d", "e", "f", "g", "a", "h", "b", "cis", "dis", "eis", "fis", "gis", "ais", "des", "es", "ges", "as", "s", "bes"},
+  },
+  { Id=2,
+    Regex=[[\\[\w<>!\\]+]],
+  },
+}
+
+Strings={
+  Delimiter=[["]],
+}
+
+IgnoreCase=false
+
+Comments={
+  { Block=false,
+    Delimiter= { [[%(?!\{).*]] },
+  },
+  { Block=true,
+    Nested=false,
+    Delimiter= { [[\%\{]],[[\}\%]],}
+  }
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|<|>|\'|\,|\.|\/|\:|\^|\=|\#|\*|\_|\!]]

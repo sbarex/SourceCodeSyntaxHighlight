@@ -1,0 +1,50 @@
+
+Description="Objective Caml"
+
+Categories = {"source"}
+
+Digits=[[ (?:0x|0X|0b|0B)[0-9a-fA-F]+|\d*[\.\_]?\d+(?:[eE][\-\+]\d+)?[lLuUbfdm]* ]]
+
+Keywords={
+  { Id=1, List={"and", "as", "assert", "asr", "begin", "", "class", 
+    "constraint", "do", "done", "downto", "else", "end", "exception", "external", 
+    "false", "for", "fun", "function", "functor", "if", "in", "include", "inherit", 
+    "initializer", "land", "lazy", "let", "lor", "lsl", "lsr", "lxor", "match", 
+    "method", "mod", "module", "mutable", "new", "object", "of", "open", "or", 
+    "private", "rec", "sig", "struct", "then", "to", "true", "try", "type", "val", 
+    "virtual", "when", "while", "with", "value"}, },
+  { Id=2,
+    List={"bool", "string", "int", "real", "word", "float", "unit", "option", "ref"},
+  },
+  { Id=3,
+    Regex=[[\b[A-Z][a-zA-Z0-9_]*(?=\.)]],
+  },
+  { Id=4,
+    Regex=[[ let\s+(rec\s+)?(\w+)]], Group=2
+  },
+}
+
+function OnStateChange(oldState, newState, token, kwgroup)
+  if  newState==HL_KEYWORD and kwgroup==4 then
+    
+    AddKeyword(token, 4)
+  end
+  return newState
+end
+
+Strings={
+  Delimiter=[["]],
+  Interpolation=[[ %\w ]],
+}
+
+Comments={
+
+  { Block=true,
+    Nested=false,
+    Delimiter= { [[\(\*]],[[\*\)]],}
+  }
+}
+
+IgnoreCase=false
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-|\.|\||@]]

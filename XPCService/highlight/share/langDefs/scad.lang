@@ -1,0 +1,54 @@
+--based on c.lang
+
+Description="OpenSCAD"
+
+
+Categories = {"source"}
+
+Digits = [[ (?:0x|0X|0b)[0-9a-fA-F']+|\d*[\.]?\d+(?:[eE][\-\+]?\d+)?[lLuU]* ]]
+
+Keywords={
+  { Id=1,
+   List={ "echo", "assign", "let", "if", "else", "for", "intersection_for", "include", "use", "union", "difference", "intersection", "render", 
+          "intersection_for", "scale", "rotate", "translate", "mirror", "multmatrix", "color", "minkowski", "hull", "projection", "linear_extrude", 
+          "rotate_extrude", "offset", "cube", "sphere", "cylinder", "polyhedron", "surface", "square", "circle", "polygon", "import_dxf", "text", 
+          "import", "child", "children"
+   }
+  },
+  { Id=2,
+    List= { "abs", "acos", "asin", "atan", "atan2", "ceil", "cos", "exp", "floor", "ln", "log", "lookup", "max", "min", "pow", "rands", "round", "sign", 
+            "sin", "sqrt", "tan", "str", "len", "search", "version", "version_num", "concat", "chr", "dxf_cross", "dxf_dim"
+          }
+  },
+  { Id=3,
+    List= { "true", "false"
+          }
+  },
+  { Id=3,
+    Regex=[[\$\w+]]
+  },
+  { Id=4,
+    Regex=[[(\w+)\s*\(]]
+  }
+}
+
+Strings = {
+  Delimiter=[["]],
+}
+
+Comments = {
+   { Block=true,
+     Nested=false,
+     Delimiter = { [[\/\*]], [[\*\/]] }
+   },
+   {
+     Block=false,
+     Delimiter = { [[//]] }
+   }
+}
+
+IgnoreCase=false
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\.|\:|\&|<|>|\!|=|\/|\*|\%|\+|\-|\~|\||\^|\?]]
+
+EnableIndentation=true

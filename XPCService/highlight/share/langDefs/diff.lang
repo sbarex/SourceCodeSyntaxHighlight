@@ -1,0 +1,28 @@
+
+Description="Diff"
+
+Categories = {"text"}
+
+Digits=[[ ^[\d,]*[ac]\d* ]]
+
+Keywords={
+  { Id=1,
+    Regex=[[^[-<].*]],
+  },
+  { Id=2,
+    Regex=[[^[+>].*]],
+  },
+  { Id=3,
+    Regex=[[^\.$]],
+  },
+  { Id=4,
+    Regex=[[^@@.*@@$]],
+  },
+}
+
+Comments={
+  { Block=false,
+    Delimiter= { [[regex(^\-\-\-$)]] },
+  },
+}
+

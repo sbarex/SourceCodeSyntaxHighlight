@@ -1,0 +1,18 @@
+-- Load Java definition
+dofile(HL_LANG_DIR.."java.lang")
+
+Description="Scala"
+
+Categories = {"source", "functional"}
+
+-- append keywords to Java keywords
+table.insert(Keywords,
+  { Id=1,
+    List={"abstract", "def", "object", "override", "sealed", "trait", "type", "val", "var", "yield",
+          "forSome", "implicit", "lazy", "match", "null", "with"},
+  }
+)
+
+Strings={
+  Delimiter=[["""|"|']],
+}

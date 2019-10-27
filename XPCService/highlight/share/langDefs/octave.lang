@@ -1,0 +1,75 @@
+
+Description="Octave"
+
+Categories = {"source", "scientific"}
+
+Keywords={
+  { Id=1,
+    List={
+    "break","endfor","function","return",
+    "continue","endfunction","global","while",
+    "else","endif","gplot",
+    "elseif","endwhile","gsplot",
+    "end","for","if","casesen","document","history","set",
+    "cd","edit_history","load","show",
+    "clear","help","ls","who",
+    "dir","format","run_history","save"
+},
+  },
+  { Id=2,
+    List={"DEFAULT_EXEC_PATH", "current_script_file_name", 
+        "max_recursion_depth", "variables_can_hide_functions", "DEFAULT_LOADPATH", 
+        "debug_on_error", "octave_core_file_formatwarn_assign_as_truth_value", "EDITOR", 
+        "debug_on_interrupt", "octave_core_file_limit", "warn_divide_by_zero", 
+        "EXEC_PATH", "debug_on_warning", 
+        "octave_core_file_namewarn_empty_list_elements", "FFTW_WISDOM_PROGRAM", 
+        "debug_symtab_lookups", "output_max_field_width", "warn_fortran_indexing", 
+        "IMAGEPATH", "default_save_formatoutput_precision", "warn_function_name_clash", 
+        "INFO_FILE", 
+        "echo_executing_commandspage_output_immediatelywarn_future_time_stamp", 
+        "INFO_PROGRAM", "fixed_point_format", "page_screen_output", "warn_imag_to_real", 
+        "LOADPATH", "gnuplot_binary", "print_answer_id_name", 
+        "warn_matlab_incompatible", "MAKEINFO_PROGRAM", "gnuplot_command_axes", 
+        "print_empty_dimensions", "warn_missing_semicolon", "PAGER", 
+        "gnuplot_command_end", "print_rhs_assign_val", "warn_neg_dim_as_zero", "PS1", 
+        "gnuplot_command_plot", "save_header_format_stringwarn_num_to_str", "PS2", 
+        "gnuplot_command_replot", "save_precision", "warn_precedence_change", "PS4", 
+        "gnuplot_command_splot", "saving_history", "warn_reload_forces_clear", 
+        "__kluge_procbuf_delay__", "gnuplot_command_title", "sighup_dumps_octave_core", 
+        "warn_resize_on_range_error", "__nargin__", 
+        "gnuplot_command_usingsigterm_dumps_octave_corewarn_separator_insert", 
+        "ansgnuplot_command_with", "silent_functions", "warn_single_quote_string", 
+        "automatic_replot", "gnuplot_has_frames", "split_long_rowswarn_str_to_num", 
+        "beep_on_errorhistory_file", "string_fill_char", "warn_undefined_return_values", 
+        "completion_append_char", "history_size", "struct_levels_to_print", 
+        "warn_variable_switch_label", 
+        "crash_dumps_octave_coreignore_function_time_stamp", 
+        "suppress_verbose_help_message"},
+  },
+  { Id=3,
+    List={"abs", "asinh", "cosh", "floor", "isalpha",  "isinf", "isspace", 
+        "real", "tan", "acos", "atan", "erf",  "gammaisascii", "islower", "isupper", 
+        "roundtanh", "acoshatanherfc", "gammaln", "iscntrl", "isna", "isxdigitsign", 
+        "toascii", "angleceil", "exp",  "imag", "isdigit", "isnanlgamma",  "sin",  
+        "tolower", "arg",  "conj", "finite",  "is_nan_or_na",  "isfiniteisprint", "log", 
+        "sinh", "toupper", "asin", "cos",  "fix",  "isalnum", "isgraph", "ispunct", 
+        "log10sqrt"},
+  },
+  { Id=4,
+    Regex=[[(\w+)\s*\(]],
+  },
+}
+
+Strings={
+  Delimiter=[["|']],
+}
+
+IgnoreCase=false
+
+Comments={
+  { Block=false,
+    Delimiter= { [[#|--]] },
+  },
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-|~]]

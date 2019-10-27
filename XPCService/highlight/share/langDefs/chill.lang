@@ -1,0 +1,43 @@
+
+Description="CHILL"
+
+Categories = {"source"}
+
+Keywords={
+  { Id=1,
+    List={"AND", "BEGIN", "CASE", "DIV", "DO", "ELSE", "ELSIF", "END", "ESAC", 
+        "EXIT", "FI", "FOR", "GOTO", "IF", "IN", "MOD", "NOT", "OD", "OF", "ON", "OR", 
+        "OUT", "RESULT", "RETURN", "THEN", "THEN", "TO", "UNTIL", "USES", "WHILE", 
+        "WITH", "XOR"},
+  },
+  { Id=2,
+    List={"ARRAY", "DCL", "GRANT", "LABEL", "MODULE", "NEWMODE", "PROC", "POWERSET", "SEIZE", "SET", "STRUCT", "SYN", "SYNMODE", "TYPE", "PACK"},
+  },
+  { Id=3,
+    List={"BIN", "CHAR", "INT", "RANGE", "BOOL", "PTR", "REF"},
+  },
+  { Id=4,
+    List={"MODULE_DESCRIPTION_HEADER", "PATCH_INFOS", "LIO_INFOS", "SWSG_INFOS", "MSG_XREF", "EJECT", "FALSE", "NULL", "TRUE"},
+  },
+}
+
+Strings={
+  Delimiter=[["|']],
+}
+
+Comments={
+
+  { Block=true,
+    Nested=true,
+    Delimiter= { [[\/\*]],[[\*\/]],}
+  },
+  { Block=true,
+    Nested=true,
+    Delimiter= { [[\<\>]],[[\<\>]],}
+  }
+
+}
+
+IgnoreCase=true
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\.|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-|\~]]

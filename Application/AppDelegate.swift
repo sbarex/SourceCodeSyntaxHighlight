@@ -40,13 +40,22 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         return service
     }()
     
+    private var firstAppear = false
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
+        firstAppear = true
     }
     
     func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
         self.connection.invalidate()
+    }
+    
+    func applicationDidBecomeActive(_ notification: Notification) {
+        if firstAppear && NSApplication.shared.windows.count == 0, let menu = NSApp.menu?.item(at: 0)?.submenu?.item(withTag: 100), let a = menu.action {
+            NSApp.sendAction(a, to: menu.target, from: menu)
+        }
+        firstAppear = false
     }
 
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {

@@ -1,0 +1,56 @@
+-- Contributed by Conrad Steenberg http://code.google.com/p/crack-language/
+
+Description="Crack"
+
+Categories = {"source"}
+
+Digits = [[(?:0x|0X)[0-9a-fA-F]+|\d*[\.]?\d+(?:[eE][\-\+]?\d+)?[lLuU]*]]
+
+Keywords={
+  {  Id=1,
+   List={"class", "for", "while", "in", "if", "else", "const",
+         "oper", "return", "this", "abstract", "static", "enum",
+         "import", "is", "try", "except", "throw", "bind", "release",
+         "init", "del"
+        }
+  },
+  { Id=2,
+    List= { "bool", "byte", "byteptr", "void", "voidptr", "function", "array",
+            "int", "uint", "int16", "uint16", "int32", "uint32", "int64", "uint64",
+            "float", "float32", "float64", "intz", "uintz"
+          }
+  },
+  { Id=3,
+    Regex=[[@\w+]],
+  },
+  { Id=4,
+    Regex=[[\@?(\w+)\s*[\(]|Exception|Object|String|VTableBase|Class|StaticString]]
+  }
+}
+
+Strings = {
+  Delimiter=[["|']],
+  RawPrefix="r",
+  Escape = [[ \\t|\\a|\\b|\\n|\\r|\\x[0-9a-fA-F]{2}|\\[0-7]{3} ]],
+}
+
+Comments = {
+   { Block=true,
+     Nested=false,
+     Delimiter = { [[\/\*]], [[\*\/]] }
+   },
+   {
+     Block=false,
+     Delimiter = { [[//]] }
+   },
+   {
+     Block=false,
+     Delimiter = { [[#]] }
+   }
+}
+
+IgnoreCase=false
+
+Operators=[[\{|\}\@|\$|\`|\(|\)|\[|\]|\{|\}|\,|\;|\.|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-|\~|\||\^]]
+
+EnableIndentation=true

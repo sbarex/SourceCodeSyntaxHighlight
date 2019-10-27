@@ -1,0 +1,55 @@
+Description="vimscript"
+
+Categories = {"script", "config"}
+
+Digits = [[ (?:[0-9])(?:0x|0X|0b)[0-9a-fA-F']+|#?\d*[\.]?\d+(?:[eE][\-\+]\d+)?[lLuU]* ]]
+
+Keywords={
+  {  Id=1,
+    List={ "call", "set", "let",  "au", "if", "endif", "else", "has",
+    "autocmd", "augroup", "end", "function", "while", "endwhile", "endfunction"},
+  },
+  { Id=2,
+    List= { "filetype", "ft", "syntax", "colorscheme" }
+  },
+  { Id=3,
+    Regex=[[[nvxsoilc]n?o?remap|\&\w+]]
+  },
+  { Id=4,
+    Regex=[[(\w+)\s*\(]]
+  }
+}
+
+Strings = {
+  Delimiter=[[']],
+  
+   DelimiterPairs= {
+    { Open=[["(?=.*")]], Close=[["]] }
+  }
+}
+
+Comments = {
+   {
+     Block=false,
+     Nested=false,
+     Delimiter = { [[ ^"|"(?!.*")]] }
+   }
+}
+
+IgnoreCase=true
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\.|\:|\&|<|>|\!|=|\/|\*|\%|\+|\-|\~|\||\^]]
+
+function OnStateChange(oldState, newState, token)
+
+   if newState==HL_STRING  then
+      openDelim=token
+   end
+
+   if oldState==HL_STRING and token==openDelim then
+      openDelim = nil
+      return HL_STRING_END
+   end
+   
+   return newState
+end

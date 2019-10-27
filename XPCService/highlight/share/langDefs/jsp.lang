@@ -1,0 +1,39 @@
+Description="JavaServer Pages"
+
+Categories = {"source", "script"}
+ 
+Keywords={
+  { Id=1,
+    Regex=[[<[!?]?(?!\-\-)\/?[\w\:\-\.]+>?|[/?]?>]],
+    Group=0,
+  },
+  { Id=2,
+    Regex=[[([-\w\:]+)="]],
+  },
+  { Id=4,
+    Regex=[[\&\#?\w+;]],
+  },
+}
+ 
+Strings={
+  Delimiter=[["]],
+}
+ 
+IgnoreCase=true
+ 
+Comments={
+  { Block=true,
+    Nested=false,
+    Delimiter= { [[<[%!]\-\-]],[[\-\-%?>]] }
+  }
+}
+ 
+NestedSections = {
+  { Lang="java", Delimiter= { [[<%(?!\-\-)[=\!@]?]], [[%>]] } },
+  { Lang="css", Delimiter= { [[<style\s+type\=[\'\"]text\/css[\'\"]>]], [[<\/style>]] } },
+  { Lang="js", Delimiter= { [[<script>]], [[<\/script>]] } },
+  { Lang="js", Delimiter= { [[<script\s+language\=\"[jJ]ava[sS]cript\"(?:\s+type\=\"text\/javascript\")?>]], [[<\/script>]] } },
+  { Lang="js", Delimiter= { [[<script\s+language=[\"\'][jJ]ava[sS]cript[\"\'](?:\s+type=[\"\']text/javascript[\"\'])?[^>]*>]], [[<\/script>]] } },
+  { Lang="js", Delimiter= { [[<script(?:\s+type=[\"\']text/javascript[\"\'])\s+language=[\"\'][jJ]ava[sS]cript[\"\']?[^>]*>]], [[<\/script>]] } },
+  { Lang="js", Delimiter= { [[<script(?:\s+type=[\"\']text/javascript[\"\'])>]], [[<\/script>]] } },
+}

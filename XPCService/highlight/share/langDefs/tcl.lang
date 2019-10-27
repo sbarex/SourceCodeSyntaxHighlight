@@ -1,0 +1,71 @@
+
+Description="Tcl/Tk"
+
+Categories = {"script"}
+
+Identifiers=[[ [a-zA-Z_][\w\-]* ]]
+
+Keywords={
+  { Id=1,
+    List={"Safe", "Base", "encoding", "if", "pid", "switch",  "Tcl", "eof", 
+        "incr", "tcl_endOfWord",  "after", "error", "info", 
+        "pkg_mkIndex", "tcl_findLibrary",  "append", "eval", "interp", "proc", 
+        "tcl_startOfNextWord",  "array", "exec", "join", "puts", 
+        "tcl_startOfPreviousWord",  "auto_execok", "exit", "lappend", "pwd", 
+        "tcl_wordBreakAfter",  "auto_import", "expr", "lindex", "re_syntax", 
+        "tcl_wordBreakBefore",  "auto_load", "fblocked", "linsert", "read", "tcltest", 
+        "auto_mkindex", "fconfigure", "list", "regexp", "tclvars",  "auto_mkindex_old", 
+        "fcopy", "llength", "registry", "tell",  "auto_qualify", "file", "load", 
+        "regsub", "time",  "auto_reset", "fileevent", "lrange", "rename", "trace",  
+        "bgerror", "filename", "lreplace", "resource", "unknown", "binary", "flush", 
+        "lsearch", "return", "unset",  "break", "for", "lset", "scan", "update",  
+        "catch", "foreach", "lsort", "seek", "uplevel",  "cd", "format", "memory", 
+        "set", "upvar",  "clock", "gets", "msgcat", "socket", "variable",  "close", 
+        "glob", "namespace", "source", "vwait",  "concat", "global", "open", "split", 
+        "while",  "continue", "history", "package", "string",  "dde", "http", "parray", 
+        "subst",   "bell", "entry", "loadTk", "raise", "tk_focusFollowsMouse", 
+        "tk_textPaste",  "bind", "event", "lower", "scale", "tk_focusNext", "tkerror",  
+        "bindtags", "focus", "menu", "scrollbar", "tk_focusPrev", "tkvars",  "bitmap", 
+        "font", "menubutton", "selection", "tk_getOpenFile", "tkwait",  "button", 
+        "frame", "message", "send", "tk_getSaveFile", "toplevel",  "canvas", "grab", 
+        "option", "spinbox", "tk_menuSetFocus", "winfo",  "checkbutton", "grid", 
+        "options", "text", "tk_messageBox", "wm",  "clipboard", "image", "pack", "tk", 
+        "tk_optionMenu",  "colors", "keysyms", "panedwindow", "tk_bisque", "tk_popup", 
+        "console", "label", "photo", "tk_chooseColor", "tk_setPalette",  "cursors", 
+        "labelframe", "place", "tk_chooseDirectory", "tk_textCopy",  "destroy", 
+        "listbox", "radiobutton", "tk_dialog", "tk_textCut", "default", "else", 
+        "challenge", "success", "failure"},
+  },
+  { Id=2,
+    Regex=[[\$\w*]],
+  },
+  { Id=3,
+    Regex=[[\W(-\w+)]],
+  },
+  { Id=4,
+    Regex=[[::(\w+)]],
+  },
+}
+
+Strings={
+  Delimiter=[["]]
+}
+
+IgnoreCase=false
+
+Comments={
+  { Block=false,
+    Delimiter= { [[#]] },
+  },
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-|\\|\@]]
+
+-- fix recognition of $
+function OnStateChange(oldState, newState, token)
+   
+   if  (string.sub(token,1,1) =="$") and oldState==HL_STRING and newState==HL_KEYWORD then
+      return HL_INTERPOLATION
+   end
+   
+end

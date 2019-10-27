@@ -1,0 +1,24 @@
+
+Description="BibTeX"
+
+Categories = {"document"}
+
+Keywords={
+  { Id=1,
+    List={"address", "annote", "author", "title", "type", "abstract", "volume", 
+        "pages", "number", "note", "key", "organization", "school", "series", "chapter", 
+        "month", "department", "keywords", "howpublished", "institution", "journal", 
+        "publisher", "editon", "editor", "year", "booktitle"},
+  },
+}
+
+IgnoreCase=false
+
+Comments={
+  { Block=false,
+    Delimiter= { [[%]] },
+  },
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\:|\&|<|>|\!|\=|\/|\*|\+|\-]]
+

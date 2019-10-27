@@ -1,0 +1,37 @@
+
+Description="Object Script"
+
+Categories = {"source", "script"}
+
+
+Keywords={
+  { Id=1,
+    List={"new", "instanceof", "castToBoolean", "castToString", 
+        "castToExactNumber", "castToInexactNumber", "var", "writeln", "if", "while", 
+        "for", "break", "continue", "try", "catch", "finally", "throw", "synchronized", 
+        "const", "public", "function", "extends", "return", "eval", "this", "true", 
+        "false", "null", "import", "write"},
+  },
+  { Id=2,
+    List={"Object", "ExactNumber", "String", "Exception", "Thread"},
+  },
+}
+
+Strings={
+  Delimiter=[["]],
+}
+
+IgnoreCase=false
+
+Comments={
+  { Block=false,
+    Delimiter= { [[\/\/]] },
+  },
+  { Block=true,
+    Nested=false,
+    Delimiter= { [[\/\*]],[[\*\/]],}
+  }
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-]]
+

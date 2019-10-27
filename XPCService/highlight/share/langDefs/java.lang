@@ -1,0 +1,44 @@
+Description="Java"
+
+Categories = {"source"}
+
+Keywords={
+  { Id=1,
+    List={"abstract", "assert", "boolean", "break", "byte", "case", "catch", "char", "class", "const",
+          "continue", "default", "do", "double", "else", "enum", "extends", "final", "finally",
+          "float", "for", "goto", "if", "implements", "import", "instanceof", "int", "interface",
+          "long", "native", "new", "package", "private", "protected", "public", "return", "short",
+          "static", "strictfp", "super", "switch", "synchronized", "this", "throw", "throws",
+          "transient", "try", "void", "volatile", "while", "var"},
+  },
+  { Id=2,
+    List={"false", "true", "null"},
+  },
+  { Id=3,
+    Regex=[[@\w+]],
+  },
+  { Id=4,
+    Regex=[[(\w+)\s*\(]],
+  },
+}
+
+Strings={
+  Delimiter=[["|']],
+  Escape = [[ \\u\d{4}|\\x?\d{3}|\\\w|\\[\'\\\"] ]]
+}
+
+IgnoreCase=false
+
+Comments={
+  { Block=false,
+    Delimiter= { [[\/\/]] },
+  },
+  { Block=true,
+    Nested=false,
+    Delimiter= { [[\/\*]],[[\*\/]],}
+  }
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\.|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-|\|]]
+
+EnableIndentation=true

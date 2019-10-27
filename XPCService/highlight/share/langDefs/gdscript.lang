@@ -1,0 +1,229 @@
+--[[******************************************************************************
+    *                                                                            *
+    *                        GDScript Language Definition                        *
+    *                                                                            *
+    *                             v1.0 - 2017/02/16                              *
+    *                                                                            *
+    ******************************************************************************
+
+    GDScript language definition for Godot Engine script files:
+        https://godotengine.org/
+    Godot Engine 2.1.2.
+    ------------------------------------------------------------------------------
+    Written by Tristano Ajmone:
+        <tajmone@gmail.com>
+        https://github.com/tajmone
+    Released into the public domain according to the Unlicense licsense:
+        http://unlicense.org/
+    ------------------------------------------------------------------------------
+    Project repository:
+        https://github.com/tajmone/gdscript-highlight
+    ------------------------------------------------------------------------------
+    For each element group definition there is a comment specifying the color used
+    in Godot editor's default theme to highlight that particulare element. This is
+    to help keeping track of the various elements during tests, and to create a
+    stylesheet mimicking the original look and feel of Godot's editor.
+    Color here are given as hex values representing them as they appear on screen
+    (unlike Godot theme files, which contain alpha values).
+    Color names were calculated using NTC (Name That Color) tool:
+    -- https://github.com/tajmone/name-that-color
+    ------------------------------------------------------------------------------
+  ]]
+
+Description="GDScript"
+
+Categories = {"source", "script"}
+
+IgnoreCase=false
+
+Keywords={
+  { Id=1,   -- Keywords          #FFFFB3 -- "Portafino" Yellow
+    List={ 
+      -- ========== KEYOWRDS ==========
+      -- Keywords list taken from 'gd_script.cpp':
+      -- operators
+      "and",
+      "in",
+      "not",
+      "or",
+      -- types and values
+      "bool",
+      "false",
+      "float",
+      "int",
+      "null",
+      "PI",
+      "self",
+      "true",
+      -- functions
+      "assert",
+      "breakpoint",
+      "class",
+      "extends",
+      "func",
+      "preload",
+      "setget",
+      "signal",
+      "tool",
+      "yield",
+      -- var
+      "const",
+      "enum",
+      "export",
+      "onready",
+      "static",
+      "var",
+      -- control flow
+      "break",
+      "continue",
+      "elif",
+      "else",
+      "for",
+      "if",
+      "master",
+      "match",
+      "pass",
+      "remote",
+      "return",
+      "slave",
+      "sync",
+      "while",
+      -- ========== FUNCTIONS ==========
+      -- Functions list taken from 'gd_functions.cpp':
+      "abs",
+      "acos",
+      "asin",
+      "atan",
+      "atan2",
+      "bytes2var",
+      "ceil",
+      "char",
+      "clamp",
+      "Color8",
+      "ColorN",
+      "convert",
+      "cos",
+      "cosh",
+      "db2linear",
+      "decimals",
+      "dectime",
+      "deg2rad",
+      "dict2inst",
+      "ease",
+      "exp",
+      "floor",
+      "fmod",
+      "fposmod",
+      "funcref",
+      "hash",
+      "inst2dict",
+      "instance_from_id",
+      "is_inf",
+      "is_nan",
+      "lerp",
+      "linear2db",
+      "load",
+      "log",
+      "max",
+      "min",
+      "nearest_po2",
+      "parse_json",
+      "pow",
+      "print",
+      "print_stack",
+      "printerr",
+      "printraw",
+      "prints",
+      "printt",
+      "rad2deg",
+      "rand_range",
+      "rand_seed",
+      "randf",
+      "randi",
+      "randomize",
+      "range",
+      "round",
+      "seed",
+      "sign",
+      "sin",
+      "sinh",
+      "sqrt",
+      "stepify",
+      "str",
+      "str2var",
+      "tan",
+      "tanh",
+      "to_json",
+      "type_exists",
+      "typeof",
+      "validate_json",
+      "var2bytes",
+      "var2str",
+      "weakref",
+      },
+    },
+  { Id=2,   -- Core Types        #A3FFD4 -- "Aquamarine" Green
+    List={
+      -- ========== CORE TYPES (aka Base Types) ==========
+      -- TAKEN FROM 'script_text_editor.cpp':
+      "AABB",
+      "Color",
+      "Image",
+      "InputEvent",
+      "Matrix3",
+      "NodePath",
+      "Plane",
+      "Quat",
+      "Rect2",
+      "Transform",
+      "Vector2",
+      "Vector3",
+      },
+  },
+  { Id=3,   -- Functions         #66A1CD -- "Danube" Blue
+    Regex=[[ ([a-zA-Z_][a-zA-Z_0-9]*)(?:(\s*)?\() ]],
+    Group=1
+  },
+  { Id=4,   -- Member vars       #E64D59 -- "Mandy" Red
+    Regex=[[ (?<=\.)([a-zA-Z_][a-zA-Z_0-9]*) ]],
+    Group=1
+  },
+}
+
+Comments={                    -- #973D1A -- "Cumin" Red
+   { Block=false,
+     Nested=false,
+     Delimiter = { [[#]] }
+   }
+}
+
+Strings={                     -- #EF6EBD -- "Hot Pink"
+  Delimiter=[["""|'''|"|']],
+  Escape=[=[\\[abtnvfr'"\\/"]|\\u[[:xdigit:]]{4}]=],
+  Interpolation=[[ (?<!%)%[0-9-+*.]{0,}[scdoxXf] ]]
+--[[================================= DEV NOTES ==================================
+    ESCAPE SEQUENCES were modeled according to Godot source code:
+    "/modules/gdscript/gd_tokenizer.cpp" (lines: 604-)
+    
+    The following escape sequences are matched by 'Escape' RegEx:
+      \a   \b   \t   \n   \v   \f   \r   \'   \"   \\   \/
+    
+      \uhhhh (universal character names): "\u" followed by four hex digits (h)
+              representing a Unicode code point.
+
+    NOTE: Hexadecimal (\xhh...) and Octal (\nnn) escape sequences are unsupported
+          as they appear to be depreacted in GDScript ("gd_tokenizer.cpp":619).
+  ]]
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\.|\:|\&|\^|\||<|>|\!|\=|\/|\*|\%|\+|\-|\@]]
+
+-- Digits :: not defined. Highlight defaults seem to work alright enough.
+
+--[[==============================================================================
+                                      CHANGELOG                                   
+    ==============================================================================
+    v1.0 (2017/02/16)
+      -- First release.
+      -- Godot Engine 2.1.2.
+  ]]

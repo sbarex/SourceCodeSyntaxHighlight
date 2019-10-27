@@ -1,0 +1,55 @@
+
+Description="HTML"
+
+Categories = {"markup"}
+
+Keywords={
+  { Id=1,
+    Regex=[[<[!?]?(?!\-\-)\/?[\w\:\-]+>?|[/?]?>]],
+    Group=0,
+  },
+  { Id=2,
+    Regex=[[([-\w\.\-\:]+)="]],
+  },
+  
+  
+  -- see http://stackoverflow.com/questions/1723182/a-regex-that-will-never-be-matched-by-anything
+  -- workaround to fix RTF output: nested JS has more keyword definitions, add one here which is a NOP
+  { Id=3,
+    Regex=[[\A(?!x)x]],
+  },
+  { Id=4,
+    Regex=[[\&\#?\w+;]],
+  },
+}
+
+Strings={
+  Delimiter=[["]],
+  Escape=[[\A(?!x)x]] 
+  -- see http://stackoverflow.com/questions/1723182/a-regex-that-will-never-be-matched-by-anything
+}
+
+Comments={
+  { Block=true,
+    Nested=false,
+    Delimiter= { [[<!\-\-]],[[\-\->]] }
+  }
+}
+
+NestedSections = {
+  { Lang="php", Delimiter= { [[<\?php]], [[\?>]] } },
+  { Lang="jsp", Delimiter= { [[<\%[@!\=]?]], [[.*(%>).*]] } },
+  { Lang="css", Delimiter= { [[<style>]], [[<\/style>]] } },
+  { Lang="js", Delimiter= { [[<script>]], [[<\/script>]] } },
+  { Lang="css", Delimiter= { [[<style\s+type\=[\'\"]text\/css[\'\"]>]], [[<\/style>]] } },
+  { Lang="js", Delimiter= { [[<script\s+language\=\"[jJ]ava[sS]cript\"(?:\s+type\=\"text\/javascript\")?>]], [[<\/script>]] } },
+  { Lang="js", Delimiter= { [[<script\s+language=[\"\'][jJ]ava[sS]cript[\"\'](?:\s+type=[\"\']text/javascript[\"\'])?[^>]*>]], [[<\/script>]] } },
+  { Lang="js", Delimiter= { [[<script(?:\s+type=[\"\']text/javascript[\"\'])\s+language=[\"\'][jJ]ava[sS]cript[\"\']?[^>]*>]], [[<\/script>]] } },
+  { Lang="js", Delimiter= { [[<script(?:\s+type=[\"\']text/javascript[\"\'])>]], [[<\/script>]] } },
+  --{ Lang="python", Delimiter= { [[\{%]], [[%\}]] } },
+  --{ Lang="python", Delimiter= { [[\{\{]], [[\}\}]] } },
+
+ --{ Lang="php", Delimiter= { [[<\?\=]], [[\?>]] } },
+}
+
+IgnoreCase=true

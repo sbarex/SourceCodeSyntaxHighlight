@@ -1,0 +1,28 @@
+
+Description="PO translation"
+
+Categories = {"config"}
+
+Keywords={
+
+  { Id=1,
+    Regex=[[^msg\w+]]
+  },
+}
+
+Strings={
+  Delimiter=[["]],
+  Interpolation=[[ \%\w ]],
+  Escape = [=[ \\u\{?[[:xdigit:]]{4,6}\}?|\\\d{3}|\\x[[:xdigit:]]{2}|\\[ntvbrfa\\\?'\"] ]=]
+}
+
+Comments={
+  { Block=false,
+    Delimiter= { [[#]] },
+  },
+}
+
+IgnoreCase=false
+
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-|.]]

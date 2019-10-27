@@ -1,0 +1,40 @@
+
+Description="Smalltalk"
+
+Categories = {"source", "functional"}
+
+Digits=[[ (?:0x|0X)[0-9a-fA-F]+|\d*[\.]?\d+(?:[eE][\-\+]\\d+)?[lLuU]?|\$[\w\$\#\'\-\:\>\<] ]]
+
+Keywords={
+  { Id=1,
+    List={"self", "super", "nil", "true", "false", "thisContext"},
+  },
+  { Id=2,
+    Regex=[[\b[a-z]\w*:(?!=)|(?<= )(?<!  )(?<!\[ )(?<!\| )(?<!= )(?<!. )(?<!: )(?<!\* )(?<!- )(?<!\+ )(?<!/ )[a-z]\w*\b|[\-+/*=]|==|[<>]=|^\s*[a-z]\w+\s*$]],
+  },
+  { Id=3,
+    Regex=[[\b[A-Z]\w*\b]],
+  },
+  { Id=4,
+    Regex=[[#[a-zA-Z0-9_:]+|#[\-+/*]|(?<= ):\w*\b|(?<=\[):\w*\b|\| *\w+(?: +\w+)* *\|]],
+  },
+}
+
+Strings={
+  Delimiter=[[']],
+
+}
+
+IgnoreCase=false
+
+Comments={
+  { Block=true,
+    Nested=false,
+    Delimiter= { [["]],[["]]}
+  }
+}
+
+Operators=[[\:|\=|\.|\;|\(|\)|\[|\]|\^|\#|\!|\$|\%|\{|\}]]
+
+EnableIndentation=false
+

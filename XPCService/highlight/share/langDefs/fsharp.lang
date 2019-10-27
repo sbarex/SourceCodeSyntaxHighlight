@@ -1,0 +1,57 @@
+
+Description="F#"
+
+Categories = {"source", "functional"}
+
+Digits=[[ (?:0x|0X|0b|0B|0o)[0-9a-fA-F]+?\w*|\d*[\.\_]?\d+(?:[eE][\-\+]\d+)?\w* ]]
+
+Keywords={
+  { Id=1,
+    List={"abstract", "lsl", "and", "lsr", "as", "lxor", "assert", "match", "member", "asr", "mod", "begin", "module",
+    "class", "mutable", "namespace", "default", "new", "delegate", "null", "do", "of", "done", "open", "downcast", "or",
+    "downto", "override", "else", "rec", "end", "sig", "exception", "static", "false", "struct", "finally", "then", "for",
+    "to", "fun", "true", "function", "try", "if", "type", "in", "val", "inherit", "when", "inline", "upcast", "interface",
+    "while", "land", "with", "lor", "let" , "use" },
+  },
+  { Id=2,
+    List={"bool", "string", "int", "real", "word", "float", "unit", "option", "ref"},
+  },
+    { Id=3,
+    Regex=[[ [use|let]\s+(mutable\s+)?(\w+)]], Group=2
+  },
+  { Id=4,
+    Regex=[[\b[A-Z][a-zA-Z0-9_']*]],
+  },
+}
+
+-- add keywords to list 3
+function OnStateChange(oldState, newState, token, kwgroup)
+  if  newState==HL_KEYWORD and kwgroup==3 then
+    AddKeyword(token, 3)
+  end
+  return newState
+end
+
+Strings={
+  Delimiter=[["|']],
+  RawPrefix="@",
+  Interpolation=[[ \{\d+\}|%\w ]]
+}
+
+IgnoreCase=false
+
+Comments={
+  { Block=false,
+    Delimiter= { [[//]] },
+  },
+  { Block=true,
+    Nested=true,
+    Delimiter= { [[\(\*]],[[\*\)]],}
+  }
+}
+
+PreProcessor={
+  Prefix=[[#]],
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-|\.|\@|\?|\^|\|]]

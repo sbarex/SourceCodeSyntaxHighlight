@@ -1,0 +1,61 @@
+
+Description="Verilog"
+
+Categories = {"hardware"}
+
+-- recognize stuff like 5'b0 as number
+Digits=[[ (?:0x|0X)[0-9a-fA-F]+|\d*[\.\_]?[\d+\'](?:[eE][\-\+]\d+)?h?[0-9a-fA-F]* ]]
+
+Keywords={
+  { Id=1,
+    List={"always", "and", "assign", "attribute", "begin", "buf", "bufif0", 
+            "bufif1", "case", "casex", "casez", "cmos", "deassign", "default", "defparam", 
+            "disable", "edge", "else", "end", "endattribute", "endcase", "endmodule", 
+            "endfunction", "endprimitive", "endspecify", "endtable", "endtask", "event", 
+            "for", "force", "forever", "fork", "function", "highz0", "highz1", "if", 
+            "initial", "inout", "input", "integer", "join", "large", "macromodule", 
+            "medium", "module", "nand", "negedge", "nmos", "nor", "not", "notif0", "notif1", 
+            "or", "output", "parameter", "pmos", "posedge", "primitive", "pull0", "pull1", 
+            "pullup", "pulldown", "rcmos", "reg", "release", "repeat", "rnmos", "rpmos", 
+            "rtran", "rtranif0", "rtranif1", "scalared", "small", "specify", "specparam", 
+            "strength", "strong0", "strong1", "supply0", "supply1", "table", "task", "time", 
+            "tran", "tranif0", "tranif1", "tri", "tri0", "tri1", "triand", "trior", 
+            "trireg", "use", "vectored", "wait", "wand", "weak0", "weak1", "while", "wire", 
+            "wor", "xnor", "xor"},
+  },
+  { Id=2,
+    Regex=[[\$\w+]],
+  },
+  { Id=3,
+    Regex=[[#\d+]],
+  },
+  { Id=4,
+    Regex=[[(\w+)\s*\(]],
+  },
+}
+
+Strings={
+  Delimiter=[["]],
+  Interpolation = [[ %\w ]],
+
+}
+
+Escape=[[ \\[ntvbrfa\\\?'"]|\\\d{3} ]]
+
+IgnoreCase=false
+
+Comments={
+  { Block=false,
+    Delimiter= { [[\/\/]] },
+  },
+  { Block=true,
+    Nested=false,
+    Delimiter= { [[\/\*]],[[\*\/]],}
+  }
+}
+
+PreProcessor={
+  Prefix=[[`]],
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-|\~|\@]]

@@ -1,0 +1,37 @@
+
+Description="Luban"
+
+Categories = {"source"}
+
+Keywords={
+  { Id=1,
+    List={"as",  "break",  "continue",  "else",  "finish",  "for",  "foreach",  
+        "if",  "implements",  "in",  "input",  "isa", "namespace", "output", "static",  
+        "store",  "struct",  "typedef", "wait",  "waitfor", "while", "println"},
+  },
+  { Id=2,
+    List={"bool", "char", "string", "vector", "map", "set", "null", "error", 
+        "enum", "range", "int", "double"},
+  },
+  { Id=3,
+    List={"true", "false", "and", "or", "not"},
+  },
+}
+
+Strings={
+  Delimiter=[["|']],
+}
+
+IgnoreCase=false
+
+Comments={
+  { Block=false,
+    Delimiter= { [[\/\/]] },
+  },
+  { Block=true,
+    Nested=false,
+    Delimiter= { [[\/\*]],[[\*\/]],}
+  }
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\.|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-|\~]]

@@ -1,0 +1,32 @@
+
+Description="ABC"
+
+Categories = {"database"}
+
+Keywords={
+    {  Id=1,
+       List={
+             "WRITE", "READ", "EG", "RAW", "PUT", "IN", "SET", "RANDOM", "REMOVE", "FROM",
+             "INSERT", "DELETE", "PASS", "KEYWORD", "CHECK", "IF", "SELECT", "WHILE", "FOR",
+             "HOW", "TO", "RETURN", "REPORT", "SHARE", "QUIT", "FAIL", "SUCCEED", "AND",
+             "OR", "NOT", "SOME", "HAS", "NO"
+            }
+    },
+    { Id=2,
+      List= {
+             "exactly", "exact", "root", "abs", "round", "mod", "random", "exp", "log",
+             "pi", "sin", "cos", "tan", "arctan", "angle", "now", "lower", "upper",
+             "stripped", "split", "keys", "min", "max", "train", "choice"
+            }
+    }
+    
+    }
+
+Strings = {
+    Delimiter=[["]]
+}
+
+IgnoreCase=false
+
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-|\~|\|]]

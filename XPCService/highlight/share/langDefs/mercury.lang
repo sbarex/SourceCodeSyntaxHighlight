@@ -1,0 +1,43 @@
+
+Description="Mercury"
+
+Categories = {"source"}
+
+Keywords={
+  { Id=1,
+    List={"is", "and", "or", "func", "impure", "", "", "pred", "", "semipure", 
+        "not", "when", "then", "if", "else", "where", "", "", "all", "arbitrary", 
+        "promise_equivalent_solutions", "promise_equivalent_solution_sets", 
+        "promise_exclusive", "promise_exclusive_exhaustive", "promise_exhaustive", 
+        "promise_impure", "", "promise_impure_implicit", "promise_pure", 
+        "promise_pure_implicit", "promise_semipure", "promise_semipure_implicit", 
+        "some", "ype", "solver", "", "", "end_module", "import_module", 
+        "include_module", "initialise", "initialize", "finalise", "finalize", "inst", 
+        "instance", "mode", "module", "pragma", "", "", "promise", "", "rule", 
+        "typeclass", "use_module", "interface", "implementation", "det"},
+  }, 
+  {
+   Id=2,
+   List={"div", "mod", "rem"},
+  },
+  { Id=3,
+    Regex=[[[A-Z]\w+]],
+  },
+  { Id=4,
+    Regex=[[(\w+)\s*\(]],
+  },
+}
+
+Strings={
+  Delimiter=[["|']],
+}
+
+IgnoreCase=false
+
+Comments={
+  { Block=false,
+    Delimiter= { [[%]] },
+  },
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\.|\:|\&|<|>|\!|\=|\/|\*|\|\+|\-|\~]]

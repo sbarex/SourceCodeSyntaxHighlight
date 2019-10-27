@@ -34,6 +34,9 @@ import Foundation
     func rtfColorize(url: URL, overrideSettings: NSDictionary?, withReply reply: @escaping (Data, NSDictionary, Error?) -> Void)
     
     func getThemes(withReply reply: @escaping ([NSDictionary], Error?) -> Void)
+    func getThemes(highlight path: String, withReply reply: @escaping ([NSDictionary], Error?) -> Void)
+    
+    func locateHighlight(reply: @escaping ([[Any]]) -> Void)
 }
 
 /*

@@ -167,8 +167,15 @@ struct SCSHSettings {
         let defaults = UserDefaults.standard
         let defaultsDomain = defaults.persistentDomain(forName: domain) ?? [:]
         
+        self.highlightProgramPath = defaultsDomain[Key.highlightPath.rawValue] as? String ?? "-"
+        if self.highlightProgramPath == "" {
+            // Use embedded highlight.
+            self.highlightProgramPath = "-"
+        }
+        
         self.lightTheme = defaultsDomain[Key.lightTheme.rawValue] as? String ?? "edit-xcode"
         self.rtfLightBackgroundColor = defaultsDomain[Key.rtfLightBackgroundColor.rawValue] as? String ?? "#ffffff"
+        
         self.darkTheme = defaultsDomain[Key.darkTheme.rawValue] as? String ?? "edit-xcode"
         self.rtfDarkBackgroundColor = defaultsDomain[Key.rtfDarkBackgroundColor.rawValue] as? String ?? "#000000"
         
@@ -184,8 +191,6 @@ struct SCSHSettings {
         
         self.format = SCSHFormat(rawValue: defaultsDomain[Key.format.rawValue] as? String ?? "") ?? .html
         self.extra = defaultsDomain[Key.extraArguments.rawValue] as? String ?? ""
-        
-        self.highlightProgramPath = defaultsDomain[Key.highlightPath.rawValue] as? String ?? ""
         
         self.fontFamily = defaultsDomain[Key.fontFamily.rawValue] as? String ?? "Menlo"
         self.fontSize = defaultsDomain[Key.fontSize.rawValue] as? Float ?? 10
@@ -203,9 +208,12 @@ struct SCSHSettings {
         let defaults = UserDefaults.standard
         var defaultsDomain = defaults.persistentDomain(forName: d) ?? [:]
         
+        defaultsDomain[Key.highlightPath.rawValue] = highlightProgramPath
+        defaultsDomain[Key.format.rawValue] = format.rawValue
+        
         defaultsDomain[Key.lightTheme.rawValue] = lightTheme
-        defaultsDomain[Key.darkTheme.rawValue] = darkTheme
         defaultsDomain[Key.rtfLightBackgroundColor.rawValue] = rtfLightBackgroundColor
+        defaultsDomain[Key.darkTheme.rawValue] = darkTheme
         defaultsDomain[Key.rtfDarkBackgroundColor.rawValue] = rtfDarkBackgroundColor
         
         switch lineNumbers {
@@ -220,11 +228,12 @@ struct SCSHSettings {
         defaultsDomain[Key.lineLength.rawValue] = self.lineLength
         
         defaultsDomain[Key.tabSpaces.rawValue] = tabSpaces
-        defaultsDomain[Key.highlightPath.rawValue] = highlightProgramPath
-        defaultsDomain[Key.format.rawValue] = format.rawValue
+        
         defaultsDomain[Key.extraArguments.rawValue] = extra
+        
         defaultsDomain[Key.fontFamily.rawValue] = fontFamily
         defaultsDomain[Key.fontSize.rawValue] = fontSize
+        
         defaultsDomain[Key.commandsToolbar.rawValue] = commandsToolbar
         
         let userDefaults = UserDefaults()
@@ -238,9 +247,9 @@ struct SCSHSettings {
             Key.format.rawValue: self.format.rawValue,
         
             Key.lightTheme.rawValue: self.lightTheme,
-            Key.darkTheme.rawValue: self.darkTheme,
-        
             Key.rtfLightBackgroundColor.rawValue: self.rtfLightBackgroundColor,
+            
+            Key.darkTheme.rawValue: self.darkTheme,
             Key.rtfDarkBackgroundColor.rawValue: self.rtfDarkBackgroundColor,
         
             Key.wordWrap.rawValue: self.wordWrap.rawValue,
@@ -255,6 +264,7 @@ struct SCSHSettings {
             
             Key.commandsToolbar.rawValue: self.commandsToolbar,
         ]
+        
         switch self.lineNumbers {
         case .hidden:
             r[Key.lineNumbers.rawValue] = false
@@ -262,6 +272,7 @@ struct SCSHSettings {
             r[Key.lineNumbers.rawValue] = true
             r[Key.lineNumbersOmittedWrap.rawValue] = omittingWrapLines
         }
+        
         if let v = self.theme {
             r[Key.theme.rawValue] = v
         }
@@ -275,21 +286,29 @@ struct SCSHSettings {
     /// - parameters:
     ///   - data: NSDictionary [String: Any]
     mutating func fromDictionary(_ data: [String: Any]) {
+        if let v = data[Key.highlightPath.rawValue] as? String {
+            self.highlightProgramPath = v
+        }
+        if let v = data[Key.format.rawValue] as? String, let f = SCSHFormat(rawValue: v) {
+            self.format = f
+        }
+        
         if let v = data[Key.lightTheme.rawValue] as? String {
             self.lightTheme = v
         }
-        if let v = data[Key.darkTheme.rawValue] as? String {
-            self.darkTheme = v
-        }
-        if let _ = data.keys.first(where: { $0 == Key.theme.rawValue }) {
-            self.theme = data[Key.theme.rawValue] as? String
-        }
-        
         if let v = data[Key.rtfLightBackgroundColor.rawValue] as? String {
             self.rtfLightBackgroundColor = v
         }
+        
+        if let v = data[Key.darkTheme.rawValue] as? String {
+            self.darkTheme = v
+        }
         if let v = data[Key.rtfDarkBackgroundColor.rawValue] as? String {
             self.rtfDarkBackgroundColor = v
+        }
+        
+        if let _ = data.keys.first(where: { $0 == Key.theme.rawValue }) {
+            self.theme = data[Key.theme.rawValue] as? String
         }
         if let _ = data.keys.first(where: { $0 == Key.rtfBackgroundColor.rawValue }) {
             self.rtfBackgroundColor = data[Key.rtfBackgroundColor.rawValue] as? String
@@ -309,15 +328,11 @@ struct SCSHSettings {
         if let v = data[Key.tabSpaces.rawValue] as? Int {
             self.tabSpaces = v
         }
-        if let v = data[Key.highlightPath.rawValue] as? String {
-            self.highlightProgramPath = v
-        }
-        if let v = data[Key.format.rawValue] as? String, let f = SCSHFormat(rawValue: v) {
-            self.format = f
-        }
+        
         if let v = data[Key.extraArguments.rawValue] as? String {
             self.extra = v
         }
+        
         if let v = data[Key.fontFamily.rawValue] as? String {
             self.fontFamily = v
         }
@@ -346,16 +361,18 @@ struct SCSHSettings {
         
         // Light theme.
         final_settings.lightTheme = override?[Key.lightTheme.rawValue] as? String ?? self.lightTheme
+        // Light background color.
+        final_settings.rtfLightBackgroundColor = override?[Key.rtfLightBackgroundColor.rawValue] as? String ?? self.rtfLightBackgroundColor
+        
         // Dark theme.
         final_settings.darkTheme = override?[Key.darkTheme.rawValue] as? String ?? self.darkTheme
+        
+        // Dark background color.
+        final_settings.rtfDarkBackgroundColor = override?[Key.rtfDarkBackgroundColor.rawValue] as? String ?? self.rtfDarkBackgroundColor
+        
         // Forcing a theme.
         final_settings.theme = override?[Key.theme.rawValue] as? String ?? self.theme
-        
-        // Light backgrund color.
-        final_settings.rtfLightBackgroundColor = override?[Key.rtfLightBackgroundColor.rawValue] as? String ?? self.rtfLightBackgroundColor
-        // Dark backgrund color.
-        final_settings.rtfDarkBackgroundColor = override?[Key.rtfDarkBackgroundColor.rawValue] as? String ?? self.rtfDarkBackgroundColor
-        // Forcing a backgrund color.
+        // Forcing a background color.
         final_settings.rtfBackgroundColor = override?[Key.rtfBackgroundColor.rawValue] as? String ?? self.rtfBackgroundColor
         
         // Extra arguments for _highlight_.
@@ -380,7 +397,6 @@ struct SCSHSettings {
         
         // Font family.
         final_settings.fontFamily = override?[Key.fontFamily.rawValue] as? String ?? self.fontFamily
-       
         // Font size.
         final_settings.fontSize = override?[Key.fontSize.rawValue] as? Float ?? self.fontSize
         

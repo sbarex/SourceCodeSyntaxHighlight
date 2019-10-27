@@ -22,13 +22,23 @@
 
 import Foundation
 
-enum SCSHError: Error {
+enum SCSHError: Error, LocalizedError {
     case xpcGenericError(error: Error?)
     case missingHighlight
     
     case shellError(cmd: String, exitCode: Int, stdOut: String, stdErr: String, message: String?)
     
+    var errorDescription: String? {
+        get {
+            return self.description
+        }
+    }
+    
     var localizedDescription: String {
+        return self.description
+    }
+    
+    var description: String {
         switch self {
         case .xpcGenericError(let error):
             var s = "Error communicating with XPC service!"

@@ -1,0 +1,45 @@
+Description="SASS/SCSS"
+
+Categories = {"markup"}
+
+Identifiers=[[ [a-zA-Z_\-][\w\-]* ]]
+
+Digits=[=[ \#[[:xdigit:]]{3,6}|\d*\.?\d+?\w* ]=]
+
+Keywords={
+  { Id=1,
+    List={    
+    'in', 'to', 'from', 'through', 'false', 'true', 'global', 'optional','default'
+    },
+  },
+  { Id=2,
+    Regex=[[\$[\w\-]+]],
+  },
+    { Id=3,
+    Regex=[[@[\w\-]+]],
+  },
+  { Id=4,
+    Regex=[[([\w\-]+)\s*\(]],
+  },
+}
+
+Strings={
+  Delimiter=[["|']],
+  Escape= [=[ \\[[:xdigit:]]{4} ]=], 
+  Interpolation=[[ %\d?\$?s ]],  
+}
+
+IgnoreCase=false
+
+Comments = {
+   { Block=true,
+     Nested=false,
+     Delimiter = { [[\/\*]], [[\*\/]] }
+   },
+   {
+     Block=false,
+     Delimiter = { [[//]] }
+   }
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\.|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-|\~|\#]]

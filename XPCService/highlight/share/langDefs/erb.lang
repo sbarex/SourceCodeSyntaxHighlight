@@ -1,0 +1,42 @@
+
+Description="ERB Templates"
+
+Categories = {"template"}
+
+Keywords={
+  { Id=1,
+    Regex=[[ <\%[\=#]?(?!#) ]],
+    Group=0,
+  }
+}
+
+Strings={
+  Delimiter=[["]],
+  Escape=[[\A(?!x)x]] 
+  -- see http://stackoverflow.com/questions/1723182/a-regex-that-will-never-be-matched-by-anything
+}
+
+
+-- Issue with %> also ending the Ruby nested sections
+--Comments={
+--  { Block=true,
+--    Nested=false,
+--    Delimiter= { [[<\%\#]],[[\%>]] }
+--  }
+--}
+
+NestedSections = {
+
+  { Lang="ruby", Delimiter= { [[<%[=]?]], [[%>]] } },
+}
+
+IgnoreCase=true
+
+function OnStateChange(oldState, newState, token, groupID)
+
+   if token=="%>"  and newState==HL_EMBEDDED_CODE_END and oldState==HL_BLOCK_COMMENT then
+      return HL_BLOCK_COMMENT_END
+   end
+   
+   return newState
+end

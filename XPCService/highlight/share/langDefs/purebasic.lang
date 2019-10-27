@@ -1,0 +1,323 @@
+--[[******************************************************************************
+    *                                                                            *
+    *                       PureBASIC Language Definition                        *
+    *                                                                            *
+    *                            v1.7.1 - 2017/11/18                             *
+    *                                                                            *
+    ******************************************************************************
+    PureBASIC v5.00-5.61 -- The goal of this language definition is to emulate the
+    way PureBASIC's native IDE highlights its code, including inline Assembly
+    syntax coloring. When used with the "edit-purebasic" theme, PureBASIC code
+    will be highlighted just like in its native IDE.
+
+    Keywords from all PureBASIC versions (from 5.00 up to current) are added to
+    the list (deprecated keywords are preserved) to ensure that any code written 
+    for PureBASIC >=5.00 will be parsed and highlighted correctly.
+
+    Comments in color definitions refer to PureBASIC native IDE's default palette.
+    ------------------------------------------------------------------------------
+    This language definition is maintained at the PureBASIC Archives project:
+        https://github.com/tajmone/purebasic-archives/tree/master/syntax-highlighting/highlight
+    
+    (visit the above link for more info and resources on this lang definition)
+    ------------------------------------------------------------------------------
+    Written by Tristano Ajmone:
+        <tajmone@gmail.com>
+        https://github.com/tajmone
+    Released into the public domain according to the Unlicense terms:
+        http://unlicense.org/
+    ------------------------------------------------------------------------------
+  ]]
+
+Description="PureBASIC"
+
+Categories = {"source"}
+
+IgnoreCase=false
+
+Comments={  -- PB IDE color: #00AAAA (Persian Green/Tradewind)
+   { Block=false,
+     Nested=false,
+     Delimiter = { [[ ; ]] }
+   }
+}
+
+Strings={   -- PB IDE color: #0080FF (Azure Radiance)
+  Delimiter=[[ " ]],
+  Escape=[=[\\[abfnrtv"\\]]=], -- PB IDE color: same as String
+}
+--[[ STRINGS NOTE: There's more to PB strings than this delimiter definition.
+        Escaped strings (~"") are handled via `Keyword Id=4` and custom code in
+        the `OnStateChange()` function found below.
+--]]
+
+Operators=[[\&|<|>|\!|\||\=|\/|\*|\%|\+|\-|~]] -- PB IDE color: same as normal text (Black)
+
+-- NUMBERS > PB IDE color: same as normal text (Black)
+Digits=[[ (?x)
+        # ============ HEX ============
+        # Pascal style ($FF):
+
+          \$[0-9a-fA-F]+\b
+
+        # ============ BINARY ============
+        | %[01]+\b
+
+
+        # ============ FLOAT ============
+        # With decimal point separator:
+
+        | \b[-]?\d+\.\d+(?:[eE][\-\+]?\d+)?[a-zA-Z]*\b
+
+        # Without decimal point separator:
+        
+        | \b[-]?\d+(?:[eE][\-\+]?\d+)[a-zA-Z]*\b
+
+
+        # ============ DECIMAL ============
+        | (?<!\$)\b\d+\b
+ 
+       ]]
+-- FLOATS NOTE: PureBASIC strips and ignores all suffixes from float numbers.
+--    Therefore "1.575e+1" and "1.575e+1bananas" are both valid float values
+--    in PureBASIC code (both yelding the smae value of 15.75).
+
+
+Keywords={
+  { Id=1,   -- PureBASIC Keywords > PB IDE color: #006666 (Blue Stone) + Bold
+    List={
+        -- Keywords list built by parsing the tokens inside PureBASIC SDK's
+        -- "SyntaxHilighting.dll" (from each PureBASIC version)...
+        "Align", "And", "Array", "As", "Break", "CallDebugger", "Case", "CompilerCase", "CompilerDefault",
+        "CompilerElse", "CompilerElseIf", "CompilerEndIf", "CompilerEndSelect", "CompilerError",
+        "CompilerIf", "CompilerSelect", "CompilerWarning", "Continue", "Data", "DataSection", "Debug",
+        "DebugLevel", "Declare", "DeclareC", "DeclareCDLL", "DeclareDLL", "DeclareModule", "Default",
+        "Define", "Dim", "DisableASM", "DisableDebugger", "DisableExplicit", "Else", "ElseIf", "EnableASM",
+        "EnableDebugger", "EnableExplicit", "End", "EndDataSection", "EndDeclareModule", "EndEnumeration",
+        "EndIf", "EndImport", "EndInterface", "EndMacro", "EndModule", "EndProcedure", "EndSelect",
+        "EndStructure", "EndStructureUnion", "EndWith", "Enumeration", "EnumerationBinary", "Extends",
+        "FakeReturn", "For", "ForEach", "ForEver", "Global", "Gosub", "Goto", "If", "Import", "ImportC",
+        "IncludeBinary", "IncludeFile", "IncludePath", "Interface", "List", "Macro", "MacroExpandedCount",
+        "Map", "Module", "NewList", "NewMap", "Next", "Not", "Or", "Procedure", "ProcedureC",
+        "ProcedureCDLL", "ProcedureDLL", "ProcedureReturn", "Protected", "Prototype", "PrototypeC", "ReDim",
+        "Read", "Repeat", "Restore", "Return", "Runtime", "Select", "Shared", "Static", "Step", "Structure",
+        "StructureUnion", "Swap", "Threaded", "To", "UndefineMacro", "Until", "Until ", "UnuseModule",
+        "UseModule", "Wend", "While", "With", "XIncludeFile", "XOr",        },
+    },
+  { Id=2,   -- Constants > PB IDE color: #924B72 (Cannon Pink)
+    Regex=[[ (#[a-zA-Z_]\w*\$?) ]]
+    },
+  { Id=2,   -- Inline ASM > PB IDE color: #924B72 (Cannon Pink)
+    Regex=[[ ^\s*(![^;]*) ]], Group=1
+    },
+  { Id=2,   -- ASM Keywords > PB IDE color: #924B72 (Cannon Pink)
+    List={
+        -- Keywords list built by parsing the tokens inside PureBASIC SDK's
+        -- "SyntaxHilighting.dll" (from each PureBASIC version)...
+        "AAA", "AAD", "AAM", "AAS", "ADC", "ADD", "AND", "ARPL", "BOUND", "BSF", "BSR", "BSWAP", "BT",
+        "BTC", "BTR", "BTS", "CALL", "CBW", "CDQ", "CLC", "CLD", "CLI", "CLTS", "CMC", "CMOVA", "CMOVAE",
+        "CMOVB", "CMOVBE", "CMOVC", "CMOVE", "CMOVG", "CMOVGE", "CMOVL", "CMOVLE", "CMOVNA", "CMOVNAE",
+        "CMOVNB", "CMOVNBE", "CMOVNC", "CMOVNE", "CMOVNG", "CMOVNGE", "CMOVNL", "CMOVNLE", "CMOVNO",
+        "CMOVNP", "CMOVNS", "CMOVNZ", "CMOVO", "CMOVP", "CMOVPE", "CMOVPO", "CMOVS", "CMOVZ", "CMP", "CMPS",
+        "CMPSB", "CMPSD", "CMPSW", "CMPXCHG", "CMPXCHG8B", "CWD", "CWDE", "DAA", "DAS", "DB", "DD", "DEC",
+        "DIV", "DW", "EMMS", "ENTER", "ESC", "F2XM1", "FABS", "FADD", "FADDP", "FBLD", "FBSTP", "FCHS",
+        "FCLEX", "FCMOVB", "FCMOVBE", "FCMOVE", "FCMOVNB", "FCMOVNBE", "FCMOVNE", "FCMOVNU", "FCMOVU",
+        "FCOM", "FCOMI", "FCOMIP", "FCOMP", "FCOMPP", "FCOS", "FDECSTP", "FDIV", "FDIVP", "FDIVR", "FDIVRP",
+        "FFREE", "FIADD", "FICOM", "FICOMP", "FIDIV", "FIDIVR", "FILD", "FIMUL", "FINCSTP", "FINIT", "FIST",
+        "FISTP", "FISUB", "FISUBR", "FLD", "FLD1", "FLDCW", "FLDENV", "FLDL2E", "FLDL2T", "FLDLG2",
+        "FLDLN2", "FLDPI", "FLDZ", "FMUL", "FMULP", "FNCLEX", "FNINIT", "FNOP", "FNSAVE", "FNSTCW",
+        "FNSTENV", "FNSTSW", "FPATAN", "FPREM", "FPREM1", "FPTAN", "FRNDINT", "FRSTOR", "FSAVE", "FSCALE",
+        "FSETPM", "FSIN", "FSINCOS", "FSQRT", "FST", "FSTCW", "FSTENV", "FSTP", "FSTSW", "FSUB", "FSUBP",
+        "FSUBR", "FSUBRP", "FTST", "FUCOM", "FUCOMI", "FUCOMIP", "FUCOMP", "FUCOMPP", "FWAIT", "FXAM",
+        "FXCH", "FXTRACT", "FYL2X", "FYL2XP1", "HLT", "IDIV", "IMUL", "IN", "INC", "INS", "INSB", "INSD",
+        "INSW", "INT", "INTO", "INVD", "INVLPG", "IRET", "IRETD", "JA", "JAE", "JB", "JBE", "JC", "JCXZ",
+        "JE", "JECXZ", "JG", "JGE", "JL", "JLE", "JMP", "JNA", "JNAE", "JNB", "JNBE", "JNC", "JNE", "JNG",
+        "JNGE", "JNL", "JNLE", "JNO", "JNP", "JNS", "JNZ", "JO", "JP", "JPE", "JPO", "JS", "JZ", "LAHF",
+        "LAR", "LDS", "LEA", "LEAVE", "LES", "LFS", "LGDT", "LGS", "LIDT", "LLDT", "LMSW", "LOCK", "LODS",
+        "LODSB", "LODSD", "LODSW", "LOOP", "LOOPE", "LOOPNE", "LOOPNZ", "LOOPZ", "LSL", "LSS", "LTR", "MOV",
+        "MOVD", "MOVQ", "MOVS", "MOVSB", "MOVSD", "MOVSW", "MOVSX", "MOVZX", "MUL", "NEG", "NOP", "NOT",
+        "OR", "OUT", "OUTS", "OUTSB", "OUTSD", "OUTSW", "PACKSSDW", "PACKSSWB", "PACKUSWB", "PADDB",
+        "PADDD", "PADDSB", "PADDSW", "PADDUSB", "PADDUSW", "PADDW", "PAND", "PANDN", "PCMPEQB", "PCMPEQD",
+        "PCMPEQW", "PCMPGTB", "PCMPGTD", "PCMPGTW", "PMADDWD", "PMULHW", "POP", "POPA", "POPAD", "POPF",
+        "POPFD", "POR", "PSLLD", "PSLLQ", "PSLLW", "PSRAD", "PSRAW", "PSRLD", "PSRLQ", "PSRLW", "PSUBB",
+        "PSUBD", "PSUBSB", "PSUBSW", "PSUBUSB", "PSUBUSW", "PSUBW", "PUNPCKHBW", "PUNPCKHDQ", "PUNPCKHWD",
+        "PUNPCKLBW", "PUNPCKLDQ", "PUNPCKLWD", "PUSH", "PUSHA", "PUSHAD", "PUSHF", "PUSHFD", "PXOR", "RCL",
+        "RCR", "RDMSR", "RDPMC", "RDTSC", "REP", "REPE", "REPNE", "REPNZ", "REPZ", "RET", "RETF", "ROL",
+        "ROR", "RSM", "SAHF", "SAL", "SAR", "SBB", "SCAS", "SCASB", "SCASD", "SCASW", "SETA", "SETAE",
+        "SETB", "SETBE", "SETC", "SETE", "SETG", "SETGE", "SETL", "SETLE", "SETNA", "SETNAE", "SETNB",
+        "SETNBE", "SETNC", "SETNE", "SETNG", "SETNGE", "SETNL", "SETNLE", "SETNO", "SETNP", "SETNS",
+        "SETNZ", "SETO", "SETP", "SETPE", "SETPO", "SETS", "SETZ", "SGDT", "SHL", "SHLD", "SHR", "SHRD",
+        "SIDT", "SLDT", "SMSW", "STC", "STD", "STI", "STOS", "STOSB", "STOSD", "STOSW", "STR", "SUB",
+        "TEST", "UD2", "VERR", "VERW", "WAIT", "WBINVD", "WRMSR", "XADD", "XCHG", "XLAT", "XLATB", "XOR" },
+    },
+  { Id=3,   -- Procedure calls > PB IDE color: #006666 (Blue Stone)
+    Regex=[[ ([a-zA-Z_]\w*)(?:(?:\s*)\() ]],
+    Group=1
+    },
+  { Id=4,   -- Escaped-String Prefix ("~") > PB IDE color: same as strings
+    Regex=[[ ~" ]], -- NOTE: In the final doc, this Keyword is converted to become
+                    --       part of the string [see OnStateChange() func below]
+    },
+}
+
+
+
+function OnStateChange(oldState, newState, token, kwgroup)
+
+--[[ Dismiss Escape-Sequences
+     =========================
+     Currently, I couldn't find a way to preserve escape sequences without causing
+     stray behaviour in string. So, for the time being they are just dismissed. ]]
+  if newState==HL_ESC_SEQ then
+    if oldState==HL_STRING then
+      -- ESCAPE SEQUENCE FOUND INSIDE A STRING:
+      if escapedString~=true then
+        -- String is Literal (no escaping allowed)...
+        escapeSeq = false
+        if token=='\\"' then
+          -- rejecting a \" will cause the \ to become part of the curr. string
+          -- but the " will be thrown again to the parser, which will mistake it
+          -- for a new string start. We'll use the `forceStringEnd` var to
+          -- prevent this...
+          forceStringEnd = true
+          return HL_REJECT
+        else
+          -- all other escape sequences can be suppresed by assimilating
+          -- them to the current string... 
+          forceStringEnd=false
+          return HL_REJECT --HL_STRING
+        end
+      else
+        -- String is Escapable...
+        escapeSeq = true
+        forceStringEnd=false
+        return HL_ESC_SEQ
+      end
+    -- HANDLE TWO ESCAPRE SEQUENCES IN A ROW: 
+    elseif oldState==HL_ESC_SEQ then
+        escapeSeq = true
+        escapedString = true
+        forceStringEnd=false
+        return HL_ESC_SEQ
+    else
+      -- ESCAPE SEQUENCE FOUND OUTSIDE A STRING
+      escapeSeq = false
+      forceStringEnd=false
+        escapedString = false
+     return HL_REJECT
+    end
+
+--[[ PB Escape Strings (~"...")
+     ==========================
+     Keyword 4 (~") is converted to string state, so the tilda becomes part of
+     the actual string. The boolean var `escapedString` tracks this process. ]]
+  elseif newState==HL_KEYWORD and kwgroup==4 then
+    -- If ~" occurs inside a string, it's just a string with a tilda as last char...
+    if oldState==HL_STRING then
+      -- We use the `forceStringEnd` var trick here, like we did with
+      -- rejected \" escape sequences above... 
+      forceStringEnd=true
+      return HL_REJECT -- HL_STRING -- HL_REJECT
+    -- In all other cases it's an escaped string delimiter (opening)...
+    else
+      escapedString = true
+      escapeSeq = false
+      forceStringEnd=false
+      return HL_STRING
+    end
+
+--[[ NEW STATE IS STRING: ]]
+  elseif newState==HL_STRING then
+
+--[[ Handle The " After A Rejcted  \" or ~" in Literal String
+     =======================
+     A rejected \" or ~" led to a spurious " being fed to the parser which can 
+     be mistaken for a new string delimiter ]]
+    if forceStringEnd==true then
+      forceStringEnd=false
+      return HL_STRING_END
+
+--[[ Sanitize String Starts
+     ======================
+     Because Keyword 4 is converted to a string start, we must tell the parser to
+     treat the next string delimiter as a string end! ]]
+    elseif escapedString==true then
+      escapedString = false
+      return HL_STRING_END
+
+--[[ Sanitize String After Escape Sequence
+     =====================================
+     Ensure that a " immediately following an escape sequence is treated as
+     a string-end delimiter. ]]
+    elseif token=='"' and escapeSeq==true then
+      escapeSeq = false
+      forceStringEnd=false
+      escapedString = false
+      return HL_STRING_END
+    else
+      escapeSeq = false
+      forceStringEnd=false
+      return HL_STRING
+    end
+
+--[[ FOR ALL OTHER SYNTAX ITEMS:]]
+  elseif oldState~=HL_STRING and oldState~=HL_ESC_SEQ then
+    -- Reset all Trackers' States: This is required to avoid some edge-cases
+    -- of strings corruption in complex source code...
+    escapeSeq = false
+    escapedString = false
+    forceStringEnd=false
+    return newState
+
+  end
+end
+
+
+--[[==========================================================================
+                                      CHANGELOG                                   
+==============================================================================
+v1.7.1 - 2017/11/18 (PureBASIC v5.61)
+       - Syntax checked against new PureBASIC v5.61 (no changes detected)
+v1.7   - 2017/10/02 (PureBASIC v5.60) 
+       - IMPROVEMENTS: Escape sequences are now corretcly parsed and highlighted.
+v1.6   - 2017/09/30 (PureBASIC v5.60) 
+       - IMPROVEMENTS: Added numbers definition (hex, binary, floats an decimals) 
+       - BUG-FIX: String concatenations didn't always parse correctly; now this
+         was fixed (at the expenses of escaped sequences).
+       - ABROGATED: parsing of escape sequences is now disabled because it caused
+         too many problems with strings.
+v1.5   - 2017/09/28 (PureBASIC v5.60) 
+       - IMPROVEMENTS:
+         - Escaped-String Prefix (~) is no longer handled as a keyword (ID=4/kwd)
+           but its recognized as a valid string delimiter.
+         - Escape Sequences are further sanitized so that they can occur only
+           inside strings with the ~" opening delimiter.
+       - ABROGATED:
+         - The lang definition no longer uses Keyword 4 (Escaped-String Prefix).
+v1.4   - 2017/09/27 (PureBASIC v5.60) 
+       - BUG-FIX: Added sanitize function to avoid false positive Escape Sequences
+         in structured vars (eg: "\v" in "SomeStructure\var1").
+         (Thanks to André Simon -- see Issue #23:)
+         -- https://github.com/andre-simon/highlight/issues/23
+v1.3   - 2017/05/20 (PureBASIC v5.60) 
+       - fixed single line comment delimiter
+v1.2   - 2017/05/11 (PureBASIC v5.60)
+       - Added ASM keywords and support for inline ASM (via "!" syntax).
+       - BUG-FIXES:
+         - Repaired missing or mispelled PB Keywords (something went wrong in the
+           keywords list of the v1.1 of this lang definition, some tokens were
+           lost, other fused into a single token -- sorry about that).
+v1.1   - 2017/04/30 (PureBASIC v5.60)
+       - Keywords list now built by extracting them from the PureBASIC SDK's
+         "SyntaxHilighting.dll" (from each PureBASIC version). Tokens from each
+         version are added to the list, and renamed or removed tokens are kept
+         for the sake of covering all versions of the language from PureBASIC
+         v5.00 upward. (NOTE: currently, there are no renamed or deprecated
+         tokens in the keywords list). For more info, see:
+         -- http://www.purebasic.fr/english/viewtopic.php?&p=506269
+         -- https://github.com/tajmone/purebasic-archives/tree/master/syntax-highlighting/guidelines
+v1.0   - 2016/10/27 (PureBASIC v5.50)
+       - First release. Keywords list taken and adapted from GuShH's PureBasic 
+         language file for GeSHi:
+         -- https://github.com/easybook/geshi/blob/master/geshi/purebasic.php
+--]]

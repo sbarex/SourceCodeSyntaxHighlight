@@ -1,0 +1,60 @@
+
+-- Support inline SQL
+dofile(HL_LANG_DIR.."sql.lang")
+
+Description="RPG"
+
+Categories = {"source", "database"}
+
+table.insert(Keywords,
+  { Id=1,
+    Regex=[[ ^\s*([CDEFHIOP]) ]],
+  }
+)
+
+table.insert(Keywords,
+  { Id=1,
+    List={
+        "acq", "add", "adddur", "alloc", "andgt", "andlt", "andeq", "andne", "andge",
+        "andle", "begsr", "bitoff", "biton", "cabxx", "call", "callb", "callp", "casgt",
+        "caslt", "caseq", "casne", "casge", "casle", "cat", "chain", "check", "checkr",
+        "clear", "close", "commit", "comp", "dealloc", "define", "delete", "div", "do",
+        "dou", "dougt", "doult", "doueq", "doune", "douge", "doule", "dow", "dowgt",
+        "dowlt", "doweq", "downe", "dowge", "dowle", "dsply", "dump", "else", "endcs",
+        "enddo", "endfor", "endif", "endsl", "endsr", "eval", "evalr", "except",
+        "exfmt", "exsr", "extrct", "feod", "for", "force", "goto", "if", "ifgt", "iflt",
+        "ifeq", "ifne", "ifge", "ifle", "in", "iter", "kfld", "klist", "leave",
+        "leavesr", "lookup", "mhhzo", "mhlzo", "mlhzo", "mllzo", "move", "movea",
+        "movel", "mult", "mvr", "next", "occur", "open", "orgt", "orlt", "oreq", "orne",
+        "orge", "orle", "other", "out", "parm", "plist", "post", "read", "readc",
+        "reade", "readp", "readpe", "realloc", "rel", "reset", "return", "rolbk",
+        "scan", "select", "setgt", "setll", "setoff", "seton", "shtdn", "sorta", "sqrt",
+        "sub", "subdur", "subst", "tag", "test", "testb", "testn", "testz", "time",
+        "unlock", "update", "when", "whengt", "whenlt", "wheneq", "whenne", "whenge",
+        "whenle", "write", "xfoot", "xlate", "z-add", "z-sub" }
+}
+)
+
+table.insert(Keywords,
+  { Id=2,
+    Regex=[[ %\w+ ]],
+  }
+)
+
+table.insert(Keywords,
+  { Id=3,
+    Regex=[[ /[\w\-]+ ]],
+  }
+)
+
+Comments={
+  { Block=false,
+    Delimiter= { [[^\s+(\*.*)]] },
+  },
+  { Block=false,
+    Delimiter= { [[//]] },
+  },
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\:]]
+

@@ -1,0 +1,66 @@
+-- a highlight lang definition for coffeescript, by Jess Austin
+Description = "Coffeescript"
+
+Categories = {"source", "script"}
+
+Keywords = {
+  {
+    Id = 1,
+    List = { "and", "break", "by", "catch", "class", "continue", "debugger",
+    "default", "delete", "do", "else", "export", "extends", "finally", "for",
+    "if", "import", "in", "instanceof", "is", "isnt", "loop", "new", "not",
+    "of", "or", "return", "super", "switch", "then", "throw", "try", "typeof",
+    "unless", "until", "when", "while", "yield", "as", "from", "var"
+    }
+  },
+  {
+    Id = 2,
+    List = { "false", "Infinity", "NaN", "no", "null", "off", "on", "this",
+    "undefined", "true", "yes" }
+  },
+  { -- property names in object literals
+    Id = 3,
+    Regex = [[\w+(?=:)]]
+  },
+  { 
+    Id = 1,
+    Regex = [[///|/(?!//)]]
+  },
+}
+
+Comments = {
+  {
+    Block = true,
+    Nested = false,
+    Delimiter = { [[###]], [[###]] }
+  },
+  {
+    Block = false,
+    Delimiter = { [[#(?!\{)]] } -- lookahead so string interpolation will work
+  }
+}
+
+Strings = {
+  Delimiter = [["""|'''|"|']],
+  Escape = [=[\\u\{[[:xdigit:]]+\}|\\u[[:xdigit:]]{4}|\\x[[:xdigit:]]{2}|\\[\\bfnrtv0'"]]=],
+  Interpolation = [[#\{[^}]+}]]
+}
+
+NestedSections = { -- regex as nested language seems to work?
+  {
+    Lang = "cs_block_regex",
+    Delimiter = { [[///]], [[///[gimuy]*]] }
+  },
+  {
+    Lang = "js_regex", -- js.lang might want to use this too
+    Delimiter = { [[/(?!//)]], [[(?!\\)/[gimuy]*]] }
+  },
+  
+}
+
+Digits = [=[0[Bb][01]+|0[Oo][0-7]+|0[Xx][[:xdigit:]]+|\d+]=]
+Identifiers = [=[[A-Za-z$_][A-Za-z$_0-9]*]=]
+Operators = [[=|\+|-|\*|\/|%|<|>|&|\||^|!|\?|:|\.|,|@|\(|\)|\[|]|\{|}]]
+
+EnableIndentation = false
+IgnoreCase = false

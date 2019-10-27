@@ -1,0 +1,156 @@
+
+Description="Crystal"
+
+Categories = {"source"}
+
+Digits = [[ (?:0x|0X|0b)[0-9a-fA-F']+|\d*[\.]?\d+(?:[eE][\-\+]\d+)?[lLuU]* ]]
+
+Keywords={
+  { Id=1,
+    List={"abstract", "alias", "as", "as?", "asm", "begin", "break", "case", "class", 
+          "def", "do", "else", "elsif", "end", "ensure", "enum", "extend", "false",
+          "for", "fun", "if", "in", "include", "instance_sizeof", "is_a?", "lib",
+          "macro", "module", "next", "nil", "nil?", "of", "out", "pointerof", "private",
+          "protected", "require", "rescue", "responds_to?", "return", "select", "self", 
+          "sizeof", "struct", "super", "then", "true", "type", "typeof", 
+          "unintialized", "union", "unless", "until", "verbatim", "when", "while",
+          "with", "yield"},
+  },
+  { Id=2,
+    List={"Nil", "Bool", "Char",
+          "Float32", "Float64",
+          "Int8", "Int16", "Int32", "Int64",
+          "UInt8", "UInt16","UInt32","UInt64",
+          "Number", "String", "Symbol",
+          "Array", "Channel", "Hash", "NamedTuple", "Proc", "Tuple", "Set"},
+  },
+  { Id=3,
+    Regex=[[ [\:@][a-z]\w+ ]]
+  },
+  { Id=4,
+    Regex=[[(\w+)\s*\(]]
+  }
+}
+
+Strings={
+  Delimiter=[["""|'''|"|'|<<[\-~"'`]?[\w_]+["'`]?]],
+  RawPrefix="r",
+  Escape=[=[\\[ntvbrfa\\\?'"]|\\\d{3}|\\x[[:xdigit:]]{2}]=],
+  Interpolation=[[ #\{\w+\} ]],
+  
+  DelimiterPairs= {
+    { Open=[[%q\(]], Close=[[\)]] },
+    { Open=[[%Q\(]], Close=[[\)]] },
+    
+   
+    { Open=[[%\(]], Close=[[\)]] },
+    { Open=[[%\{]], Close=[[\}]] },
+    
+    
+    { Open=[[%\[]], Close=[=[ \] ]=] },
+    { Open=[[%<]], Close=[[>]] },
+    { Open=[[%\|]], Close=[[\|]] },
+ }
+}
+
+Comments = {
+   {
+     Block=false,
+     Delimiter = { [[ # ]] }
+   }
+}
+
+IgnoreCase=false
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\.|\:|\&|<|>|\!|=|\/|\*|\%|\+|\-|\~|\||\^|\?]]
+
+function OnStateChange(oldState, newState, token, groupID)
+
+  
+   
+   if oldState~=HL_STRING and newState==HL_INTERPOLATION then
+      return HL_REJECT
+   end
+   
+   if oldState==HL_STRING and token==hereDoc then
+      hereDoc = nil
+      return HL_STRING_END
+   end
+      
+   if hereDoc~=nil then
+    return HL_STRING
+   end
+   
+   --resolve issue with #{} sequence within strings
+   if oldState==HL_STRING and newState==HL_KEYWORD and groupID==5 then
+      return HL_INTERPOLATION
+   end
+   
+   -- resolve issue with regex expression which spans strings like "</i>" + VAR + "</i>"
+   if string.sub(token,1,1)=="/" and oldState==HL_STRING and newState==HL_KEYWORD then
+      return HL_REJECT
+   end
+      
+   --recognize hereDoc multine strings (including squiggly heredoc)
+   --do not clear hereDoc if token is ",' or `
+   if (oldState==HL_STANDARD or oldState==HL_STRING) and newState==HL_STRING 
+       and not string.find("\"'`", token) then
+      hereDoc = string.match(token, "<<[%-~\"'`]?([%a_]+)" )
+   end
+   
+   -- fix quoted string termination
+   --if oldState~=HL_STRING  then
+   --   qString=0
+   -- end
+    
+   if newState==HL_STRING and (token=="%q(" or token=="%Q("  ) then
+      qString=1
+      return HL_STRING
+   end
+ 
+   
+   if newState==HL_STRING and  token=="%["  then
+      qString=3
+      return HL_STRING
+   end
+   
+   if newState==HL_STRING and  token=="%<"  then
+      qString=4
+      return HL_STRING
+   end
+   if newState==HL_STRING and  token=="%|"  then
+      qString=5
+      return HL_STRING
+   end
+   
+   
+   
+   if oldState==HL_STRING and qString==1 and token==")" then
+      qString=0
+      return HL_STRING_END
+   end
+   
+   
+   if oldState==HL_STRING and qString==3 and token=="]" then
+      qString=0
+      return HL_STRING_END
+   end
+
+   if oldState==HL_STRING and qString==4 and token==">" then
+      qString=0
+      return HL_STRING_END
+   end
+
+   if oldState==HL_STRING and qString==5 and token=="|" then
+      qString=0
+      return HL_STRING_END
+   end
+
+  -- https://fossies.org/linux/misc/puppet-5.3.2.tar.gz/puppet-5.3.2/lib/puppet/indirector/hiera.rb?m=t  
+  
+  -- if token==")" or token=="}" or token=="{"  and oldState~=HL_STRING then
+  --    return HL_OPERATOR
+  -- end
+   
+   return newState
+end

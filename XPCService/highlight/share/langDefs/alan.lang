@@ -1,0 +1,248 @@
+--[[ "alan.lang" v2.0.1 (2018/09/18) | Alan 3.0beta6 | Highlight v3.44 | Lua 5.3
+********************************************************************************
+*                                                                              *
+*                          ALAN IF Syntax Definition                           *
+*                                                                              *
+*                              by Tristano Ajmone                              *
+*                                                                              *
+********************************************************************************
+Syntax definition for the Alan Interactive Fiction Language:
+    https://www.alanif.se
+Created by Tristano Ajmone:
+    <tajmone@gmail.com>
+    https://github.com/tajmone
+    https://gitlab.com/tajmone
+Released into the public domain according to the Unlicense terms:
+    http://unlicense.org
+--------------------------------------------------------------------------------
+File extensions: "*.alan", "*.i"
+------------------------------------------------------------------------------]]
+Description = "ALAN Interactive Fiction Language"
+
+Categories = {"source"}
+
+IgnoreCase = true --> Alan is not case-sensitive
+
+EnableIndentation = false
+
+--[[============================================================================
+                                  IDENTIFIERS                                   
+================================================================================
+RegEx that defines keywords identifier's pattern — ie, which tokens are valid
+keyword candidates. Alan keywords are letters-only, but:
+  (1) Kewyords must not be preceded by a single quote, otherwise it would be a
+      quoted identifier (which can be named like a keyword, but isn't one).
+  (2) Also capture '=>', '.', ',' and ':' as keywords (they are not operators).
+
+Quoted IDs Hack
+===============
+We want the Identifiers RegEx to also capture Quoted Identifies, which then will
+not be matched by any actual Keywords list or RegEx, and therefore will be
+rendered as STANDARD text in the highlighted output.
+This hack is needed to avoid highlighting as keywords the contents of Quoted IDs.
+------------------------------------------------------------------------------]]
+Identifiers = [=[ (?x)(
+  # Quoted Identifiers:
+  '.*?'(?!'')|
+  
+  # Special Kewyords:
+  \=>|\.|,|:|
+  
+  # Alan Keywords:
+  (?<!')\b[a-zA-Z]+\b
+            ) ]=]
+--==============================================================================
+--                                  COMMENTS                                    
+--==============================================================================
+-- Define SINGLE-LINE-COMMENTS delimiter:
+Comments = {
+  { Block     = false,
+    Nested    = false,
+    Delimiter = { [=[ -- ]=] }
+  }
+}
+--==============================================================================
+--                                 STRINGS                                      
+--==============================================================================
+Strings = {
+--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+--                              STRING DELIMITERS                               
+--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Delimiter = [=[ " ]=],
+  AssertEqualLength = true,  -- Delimiters must have the same length?
+
+--[[~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                ESCAPE SEQUENCES                                
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Character combinations with special meaning for the printout:
+  $p  => New paragraph (usually one empty line)
+  $n  => New line
+  $i  => Indent on a new line
+  $t  => Insert a tabulation
+  $$  => Do not insert a space
+  $a  => The name of the actor that is executing
+  $l  => The name of the current location
+  $v  => The verb the player used (the first word)
+  $   => Print a dollar sign
+------------------------------------------------------------------------------]]
+  Escape = [=[ [\$][pnitalv\$] ]=],
+
+--[[~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                INTERPOLATION                                   
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+These refer to parameters while executing a verb:
+  $<n>   => The parameter <n> (<n> is a digit > 0, e.g. "$1")
+  $+<n>  => Definite form of parameter <n>
+  $0<n>  => Indefinite form of parameter <n>
+  $-<n>  => Negative form of parameter <n>
+  $!<n>  => Pronoun for the parameter <n>
+  $o     => The current object (first parameter) *DEPRECATED*
+------------------------------------------------------------------------------]]
+  Interpolation = [=[ \$[+\-!0]?[1-9]|\$o ]=],
+}
+
+--[[============================================================================
+                                   OPERATORS                                    
+================================================================================
+Arythmetic: '+', '-', '*', '/'
+Comparison: '=', '<', '>', '<=', '>=', '<>', '=='
+Other:
+  (1) parameter indicators: '!', '*'
+--------------------------------------------------------------------------------
+NOTE: This RegEx is designed to avoid capturing '=>' as an operator, because we
+      want to capture it as a keyword (shorthand for 'THEN'). Otherwise it could
+      have been optimized to be much shorter.
+------------------------------------------------------------------------------]]
+Operators = [=[ \+|\-|\*|\/|<|(?<!\=)>|<>|<\=|>\=|\=(?!>)|\=\=|\(|\)|\{|\}|! ]=]
+
+--[[============================================================================
+                                     DIGITS                                     
+================================================================================
+Alan has only integer-type numerals.
+------------------------------------------------------------------------------]]
+Digits = [=[ \b\d+\b ]=]
+
+--==============================================================================
+--                                   KEYWORDS                                   
+--==============================================================================
+-- NOTE: All keywords must be in lowercase here, because of 'IgnoreCase = true'.
+Keywords = {
+--------------------------------------------------------------------------------
+--                              Alan Keywords List                              
+--------------------------------------------------------------------------------
+  { Id = 1,
+    List = {
+      -- Keywords (124):
+      "add", "after", "an", "and", "are", "article", "at", "attributes",
+      "before", "between", "by", "can", "cancel", "character", "characters",
+      "check", "container", "contains", "count", "current", "decrease",
+      "definite", "depend", "depending", "describe", "description", "directly",
+      "do", "does", "each", "else", "elsif", "empty", "end", "entered",
+      "event", "every", "exclude", "exit", "extract", "first", "for", "form",
+      "from", "has", "header", "here", "if", "import", "in", "include",
+      "increase", "indefinite", "indirectly", "initialize", "into", "is",
+      "isa", "it", "last", "limits", "list", "locate", "look", "make", "max",
+      "mentioned", "message", "meta", "min", "name", "near", "nearby",
+      "negative", "no", "not", "of", "off", "on", "only", "opaque", "option",
+      "options", "or", "play", "prompt", "pronoun", "quit", "random",
+      "restart", "restore", "save", "say", "schedule", "score", "script",
+      "set", "show", "start", "step", "stop", "strip", "style", "sum",
+      "synonyms", "syntax", "system", "taking", "the", "then", "this", "to",
+      "transcript", "transitively", "until", "use", "verb", "visits", "wait",
+      "when", "where", "with", "word", "words",
+      -- Treat as keywords:
+      "=>",          --> Shorthand for 'THEN'.
+      ".", ",", ":"  --> These are never used as operators.
+    }
+  },
+--------------------------------------------------------------------------------
+--                           Predefined Alan Classes                            
+--------------------------------------------------------------------------------
+-- These are the seven predefined classes of the Alan language.
+-- 
+-- NOTE: Usually there is no need to syntax-highlight the predefined classes or
+--       the 'hero' instance (next keywords group) as there isn't anything
+--       special about them beside being hard-coded into the language.
+--       You can always style this group as normal text if you wish; I've
+--       created a dedicated keywords group for them in order to allow styling
+--       them if needed (for example, in documentation or tutorials it might be
+--       desirable to do so).
+  { Id = 2,
+    List = {
+      "actor", "entity", "integer", "literal", "location", "object", "string", "thing",
+    }
+  },
+--------------------------------------------------------------------------------
+--                             Predefined Instances                             
+--------------------------------------------------------------------------------
+-- The 'hero' is a special predefined actor instance, used for the protagonist.
+-- (See NOTE above!)
+  { Id = 3,
+    List = {
+      "hero"
+    }
+  }
+}
+
+--[[****************************************************************************
+*                                                                              *
+*                            CUSTOM HOOK-FUNCTIONS                             *
+*                                                                              *
+********************************************************************************
+
+================================================================================
+#01 -- Ignore Escape Sequences Outside Strings
+================================================================================
+This function ensures that escape sequences outside strings are ignored: tokens
+matching an escape sequence are rejected if the previously parsed token was not
+a string, an interpolation or another escape sequence.
+Based on André Simon's reply to Issue #23:
+    https://github.com/andre-simon/highlight/issues/23#issuecomment-332002639
+------------------------------------------------------------------------------]]
+function OnStateChange(oldState, newState, token, kwgroup)
+  if  newState == HL_ESC_SEQ and
+      oldState ~= HL_STRING  and
+      oldState ~= HL_ESC_SEQ and
+      oldState ~= HL_INTERPOLATION then
+        return HL_REJECT
+  end
+  return newState
+end
+
+--[[============================================================================
+                                   CHANGELOG                                    
+================================================================================
+This syntax definition abides to Semantic Versioning 2.0.0:
+    http://semver.org
+--------------------------------------------------------------------------------
+v2.0.1 (2018/09/18)
+      - Add missing "integer" to the Predefined Alan classes.
+v2.0.0 (2018/09/11) | Alan 3.0beta6 | Highlight v3.44
+    - BUG FIXES:
+      - Add missing keywords "meta", "indirectly" and "transitively".
+      - Add missing "literal" and "string" to the Predefined Alan classes.
+        For more details, see discussion with Alan develepor Thomas Nilefalk at:
+            https://github.com/alan-if/alan-docs/issues/15
+            https://github.com/alan-if/alan-docs/issues/17
+    - MAJOR CHANGES:
+      - Add new Keywords group and move "hero" there. This new group is for
+        "predefined instances", but its sole member is "hero", the predefined
+        actor instance representing the player. In some contexts, like tutorials
+        and documentation, it might be desirable to be able to syntax highlight
+        this special instance; in all other cases it can just be styled as
+        normal text (or non-styled) to visually hide it.
+v1.0.2 (2018/06/26) | Alan 3.0beta5 | Highlight v3.43)
+    - BUG FIXES:
+      - Now Quoted IDs are passed through as STANDARD text. Before, if Quoted IDs
+        contained an Alan keyword or operators, etc., these would be highlighted
+        as such. The new hack adds a pattern to Identifiers' RegEx that will
+        match any Quoted ID, but since these will not match against any actual
+        Keywords list or RegEx, the token will be consumed as STANDARD text and
+        not processed further.
+v1.0.1 (2018/06/26 | Alan 3.0beta5 | Highlight v3.43)
+    - BUG FIXES:
+      - Escape Sequences after Interpolation (eg: "$1$p") were not captured.
+v1.0.0 (2018/06/16 | Alan 3.0beta5 | Highlight v3.43)
+    - First release.
+--------------------------------------------------------------------------------
+--]]

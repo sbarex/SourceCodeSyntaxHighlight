@@ -1,0 +1,95 @@
+
+Description="Transact-SQL"
+
+Categories = {"database"}
+
+Keywords={
+  { Id=1,
+    List={  "add", "exists", "precision", "all", "exit", "primary", "alter",
+            "external", "print", "and", "fetch", "proc", "any", "file", "procedure", "as",
+            "fillfactor", "public", "asc", "for", "raiserror", "authorization", "foreign",
+            "read", "backup", "freetext", "readtext", "begin", "freetexttable",
+            "reconfigure", "between", "from", "references", "break", "full", "replication",
+            "browse", "function", "restore", "bulk", "goto", "restrict", "by", "grant",
+            "return", "returns", "cascade", "group", "revert", "case", "having", "revoke", "check",
+            "holdlock", "right", "checkpoint", "identity", "rollback", "close",
+            "identity_insert", "rowcount", "clustered", "identitycol", "rowguidcol",
+            "coalesce", "if", "rule", "collate", "in", "save", "column", "index", "schema",
+            "commit", "inner", "securityaudit", "compute", "insert", "select", "constraint",
+            "intersect", "session_user", "contains", "into", "set", "containstable", "is",
+            "setuser", "continue", "join", "shutdown", "convert", "key", "some", "create",
+            "kill", "statistics", "cross", "left", "system_user", "current", "like",
+            "table", "current_date", "lineno", "tablesample", "current_time", "load",
+            "textsize", "current_timestamp", "merge", "then", "current_user", "national",
+            "to", "cursor", "nocheck", "top", "database", "nonclustered", "tran", "dbcc",
+            "not", "transaction", "deallocate", "null", "trigger", "declare", "nullif",
+            "truncate", "default", "of", "tsequal", "delete", "off", "union", "deny",
+            "offsets", "unique", "desc", "on", "unpivot", "disk", "open", "update",
+            "distinct", "opendatasource", "updatetext", "distributed", "openquery", "use",
+            "double", "openrowset", "user", "drop", "openxml", "values", "dump", "option",
+            "varying", "else", "or", "view", "end", "order", "waitfor", "errlvl", "outer",
+            "when", "escape", "over", "where", "except", "percent", "while", "exec",
+            "pivot", "with", "execute", "plan", "writetext"},
+  },
+
+  { Id=2,
+    List={  "absolute", "exec", "overlaps", "action", "execute", "pad", "ada",
+            "exists", "partial", "add", "external", "pascal", "all", "extract", "position",
+            "allocate", "false", "precision", "alter", "fetch", "prepare", "and", "first",
+            "preserve", "any", "float", "primary", "are", "for", "prior", "as", "foreign",
+            "privileges", "asc", "fortran", "procedure", "assertion", "found", "public",
+            "at", "from", "read", "authorization", "full", "real", "avg", "get",
+            "references", "begin", "global", "relative", "between", "go", "restrict", "bit",
+            "goto", "revoke", "bit_length", "grant", "right", "both", "group", "rollback",
+            "by", "having", "rows", "cascade", "hour", "schema", "cascaded", "identity",
+            "scroll", "case", "immediate", "second", "cast", "in", "section", "catalog",
+            "include", "select", "char", "index", "session", "char_length", "indicator",
+            "session_user", "character", "initially", "set", "character_length", "inner",
+            "size", "check", "input", "smallint", "close", "insensitive", "some",
+            "coalesce", "insert", "space", "collate", "int", "sql", "collation", "integer",
+            "sqlca", "column", "intersect", "sqlcode", "commit", "interval", "sqlerror",
+            "connect", "into", "sqlstate", "connection", "is", "sqlwarning", "constraint",
+            "isolation", "substring", "constraints", "join", "sum", "continue", "key",
+            "system_user", "convert", "language", "table", "corresponding", "last",
+            "temporary", "count", "leading", "then", "create", "left", "time", "cross",
+            "level", "timestamp", "current", "like", "timezone_hour", "current_date",
+            "local", "timezone_minute", "current_time", "lower", "to", "current_timestamp",
+            "match", "trailing", "current_user", "max", "transaction", "cursor", "min",
+            "translate", "date", "minute", "translation", "day", "module", "trim",
+            "deallocate", "month", "true", "dec", "names", "union", "decimal", "national",
+            "unique", "declare", "natural", "unknown", "default", "nchar", "update",
+            "deferrable", "next", "upper", "deferred", "no", "usage", "delete", "none",
+            "user", "desc", "not", "using", "describe", "null", "value", "descriptor",
+            "nullif", "values", "diagnostics", "numeric", "varchar", "disconnect",
+            "octet_length", "varying", "distinct", "of", "view", "domain", "on", "when",
+            "double", "only", "whenever", "drop", "open", "where", "else", "option", "with",
+            "end", "or", "work", "end-exec", "order", "write", "escape", "outer", "year",
+            "except", "output", "zone", "exception"},
+  },
+
+  { Id=3,
+    Regex=[[(\w+)\s*\(]],
+  },
+
+  { Id=4,
+    Regex=[[@?@\w+]],
+  },
+}
+
+Strings={
+  Delimiter=[["|']],
+}
+
+IgnoreCase=true
+
+Comments={
+  { Block=false,
+    Delimiter= { [[\-\-]] },
+  },
+  { Block=true,
+    Nested=false,
+    Delimiter= { [[\/\*]],[[\*\/]],}
+  }
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-]]

@@ -1,0 +1,27 @@
+Description="Excel Formulas"
+
+Categories = {"database"}
+
+Keywords={
+  { Id = 1,
+	List = {"abs", "accrint", "accrintm", "acos", "acosh", "address", "amordegrc", "amorlincand", "areas", "asc", "asin", "asinh", "atan", "atan2", "atanh", "avedev", "average", "averagea", "bahttext", "besseli", "besselj", "besselk", "bessely", "betadist", "betainv", "bin2dec", "bin2hex", "bin2oct", "binomdist", "ceiling", "cell", "char", "chidist", "chiinv", "chitest", "choose", "clean", "code", "column", "columns", "combin", "complex", "concatenate", "confidence", "convert", "correl", "cos", "cosh", "count", "counta", "countblank", "countif", "coupdaybs", "coupdays", "coupdaysnc", "coupncd", "coupnum", "couppcd", "covar", "critbinom", "cumipmt", "cumprinc", "date", "datedif", "datevalue", "daverage", "day", "days360", "db", "dcount", "dcounta", "ddb", "dec2bin", "dec2hex", "dec2oct", "degrees", "delta", "devsq", "dget", "disc", "dmax", "dmin", "dollar", "dollarde", "dollarfr", "dproduct", "dstdev", "dstdevp", "dsum", "duration", "dvar", "dvarp", "edate", "effect", "eomonth", "erf", "erfc", "error.type", "euroconvert", "even", "exact", "exp", "expondist", "fact", "factdouble", "false", "fdist", "find", "findb", "finv", "fisher", "fisherinv", "fixed", "floor", "forecast", "frequency", "ftest", "fv", "fvschedule", "gammadist", "gammainv", "gammaln", "gcd", "geomean", "gestep", "getpivotdata", "growth", "harmean", "hex2bin", "hex2dec", "hex2oct", "hlookup", "hour", "hyperlink", "hypgeomdist", "if", "imabs", "imaginary", "imargument", "imconjugate", "imcos", "imdiv", "imexp", "imln", "imlog10", "imlog2", "impower", "improduct", "imreal", "imsin", "imsqrt", "imsub", "imsum", "index", "indirect", "info", "int", "intercept", "intrate", "ipmt", "irr", "isblank", "iserr", "iserror", "iseven", "islogical", "isna", "isnontext", "isnumber", "isodd", "ispmt", "isref", "istext", "kurt", "large", "lcm", "left", "leftb", "len", "lenb", "linest", "ln", "log", "log10", "logest", "loginv", "lognormdist", "lookup", "lower", "match", "max", "maxa", "mdeterm", "mduration", "median", "mid", "midb", "min", "mina", "minute", "minverse", "mirr", "mmult", "mod", "mode", "month", "mround", "multinomial", "n", "na", "negbinomdist", "networkdays", "nominal", "normdist", "norminv", "normsdist", "normsinv", "not", "now", "nper", "npv", "oct2bin", "oct2dec", "oct2hex", "odd", "oddfprice", "oddfyield", "oddlprice", "oddlyield", "offset", "or", "pearson", "percentile", "percentrank", "permut", "phonetic", "pi", "pmt", "poisson", "power", "ppmt", "price", "pricedisc", "pricemat", "prob", "product", "proper", "pv", "quartile", "quartile.exc", "quartile.inc", "quotient", "radians", "rand", "randbetween", "rank", "rate", "received", "replace,", "rept", "right,", "roman", "round", "rounddown", "roundup", "row", "rows", "rsq", "rtd", "search,", "searchb", "second", "seriessum", "sign", "sin", "sinh", "skew", "sln", "slope", "small", "sql.request", "sqrt", "sqrtpi", "standardize", "stdev", "stdeva", "stdevp", "stdevpa", "steyx", "substitute", "subtotal", "sum", "sumif", "sumifs", "sumproduct", "sumsq", "sumx2my2", "sumx2py2", "sumxmy2", "syd", "t", "tan", "tanh", "tbilleq", "tbillprice", "tbillyield", "tdist", "text", "time", "timevalue", "tinv", "today", "transpose", "trend", "trim", "trimmean", "true", "trunc", "ttest", "type", "upper", "value", "var", "vara", "varp", "varpa", "vdb", "vlookup", "weekday", "weeknum", "weibull", "weibull.dist", "workday", "workday.intl", "xirr", "xnpv", "year", "yearfrac", "yield", "yielddisc", "yieldmat", "ztest"}
+  },
+  { Id = 2,
+	List = {"averageif", "averageifs", "countifs", "iferror", "sumifs"}
+  },
+  { Id = 3,
+	List = {"aggregate", "beta.dist", "beta.inv", "binom.dist", "binom.inv", "chisq.dist", "chisq.dist.rt", "chisq.inv", "chisq.inv.rt", "chisq.test", "confidence.norm", "confidence.t", "covariance.p", "covariance.s", "expon.dist", "f.dist", "f.dist.rt", "f.inv", "f.inv.rt", "f.test", "gamma.dist", "gamma.inv", "hypgeom.dist", "ceiling.precise", "lognorm.dist", "lognorm.inv", "mode.mult", "mode.sngl", "negbinom.dist", "networkdays.intl", "norm.dist", "norm.inv", "norm.s.dist", "norm.s.inv", "percentile.exc", "percentile.inc", "percentrank.exc", "percentrank.inc", "poisson.dist", "quartile.exc", "quartile.inc", "rank.avg", "rank.eq", "stdev.p", "stdev.s", "t.dist", "t.dist.2t", "t.dist.rt", "t.inv", "t.inv.2t", "t.test", "var.p", "var.s", "weibull.dist", "workday.intl", "z.test"}
+  },
+  { Id = 4,
+	List={"cubekpimember", "cubemember", "cubememberproperty", "cuberankedmember", "cubeset", "cubesetcount", "cubevalue"}
+  }
+}
+
+Strings = {
+  Delimiter=[["|']],
+  DelimiterPairs = {{ Open = "\\[", Close = "\\]"}}
+}
+
+IgnoreCase=true
+
+Operators=[[\-|"|\%|\&|\(|\)|\,|\/|\^|\{|\}|\+|<|\=|>|]]

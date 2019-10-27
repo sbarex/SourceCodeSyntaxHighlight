@@ -1,0 +1,24 @@
+
+Description="Kwrite Editor"
+
+Categories = {"light"}
+
+Default        = { Colour="#000000" }
+Canvas         = { Colour="#E0EAEE" }
+Number         = { Colour="#B07E00" }
+Escape         = { Colour="#ff00ff" }
+String         = { Colour="#BF0303" }
+Interpolation  = { Colour="#0057AE" }
+StringPreProc  = { Colour="#818100" }
+BlockComment   = { Colour="#838183", Italic=true }
+PreProcessor   = { Colour="#008200" }
+LineNum        = { Colour="#555555" }
+Operator       = { Colour="#000000" }
+LineComment = BlockComment
+
+Keywords = {
+  { Colour= "#000000", Bold=true },
+  { Colour= "#0057AE" },
+  { Colour= "#000000", Bold=true },
+  { Colour= "#010181" },
+}

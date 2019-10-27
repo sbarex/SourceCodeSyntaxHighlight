@@ -1,0 +1,48 @@
+
+Description="mIRC Scripting"
+--msl, nbs
+
+Categories = {"script"}
+
+Keywords={
+{  Id=1,
+   List={"if", "while", "else", "for", "inc", "dec" }
+  },
+  {  Id=2,
+   List={"set", "var", "alias", "on", "msg", "kick",       
+		"ajinvite","amsg","anick","autojoin","background","ban","beep","channel","clear","clearall",
+		"clipboard","close","color","copy","creq","ctcreply","debug","describe","disconnect","dll","dns",
+		"dqwindow","ebeeps","editbox","emailaddr","exit","filter","flash","flushini","font","fullname",
+		"help","hop","join","linesep","links","load","loadbuf","localinfo","log","mdi","mkdir",
+		"mnick","nick","noop","omsg","partall","pdcc","perform","play","pop","pvoice","qmsg","query",
+		"queryrn","raw","remini","remove","rename","resetidle","rmdir","run","save","savebuf","saveini",
+		"say","server","showmirc","sline","speak","splay","sreq","strip","timer","timestamp","titlebar",
+		"titlebar","tnick","tokenize","unload","updatenl","url","winhelp","write","writeini" }
+  },
+  { Id=2,
+    Regex=[[ /\w+ ]],
+  },
+  { Id=3,
+    Regex=[[ \$[\w\d\+\$]+ ]],
+  },
+  { Id=4,
+    Regex=[[ [&%]\w+ ]],
+  }
+}
+
+Strings = {
+  Delimiter=[["|']]
+}
+
+Comments = {
+   { Block=true,
+     Nested=false,
+     Delimiter = { [[\/\*]], [[\*\/]] }
+   },
+   {
+     Block=false,
+     Delimiter = { [[;]] }
+   }
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\.|\:|\&|<|>|\!|=|\/|\*|\%|\+|\-|\~|\||\^]]

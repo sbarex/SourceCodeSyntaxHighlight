@@ -1,0 +1,24 @@
+
+Description = "vim clarity"
+
+Categories = {"dark", "vim"}
+
+Default	= { Colour="#b2dfee" }
+Canvas	= { Colour="#1F3055" }
+Number	= { Colour="#b3ee3a" }
+Escape	= { Colour="#FFEEA6" }
+String	= { Colour="#cccccc" }
+BlockComment	= { Colour="#9e9e9e" }
+StringPreProc = String
+LineComment   = BlockComment
+Operator      = { Colour="#ffffff" }
+LineNum      = BlockComment
+PreProcessor      = Default
+Interpolation  = { Colour="#CEFF9F" }
+
+Keywords = {
+  { Colour="#cd919e" },
+  { Colour="#ff4400" },
+  { Colour="#9ecc91" },
+  { Colour="#edc1b2" },
+}

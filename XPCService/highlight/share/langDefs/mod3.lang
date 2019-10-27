@@ -1,0 +1,51 @@
+
+Description="Modula3"
+
+Categories = {"source"}
+
+
+Keywords={
+  { Id=1,
+    List={"and", "do", "from", "not",  "repeat", 
+      "until", "any","else", "generic","object", "return", 
+      "untraced", "array","elsif","if","of","reveal", 
+      "value", "as", "end",  "import", "or","root",
+      "var", "begin","eval", "in","overrides","set", 
+        "while", "bits", "except", "interface","procedure","then",
+        "with", "branded","exception","lock", "raise","to", "by",  
+      "exit", "loop", "raises", "try", "case", 
+      "exports","methods","readonly", "type", "const","finally",
+      "mod",  "record", "typecase", "div","for",  "module",  
+      "ref",  "unsafe"},
+  },
+  { Id=2,
+    List={"abs","bytesize","extended",  "integer", "min",
+      "number", "text", "address","cardinal","false","istype",
+      "mutex","ord","true", "adr","ceiling", "first","last",  
+      "narrow",  "real", "trunc", "adrsize","char","float",
+      "longreal","new","refany", "typecode", "bitsize","dec", 
+      "floor","loophole","nil","round","val", "boolean",
+      "dispose", "inc","max", "null", "subarray"},
+  },
+  { Id=4,
+      Regex=[[(\w+)\s*\(]],
+  },
+}
+
+Strings={
+  Delimiter=[["|']],
+}
+
+IgnoreCase=true
+
+Comments={
+  { Block=false,
+ Delimiter= { [[\/\/]] },
+  },
+  { Block=true,
+ Nested=false,
+ Delimiter= { [[\(\*]],[[\*\)]],}
+  }
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-|\.]]

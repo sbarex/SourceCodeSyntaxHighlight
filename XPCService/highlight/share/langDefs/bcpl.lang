@@ -1,0 +1,38 @@
+
+Description="BCPL"
+
+Categories = {"source"}
+
+Keywords={
+  {  Id=1,
+   List={"NUMBER", "NAME", "STRINGCONST", "TRUE", "FALSE", "VALOF", "LV", "RV",
+        "DIV", "REM", "PLUS", "MINUS", "EQ", "NE", "LS", "GR", "LE", "GE", "NOT",
+        "LSHIFT", "RSHIFT", "LOGAND", "LOGOR", "EQV", "NEQV", "COND", "COMMA", "AND",
+        "ASS", "GOTO", "RESULTIS", "COLON", "TEST", "FOR", "IF", "UNLESS", "WHILE",
+        "UNTIL", "REPEAT", "REPEATWHILE", "REPEATUNTIL", "BREAK", "RETURN", "FINISH",
+        "SWITCHON", "CASE", "DEFAULT", "LET", "MANIFEST", "GLOBAL", "BE", "SECTBRA",
+        "SECTKET", "RBRA", "RKET", "SBRA", "SKET", "SEMICOLON", "INTO", "TO", "DO",
+        "OR", "VEC", "STAR"
+        }
+  },
+
+  { Id=4,
+    Regex=[[(\w+)\s*\(]]
+  }
+}
+
+Strings = {
+  Delimiter=[["|']],
+  RawPrefix="R",
+}
+
+Comments = {
+   {
+     Block=false,
+     Delimiter = { [[//]] }
+   }
+}
+
+IgnoreCase=false
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\.|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-|\~|\|]]

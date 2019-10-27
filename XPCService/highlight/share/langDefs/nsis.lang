@@ -1,0 +1,90 @@
+
+Description="NSIS"
+
+Categories = {"config", "script"}
+
+Keywords={
+  { Id=1,
+    List={"OutFile", "Name", "Caption", "SubCaption", "BrandingText", "Icon", 
+    "WindowIcon", "BGGradient", "SilentInstall", "SilentUnInstall", "CRCCheck", 
+    "MiscButtonText", "InstallButtonText", "FileErrorText", "InstallDir", 
+    "InstallDirRegKey", "LicenseText", "LicenseData", "ComponentText", "InstType", 
+    "EnabledBitmap", "DisabledBitmap", "SpaceTexts", "DirShow", "DirText", 
+    "AllowRootDirInstall", "InstallColors", "InstProgressFlags", "AutoCloseWindow", 
+    "ShowInstDetails", "DetailsButtonText", "CompletedText", "UninstallText", 
+    "UninstallIcon", "UninstallCaption", "UninstallSubCaption", "ShowUninstDetails", 
+    "UninstallButtonText", "SetOverwrite", "SetCompress", "SetDatablockOptimize", 
+    "SetDateSave", "Section", "SectionIn", "SectionEnd", "SectionDivider", 
+    "AddSize", "Function", "FunctionEnd", "XPStyle", "Var", "goto", "end"},
+  },
+  { Id=2,
+    List={"SetOutPath", "File", "Exec", "ExecWait", "ExecShell", "Rename", 
+    "Delete", "RMDir", "WriteRegStr", "WriteRegExpandStr", "WriteRegDWORD", 
+    "WriteRegBin", "WriteINIStr", "ReadRegStr", "ReadRegDWORD", "ReadINIStr", 
+    "ReadEnvStr", "ExpandEnvStrings", "DeleteRegValue", "DeleteRegKey", 
+    "EnumRegKey", "EnumRegValue", "DeleteINISec", "DeleteINIStr", "CreateDirectory", 
+    "CopyFiles", "SetFileAttributes", "CreateShortCut", "GetFullPathName", 
+    "SearchPath", "GetTempFileName", "CallInstDLL", "RegDLL", "UnRegDLL", 
+    "GetDLLVersion", "GetDLLVersionLocal", "GetFileTime", "GetFileTimeLocal", 
+    "Goto", "Call", "Return", "IfErrors", "ClearErrors", "SetErrors", "FindWindow", 
+    "SendMessage", "IsWindow", "IfFileExists", "MessageBox", "StrCmp", "IntCmp", 
+    "IntCmpU", "Abort", "Quit", "GetFunctionAddress", "GetLabelAddress", 
+    "GetCurrentAddress", "FindFirst", "FindNext", "FindClose", "FileOpen", 
+    "FileClose", "FileRead", "FileWrite", "FileReadByte", "FileWriteByte", 
+    "FileSeek", "SetDetailsView", "SetDetailsPrint", "SetAutoClose", "DetailPrint", 
+    "Sleep", "BringToFront", "HideWindow", "StrCpy", "StrLen", "Push", 
+    "Pop", "Exch", "IntOp", "IntFmt", "RebootIf", "RebootFlag", "SetRebootFlag", 
+    "WriteUninstaller"},
+  },
+  { Id=3,
+    List={"SW_SHOWNORMAL", "SW_SHOWMAXIMIZED", "SW_SHOWMINIMIZED", "HKCR", 
+    "HKEY_CLASSES_ROOT", "HKLM", "HKEY_LOCAL_MACHINE", "HKCU", "HKEY_CURRENT_USER", 
+    "HKU", "HKEY_USERS", "HKCC", "HKEY_CURRENT_CONFIG", "HKDD", "HKEY_DYN_DATA", 
+    "HKPD", "HKEY_PERFORMANCE_DATA", "MB_OK", "MB_OKCANCEL", "MB_ABORTRETRYIGNORE", 
+    "MB_RETRYCANCEL", "MB_YESNO", "MB_YESNOCANCEL", "MB_ICONEXCLAMATION", 
+    "MB_ICONQUESTION", "MB_ICONSTOP", "MB_TOPMOST", "MB_SETFOREGROUND", "MB_RIGHT", 
+    "IDABORT", "IDCANCEL", "IDIGNORE", "IDNO", "IDOK", "IDRETRY", "IDYES", "NORMAL", 
+    "FILE_ATTRIBUTE_NORMAL", "ARCHIVE", "FILE_ATTRIBUTE_ARCHIVE", "HIDDEN", 
+    "FILE_ATTRIBUTE_HIDDEN", "OFFLINE", "FILE_ATTRIBUTE_OFFLINE", "READONLY", 
+    "FILE_ATTRIBUTE_READONLY", "SYSTEM", "FILE_ATTRIBUTE_SYSTEM", "TEMPORARY", 
+    "FILE_ATTRIBUTE_TEMPORARY", "ALT", "CONTROL", "EXT", "SHIFT"},
+  },
+  { Id=3,
+    Regex=[[\w+\:]],
+  },
+  { Id=4,
+    Regex=[[(\$\{[\w\:]+\})]],
+  },
+  { Id=4,
+    Regex=[[\$\w+]],
+  },
+  { Id=4,
+    Regex=[[\!\w+]],
+  }
+}
+
+
+Strings={
+  Delimiter=[["|'|`]],
+  Escape = [[ \$ ]],
+  Interpolation=[[ (\$\{\w+\}) ]],
+}
+
+IgnoreCase=false
+
+Comments={
+  { Block=false,
+    Delimiter= { [[;|\#]] },
+  },
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\.|\:|\&|<|>|\|\=|\/|\*|\%|\+|\-|\~]]
+
+
+-- fix recognition of $
+function OnStateChange(oldState, newState, token, groupID)
+   if  (string.sub(token,1,1) =="$" and oldState==HL_STRING and newState==HL_KEYWORD) then
+      return HL_INTERPOLATION
+   end   
+   return newState
+end

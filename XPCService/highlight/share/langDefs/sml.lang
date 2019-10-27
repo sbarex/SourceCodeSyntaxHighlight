@@ -1,0 +1,31 @@
+
+Description="Standard ML"
+
+Categories = {"source", "functional"}
+
+Keywords={
+  { Id=1,
+    List={"abstraction", "abstype", "and", "andalso", "as", "before", "case", 
+        "datatype", "else", "end", "eqtype", "exception", "do", "fn", "fun", "functor", 
+        "handle", "if", "in", "include", "infix", "infixr", "let", "local", "nonfix", 
+        "of", "op", "open", "orelse", "overload", "raise", "rec", "sharing", "sig", 
+        "signature", "struct", "structure", "then", "type", "val", "where", "while", 
+        "with", "withtype", "o", "true", "false", "", "Bool", "String", "Int", "Real", 
+        "Word", "Char", "StringCvt", "Word8", "List", "ListPair", "Vector", "TextIO", 
+        "BinIO", "div", "mod"},
+  },
+  { Id=2,
+    List={"bool", "string", "int", "real", "word"},
+  },
+  { Id=4,
+    Regex=[[(\w+)\s*\(]],
+  },
+}
+
+Strings={
+  Delimiter=[["]],
+}
+
+IgnoreCase=false
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-|\'|\.]]

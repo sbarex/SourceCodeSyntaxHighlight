@@ -1,0 +1,83 @@
+
+Description="COBOL"
+
+Categories = {"source"}
+
+Identifiers=[[ [a-zA-Z_][\w\-]* ]]
+
+Keywords={
+  { Id=1,
+    List={"accept", "access",  "add", "advancing", "after", "all", "alphabet", 
+        "alphabetic", "alphabetic-lower", "alphabetic-upper", "alphanumeric", 
+        "alphanumeric-edited", "also", "alter", "alternate", "and", "any", "are", 
+        "area", "areas", "ascending", "assign", "at", "author", "before",  "binary", 
+        "blank", "block", "bottom", "by", "call", "cancel",    "cd", "cf", "ch",     
+        "character", "characters", "class", "clock-units", "close", "cobol", "code", 
+        "code-set", "collating", "column",    "comma",  "common", "communication", 
+        "comp", "comp-0", "comp-1", "comp-2", "comp-3", "comp-4", "comp-5", "comp-6", 
+        "comp-x", "computational", "computational-0", "computational-1", 
+        "computational-2", "computational-3", "computational-4", "computational-5", 
+        "computational-6", "computational-x", "compute", "configuration", "contains", 
+        "content", "continue", "control", "control-area", "controls", "converting", 
+        "copy",    "corr", "corresponding", "count",     "currency", "data", "date", 
+        "date-compiled", "date-written", "day", "day-of-week", "de", "debug-contents", 
+        "debug-item", "debug-line", "debug-name", "debug-sub-1", "debug-sub-2", 
+        "debug-sub-3", "debugging", "decimal-point", "declaratives", "delete", 
+        "delimited", "delimiter", "depending", "descending", "destination", "detail", 
+        "disable", "display",  "divide", "division", "down", "duplicates", "dynamic", 
+        "egi", "else", "emi", "enable", "end",    "end-add", "end-call", "end-compute", 
+        "end-delete", "end-divide", "end-evaluate", "end-if", "end-multiply", 
+        "end-of-page", "end-perform", "end-read", "end-receive", "end-return", 
+        "end-rewrite", "end-search", "end-start", "end-string", "end-subtract", 
+        "end-unstring", "end-write", "enter",    "environment",    "eop",    "equal",  
+        "error", "esi", "evaluate", "every",  "exception", "exit", "extend",    
+        "external", "false", "fd",  "file", "file-control",     "filler", "final", 
+        "first", "footing", "for", "from", "function", "generate", "giving", "global", 
+        "go", "greater", "group", "heading",    "high-value", "high-values", "i-o", 
+        "i-o-control", "identification", "if", "in", "index", "indexed", "indicate", 
+        "initial", "initialize", "initiate", "input", "input-output",    "inspect", 
+        "installation", "into", "invalid", "just", "justified", "key", "label", "last", 
+        "leading",    "left",  "length",    "less", "limit", "limits", "linage", 
+        "linage-counter", "line", "line-counter", "lines", "linkage",    "lock",  
+        "low-value", "low-values", "memory", "merge", "message",    "mode",    
+        "modules", "more-labels", "move", "multiple", "multiply", "native",    
+        "negative", "next", "no",  "not",   "number", "numeric", "numeric-edited", 
+        "object-computer",    "occurs", "of", "off", "omitted", "on",    "open", 
+        "optional", "or", "order", "organization", "other",    "output", "overflow", 
+        "packed-decimal", "padding", "page", "page-counter",  "perform", "pf", "ph", 
+        "pic", "picture", "plus", "pointer",    "position",    "positive",      
+        "printing",  "procedure",    "procedures", "proceed",  "program", "program-id",  
+        "purge", "queue", "quote", "quotes", "random",    "rd", "read",    "receive", 
+        "record",  "records", "redefines", "reel", "reference", "references", 
+        "relative", "release",    "remainder",    "removal", "renames",  "replace", 
+        "replacing", "report", "reporting", "reports",  "rerun", "reserve",    "return", 
+        "reversed", "rewind", "rewrite", "rf", "rh", "right", "rounded", "run", 
+        "same",    "sd", "search", "section",    "security",    "segment", 
+        "segment-limit", "select",     "send", "sentence", "separate", "sequence", 
+        "sequential",    "set",  "sign", "size", "sort",     "sort-merge",   "source", 
+        "source-computer", "space",    "spaces", "special-names", "standard", 
+        "standard-1", "standard-2", "start",    "status", "stop",    "string", 
+        "sub-queue-1", "sub-queue-2", "sub-queue-3",    "subtract", "sum", "super", 
+        "suppress", "symbolic", "sync", "synchronized", "tallying", "tape", "terminal", 
+        "terminate", "test", "text", "than", "then", "through", "thru", "time",     
+        "times",    "to", "top",    "trailing",     "true", "type", "unit",    
+        "unstring", "until", "up",    "upon",        "usage", "use",      "using", 
+        "value", "values",      "varying", "when",      "with", "words", 
+        "working-storage", "write", "zero",      "zeroes", "zeros"},
+  },
+}
+
+Strings={
+  Delimiter=[["|']],
+}
+
+IgnoreCase=true
+
+Comments={
+  { Block=false,
+    Delimiter= { [[\*|\/]] },
+  },
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\:|\&|<|>|\!|\=|\%|\+|\-]]
+

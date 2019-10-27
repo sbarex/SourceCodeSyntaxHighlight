@@ -1,0 +1,123 @@
+--[[ "nim.lang" v1.1.1 (2019/01/09) | Nim 0.19.2 | Highlight 3.48 
+********************************************************************************
+*                                                                              *
+*                           Nim Language Definition                            *
+*                                                                              *
+********************************************************************************
+Original author unknown. Updated by Tristano Ajmone.
+------------------------------------------------------------------------------]]
+Description="Nim"
+
+Categories = {"source"}
+
+
+--------------------------------------------------------------------------------
+--                                   Numerals                                   
+--------------------------------------------------------------------------------
+-- Based on Nim numerical constants definition found at:
+--  https://nim-lang.org/docs/manual.html#lexical-analysis-numerical-constants
+
+-- Some reusable RegExs:
+RE_suffx_int = [[(?:'i(?:8|16|32|64)|'u(?:8|16|32|64)?)?]]
+RE_suffx_flt = [[(?:'f(?:32|64)?|'d)?]]
+RE_exponent  = [[(?:e[\+\-]?\d[\d_]*)]]
+
+Digits=[[(?xi)
+
+  # ========== HEX / HEX FLOAT ================
+  
+    \b0x[\da-f][\d_a-f]*\b]]..RE_suffx_flt..[[
+
+  # ========== OCTAL / OCTAL FLOAT ============
+  
+  | \b0(?-i:o)[0-7][0-7_]*\b]]..RE_suffx_flt..[[
+
+  # ========== BINARY / BINARY FLOAT ==========
+  
+  | \b0b[01][01_]*\b]]..RE_suffx_flt..[[
+
+  # ========== FLOATS =========================
+
+  | \b\d[\d_]*(?:\.\d[\d_]*]]..RE_exponent..[[?|]]..RE_exponent..[[)]]..RE_suffx_flt..[[
+
+  # ========== DECIMAL ========================
+
+  | \b\d[\d_]*\b]]..RE_suffx_int..[[
+  ]]
+-------------------------------------------------------------------------------- 
+
+Keywords={
+  {  Id=1,
+    List={
+    "addr", "and", "as", "asm", "bind", "block", "break", "case", "cast",
+    "concept", "const", "continue", "converter", "defer", "discard",
+    "distinct", "div", "do", "elif", "else", "end", "enum", "except", "export",
+    "finally", "for", "from", "func", "if", "import", "in", "include",
+    "interface", "is", "isnot", "iterator", "let", "macro", "method", "mixin",
+    "mod", "nil", "not", "notin", "object", "of", "or", "out", "proc", "ptr",
+    "raise", "ref", "return", "shl", "shr", "static", "template", "try",
+    "tuple", "type", "using", "var", "when", "while", "xor", "yield"
+    }
+  },
+  { Id=2,
+    List= {"int", "int8", "int16", "int32", "int64", "uint", "uint8", "uint16", "uint32", "uint64", 
+           "float", "float32", "float64", "char", "string", "pointer"}
+  },
+  { Id=3,
+    List= {}
+  },
+  { Id=4,
+    Regex=[[(\w+)\s*\(]]
+  }
+}
+
+Strings = {
+  Delimiter=[["""|"|'|`]],
+  RawPrefix="r",
+  Escape=[=[\\[ntvbrfa\\\?'"]|\\\d{3}|\\x[[:xdigit:]]{2}]=],
+}
+
+--allow #, ##, #[..]#, ##[..]##
+Comments = {
+  { Block=false,
+    Delimiter= { [=[ ##(?!\[)|#(?![\[#]) ]=] },
+  },
+   { Block=true,
+     Nested=true,
+     Delimiter = { [[ ##?\[ ]], [[ \]##? ]] }
+   }
+
+}
+
+IgnoreCase=false
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\.|\:|\&|<|>|\!|=|\/|\*|\%|\+|\-|\~|\||\^]]
+
+--[[============================================================================
+                                   CHANGELOG                                    
+================================================================================
+v1.1.1 (2019/01/09)  | Nim 0.19.2 | Highlight 3.48
+  Updated by Tristano Ajmone:
+  - Remove the "'f128" type suffix for it turned out that although still in the
+    Nim documentation it was no longer supported. See discussion at #10213 that
+    led to removal of 'f128 from documentation:
+      https://github.com/nim-lang/Nim/issues/10213
+      https://github.com/nim-lang/Nim/commit/258952832f
+v1.1.0 (2019/01/05) | Nim 0.19.2 | Highlight 3.48
+  Updated by Tristano Ajmone:
+  - Remove depracated keywords: 'atomic', 'generic', 'with', 'without'.
+  - Rewrite 'Digits' RegEx definition to support:
+    - Underscore separators in all numeral types:
+      - FIXES: Hex and Floats did not support underscore separators.
+    - Better floats definition:
+      - FIXES: Exponents were breaking up floats.
+    - Better support for type suffixes:
+      - FIXES: Floats suffixes were not working properly.
+      - ADDS: floats suffixes supported in decimals, hex and binary numbers too.
+    - Better enforcement for letter casing, regardless of syntax settings:
+      - enforce case insensitivity for Hex digts.
+      - prefixes for Hex (0x) and Binary (ob) are always insensitive.
+      - prefixes for Octal (0o) are always sensitive (Nim requires it).
+      - exponents and int/float suffixes are insensitive.
+
+-- EOF --]]

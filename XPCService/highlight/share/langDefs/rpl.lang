@@ -1,0 +1,143 @@
+-- Language definition by Frank Seidinger
+
+Description="RPL Programming Language"
+
+Categories = {"source"}
+
+Keywords={
+	{
+		Id=1,
+		List={
+			"ABORT", "ABS", "ACOS", "ACOSH", "ALOG", "AND", "ARG", "ASIN", "ASINH", "ASR", "ATAN", "ATANH", "AXES",
+			"BEEP", "BIN", "CEIL", "CENTR", "CF", "CHR", "CLEAR", "CLLCD", "CLMF", "CLUSR", "CNRM", "COLCT", "CON", "CONJ",
+			"CONVERT", "CORR", "COS", "COSH", "COV", "CR", "CROSS", "DEC", "DEG", "DEPTH", "DET", "DISP", "DO", "DOT", "DRAW",
+			"DRAWX", "DROP", "DROP2", "DROPN", "DUP", "DUP2", "DUPN", "e", "ELSE", "END", "ENG", "ERRM", "ERRN", "EVAL", "EXGET",
+			"EXP", "EXPAN", "EXPM", "EXSUB", "FACT", "FC?", "FC?C", "FIX", "FLOOR", "FOR", "FORM", "FP", "FS?", "FS?C",
+			"GET", "GETI", "HALT", "HEX", "HMS+", "HMS-", "i", "IDN", "IF", "IFERR", "IFT", "IFTE", "IM", "INDEP", "INV", "IP",
+			"ISOL", "KEY", "KILL", "LAST", "LN", "LNP1", "LOG", "LR", "MANT", "MAX", "MAXR", "MEAN", "MEM", "MIN", "MINR",
+			"MOD", "NEG", "NEXT", "NOT", "NUM", "OBGET", "OBSUB", "OCT", "OR", "ORDER", "OVER", "PICK", "PIXEL", "PMAX",
+			"PMIN", "POS", "PR1", "PREDV", "PRLCD", "PRMD", "PRST", "PRSTC", "PRUSR", "PRVAR", "PURGE", "PUT", "PUTI",
+			"QUAD", "RAD", "RAND", "RCEQ", "RCL", "RCLF", "RCWS", "RDM", "RE", "REPEAT", "RES", "RL", "RLB", "RND", "RNRM",
+			"ROLL", "ROLLD", "ROOT", "ROT", "RR", "RRB", "RSD", "SAME", "SCI", "SCONJ", "SDEV", "SF", "SHOW", "SIGN", "SIN",
+			"SINH", "SINV", "SIZE", "SL", "SLB", "SENG", "SQ", "SR", "SRB", "START", "STD", "STEP", "STEQ", "STO", "STO*",
+			"STO+", "STO-", "STO/", "STOF", "STWS", "SUB", "SWAP", "SYSEVAL", "TAN", "TANH", "TAYLR", "THEN", "TOT", "TRN",
+			"TYPE", "UNTIL", "UTPC", "UTPF", "UTPN", "UTPT", "VAR", "WAIT", "WHILE", "XOR", "XPON"
+			}
+		},
+	{
+		Id=1,
+		Regex=[[ARRY\xe2\x86\x92]],
+	},
+	{
+		Id=1,
+		Regex=[[B\xe2\x86\x92R]],
+	},
+	{
+		Id=1,
+		Regex=[[C\xe2\x86\x92R]],
+	},
+	{
+		Id=1,
+		Regex=[[D\xe2\x86\x92R]],
+	},
+	{
+		Id=1,
+		Regex=[[HMS\xe2\x86\x92]],
+	},
+	{
+		Id=1,
+		Regex=[[LIST\xe2\x86\x92]],
+	},
+	{
+		Id=1,
+		Regex=[[P\xe2\x86\x92R]],
+	},
+	{
+		Id=1,
+		Regex=[[R\xe2\x86\x92B]],
+	},
+	{
+		Id=1,
+		Regex=[[R\xe2\x86\x92C]],
+	},
+	{
+		Id=1,
+		Regex=[[R\xe2\x86\x92C]],
+	},
+	{
+		Id=1,
+		Regex=[[R\xe2\x86\x92P]],
+	},
+	{
+		Id=1,
+		Regex=[[STR\xe2\x86\x92]],
+	},
+	{
+		Id=1,
+		Regex=[[\xe2\x86\x92ARRY]],
+	},
+	{
+		Id=1,
+		Regex=[[\xe2\x86\x92HMS]],
+	},
+	{
+		Id=1,
+		Regex=[[\xe2\x86\x92LIST]],
+	},
+	{
+		Id=1,
+		Regex=[[\xe2\x86\x92NUM]],
+	},
+	{
+		Id=1,
+		Regex=[[\xe2\x86\x92STR]],
+	},
+	{
+		Id=1,
+		Regex=[[CL\xe2\x88\x91]],
+	},
+	{
+		Id=1,
+		Regex=[[COL\xe2\x88\x91]],
+	},
+	{
+		Id=1,
+		Regex=[[DRW\xe2\x88\x91]],
+	},
+	{
+		Id=1,
+		Regex=[[MAX\xe2\x88\x91]],
+	},
+	{
+		Id=1,
+		Regex=[[MIN\xe2\x88\x91]],
+	},
+	{
+		Id=1,
+		Regex=[[N\xe2\x88\x91]],
+	},
+	{
+		Id=1,
+		Regex=[[RCL\xe2\x88\x91]],
+	},
+	{
+		Id=1,
+		Regex=[[SCL\xe2\x88\x91]],
+	},
+	{
+		Id=1,
+		Regex=[[STO\xe2\x88\x91]],
+	},
+	{
+		Id=1,
+		Regex=[[\xcf\x80]],
+	},
+}
+
+Strings={
+  Delimiter=[["|']],
+}
+
+IgnoreCase=false
+
+Operators=[[\+|\-|\*|\*H|\*W|\/|\%|\%CH|\%T|\^|<|\=|\=\=|>|e|i|\xe2\x86\x92|\xe2\x88\x91\+|\xe2\x88\x91\-|\xe2\x89\xa4|\xe2\x89\xa5|\xe2\x89\xa0|\xc2\xab|\xc2\xbb]]

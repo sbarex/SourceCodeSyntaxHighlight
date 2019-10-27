@@ -1,0 +1,36 @@
+
+Description="Magic eXtensible Markup"
+
+Categories = {"markup"}
+
+Keywords={
+  { Id=1,
+    Regex=[[<[!?]?(?!\-\-)\/?[\w\:\-]+>?|[/?]?>]],
+    Group=0,
+  },
+  { Id=2,
+    Regex=[[([-\w]+)="]],
+  },
+  { Id=4,
+    Regex=[[\&\#?\w+;]],
+  },
+}
+
+Strings={
+  Delimiter=[["]],
+}
+
+Comments={
+  { Block=true,
+    Nested=false,
+    Delimiter= { [[<!\-\-]],[[\-\->]] }
+  }
+}
+
+NestedSections = {
+  { Lang="actionscript", Delimiter= { [[ <!\[CDATA\[ ]], [[ \]\]\> ]] } },
+  { Lang="css", Delimiter= { [[<mx\:Style>]], [[<\/mx\:Style>]] } }
+
+}
+
+IgnoreCase=true

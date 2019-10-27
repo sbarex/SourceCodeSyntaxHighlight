@@ -1,0 +1,39 @@
+
+Description="Lotos"
+
+Categories = {"source"}
+
+Keywords={
+  { Id=1,
+    List={"accept", "actualizedby", "any", "behavior", "behaviour", "choice", 
+        "endlib", "endproc", "endspec", "endtype", "eqns",  "exit", "for", "forall", 
+        "formaleqns", "formalopns", "formalsorts", "hide", "iin", "is", "let", 
+        "library", "noexit", "of", "ofsort", "opnnames",  "opns", "par",  "process",  
+        "renamedby", "sortnames",  "sorts",  "specification",  "stop",  "type",  
+        "using",  "where",  "false", "true"},
+  },
+  { Id=2,
+    List={"Bit", "BitString", "Bool", "DecDigit", "DecString", "Element", 
+        "FBool", "HexDigit", "HexStringOctDigit", "Octet", "OctString", "Nat", 
+        "NonEmptyString", "OctetString", "Set", "String", "BasicNaturalNumber", 
+        "BasicNonEmptyString", "BitNatRepr", "Boolean", "FBoolean", "DecNatRepr", 
+        "HexNatRepr", "NatRepresentations", "NaturalNumber", "OctNatRepr", 
+        "RicherNonEmptyString", "String0", "String1"},
+  },
+}
+
+Strings={
+  Delimiter=[["|']],
+}
+
+Comments={
+  { Block=true,
+    Nested=false,
+    Delimiter= { [[\(\*]],[[\*\)]],}
+  }
+}
+
+IgnoreCase=false
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-]]
+

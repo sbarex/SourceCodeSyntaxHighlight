@@ -1,0 +1,57 @@
+-- Chapel language definition file for highlight http://www.andre-simon.de/
+-- This file is written in Lua
+--
+-- Author: Lydia Duncan
+-- Date  : April 28, 2016
+--
+-- The file is used to describe keywords and special symbols of programming languages.
+-- See README in the highlight directory for details.
+
+Description="Chapel"
+
+Categories = {"source"}
+
+Keywords={
+  { Id=1,
+   List={"as", "align", "atomic", "begin", "break", "by", "class", "cobegin",
+         "coforall", "config", "const", "continue", "proc", "iter", "delete",
+         "dmapped", "do", "domain", "else", "enum", "except", "export",
+         "extern", "false", "for", "forall", "if", "in", "index", "inline",
+         "inout", "label", "lambda", "let", "local", "module", "new", "nil",
+         "noinit", "on", "only", "otherwise", "out", "param", "private",
+         "public", "record", "reduce", "ref", "require", "return", "scan",
+         "select", "serial", "single", "sparse", "subdomain", "sync", "then",
+         "true", "type", "union", "use", "var", "when", "where", "while",
+         "with", "yield", "zip"
+        }
+  },
+  { Id=2,
+    List= { "bool", "complex", "imag", "int", "opaque", "range", "real",
+            "string", "uint"
+          }
+  },
+  { Id=3,
+    Regex=[[(\w+)\s*\(]]
+  }
+}
+
+Strings = {
+  Delimiter=[["|']]
+}
+
+Comments = {
+   { Block=true,
+     Nested=true,
+     Delimiter = { [[\/\*]], [[\*\/]] }
+   },
+   {
+     Block=false,
+     Delimiter = { [[//]] }
+   }
+}
+
+IgnoreCase=false
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\.|\:|\/|\*|\%|\+|\-|=|\&|\?|<|>|\!|\~|\||\^|!|#]]
+
+EnableIndentation=true

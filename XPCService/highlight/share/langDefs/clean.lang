@@ -1,0 +1,38 @@
+
+Description="Clean"
+
+Categories = {"source"}
+
+Keywords={
+  { Id=1,
+    List={"default", "definition", "derive", "case", "class", "code", "export", 
+        "from", "if", "implementation", "import", "in", "infix", "infixl", "infixr", 
+        "instance", "let", "module", "of", "otherwise", "special", "system", 
+        "where", "with"},
+        },
+  { Id=2,
+    List={"Bool", "Char", "File", "Int", "Real", "World"},
+  },
+  { Id=3,
+    List={"True", "False"},
+  },
+}
+
+Strings={
+  Delimiter=[["]],
+}
+
+IgnoreCase=false
+
+Comments={
+  { Block=false,
+    Delimiter= { [[//]] },
+  },
+  { Block=true,
+    Nested=true,
+    Delimiter= { [[\/\*]],[[\*\/]],}
+  }
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-|\.|\'|\#|\@|\$|\\]]
+

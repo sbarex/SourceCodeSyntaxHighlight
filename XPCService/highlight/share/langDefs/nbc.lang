@@ -1,0 +1,86 @@
+
+
+Description="NeXT Byte Codes"
+
+Categories = {"source"}
+
+
+Digits=[[ (?:x|X)[-a-fA-F]+|\d*[\.]?\d+(?:[eE][\-\+]\\d+)?[lLuU]* ]]
+
+Keywords={
+  { Id=1,
+    List={"add", "sub", "neg", "mul", "div", "mod", "and", "or", "xor", "not", 
+        "cmp", "tst", "index", "replace", "arrsize", "arrbuild", "arrsubset", "arrinit", 
+        "mov", "set", "flatten", "unflatten", "numtostr", "strtonum", "strcat", 
+        "strsubset", "strtoarr", "arrtostr", "jmp", "brcmp", "brtst", "syscall", "stop", 
+        "exit", "exitto", "acquire", "release", "subcall", "subret", "setin", "setout", 
+        "getin", "getout", "wait", "gettick", "thread", "endt", "subroutine", "follows", 
+        "precedes", "segment", "ends", "typedef", "struct", "dd", "void", "waitv", 
+        "call", "return", "abs", "sign", "strindex", "strreplace", "strlen", "shl", 
+        "shr", "sizeof", "compchk", "compif", "compelse", "compend", "valueof", 
+        "isconst", "asl", "asr", "lsl", "lsr", "rotl", "rotr", "start", "stopthread", 
+        "priority", "cmnt", "fmtnum", "compchktype"},
+  },
+  { Id=2,
+    List={"byte", "ubyte", "db", "sbyte", "word", "uword", "dw", "sword", 
+"dword", "udword", "dd", "sdword", "long", "ulong", "slong", "mutex"},
+  },
+  { Id=3,
+    List={"tan", "sin", "cos", "sinh", "cosh", "arctan", "cotan", "arg", "exp", 
+        "ln", "log", "log", "logn", "sqr", "sqrt", "trunc", "int", "ceil", "floor", 
+        "heav", "abs", "sign", "zero", "ph", "rnd", "random", "max", "min", "power", 
+        "intpower", "InputIOType", "InputIOInputMode", "InputIORawValue", 
+        "InputIONormalizedValue", "InputIOScaledValue", "InputIOInvalidData", 
+        "OutputIOUpdateFlags", "OutputIOOutputMode", "OutputIOPower", 
+        "OutputIOActualSpeed", "OutputIOTachoCount", "OutputIOTachoLimit", 
+        "OutputIORunState", "OutputIOTurnRatio", "OutputIORegMode", "OutputIOOverload", 
+        "OutputIORegPValue", "OutputIORegIValue", "OutputIORegDValue", 
+        "OutputIOBlockTachoCount", "OutputIORotationCount", "FileOpenRead", 
+        "FileOpenWrite", "FileOpenAppend", "FileRead", "FileWrite", "FileClose", 
+        "FileResolveHandle", "FileRename", "FileDelete", "SoundPlayFile", 
+        "SoundPlayTone", "SoundGetState", "SoundSetState", "DrawText", "DrawPoint", 
+        "DrawLine", "DrawCircle", "DrawRect", "DrawGraphic", "SetScreenMode", 
+        "ReadButton", "CommLSWrite", "CommLSRead", "CommLSCheckStatus", "RandomNumber", 
+        "GetStartTick", "MessageWrite", "MessageRead", "CommBTCheckStatus", 
+        "CommBTWrite", "KeepAlive", "IOMapRead", "IOMapWrite", "IOMapReadByID", 
+        "IOMapWriteByID", "DisplayExecuteFunction", "CommExecuteFunction", 
+        "LoaderExecuteFunction", "Type", "InputMode", "RawValue", "NormalizedValue", 
+        "ScaledValue", "InvalidData", "UpdateFlags", "OutputMode", "Power", 
+        "ActualSpeed", "TachoCount", "TachoLimit", "RunState", "TurnRatio", "RegMode", 
+        "Overload", "RegPValue", "RegIValue", "RegDValue", "BlockTachoCount", 
+        "RotationCount"},
+  },
+  { Id=4,
+    Regex=[[(\w+)\s*\(]],
+  },
+  { Id=4,
+    Regex=[[^(\w+)\:]],
+  }
+}
+
+Strings={
+  Delimiter=[["|']],
+}
+
+IgnoreCase=false
+
+Comments={
+  { Block=false,
+    Delimiter= { [[\/\/|\;]] },
+  },
+  { Block=true,
+    Nested=false,
+    Delimiter= { [[\/\*]],[[\*\/]],}
+  }
+}
+
+PreProcessor={
+  Prefix=[[#]],
+  Continuation="\\",
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\.|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-|\~]]
+
+--EnableIndentation=true
+
+--FIXME no default escchar param: regex(\\\d{}|\\x[[:xdigit:]]{}|\\[ntvbrfa\\\?'"])

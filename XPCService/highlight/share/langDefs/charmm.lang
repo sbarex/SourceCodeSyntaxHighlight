@@ -1,0 +1,51 @@
+
+Description="Charmm"
+
+Categories = {"source"}
+
+Keywords={
+  {  Id=1,
+   List={"if", "then", "set", "goto", "label", "stream", "increment", 
+        "decrement", "rewind", "return", "endif", "define", "calc", "set", "stop",
+        "gt", "ge", "eq", "ne", "le", "lt"
+        }
+  },
+  { Id=2,
+    List= { "merge", "merg", "hqbm", "update", "upda", "tmdinit", "tmdi", "print",
+            "prin", "nbonds", "nbon", "vibran", "vibr", "diag", "ic", "hbuild", "hbui",
+            "dynamics", "dyna", "shake", "shak", "energy", "ener", "mini", "crystal",
+            "crys", "image", "imag", "scalar", "scal", "generate", "gene", "delete",
+            "dele", "correl", "corr", "enter", "ente", "trajectory", "traj", "mantime",
+            "mant", "corfun", "corf", "end"
+
+          }
+  },
+  { Id=3,
+    Regex=[[^\s*(close|read|open|write)]]
+  },
+  { Id=4,
+    Regex=[[ [@|\?|$]\w+ ]]
+  }
+
+}
+
+Strings = {
+  Delimiter=[["|'|`]]
+}
+
+Comments = {
+   {
+     Block=false,
+     Delimiter = { [[\!]] }
+   }
+}
+
+IgnoreCase=true
+
+PreProcessor = {
+  Prefix=[[^\*]]
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\.|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-|\~|\|]]
+
+EnableIndentation=false

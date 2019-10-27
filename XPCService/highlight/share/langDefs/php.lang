@@ -1,0 +1,86 @@
+
+Description="PHP"
+
+Categories = {"source", "script"}
+
+Keywords={
+  { Id=1,
+	List={"abstract", "and", "array", "as", "break", "case",
+	"catch",   "cfunction", "class", "clone", "const",
+	"continue", "declare", "default", "do", "else", "elseif",
+	"enddeclare", "endfor", "endforeach", "endif", "endswitch",
+	"endwhile", "extends", "final", "for", "foreach",
+	"function", "global", "goto", "if", "implements",
+	"interface", "instanceof", "namespace",  "new",
+	"old_function", "or", "private", "protected",  "public",
+	"static", "switch", "throw", "try",  "use", "var", "while",
+	"xor", "__CLASS__", "__DIR__",  "__LINE__", "__FILE__",
+	"__FUNCTION__", "__TRAIT__", "__METHOD__",  "__NAMESPACE__",
+	"die", "echo", "empty", "exit", "eval", "include",
+	"include_once", "isset", "list", "require", "require_once",
+	"return", "print", "unset",  "true", "false", "null", "resource"
+	  },
+  },
+  { Id=2,
+    List={"int", "integer", "real", "double", "float", "string", "array", "object", "bool", "mixed", "numeric"},
+  },
+  { Id=3,
+    Regex=[[\$[\w\-"|'|\>]+|\$?\{.+?\}]],
+  },
+  { Id=4,
+    Regex=[[(\w+)\s*\(]],
+  },
+}
+
+-- hereDoc opening delimiter, see OnStateChange to handle end of string
+Strings={
+  Delimiter=[["|'|<<<'?[\w_]+'?]],
+   Escape=[=[ \\\d{3}|\\u\d{4}|\\x[[:xdigit:]]{2}|\\[ntvbrfa\\\?'"\$] ]=],
+   --Interpolation = [[ \$\w+\[.+?\] ]]
+}
+
+IgnoreCase=true
+
+Comments={
+  { Block=false,
+    Delimiter= { [[\/\/|\#]] },
+  },
+  { Block=true,
+    Nested=false,
+    Delimiter= { [[\/\*]],[[\*\/]],}
+  }
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\:|\&|<|>|\!|\=|\/|\*|\|\+|\-|\.|\@]]
+
+function OnStateChange(oldState, newState, token)
+
+   if oldState==HL_STRING and token==hereDoc then
+      hereDoc = nil
+      return HL_STRING_END
+   end
+
+   
+   if  (string.sub(token,1,1) =="$" or string.sub(token,1,1) =="{") and oldState==HL_STRING and newState==HL_KEYWORD then
+      return HL_INTERPOLATION
+   end
+   
+   if  (string.sub(token,1,1) =="{") and  oldState~=HL_STRING and newState==HL_KEYWORD then
+      return HL_REJECT
+   end
+   
+   if hereDoc~=nil then
+    return HL_STRING
+   end
+
+   --recognize hereDoc multine strings
+   if oldState==HL_STANDARD and newState==HL_STRING and not string.find("\"'", token) then
+      hereDoc = string.match(token, "<<<'?([%a_]+)" )
+   end
+   
+   if oldState~=HL_STRING and newState==HL_ESC_SEQ then
+      return oldState
+   end
+   
+   return newState
+end

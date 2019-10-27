@@ -1,0 +1,33 @@
+
+dofile(HL_LANG_DIR.."lua.lang")
+
+Description="MoonScript"
+
+Categories = {"source", "script"}
+
+-- append keywords to Lua list
+table.insert(Keywords,
+  { Id=1,
+    List={"class", "export", "import", "from", "extends", "module", "require"}
+  }
+)
+
+table.insert(Keywords,
+  { Id=3,
+    Regex=[[@\w+]],
+  }
+)
+
+table.insert(Keywords,
+  { Id=4,
+    Regex=[[\w+\:]],
+  }
+)
+
+table.insert(Keywords,
+  { Id=4,
+    Regex=[[(\w+)?(\\\w+)]],
+  }
+)
+
+-- >TODO print "I am #{math.random! * 100}% sure."

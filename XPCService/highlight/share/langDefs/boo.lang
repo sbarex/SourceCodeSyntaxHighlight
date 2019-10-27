@@ -1,0 +1,42 @@
+
+Description="Boo"
+
+Categories = {"source"}
+
+Keywords={
+  { Id=1,
+    List={"abstract", "and", "as", "AST", "break", "callable", "cast", "char", 
+        "class", "constructor", "continue", "def", "destructor", "do", "elif", "else", 
+        "ensure", "enum", "event", "except", "failure", "final", "from", "for", "false", 
+        "get", "given", "goto", "if", "import", "in", "interface", "internal", "is", 
+        "isa", "not", "null", "of", "or", "otherwise", "override", "namespace", 
+        "partial", "pass", "public", "protected", "private", "raise", "ref", "retry", 
+        "return", "self", "set", "super", "static", "struct", "success", "transient", 
+        "true", "try", "typeof", "unless", "virtual", "when", "while", "yield"},
+  },
+  { Id=2,
+    List={"print", "assert", "using", "lock", "debug"},
+  },
+  { Id=4,
+    Regex=[[(\w+)\s*\(]],
+  },
+}
+
+Strings={
+  Delimiter=[["""|'''|"|']],
+  RawPrefix="r",
+}
+
+IgnoreCase=false
+
+Comments={
+  { Block=false,
+    Delimiter= { [[#|\/\/]] },
+  },
+  { Block=true,
+    Nested=false,
+    Delimiter= { [[\/\*]],[[\*\/]],}
+  }
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\.|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-|\@]]

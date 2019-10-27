@@ -1,0 +1,55 @@
+Description="Yang"
+
+Categories = {"protocol"}
+
+Identifiers=[[ [a-zA-Z_][\w\-]* ]]
+
+Keywords={
+  { Id=1,
+    List={ "anyxml", "argument", "augment", "base", "belongs-to", "bit", 
+        "case", "choice", "config", "contact", "container", "default", 
+        "description", "enum", "error-app-tag", "error-message", "extension",
+        "deviation", "deviate", "feature", "fraction-digits", "grouping", 
+        "identity", "if-feature", "import", "include", "input", "key", "leaf", 
+        "leaf-list", "length", "list", "mandatory", "max-elements", "min-elements", 
+        "module", "must", "namespace", "notification", "ordered-by", "organization", 
+        "output", "path", "pattern", "position", "prefix", "presence", "range", 
+        "reference", "refine", "require-instance", "revision", "revision-date", 
+        "rpc", "status", "submodule", "type", "typedef", "unique", "units", "uses", 
+        "value", "when", "yang-version", "yin-element", "add", "current", "delete", 
+        "deprecated", "false", "max", "min", "not-supported", "obsolete", "replace",
+        "system", "true", "unbounded", "user" }, },
+  { Id=2,
+    List={ "binary", "bits", "boolean", "decimal64", "empty", "enumeration", 
+          "identityref", "instance-identifier", "int8", "int16", "int32", 
+          "int64", "leafref", "string", "uint8", "uint16", "uint32", "uint64", "union" },
+  },
+ { Id=3,
+    Regex=[[@\w+]],
+  },
+  { Id=4,
+    Regex=[[(\w+)\s*\(]],
+  },
+}
+
+Strings={
+  Delimiter=[["|']],
+  Escape = [[ \\u\d{4}|\\x?\d{3}|\\\w|\\[\'\\\"] ]]
+}
+
+IgnoreCase=false
+
+Comments={
+  { Block=false,
+    Delimiter= { [[\/\/]] },
+  },
+  { Block=true,
+    Nested=false,
+    Delimiter= { [[\/\*]],[[\*\/]],}
+  }
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\.|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-|\|]]
+
+EnableIndentation=true
+

@@ -71,22 +71,6 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
         
         // Set up preferences
         self.settings = SCSHSettings(domain: XPCDomain)
-        
-        // Try to find highlight location
-        var highlightPath: String = settings.highlightProgramPath
-        if highlightPath == "" {
-            var env = ProcessInfo.processInfo.environment
-            env["PATH"] = (env["PATH"] ?? "") + ":/usr/local/bin:/usr/local/sbin"
-            let r = try? SCSHXPCService.runTask(script: "which highlight", env: env)
-            if r?.isSuccess ?? false {
-                highlightPath = r!.output() ?? ""
-                if highlightPath.hasPrefix("/") && highlightPath.hasSuffix("highlight") {
-                    // i.e. highlightPath looks like the actual path
-                    settings.highlightProgramPath = highlightPath
-                    _ = settings.synchronize()
-                }
-            }
-        }
     }
     
     /// Execute a shell task
@@ -142,11 +126,22 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
     ///   - overrideSettings: Settings thar override standard preferences.
     private func colorize(url: URL, custom_settings: SCSHSettings) throws -> (result: TaskResult, settings: [String: Any])
     {
-        let highlightPath = custom_settings.highlightProgramPath
+        // Set environment variables.
+        var env = ProcessInfo.processInfo.environment
+        env["PATH"] = (env["PATH"] ?? "") + ":/usr/local/bin:/usr/local/sbin"
+        
+        var highlightPath = custom_settings.highlightProgramPath
+        if highlightPath == "" || highlightPath == "-" {
+            let p  = self.getEmbededHiglight()
+            highlightPath = p.path
+            env.merge(p.env) { (_, new) in new }
+        }
         
         guard highlightPath != "" else {
             throw SCSHError.missingHighlight
         }
+        
+        env["pathHL"] = highlightPath
         
         let defaults = UserDefaults.standard
         
@@ -157,11 +152,6 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
         
         os_log(OSLogType.debug, log: self.log, "colorizing %{public}@", url.path)
         // os_log(OSLogType.debug, log: log, "target = %@", targetEsc)
-
-        // Set environment variables.
-        var env = ProcessInfo.processInfo.environment
-        env["PATH"] = (env["PATH"] ?? "") + ":/usr/local/bin:/usr/local/sbin"
-        env["pathHL"] = highlightPath
         
         env.merge([
             // "qlcc_debug": "1",
@@ -214,7 +204,11 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
         // Font size.
         let fontSize = custom_settings.fontSize
         if fontSize > 0 {
-            env["fontSizePoints"] = "\(fontSize)"
+            if custom_settings.format == .html {
+                env["fontSizePoints"] = String(format: "%2f", fontSize * 0.75)
+            } else {
+                env["fontSizePoints"] = "\(fontSize)"
+            }
         }
         
         // Debug
@@ -266,7 +260,7 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
             let result = try colorize(url: url, custom_settings: custom_settings)
             reply(result.result.data, result.settings as NSDictionary, nil)
         } catch {
-            reply("".data(using: String.Encoding.utf8)!, custom_settings.toDictionary() as NSDictionary, error)
+            reply(error.localizedDescription.data(using: String.Encoding.utf8)!, custom_settings.toDictionary() as NSDictionary, error)
         }
     }
     
@@ -278,7 +272,7 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
             let result = try colorize(url: url, custom_settings: custom_settings)
             reply(result.result.output() ?? "", result.settings as NSDictionary, nil)
         } catch {
-            reply("", custom_settings.toDictionary() as NSDictionary, error)
+            reply("<pre>" + error.localizedDescription + "</pre>", custom_settings.toDictionary() as NSDictionary, error)
         }
     }
     
@@ -290,20 +284,35 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
             let result = try colorize(url: url, custom_settings: custom_settings)
             reply(result.result.data, result.settings as NSDictionary, nil)
         } catch {
-            reply("".data(using: String.Encoding.utf8)!, custom_settings.toDictionary() as NSDictionary, error)
+            reply(error.localizedDescription.data(using: String.Encoding.utf8)!, custom_settings.toDictionary() as NSDictionary, error)
         }
     }
     
     /// Get the list of available themes.
     /// Return an array of dictionary with key _name_ and _desc_ and _color_ for the background color.
     func getThemes(withReply reply: @escaping ([NSDictionary], Error?) -> Void) {
+        self.getThemes(highlight: self.settings.highlightProgramPath, withReply: reply)
+    }
+    
+    func getThemes(highlight path: String, withReply reply: @escaping ([NSDictionary], Error?) -> Void) {
         let result: TaskResult
+        
+        let highlight_executable: String
+        let env: [String: String]
+        if path == "-" {
+            let r = self.getEmbededHiglight()
+            highlight_executable = r.path
+            env = r.env
+        } else {
+            highlight_executable = path
+            env = [:]
+        }
         do {
-            guard self.settings.highlightProgramPath != "" else {
+            guard highlight_executable != "", highlight_executable != "false" else {
                 reply([], nil)
                 return
             }
-            result = try SCSHXPCService.runTask(script: "\(self.settings.highlightProgramPath) --list-scripts=theme")
+            result = try SCSHXPCService.runTask(script: "\(highlight_executable) --list-scripts=theme", env: env)
             guard result.isSuccess else {
                 reply([], nil)
                 return
@@ -384,5 +393,49 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
         } else {
             reply(false)
         }
+    }
+    
+    func getEmbededHiglight() -> (path: String, env: [String: String]) {
+        if let path = Bundle.main.path(forResource: "highlight", ofType: nil, inDirectory: "highlight/bin"), let data_dir = Bundle.main.path(forResource: "share", ofType: nil, inDirectory: "highlight") {
+            return (path: path, env: ["HIGHLIGHT_DATADIR": "\(data_dir)/"])
+        } else {
+            return (path: "false", env: [:])
+        }
+    }
+    
+    func locateHighlight(reply: @escaping ([[Any]]) -> Void) {
+        var env = ProcessInfo.processInfo.environment
+        env["PATH"] = (env["PATH"] ?? "") + ":/usr/local/bin:/usr/local/sbin"
+        
+        let parse_version = { (path: String, env: [String: String]) -> String? in
+            guard let r = try? SCSHXPCService.runTask(script: "\(path) --version", env: env), r.isSuccess, let output = r.output(), output.contains("Andre Simon"), let regex = try? NSRegularExpression(pattern: #"highlight version (\d\.\d+)"#, options: []) else {
+                return nil
+            }
+            
+            guard let match = regex.firstMatch(in: output, options: [], range: NSRange(output.startIndex ..< output.endIndex, in: output)) else {
+                return nil
+            }
+            let firstCaptureRange = Range(match.range(at: 1), in: output)!
+            let version = String(output[firstCaptureRange])
+            
+            return version
+        }
+        
+        var result: [[Any]] = []
+        
+        let embedHiglight = self.getEmbededHiglight()
+        if let v = parse_version(embedHiglight.path, embedHiglight.env) {
+            result.append([embedHiglight.path, v, true])
+        }
+        if let r = try? SCSHXPCService.runTask(script: "which -a highlight", env: env), r.isSuccess, let output = r.output() {
+            let paths = output.split(separator: "\n")
+            for path in paths {
+                if let v = parse_version(String(path), env) {
+                    result.append([path, v, false])
+                }
+            }
+        }
+        
+        reply(result)
     }
 }

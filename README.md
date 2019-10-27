@@ -3,7 +3,7 @@
 This project is a test to develop a system extension for MacOS 10.15 Catalina for previewing source files.
 It's based on the [anthonygelibert/QLColorCode](https://github.com/anthonygelibert/QLColorCode).
 Inside it uses [Highlight](http://www.andre-simon.de/doku/highlight/en/highlight.php) to render source code with syntax highlighting.
-To install Highlight, download the library manually, or use Homebrew `brew install highlight`.
+The application is distributed with a version of the `highlight`. If you want you can use a different version customizing the preferences.
 
 MacOS 10.15 Catalina has deprecated the qlgenerator APIs. Moreover a .qlgenerator package inside Library/QuickLook now must be notarized to works. 
 For this reason I tried to migrate the QLColorCode code using the new quicklook extension system.
@@ -25,10 +25,10 @@ To use the extension you must launch the application at least once. In this way 
 
 In the settings it is possible to choose a different theme to use when OS is in light and dark mode.
 
-The app and quicklook extension can preview files showing the formatted code as html, indise a WKWebView, or as rtf inside a NSTextView.
+The app and quicklook extension can preview files showing the formatted code as html, inside a WKWebView, or as rtf inside a NSTextView.
 
 After the first execution, the quicklook extension will be available among those present in the System preferences/Extensions.
 
-![ System preferences/Extensions](extensions.png)
+![System preferences/Extensions](extensions.png)
 
-For now this extension don't provide a thumbnail service for the Finder icon. I don't think a preview of the contents in the icon is a necessary feature for the source files. I rather think it would be more useful to have a distinctive file type icon.
+This extension don't provide a thumbnail service for the Finder icon. 

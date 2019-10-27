@@ -1,0 +1,42 @@
+
+Description="Zonnon"
+
+Categories = {"source"}
+
+Keywords={
+    { Id=1,
+      list={"accept", "activity", "array", "as", "await", "begin", "by", "case", 
+            "const", "definition", "div", "do", "else", "elsif", "end", "exception", "exit", 
+            "false", "for", "if", "implementation", "implements", "import", "in", "is", 
+            "loop", "mod", "module", "new", "nil", "object", "of", "on", "operator", "or", 
+            "procedure", "protocol", "record", "refines", "repeat", "return", "self", 
+            "termination", "then", "to", "true", "type", "until", "var", "while", "accept", 
+            "activity", "array", "as", "await", "begin", "by", "case", "const", 
+            "definition", "div", "do", "else", "elsif", "end", "exception", "exit", "false", 
+            "for", "if", "implementation", "implements", "import", "in", "is", "loop", 
+            "mod", "module", "new", "nil", "object", "of", "on", "operator", "or", 
+            "procedure", "protocol", "record", "refines", "repeat", "return", "self", 
+            "termination", "then", "to", "true", "type", "until", "var", "while"}, },
+    { id=2,
+      List={"object", "boolean", "char", "integer", "cardinal", "fixed", "real", "set", "string"},
+      },
+    
+    { Id=4,
+      Regex=[[(\w+)\s*\(]],
+    }
+}
+                       
+Strings={
+     Delimiter=[["|']],
+}
+                       
+Comments={
+     { Block=true,
+       Nested=true,
+      Delimiter= { [[\(\*]], [[\*\)]] },
+     },
+}
+                       
+IgnoreCase=true
+                      
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\.|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-|\~|\||\#]]

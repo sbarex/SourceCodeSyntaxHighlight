@@ -1,0 +1,25 @@
+-- Theme based loosely on vim xoria256 but seriously tweaked by Roger Sperberg
+
+Description = "Andes"
+
+Categories = {"dark"}
+
+Default	= { Colour="#f0f0f0" }
+Canvas	= { Colour="#0f0f0f" }
+Number	= { Colour="#dfaf87" }
+Escape	= { Colour="#df8787" }
+BlockComment	= { Colour="#33ff00" }
+PreProcessor	= { Colour="#afdf87" }
+LineNum	= { Colour="#993366" }
+String=   { Colour="#ffff77" }
+StringPreProc = String
+LineComment   = { Colour="#33ff00" }
+Operator = { Colour="#ff00cc" }
+Interpolation  = { Colour="#8FDBDF" }
+
+Keywords = {
+  { Colour="#66aaff" },
+  { Colour="#66ff99" },
+  { Colour="#cc9966" },
+  { Colour="#ff99aa" },
+}

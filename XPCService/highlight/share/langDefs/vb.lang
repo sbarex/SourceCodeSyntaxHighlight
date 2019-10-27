@@ -1,0 +1,50 @@
+
+Description="Visual Basic"
+
+Categories = {"source"}
+
+Keywords={
+  { Id=1,
+    List={"and", "as", "begin", "case", "call", "continue", "do", "each", 
+        "else", "elseif", "end", "erase", "error", "event", "exit", "false", "for", 
+        "function", "get", "gosub", "goto", "if", "implement", "in", "load", "loop", 
+        "lset", "me", "mid", "new", "next", "not", "nothing", "on", "or", "property", 
+        "raiseevent", "resume", "return", "rset", "select", "set", "stop", "sub", 
+        "then", "to", "true", "unload", "until", "wend", "while", "with", "withevents", 
+        "attribute", "alias", "as", "", "byref", "", "byval", "", "compare", "", "", 
+        "declare", "explicit", "friend", "global", "let", "lib", "", "module", "object", 
+        "option", "optional", "preserve", "private", "property", "public", "redim", "", 
+        "type", "dim", "const"},
+  },
+  { Id=2,
+    List={"boolean", "", "byte", "", "currency", "date", "decimal", "", "double", "enum", 
+            "integer", "", "long", "single", "static", "string", "variant"},
+  },
+    { Id=2,
+    Regex=[[\$\S+]],
+  },
+  --labels:
+  { Id=3,
+    Regex=[[^\s*(\w+):$]],
+  },
+  { Id=4,
+    Regex=[[(\w+)\s*\(]],
+  }
+}
+
+
+Strings={
+  Delimiter=[["]],
+    Escape=[[\"\"]]
+}
+
+IgnoreCase=true
+
+Comments={
+  { Block=false,
+    Delimiter= { [['|rem|REM|Rem]] },
+  },
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-|\.]]
+

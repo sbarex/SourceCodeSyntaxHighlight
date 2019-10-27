@@ -1,0 +1,65 @@
+-- vim: set ft=lua ts=2 sw=2 et :
+-- Language definition for PDF files
+-- Author: Roland Hieber <rohieb@rohieb.name>
+-- Date: 2013-11-22
+-- Known Bugs: 
+--  * Does not highlight files with MacOS (CR-only) line endings
+--  * Does not (yet) highlight inside streams due to limitations in the library
+--
+
+Description="Portable Document Format"
+
+Categories = {"document"}
+
+IgnoreCase=false
+
+-- File Structure
+PreProcessor={
+  Prefix=[[%PDF-[0-9]\.[0-9]|%%EOF|xref|startxref|trailer]]
+}
+
+-- Comments. But do not match file structure elements.
+Comments={
+  { Block=false,
+    Delimiter={ [[%(?!PDF-[0-9]\.[0-9]|%EOF)]] },
+  },
+}
+
+-- Numbers: 0.45, +1.34, -.4, 123, 4., and so on.
+Digits=[[ [-+]?\.[0-9]+|[-+]?[0-9]+\.?[0-9]* ]]
+
+-- Strings: (string), <hex> and streams
+Strings={
+  DelimiterPairs= {
+    { Open=[[ \( ]], Close=[[ \) ]] },
+    { Open=[[ < ]], Close=[[ > ]] },
+    { Open=[[ ^stream ]], Close=[[ ^endstream ]], Raw=true },
+  }
+}
+
+-- Note: we highlight dictionary and array syntax as "keywords", so we have to
+-- include them in Identifiers. This definition basically matches the allowed
+-- characters for Names. Also, we do not want to match Numbers, Streams,
+-- References and file structure elements as identifiers
+Identifiers=[[ (?!%PDF-[0-9]\.[0-9]|%%EOF|xref|startxref|trailer|[0-9]+\s+[0-9]+\s+(R|obj)|[-+]?\.[0-9]+|[-+]?[0-9]+\.?[0-9]*)[^\s\[\]\(\){}<>/%]+ ]]
+
+Keywords={
+  -- Indirect Objects
+  { Id=1,
+    Regex=[[ [0-9]+\s+[0-9]+\s+(obj|R)|endobj]],
+    Group=0
+  },
+  -- Arrays and Dictionaries
+  { Id=2,
+    Regex=[[ \[|\]|<<|>> ]],
+  },
+  -- Names
+  { Id=3,
+    Regex=[[ /[^\s\[\]\(\){}<>/%]+ ]],
+  },
+  -- Constants
+  { Id=4,
+    --List={"true", "false", "null"},
+    Regex=[[ true|false|null ]],
+  },
+}

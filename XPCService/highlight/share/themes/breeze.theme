@@ -1,0 +1,24 @@
+
+Description = "vim breeze"
+
+Categories = {"dark", "vim"}
+
+Default	= { Colour="#ffffff" }
+Canvas	= { Colour="#005c70" }
+Number	= { Colour="#60ffff" }
+Escape	= { Colour="#ffd074" }
+String	= { Colour="#60ffff" }
+BlockComment	= { Colour="#c8d0d0" }
+StringPreProc = String
+LineComment   = BlockComment
+Operator      = Default
+LineNum      = BlockComment
+PreProcessor      = Default
+Interpolation  = { Colour="#9F9FF2" }
+
+Keywords = {
+  { Colour="#ffff80" },
+  { Colour="#80ffa0" },
+  { Colour="#7f7fff" },
+  { Colour="#ff7fff" },
+}

@@ -1,0 +1,47 @@
+
+Description="Felix"
+
+Categories = {"source"}
+
+Keywords={
+  { Id=1,
+    List={"all", "and", "as", "body", "call", "case", "class", "code", "const", 
+        "define", "elif", "else", "endif", "endmatch", "except", "export", "fork", 
+        "fun", "function", "functor", "goto", "header", "if", "in", "inf", "interface", 
+        "lambda", "let", "match", "module", "NaN", "", "not", "of", "open", "or", 
+        "proc", "procedure", "raise", "read", "regexp", "regmatch", "return", "struct", 
+        "then", "to", "todo", "type", "typedef", "union", "use", "val", "var", "when", 
+        "with", "header", "body", "code", "open", "", "use", "endl", "print", "include", 
+        "true", "false", "not", "and", "or", "lnot", "land", "lor", "pow", "eol"},
+  },
+  { Id=2,
+    List={"tiny", "short", "int", "long", "vlong", "utiny", "ushort", "uint", 
+        "ulong", "uvlong", "int8", "int16", "int32", "int64", "uint8", "uint16", 
+        "uint32", "uint64", "float", "double", "ldouble", "", "float32", "float64", 
+        "float80", "char", "wchar", "uchar", "string", "wstring", "ustring", "void", 
+        "unit", "bool", "any", "address", "byte"},
+  },
+}
+
+Strings={
+  Delimiter=[["""|'''|"|']],
+  RawPrefix="r",
+}
+
+IgnoreCase=false
+
+Comments={
+  { Block=false,
+    Delimiter= { [[//]] },
+  },
+  { Block=true,
+    Nested=true,
+    Delimiter= { [[\/\*]],[[\*\/]],}
+  }
+}
+
+PreProcessor={
+  Prefix=[[#]],
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-]]

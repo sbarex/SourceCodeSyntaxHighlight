@@ -1,0 +1,33 @@
+
+Description="Linden Script"
+
+Categories = {"source", "script"}
+
+Keywords={
+  { Id=1,
+    List={"for", "do", "while", "if", "else", "jump"},
+  },
+  { Id=2,
+    List={"integer", "float", "string", "key", "vector", "rotation", "list"},
+  },
+  { Id=3,
+    Regex=[[(ll\w+)\s*\(]],
+  },
+  { Id=4,
+    Regex=[[(\w+)\s*\(]],
+  },
+}
+
+Strings={
+  Delimiter=[["|']],
+}
+
+IgnoreCase=false
+
+Comments={
+  { Block=false,
+    Delimiter= { [[\/\/]] },
+  },
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\.|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-|\~]]

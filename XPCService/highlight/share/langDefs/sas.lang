@@ -1,0 +1,33 @@
+
+Description="SAS"
+
+Categories = {"source"}
+
+Keywords={
+  { Id=1,
+    List={"put"},
+  },
+  { Id=2,
+    List={"proc", "data", "set", "merge", "run", "output"},
+  },
+  { Id=3,
+    List={"drop", "keep", "in", "retain", "file", "infile", "put", "if", "then", "else", "while", "for"},
+  },
+}
+
+Strings={
+  Delimiter=[["|']],
+}
+
+Comments={
+  { Block=false,
+    Delimiter= { [[\/\/]] },
+  },
+  { Block=true,
+    Nested=false,
+    Delimiter= { [[\/\*]],[[\*\/]],}
+  }
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-]]
+

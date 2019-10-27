@@ -1,0 +1,48 @@
+
+Description="LDAP"
+
+Categories = {"protocol"}
+
+
+Keywords={
+  { Id=1,
+    List={"binary", "businesscategory", "carlicense", "changetype", "cn", 
+        "commonname", "departmentnumber", "description", "dn", "employeenumber", 
+        "employeetype", "facsimiletelephonenumber", "givenname", "homephone", 
+        "homepostaladdress", "initials", "internationalisdnnumber", "jpegphoto", "l", 
+        "labeleduri", "locality", "mail", "mailalternateaddress", "maildeliveryoption", 
+        "mailhost", "manager", "mobile", "objectclass", "pager", "photo", 
+        "postofficebox", "preferreddeliverymethod", "preferredlanguage", 
+        "physicaldeliveryofficename", "postaladdress", "postalcode", 
+        "registeredaddress", "roleoccupant", "roomnumber", "secretary", "seealso", "sn", 
+        "st", "street", "surname", "telephonenumber", "title", "uid", "userpassword", 
+        "usercertificate", "usercertificate", "usersmimecertificate", 
+        "x500uniqueidentifier", "add", "c", "dc", "delete", "modify", "o", "ou", 
+        "crypt", "inetorgperson", "mailrecipient", "nslicenseuser", 
+        "organizationalperson", "organizationalrole", "residentialperson", "person", 
+        "sha", "top", "nsserversecurity", "nsserverid", "nsbinddn", "nsbasedn", 
+        "serverroot", "nsserverport", "nssecureserverport", "serverproductname", 
+        "serverversionnumber", "installationtimestamp", "installationtimestamp", 
+        "serverhostname", "nstasklabel", "", "creatorsname", "modifiersname", 
+        "createtimestamp", "modifytimestamp", "nsuniqueid", "aci", "uniquemember", 
+        "passwordExpirationTime", "nsAdminDomainName", "nshardwareplatform", 
+        "nsosversion", "", "nsproductname", "nsproductversion", "nsnickname", 
+        "nsbuildnumber", "nsvendor", "nsinstalledlocation", "nsdirectoryinforef", 
+        "nsclassname", "nsexecref", "nsmerge"},
+  },
+}
+
+Strings={
+  Delimiter=[["|']],
+}
+
+IgnoreCase=true
+
+Comments={
+  { Block=false,
+    Delimiter= { [[#]] },
+  },
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-]]
+

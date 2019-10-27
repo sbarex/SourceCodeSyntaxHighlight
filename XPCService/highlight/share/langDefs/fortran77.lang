@@ -1,0 +1,33 @@
+
+Description="Fortran 77"
+
+Categories = {"source"}
+
+Identifiers=[[ [a-zA-Z_][\w\d\*]* ]]
+
+Keywords={
+  { Id=1,
+    List={"break",  "common",  "continue",  "date",  "default",  "dimension",  
+        "do",  "else",  "enddo",  "endif",  "for", "goto",  "go",  "to",  "if",  "then", 
+        "return",  "end",  "format",  "write",  "read",  "subroutine",  "function",  
+        "switch", "program",  "call",  "while", "stop"},
+  },
+  { Id=2,
+    List={"character",  "complex",  "double",  "precision",  "real",  "real*8",  "integer", 
+          "common",  "logical", "implicit",  "dimension",  "external",  "parameter"},
+  },
+}
+
+Strings={
+  Delimiter=[["|']],
+}
+
+IgnoreCase=true
+
+Comments={
+  { Block=false,
+    Delimiter= { [[^[cC].*]] },
+  },
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-|\.]]

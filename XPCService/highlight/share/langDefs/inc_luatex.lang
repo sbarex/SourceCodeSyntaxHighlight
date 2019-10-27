@@ -1,0 +1,49 @@
+
+Description="Lua (for LuaTeX)"
+
+Categories = {"script", "document"}
+
+
+Keywords={
+  { Id=1,
+    List={"and", "break", "do", "else", "elseif", "end", "false", "for", "function", 
+            "if", "in", "local", "nil", "not", "or", "repeat", "return", "then", 
+            "true", "until", "while"},
+  },
+  { Id=2,
+    List={"number", "string", "function", "userdata", "table", "assert", "call", 
+        "collectgarbage", "copytagmethods", "dofile", "dostring", "error", "foreach", 
+        "foreachi", "getglobal", "getn", "", "gettagmethod", "", "globals", "newtag", 
+        "next", "print", "rawget", "rawset", "setglobal", "settag", "", "settagmethod", 
+        "sort", "tag", "tonumber", "tostring", "tinsert", "tremove", "type", "", "abs", 
+        "", "acos", "", "asin", "", "atan", "", "atan2", "ceil", "cos", "deg", "exp", 
+        "floor", "log", "", "log10", "max", "min", "mod", "rad", "sin", "sqrt", "tan", 
+        "frexp", "ldexp", "random", "randomseed", "openfile", "closefile", "readfrom", 
+        "writeto", "appendto", "remove", "rename", "flush", "seek", "tmpname", "read", 
+        "", "write", "clock", "date", "execute", "exit", "getenv", "setlocale", 
+        "strbyte", "strchar", "strfind", "strlen", "strlower", "strrep", "strsub", 
+        "strupper", "format", "gsub"},
+  },
+  { Id=4,
+    Regex=[[(\w+)\s*\(]],
+  },
+}
+
+Strings={
+  Delimiter=[["|']],
+}
+
+IgnoreCase=false
+
+Comments={
+-- this differs from lua.lang
+  { Block=false,
+    Delimiter= { [[%]] },
+  },
+  { Block=true,
+    Nested=false,
+    Delimiter= { [[ \-\-\[\[ ]],[[ \]\] ]],}
+  }
+}
+
+Operators=[[\(|\)|\{|\}|\[|\]|\,|\;|\.|\:|\&|<|>|\!|\=|\/|\*|\+|\-|\~|\#|\\|\%]]

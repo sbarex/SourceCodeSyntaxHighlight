@@ -1,0 +1,44 @@
+
+Description="haXe"
+
+Categories = {"source"}
+
+Digits=[[ (?:0x|0X)[0-9a-fA-F]+|\d*[\.\_]?\d+(?:[eE][\-\+]?\d+)?[lLuUbfdm]* ]]
+
+Keywords={
+  { Id=1,
+    List={"function", "class", "static", "var", "if", "else", "while", "do", 
+        "for", "break", "return", "continue", "extends", "implements", "import", 
+        "switch", "case", "default", "private", "public", "try", "catch", "new", "this", 
+        "throw", "extern", "enum", "in", "interface", "untyped", "cast", "override", 
+        "typedef", "dynamic", "package", "callback", "inline", "here", "using", "never",
+        "super", "trace"},
+  },
+  { Id=2,
+    List={"Void", "Float", "Int", "Bool", "Dynamic", "true", "false", "null"},
+  },
+  { Id=3,
+    Regex=[[~\/.*?\/[igms]*]],
+  },
+  { Id=4,
+    Regex=[[(\w+)\s*\(]],
+  },
+}
+
+Strings={
+  Delimiter=[["|']],
+}
+
+IgnoreCase=false
+
+Comments={
+  { Block=false,
+    Delimiter= { [[//]] },
+  },
+  { Block=true,
+    Nested=false,
+    Delimiter= { [[\/\*]],[[\*\/]],}
+  }
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\.|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-|\~]]

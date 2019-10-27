@@ -1,0 +1,48 @@
+
+Description="ASCEND"
+
+Categories = {"source"}
+
+Keywords={
+  { Id=1,
+    List={  "ADD", "AND", "ALIASES", "ARE_ALIKE", "ARE_THE_SAME", 
+            "ARE_NOT_THE_SAME", "ASSERT", "ATOM", "CALL", "CASE", "CARD", "CHECK", "CHOICE", 
+            "CONSTANT", "CONDITIONAL", "CREATE", "DATA", "DEFAULT", "DEFINITION", "DO", 
+            "ELSE", "FIX", "FOR", "FREE", "IF", "IN", "INPUT", "INTERSECTION", "IS_A", 
+            "IS_REFINED_TO", "MAX", "MAXIMIZE", "MIN", "MINIMIZE", "NOTES", "OF", "OR", 
+            "OTHERWISE", "OUTPUT", "PROVIDE", "PROD", "REPLACE", "REFINES", "RUN", 
+            "SATISFIED", "SELECT", "SELF", "STUDY", "SUCH_THAT", "SUM", "SWITCH", "THEN", 
+            "UNIVERSAL", "UNION", "UNITS", "USE", "WHEN", "WHERE", "WITH_VALUE", "WILL_BE", 
+            "WILL_BE_THE_SAME", "WILL_NOT_BE_THE_SAME"},
+  },
+  { Id=2,
+    List={"FALSE", "TRUE", "real_constant", "integer_constant", "symbol_constant", 
+            "boolean_constant", "real", "integer", "symbol", "boolean", "set"},
+  },
+  { Id=3,
+    List={"IMPORT", "REQUIRE", "MODEL", "END", "METHOD", "METHODS"},
+  },
+  { Id=4,
+    Regex=[[(\w+)\s*\(]],
+  },
+}
+
+Strings={
+  Delimiter=[[']],
+  DelimiterPairs= {
+    { Open=[[ \{ ]], Close=[[ \} ]] }
+  }
+}
+
+Comments={
+  { Block=true,
+    Nested=false,
+    Delimiter= { [[\(\*]],[[\*\)]] }
+  }
+}
+
+IgnoreCase=false
+
+Operators=[[\(|\)|\[|\]|\,|\;|\.|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-|\~]]
+
+EnableIndentation=true

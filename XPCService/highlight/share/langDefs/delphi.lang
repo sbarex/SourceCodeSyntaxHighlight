@@ -1,0 +1,265 @@
+--[[ delphi.lang v0.0.1 | 2019/01/05 | Highlight v3.48
+********************************************************************************
+*                                                                              *
+*                         Delphi Syntax for Highlight                          *
+*                                                                              *
+********************************************************************************
+Adapted by Tristano Ajmone. Original author unknown (maybe André Simon?).
+License: GNU GPL v3.
+
+This is a readaptation of the Pascal syntax definition ("pas.lang") that ships
+with Highlight; it was tweaked to cover Delphi native types and keywords.
+Being a derivative work from a file taken from the Highlight project, it falls
+under the same license of Highlight (GNU GPL v3).
+--------------------------------------------------------------------------------
+** MAINTAINER NEEDED! **
+
+This langDef doesn't fully cover the Delphi syntax -- I've just updated the list
+of native data types keywords, as a way of "patching holes", but no effort was
+taken to systematically go over the full syntax definition to make it fully
+compliant to Delphi. 
+
+It should be considered an Alpha version and won't reach v1.0 until someone with
+better knwoledge of Delphi than I have revises the whole syntax to ensure it's
+compliant to the Delphi language.
+
+Keywords lists are left as one-keyword-for-line to simplify reading and editing.
+------------------------------------------------------------------------------]]
+Description="delphi"
+
+Categories = {"source"}
+
+Digits=[[ (?:0x|0X|\$)[0-9a-fA-F]+|\d*[\.\_]?\d+(?:[eE][\-\+]\d+)?[lLuUbfdm]* ]]
+
+Keywords={
+  -- ===========================================================================
+  --                              Delphi Keywords                               
+  -- ===========================================================================
+  -- Keywords list is the same as the original Pascal langDef.
+  -- ---------------------------------------------------------------------------
+  { Id=1,
+    List={
+      "absolute",
+      "abstract",
+      "and",
+      "array",
+      "as",
+      "asm",
+      "assembler",
+      "automated",
+      "begin",
+      "case",
+      "cdecl",
+      "class",
+      "const",
+      "constructor",
+      "destructor",
+      "dispid",
+      "dispinterface",
+      "div",
+      "do",
+      "downto",
+      "dynamic",
+      "else",
+      "end",
+      "except",
+      "export",
+      "exports",
+      "external",
+      "far",
+      "file",
+      "finalization",
+      "finally",
+      "for",
+      "forward",
+      "function",
+      "goto",
+      "if",
+      "implementation",
+      "in",
+      "inherited",
+      "initialization",
+      "inline",
+      "interface",
+      "is",
+      "label",
+      "library",
+      "message",
+      "mod",
+      "near",
+      "nil",
+      "not",
+      "object",
+      "of",
+      "or",
+      "out",
+      "override",
+      "packed",
+      "pascal",
+      "private",
+      "procedure",
+      "program",
+      "property",
+      "protected",
+      "public",
+      "published",
+      "raise",
+      "record",
+      "register",
+      "repeat",
+      "resourcestring",
+      "safecall",
+      "set",
+      "shl",
+      "shr",
+      "stdcall",
+      "then",
+      "threadvar",
+      "to",
+      "try",
+      "type",
+      "unit",
+      "until",
+      "uses",
+      "var",
+      "virtual",
+      "while",
+      "with",
+      "xor",
+    },
+  },
+  -- ===========================================================================
+  --                             Delphi Data Types                              
+  -- ===========================================================================
+  -- Keywords list updated based on:
+  -- http://docwiki.embarcadero.com/RADStudio/Tokyo/en/Delphi_Data_Types_for_API_Integration
+  -- ---------------------------------------------------------------------------
+  { Id=2,
+    List={
+      "ansichar",
+      "ansistring",
+      "array",
+      "boolean",
+      "byte",
+      "bytebool",
+      "cardinal",
+      "char",
+      "currency",
+      "double",
+      "false",
+      "fixedint",
+      "fixeduint",
+      "int64",
+      "integer",
+      "longbool",
+      "longint",
+      "longword",
+      "nativeint",
+      "nativeuint",
+      "pansichar",
+      "pansistring",
+      "pboolean",
+      "pbyte",
+      "pcardinal",
+      "pchar",
+      "pcurrency",
+      "pdouble",
+      "pfixedint",
+      "pfixeduint",
+      "pint64",
+      "pinteger",
+      "plongbool",
+      "plongint",
+      "plongword",
+      "pnativeint",
+      "pnativeuint",
+      "pointer",
+      "ppointer",
+      "prawbytestring",
+      "pshortint",
+      "pshortstring",
+      "psingle",
+      "psmallint",
+      "pstring",
+      "puint64",
+      "punicodestring",
+      "pvariant",
+      "pwidechar",
+      "pwidestring",
+      "pword",
+      "pwordbool",
+      "rawbytestring",
+      "real",
+      "record",
+      "shortint",
+      "shortstring",
+      "single",
+      "smallint",
+      "string",
+      "tdoublerec",
+      "text",
+      "true",
+      "tsinglerec",
+      "type",
+      "uint64",
+      "unicodestring",
+      "variant",
+      "widechar",
+      "widestring",
+      "word",
+      "wordbool",
+    },
+  },
+  { Id=4,
+    Regex=[[(\w+)\s*\(]],
+  },
+}
+
+Strings={
+  Delimiter=[["|']],
+  Escape="#[[:digit:]]+"
+}
+
+IgnoreCase=true
+
+Comments={
+  { Block=false,
+    Delimiter= { [[//]] },
+  },
+  { Block=true,
+    Nested=false,
+    Delimiter= { [[\{(?!\$)]],[[\}]] }
+  },
+  { Block=true,
+    Nested=false,
+    Delimiter= { [[\(\*]],[[\*\)]] }
+  }
+}
+
+PreProcessor = {
+  Prefix=[[{]],
+  Continuation="\x13",
+}
+
+NestedSections = {
+  { 
+    Lang="assembler", 
+    Delimiter= { [[asm]], [[end;]] } 
+  }
+}
+
+Operators=[[\(|\)|\[|\]|,|;|:|&|<|>|\!|\=|\/|\*|\%|\+|\-|\@|\.|\^]]
+
+function OnStateChange(oldState, newState, token)
+   if token=="}" and oldState==HL_PREPROC then
+      return HL_PREPROC_END
+   end   
+   return newState
+end
+--[[============================================================================
+                                   CHANGELOG                                    
+================================================================================
+v0.0.1  - 2019/01/05 (Highlight v3.48)
+        - First release. Adapted from the Pascal syntax definition ("pas.lang").
+        - Updated keywords Id2 list to include the Delphi native Data Types.
+--]]

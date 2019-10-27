@@ -1,0 +1,62 @@
+
+Description="MS DOS Batch"
+
+Categories = {"source", "script"}
+
+Keywords={
+  { Id=1,
+    List={"do", "else", "end", "errorlevel", "exist", "exit", "for", "goto", "if", "not", 
+          "pause", "return", "say", "select", "then", "neq", "when"},
+  },
+  { Id=2,
+    List={"ansi", "append", "assign", "attrib", "autofail", "backup", "basedev", 
+	  "boot", "break", "buffers", "cache", "call", "cd", "chcp", "chdir", "chkdsk", 
+	  "choice", "cls", "cmd", "codepage", "command", "comp", "copy", "country", 
+	  "date", "ddinstal", "debug", "del", "detach", "device", "devicehigh", "devinfo", 
+	  "dir", "diskcoache", "diskcomp", "diskcopy", "doskey", "dpath", "dumpprocess", 
+	  "eautil", "endlocal", "erase", "exit_vdm", "extproc", "fcbs", "fdisk", 
+	  "fdiskpm", "files", "find", "format", "fsaccess", "fsfilter", "graftabl", 
+	  "iopl", "join", "keyb", "keys", "label", "lastdrive", "libpath", "lh", 
+	  "loadhigh", "makeini", "maxwait", "md", "mem", "memman", "mkdir", "mode", 
+	  "move", "net", "patch", "path", "pauseonerror", "picview", "pmrexx", "print", 
+	  "printmonbufsize", "priority", "priority_disk_io", "prompt", "protectonly", 
+	  "protshell", "pstat", "rd", "recover", "reipl", "ren", "rename", "replace", 
+	  "restore", "rmdir", "rmsize", "run", "set", "setboot", "setlocal", "shell", 
+	  "shift", "sort", "spool", "start", 
+	  "subst", "suppresspopups", "swappath", "syslevel", "syslog", "threads", "time", 
+	  "timeslice", "trace", "tracebuf", "tracefmt", "trapdump", "tree", "type", 
+	  "undelete", "unpack", "use", "ver", "verify", "view", "vmdisk", "vol", "xcopy", 
+	  "xcopy32", "xdfcopy", "echo"},
+  },
+  { Id=3,
+    Regex=[[%\w+%]],
+  },
+  { Id=4,
+    Regex=[[:\w+]],
+  },
+}
+
+Strings={
+  Delimiter=[["|']],
+  Interpolation=[[ %\w+% ]],
+}
+
+IgnoreCase=true
+
+Comments={
+  { Block=false,
+    Delimiter= { [[^(rem|Rem|REM).*]] },
+  },
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-]]
+
+-- fix recognition of $
+function OnStateChange(oldState, newState, token)
+   
+   if string.match(token, "%%.*%%") ~= nil and oldState==HL_STRING and newState==HL_KEYWORD then
+      return HL_INTERPOLATION
+   end
+   
+   return newState
+end

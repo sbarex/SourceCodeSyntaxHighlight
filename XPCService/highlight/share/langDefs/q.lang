@@ -1,0 +1,46 @@
+
+Description="Qore"
+
+Categories = {"source"}
+
+Keywords={
+  { Id=1,
+    List={"class", "private", "synchronized", "new", "inherits", "shift", 
+        "where", "do", "while", "if", "else", "for", "foreach", "const", "namespace", 
+        "return", "my", "our", "try", "throw", "catch", "find", "delete", "background", 
+        "exists", "thread_exit", "in", "elements", "keys", "sub", "context", "sortBy", 
+        "sortDescendingBy", "NULL", "NOTHING", "summarize", "by", "subcontext", "break", 
+        "continue", "option"},
+  },
+  { Id=2,
+    Regex=[[[$]\w+]],
+  },
+  { Id=3,
+    Regex=[[[%][\w\-]+]],
+  },
+  { Id=4,
+    Regex=[[(\w+)\s*\(]],
+  },
+}
+
+Strings={
+  Delimiter=[["|']],
+}
+
+IgnoreCase=false
+
+Comments={
+  { Block=false,
+    Delimiter= { [[#]] },
+  },
+  { Block=true,
+    Nested=false,
+    Delimiter= { [[\/\*]],[[\*\/]],}
+  }
+}
+
+PreProcessor={
+  Prefix=[[%]],
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\.|\:|\&|<|>|\!|\=|\/|\\|\*|\%|\+|\-|\~]]
