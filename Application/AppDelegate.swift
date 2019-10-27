@@ -33,7 +33,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }()
     
     lazy var service: SCSHXPCServiceProtocol? = {
-        let service = self.connection.remoteObjectProxyWithErrorHandler { error in
+        let service = self.connection.synchronousRemoteObjectProxyWithErrorHandler { error in
             print("Received error:", error)
         } as? SCSHXPCServiceProtocol
         

@@ -84,9 +84,11 @@ class PreferencesController: NSViewController, NSFontChanging {
         if let examplesDirURL = Bundle.main.url(forResource: "examples", withExtension: nil) {
             let fileManager = FileManager.default
             if let files = try? fileManager.contentsOfDirectory(at: examplesDirURL, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles]) {
-                self.examples = files
+                self.examples = files.sorted(by: { (a, b) -> Bool in
+                    a.lastPathComponent < b.lastPathComponent
+                })
                 
-                for file in files {
+                for file in self.examples {
                     self.exampleFormatButton.addItem(withTitle: file.lastPathComponent)
                 }
             }
@@ -236,7 +238,8 @@ class PreferencesController: NSViewController, NSFontChanging {
                 // Poppulate theme list.
                 self.updateThemes()
                 
-                self.commandsToolbarButton.isEnabled = self.modePopupButton.indexOfSelectedItem != 0
+                self.commandsToolbarButton.state = (self.settings?[SCSHSettings.Key.commandsToolbar.rawValue] as? Bool ?? false) ? .on : .off
+                self.commandsToolbarButton.isEnabled = format == SCSHFormat.html.rawValue
                 
                 // Example preview.
                 self.exampleFormatButton.isEnabled = self.examples.count > 0

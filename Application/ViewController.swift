@@ -97,14 +97,17 @@ class ViewController: NSViewController {
                 
                 self.textScrollView!.documentView = self.textView!
             }
-                
-            self.webView?.removeObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress))
-            self.webView?.removeFromSuperview()
-            self.webView = nil
+             
+            if let wv = self.webView {
+                wv.removeObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress))
+                wv.removeFromSuperview()
+                self.webView = nil
+            }
         } else {
             if self.webView == nil {
                 let preferences = WKPreferences()
                 preferences.javaScriptEnabled = true
+                preferences.setValue(true, forKey: "developerExtrasEnabled")
 
                 // Create a configuration for the preferences
                 let configuration = WKWebViewConfiguration()
@@ -118,9 +121,13 @@ class ViewController: NSViewController {
                 self.webView?.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
             }
                 
-            self.textScrollView?.removeFromSuperview()
-            self.textScrollView = nil
-            self.textView = nil
+            if let tsv = textScrollView {
+                self.textView?.removeFromSuperview()
+                self.textView = nil
+                
+                tsv.removeFromSuperview()
+                self.textScrollView = nil
+            }
         }
     }
 

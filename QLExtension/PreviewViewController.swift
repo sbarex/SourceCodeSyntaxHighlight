@@ -65,7 +65,7 @@ class PreviewViewController: NSViewController, QLPreviewingController {
         connection.remoteObjectInterface = NSXPCInterface(with: SCSHXPCServiceProtocol.self)
         connection.resume()
         
-        guard let service = connection.remoteObjectProxyWithErrorHandler({ error in
+        guard let service = connection.synchronousRemoteObjectProxyWithErrorHandler({ error in
             print("Received error:", error)
             handler(SCSHError.xpcGenericError(error: error))
         }) as? SCSHXPCServiceProtocol else {
