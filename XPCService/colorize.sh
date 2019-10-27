@@ -131,7 +131,7 @@ go4it () {
     else
         theme="--style=${hlTheme}"
     fi
-    cmdOpts=(--plug-in reduce_filesize ${plugin} --plug-in outhtml_codefold --syntax=${lang} --quiet --include-style --font=${font} --font-size=${fontSizePoints} ${=theme} --encoding=${textEncoding} ${=extraHLFlags} --validate-input)
+    cmdOpts=(${plugin} --plug-in=outhtml_codefold --syntax=${lang} --quiet --include-style --font=${font} --font-size=${fontSizePoints} ${=theme} --encoding=${textEncoding} ${=extraHLFlags} --validate-input)
     
     debug "Generating the preview"
     if [ "${thumb}" = "1" ]; then
