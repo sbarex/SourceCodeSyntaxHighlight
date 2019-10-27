@@ -219,9 +219,11 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
         if format == SCSHFormat.rtf.rawValue {
             env["extraHLFlags"]! += " --page-color --char-styles"
         } else {
-            if custom_settings.commandsToolbar, let plugin = Bundle.main.path(forResource: "outhtml_gotoline", ofType: "lua") {
+            /*
+            if custom_settings.commandsToolbar, let plugin = Bundle.main.path(forResource: "outhtml_commandbar", ofType: "lua") {
                 env["extraHLFlags"]! += " --plug-in=\(plugin)"
             }
+            */
         }
         
         /// Command to execute.

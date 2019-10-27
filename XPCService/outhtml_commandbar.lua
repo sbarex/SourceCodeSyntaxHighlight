@@ -4,7 +4,6 @@ Description="Add interactive commands."
 Categories = {"format", "html", "usability" }
 
 function syntaxUpdate(desc)
-  
   if (HL_OUTPUT ~= HL_FORMAT_HTML and HL_OUTPUT ~= HL_FORMAT_XHTML) then
     return
   end
@@ -12,11 +11,7 @@ function syntaxUpdate(desc)
   -- see themeUpdate below for CSS modifications
   
   function init()
-    pID=0      -- a sequential counter to generate HTML IDs
-    pCount=0   -- paranthesis counter to keep track of opening and closing pairs
-    openPID={} -- save opening IDs as they are needed again for the close tag IDs
     currentLineNumber=0 -- remember the current line number
-    notEmbedded=false   -- disable plugin for nested code snippets (like JS in HTML)
   end
     
   init()  
@@ -28,43 +23,35 @@ function syntaxUpdate(desc)
     --TODO we need an initialization hook:
     if lineNumber==1 then
       init()
-      notEmbedded=true
-    end 
+    end
+
     -- the line number does not increase for wrapped lines (--wrap, --wrap-simple)
     if (tonumber(currentLineNumber)==lineNumber) then
       return
     end
-    currentLineNumber = string.format("%d", lineNumber)
-    return '<span id="ln_'..currentLineNumber..'">'
-  end
-  
-  function DecorateLineEnd(lineNumber)  
-    if (tonumber(currentLineNumber)==lineNumber) then
-      return
-    end
-    return '</span>'
-  end
-  
-  function Set (list)
-    local set = {}
-    for _, l in ipairs(list) do set[l] = true end
-    return set
-  end
 
-  -- FIX conditional modifiers: add global desc var
-  langDesc = desc
-   
-    HeaderInjection=[=[
+    currentLineNumber = string.format("%d", lineNumber)
+    return '<span id="ln_'..currentLineNumber..'"></span>'
+  end
+  
+  -- function DecorateLineEnd(lineNumber)
+  --   if (tonumber(currentLineNumber)==lineNumber) then
+  --     return
+  --   end
+  --   return '</span>'
+  -- end
+
+  HeaderInjection=[=[
 <div id="gotobar">
     <form onsubmit="return false">
-        <!--<input type="number" name="line" value="" placeholder="line number" />
-        <button onclick="gotoLineNumber(this.form.line.value)" type="submit">goto</button>-->
         <button onclick="copyToClipboard()" type="button">copy to clipboard</button>
     </form>
 </div>
 <div id="gotobar_space"></div>
-  <script type="text/javascript">
-  /* <![CDATA[ */
+]=]
+
+  FooterInjection=[=[
+<script type="text/javascript">/* <![CDATA[ */
 function gotoLineNumber(n) {
     const row = document.getElementById('ln_'+n);
     if (row) {
@@ -78,7 +65,6 @@ function gotoLineNumber(n) {
             row.classList.remove('highlight');
         }, 1000);
         // row.scrollIntoView();
-    } else {
     }
 }
 
@@ -114,9 +100,10 @@ function copyToClipboard() {
         el[0].style.display = el[1]
     }
 }
-  /* ]]> */
+/* ]]> */
 </script>  
-  ]=]
+]=]
+
 end
 
 function themeUpdate(desc)
@@ -166,5 +153,5 @@ end
 
 Plugins={
   { Type="lang", Chunk=syntaxUpdate },
-  { Type="theme", Chunk=themeUpdate },
+  { Type="theme", Chunk=themeUpdate }
 }

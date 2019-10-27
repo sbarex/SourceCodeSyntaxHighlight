@@ -648,7 +648,7 @@ Gw
                                     <action selector="refresh:" target="2Ln-xh-MJc" id="wJ4-OZ-2Fc"/>
                                 </connections>
                             </textField>
-                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="PDU-DX-Uf2">
+                            <button hidden="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="PDU-DX-Uf2">
                                 <rect key="frame" x="129" y="252" width="172" height="18"/>
                                 <buttonCell key="cell" type="check" title="Show commands toolbar" bezelStyle="regularSquare" imagePosition="left" enabled="NO" state="on" inset="2" id="2gm-xL-nF9">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -662,7 +662,7 @@ Gw
                                 <rect key="frame" x="129" y="552" width="369" height="25"/>
                                 <popUpButtonCell key="cell" type="push" title="waiting…" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" enabled="NO" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="2Ji-YN-SxJ" id="z4X-GB-r12">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
+                                    <font key="font" metaFont="menu"/>
                                     <menu key="menu" id="JUN-Fc-0zt">
                                         <items>
                                             <menuItem title="waiting…" state="on" id="2Ji-YN-SxJ"/>
