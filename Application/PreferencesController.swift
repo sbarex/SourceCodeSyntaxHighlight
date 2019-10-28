@@ -46,7 +46,6 @@ class PreferencesController: NSViewController, NSFontChanging {
     
     @IBOutlet weak var extraArgumentsTextField: NSTextField!
     @IBOutlet weak var exampleFormatButton: NSPopUpButton!
-    @IBOutlet weak var commandsToolbarButton: NSButton!
     
     @IBOutlet weak var webView: WKWebView!
     @IBOutlet weak var textScrollView: NSScrollView!
@@ -161,7 +160,7 @@ class PreferencesController: NSViewController, NSFontChanging {
                 
                 let currentHighlightPath = self.settings?[SCSHSettings.Key.highlightPath.rawValue] as? String
                 for (i, path) in self.highlightPaths.enumerated() {
-                    let m = NSMenuItem(title: "\(path.embedded ? "Internal" : path.path) (ver. \(path.ver))", action: nil, keyEquivalent: "")
+                    let m = NSMenuItem(title: "\(path.embedded ? "Internal" : path.path)\(path.ver != "" ? " (ver. \(path.ver))" : "")", action: nil, keyEquivalent: "")
                     m.tag = i
                     self.highlightPathPopup.menu?.addItem(m)
                     if currentHighlightPath == path.path {
@@ -205,6 +204,7 @@ class PreferencesController: NSViewController, NSFontChanging {
                 // Line length.
                 self.lineLengthLabel.isHidden = self.wrapPopupButton.indexOfSelectedItem == 0
                 self.lineLengthTextField.isHidden = self.lineLengthLabel.isHidden
+                self.lineLengthTextField.isEnabled = true
                 self.lineLengthTextField.integerValue = self.settings?[SCSHSettings.Key.lineLength.rawValue] as? Int ?? 80
                 
                 // Line numbers.
@@ -237,9 +237,6 @@ class PreferencesController: NSViewController, NSFontChanging {
                 
                 // Poppulate theme list.
                 self.updateThemes()
-                
-                self.commandsToolbarButton.state = (self.settings?[SCSHSettings.Key.commandsToolbar.rawValue] as? Bool ?? false) ? .on : .off
-                self.commandsToolbarButton.isEnabled = format == SCSHFormat.html.rawValue
                 
                 // Example preview.
                 self.exampleFormatButton.isEnabled = self.examples.count > 0
@@ -319,7 +316,6 @@ class PreferencesController: NSViewController, NSFontChanging {
             
             SCSHSettings.Key.extraArguments.rawValue: self.extraArgumentsTextField.stringValue,
             SCSHSettings.Key.format.rawValue: self.modePopupButton.indexOfSelectedItem == 0 ? "html" : "rtf",
-            SCSHSettings.Key.commandsToolbar.rawValue: self.commandsToolbarButton.state == .on,
         ]
         
         let lightTheme: [String: Any]
@@ -366,7 +362,6 @@ class PreferencesController: NSViewController, NSFontChanging {
     @IBAction func handleFormatChange(_ sender: NSPopUpButton) {
         self.webView.isHidden = sender.indexOfSelectedItem != 0
         self.textScrollView.isHidden = sender.indexOfSelectedItem == 0
-        self.commandsToolbarButton.isEnabled = !self.webView.isHidden
         refresh(nil)
     }
 

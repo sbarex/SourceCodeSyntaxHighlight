@@ -83,7 +83,7 @@ class ViewController: NSViewController {
                 self.textView!.textContainer?.heightTracksTextView = false
                 
                 self.textView!.isEditable = false
-                self.textView!.isSelectable = true
+                self.textView!.isSelectable = false
                 
                 self.textView!.isGrammarCheckingEnabled = false
                 

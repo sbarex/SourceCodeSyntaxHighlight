@@ -411,7 +411,7 @@
 		</dict>
 		<dict>
 			<key>UTTypeDescription</key>
-			<string>Markdown</string>
+			<string>Markdown document</string>
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.plain-text</string>

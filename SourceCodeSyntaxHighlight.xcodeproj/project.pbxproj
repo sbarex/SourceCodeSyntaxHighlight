@@ -55,6 +55,8 @@
 		835923EF235A5EB9001506B6 /* SCSHCSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835923ED235A5D33001506B6 /* SCSHCSettings.swift */; };
 		835923F0235A5EBA001506B6 /* SCSHCSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835923ED235A5D33001506B6 /* SCSHCSettings.swift */; };
 		835923F1235A6F16001506B6 /* NSColor+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835923E9235A022C001506B6 /* NSColor+ext.swift */; };
+		83A0691123672FD100C795D6 /* style.css in Resources */ = {isa = PBXBuildFile; fileRef = 83A0691023672FD100C795D6 /* style.css */; };
+		83A06912236730D800C795D6 /* style.css in Resources */ = {isa = PBXBuildFile; fileRef = 83A0691023672FD100C795D6 /* style.css */; };
 		83C09FC223638E4F0062BF39 /* outhtml_commandbar.lua in Resources */ = {isa = PBXBuildFile; fileRef = 83C09FC0236367140062BF39 /* outhtml_commandbar.lua */; };
 		83C09FDB2365B9360062BF39 /* highlight in Resources */ = {isa = PBXBuildFile; fileRef = 83C09FDA2365B9360062BF39 /* highlight */; };
 /* End PBXBuildFile section */
@@ -190,6 +192,7 @@
 		835923E9235A022C001506B6 /* NSColor+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSColor+ext.swift"; sourceTree = "<group>"; };
 		835923EB235A3A85001506B6 /* SCSHTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCSHTheme.swift; sourceTree = "<group>"; };
 		835923ED235A5D33001506B6 /* SCSHCSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCSHCSettings.swift; sourceTree = "<group>"; };
+		83A0691023672FD100C795D6 /* style.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = style.css; sourceTree = "<group>"; };
 		83C09FC0236367140062BF39 /* outhtml_commandbar.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = outhtml_commandbar.lua; sourceTree = "<group>"; };
 		83C09FDA2365B9360062BF39 /* highlight */ = {isa = PBXFileReference; lastKnownFileType = folder; path = highlight; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -334,6 +337,7 @@
 				83C09FC0236367140062BF39 /* outhtml_commandbar.lua */,
 				83C09FDA2365B9360062BF39 /* highlight */,
 				8359236F2355B19F001506B6 /* colorize.sh */,
+				83A0691023672FD100C795D6 /* style.css */,
 			);
 			name = resources;
 			sourceTree = "<group>";
@@ -445,6 +449,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8359234D235599F9001506B6 /* Assets.xcassets in Resources */,
+				83A0691123672FD100C795D6 /* style.css in Resources */,
 				83592350235599F9001506B6 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -463,6 +468,7 @@
 			files = (
 				8359239523564B56001506B6 /* colorize.sh in Resources */,
 				83C09FC223638E4F0062BF39 /* outhtml_commandbar.lua in Resources */,
+				83A06912236730D800C795D6 /* style.css in Resources */,
 				83C09FDB2365B9360062BF39 /* highlight in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -108,10 +108,6 @@ struct SCSHSettings {
             return Self("font-size")
         }()
         
-        static let commandsToolbar: Self = {
-            return Self("commands-toolbar")
-        }()
-        
         static let debug: Self = {
             return Self("debug")
         }()
@@ -150,7 +146,6 @@ struct SCSHSettings {
     var fontFamily: String = "Menlo"
     var fontSize: Float = 10
     
-    var commandsToolbar = false
     var debug = false
     
     /// Domain for storing defaults.
@@ -194,8 +189,6 @@ struct SCSHSettings {
         
         self.fontFamily = defaultsDomain[Key.fontFamily.rawValue] as? String ?? "Menlo"
         self.fontSize = defaultsDomain[Key.fontSize.rawValue] as? Float ?? 10
-        
-        self.commandsToolbar = defaultsDomain[Key.commandsToolbar.rawValue] as? Bool ?? false
     }
     
     /// Save the settings to the defauls preferences.
@@ -234,8 +227,6 @@ struct SCSHSettings {
         defaultsDomain[Key.fontFamily.rawValue] = fontFamily
         defaultsDomain[Key.fontSize.rawValue] = fontSize
         
-        defaultsDomain[Key.commandsToolbar.rawValue] = commandsToolbar
-        
         let userDefaults = UserDefaults()
         userDefaults.setPersistentDomain(defaultsDomain, forName: d)
         return userDefaults.synchronize()
@@ -261,8 +252,6 @@ struct SCSHSettings {
         
             Key.fontFamily.rawValue: self.fontFamily,
             Key.fontSize.rawValue: self.fontSize,
-            
-            Key.commandsToolbar.rawValue: self.commandsToolbar,
         ]
         
         switch self.lineNumbers {
@@ -339,10 +328,6 @@ struct SCSHSettings {
         if let v = data[Key.fontSize.rawValue] as? Float {
             self.fontSize = v
         }
-        
-        if let v = data[Key.commandsToolbar.rawValue] as? Bool {
-            self.commandsToolbar = v
-        }
     }
     
     /// Create a new settings overriding current values
@@ -399,8 +384,6 @@ struct SCSHSettings {
         final_settings.fontFamily = override?[Key.fontFamily.rawValue] as? String ?? self.fontFamily
         // Font size.
         final_settings.fontSize = override?[Key.fontSize.rawValue] as? Float ?? self.fontSize
-        
-        final_settings.commandsToolbar = override?[Key.commandsToolbar.rawValue] as? Bool ?? self.commandsToolbar
         
         // Debug
         final_settings.debug = override?[Key.debug.rawValue] as? Bool ?? debug

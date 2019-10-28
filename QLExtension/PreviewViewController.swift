@@ -27,7 +27,38 @@ import OSLog
 
 import SourceCodeSyntaxHighlightXPCService
 
+class MyDraggingView: NSTextView {
+    override var isOpaque: Bool {
+        get {
+            return false
+        }
+    }
+    
+    override func mouseDown(with event: NSEvent) {
+        self.window?.performDrag(with: event)
+    }
+    
+    override func becomeFirstResponder() -> Bool {
+        return false
+    }
+    
+    override func draw(_ dirtyRect: NSRect) {
+        NSColor.clear.set()
+        dirtyRect.fill()
+    }
+}
+
+class StaticTextView: NSTextView {
+    override func mouseDown(with event: NSEvent) {
+        self.window?.performDrag(with: event)
+    }
+}
+
 class PreviewViewController: NSViewController, QLPreviewingController {
+    @IBOutlet weak var draggingView: MyDraggingView!
+    @IBOutlet weak var trailingDragginViewConstraint: NSLayoutConstraint!
+    @IBOutlet weak var bottomDragginViewConstraint: NSLayoutConstraint!
+    
     private let log = {
         return OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "quicklook.scsh-extension")
     }()
@@ -39,6 +70,10 @@ class PreviewViewController: NSViewController, QLPreviewingController {
     override func loadView() {
         super.loadView()
         // Do any additional setup after loading the view.
+        
+        let w = NSScroller.scrollerWidth(for: NSControl.ControlSize.regular, scrollerStyle: NSScroller.Style.overlay)
+        self.trailingDragginViewConstraint.constant = w
+        self.bottomDragginViewConstraint.constant = w
     }
 
     /*
@@ -82,9 +117,9 @@ class PreviewViewController: NSViewController, QLPreviewingController {
                     textScrollView.hasHorizontalScroller = true
                     textScrollView.hasVerticalScroller = true
                     textScrollView.borderType = .noBorder
-                    self.view.addSubview(textScrollView)
+                    self.view.addSubview(textScrollView, positioned: NSWindow.OrderingMode.below, relativeTo: self.draggingView)
                     
-                    let textView = NSTextView(frame: CGRect(origin: .zero, size: textScrollView.contentSize))
+                    let textView = StaticTextView(frame: CGRect(origin: .zero, size: textScrollView.contentSize))
                     
                     //textView.minSize = CGSize(width: 0, height: 0)
                     textView.maxSize = CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)
@@ -96,7 +131,7 @@ class PreviewViewController: NSViewController, QLPreviewingController {
                     textView.textContainer?.heightTracksTextView = false
                     
                     textView.isEditable = false
-                    textView.isSelectable = true
+                    textView.isSelectable = false
                     
                     textView.isGrammarCheckingEnabled = false
                     
@@ -110,7 +145,7 @@ class PreviewViewController: NSViewController, QLPreviewingController {
                     
                     textScrollView.documentView = textView
                     
-                    // The rtf parser don't apply (why?) the page packground.
+                    // The rtf parser don't apply (why?) the page background color.
                     if let c = settings[SCSHSettings.Key.rtfBackgroundColor.rawValue] as? String, let color = NSColor(fromHexString: c) {
                         textView.backgroundColor = color
                     } else {
@@ -128,7 +163,7 @@ class PreviewViewController: NSViewController, QLPreviewingController {
                     }
                     
                     let preferences = WKPreferences()
-                    preferences.javaScriptEnabled = settings[SCSHSettings.Key.commandsToolbar.rawValue] as? Bool ?? false
+                    preferences.javaScriptEnabled = false
 
                     // Create a configuration for the preferences
                     let configuration = WKWebViewConfiguration()
@@ -138,11 +173,11 @@ class PreviewViewController: NSViewController, QLPreviewingController {
                     let webView = WKWebView(frame: self.view.bounds, configuration: configuration)
                     webView.autoresizingMask = [.height, .width]
                     
-                    self.view.addSubview(webView)
+                    self.view.addSubview(webView, positioned: NSWindow.OrderingMode.below, relativeTo: self.draggingView)
                     
                     webView.loadHTMLString(html, baseURL: nil)
                 }
-                connection.invalidate()
+                
                 handler(nil)
             }
         }

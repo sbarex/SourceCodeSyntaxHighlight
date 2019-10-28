@@ -219,11 +219,9 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
         if format == SCSHFormat.rtf.rawValue {
             env["extraHLFlags"]! += " --page-color --char-styles"
         } else {
-            /*
-            if custom_settings.commandsToolbar, let plugin = Bundle.main.path(forResource: "outhtml_commandbar", ofType: "lua") {
-                env["extraHLFlags"]! += " --plug-in=\(plugin)"
+            if let style = Bundle.main.path(forResource: "style", ofType: "css") {
+                env["extraHLFlags"]! += " --style-infile=\(style)"
             }
-            */
         }
         
         /// Command to execute.
@@ -406,6 +404,7 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
     }
     
     func locateHighlight(reply: @escaping ([[Any]]) -> Void) {
+        let current = self.settings.highlightProgramPath
         var env = ProcessInfo.processInfo.environment
         env["PATH"] = (env["PATH"] ?? "") + ":/usr/local/bin:/usr/local/sbin"
         
@@ -429,13 +428,21 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
         if let v = parse_version(embedHiglight.path, embedHiglight.env) {
             result.append([embedHiglight.path, v, true])
         }
+        var found = false
         if let r = try? SCSHXPCService.runTask(script: "which -a highlight", env: env), r.isSuccess, let output = r.output() {
             let paths = output.split(separator: "\n")
             for path in paths {
                 if let v = parse_version(String(path), env) {
                     result.append([path, v, false])
+                    if current == path {
+                        found = true
+                    }
                 }
             }
+        }
+        if !found && current != "" && current != "-", let v = parse_version(String(current), env) {
+            // Parse current customized highlight path.
+            result.append([current, v, false])
         }
         
         reply(result)
