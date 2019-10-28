@@ -31,6 +31,7 @@
 				<string>com.sun.javafx</string>
 				<string>com.sun.java-class</string>
 				<string>com.sun.manifest</string>
+				<string>net.daringfireball.markdown</string>
 				<string>org.applescript.source</string>
 				<string>org.arduino.ino-source</string>
 				<string>org.arduino.source</string>
@@ -406,6 +407,21 @@
 				<array>
 					<string>mf</string>
 				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeDescription</key>
+			<string>Markdown</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.plain-text</string>
+			</array>
+			<key>UTTypeIdentifier</key>
+			<string>net.daringfireball.markdown</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<string>md</string>
 			</dict>
 		</dict>
 		<dict>
