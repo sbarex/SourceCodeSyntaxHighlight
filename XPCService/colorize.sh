@@ -67,7 +67,8 @@ case ${target} in
         ;;
     *.c | *.cpp | *.ino )
         lang=${target##*.}
-        plugin=(--plug-in cpp_syslog --plug-in cpp_ref_cplusplus_com --plug-in cpp_ref_local_includes)
+        # plugin=(--plug-in cpp_syslog --plug-in cpp_ref_cplusplus_com --plug-in cpp_ref_local_includes)
+        plugin=(--plug-in cpp_syslog)
         ;;
     *.rdf | *.xul | *.ecore )
         lang=xml
@@ -98,11 +99,11 @@ case ${target} in
         ;;
     *.pl )
         lang=pl
-        plugin=(--plug-in perl_ref_perl_org)
+        # plugin=(--plug-in perl_ref_perl_org)
         ;;
     *.py )
         lang=py
-        plugin=(--plug-in python_ref_python_org)
+        # plugin=(--plug-in python_ref_python_org)
         ;;
     *.sh | *.zsh | *.bash | *.csh | *.fish | *.bashrc | *.zshrc )
         lang=sh
@@ -110,7 +111,7 @@ case ${target} in
         ;;
     *.scala )
         lang=scala
-        plugin=(--plug-in scala_ref_scala_lang_org)
+        # plugin=(--plug-in scala_ref_scala_lang_org)
         ;;
     *.cfg | *.properties | *.conf )
         lang=ini
@@ -131,7 +132,7 @@ go4it () {
     else
         theme="--style=${hlTheme}"
     fi
-    cmdOpts=(${plugin} --plug-in=outhtml_codefold --syntax=${lang} --quiet --include-style --font=${font} --font-size=${fontSizePoints} ${=theme} --encoding=${textEncoding} ${=extraHLFlags} --validate-input)
+    cmdOpts=(${plugin} --syntax=${lang} --quiet --include-style --font=${font} --font-size=${fontSizePoints} ${=theme} --encoding=${textEncoding} ${=extraHLFlags} --validate-input)
     
     debug "Generating the preview"
     if [ "${thumb}" = "1" ]; then
