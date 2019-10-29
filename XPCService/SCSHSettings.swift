@@ -111,6 +111,10 @@ struct SCSHSettings {
         static let debug: Self = {
             return Self("debug")
         }()
+        
+        static let embedCustomStyle: Self = {
+            return Self("embed-style")
+        }()
     }
     
     /// Name of theme for light visualization.
@@ -147,6 +151,9 @@ struct SCSHSettings {
     var fontSize: Float = 10
     
     var debug = false
+    
+    /// Embed custom style in the output.
+    var embedCustomStyle = true
     
     /// Domain for storing defaults.
     let domain: String
@@ -252,6 +259,8 @@ struct SCSHSettings {
         
             Key.fontFamily.rawValue: self.fontFamily,
             Key.fontSize.rawValue: self.fontSize,
+            
+            Key.embedCustomStyle.rawValue: self.embedCustomStyle,
         ]
         
         switch self.lineNumbers {
@@ -328,6 +337,9 @@ struct SCSHSettings {
         if let v = data[Key.fontSize.rawValue] as? Float {
             self.fontSize = v
         }
+        if let v = data[Key.embedCustomStyle.rawValue] as? Bool {
+            self.embedCustomStyle = v
+        }
     }
     
     /// Create a new settings overriding current values
@@ -387,6 +399,8 @@ struct SCSHSettings {
         
         // Debug
         final_settings.debug = override?[Key.debug.rawValue] as? Bool ?? debug
+        
+        final_settings.embedCustomStyle = override?[Key.embedCustomStyle.rawValue] as? Bool ?? embedCustomStyle
         
         return final_settings
     }

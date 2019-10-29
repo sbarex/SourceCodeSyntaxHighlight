@@ -83,7 +83,7 @@ class ViewController: NSViewController {
                 self.textView!.textContainer?.heightTracksTextView = false
                 
                 self.textView!.isEditable = false
-                self.textView!.isSelectable = false
+                self.textView!.isSelectable = true
                 
                 self.textView!.isGrammarCheckingEnabled = false
                 
@@ -141,7 +141,7 @@ class ViewController: NSViewController {
         webView?.isHidden = true
         textScrollView?.isHidden = true
         
-        service?.colorize(url: documentUrl, overrideSettings: nil) { (response, settings, error) in
+        service?.colorize(url: documentUrl, overrideSettings: [SCSHSettings.Key.embedCustomStyle.rawValue: false]) { (response, settings, error) in
             let format = settings[SCSHSettings.Key.format.rawValue] as? String ?? SCSHFormat.html.rawValue
             DispatchQueue.main.async {
                 self.initializeView(forMode: format)

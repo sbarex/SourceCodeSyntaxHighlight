@@ -28,6 +28,8 @@ import OSLog
 import SourceCodeSyntaxHighlightXPCService
 
 class MyDraggingView: NSTextView {
+    var trackArea: NSTrackingArea? = nil
+    
     override var isOpaque: Bool {
         get {
             return false
@@ -45,6 +47,18 @@ class MyDraggingView: NSTextView {
     override func draw(_ dirtyRect: NSRect) {
         NSColor.clear.set()
         dirtyRect.fill()
+    }
+    
+    override func updateTrackingAreas() {
+        if let trackArea = self.trackArea {
+            self.removeTrackingArea(trackArea)
+        }
+        self.trackArea = NSTrackingArea(rect: self.bounds, options: [NSTrackingArea.Options.activeAlways, NSTrackingArea.Options.cursorUpdate], owner: self, userInfo: nil)
+        self.addTrackingArea(self.trackArea!)
+    }
+    
+    override func cursorUpdate(with event: NSEvent) {
+        NSCursor.arrow.set()
     }
 }
 

@@ -26,7 +26,7 @@
                                         <menuItem isSeparatorItem="YES" id="VOq-y0-SEH"/>
                                         <menuItem title="Preferences…" tag="100" keyEquivalent="," id="BOF-NM-1cW">
                                             <connections>
-                                                <segue destination="KWJ-lo-l8G" kind="modal" identifier="SettingsSegue" id="zB3-XI-gBu"/>
+                                                <segue destination="KWJ-lo-l8G" kind="show" identifier="SettingsSegue" id="zB3-XI-gBu"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="wFC-TO-SCJ"/>
@@ -419,7 +419,7 @@ Gw
 </string>
                                 </buttonCell>
                                 <connections>
-                                    <action selector="dismissController:" target="2Ln-xh-MJc" id="mBw-OH-Ujr"/>
+                                    <action selector="performClose:" target="niw-ah-gTT" id="pwZ-nI-8oJ"/>
                                 </connections>
                             </button>
                             <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="CXL-K6-xK1">

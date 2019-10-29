@@ -544,13 +544,13 @@ class PreferencesController: NSViewController, NSFontChanging {
         
         service?.setSettings(settings as NSDictionary) { _ in 
             DispatchQueue.main.async {
+                self.view.window?.performClose(sender)
+                
                 NSApplication.shared.windows.forEach { (window) in
                     if let c = window.contentViewController as? ViewController {
                         c.refresh(nil)
                     }
                 }
-                
-                self.dismiss(sender)
             }
         }
     }

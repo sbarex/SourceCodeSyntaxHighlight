@@ -51,9 +51,9 @@
 		835923E823585E27001506B6 /* example.html in CopyFiles */ = {isa = PBXBuildFile; fileRef = 835923DE23585DD9001506B6 /* example.html */; };
 		835923EA235A022C001506B6 /* NSColor+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835923E9235A022C001506B6 /* NSColor+ext.swift */; };
 		835923EC235A3A85001506B6 /* SCSHTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835923EB235A3A85001506B6 /* SCSHTheme.swift */; };
-		835923EE235A5D33001506B6 /* SCSHCSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835923ED235A5D33001506B6 /* SCSHCSettings.swift */; };
-		835923EF235A5EB9001506B6 /* SCSHCSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835923ED235A5D33001506B6 /* SCSHCSettings.swift */; };
-		835923F0235A5EBA001506B6 /* SCSHCSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835923ED235A5D33001506B6 /* SCSHCSettings.swift */; };
+		835923EE235A5D33001506B6 /* SCSHSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835923ED235A5D33001506B6 /* SCSHSettings.swift */; };
+		835923EF235A5EB9001506B6 /* SCSHSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835923ED235A5D33001506B6 /* SCSHSettings.swift */; };
+		835923F0235A5EBA001506B6 /* SCSHSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835923ED235A5D33001506B6 /* SCSHSettings.swift */; };
 		835923F1235A6F16001506B6 /* NSColor+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835923E9235A022C001506B6 /* NSColor+ext.swift */; };
 		83A0691123672FD100C795D6 /* style.css in Resources */ = {isa = PBXBuildFile; fileRef = 83A0691023672FD100C795D6 /* style.css */; };
 		83A06912236730D800C795D6 /* style.css in Resources */ = {isa = PBXBuildFile; fileRef = 83A0691023672FD100C795D6 /* style.css */; };
@@ -191,7 +191,7 @@
 		835923E223585DFB001506B6 /* example.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = example.xml; sourceTree = "<group>"; };
 		835923E9235A022C001506B6 /* NSColor+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSColor+ext.swift"; sourceTree = "<group>"; };
 		835923EB235A3A85001506B6 /* SCSHTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCSHTheme.swift; sourceTree = "<group>"; };
-		835923ED235A5D33001506B6 /* SCSHCSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCSHCSettings.swift; sourceTree = "<group>"; };
+		835923ED235A5D33001506B6 /* SCSHSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCSHSettings.swift; sourceTree = "<group>"; };
 		83A0691023672FD100C795D6 /* style.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = style.css; sourceTree = "<group>"; };
 		83C09FC0236367140062BF39 /* outhtml_commandbar.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = outhtml_commandbar.lua; sourceTree = "<group>"; };
 		83C09FDA2365B9360062BF39 /* highlight */ = {isa = PBXFileReference; lastKnownFileType = folder; path = highlight; sourceTree = "<group>"; };
@@ -297,7 +297,7 @@
 				8359238B23563C1E001506B6 /* XPCServiceRelease.entitlements */,
 				835923EB235A3A85001506B6 /* SCSHTheme.swift */,
 				8359239C23570C52001506B6 /* SCSHError.swift */,
-				835923ED235A5D33001506B6 /* SCSHCSettings.swift */,
+				835923ED235A5D33001506B6 /* SCSHSettings.swift */,
 				8359237E23563BDF001506B6 /* SCSHXPCService.swift */,
 				8359237D23563BDF001506B6 /* SCSHXPCServiceProtocol.swift */,
 				8359237F23563BDF001506B6 /* SCSHXPCServiceDelegate.swift */,
@@ -485,7 +485,7 @@
 				8359234B235599F6001506B6 /* ViewController.swift in Sources */,
 				83592349235599F6001506B6 /* AppDelegate.swift in Sources */,
 				8359239F23570C5C001506B6 /* SCSHError.swift in Sources */,
-				835923F0235A5EBA001506B6 /* SCSHCSettings.swift in Sources */,
+				835923F0235A5EBA001506B6 /* SCSHSettings.swift in Sources */,
 				835923EA235A022C001506B6 /* NSColor+ext.swift in Sources */,
 				8311D9C7235DE6D7006DC138 /* Data+Ext.swift in Sources */,
 			);
@@ -498,7 +498,7 @@
 				835923F1235A6F16001506B6 /* NSColor+ext.swift in Sources */,
 				8311D9C8235DE6D7006DC138 /* Data+Ext.swift in Sources */,
 				8359236223559A2B001506B6 /* PreviewViewController.swift in Sources */,
-				835923EF235A5EB9001506B6 /* SCSHCSettings.swift in Sources */,
+				835923EF235A5EB9001506B6 /* SCSHSettings.swift in Sources */,
 				8359239E23570C5B001506B6 /* SCSHError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -511,7 +511,7 @@
 				8359239D23570C52001506B6 /* SCSHError.swift in Sources */,
 				8359238E2356436C001506B6 /* SCSHXPCServiceProtocol.swift in Sources */,
 				8359238023563BDF001506B6 /* SCSHXPCServiceDelegate.swift in Sources */,
-				835923EE235A5D33001506B6 /* SCSHCSettings.swift in Sources */,
+				835923EE235A5D33001506B6 /* SCSHSettings.swift in Sources */,
 				8359238F23564497001506B6 /* SCSHXPCService.swift in Sources */,
 				835923EC235A3A85001506B6 /* SCSHTheme.swift in Sources */,
 			);

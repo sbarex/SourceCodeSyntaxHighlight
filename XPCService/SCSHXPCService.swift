@@ -219,7 +219,7 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
         if format == SCSHFormat.rtf.rawValue {
             env["extraHLFlags"]! += " --page-color --char-styles"
         } else {
-            if let style = Bundle.main.path(forResource: "style", ofType: "css") {
+            if custom_settings.embedCustomStyle, let style = Bundle.main.path(forResource: "style", ofType: "css") {
                 env["extraHLFlags"]! += " --style-infile=\(style)"
             }
         }
