@@ -31,3 +31,14 @@ After the first execution, the quicklook extension will be available among those
 ![System preferences/Extensions](extensions.png)
 
 This extension don't provide a thumbnail service for the Finder icon. 
+
+
+## Note for developers
+After clone remeber of fetch submodules:
+
+```
+$ git submodule init 
+$ git submodule update
+$ cd lua4swift
+$ git checkout
+```
