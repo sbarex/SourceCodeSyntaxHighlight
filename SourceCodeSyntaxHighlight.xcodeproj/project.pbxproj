@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		83088A7F236CBBB20092180E /* libLua.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 83088A6E236CB19A0092180E /* libLua.dylib */; };
+		83088A87236CC0330092180E /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 83088A82236CC0330092180E /* .gitignore */; };
 		8311D9AC235DA0E4006DC138 /* example.json in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8311D9AA235D99B8006DC138 /* example.json */; };
 		8311D9B0235DA127006DC138 /* example.fsx in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8311D9AE235DA124006DC138 /* example.fsx */; };
 		8311D9B3235DB8D7006DC138 /* example.c in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8311D9B1235DB8CA006DC138 /* example.c */; };
@@ -62,6 +64,34 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		83088A69236CB19A0092180E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83088A62236CB19A0092180E /* Lua.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 168D386D1DB9D00A00087970;
+			remoteInfo = LuaSource;
+		};
+		83088A6B236CB19A0092180E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83088A62236CB19A0092180E /* Lua.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1680CA551DBA0D3600333F1F;
+			remoteInfo = Lua;
+		};
+		83088A6D236CB19A0092180E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83088A62236CB19A0092180E /* Lua.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 944A33011A475A6400BF8675;
+			remoteInfo = "Lua macOS";
+		};
+		83088A6F236CB19A0092180E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83088A62236CB19A0092180E /* Lua.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 94697A8E1AC712CB0047447A;
+			remoteInfo = "Lua Tests";
+		};
 		8359236823559A2B001506B6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8359233D235599F6001506B6 /* Project object */;
@@ -141,6 +171,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		83088A62236CB19A0092180E /* Lua.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Lua.xcodeproj; path = lua4swift/Lua.xcodeproj; sourceTree = "<group>"; };
+		83088A82236CC0330092180E /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		8311D9A3235CDAA1006DC138 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		8311D9A6235CE0A8006DC138 /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings.png; sourceTree = "<group>"; };
 		8311D9A8235CE6D7006DC138 /* extensions.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = extensions.png; sourceTree = "<group>"; };
@@ -220,19 +252,33 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83088A7F236CBBB20092180E /* libLua.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		83088A63236CB19A0092180E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				83088A6A236CB19A0092180E /* LuaSource.framework */,
+				83088A6C236CB19A0092180E /* Lua.framework */,
+				83088A6E236CB19A0092180E /* libLua.dylib */,
+				83088A70236CB19A0092180E /* Lua Tests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		8359233C235599F6001506B6 = {
 			isa = PBXGroup;
 			children = (
+				83088A62236CB19A0092180E /* Lua.xcodeproj */,
 				8311D9A3235CDAA1006DC138 /* README.md */,
 				833C295C236028B000B14757 /* LICENSE.txt */,
 				8311D9A6235CE0A8006DC138 /* settings.png */,
 				8311D9A8235CE6D7006DC138 /* extensions.png */,
+				83088A82236CC0330092180E /* .gitignore */,
 				83592347235599F6001506B6 /* Application */,
 				8359236023559A2B001506B6 /* QLExtension */,
 				8359237C23563BDF001506B6 /* XPCService */,
@@ -434,6 +480,12 @@
 			mainGroup = 8359233C235599F6001506B6;
 			productRefGroup = 83592346235599F6001506B6 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 83088A63236CB19A0092180E /* Products */;
+					ProjectRef = 83088A62236CB19A0092180E /* Lua.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				83592344235599F6001506B6 /* SourceCodeSyntaxHighlight */,
@@ -443,11 +495,43 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXReferenceProxy section */
+		83088A6A236CB19A0092180E /* LuaSource.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = LuaSource.framework;
+			remoteRef = 83088A69236CB19A0092180E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		83088A6C236CB19A0092180E /* Lua.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Lua.framework;
+			remoteRef = 83088A6B236CB19A0092180E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		83088A6E236CB19A0092180E /* libLua.dylib */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.dylib";
+			path = libLua.dylib;
+			remoteRef = 83088A6D236CB19A0092180E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		83088A70236CB19A0092180E /* Lua Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Lua Tests.xctest";
+			remoteRef = 83088A6F236CB19A0092180E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
 /* Begin PBXResourcesBuildPhase section */
 		83592343235599F6001506B6 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83088A87236CC0330092180E /* .gitignore in Resources */,
 				8359234D235599F9001506B6 /* Assets.xcassets in Resources */,
 				83A0691123672FD100C795D6 /* style.css in Resources */,
 				83592350235599F9001506B6 /* Main.storyboard in Resources */,

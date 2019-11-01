@@ -357,9 +357,9 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
                 
                 result["name"] = name
                 result["desc"] = desc
-                if let theme_url = theme_dir_url?.appendingPathComponent("\(name).theme") {
-                    // Parse theme file.
-                    let theme = SCSHTheme(url: theme_url)
+                
+                // Parse theme file.
+                if let theme_url = theme_dir_url?.appendingPathComponent("\(name).theme"), let theme = try? SCSHTheme(url: theme_url) {
                     if theme.categories.count > 0 {
                         result["desc"] = "\(desc) [\(theme.categories.joined(separator: ", "))]"
                     }

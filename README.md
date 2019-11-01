@@ -5,8 +5,7 @@ It's based on the [anthonygelibert/QLColorCode](https://github.com/anthonygelibe
 Inside it uses [Highlight](http://www.andre-simon.de/doku/highlight/en/highlight.php) to render source code with syntax highlighting.
 The application is distributed with a version of the `highlight`. If you want you can use a different version customizing the preferences.
 
-MacOS 10.15 Catalina has deprecated the qlgenerator APIs. Moreover a .qlgenerator package inside Library/QuickLook now must be notarized to works. 
-For this reason I tried to migrate the QLColorCode code using the new quicklook extension system.
+MacOS 10.15 Catalina has deprecated the qlgenerator APIs. Moreover a .qlgenerator package inside Library/QuickLook must be notarized on 10.15.0 to works. In version 10.15.1 it seems that notarization is no longer required.  
 
 This project consists of these components:
 
