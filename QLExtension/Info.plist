@@ -34,6 +34,7 @@
 			<array>
 				<string>com.adobe.actionscript</string>
 				<string>com.adobe.coldfusion</string>
+				<string>com.adobe.jsx</string>
 				<string>com.apple.applescript.script</string>
 				<string>com.apple.applescript.text</string>
 				<string>com.apple.property-list</string>
@@ -70,6 +71,7 @@
 				<string>org.kmt.source</string>
 				<string>org.km3</string>
 				<string>org.kotlinlang.source</string>
+				<string>org.lua.lua</string>
 				<string>org.lua.lua-source</string>
 				<string>org.microsoft.inf</string>
 				<string>org.nfo</string>
@@ -126,6 +128,7 @@
 				<string>dyn.ah62d4rv4ge80g62</string>
 				<string>dyn.ah62d4rv4ge80w5pq</string>
 				<string>dyn.ah62d4rv4ge80s52</string>
+				<string>dyn.ah62d4rv4ge80y652</string>
 			</array>
 			<key>QLSupportsSearchableItems</key>
 			<false/>

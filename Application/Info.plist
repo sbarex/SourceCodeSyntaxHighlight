@@ -15,6 +15,7 @@
 			<array>
 				<string>com.adobe.actionscript</string>
 				<string>com.adobe.coldfusion</string>
+				<string>com.adobe.jsx</string>
 				<string>com.apple.applescript.script</string>
 				<string>com.apple.applescript.text</string>
 				<string>com.apple.property-list</string>
@@ -52,6 +53,7 @@
 				<string>org.kmt.source</string>
 				<string>org.km3</string>
 				<string>org.kotlinlang.source</string>
+				<string>org.lua.lua</string>
 				<string>org.lua.lua-source</string>
 				<string>org.microsoft.inf</string>
 				<string>org.nfo</string>
@@ -108,6 +110,7 @@
 				<string>dyn.ah62d4rv4ge80g62</string>
 				<string>dyn.ah62d4rv4ge80w5pq</string>
 				<string>dyn.ah62d4rv4ge80s52</string>
+				<string>dyn.ah62d4rv4ge80y652</string>
 			</array>
 			<key>NSDocumentClass</key>
 			<string>$(PRODUCT_MODULE_NAME).Document</string>
@@ -184,6 +187,25 @@
 					<string>cfc</string>
 					<string>cfm</string>
 					<string>cfml</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.item</string>
+				<string>dyn.ah62d4rv4ge80y652</string>
+				<string>public.data</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Adobe JSX</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.adobe.jsx</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>jsx</string>
 				</array>
 			</dict>
 		</dict>
