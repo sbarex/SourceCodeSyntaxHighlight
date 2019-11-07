@@ -88,6 +88,7 @@
 				<string>public.c-plus-plus-source</string>
 				<string>public.json</string>
 				<string>public.objective-c-source</string>
+				<string>public.pascal-source</string>
 				<string>public.perl-script</string>
 				<string>public.php-script</string>
 				<string>public.plain-text</string>
