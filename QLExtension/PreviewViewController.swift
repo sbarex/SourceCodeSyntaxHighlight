@@ -68,7 +68,7 @@ class StaticTextView: NSTextView {
     }
 }
 
-class PreviewViewController: NSViewController, QLPreviewingController {
+class PreviewViewController: NSViewController, QLPreviewingController, WKNavigationDelegate {
     @IBOutlet weak var draggingView: MyDraggingView!
     @IBOutlet weak var trailingDragginViewConstraint: NSLayoutConstraint!
     @IBOutlet weak var bottomDragginViewConstraint: NSLayoutConstraint!
@@ -101,6 +101,8 @@ class PreviewViewController: NSViewController, QLPreviewingController {
         handler(nil)
     }
      */
+    
+    var handler: ((Error?) -> Void)? = nil
     
     func preparePreviewOfFile(at url: URL, completionHandler handler: @escaping (Error?) -> Void) {
         // Add the supported content types to the QLSupportedContentTypes array in the Info.plist of the extension.
@@ -168,6 +170,8 @@ class PreviewViewController: NSViewController, QLPreviewingController {
                     
                     let text = NSAttributedString(rtf: response, documentAttributes: nil) ?? NSAttributedString(string: "Unable to convert data to rtf.")
                     textView.textStorage?.setAttributedString(text)
+                    
+                    handler(nil)
                 } else {
                     var lossy = false
                     let html = response.decodeToString(lossy: &lossy).trimmingCharacters(in: CharacterSet.newlines)
@@ -185,15 +189,30 @@ class PreviewViewController: NSViewController, QLPreviewingController {
                     configuration.allowsAirPlayForMediaPlayback = false
                     
                     let webView = WKWebView(frame: self.view.bounds, configuration: configuration)
+                    webView.navigationDelegate = self
                     webView.autoresizingMask = [.height, .width]
                     
                     self.view.addSubview(webView, positioned: NSWindow.OrderingMode.below, relativeTo: self.draggingView)
                     
                     webView.loadHTMLString(html, baseURL: nil)
+                    self.handler = handler
                 }
-                
-                handler(nil)
             }
+        }
+    }
+    
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        if let handler = self.handler {
+            // Show the quicklook preview only after the complete rendering (preventing a flickering glitch).
+            handler(nil)
+            self.handler = nil
+        }
+    }
+    
+    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        if let handler = self.handler {
+            handler(error)
+            self.handler = nil
         }
     }
 }
