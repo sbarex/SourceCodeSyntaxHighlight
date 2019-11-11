@@ -44,6 +44,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
         firstAppear = true
+        
+        // Debug constraints.
+        // UserDefaults.standard.set(true, forKey: "NSConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints")
+        // Or put -NSConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints YES on the launch arguments
     }
     
     func applicationWillTerminate(_ aNotification: Notification) {

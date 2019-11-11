@@ -127,10 +127,14 @@ esac
 debug "Resolved ${target} to language $lang"
 
 go4it () {
-    if [[ ${hlTheme} == base16* ]]; then
-        theme="--base16=${hlTheme#"base16/"}"
+    if [[ ${hlTheme16} == 1 ]]; then
+        theme="--base16=${hlTheme}"
     else
-        theme="--style=${hlTheme}"
+        if [[ ${hlTheme} == base16* ]]; then
+            theme="--base16=${hlTheme#"base16/"}"
+        else
+            theme="--style=${hlTheme}"
+        fi
     fi
     cmdOpts=(${plugin} --syntax=${lang} --quiet --include-style --font=${font} --font-size=${fontSizePoints} ${=theme} --encoding=${textEncoding} ${=extraHLFlags} --validate-input)
     

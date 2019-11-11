@@ -123,7 +123,7 @@ class PreviewViewController: NSViewController, QLPreviewingController {
         }
         
         service.colorize(url: url, overrideSettings: nil) { (response, settings, error) in
-            let format = settings[SCSHSettings.Key.format.rawValue] as? String ?? SCSHFormat.html.rawValue
+            let format = settings[SCSHSettings.Key.format] as? String ?? SCSHFormat.html.rawValue
             DispatchQueue.main.async {
                 if format == SCSHFormat.rtf.rawValue {
                     let textScrollView = NSScrollView(frame: self.view.bounds)
@@ -160,7 +160,7 @@ class PreviewViewController: NSViewController, QLPreviewingController {
                     textScrollView.documentView = textView
                     
                     // The rtf parser don't apply (why?) the page background color.
-                    if let c = settings[SCSHSettings.Key.rtfBackgroundColor.rawValue] as? String, let color = NSColor(fromHexString: c) {
+                    if let c = settings[SCSHSettings.Key.rtfBackgroundColor] as? String, let color = NSColor(fromHexString: c) {
                         textView.backgroundColor = color
                     } else {
                         textView.backgroundColor = .clear

@@ -141,8 +141,8 @@ class ViewController: NSViewController {
         webView?.isHidden = true
         textScrollView?.isHidden = true
         
-        service?.colorize(url: documentUrl, overrideSettings: [SCSHSettings.Key.embedCustomStyle.rawValue: false]) { (response, settings, error) in
-            let format = settings[SCSHSettings.Key.format.rawValue] as? String ?? SCSHFormat.html.rawValue
+        service?.colorize(url: documentUrl, overrideSettings: [SCSHSettings.Key.embedCustomStyle: false]) { (response, settings, error) in
+            let format = settings[SCSHSettings.Key.format] as? String ?? SCSHFormat.html.rawValue
             DispatchQueue.main.async {
                 self.initializeView(forMode: format)
                 
@@ -156,7 +156,7 @@ class ViewController: NSViewController {
                     
                     self.textView?.textStorage?.setAttributedString(text)
                     // The rtf parser don't apply (why?) the page packground.
-                    if let c = settings[SCSHSettings.Key.rtfBackgroundColor.rawValue] as? String, let color = NSColor(fromHexString: c) {
+                    if let c = settings[SCSHSettings.Key.rtfBackgroundColor] as? String, let color = NSColor(fromHexString: c) {
                         self.textView?.backgroundColor = color
                     } else {
                         self.textView?.backgroundColor = .clear

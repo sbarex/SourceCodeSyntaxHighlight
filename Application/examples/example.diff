@@ -1,0 +1,8 @@
+--- file1.txt   2014-08-21 17:58:29.764656635 -0400
++++ file2.txt   2014-08-21 17:58:50.768989841 -0400
+@@ -1,4 +1,4 @@
+ apples
+-oranges
+ kiwis
+ carrots
++grapefruits

@@ -21,163 +21,253 @@
 //  along with SourceCodeSyntaxHighlight. If not, see <http://www.gnu.org/licenses/>.
 
 import Foundation
-import Lua
 
-class SCSHTheme {
-    fileprivate let REGEX_IDENTIFIER = "[a-zA-Z_]\\w*"
-    fileprivate let REGEX_NUMBER = "(?:0x|0X)[0-9a-fA-F]+|\\d*[\\.]?\\d+(?:[eE][\\-\\+]\\d+)?[lLuU]*"
-    
-    /** states which may occour during input file parsing */
-    fileprivate enum State: Int {
-        case STANDARD=0
-        case STRING
-        case NUMBER
-        case SL_COMMENT
-        case ML_COMMENT
-        case ESC_CHAR
-        case DIRECTIVE
-        case DIRECTIVE_STRING
-        case LINENUMBER
-        case SYMBOL
-        case STRING_INTERPOLATION
-
-        // don't use constants > KEYWORD as array indices!
-        case KEYWORD
-        case STRING_END
-        case NUMBER_END
-        case SL_COMMENT_END
-        case ML_COMMENT_END
-        case ESC_CHAR_END
-        case DIRECTIVE_END
-        case SYMBOL_END
-        case STRING_INTERPOLATION_END
-        case KEYWORD_END
-        case IDENTIFIER_BEGIN
-        case IDENTIFIER_END
-        case EMBEDDED_CODE_BEGIN
-        case EMBEDDED_CODE_END
-
-        case _UNKNOWN=100
-        case _REJECT
-        case _EOL
-        case _EOF
-        case _WS
-        case _TESTPOS
-    }
-    
-    /** output formats */
-    fileprivate enum OutputType: Int {
-        case HTML
-        case XHTML
-        case TEX
-        case LATEX
-        case RTF
-        case ESC_ANSI
-        case ESC_XTERM256
-        case HTML32_UNUSED
-        case SVG
-        case BBCODE
-        case PANGO
-        case ODTFLAT
-        case ESC_TRUECOLOR
-    }
-    
-    enum LuaError: Error {
-        case error(message: String)
-    }
-    
-    let name: String
-    
-    let desc: String
-    let categories: [String]
-    let backgroundColor: String
-    let isBase16: Bool
-    
-    init(url: URL) throws {
-        self.name = url.deletingPathExtension().lastPathComponent
+public class SCSHTheme {
+    public struct ThemeProperty {
+        public let color: String
+        public let isBold: Bool
+        public let isItalic: Bool
         
-        let vm = Lua.VirtualMachine(openLibs: true)
-
-        vm.globals["HL_LANG_DIR"] = ""
-       
-        let pluginParameter = ""
-        vm.globals["HL_INPUT_FILE"] = pluginParameter
-        vm.globals["HL_PLUGIN_PARAM"] = pluginParameter
-        
-        vm.globals["HL_OUTPUT"] = ""
-
-        vm.globals["Identifiers"]=REGEX_IDENTIFIER;
-        vm.globals["Digits"]=REGEX_NUMBER
-
-        //initialize environment for hook functions
-        vm.globals["HL_STANDARD"]=State.STANDARD.rawValue
-        vm.globals["HL_STRING"]=State.STRING.rawValue
-        vm.globals["HL_NUMBER"]=State.NUMBER.rawValue
-        vm.globals["HL_LINE_COMMENT"]=State.SL_COMMENT.rawValue
-        vm.globals["HL_BLOCK_COMMENT"]=State.ML_COMMENT.rawValue
-        vm.globals["HL_ESC_SEQ"]=State.ESC_CHAR.rawValue
-        vm.globals["HL_PREPROC"]=State.DIRECTIVE.rawValue
-        vm.globals["HL_PREPROC_STRING"]=State.DIRECTIVE_STRING.rawValue
-        vm.globals["HL_OPERATOR"]=State.SYMBOL.rawValue
-        vm.globals["HL_LINENUMBER"]=State.LINENUMBER.rawValue
-        vm.globals["HL_INTERPOLATION"]=State.STRING_INTERPOLATION.rawValue
-        vm.globals["HL_KEYWORD"]=State.KEYWORD.rawValue
-        vm.globals["HL_STRING_END"]=State.STRING_END.rawValue
-        vm.globals["HL_LINE_COMMENT_END"]=State.SL_COMMENT_END.rawValue
-        vm.globals["HL_BLOCK_COMMENT_END"]=State.ML_COMMENT_END.rawValue
-        vm.globals["HL_ESC_SEQ_END"]=State.ESC_CHAR_END.rawValue
-        vm.globals["HL_PREPROC_END"]=State.DIRECTIVE_END.rawValue
-        vm.globals["HL_OPERATOR_END"]=State.SYMBOL_END.rawValue
-        vm.globals["HL_KEYWORD_END"]=State.KEYWORD_END.rawValue
-        vm.globals["HL_EMBEDDED_CODE_BEGIN"]=State.EMBEDDED_CODE_BEGIN.rawValue
-        vm.globals["HL_EMBEDDED_CODE_END"]=State.EMBEDDED_CODE_END.rawValue
-        vm.globals["HL_IDENTIFIER_BEGIN"]=State.IDENTIFIER_BEGIN.rawValue
-        vm.globals["HL_IDENTIFIER_END"]=State.IDENTIFIER_END.rawValue
-
-        vm.globals["HL_INTERPOLATION_END"]=State.STRING_INTERPOLATION_END.rawValue
-        vm.globals["HL_UNKNOWN"]=State._UNKNOWN.rawValue
-        vm.globals["HL_REJECT"]=State._REJECT.rawValue
-        vm.globals["HL_FORMAT_HTML"] = OutputType.HTML.rawValue
-        vm.globals["HL_FORMAT_XHTML"] = OutputType.XHTML.rawValue
-        vm.globals["HL_FORMAT_TEX"] = OutputType.TEX.rawValue
-        vm.globals["HL_FORMAT_LATEX"] = OutputType.LATEX.rawValue
-        vm.globals["HL_FORMAT_RTF"] = OutputType.RTF.rawValue
-        vm.globals["HL_FORMAT_ANSI"] = OutputType.ESC_ANSI.rawValue
-        vm.globals["HL_FORMAT_XTERM256"] = OutputType.ESC_XTERM256.rawValue
-        vm.globals["HL_FORMAT_TRUECOLOR"] = OutputType.ESC_TRUECOLOR.rawValue
-        vm.globals["HL_FORMAT_SVG"] = OutputType.SVG.rawValue
-        vm.globals["HL_FORMAT_BBCODE"] = OutputType.BBCODE.rawValue
-        vm.globals["HL_FORMAT_PANGO"] = OutputType.PANGO.rawValue
-        vm.globals["HL_FORMAT_ODT"] = OutputType.ODTFLAT.rawValue
-
-        // default values for --verbose
-        vm.globals["IgnoreCase"]=false
-        vm.globals["EnableIndentation"]=false
-        vm.globals["DisableHighlighting"]=false
-
-        let r = vm.eval(url)
-
-        switch r {
-        case .values(_):
-            self.desc = vm.globals["Description"] as? String ?? ""
-            if let a = vm.globals["Categories"] as? Table {
-                self.categories = a.asSequence()
-            } else {
-                self.categories = []
-            }
-            if let a = vm.globals["Canvas"] as? Table {
-                self.backgroundColor = a["Colour"] as? String ?? ""
-                self.isBase16 = false
-            } else if let a = vm.globals["base00"] as? String {
-                self.backgroundColor = a
-                self.isBase16 = true
-            } else {
-                self.backgroundColor = ""
-                self.isBase16 = false
-            }
-
-        case .error(let s):
-            throw LuaError.error(message: s)
+        public init() {
+            self.init(color: "", isBold: false, isItalic: false)
         }
+        
+        public init(color: String, isBold: Bool, isItalic: Bool) {
+            self.color = color
+            self.isBold = isBold
+            self.isItalic = isItalic
+        }
+        
+        public init(dict: NSDictionary?) {
+            self.init(color: dict?["color"] as? String ?? "", isBold: dict?["bold"] as? Bool ?? false, isItalic:  dict?["italic"] as? Bool ?? false)
+        }
+        
+        public func toDictionary() -> NSDictionary {
+            return [
+                "color": color,
+                "bold": isBold,
+                "italic": isItalic
+            ]
+        }
+        
+        /// Get CSS inline style attribute for the property.
+        func toCssStyle() -> String {
+            var css = ""
+            if color != "" {
+                css += "color: \(color); "
+            }
+            css += "font-weight: \(isBold ? "bold" : "normal"); "
+            css += "font-style: \(isItalic ? "italic" : "normal"); "
+            
+            return css
+        }
+    }
+    
+    public struct ThemeProperties {
+        public let defaultProp: ThemeProperty
+        public let canvas: ThemeProperty
+        public let number: ThemeProperty
+        public let escape: ThemeProperty
+        public let string: ThemeProperty
+        public let blockComment: ThemeProperty
+        public let lineComment: ThemeProperty
+        
+        public let stringPreProc: ThemeProperty
+        public let operatorProp: ThemeProperty
+        public let lineNum: ThemeProperty
+        public let preProcessor: ThemeProperty
+        public let interpolation: ThemeProperty
+
+        public let keywords: [ThemeProperty]
+        
+        public init() {
+            self.defaultProp = ThemeProperty()
+            self.canvas = ThemeProperty()
+            self.number = ThemeProperty()
+            self.escape = ThemeProperty()
+            self.string = ThemeProperty()
+            self.blockComment = ThemeProperty()
+            self.lineComment = ThemeProperty()
+            self.stringPreProc = ThemeProperty()
+            self.operatorProp = ThemeProperty()
+            self.lineNum = ThemeProperty()
+            self.preProcessor = ThemeProperty()
+            self.interpolation = ThemeProperty()
+            
+            self.keywords = []
+        }
+        
+        public init(defaultProp: ThemeProperty, canvas: ThemeProperty, number: ThemeProperty, escape: ThemeProperty, string: ThemeProperty, blockComment: ThemeProperty, lineComment: ThemeProperty, stringPreProc: ThemeProperty, operatorProp: ThemeProperty, lineNum: ThemeProperty, preProcessor: ThemeProperty, interpolation: ThemeProperty, keywords: [ThemeProperty]) {
+            self.defaultProp = defaultProp
+            self.canvas = canvas
+            self.number = number
+            self.escape = escape
+            self.string = string
+            self.blockComment = blockComment
+            self.lineComment = lineComment
+            self.stringPreProc = stringPreProc
+            self.operatorProp = operatorProp
+            self.lineNum = lineNum
+            self.preProcessor = preProcessor
+            self.interpolation = interpolation
+            
+            self.keywords = keywords
+        }
+        
+        public init(dict: NSDictionary) {
+            self.defaultProp = ThemeProperty(dict: dict["defaultProp"] as? NSDictionary)
+            self.canvas = ThemeProperty(dict: dict["canvas"] as? NSDictionary)
+            
+            self.number = ThemeProperty(dict: dict["number"] as? NSDictionary)
+            self.escape = ThemeProperty(dict: dict["escape"] as? NSDictionary)
+            self.string = ThemeProperty(dict: dict["string"] as? NSDictionary)
+            self.stringPreProc = ThemeProperty(dict: dict["stringPreProc"] as? NSDictionary)
+            
+            self.blockComment = ThemeProperty(dict: dict["blockComment"] as? NSDictionary)
+            self.lineComment = ThemeProperty(dict: dict["lineComment"] as? NSDictionary)
+            
+            self.operatorProp = ThemeProperty(dict: dict["operatorProp"] as? NSDictionary)
+            self.lineNum = ThemeProperty(dict: dict["lineNum"] as? NSDictionary)
+            
+            self.preProcessor = ThemeProperty(dict: dict["preProcessor"] as? NSDictionary)
+            self.interpolation = ThemeProperty(dict: dict["interpolation"] as? NSDictionary)
+            
+            if let k = dict["keywords"] as? [NSDictionary] {
+                self.keywords = k.map({ ThemeProperty(dict: $0) })
+            } else {
+                self.keywords = []
+            }
+        }
+        
+        public func toDictionary() -> NSDictionary {
+            return [
+                "defaultProp": defaultProp.toDictionary(),
+                "canvas": canvas.toDictionary(),
+                
+                "number": number.toDictionary(),
+                "escape": escape.toDictionary(),
+                "string": string.toDictionary(),
+                "stringPreProc": stringPreProc.toDictionary(),
+                
+                "blockComment": blockComment.toDictionary(),
+                "lineComment": lineComment.toDictionary(),
+                
+                "operatorProp": operatorProp.toDictionary(),
+                "lineNum": lineNum.toDictionary(),
+                
+                "preProcessor": preProcessor.toDictionary(),
+                "interpolation": interpolation.toDictionary(),
+                
+                "keywords": keywords.map({ $0.toDictionary() })
+            ]
+        }
+    }
+    
+    public let name: String
+    
+    public let desc: String
+    public let categories: [String]
+    public var backgroundColor: String {
+        return self.properties.canvas.color
+    }
+    public let isBase16: Bool
+    public let properties: ThemeProperties
+    
+    /// Full description with the categories.
+    public var fullDesc: String {
+        var s = desc
+        if categories.count > 0 {
+            s += " [" + categories.joined(separator: " ") + "]"
+        }
+        return s
+    }
+    
+    public init(name: String, desc: String, categories: [String], isBase16: Bool, properties: ThemeProperties) {
+        self.name = name
+        self.desc = desc
+        self.categories = categories
+        self.isBase16 = isBase16
+        self.properties = properties
+    }
+    
+    public init(dict: NSDictionary) {
+        name = dict["name"] as? String ?? ""
+        desc = dict["desc"] as? String ?? ""
+        categories = dict["categories"] as? [String] ?? []
+        isBase16 = dict["isBase16"] as? Bool ?? false
+        if let p = dict["properties"] as? NSDictionary {
+            properties = ThemeProperties(dict: p)
+        } else {
+            properties = ThemeProperties()
+        }
+    }
+    
+    public func toDictionary() -> NSDictionary {
+        return [
+            "name": name,
+            "desc": desc,
+            "categories": categories,
+            "isBase16": isBase16,
+            "properties": properties.toDictionary()
+        ]
+    }
+    
+    public func getHtmlExample() -> String {
+        return getHtmlExample(fontName: "Menlo", fontSize: 12)
+    }
+    
+    /// Get a html code for preview the theme settings.
+    public func getHtmlExample(fontName: String, fontSize: Float) -> String {
+        var keywords = ""
+        var i = 1
+        for k in self.properties.keywords {
+            keywords += "<tr><td style='\(k.toCssStyle())'>keyword \(i)</td></tr>"
+            i += 1
+        }
+        
+        var cssFont = ""
+        if fontName != "" {
+            cssFont = "font-family: \(fontName); font-size: \(fontSize)pt; "
+        }
+        
+        let textColor = properties.defaultProp.toCssStyle()
+        return """
+<html>
+<head>
+<style>
+html, body {
+    background-color: \(self.properties.canvas.color);
+    \(cssFont)
+    user-select: none;
+}
+</style>
+</head>
+<body>
+        <table>
+        <tr><td style="\(self.properties.defaultProp.toCssStyle())\(cssFont)">standard color</td><td style="\(textColor)">\(self.properties.defaultProp.color)</td></tr>
+        <tr><td style="\(self.properties.number.toCssStyle())\(cssFont)">number</td><td style="\(textColor)">\(self.properties.number.color)</td></tr>
+        <tr><td style="\(self.properties.string.toCssStyle())\(cssFont)">string</td><td style="\(textColor)">\(self.properties.string.color)</td></tr>
+        <tr><td style="\(self.properties.stringPreProc.toCssStyle())\(cssFont)">string pre proc</td><td style="\(textColor)">\(self.properties.stringPreProc.color)</td></tr>
+        <tr><td style="\(self.properties.operatorProp.toCssStyle())\(cssFont)">operators</td><td style="\(textColor)">\(self.properties.operatorProp.color)</td></tr>
+        
+        <tr><td style="\(self.properties.blockComment.toCssStyle())\(cssFont)">block comment</td><td style="\(textColor)">\(self.properties.blockComment.color)</td></tr>
+        <tr><td style="\(self.properties.lineComment.toCssStyle())\(cssFont)">inline comment</td><td style="\(textColor)">\(self.properties.lineComment.color)</td></tr>
+        
+        <tr><td style="\(self.properties.escape.toCssStyle())\(cssFont)">escape</td><td style="\(textColor)">\(self.properties.escape.color)</td></tr>
+        <tr><td style="\(self.properties.preProcessor.toCssStyle())\(cssFont)">pre processor</td><td style="\(textColor)">\(self.properties.preProcessor.color)</td></tr>
+        <tr><td style="\(self.properties.interpolation.toCssStyle())\(cssFont)">interpolation</td><td style="\(textColor)">\(self.properties.interpolation.color)</td></tr>
+        
+        <tr><td style="\(self.properties.lineNum.toCssStyle())\(cssFont)">line number</td><td style="\(textColor)">\(self.properties.lineNum.color)</td></tr>
+        
+        \(keywords)
+        </table>
+</body>
+</html>
+"""
+    }
+    
+    /// Get a NSAttributedString for preview the theme settings.
+    public func getAttributedExample(fontName: String, fontSize: Float) -> NSAttributedString {
+        return NSAttributedString(html: getHtmlExample(fontName: fontName, fontSize: fontSize).data(using: .utf8)!, options: [:], documentAttributes: nil)!
     }
 }

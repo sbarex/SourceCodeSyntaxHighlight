@@ -19,16 +19,25 @@
 				<string>com.apple.applescript.script</string>
 				<string>com.apple.applescript.text</string>
 				<string>com.apple.property-list</string>
+				<string>com.barebones.bbedit.verilog-hdl-source</string>
+				<string>com.barebones.bbedit.vhdl-source</string>
 				<string>com.dhowett.logos</string>
 				<string>com.eiffel.eiffelstudio-project-config</string>
 				<string>com.eiffel.source-code</string>
 				<string>com.jetbrain.source</string>
+				<string>com.macromates.textmate.scheme</string>
+				<string>com.macromates.textmate.standard-ml</string>
 				<string>com.microsoft.csharp-source</string>
 				<string>com.microsoft.c-sharp</string>
 				<string>com.microsoft.f-sharp</string>
+				<string>com.microsoft.ini</string>
 				<string>com.microsoft.typescript</string>
 				<string>com.microsoft.vb-source</string>
+				<string>com.microsoft.visual-basic</string>
 				<string>com.netscape.javascript-source</string>
+				<string>com.sun.java-source</string>
+				<string>com.sun.java-server-pages</string>
+				<string>com.sun.java-web-start</string>
 				<string>com.sun.javafx</string>
 				<string>com.sun.java-class</string>
 				<string>com.sun.manifest</string>
@@ -38,18 +47,21 @@
 				<string>org.arduino.source</string>
 				<string>org.asm.source</string>
 				<string>org.bash.source</string>
-				<string>org.coffee.source</string>
 				<string>org.codehaus.groovy-source</string>
 				<string>org.coffee.source</string>
+				<string>org.coffeescript.coffeescript</string>
 				<string>org.cson.source</string>
+				<string>org.erlang.erlang</string>
 				<string>org.erlang.erlang-source</string>
 				<string>org.fish.source</string>
 				<string>org.gcc.files</string>
 				<string>org.go.source</string>
 				<string>org.gradle.source</string>
+				<string>org.haskell.haskell</string>
 				<string>org.haskell.haskell-source</string>
 				<string>org.haskell.literate-haskell-source</string>
 				<string>org.inno.source</string>
+				<string>org.iso.sql</string>
 				<string>org.kmt.source</string>
 				<string>org.km3</string>
 				<string>org.kotlinlang.source</string>
@@ -58,7 +70,6 @@
 				<string>org.microsoft.inf</string>
 				<string>org.nfo</string>
 				<string>org.n8gray.bat</string>
-				<string>org.n8gray.bogusextension</string>
 				<string>org.n8gray.diff-script</string>
 				<string>org.n8gray.idl</string>
 				<string>org.n8gray.ini-source</string>
@@ -73,12 +84,12 @@
 				<string>org.n8gray.verilog</string>
 				<string>org.n8gray.vhdl</string>
 				<string>org.n8gray.xhtml</string>
+				<string>org.ocaml.ocaml</string>
 				<string>org.ocaml.ocaml-interface</string>
 				<string>org.ocaml.ocaml-source</string>
 				<string>org.omg.ecore</string>
 				<string>org.rdf.source</string>
 				<string>org.sbarex.dart</string>
-				<string>org.sbarex.xml</string>
 				<string>org.scala.source</string>
 				<string>org.tug.tex</string>
 				<string>org.vim.vim-script</string>
@@ -89,6 +100,7 @@
 				<string>public.json</string>
 				<string>public.objective-c-source</string>
 				<string>public.pascal-source</string>
+				<string>public.patch-file</string>
 				<string>public.perl-script</string>
 				<string>public.php-script</string>
 				<string>public.plain-text</string>
@@ -103,6 +115,7 @@
 				<string>public.xml</string>
 				<string>public.xsd</string>
 				<string>public.yaml</string>
+				<string>tk.tcl.tcl</string>
 				<string>tk.tcl.tcl-source</string>
 				<string>dyn.ah62d4rv4ge81g6pq</string>
 				<string>dyn.ah62d4rv4ge8007a</string>
@@ -834,23 +847,6 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>public.source-code</string>
-			</array>
-			<key>UTTypeDescription</key>
-			<string>QLColorCode Test File</string>
-			<key>UTTypeIdentifier</key>
-			<string>org.n8gray.bogusextension</string>
-			<key>UTTypeTagSpecification</key>
-			<dict>
-				<key>public.filename-extension</key>
-				<array>
-					<string>bogus_extension</string>
-				</array>
-			</dict>
-		</dict>
-		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
 				<string>public.script</string>
 			</array>
 			<key>UTTypeDescription</key>
@@ -1181,23 +1177,6 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>dart</string>
-				</array>
-			</dict>
-		</dict>
-		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.text</string>
-				<string>public.xml</string>
-			</array>
-			<key>UTTypeIdentifier</key>
-			<string>org.sbarex.xml</string>
-			<key>UTTypeTagSpecification</key>
-			<dict>
-				<key>public.filename-extension</key>
-				<array>
-					<string>myxml</string>
-					<string>xml</string>
 				</array>
 			</dict>
 		</dict>

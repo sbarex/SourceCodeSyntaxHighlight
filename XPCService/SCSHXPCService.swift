@@ -25,6 +25,7 @@ import OSLog
 
 // This object implements the protocol which we have defined. It provides the actual behavior for the service. It is 'exported' by the service to make it available to the process hosting the service over an NSXPCConnection.
 
+
 class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
     struct TaskResult {
         /// stdout data.
@@ -146,7 +147,7 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
         let defaults = UserDefaults.standard
         
         /// Output format.
-        let format = custom_settings.format.rawValue
+        let format = (custom_settings.format ?? .html).rawValue
         
         let targetEsc = url.path
         
@@ -166,44 +167,47 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
         }
         let isOSThemeLight = (defaults.string(forKey: "AppleInterfaceStyle") ?? "Light") == "Light"
         let theme = custom_settings.theme ?? (isOSThemeLight ? custom_settings.lightTheme : custom_settings.darkTheme)
+        let themeIsBase16 = custom_settings.themeIsBase16 ?? (isOSThemeLight ? custom_settings.lightThemeIsBase16 : custom_settings.darkThemeIsBase16)
         // Theme to use.
         env["hlTheme"] = theme
+        env["hlTheme16"] = themeIsBase16 == true ? "1" : "0"
         
         // Extra arguments for _highlight_.
         env["extraHLFlags"] = custom_settings.extra
         
         // Show line numbers.
-        switch custom_settings.lineNumbers {
-        case .hidden:
-            break
-        case .visible(let omittingWrapLines):
-            env["extraHLFlags"]! += " --line-numbers"
-            if omittingWrapLines {
-                env["extraHLFlags"]! += " --wrap-no-numbers"
+        if let lineNumbers = custom_settings.lineNumbers {
+            switch lineNumbers {
+            case .hidden:
+                break
+            case .visible(let omittingWrapLines):
+                env["extraHLFlags"]! += " --line-numbers"
+                if omittingWrapLines {
+                    env["extraHLFlags"]! += " --wrap-no-numbers"
+                }
             }
         }
         
         // Word wrap and line length.
-        if custom_settings.wordWrap != .off {
-            env["extraHLFlags"]! += " --line-length=\(custom_settings.lineLength)"
+        if let wordWrap = custom_settings.wordWrap, wordWrap != .off {
+            if let lineLength = custom_settings.lineLength {
+                env["extraHLFlags"]! += " --line-length=\(lineLength)"
+            }
             env["extraHLFlags"]! += custom_settings.wordWrap == .simple ? " -V" : " -W"
         }
         
         // Convert tab to spaces.
-        let space = custom_settings.tabSpaces
-        if space > 0 {
+        if let space = custom_settings.tabSpaces, space > 0 {
             env["extraHLFlags"]! += " --replace-tabs=\(space)"
         }
         
         // Font family.
-        let font = custom_settings.fontFamily
-        if font != "" {
+        if let font = custom_settings.fontFamily, !font.isEmpty {
             env["font"] = font
         }
         
         // Font size.
-        let fontSize = custom_settings.fontSize
-        if fontSize > 0 {
+        if let fontSize = custom_settings.fontSize, fontSize > 0 {
             if custom_settings.format == .html {
                 env["fontSizePoints"] = String(format: "%2f", fontSize * 0.75)
             } else {
@@ -239,9 +243,14 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
             throw e
         } else {
             var final_settings = settings.overriding([
-                SCSHSettings.Key.theme.rawValue: theme,
-                SCSHSettings.Key.format.rawValue: format,
+                SCSHSettings.Key.format: format,
             ])
+            if let t = theme {
+                final_settings.theme = t
+            }
+            if let t = themeIsBase16 {
+                final_settings.themeIsBase16 = t
+            }
             if format == SCSHFormat.rtf.rawValue {
                 let bgLight = custom_settings.rtfLightBackgroundColor
                 let bgDark = custom_settings.rtfDarkBackgroundColor
@@ -255,7 +264,14 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
     
     /// Colorize a source file returning a formatted rtf code.
     func colorize(url: URL, overrideSettings: NSDictionary? = nil, withReply reply: @escaping (Data, NSDictionary, Error?) -> Void) {
-        let custom_settings = self.settings.overriding(overrideSettings as? [String: Any])
+        var custom_settings: SCSHSettings
+        
+        if let uti = (try? url.resourceValues(forKeys: [.typeIdentifierKey]))?.typeIdentifier {
+            custom_settings = settings.getGlobalSettingsForUti(uti) ?? SCSHSettings(settings: settings)
+        } else {
+            custom_settings = SCSHSettings(settings: settings)
+        }
+        custom_settings.override(fromDictionary: overrideSettings as? [String: Any])
         do {
             let result = try colorize(url: url, custom_settings: custom_settings)
             reply(result.result.data, result.settings as NSDictionary, nil)
@@ -266,7 +282,15 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
     
     /// Colorize a source file returning a formatted html code.
     func htmlColorize(url: URL, overrideSettings: NSDictionary? = nil, withReply reply: @escaping (String, NSDictionary, Error?) -> Void) {
-        var custom_settings = self.settings.overriding(overrideSettings as? [String: Any])
+        var custom_settings: SCSHSettings
+        
+        if let uti = (try? url.resourceValues(forKeys: [.typeIdentifierKey]))?.typeIdentifier {
+            custom_settings = settings.getGlobalSettingsForUti(uti) ?? SCSHSettings(settings: settings)
+        } else {
+            custom_settings = SCSHSettings(settings: settings)
+        }
+        custom_settings.override(fromDictionary: overrideSettings as? [String: Any])
+
         custom_settings.format = SCSHFormat.html
         do {
             let result = try colorize(url: url, custom_settings: custom_settings)
@@ -278,7 +302,15 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
     
     /// Colorize a source file returning a formatted rtf code.
     func rtfColorize(url: URL, overrideSettings: NSDictionary? = nil, withReply reply: @escaping (Data, NSDictionary, Error?) -> Void) {
-        var custom_settings = self.settings.overriding(overrideSettings as? [String: Any])
+        var custom_settings: SCSHSettings
+        
+        if let uti = (try? url.resourceValues(forKeys: [.typeIdentifierKey]))?.typeIdentifier {
+            custom_settings = settings.getGlobalSettingsForUti(uti) ?? SCSHSettings(settings: settings)
+        } else {
+            custom_settings = SCSHSettings(settings: settings)
+        }
+        custom_settings.override(fromDictionary: overrideSettings as? [String: Any])
+        
         custom_settings.format = SCSHFormat.rtf
         do {
             let result = try colorize(url: url, custom_settings: custom_settings)
@@ -294,17 +326,17 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
         self.getThemes(highlight: self.settings.highlightProgramPath, withReply: reply)
     }
     
-    func getThemes(highlight path: String, withReply reply: @escaping ([NSDictionary], Error?) -> Void) {
+    func getThemes(highlight highlightPath: String, withReply reply: @escaping ([NSDictionary], Error?) -> Void) {
         let result: TaskResult
         
         let highlight_executable: String
         let env: [String: String]
-        if path == "-" {
+        if highlightPath == "-" || highlightPath == "" {
             let r = self.getEmbededHiglight()
             highlight_executable = r.path
             env = r.env
         } else {
-            highlight_executable = path
+            highlight_executable = highlightPath
             env = [:]
         }
         do {
@@ -344,40 +376,23 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
             theme_dir_url = nil
         }
         
-        var results: [NSDictionary] = []
+        var results: [SCSHTheme] = []
         for line in output.split(separator: "\n").map({ String($0) }) {
             let nsrange = NSRange(line.startIndex..<line.endIndex, in: line)
             if let match = regex.firstMatch(in: line, options: [], range: nsrange) {
                 let firstCaptureRange = Range(match.range(at: 1), in: line)!
-                let secondCaptureRange = Range(match.range(at: 2), in: line)!
                 let name = line[firstCaptureRange].trimmingCharacters(in: CharacterSet.whitespaces)
-                let desc = line[secondCaptureRange].trimmingCharacters(in: CharacterSet.whitespaces)
-                
-                let result = NSMutableDictionary()
-                
-                result["name"] = name
-                result["desc"] = desc
-                
                 // Parse theme file.
                 if let theme_url = theme_dir_url?.appendingPathComponent("\(name).theme"), let theme = try? SCSHTheme(url: theme_url) {
-                    if theme.categories.count > 0 {
-                        result["desc"] = "\(desc) [\(theme.categories.joined(separator: ", "))]"
-                    }
-                    result["bg-color"] = theme.backgroundColor
-                    result["base16"] = theme.isBase16
+                    results.append(theme)
                 }
-                
-                results.append(result)
             }
         }
         results.sort { (a, b) -> Bool in
-            let desc1 = a["desc"] as! String
-            let desc2 = b["desc"] as! String
-            return desc1 < desc2
+            return a.desc < b.desc
         }
         
-       
-        reply(results, nil)
+        reply(results.map({ $0.toDictionary() }), nil)
     }
     
     /// Get settings.
