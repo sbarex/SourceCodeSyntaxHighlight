@@ -1,0 +1,3 @@
+[submodule "lua4swift"]
+	path = lua4swift
+	url = https://github.com/sbarex/lua4swift.git
