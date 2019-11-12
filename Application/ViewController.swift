@@ -22,7 +22,7 @@
 
 import Cocoa
 import WebKit
-import SourceCodeSyntaxHighlightXPCService
+import Syntax_Highlight_XPC_Service
 
 class ViewController: NSViewController {
     var webView: WKWebView?
@@ -40,12 +40,12 @@ class ViewController: NSViewController {
     }
     
     func load(url: URL) {
-        self.webView?.loadHTMLString("", baseURL: nil)
         self.webView?.isHidden = true
+        self.webView?.loadHTMLString("", baseURL: nil)
         
-        self.textView?.string = ""
         self.textScrollView?.isHidden = true
-
+        self.textView?.string = ""
+        
         self.representedObject = url
     }
     
@@ -59,8 +59,8 @@ class ViewController: NSViewController {
         }
     }
     
-    func initializeView(forMode mode: String) {
-        if mode == SCSHFormat.rtf.rawValue {
+    func initializeView(forMode mode: SCSHFormat) {
+        if mode == .rtf {
             if self.textScrollView == nil {
                 self.textScrollView = NSScrollView(frame: self.view.bounds)
                 self.textScrollView!.autoresizingMask = [.height, .width]
@@ -116,9 +116,10 @@ class ViewController: NSViewController {
                 
                 self.webView = WKWebView(frame: self.view.bounds, configuration: configuration)
                 self.webView!.autoresizingMask = [.height, .width]
+                self.webView?.isHidden = true
                 
                 self.view.addSubview(self.webView!)
-                self.webView?.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
+                self.webView?.navigationDelegate = self
             }
                 
             if let tsv = textScrollView {
@@ -142,11 +143,11 @@ class ViewController: NSViewController {
         textScrollView?.isHidden = true
         
         service?.colorize(url: documentUrl, overrideSettings: [SCSHSettings.Key.embedCustomStyle: false]) { (response, settings, error) in
-            let format = settings[SCSHSettings.Key.format] as? String ?? SCSHFormat.html.rawValue
+            let format = SCSHFormat(rawValue: settings[SCSHSettings.Key.format] as? String ?? "html") ?? .html
             DispatchQueue.main.async {
                 self.initializeView(forMode: format)
                 
-                if format == SCSHFormat.rtf.rawValue {
+                if format == .rtf {
                     let text: NSAttributedString
                     if let e = error {
                         text = NSAttributedString(string: String(data: response, encoding: .utf8) ?? e.localizedDescription)
@@ -170,18 +171,21 @@ class ViewController: NSViewController {
                     let html: String = response.decodeToString().trimmingCharacters(in: CharacterSet.newlines)
                     
                     self.webView?.loadHTMLString(html, baseURL: nil)
-                    self.view.window?.makeFirstResponder(self.webView!)
                 }
             }
         }
     }
+}
+
+extension ViewController: WKNavigationDelegate {
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        // Show the quicklook preview only after the complete rendering (preventing a flickering glitch).
+        webView.isHidden = false
+        self.view.window?.makeFirstResponder(webView)
+    }
     
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        if keyPath == "estimatedProgress", let w = self.webView, w.estimatedProgress == 1 {
-            // Show the webview only when loading is complete.
-            self.progressIndicatorView.stopAnimation(self)
-            self.webView?.isHidden = false
-        }
+    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        webView.isHidden = false
     }
 }
 

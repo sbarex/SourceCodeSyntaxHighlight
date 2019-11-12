@@ -125,9 +125,9 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
     ///   - url: File url to colorize.
     ///   - format: Format output.
     ///   - overrideSettings: Settings thar override standard preferences.
-    private func colorize(url: URL, custom_settings: SCSHSettings) throws -> (result: TaskResult, settings: [String: Any])
-    {
+    private func colorize(url: URL, custom_settings: SCSHSettings) throws -> (result: TaskResult, settings: [String: Any]) {
         // Set environment variables.
+        // All values on env are automatically quoted escaped.
         var env = ProcessInfo.processInfo.environment
         env["PATH"] = (env["PATH"] ?? "") + ":/usr/local/bin:/usr/local/sbin"
         
@@ -147,18 +147,20 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
         let defaults = UserDefaults.standard
         
         /// Output format.
-        let format = (custom_settings.format ?? .html).rawValue
+        let format = custom_settings.format ?? .html
         
-        let targetEsc = url.path
+        let target = url.path
         
         os_log(OSLogType.debug, log: self.log, "colorizing %{public}@", url.path)
-        // os_log(OSLogType.debug, log: log, "target = %@", targetEsc)
+        // os_log(OSLogType.debug, log: log, "target = %@", target)
         
         env.merge([
-            // "qlcc_debug": "1",
             "maxFileSize": "",
             "textEncoding": "UTF-8",
-            "webkitTextEncoding": "UTF-8"
+            "webkitTextEncoding": "UTF-8",
+            
+            // Debug
+            "qlcc_debug": custom_settings.debug ? "1" : "",
         ]) { (_, new) in new }
         
         if let e = defaults.persistentDomain(forName: XPCDomain) as? [String: String] {
@@ -172,8 +174,9 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
         env["hlTheme"] = theme
         env["hlTheme16"] = themeIsBase16 == true ? "1" : "0"
         
-        // Extra arguments for _highlight_.
-        env["extraHLFlags"] = custom_settings.extra
+        // Extra arguments for _highlight_ splitted in single arguments.
+        // Warning: all white spaces that are not arguments separators must be quote protected.
+        var extraHLFlags: [String] = try custom_settings.extra?.trimmingCharacters(in: CharacterSet.whitespaces).tokenize_command_line() ?? []
         
         // Show line numbers.
         if let lineNumbers = custom_settings.lineNumbers {
@@ -181,9 +184,9 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
             case .hidden:
                 break
             case .visible(let omittingWrapLines):
-                env["extraHLFlags"]! += " --line-numbers"
+                extraHLFlags.append("--line-numbers")
                 if omittingWrapLines {
-                    env["extraHLFlags"]! += " --wrap-no-numbers"
+                    extraHLFlags.append("--wrap-no-numbers")
                 }
             }
         }
@@ -191,14 +194,14 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
         // Word wrap and line length.
         if let wordWrap = custom_settings.wordWrap, wordWrap != .off {
             if let lineLength = custom_settings.lineLength {
-                env["extraHLFlags"]! += " --line-length=\(lineLength)"
+                extraHLFlags.append("--line-length=\(lineLength)")
             }
-            env["extraHLFlags"]! += custom_settings.wordWrap == .simple ? " -V" : " -W"
+            extraHLFlags.append(custom_settings.wordWrap == .simple ? "-V" : "-W")
         }
         
         // Convert tab to spaces.
         if let space = custom_settings.tabSpaces, space > 0 {
-            env["extraHLFlags"]! += " --replace-tabs=\(space)"
+            extraHLFlags.append("--replace-tabs=\(space)")
         }
         
         // Font family.
@@ -208,28 +211,24 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
         
         // Font size.
         if let fontSize = custom_settings.fontSize, fontSize > 0 {
-            if custom_settings.format == .html {
-                env["fontSizePoints"] = String(format: "%2f", fontSize * 0.75)
-            } else {
-                env["fontSizePoints"] = "\(fontSize)"
-            }
+            env["fontSizePoints"] = String(format: "%.2f", fontSize * (custom_settings.format == .html ? 0.75 : 1))
         }
-        
-        // Debug
-        env["qlcc_debug"] = custom_settings.debug ? "1" : ""
         
         // Output format.
-        env["extraHLFlags"]! += " -O \(format)"
-        if format == SCSHFormat.rtf.rawValue {
-            env["extraHLFlags"]! += " --page-color --char-styles"
+        extraHLFlags.append("--out-format=\(format.rawValue)")
+        if custom_settings.format == .rtf {
+            extraHLFlags.append("--page-color")
+            extraHLFlags.append("--char-styles")
         } else {
             if custom_settings.embedCustomStyle, let style = Bundle.main.path(forResource: "style", ofType: "css") {
-                env["extraHLFlags"]! += " --style-infile=\(style)"
+                extraHLFlags.append("--style-infile=\(style.g_shell_quote())")
             }
         }
         
+        env["extraHLFlags"] = extraHLFlags.joined(separator: "^")
+        
         /// Command to execute.
-        let cmd = "'\(self.rsrcEsc)/colorize.sh' '\(self.rsrcEsc)' '\(targetEsc.replacingOccurrences(of: "'", with: "'\\''"))' 0"
+        let cmd = "\(self.rsrcEsc)/colorize.sh".g_shell_quote() + " " + self.rsrcEsc.g_shell_quote() + " " + target.g_shell_quote() + " 0"
         
         os_log(OSLogType.debug, log: self.log, "cmd = %{public}@", cmd)
         os_log(OSLogType.debug, log: self.log, "env = %@", env)
@@ -251,7 +250,7 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
             if let t = themeIsBase16 {
                 final_settings.themeIsBase16 = t
             }
-            if format == SCSHFormat.rtf.rawValue {
+            if format == .rtf {
                 let bgLight = custom_settings.rtfLightBackgroundColor
                 let bgDark = custom_settings.rtfDarkBackgroundColor
                 let bg = custom_settings.rtfBackgroundColor ?? (isOSThemeLight ? bgLight : bgDark)
@@ -344,7 +343,7 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
                 reply([], nil)
                 return
             }
-            result = try SCSHXPCService.runTask(script: "\(highlight_executable) --list-scripts=theme", env: env)
+            result = try SCSHXPCService.runTask(script: "\(highlight_executable.g_shell_quote()) --list-scripts=theme", env: env)
             guard result.isSuccess else {
                 reply([], nil)
                 return
@@ -424,7 +423,7 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
         env["PATH"] = (env["PATH"] ?? "") + ":/usr/local/bin:/usr/local/sbin"
         
         let parse_version = { (path: String, env: [String: String]) -> String? in
-            guard let r = try? SCSHXPCService.runTask(script: "\(path) --version", env: env), r.isSuccess, let output = r.output(), output.contains("Andre Simon"), let regex = try? NSRegularExpression(pattern: #"highlight version (\d\.\d+)"#, options: []) else {
+            guard let r = try? SCSHXPCService.runTask(script: "\(path.g_shell_quote()) --version", env: env), r.isSuccess, let output = r.output(), output.contains("Andre Simon"), let regex = try? NSRegularExpression(pattern: #"highlight version (\d\.\d+)"#, options: []) else {
                 return nil
             }
             

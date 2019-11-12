@@ -17,7 +17,7 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Syntax Highlight" systemMenu="apple" id="uQy-DD-JDr">
                                     <items>
-                                        <menuItem title="About Source Code Syntax Highlight" id="5kV-Vb-QxS">
+                                        <menuItem title="About Syntax Highlight" id="5kV-Vb-QxS">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="orderFrontStandardAboutPanel:" target="Ady-hI-5gd" id="Exp-CZ-Vem"/>
@@ -242,7 +242,7 @@
                         <outlet property="delegate" destination="Voe-Tx-rLC" id="PrD-fu-P6m"/>
                     </connections>
                 </application>
-                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="SourceCodeSyntaxHighlight" customModuleProvider="target"/>
+                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="Syntax_Highlight" customModuleProvider="target"/>
                 <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -271,7 +271,7 @@
         <!--View Controller-->
         <scene sceneID="hIz-AP-VOD">
             <objects>
-                <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="SourceCodeSyntaxHighlight" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="Syntax_Highlight" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="m2S-Jp-Qdl">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="186"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -317,7 +317,7 @@
         <!--Preferences View Controller-->
         <scene sceneID="wj8-FK-mLy">
             <objects>
-                <viewController id="Nbr-xI-AXM" customClass="PreferencesViewController" customModule="SourceCodeSyntaxHighlight" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Nbr-xI-AXM" customClass="PreferencesViewController" customModule="Syntax_Highlight" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="803-Zp-OMj">
                         <rect key="frame" x="0.0" y="0.0" width="898" height="619"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -457,7 +457,7 @@ DQ
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="26" id="ims-Fg-cXm"/>
                                                     </constraints>
-                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Menlo, 12pt" id="nkp-rR-PCs" customClass="VerticallyCenteredTextFieldCell" customModule="SourceCodeSyntaxHighlight" customModuleProvider="target">
+                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Menlo, 12pt" id="nkp-rR-PCs" customClass="VerticallyCenteredTextFieldCell" customModule="Syntax_Highlight" customModuleProvider="target">
                                                         <font key="font" size="12" name="Menlo-Regular"/>
                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -582,7 +582,7 @@ DQ
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <textField toolTip="Extra highlight parameters." verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mXT-DK-2yC">
+                                                <textField toolTip="Extra highlight parameters. Any arguments with space inside must be protect inside quote." verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mXT-DK-2yC">
                                                     <rect key="frame" x="131" y="233" width="701" height="21"/>
                                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" enabled="NO" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="siT-Cd-Rdu">
                                                         <font key="font" metaFont="system"/>
@@ -628,7 +628,7 @@ DQ
                                                     <rect key="frame" x="163" y="21" width="16" height="16"/>
                                                 </progressIndicator>
                                                 <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dpd-dI-uCq">
-                                                    <rect key="frame" x="18" y="189" width="817" height="25"/>
+                                                    <rect key="frame" x="18" y="167" width="817" height="25"/>
                                                     <popUpButtonCell key="cell" type="push" title="waiting…" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" enabled="NO" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="nxS-JN-x5m" id="ZRS-Qp-Xia">
                                                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                         <font key="font" metaFont="system"/>
@@ -643,24 +643,24 @@ DQ
                                                     </connections>
                                                 </popUpButton>
                                                 <wkWebView wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KDm-Tz-8Uy">
-                                                    <rect key="frame" x="20" y="46" width="812" height="138"/>
+                                                    <rect key="frame" x="20" y="46" width="812" height="116"/>
                                                     <wkWebViewConfiguration key="configuration">
                                                         <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
                                                         <wkPreferences key="preferences"/>
                                                     </wkWebViewConfiguration>
                                                 </wkWebView>
                                                 <scrollView hidden="YES" appearanceType="aqua" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" translatesAutoresizingMaskIntoConstraints="NO" id="enk-pw-AdR">
-                                                    <rect key="frame" x="20" y="46" width="812" height="138"/>
+                                                    <rect key="frame" x="20" y="46" width="812" height="116"/>
                                                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="cEQ-3M-war">
-                                                        <rect key="frame" x="0.0" y="0.0" width="812" height="138"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="812" height="116"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <subviews>
                                                             <textView editable="NO" selectable="NO" verticallyResizable="YES" allowsCharacterPickerTouchBarItem="NO" allowsDocumentBackgroundColorChange="YES" textCompletion="NO" id="KH6-ez-Wsw">
-                                                                <rect key="frame" x="0.0" y="0.0" width="812" height="138"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="812" height="116"/>
                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                                <size key="minSize" width="812" height="138"/>
+                                                                <size key="minSize" width="812" height="116"/>
                                                                 <size key="maxSize" width="812" height="10000000"/>
                                                                 <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                             </textView>
@@ -672,10 +672,17 @@ DQ
                                                         <autoresizingMask key="autoresizingMask"/>
                                                     </scroller>
                                                     <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="2jy-tl-Ccz">
-                                                        <rect key="frame" x="796" y="0.0" width="16" height="138"/>
+                                                        <rect key="frame" x="796" y="0.0" width="16" height="116"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                     </scroller>
                                                 </scrollView>
+                                                <button toolTip="On debug mode active a file colorize.log is created to the desktop with the log of last rendering." verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6vr-Ni-BiO">
+                                                    <rect key="frame" x="129" y="209" width="62" height="18"/>
+                                                    <buttonCell key="cell" type="check" title="Debug" bezelStyle="regularSquare" imagePosition="left" enabled="NO" state="on" inset="2" id="5rc-dD-sXP">
+                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                        <font key="font" metaFont="system"/>
+                                                    </buttonCell>
+                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="enk-pw-AdR" firstAttribute="leading" secondItem="KDm-Tz-8Uy" secondAttribute="leading" id="08y-3C-qCj"/>
@@ -700,6 +707,7 @@ DQ
                                                 <constraint firstItem="nUi-D4-ZcU" firstAttribute="trailing" secondItem="c6O-gJ-k1T" secondAttribute="trailing" id="E7N-86-rwY"/>
                                                 <constraint firstItem="HJP-Ns-yjX" firstAttribute="centerY" secondItem="ahx-Xy-SS4" secondAttribute="centerY" id="FIm-Ww-MhQ"/>
                                                 <constraint firstItem="SDB-Fw-vSP" firstAttribute="leading" secondItem="xR4-wI-w1W" secondAttribute="trailing" constant="8" symbolic="YES" id="GQN-tK-JhJ"/>
+                                                <constraint firstItem="dpd-dI-uCq" firstAttribute="top" secondItem="6vr-Ni-BiO" secondAttribute="bottom" constant="20" symbolic="YES" id="Gf1-cc-hlf"/>
                                                 <constraint firstItem="o37-jg-sJl" firstAttribute="top" secondItem="ahx-Xy-SS4" secondAttribute="bottom" id="HIX-lv-h1v"/>
                                                 <constraint firstItem="6v5-gN-q1D" firstAttribute="top" secondItem="KDm-Tz-8Uy" secondAttribute="bottom" constant="8" symbolic="YES" id="JY0-gZ-DPI"/>
                                                 <constraint firstItem="o37-jg-sJl" firstAttribute="leading" secondItem="ahx-Xy-SS4" secondAttribute="leading" id="M22-gP-qZ8"/>
@@ -715,7 +723,6 @@ DQ
                                                 <constraint firstItem="4uW-bL-e1I" firstAttribute="firstBaseline" secondItem="Xc3-SE-sK5" secondAttribute="firstBaseline" id="Ra4-Gg-rJ4"/>
                                                 <constraint firstItem="ahx-Xy-SS4" firstAttribute="top" secondItem="Mk9-tK-Ja9" secondAttribute="bottom" constant="8" symbolic="YES" id="RiW-pf-bxu"/>
                                                 <constraint firstItem="enk-pw-AdR" firstAttribute="trailing" secondItem="KDm-Tz-8Uy" secondAttribute="trailing" id="S4N-8T-ftf"/>
-                                                <constraint firstItem="dpd-dI-uCq" firstAttribute="top" secondItem="mXT-DK-2yC" secondAttribute="bottom" constant="20" symbolic="YES" id="SmZ-t3-sUC"/>
                                                 <constraint firstItem="EwM-Mk-zsa" firstAttribute="top" secondItem="4uW-bL-e1I" secondAttribute="bottom" constant="8" symbolic="YES" id="U1d-od-nN9"/>
                                                 <constraint firstItem="OMF-Vn-hED" firstAttribute="leading" secondItem="6v5-gN-q1D" secondAttribute="trailing" constant="8" symbolic="YES" id="UMd-NE-UDn"/>
                                                 <constraint firstItem="ahx-Xy-SS4" firstAttribute="leading" secondItem="HJP-Ns-yjX" secondAttribute="trailing" constant="8" symbolic="YES" id="UhX-pe-mvF"/>
@@ -723,6 +730,7 @@ DQ
                                                 <constraint firstItem="Mk9-tK-Ja9" firstAttribute="leading" secondItem="9Q7-JF-Gw9" secondAttribute="trailing" constant="8" symbolic="YES" id="Vcs-Hz-fWp"/>
                                                 <constraint firstItem="IwJ-Xb-TLp" firstAttribute="top" secondItem="EwM-Mk-zsa" secondAttribute="bottom" constant="20" symbolic="YES" id="Wv6-3q-twi"/>
                                                 <constraint firstItem="fDS-RY-gZY" firstAttribute="trailing" secondItem="c6O-gJ-k1T" secondAttribute="trailing" id="XQQ-Ph-bes"/>
+                                                <constraint firstItem="6vr-Ni-BiO" firstAttribute="leading" secondItem="mXT-DK-2yC" secondAttribute="leading" id="Xqn-8q-bA0"/>
                                                 <constraint firstItem="rKz-8Q-Pro" firstAttribute="trailing" secondItem="ahx-Xy-SS4" secondAttribute="trailing" id="ZBy-Wh-1lJ"/>
                                                 <constraint firstItem="TqO-Yr-bGR" firstAttribute="trailing" secondItem="c6O-gJ-k1T" secondAttribute="trailing" id="Ze7-Me-BZd"/>
                                                 <constraint firstItem="tBZ-v8-tw2" firstAttribute="centerY" secondItem="crs-L2-dD8" secondAttribute="centerY" id="Zl9-Lp-sv3"/>
@@ -749,6 +757,7 @@ DQ
                                                 <constraint firstItem="nUi-D4-ZcU" firstAttribute="leading" secondItem="aQS-du-WVl" secondAttribute="leading" constant="20" symbolic="YES" id="qZo-0j-11t"/>
                                                 <constraint firstItem="KDm-Tz-8Uy" firstAttribute="top" secondItem="dpd-dI-uCq" secondAttribute="bottom" constant="8" symbolic="YES" id="qfH-Bp-Rko"/>
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="SDB-Fw-vSP" secondAttribute="trailing" constant="20" symbolic="YES" id="qnh-X8-yIO"/>
+                                                <constraint firstItem="6vr-Ni-BiO" firstAttribute="top" secondItem="mXT-DK-2yC" secondAttribute="bottom" constant="8" symbolic="YES" id="qzE-dh-zfP"/>
                                                 <constraint firstAttribute="trailing" secondItem="DNj-Su-UBA" secondAttribute="trailing" constant="20" symbolic="YES" id="rq1-aj-TkJ"/>
                                                 <constraint firstItem="tBZ-v8-tw2" firstAttribute="leading" secondItem="crs-L2-dD8" secondAttribute="trailing" constant="8" symbolic="YES" id="rqP-oq-hKA"/>
                                                 <constraint firstItem="OMF-Vn-hED" firstAttribute="centerY" secondItem="6v5-gN-q1D" secondAttribute="centerY" id="tGp-QA-Xsf"/>
@@ -759,6 +768,7 @@ DQ
                                                 <constraint firstItem="TqO-Yr-bGR" firstAttribute="leading" secondItem="aQS-du-WVl" secondAttribute="leading" constant="20" symbolic="YES" id="vSH-YH-E1b"/>
                                                 <constraint firstItem="oBM-Ys-xoO" firstAttribute="firstBaseline" secondItem="D6S-dP-0UE" secondAttribute="firstBaseline" id="wxO-8V-LNj"/>
                                                 <constraint firstItem="crs-L2-dD8" firstAttribute="leading" secondItem="fDS-RY-gZY" secondAttribute="trailing" constant="8" symbolic="YES" id="wyp-QF-2jf"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="6vr-Ni-BiO" secondAttribute="trailing" constant="20" symbolic="YES" id="xKx-Lw-HBE"/>
                                             </constraints>
                                         </view>
                                     </tabViewItem>
@@ -891,7 +901,7 @@ DQ
                                                         <rect key="frame" x="1" y="1" width="550" height="474"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <subviews>
-                                                            <textField toolTip="Extra highlight parameters." verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="IOL-Fy-iJZ">
+                                                            <textField toolTip="Higlight aguments added to the global extra arguments. Any arguments with space inside must be protect inside quote." verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="IOL-Fy-iJZ">
                                                                 <rect key="frame" x="149" y="397" width="381" height="21"/>
                                                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="7gW-yF-KNJ">
                                                                     <font key="font" metaFont="system"/>
@@ -932,7 +942,7 @@ DQ
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="26" id="c0f-La-5cC"/>
                                                                 </constraints>
-                                                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" enabled="NO" sendsActionOnEndEditing="YES" title="Menlo, 12pt" id="kQ6-5f-4oc" customClass="VerticallyCenteredTextFieldCell" customModule="SourceCodeSyntaxHighlight" customModuleProvider="target">
+                                                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" enabled="NO" sendsActionOnEndEditing="YES" title="Menlo, 12pt" id="kQ6-5f-4oc" customClass="VerticallyCenteredTextFieldCell" customModule="Syntax_Highlight" customModuleProvider="target">
                                                                     <font key="font" size="12" name="Menlo-Regular"/>
                                                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1018,12 +1028,12 @@ DQ
                                                             </button>
                                                             <popUpButton toolTip="Print line numbers in output file (--line-numbers)." verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qOh-g5-NqX">
                                                                 <rect key="frame" x="147" y="230" width="201" height="25"/>
-                                                                <popUpButtonCell key="cell" type="push" title="Off" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" enabled="NO" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="xeV-Uv-sIA" id="t2W-Ay-5wv">
+                                                                <popUpButtonCell key="cell" type="push" title="Off" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" enabled="NO" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="xeV-Uv-sIA" id="t2W-Ay-5wv">
                                                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                                     <font key="font" metaFont="system"/>
                                                                     <menu key="menu" autoenablesItems="NO" id="YrP-13-c8V">
                                                                         <items>
-                                                                            <menuItem title="Off" id="xeV-Uv-sIA"/>
+                                                                            <menuItem title="Off" state="on" id="xeV-Uv-sIA"/>
                                                                             <menuItem title="On" id="3pO-vj-dOi"/>
                                                                             <menuItem title="On, omitting wrapped lines" id="CJ3-Jy-6ec"/>
                                                                         </items>
@@ -1076,7 +1086,7 @@ DQ
                                                                     <action selector="handleUtiTabSpacesCheckbox:" target="Nbr-xI-AXM" id="oQq-wR-ycj"/>
                                                                 </connections>
                                                             </button>
-                                                            <textField toolTip="Extra highlight parameters." verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="idG-0I-NMs">
+                                                            <textField toolTip="Extra highlight parameters. Any arguments with space inside must be protect inside quote." verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="idG-0I-NMs">
                                                                 <rect key="frame" x="149" y="161" width="381" height="21"/>
                                                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" enabled="NO" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="ok9-JW-YZZ">
                                                                     <font key="font" metaFont="system"/>
@@ -1350,6 +1360,7 @@ DQ
                     </view>
                     <connections>
                         <outlet property="argumentsTextField" destination="mXT-DK-2yC" id="HJ4-Y2-HMO"/>
+                        <outlet property="debugButton" destination="6vr-Ni-BiO" id="rnu-uG-K30"/>
                         <outlet property="examplesPopup" destination="dpd-dI-uCq" id="s3M-Bw-so3"/>
                         <outlet property="extensionsTitleTextField" destination="zkG-YX-z4d" id="UVC-cV-zqI"/>
                         <outlet property="filterButton" destination="xti-2W-K68" id="pcy-nt-4px"/>
@@ -1409,7 +1420,7 @@ DQ
         <!--WarningUTI View Controller-->
         <scene sceneID="cfR-MI-hU6">
             <objects>
-                <viewController id="mAO-0a-F6b" customClass="WarningUTIViewController" customModule="SourceCodeSyntaxHighlight" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="mAO-0a-F6b" customClass="WarningUTIViewController" customModule="Syntax_Highlight" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="FXI-yt-uy9">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>

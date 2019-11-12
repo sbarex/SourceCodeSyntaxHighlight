@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
    LastUpgradeVersion = "1100"
-   wasCreatedForAppExtension = "YES"
-   version = "2.0">
+   version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
       buildImplicitDependencies = "YES">
@@ -15,23 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "8359235B23559A2B001506B6"
-               BuildableName = "SourceCodeSyntaxHighlightExtension.appex"
-               BlueprintName = "SourceCodeSyntaxHighlightExtension"
-               ReferencedContainer = "container:SourceCodeSyntaxHighlight.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
                BlueprintIdentifier = "83592344235599F6001506B6"
-               BuildableName = "SourceCodeSyntaxHighlight.app"
-               BlueprintName = "SourceCodeSyntaxHighlight"
+               BuildableName = "Syntax Highlight.app"
+               BlueprintName = "Syntax Highlight"
                ReferencedContainer = "container:SourceCodeSyntaxHighlight.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -47,45 +32,38 @@
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
-      selectedDebuggerIdentifier = ""
-      selectedLauncherIdentifier = "Xcode.IDEFoundation.Launcher.PosixSpawn"
+      selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
+      selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
-      askForAppToLaunch = "Yes"
       useCustomWorkingDirectory = "NO"
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
-      allowLocationSimulation = "YES"
-      launchAutomaticallySubstyle = "2">
-      <RemoteRunnable
-         runnableDebuggingMode = "2"
-         BundleIdentifier = "com.apple.quicklook.QuickLookSimulator"
-         RemotePath = "/System/Library/Frameworks/Quartz.framework/Versions/Current/Frameworks/QuickLookUI.framework/Versions/Current/Resources/Quick Look Simulator.app">
-      </RemoteRunnable>
-      <MacroExpansion>
+      allowLocationSimulation = "YES">
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "83592344235599F6001506B6"
-            BuildableName = "SourceCodeSyntaxHighlight.app"
-            BlueprintName = "SourceCodeSyntaxHighlight"
+            BuildableName = "Syntax Highlight.app"
+            BlueprintName = "Syntax Highlight"
             ReferencedContainer = "container:SourceCodeSyntaxHighlight.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
       shouldUseLaunchSchemeArgsEnv = "YES"
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
-      debugDocumentVersioning = "YES"
-      launchAutomaticallySubstyle = "2">
+      debugDocumentVersioning = "YES">
       <BuildableProductRunnable
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "83592344235599F6001506B6"
-            BuildableName = "SourceCodeSyntaxHighlight.app"
-            BlueprintName = "SourceCodeSyntaxHighlight"
+            BuildableName = "Syntax Highlight.app"
+            BlueprintName = "Syntax Highlight"
             ReferencedContainer = "container:SourceCodeSyntaxHighlight.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

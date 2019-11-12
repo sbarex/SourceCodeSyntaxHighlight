@@ -24,14 +24,24 @@ cmd="$pathHL"
 
 function debug() {
     if [ "x$qlcc_debug" != "x" ]; then
-        if [ "x$thumb" = "x0" ]; then
-            echo "QLColorCode: $@" 1>&2
-        fi;
+        echo "$@" >> ~/Desktop/colorize.log
     fi
 }
 
+if [ "x$qlcc_debug" != "x" ]; then
+    echo `date +"%Y-%m-%d %H:%M:%S"` > ~/Desktop/colorize.log
+    err_device=~/Desktop/colorize.log
+else
+    err_device=/std/stderr
+fi
+
 debug "Starting colorize.sh by setting reader"
-reader=(cat ${target})
+#debug "rsrcDir: ${rsrcDir}"
+#debug "target: ${target}"
+#debug "thumb: ${thumb}"
+#debug "cmd: ${cmd}"
+
+reader=(cat "${target}")
 
 debug "Handling special cases"
 case ${target} in
@@ -59,7 +69,7 @@ case ${target} in
         ;;
     *.class )
         lang=java
-        reader=(/usr/local/bin/jad -ff -dead -noctor -p -t ${target})
+        reader=(/usr/local/bin/jad -ff -dead -noctor -p -t "${target}")
         plugin=(--plug-in java_library)
         ;;
     *.pde | *.ino )
@@ -75,14 +85,14 @@ case ${target} in
         ;;
     *.ascr | *.scpt )
         lang=applescript
-        reader=(/usr/bin/osadecompile ${target})
+        reader=(/usr/bin/osadecompile "${target}")
         ;;
     *.plist )
         lang=xml
-        reader=(/usr/bin/plutil -convert xml1 -o - ${target})
+        reader=(/usr/bin/plutil -convert xml1 -o - "${target}")
         ;;
     *.sql )
-        if grep -q -E "SQLite .* database" <(file -b ${target}); then
+        if grep -q -E "SQLite .* database" <(file -b "${target}"); then
             exit 1
         fi
         lang=sql
@@ -136,15 +146,31 @@ go4it () {
             theme="--style=${hlTheme}"
         fi
     fi
-    cmdOpts=(${plugin} --syntax=${lang} --quiet --include-style --font=${font} --font-size=${fontSizePoints} ${=theme} --encoding=${textEncoding} ${=extraHLFlags} --validate-input)
     
-    debug "Generating the preview"
+    # Split extraHLFlags to an array of arguments using ^ as separator.
+    #
+    # Do not use zsh {= expansion because it split the string on all space ignoring quotes causing error.
+    cmdExtra=("${(@s/^/)extraHLFlags}")
+    
+    cmdOpts=(${plugin} --syntax=${lang} --quiet --include-style --font=${font} --font-size=${fontSizePoints} ${=theme} --encoding=${textEncoding} ${cmdExtra} --validate-input)
+    
+    function join_by { local IFS="$1"; shift; echo "$*"; }
+    
+    debug "# command line: "
+    debug "${reader} | \"${cmd}\" -T \"${target}\" ${cmdOpts}"
+    debug ""
+    debug "# environments:"
+    env=`set`
+    debug join_by ${env}
+    debug ""
+    
+    debug "# generating the preview…"
     if [ "${thumb}" = "1" ]; then
-        ${reader} | head -n 100 | head -c 20000 | ${cmd} ${cmdOpts} && exit 0
+        ${reader} | head -n 100 | head -c 20000 | "${cmd}" ${cmdOpts} 2>> ${err_device} && exit 0
     elif [ -n "${maxFileSize}" ]; then
-        ${reader} | head -c ${maxFileSize} | ${cmd} -T "${target}" ${cmdOpts} && exit 0
+        ${reader} | head -c ${maxFileSize} | "${cmd}" -T "${target}" ${cmdOpts} 2>> ${err_device} && exit 0
     else
-        ${reader} | ${cmd} -T "${target}" ${cmdOpts} && exit 0
+        ${reader} | "${cmd}" -T "${target}" ${cmdOpts} 2>> ${err_device} && exit 0
     fi
 }
 
@@ -152,9 +178,10 @@ setopt no_err_exit
 
 go4it
 # Uh-oh, it didn't work.  Fall back to rendering the file as plain
-debug "First try failed, second try..."
+debug "# First try failed, second try..."
 lang=txt
 go4it
 
-debug "Reached the end of the file.  That should not happen."
+debug "# Reached the end of the file. That should not happen."
+
 exit 101

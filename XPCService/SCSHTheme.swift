@@ -218,16 +218,16 @@ public class SCSHTheme {
     
     /// Get a html code for preview the theme settings.
     public func getHtmlExample(fontName: String, fontSize: Float) -> String {
-        var keywords = ""
-        var i = 1
-        for k in self.properties.keywords {
-            keywords += "<tr><td style='\(k.toCssStyle())'>keyword \(i)</td></tr>"
-            i += 1
-        }
-        
         var cssFont = ""
         if fontName != "" {
             cssFont = "font-family: \(fontName); font-size: \(fontSize)pt; "
+        }
+        
+        var keywords = ""
+        var i = 1
+        for k in self.properties.keywords {
+            keywords += "<tr><td colspan='2' style='\(cssFont)\(k.toCssStyle())'>keyword \(i)</td></tr>"
+            i += 1
         }
         
         let textColor = properties.defaultProp.toCssStyle()
@@ -244,20 +244,51 @@ html, body {
 </head>
 <body>
         <table>
-        <tr><td style="\(self.properties.defaultProp.toCssStyle())\(cssFont)">standard color</td><td style="\(textColor)">\(self.properties.defaultProp.color)</td></tr>
-        <tr><td style="\(self.properties.number.toCssStyle())\(cssFont)">number</td><td style="\(textColor)">\(self.properties.number.color)</td></tr>
-        <tr><td style="\(self.properties.string.toCssStyle())\(cssFont)">string</td><td style="\(textColor)">\(self.properties.string.color)</td></tr>
-        <tr><td style="\(self.properties.stringPreProc.toCssStyle())\(cssFont)">string pre proc</td><td style="\(textColor)">\(self.properties.stringPreProc.color)</td></tr>
-        <tr><td style="\(self.properties.operatorProp.toCssStyle())\(cssFont)">operators</td><td style="\(textColor)">\(self.properties.operatorProp.color)</td></tr>
+        <tr>
+            <td style="\(self.properties.defaultProp.toCssStyle())\(cssFont)">standard color</td>
+            <td style="\(cssFont)\(textColor)">\(self.properties.defaultProp.color)</td>
+        </tr>
+        <tr>
+            <td style="\(self.properties.number.toCssStyle())\(cssFont)">number</td>
+            <td style="\(cssFont)\(textColor)">\(self.properties.number.color)</td>
+        </tr>
+        <tr>
+            <td style="\(self.properties.string.toCssStyle())\(cssFont)">string</td>
+            <td style="\(textColor)\(cssFont)">\(self.properties.string.color)</td>
+        </tr>
+        <tr>
+            <td style="\(self.properties.stringPreProc.toCssStyle())\(cssFont)">string pre proc</td>
+            <td style="\(textColor)\(cssFont)">\(self.properties.stringPreProc.color)</td>
+        </tr>
+        <tr>
+            <td style="\(self.properties.operatorProp.toCssStyle())\(cssFont)">operators</td>
+            <td style="\(cssFont)\(textColor)">\(self.properties.operatorProp.color)</td>
+        </tr>
+        <tr>
+            <td style="\(self.properties.blockComment.toCssStyle())\(cssFont)">block comment</td>
+            <td style="\(cssFont)\(textColor)">\(self.properties.blockComment.color)</td>
+        </tr>
+        <tr>
+            <td style="\(self.properties.lineComment.toCssStyle())\(cssFont)">inline comment</td>
+            <td style="\(cssFont)\(textColor)">\(self.properties.lineComment.color)</td>
+        </tr>
         
-        <tr><td style="\(self.properties.blockComment.toCssStyle())\(cssFont)">block comment</td><td style="\(textColor)">\(self.properties.blockComment.color)</td></tr>
-        <tr><td style="\(self.properties.lineComment.toCssStyle())\(cssFont)">inline comment</td><td style="\(textColor)">\(self.properties.lineComment.color)</td></tr>
-        
-        <tr><td style="\(self.properties.escape.toCssStyle())\(cssFont)">escape</td><td style="\(textColor)">\(self.properties.escape.color)</td></tr>
-        <tr><td style="\(self.properties.preProcessor.toCssStyle())\(cssFont)">pre processor</td><td style="\(textColor)">\(self.properties.preProcessor.color)</td></tr>
-        <tr><td style="\(self.properties.interpolation.toCssStyle())\(cssFont)">interpolation</td><td style="\(textColor)">\(self.properties.interpolation.color)</td></tr>
-        
-        <tr><td style="\(self.properties.lineNum.toCssStyle())\(cssFont)">line number</td><td style="\(textColor)">\(self.properties.lineNum.color)</td></tr>
+        <tr>
+            <td style="\(self.properties.escape.toCssStyle())\(cssFont)">escape</td>
+            <td style="\(cssFont)\(textColor)">\(self.properties.escape.color)</td>
+        </tr>
+        <tr>
+            <td style="\(self.properties.preProcessor.toCssStyle())\(cssFont)">pre processor</td>
+            <td style="\(cssFont)\(textColor)">\(self.properties.preProcessor.color)</td>
+        </tr>
+        <tr>
+            <td style="\(self.properties.interpolation.toCssStyle())\(cssFont)">interpolation</td>
+            <td style="\(cssFont)\(textColor)">\(self.properties.interpolation.color)</td>
+        </tr>
+        <tr>
+            <td style="\(self.properties.lineNum.toCssStyle())\(cssFont)">line number</td>
+            <td style="\(cssFont)\(textColor)">\(self.properties.lineNum.color)</td>
+        </tr>
         
         \(keywords)
         </table>

@@ -227,6 +227,8 @@ struct SCSHSettings {
                 self.customizedSettings[uti] = s
             }
         }
+        
+        self.debug = defaultsDomain[Key.debug] as? Bool ?? false
     }
     
     /// Save the settings to the defaults preferences.
@@ -348,6 +350,8 @@ struct SCSHSettings {
             defaultsDomain.removeValue(forKey: Key.fontSize)
         }
         
+        defaultsDomain[Key.debug] = self.debug
+        
         let userDefaults = UserDefaults()
         userDefaults.setPersistentDomain(defaultsDomain, forName: d)
         return userDefaults.synchronize()
@@ -376,6 +380,8 @@ struct SCSHSettings {
                 }
             }
             r[Key.customizedUTISettings] = customized_formats
+            
+            r[Key.debug] = self.debug
         } else {
             if let utiExtra = self.utiExtra {
                 r[Key.utiExtraArguments] = utiExtra
@@ -430,6 +436,7 @@ struct SCSHSettings {
         if let color = self.rtfBackgroundColor {
             r[Key.rtfBackgroundColor] = color
         }
+        
         return r
     }
     
@@ -451,6 +458,9 @@ struct SCSHSettings {
                     uti_settings.fromDictionary(dict)
                     self.customizedSettings[uti] = uti_settings
                 }
+            }
+            if let debug = data[Key.debug] as? Bool {
+                self.debug = debug
             }
         } else {
             if let v = data[Key.utiExtraArguments] as? String {

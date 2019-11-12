@@ -25,7 +25,7 @@ import Quartz
 import WebKit
 import OSLog
 
-import SourceCodeSyntaxHighlightXPCService
+import Syntax_Highlight_XPC_Service
 
 class MyDraggingView: NSTextView {
     var trackArea: NSTrackingArea? = nil

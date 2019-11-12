@@ -22,7 +22,7 @@
 
 import Cocoa
 import WebKit
-import SourceCodeSyntaxHighlightXPCService
+import Syntax_Highlight_XPC_Service
 
 typealias SuppressedExtension = (ext: String, uti: String)
 
@@ -140,6 +140,7 @@ class PreferencesViewController: NSViewController {
     @IBOutlet weak var lineNumbersPopup: NSPopUpButton!
     @IBOutlet weak var tabSpacesSlider: NSSlider!
     @IBOutlet weak var argumentsTextField: NSTextField!
+    @IBOutlet weak var debugButton: NSButton!
     
     @IBOutlet weak var examplesPopup: NSPopUpButton!
     
@@ -412,13 +413,28 @@ class PreferencesViewController: NSViewController {
     
     // MARK: - Settings
     
+    /// Get the url of the quicklook extension.
+    func getQLAppexUrl() -> URL? {
+        guard let base_url = Bundle.main.builtInPlugInsURL else {
+            return nil
+        }
+        do {
+            for url in try FileManager.default.contentsOfDirectory(at: base_url, includingPropertiesForKeys: nil, options: []) {
+                // Suppose only one appex on the plugin dir.
+                if url.pathExtension == "appex" {
+                    return url
+                }
+            }
+        } catch {
+            return nil
+        }
+        return nil
+    }
+    
     /// Get all handled UTIs.
     func fetchUtis() -> [UTIDesc] {
-        let url = Bundle.main.bundleURL.appendingPathComponent("Contents/PlugIns/SourceCodeSyntaxHighlightExtension.appex")
-        
         // Get the list of all uti supported by the quicklook extension.
-        guard let bundle = Bundle(url: url), let extensionInfo = bundle.object(forInfoDictionaryKey: "NSExtension") as? [String: Any], let attributes = extensionInfo["NSExtensionAttributes"] as? [String: Any], let supportedTypes = attributes["QLSupportedContentTypes"] as? [String] else {
-            self.dismiss(self)
+        guard let url = getQLAppexUrl(), let bundle = Bundle(url: url), let extensionInfo = bundle.object(forInfoDictionaryKey: "NSExtension") as? [String: Any], let attributes = extensionInfo["NSExtensionAttributes"] as? [String: Any], let supportedTypes = attributes["QLSupportedContentTypes"] as? [String] else {
             return []
         }
         
@@ -604,6 +620,9 @@ class PreferencesViewController: NSViewController {
         
         fontChooseButton.isEnabled = settings != nil
         
+        debugButton.state = settings?.debug ?? false ? .on : .off
+        debugButton.isEnabled = settings != nil
+        
         previewThemeControl.isEnabled = settings != nil
         refreshButton.isEnabled = settings != nil
         saveButton.isEnabled = settings != nil
@@ -761,6 +780,8 @@ class PreferencesViewController: NSViewController {
         
         settings.tabSpaces = tabSpacesSlider.integerValue
         settings.extra = argumentsTextField.stringValue
+        
+        settings.debug = debugButton.state == .on
         
         return settings
     }
@@ -1230,7 +1251,7 @@ class PreferencesViewController: NSViewController {
             // Show standard theme preview.
             if let theme: SCSHTheme = themes.first(where: { $0.name == custom_settings.theme }) {
                 if custom_settings.format == .html {
-                    webView.loadHTMLString(theme.getHtmlExample(fontName: settings.fontFamily ?? "Menlo", fontSize: settings.fontSize ?? 12), baseURL: nil)
+                    webView.loadHTMLString(theme.getHtmlExample(fontName: settings.fontFamily ?? "Menlo", fontSize: (settings.fontSize ?? 12) * 1), baseURL: nil)
                 } else {
                     textView.textStorage?.setAttributedString(theme.getAttributedExample(fontName: custom_settings.fontFamily ?? "Menlo", fontSize: custom_settings.fontSize ?? 12))
                     

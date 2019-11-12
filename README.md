@@ -34,7 +34,7 @@ On MacOs every file extension is associated to an [Uniform Type Identifier (UTI)
 
 For this reason, this application supports many UTIs even if they are apparently redundant. 
 
-Apparently the operating system does not allow to manage some file formats including (but not limited to) .xml, .plist, .html.
+Apparently the operating system does not allow to manage some file formats including (but not limited to) .xml, .plist, .html, .ts, .dart.
 
 
 ## Application preferences

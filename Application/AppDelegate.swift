@@ -21,7 +21,7 @@
 //  along with SourceCodeSyntaxHighlight. If not, see <http://www.gnu.org/licenses/>.
 
 import Cocoa
-import SourceCodeSyntaxHighlightXPCService
+import Syntax_Highlight_XPC_Service
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {

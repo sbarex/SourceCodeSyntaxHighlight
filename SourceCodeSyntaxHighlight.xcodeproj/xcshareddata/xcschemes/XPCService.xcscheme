@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "8359237A23563BDF001506B6"
-               BuildableName = "SourceCodeSyntaxHighlightXPCService.xpc"
-               BlueprintName = "SourceCodeSyntaxHighlightXPCService"
+               BuildableName = "Syntax Highlight XPC Service.xpc"
+               BlueprintName = "Syntax Highlight XPC Service"
                ReferencedContainer = "container:SourceCodeSyntaxHighlight.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -51,8 +51,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8359237A23563BDF001506B6"
-            BuildableName = "SourceCodeSyntaxHighlightXPCService.xpc"
-            BlueprintName = "SourceCodeSyntaxHighlightXPCService"
+            BuildableName = "Syntax Highlight XPC Service.xpc"
+            BlueprintName = "Syntax Highlight XPC Service"
             ReferencedContainer = "container:SourceCodeSyntaxHighlight.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
