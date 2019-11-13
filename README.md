@@ -56,11 +56,9 @@ In this list the grayout items are those urrenty managed by others UTI. Clicking
 
 
 ## Note for developers
-After clone remeber of fetch submodules:
+After cloning remeber to fetch submodules:
 
 ```
 $ git submodule init 
 $ git submodule update
-$ cd lua4swift
-$ git checkout
 ```

@@ -32,7 +32,7 @@ if [ "x$qlcc_debug" != "x" ]; then
     echo `date +"%Y-%m-%d %H:%M:%S"` > ~/Desktop/colorize.log
     err_device=~/Desktop/colorize.log
 else
-    err_device=/std/stderr
+    err_device=/dev/stderr
 fi
 
 debug "Starting colorize.sh by setting reader"
