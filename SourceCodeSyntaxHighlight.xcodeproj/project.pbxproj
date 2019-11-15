@@ -38,6 +38,8 @@
 		8311D9C5235DBF29006DC138 /* example.plist in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8311D9C3235DBF0E006DC138 /* example.plist */; };
 		8311D9C7235DE6D7006DC138 /* Data+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8311D9C6235DE6D7006DC138 /* Data+Ext.swift */; };
 		8311D9C8235DE6D7006DC138 /* Data+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8311D9C6235DE6D7006DC138 /* Data+Ext.swift */; };
+		831D5F55237F0CF1007340E7 /* CustomTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831D5F54237F0CF1007340E7 /* CustomTypeViewController.swift */; };
+		831D5F5B237F1E87007340E7 /* UTI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831D5F5A237F1E87007340E7 /* UTI.swift */; };
 		83592349235599F6001506B6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83592348235599F6001506B6 /* AppDelegate.swift */; };
 		8359234B235599F6001506B6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8359234A235599F6001506B6 /* ViewController.swift */; };
 		8359234D235599F9001506B6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8359234C235599F9001506B6 /* Assets.xcassets */; };
@@ -235,6 +237,8 @@
 		8311D9BF235DBD51006DC138 /* example.yaml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = example.yaml; sourceTree = "<group>"; };
 		8311D9C3235DBF0E006DC138 /* example.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = example.plist; sourceTree = "<group>"; };
 		8311D9C6235DE6D7006DC138 /* Data+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Ext.swift"; sourceTree = "<group>"; };
+		831D5F54237F0CF1007340E7 /* CustomTypeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTypeViewController.swift; sourceTree = "<group>"; };
+		831D5F5A237F1E87007340E7 /* UTI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UTI.swift; sourceTree = "<group>"; };
 		833C295C236028B000B14757 /* LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		83592345235599F6001506B6 /* Syntax Highlight.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Syntax Highlight.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		83592348235599F6001506B6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -361,6 +365,7 @@
 				8359234C235599F9001506B6 /* Assets.xcassets */,
 				8359234E235599F9001506B6 /* Main.storyboard */,
 				8311D9C6235DE6D7006DC138 /* Data+Ext.swift */,
+				831D5F5A237F1E87007340E7 /* UTI.swift */,
 				835923E9235A022C001506B6 /* NSColor+ext.swift */,
 				837CFC8A2372EF5E00641AE4 /* VerticallyCenteredTextFieldCell.swift */,
 				835923CE2357A4F6001506B6 /* examples */,
@@ -461,6 +466,7 @@
 			children = (
 				837DFC212375FE1E00920E72 /* PreferencesViewController.swift */,
 				830D1558237961C900D5535C /* WarningUTIViewController.swift */,
+				831D5F54237F0CF1007340E7 /* CustomTypeViewController.swift */,
 			);
 			name = Preferences;
 			sourceTree = "<group>";
@@ -646,9 +652,11 @@
 				837DFC222375FE1E00920E72 /* PreferencesViewController.swift in Sources */,
 				830D15542378182800D5535C /* SCSHTheme.swift in Sources */,
 				8359234B235599F6001506B6 /* ViewController.swift in Sources */,
+				831D5F55237F0CF1007340E7 /* CustomTypeViewController.swift in Sources */,
 				83592349235599F6001506B6 /* AppDelegate.swift in Sources */,
 				8359239F23570C5C001506B6 /* SCSHError.swift in Sources */,
 				830D1559237961C900D5535C /* WarningUTIViewController.swift in Sources */,
+				831D5F5B237F1E87007340E7 /* UTI.swift in Sources */,
 				835923F0235A5EBA001506B6 /* SCSHSettings.swift in Sources */,
 				835923EA235A022C001506B6 /* NSColor+ext.swift in Sources */,
 				8311D9C7235DE6D7006DC138 /* Data+Ext.swift in Sources */,
@@ -847,7 +855,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = Application/Info.plist;
@@ -872,7 +880,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = Application/Info.plist;

@@ -433,6 +433,9 @@ struct SCSHSettings {
         if let theme = self.theme {
             r[Key.theme] = theme
         }
+        if let themeIsBase16 = self.themeIsBase16 {
+            r[Key.themeIsBase16] = themeIsBase16
+        }
         if let color = self.rtfBackgroundColor {
             r[Key.rtfBackgroundColor] = color
         }
@@ -490,6 +493,9 @@ struct SCSHSettings {
         
         if let _ = data.keys.first(where: { $0 == Key.theme }) {
             self.theme = data[Key.theme] as? String
+        }
+        if let _ = data.keys.first(where: { $0 == Key.themeIsBase16 }) {
+            self.themeIsBase16 = data[Key.themeIsBase16] as? Bool
         }
         if let _ = data.keys.first(where: { $0 == Key.rtfBackgroundColor }) {
             self.rtfBackgroundColor = data[Key.rtfBackgroundColor] as? String

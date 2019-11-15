@@ -64,23 +64,22 @@ extension WarningUTIViewController: NSTableViewDataSource {
         } else if tableColumn?.identifier.rawValue == "UTI" {
             return data[row].suppress.uti
         } else if tableColumn?.identifier.rawValue == "Desc" {
-            if let t = UTTypeCopyDescription(data[row].suppress.uti as CFString)?.takeRetainedValue() {
-                let s = (t as String).prefix(1).uppercased() + (t as String).dropFirst()
-                if !data[row].handled, let image = NSImage(named: NSImage.statusPartiallyAvailableName) {
-                    let imageAttachment = NSTextAttachment()
-                    let font = NSFont.systemFont(ofSize: NSFont.systemFontSize)
-                    imageAttachment.bounds = CGRect(x: 0, y: (font.capHeight - image.size.height).rounded() / 2, width: image.size.width, height: image.size.height)
-                    imageAttachment.image = image
-                    let imageString = NSAttributedString(attachment: imageAttachment)
-                    
-                    let fullString = NSMutableAttributedString()
-                    fullString.append(imageString)
-                    fullString.append(NSAttributedString(string: " \(s)"))
-                    
-                    return fullString
-                } else {
-                    return s
-                }
+            let u = UTI(data[row].suppress.uti)
+            let s = u.description
+            if !data[row].handled, let image = NSImage(named: NSImage.statusPartiallyAvailableName) {
+                let imageAttachment = NSTextAttachment()
+                let font = NSFont.systemFont(ofSize: NSFont.systemFontSize)
+                imageAttachment.bounds = CGRect(x: 0, y: (font.capHeight - image.size.height).rounded() / 2, width: image.size.width, height: image.size.height)
+                imageAttachment.image = image
+                let imageString = NSAttributedString(attachment: imageAttachment)
+                
+                let fullString = NSMutableAttributedString()
+                fullString.append(imageString)
+                fullString.append(NSAttributedString(string: " \(s)"))
+                
+                return fullString
+            } else {
+                return s
             }
         }
         return nil

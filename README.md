@@ -54,6 +54,19 @@ In this list the grayout items are those urrenty managed by others UTI. Clicking
 
 ![File type settings window](settings_specific_warn.png)
 
+The debug option on settings panel enable the creation of two files on your Desktop:
+- colorize.log: log of the colorize operations
+- colorize.[html|rtf] output of the syntax highlight
+
+## Note for download precompiled realease
+The precompiled app is not notarized or signed.
+When you download the precompiled app you must strip quarantine flag before execute:
+
+```
+$ xattr -r -d com.apple.quarantine "Syntax Highlight.app" 
+```
+
+This must resolve the error of damage application when launch the app.
 
 ## Note for developers
 After cloning remeber to fetch submodules:

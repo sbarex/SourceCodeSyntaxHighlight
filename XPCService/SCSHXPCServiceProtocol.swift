@@ -37,6 +37,10 @@ import Foundation
     func getThemes(highlight path: String, withReply reply: @escaping ([NSDictionary], Error?) -> Void)
     
     func locateHighlight(reply: @escaping ([[Any]]) -> Void)
+    
+    func isSyntaxSupported(_ syntax: String, overrideSettings: NSDictionary?, reply: @escaping (Bool) -> Void)
+    
+    func areSomeSyntaxSupported(_ syntax: [String], overrideSettings: NSDictionary?, reply: @escaping (Bool) ->Void)
 }
 
 /*

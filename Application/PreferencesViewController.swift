@@ -29,50 +29,23 @@ typealias SuppressedExtension = (ext: String, uti: String)
 class PreferencesViewController: NSViewController {
     class UTIDesc: Equatable {
         /// Uniform Type Identifiers.
-        let uti: String
+        let uti: UTI
         
         /// Return if the system know the file extensions or mime types for the UTI.
         lazy var isValid: Bool = {
-            if uti.hasPrefix("public.") {
+            if uti.UTI.hasPrefix("public.") {
                 return true
             }
-            let type = self.uti as CFString
-            if let info = UTTypeCopyDeclaration(type)?.takeRetainedValue() as? [String: AnyObject], let specifications = info["UTTypeTagSpecification"] as? [String: AnyObject] {
-                if let mimes = specifications["public.mime-type"], mimes as? String != "" || (mimes as? [String])?.count ?? 0 > 0 {
-                    return true
-                }
-                if let extensions = specifications["public.filename-extension"], extensions as? String != "" || (extensions as? [String])?.count ?? 0 > 0 {
-                    return true
-                }
-            }
-            return false
+            return uti.mimeTypes.count > 0 || uti.extensions.count > 0
         }()
         
         lazy var description: String = {
-            let type = self.uti as CFString
-            
-            var label: String = ""
-            if let desc = UTTypeCopyDescription(type)?.takeRetainedValue() {
-                label = (desc as String).prefix(1).uppercased() + (desc as String).dropFirst()
-            }
-            if label == "" {
-                label = uti
-            }
-            return label
+            let description = self.uti.description
+            return description.isEmpty ? self.uti.UTI : description
         }()
         
         lazy var extensions: [String] = {
-            let type = self.uti as CFString
-            
-            if let info = UTTypeCopyDeclaration(type)?.takeRetainedValue() as? [String: AnyObject], let specifications = info["UTTypeTagSpecification"] as? [String: AnyObject], let extensions = specifications["public.filename-extension"] {
-                let e: String
-                if let ext = extensions as? String {
-                    return [ext]
-                } else if let exts = extensions as? [String] {
-                    return exts
-                }
-            }
-            return []
+            return self.uti.extensions
         }()
         
         /// Full description with supported extensions.
@@ -86,7 +59,7 @@ class PreferencesViewController: NSViewController {
         }()
         
         lazy var icon: NSImage? = {
-           return NSWorkspace.shared.icon(forFileType: uti)
+            return self.uti.icon
         }()
         
        
@@ -94,7 +67,7 @@ class PreferencesViewController: NSViewController {
             var e: [SuppressedExtension] = []
             for ext in extensions {
                 if let u = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, ext as CFString, nil)?.takeRetainedValue() {
-                    if u as String != uti {
+                    if u as String != uti.UTI {
                         e.append((ext: ext, uti: u as String))
                     }
                 }
@@ -102,8 +75,8 @@ class PreferencesViewController: NSViewController {
             return e
         }()
         
-        init(UTI: String) {
-            self.uti = UTI
+        init(UTI type: String) {
+            self.uti = UTI(type)
         }
         
         func getSuppressedExtensions(handledUti: [String]) -> [(suppress: SuppressedExtension, handled: Bool)] {
@@ -116,8 +89,7 @@ class PreferencesViewController: NSViewController {
         
         // MARK: - Equatable
         static func == (lhs: UTIDesc, rhs: UTIDesc) -> Bool {
-            return
-                lhs.uti == rhs.uti
+            return lhs.uti.UTI == rhs.uti.UTI
         }
     }
     
@@ -250,15 +222,15 @@ class PreferencesViewController: NSViewController {
             }
             
             if let currentUTISettings = self.currentUTISettings {
-                guard let format = fileTypes.first(where: { $0.uti == currentUTISettings.uti }) else {
+                guard let format = fileTypes.first(where: { $0.uti.UTI == currentUTISettings.uti }) else {
                     utiDetailView.isHidden = true
                     return
                 }
                 
-                utiErrorButton.isHidden = format.getSuppressedExtensions(handledUti: allFileTypes.map({ $0.uti })).count == 0
+                utiErrorButton.isHidden = format.getSuppressedExtensions(handledUti: allFileTypes.map({ $0.uti.UTI })).count == 0
                 
                 utiTitleTextField.stringValue = format.description
-                utiTitleTextField.toolTip = format.uti
+                utiTitleTextField.toolTip = format.uti.UTI
                 extensionsTitleTextField.stringValue = format.extensions.count > 0 ? "." + format.extensions.joined(separator: ", .") : ""
                 utiSpecificArgumentsTextField.stringValue = currentUTISettings.utiExtra ?? ""
                 
@@ -329,7 +301,7 @@ class PreferencesViewController: NSViewController {
                 
                 utiDetailView.isHidden = false
                 
-                if let i = fileTypes.firstIndex(where: { $0.uti == currentUTISettings.uti }) {
+                if let i = fileTypes.firstIndex(where: { $0.uti.UTI == currentUTISettings.uti }) {
                     if tableView.selectedRow != i {
                         tableView.selectRowIndexes(IndexSet(integer: i), byExtendingSelection: false)
                         tableView.scrollRowToVisible(i)
@@ -372,13 +344,14 @@ class PreferencesViewController: NSViewController {
             if let files = try? fileManager.contentsOfDirectory(at: examplesDirURL, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles]) {
                 for file in files {
                     let title: String
-                    let uti = (try? file.resourceValues(forKeys: [.typeIdentifierKey]))?.typeIdentifier
-                    if let type = uti, let t = UTTypeCopyDescription(type as CFString)?.takeRetainedValue() {
-                        title = (t as String).prefix(1).uppercased() + (t as String).dropFirst() + " (." + file.pathExtension + ")"
+                    if let uti = UTI(URL: file) {
+                        title = uti.description + " (." + file.pathExtension + ")"
+                        examples.append((url: file, title: title, uti: uti.UTI))
                     } else {
                         title = file.lastPathComponent
+                        examples.append((url: file, title: title, uti: ""))
                     }
-                    examples.append((url: file, title: title, uti: uti ?? ""))
+                    
                 }
                 examples.sort { (a, b) -> Bool in
                     a.title < b.title
@@ -407,7 +380,7 @@ class PreferencesViewController: NSViewController {
     
     override func prepare(for segue: NSStoryboardSegue, sender: Any?) {
         if segue.identifier == "WarningUTISegue", let vc = segue.destinationController as? WarningUTIViewController {
-            vc.data = fileTypes.first(where: { $0.uti == currentUTISettings?.uti })?.getSuppressedExtensions(handledUti: allFileTypes.map( { $0.uti } )) ?? []
+            vc.data = fileTypes.first(where: { $0.uti.UTI == currentUTISettings?.uti })?.getSuppressedExtensions(handledUti: allFileTypes.map( { $0.uti.UTI } )) ?? []
         }
     }
     
@@ -465,10 +438,10 @@ class PreferencesViewController: NSViewController {
         
         let filter = self.filter.lowercased()
         fileTypes = self.allFileTypes.filter({ (uti) -> Bool in
-            if filterOnlyChanged && !(settings?.hasCustomizedUTI(uti.uti) ?? false) {
+            if filterOnlyChanged && !(settings?.hasCustomizedUTI(uti.uti.UTI) ?? false) {
                 return false
             }
-            if !filter.isEmpty && !uti.fullDescription.lowercased().contains(filter) && !uti.uti.lowercased().contains(filter) {
+            if !filter.isEmpty && !uti.fullDescription.lowercased().contains(filter) && !uti.uti.UTI.lowercased().contains(filter) {
                 return false;
             }
             return true
@@ -787,7 +760,7 @@ class PreferencesViewController: NSViewController {
     }
     
     func selectUTI(_ uti: String) -> Bool {
-        if let _ = allFileTypes.first(where: { $0.uti == uti }) {
+        if let _ = allFileTypes.first(where: { $0.uti.UTI == uti }) {
             currentUTISettings = settings?.getSettings(forUTI: uti)
             return true
         }
@@ -961,7 +934,7 @@ class PreferencesViewController: NSViewController {
             _ = settings?.removeUTISettings(uti: utiSettings.uti)
         }
         
-        if let i = fileTypes.firstIndex(where: { $0.uti == utiSettings.uti }) {
+        if let i = fileTypes.firstIndex(where: { $0.uti.UTI == utiSettings.uti }) {
             tableView.reloadData(forRowIndexes: IndexSet(integer: i), columnIndexes: IndexSet(integer: 2))
         }
     }
@@ -1011,6 +984,7 @@ class PreferencesViewController: NSViewController {
             fontPanel.setPanelFont(font, isMultiple: false)
         }
         
+        self.view.window?.makeFirstResponder(tabView)
         fontPanel.makeKeyAndOrderFront(self)
     }
     
@@ -1307,7 +1281,7 @@ extension PreferencesViewController: NSTableViewDataSource {
         if tableColumn?.identifier.rawValue == "Icon" {
             return fileTypes[row].icon
         } else if tableColumn?.identifier.rawValue == "Changed" {
-            return settings?.hasCustomizedUTI(fileTypes[row].uti) ?? false ? "M" : ""
+            return settings?.hasCustomizedUTI(fileTypes[row].uti.UTI) ?? false ? "M" : ""
         } else {
             return fileTypes[row].fullDescription
         }
@@ -1322,11 +1296,11 @@ extension PreferencesViewController: NSTableViewDelegate {
             return
         }
         
-        _ = selectUTI(self.fileTypes[index].uti)
+        _ = selectUTI(self.fileTypes[index].uti.UTI)
     }
     
     func tableView(_ tableView: NSTableView, toolTipFor cell: NSCell, rect: NSRectPointer, tableColumn: NSTableColumn?, row: Int, mouseLocation: NSPoint) -> String {
-        return self.fileTypes[row].uti
+        return self.fileTypes[row].uti.UTI
     }
     
     func tableView(_ tableView: NSTableView, willDisplayCell cell: Any, for tableColumn: NSTableColumn?, row: Int) {
@@ -1349,12 +1323,12 @@ extension PreferencesViewController: NSFontChanging {
         }
         let font = fontManager.convert(NSFont.systemFont(ofSize: 13.0))
         
-        if tabView.tabViewItems.first?.tabState == .selectedTab {
+        if tabView.selectedTabViewItem?.identifier as? String == "GlobalSettingsView" {
             refreshFontPanel(withFont: font, isGlobal: true)
-            refreshPreview(self)
-        } else if utiFontChecbox.state == .on {
+            // refreshPreview(self)
+        } else if tabView.selectedTabViewItem?.identifier as? String == "SpecificSettingsView" && utiFontChecbox.state == .on {
             refreshFontPanel(withFont: font, isGlobal: false)
-            refreshUtiPreview(self)
+            // refreshUtiPreview(self)
         }
     }
     

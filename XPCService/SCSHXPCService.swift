@@ -257,6 +257,16 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
                 final_settings.rtfBackgroundColor = bg
             }
             
+            if custom_settings.debug {
+                if format == .html {
+                    let u = URL(fileURLWithPath: NSHomeDirectory(), isDirectory: true).appendingPathComponent("Desktop/colorize.html")
+                    try? result.output()?.write(to: u, atomically: true, encoding: .utf8)
+                } else {
+                   let u = URL(fileURLWithPath: NSHomeDirectory(), isDirectory: true).appendingPathComponent("Desktop/colorize.rtf")
+                    try? result.data.write(to: u)
+               }
+            }
+            
             return (result: result, settings: final_settings.toDictionary())
         }
     }
@@ -460,5 +470,78 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
         }
         
         reply(result)
+    }
+    
+    /// Check if a file extension is handled by highlight.
+    func isSyntaxSupported(_ syntax: String, overrideSettings: NSDictionary?, reply: @escaping (Bool) -> Void) {
+        var custom_settings = SCSHSettings(settings: settings)
+        custom_settings.override(fromDictionary: overrideSettings as? [String: Any])
+        
+        // Set environment variables.
+        // All values on env are automatically quoted escaped.
+        var env = ProcessInfo.processInfo.environment
+        env["PATH"] = (env["PATH"] ?? "") + ":/usr/local/bin:/usr/local/sbin"
+        
+        var highlightPath = custom_settings.highlightProgramPath
+        if highlightPath == "" || highlightPath == "-" {
+            let p  = self.getEmbededHiglight()
+            highlightPath = p.path
+            env.merge(p.env) { (_, new) in new }
+        }
+        
+        guard highlightPath != "" else {
+            reply(false)
+            return
+        }
+        
+        /// Command to execute.
+        let cmd = "echo \"\" | \(highlightPath.g_shell_quote()) -S \(syntax)"
+        
+        os_log(OSLogType.debug, log: self.log, "cmd = %{public}@", cmd)
+        os_log(OSLogType.debug, log: self.log, "env = %@", env)
+        
+        if let result = try? SCSHXPCService.runTask(script: cmd, env: env) {
+            reply(result.exitCode == 0)
+        } else {
+            reply(false)
+        }
+    }
+    
+    /// Check if some of specified file extensions are handled by highlight.
+    func areSomeSyntaxSupported(_ syntax: [String], overrideSettings: NSDictionary?, reply: @escaping (Bool) -> Void) {
+        var custom_settings = SCSHSettings(settings: settings)
+        custom_settings.override(fromDictionary: overrideSettings as? [String: Any])
+        
+        // Set environment variables.
+        // All values on env are automatically quoted escaped.
+        var env = ProcessInfo.processInfo.environment
+        env["PATH"] = (env["PATH"] ?? "") + ":/usr/local/bin:/usr/local/sbin"
+        
+        var highlightPath = custom_settings.highlightProgramPath
+        if highlightPath == "" || highlightPath == "-" {
+            let p  = self.getEmbededHiglight()
+            highlightPath = p.path
+            env.merge(p.env) { (_, new) in new }
+        }
+        
+        guard highlightPath != "" else {
+            reply(false)
+            return
+        }
+        
+        for ext in syntax {
+            /// Command to execute.
+            let cmd = "echo \"\" | \(highlightPath.g_shell_quote()) -S \(ext)"
+            
+            os_log(OSLogType.debug, log: self.log, "cmd = %{public}@", cmd)
+            os_log(OSLogType.debug, log: self.log, "env = %@", env)
+            
+            if let result = try? SCSHXPCService.runTask(script: cmd, env: env), result.exitCode == 0 {
+                reply(true)
+                return
+            }
+        }
+        
+        reply(false)
     }
 }
