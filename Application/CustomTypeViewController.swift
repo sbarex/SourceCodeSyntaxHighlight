@@ -27,7 +27,7 @@ class DropView: NSTextField {
     weak var dropDelegate: DropViewDelegate?
     
     var acceptableTypes: [NSPasteboard.PasteboardType] { return [.fileURL] }
-
+    
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
         setup()
@@ -99,51 +99,57 @@ class CustomTypeViewController: NSViewController, DropViewDelegate {
     @IBOutlet weak var dropView: DropView!
     @IBOutlet weak var warningLabel: NSTextField!
     @IBOutlet weak var warningImage: NSImageView!
-    @IBOutlet weak var saveButton: NSButton!
+    @IBOutlet weak var saveButton: NSButton?
     
     var service: SCSHXPCServiceProtocol? {
         return (NSApplication.shared.delegate as? AppDelegate)?.service
     }
-    var settings: SCSHSettings? {
-        return (self.presentingViewController as? PreferencesViewController)?.settings
-    }
+    
+    var handledUTIs: [UTIDesc] = []
     
     var UTI: UTI? {
         didSet {
             warningLabel.isHidden = true
             warningImage.isHidden = true
-            saveButton.isEnabled = false
+            saveButton?.isEnabled = false
+            isUTIValid = false
             
             if let uti = self.UTI {
-                if let p = presentingViewController as? PreferencesViewController {
-                    if let _ = p.allFileTypes.first(where: { $0.uti == uti }) {
-                        self.warningLabel.stringValue = "Format already recognized."
-                        self.warningImage.image = NSImage(named: NSImage.statusAvailableName)
+                if let _ = handledUTIs.first(where: { $0.uti == uti }) {
+                    self.warningLabel.stringValue = "Format recognized by the extension."
+                    self.warningImage.image = NSImage(named: NSImage.statusAvailableName)
+                    
+                    self.warningLabel.isHidden = false
+                    self.warningImage.isHidden = false
+                    self.saveButton?.isEnabled = false
+                    
+                    return
+                } else {
+                    service?.areSomeSyntaxSupported(uti.extensions, overrideSettings: nil, reply: { (state) in
+                        self.warningLabel.stringValue = state ? "Format handled by highlight but not by the extension" : "Format not supported by highlight."
+                        self.warningImage.image = NSImage(named: state ? NSImage.statusPartiallyAvailableName : NSImage.statusUnavailableName)
+                        self.warningLabel.isHidden = state
+                        self.warningImage.isHidden = state
+                        self.saveButton?.isEnabled = true
                         
-                        self.warningLabel.isHidden = false
-                        self.warningImage.isHidden = false
-                        self.saveButton.isEnabled = false
-                        return
-                    } else {
-                        self.warningLabel.stringValue = "Not supported by highlight."
-                        self.warningImage.image = NSImage(named: NSImage.statusPartiallyAvailableName)
-                    }
+                        self.isUTIValid = state
+                    })
                 }
-                service?.areSomeSyntaxSupported(uti.extensions, overrideSettings: nil, reply: { (state) in
-                    self.warningLabel.isHidden = state
-                    self.warningImage.isHidden = state
-                    self.saveButton.isEnabled = true
-                })
+                
             }
         }
     }
+    
+    fileprivate(set) var isUTIValid: Bool = false
     
     override func viewDidLoad() {
         self.dropView.dropDelegate = self
         
         self.warningLabel.isHidden = true
         self.warningImage.isHidden = true
-        self.saveButton.isEnabled = false
+        self.saveButton?.isEnabled = false
+        
+        handledUTIs = (NSApplication.shared.delegate as? AppDelegate)?.fetchHandledUTIs() ?? []
     }
     
     func setUTI(_ type: UTI?) {
@@ -151,7 +157,7 @@ class CustomTypeViewController: NSViewController, DropViewDelegate {
     }
     
     @IBAction func doSave(_ sender: Any) {
-        if let p = presentingViewController as? PreferencesViewController, let url = p.getQLAppexUrl(), let bundle = Bundle(url: url) {
+        if isUTIValid, let url = (NSApplication.shared.delegate as? AppDelegate)?.getQLAppexUrl(), let bundle = Bundle(url: url) {
             
             let alert = NSAlert()
             alert.messageText = "Warning"

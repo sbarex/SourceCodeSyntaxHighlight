@@ -65,5 +65,48 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
         return false
     }
+    
+    /// Get the url of the quicklook extension.
+    func getQLAppexUrl() -> URL? {
+        guard let base_url = Bundle.main.builtInPlugInsURL else {
+            return nil
+        }
+        do {
+            for url in try FileManager.default.contentsOfDirectory(at: base_url, includingPropertiesForKeys: nil, options: []) {
+                // Suppose only one appex on the plugin dir.
+                if url.pathExtension == "appex" {
+                    return url
+                }
+            }
+        } catch {
+            return nil
+        }
+        return nil
+    }
+    
+    /// Get all handled UTIs.
+    func fetchHandledUTIs() -> [UTIDesc] {
+        // Get the list of all uti supported by the quicklook extension.
+        guard let url = getQLAppexUrl(), let bundle = Bundle(url: url), let extensionInfo = bundle.object(forInfoDictionaryKey: "NSExtension") as? [String: Any], let attributes = extensionInfo["NSExtensionAttributes"] as? [String: Any], let supportedTypes = attributes["QLSupportedContentTypes"] as? [String] else {
+            return []
+        }
+        
+        var fileTypes: [UTIDesc] = []
+        for type in supportedTypes {
+            let uti = UTIDesc(UTI: type)
+            if uti.isValid {
+                fileTypes.append(uti)
+            } else {
+                print("Ignoring \(type) uti.")
+            }
+        }
+        
+        // Sort alphabetically.
+        fileTypes.sort { (a, b) -> Bool in
+            return a.description < b.description
+        }
+        
+        return fileTypes
+    }
 }
 

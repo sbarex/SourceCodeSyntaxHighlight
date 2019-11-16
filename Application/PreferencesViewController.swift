@@ -26,73 +26,73 @@ import Syntax_Highlight_XPC_Service
 
 typealias SuppressedExtension = (ext: String, uti: String)
 
-class PreferencesViewController: NSViewController {
-    class UTIDesc: Equatable {
-        /// Uniform Type Identifiers.
-        let uti: UTI
-        
-        /// Return if the system know the file extensions or mime types for the UTI.
-        lazy var isValid: Bool = {
-            if uti.UTI.hasPrefix("public.") {
-                return true
-            }
-            return uti.mimeTypes.count > 0 || uti.extensions.count > 0
-        }()
-        
-        lazy var description: String = {
-            let description = self.uti.description
-            return description.isEmpty ? self.uti.UTI : description
-        }()
-        
-        lazy var extensions: [String] = {
-            return self.uti.extensions
-        }()
-        
-        /// Full description with supported extensions.
-        lazy var fullDescription: String = {
-            var label: String = self.description
-            let exts = self.extensions
-            if exts.count > 0 {
-                label += " (." + exts.joined(separator: ", .") + ")"
-            }
-            return label
-        }()
-        
-        lazy var icon: NSImage? = {
-            return self.uti.icon
-        }()
-        
-       
-        lazy var suppressedExtensions: [SuppressedExtension] = {
-            var e: [SuppressedExtension] = []
-            for ext in extensions {
-                if let u = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, ext as CFString, nil)?.takeRetainedValue() {
-                    if u as String != uti.UTI {
-                        e.append((ext: ext, uti: u as String))
-                    }
+class UTIDesc: Equatable {
+    /// Uniform Type Identifiers.
+    let uti: UTI
+    
+    /// Return if the system know the file extensions or mime types for the UTI.
+    lazy var isValid: Bool = {
+        if uti.UTI.hasPrefix("public.") {
+            return true
+        }
+        return uti.mimeTypes.count > 0 || uti.extensions.count > 0
+    }()
+    
+    lazy var description: String = {
+        let description = self.uti.description
+        return description.isEmpty ? self.uti.UTI : description
+    }()
+    
+    lazy var extensions: [String] = {
+        return self.uti.extensions
+    }()
+    
+    /// Full description with supported extensions.
+    lazy var fullDescription: String = {
+        var label: String = self.description
+        let exts = self.extensions
+        if exts.count > 0 {
+            label += " (." + exts.joined(separator: ", .") + ")"
+        }
+        return label
+    }()
+    
+    lazy var icon: NSImage? = {
+        return self.uti.icon
+    }()
+    
+   
+    lazy var suppressedExtensions: [SuppressedExtension] = {
+        var e: [SuppressedExtension] = []
+        for ext in extensions {
+            if let u = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, ext as CFString, nil)?.takeRetainedValue() {
+                if u as String != uti.UTI {
+                    e.append((ext: ext, uti: u as String))
                 }
             }
-            return e
-        }()
-        
-        init(UTI type: String) {
-            self.uti = UTI(type)
         }
-        
-        func getSuppressedExtensions(handledUti: [String]) -> [(suppress: SuppressedExtension, handled: Bool)] {
-            var e: [(suppress: SuppressedExtension, handled: Bool)] = []
-            for suppress in suppressedExtensions {
-                e.append((suppress: suppress, handled: handledUti.contains(suppress.uti)))
-            }
-            return e
-        }
-        
-        // MARK: - Equatable
-        static func == (lhs: UTIDesc, rhs: UTIDesc) -> Bool {
-            return lhs.uti.UTI == rhs.uti.UTI
-        }
+        return e
+    }()
+    
+    init(UTI type: String) {
+        self.uti = UTI(type)
     }
     
+    func getSuppressedExtensions(handledUti: [String]) -> [(suppress: SuppressedExtension, handled: Bool)] {
+        var e: [(suppress: SuppressedExtension, handled: Bool)] = []
+        for suppress in suppressedExtensions {
+            e.append((suppress: suppress, handled: handledUti.contains(suppress.uti)))
+        }
+        return e
+    }
+    
+    // MARK: - Equatable
+    static func == (lhs: UTIDesc, rhs: UTIDesc) -> Bool {
+        return lhs.uti.UTI == rhs.uti.UTI
+    }
+}
+
+class PreferencesViewController: NSViewController {
     // MARK: -
     @IBOutlet weak var tabView: NSTabView!
     
@@ -325,7 +325,7 @@ class PreferencesViewController: NSViewController {
     // MARK: -
     override func viewDidLoad() {
         // Populate UTIs list.
-        allFileTypes = fetchUtis()
+        allFileTypes = (NSApplication.shared.delegate as? AppDelegate)?.fetchHandledUTIs() ?? []
         fileTypes = allFileTypes
         
         let defaults = UserDefaults.standard
@@ -385,49 +385,6 @@ class PreferencesViewController: NSViewController {
     }
     
     // MARK: - Settings
-    
-    /// Get the url of the quicklook extension.
-    func getQLAppexUrl() -> URL? {
-        guard let base_url = Bundle.main.builtInPlugInsURL else {
-            return nil
-        }
-        do {
-            for url in try FileManager.default.contentsOfDirectory(at: base_url, includingPropertiesForKeys: nil, options: []) {
-                // Suppose only one appex on the plugin dir.
-                if url.pathExtension == "appex" {
-                    return url
-                }
-            }
-        } catch {
-            return nil
-        }
-        return nil
-    }
-    
-    /// Get all handled UTIs.
-    func fetchUtis() -> [UTIDesc] {
-        // Get the list of all uti supported by the quicklook extension.
-        guard let url = getQLAppexUrl(), let bundle = Bundle(url: url), let extensionInfo = bundle.object(forInfoDictionaryKey: "NSExtension") as? [String: Any], let attributes = extensionInfo["NSExtensionAttributes"] as? [String: Any], let supportedTypes = attributes["QLSupportedContentTypes"] as? [String] else {
-            return []
-        }
-        
-        var fileTypes: [UTIDesc] = []
-        for type in supportedTypes {
-            let uti = UTIDesc(UTI: type)
-            if uti.isValid {
-                fileTypes.append(uti)
-            } else {
-                print("Ignoring \(type) uti.")
-            }
-        }
-        
-        // Sort alphabetically.
-        fileTypes.sort { (a, b) -> Bool in
-            return a.description < b.description
-        }
-        
-        return fileTypes
-    }
     
     /// Filter the visible UTIs based on search cryteria.
     func filterUTIs() {
