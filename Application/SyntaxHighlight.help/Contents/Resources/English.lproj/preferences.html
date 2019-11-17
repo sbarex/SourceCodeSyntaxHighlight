@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Syntac Highlight Help</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="Syntac Highlight Preferences">
+    <link rel="stylesheet" type="text/css" href="../css/main.css" />
+</head>
+<body>
+    <a name="SyntaxHighlight_PREFERENCES"></a>
+
+    <div class=header"><a href="help:anchor=SyntaxHighlight_INDEX bookID=org.sbarex.SourceCodeSyntaxHighlight.help">index</a></div>
+    
+    <h1>Global Preferences</h1>
+
+    <p>In the standalone app, with the preferences window you can customize the preview settings used by the plugin extension.</p>
+
+    <div><img src="images/settings.png" alt="Global settings" /></div>
+
+    <p>Some <code>highlight</code> features, such as theme, words wrap, line numbers and tabs, are managed through the preferences gui.
+    It is also possible to choose a different theme when OS use light or dark style.</p>
+
+    <table>
+        <tr>
+            <td>Highlight</td>
+            <td>Path of the hightlight utils. You can choose the embedded version or select a different version (compiled by hand or installed with homebrew for example).</td></tr>
+        <tr>
+            <td>Mode</td>
+            <td>Output mode in html or rtf. Html output is rendered inside a WKWebView. Rtf output is rendered inside a NSTextView.<br />
+                <small>(corresponds to --out-format highlight argument)</small>
+            </td>
+        </tr>
+        <tr>
+            <td>Theme</td>
+            <td>You can choose a theme for light and dark style of the OS. The list of theme is automatically generated quering highlight.<br />
+            For html output mode you can edit a custom css style to override some settings. <br/>
+            <small>(corresponds to --style and --base16 highlight arguments)</small>
+        </td>
+        </tr>
+        <tr>
+            <td>Font</td>
+            <td>Font family and size to use in the output. Depending on the theme chosen, italic and bold style may be applied to certain elements.<br />
+                <small>(corresponds to --font and --font-size highlight arguments)</small></td>
+        </tr>
+        <tr>
+            <td>Word wrap</td>
+            <td><small>(corresponds to -V, -W and --line-length highlight arguments)</small></td>
+        </tr>
+        <tr>
+            <td>Line numbers</td>
+            <td><small>(corresponds to --line-numbers and --wrap-no-numbers highlight arguments)</small></td>
+        </tr>
+
+        <tr>
+            <td>Tabs</td>
+            <td>Set if the tabs must be converted to space. Setting to zero disable tabs conversions.</br />
+                <small>(corresponds to --replace-tabs highlight argument)</small></td>
+        </tr>
+
+        <tr>
+            <td>Extra arguments</td>
+            <td>Any highlight additional arguments. Please don't provide arguments handled by the prefefrences GUI.</br />
+                <small>(see man highlight to a list of valid arguments and plugins)</small></td>
+        </tr>
+
+        <tr>
+            <td>Debug</td>
+            <td>If on, create on your desktop two file with the result of last rendering:
+                    <ul>
+                        <li>colorize.log: log of the colorize operations</li>
+                        <li>colorize.[html|rtf] output of the syntax highlight</li>
+                    </ul>
+            </td>
+        </tr>
+    </table>
+    
+    <p>If you want you can also <a href="help:anchor=SyntaxHighlight_SPECIFIC_PREFERENCES bookID=org.sbarex.SourceCodeSyntaxHighlight.help">specify specific settings</a> for every supported format overriding the global preferences.</p>
+
+    <br />
+</body>
+</html>

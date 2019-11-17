@@ -6,19 +6,19 @@
 //  Copyright © 2019 sbarex. All rights reserved.
 //
 //
-//  This file is part of SourceCodeSyntaxHighlight.
-//  SourceCodeSyntaxHighlight is free software: you can redistribute it and/or modify
+//  This file is part of SyntaxHighlight.
+//  SyntaxHighlight is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
 //  (at your option) any later version.
 //
-//  SourceCodeSyntaxHighlight is distributed in the hope that it will be useful,
+//  SyntaxHighlight is distributed in the hope that it will be useful,
 //  but WITHOUT ANY WARRANTY; without even the implied warranty of
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 //  GNU General Public License for more details.
 //
 //  You should have received a copy of the GNU General Public License
-//  along with SourceCodeSyntaxHighlight. If not, see <http://www.gnu.org/licenses/>.
+//  along with SyntaxHighlight. If not, see <http://www.gnu.org/licenses/>.
 
 import Foundation
 
@@ -76,6 +76,9 @@ struct SCSHSettings {
         static let customizedUTISettings = "uti-settings"
         
         static let connectedUTI = "uti"
+        
+        static let customCSS = "css"
+        static let preprocessor = "preprocessor"
     }
     
     /// Path of highlight executable.
@@ -99,8 +102,10 @@ struct SCSHSettings {
             if utiExtra != nil && utiExtra != "" {
                 // Per l'uti collegato sono stati specificati dei parametri extra.
                 return true
-            } else if (lightTheme != nil && lightTheme != "") || (darkTheme != nil && darkTheme != "") || lineNumbers != nil || fontFamily != nil || wordWrap != nil || lineLength != nil || tabSpaces != nil || extra != nil {
+            } else if (lightTheme != nil && lightTheme != "") || (darkTheme != nil && darkTheme != "") || lineNumbers != nil || fontFamily != nil || wordWrap != nil || lineLength != nil || tabSpaces != nil || extra != nil || preprocessor != nil {
                 return true
+            } else if let css = self.css {
+                return isGlobal ? !css.isEmpty : true
             } else {
                 return false
             }
@@ -155,6 +160,8 @@ struct SCSHSettings {
     /// Domain for storing defaults.
     let domain: String
     
+    var css: String?
+    var preprocessor: String?
     var customizedSettings: [String: SCSHSettings] = [:]
     
     /// Create a global settings.
@@ -168,6 +175,7 @@ struct SCSHSettings {
         self.uti = UTI
     }
     
+    /// Dictionary base initialization.
     init(dictionary: [String: Any]) {
         if let uti = dictionary[Key.connectedUTI] as? String {
             self.uti = uti
@@ -175,9 +183,10 @@ struct SCSHSettings {
             self.uti = ""
         }
         self.domain = ""
-        self.fromDictionary(dictionary)
+        self.override(fromDictionary: dictionary)
     }
     
+    /// Initialize the setting based on the preferences provided.
     init(settings: SCSHSettings) {
         self.init(dictionary: settings.toDictionary())
     }
@@ -220,10 +229,12 @@ struct SCSHSettings {
         self.fontFamily = defaultsDomain[Key.fontFamily] as? String ?? "Menlo"
         self.fontSize = defaultsDomain[Key.fontSize] as? Float ?? 10
         
+        self.css = defaultsDomain[Key.customCSS] as? String
+        
         if let custom_formats = defaultsDomain[Key.customizedUTISettings] as? [String: [String: Any]] {
             for (uti, settings) in custom_formats {
                 var s = SCSHSettings(UTI: uti)
-                s.fromDictionary(settings)
+                s.override(fromDictionary: settings)
                 self.customizedSettings[uti] = s
             }
         }
@@ -234,48 +245,32 @@ struct SCSHSettings {
     /// Save the settings to the defaults preferences.
     mutating func synchronize(domain: String? = nil) -> Bool {
         let d = domain ?? self.domain
-        guard d != "" else {
+        guard d != "", isGlobal else {
             return false
         }
         
         let defaults = UserDefaults.standard
         var defaultsDomain = defaults.persistentDomain(forName: d) ?? [:]
         
-        if isGlobal {
-            defaultsDomain[Key.highlightPath] = highlightProgramPath
-            if let format = self.format {
-                defaultsDomain[Key.format] = format.rawValue
-            } else {
-                defaultsDomain.removeValue(forKey: Key.format)
-            }
-            
-            defaultsDomain.removeValue(forKey: Key.connectedUTI)
-            defaultsDomain.removeValue(forKey: Key.utiExtraArguments)
-            
-            var n = 0
-            var customized_formats: [String: [String: Any]] = [:]
-            for (uti, settings) in self.customizedSettings {
-                let d = settings.toDictionary()
-                if d.count > 0 {
-                    customized_formats[uti] = d
-                    n += 0
-                }
-            }
-            if n > 0 {
-                defaultsDomain[Key.customizedUTISettings] = customized_formats
-            } else {
-                defaultsDomain.removeValue(forKey: Key.customizedUTISettings)
-            }
+        defaultsDomain[Key.highlightPath] = highlightProgramPath
+        if let format = self.format {
+            defaultsDomain[Key.format] = format.rawValue
         } else {
-            defaultsDomain.removeValue(forKey: Key.highlightPath)
             defaultsDomain.removeValue(forKey: Key.format)
-            
-            defaultsDomain[Key.connectedUTI] = self.uti
-            if let utiExtra = self.utiExtra {
-                defaultsDomain[Key.utiExtraArguments] = utiExtra
-            } else {
-                defaultsDomain.removeValue(forKey: Key.utiExtraArguments)
+        }
+        
+        var n = 0
+        var customized_formats: [String: [String: Any]] = [:]
+        for (uti, settings) in self.customizedSettings {
+            let d = settings.toDictionary()
+            if d.count > 0 {
+                customized_formats[uti] = d
+                n += 1
             }
+        }
+        if n > 0 {
+            defaultsDomain[Key.customizedUTISettings] = customized_formats
+        } else {
             defaultsDomain.removeValue(forKey: Key.customizedUTISettings)
         }
         
@@ -338,7 +333,6 @@ struct SCSHSettings {
             defaultsDomain.removeValue(forKey: Key.extraArguments)
         }
         
-        
         if let fontFamily = self.fontFamily {
             defaultsDomain[Key.fontFamily] = fontFamily
         } else {
@@ -350,6 +344,18 @@ struct SCSHSettings {
             defaultsDomain.removeValue(forKey: Key.fontSize)
         }
         
+        if let css = self.css {
+            defaultsDomain[Key.customCSS] = css
+        } else {
+            defaultsDomain.removeValue(forKey: Key.customCSS)
+        }
+        
+        if let preprocessor = self.preprocessor, !preprocessor.isEmpty {
+            defaultsDomain[Key.preprocessor] = preprocessor
+        } else {
+            defaultsDomain.removeValue(forKey: Key.preprocessor)
+        }
+        
         defaultsDomain[Key.debug] = self.debug
         
         let userDefaults = UserDefaults()
@@ -357,6 +363,7 @@ struct SCSHSettings {
         return userDefaults.synchronize()
     }
     
+    /// Output the settings to a dictionary.
     func toDictionary() -> [String: Any] {
         guard self.isCustomized else {
             return [:]
@@ -419,6 +426,13 @@ struct SCSHSettings {
         if let fontSize = self.fontSize {
             r[Key.fontSize] = fontSize
         }
+        if let css = self.css {
+            r[Key.customCSS] = css
+        }
+        
+        if let preprocessor = self.preprocessor, !preprocessor.isEmpty {
+            r[Key.preprocessor] = preprocessor
+        }
         
         if let lineNumbers = self.lineNumbers {
             switch lineNumbers {
@@ -443,14 +457,18 @@ struct SCSHSettings {
         return r
     }
     
-    /// Updating values from a dictionary.
+    /// Updating values from a dictionary. Settings not defined on dictionary are not updated.
     /// - parameters:
     ///   - data: NSDictionary [String: Any]
-    mutating func fromDictionary(_ data: [String: Any]) {
+    mutating func override(fromDictionary dict: [String: Any]?) {
+        guard let data = dict else {
+            return
+        }
         if isGlobal {
             if let v = data[Key.highlightPath] as? String {
                 self.highlightProgramPath = v
             }
+            // Output format.
             if let v = data[Key.format] as? String, let f = SCSHFormat(rawValue: v) {
                 self.format = f
             }
@@ -458,10 +476,11 @@ struct SCSHSettings {
                 self.customizedSettings = [:]
                 for (uti, dict) in customized_formats {
                     var uti_settings = self.customizedSettings[uti] ?? SCSHSettings(UTI: uti)
-                    uti_settings.fromDictionary(dict)
+                    uti_settings.override(fromDictionary: dict)
                     self.customizedSettings[uti] = uti_settings
                 }
             }
+            // Debug
             if let debug = data[Key.debug] as? Bool {
                 self.debug = debug
             }
@@ -471,36 +490,43 @@ struct SCSHSettings {
             }
         }
         
+        // Light theme.
         if let v = data[Key.lightTheme] as? String {
             self.lightTheme = v
         }
         if let v = data[Key.lightThemeIsBase16] as? Bool {
             self.lightThemeIsBase16 = v
         }
+        // Light background color.
         if let v = data[Key.rtfLightBackgroundColor] as? String {
             self.rtfLightBackgroundColor = v
         }
         
+        // Dark theme.
         if let v = data[Key.darkTheme] as? String {
             self.darkTheme = v
         }
         if let v = data[Key.darkThemeIsBase16] as? Bool {
             self.darkThemeIsBase16 = v
         }
+        // Dark background color.
         if let v = data[Key.rtfDarkBackgroundColor] as? String {
             self.rtfDarkBackgroundColor = v
         }
         
+        // Forcing a theme.
         if let _ = data.keys.first(where: { $0 == Key.theme }) {
             self.theme = data[Key.theme] as? String
         }
         if let _ = data.keys.first(where: { $0 == Key.themeIsBase16 }) {
             self.themeIsBase16 = data[Key.themeIsBase16] as? Bool
         }
+        // Forcing a background color.
         if let _ = data.keys.first(where: { $0 == Key.rtfBackgroundColor }) {
             self.rtfBackgroundColor = data[Key.rtfBackgroundColor] as? String
         }
         
+        // Show line numbers.
         if let v = data[Key.lineNumbers] as? Bool {
             self.lineNumbers = v ? .visible(omittingWrapLines: data[Key.lineNumbersOmittedWrap] as? Bool ?? true) : .hidden
         }
@@ -512,261 +538,50 @@ struct SCSHSettings {
             self.lineLength = v
         }
         
+        // Convert tab to spaces.
         if let v = data[Key.tabSpaces] as? Int {
             self.tabSpaces = v
         }
         
+        // Extra arguments for _highlight_.
         if let v = data[Key.extraArguments] as? String {
             self.extra = v
         }
         
+        // Font family.
         if let v = data[Key.fontFamily] as? String {
             self.fontFamily = v
         }
+        // Font size.
         if let v = data[Key.fontSize] as? Float {
             self.fontSize = v
         }
+        if let v = data[Key.customCSS] as? String {
+            self.css = v
+        }
+        
+        if let v = data[Key.preprocessor] as? String {
+            self.preprocessor = v
+        }
+        
         if let v = data[Key.embedCustomStyle] as? Bool {
             self.embedCustomStyle = v
         }
     }
     
+    mutating func override(fromSettings settings: SCSHSettings) {
+        override(fromDictionary: settings.toDictionary())
+    }
+    
     /// Create a new settings overriding current values
     /// - parameters:
     ///   - override:
-    func overriding(_ override: [String: Any]?) -> Self {
-        var final_settings = SCSHSettings()
-        
-        final_settings.highlightProgramPath = override?[Key.highlightPath] as? String ?? self.highlightProgramPath
-        
-        // Output format.
-        if let f = override?[Key.format] as? String, let format = SCSHFormat(rawValue: f) {
-            final_settings.format = format
-        } else {
-            final_settings.format = self.format
+    func overriding(fromDictionary override: [String: Any]?) -> Self {
+        var final_settings = SCSHSettings(settings: self)
+        if let o = override {
+            final_settings.override(fromDictionary: o)
         }
-        
-        // Light theme.
-        final_settings.lightTheme = override?[Key.lightTheme] as? String ?? self.lightTheme
-        final_settings.lightThemeIsBase16 = override?[Key.lightThemeIsBase16] as? Bool ?? self.lightThemeIsBase16
-        // Light background color.
-        final_settings.rtfLightBackgroundColor = override?[Key.rtfLightBackgroundColor] as? String ?? self.rtfLightBackgroundColor
-        
-        // Dark theme.
-        final_settings.darkTheme = override?[Key.darkTheme] as? String ?? self.darkTheme
-        final_settings.darkThemeIsBase16 = override?[Key.darkThemeIsBase16] as? Bool ?? self.darkThemeIsBase16
-        
-        // Dark background color.
-        final_settings.rtfDarkBackgroundColor = override?[Key.rtfDarkBackgroundColor] as? String ?? self.rtfDarkBackgroundColor
-        
-        // Forcing a theme.
-        final_settings.theme = override?[Key.theme] as? String ?? self.theme
-        // Forcing a background color.
-        final_settings.rtfBackgroundColor = override?[Key.rtfBackgroundColor] as? String ?? self.rtfBackgroundColor
-        
-        // Extra arguments for _highlight_.
-        final_settings.extra = override?[Key.extraArguments] as? String ?? self.extra
-        
-        // Show line numbers.
-        if let v = override?[Key.lineNumbers] as? Bool {
-            final_settings.lineNumbers = v ? .visible(omittingWrapLines: override?[Key.lineNumbersOmittedWrap] as? Bool ?? true) : .hidden
-        } else {
-            final_settings.lineNumbers = self.lineNumbers
-        }
-        
-        if let v = override?[Key.wordWrap] as? Int, let ww = SCSHWordWrap(rawValue: v) {
-            final_settings.wordWrap = ww
-        } else {
-            final_settings.lineLength = self.lineLength
-        }
-        final_settings.lineLength = override?[Key.lineLength] as? Int ?? self.lineLength
-        
-        // Convert tab to spaces.
-        final_settings.tabSpaces = override?[Key.tabSpaces] as? Int ?? self.tabSpaces
-        
-        // Font family.
-        final_settings.fontFamily = override?[Key.fontFamily] as? String ?? self.fontFamily
-        // Font size.
-        final_settings.fontSize = override?[Key.fontSize] as? Float ?? self.fontSize
-        
-        // Debug
-        final_settings.debug = override?[Key.debug] as? Bool ?? debug
-        
-        final_settings.embedCustomStyle = override?[Key.embedCustomStyle] as? Bool ?? embedCustomStyle
-        
         return final_settings
-    }
-    
-    mutating func override(fromDictionary override: [String: Any]?) {
-        if let path = override?[Key.highlightPath] as? String {
-            self.highlightProgramPath = path
-        }
-        
-        // Output format.
-        if let f = override?[Key.format] as? String, let format = SCSHFormat(rawValue: f) {
-            self.format = format
-        }
-        
-        // Light theme.
-        if let lightTheme = override?[Key.lightTheme] as? String {
-            self.lightTheme = lightTheme
-        }
-        if let lightThemeIsBase16 = override?[Key.lightThemeIsBase16] as? Bool {
-            self.lightThemeIsBase16 = lightThemeIsBase16
-        }
-        // Light background color.
-        if let rtfLightBackgroundColor = override?[Key.rtfLightBackgroundColor] as? String {
-            self.rtfLightBackgroundColor = rtfLightBackgroundColor
-        }
-        
-        // Dark theme.
-        if let darkTheme = override?[Key.darkTheme] as? String {
-            self.darkTheme = darkTheme
-        }
-        if let darkThemeIsBase16 = override?[Key.darkThemeIsBase16] as? Bool {
-            self.darkThemeIsBase16 = darkThemeIsBase16
-        }
-        // Dark background color.
-        if let rtfDarkBackgroundColor = override?[Key.rtfDarkBackgroundColor] as? String {
-            self.rtfDarkBackgroundColor = rtfDarkBackgroundColor
-        }
-        
-        // Forcing a theme.
-        if let theme = override?[Key.theme] as? String {
-            self.theme = theme
-        }
-        if let theme16 = override?[Key.themeIsBase16] as? Bool {
-            self.themeIsBase16 = theme16
-        }
-        // Forcing a background color.
-        if let rtfBackgroundColor = override?[Key.rtfBackgroundColor] as? String {
-            self.rtfBackgroundColor = rtfBackgroundColor
-        }
-        
-        // Extra arguments for _highlight_.
-        if let extra = override?[Key.extraArguments] as? String {
-            self.extra = extra
-        }
-        
-        // Show line numbers.
-        if let v = override?[Key.lineNumbers] as? Bool {
-            self.lineNumbers = v ? .visible(omittingWrapLines: override?[Key.lineNumbersOmittedWrap] as? Bool ?? true) : .hidden
-        }
-        
-        if let v = override?[Key.wordWrap] as? Int, let ww = SCSHWordWrap(rawValue: v) {
-            self.wordWrap = ww
-        }
-        if let lineLength = override?[Key.lineLength] as? Int {
-            self.lineLength = lineLength
-        }
-        
-        // Convert tab to spaces.
-        if let tabSpaces = override?[Key.tabSpaces] as? Int {
-            self.tabSpaces = tabSpaces
-        }
-        
-        // Font family.
-        if let fontFamily = override?[Key.fontFamily] as? String {
-            self.fontFamily = fontFamily
-        }
-        // Font size.
-        if let fontSize = override?[Key.fontSize] as? Float {
-            self.fontSize = fontSize
-        }
-        
-        // Debug
-        if let debug = override?[Key.debug] as? Bool {
-            self.debug = debug
-        }
-        
-        if let embedCustomStyle = override?[Key.embedCustomStyle] as? Bool {
-            self.embedCustomStyle = embedCustomStyle
-        }
-    }
-    
-    mutating func override(fromSettings override: SCSHSettings?) {
-        if let path = override?.highlightProgramPath {
-            self.highlightProgramPath = path
-        }
-        
-        // Output format.
-        if let format = override?.format {
-            self.format = format
-        }
-        
-        // Light theme.
-        if let lightTheme = override?.lightTheme {
-            self.lightTheme = lightTheme
-        }
-        if let lightThemeIsBase16 = override?.lightThemeIsBase16 {
-            self.lightThemeIsBase16 = lightThemeIsBase16
-        }
-        // Light background color.
-        if let rtfLightBackgroundColor = override?.rtfLightBackgroundColor{
-            self.rtfLightBackgroundColor = rtfLightBackgroundColor
-        }
-        
-        // Dark theme.
-        if let darkTheme = override?.darkTheme {
-            self.darkTheme = darkTheme
-        }
-        if let darkThemeIsBase16 = override?.darkThemeIsBase16 {
-            self.darkThemeIsBase16 = darkThemeIsBase16
-        }
-        
-        // Dark background color.
-        if let rtfDarkBackgroundColor = override?.rtfDarkBackgroundColor {
-            self.rtfDarkBackgroundColor = rtfDarkBackgroundColor
-        }
-        
-        // Forcing a theme.
-        if let theme = override?.theme {
-            self.theme = theme
-        }
-        // Forcing a background color.
-        if let rtfBackgroundColor = override?.rtfBackgroundColor {
-            self.rtfBackgroundColor = rtfBackgroundColor
-        }
-        
-        // Extra arguments for _highlight_.
-        if let extra = override?.extra {
-            self.extra = extra
-        }
-        
-        // Show line numbers.
-        if let lineNumbers = override?.lineNumbers {
-            self.lineNumbers = lineNumbers
-        }
-        
-        if let wordWrap = override?.wordWrap {
-            self.wordWrap = wordWrap
-        }
-        if let lineLength = override?.lineLength {
-            self.lineLength = lineLength
-        }
-        
-        // Convert tab to spaces.
-        if let tabSpaces = override?.tabSpaces {
-            self.tabSpaces = tabSpaces
-        }
-        
-        // Font family.
-        if let fontFamily = override?.fontFamily {
-            self.fontFamily = fontFamily
-        }
-        // Font size.
-        if let fontSize = override?.fontSize {
-            self.fontSize = fontSize
-        }
-        
-        // Debug
-        if let debug = override?.debug {
-            self.debug = debug
-        }
-        
-        if let embedCustomStyle = override?.embedCustomStyle {
-            self.embedCustomStyle = embedCustomStyle
-        }
     }
     
     func getGlobalSettingsForUti(_ uti: String) -> SCSHSettings? {

@@ -134,6 +134,12 @@ case ${target} in
         ;;
 esac
 
+if [[ ${preprocessorHL} != "" ]]; then
+    # Split preprocessorHL to an array of arguments using • as separator.
+    reader=("${(@s/•/)preprocessorHL}")
+    reader+=("${target}")
+fi
+
 debug "Resolved ${target} to language $lang"
 
 go4it () {
@@ -147,10 +153,10 @@ go4it () {
         fi
     fi
     
-    # Split extraHLFlags to an array of arguments using ^ as separator.
+    # Split extraHLFlags to an array of arguments using • as separator.
     #
     # Do not use zsh {= expansion because it split the string on all space ignoring quotes causing error.
-    cmdExtra=("${(@s/^/)extraHLFlags}")
+    cmdExtra=("${(@s/•/)extraHLFlags}")
     
     cmdOpts=(${plugin} --syntax=${lang} --quiet --include-style --font=${font} --font-size=${fontSizePoints} ${=theme} --encoding=${textEncoding} ${cmdExtra} --validate-input)
     

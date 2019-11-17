@@ -1,8 +1,8 @@
 //
-//  VerticallyCenteredTextFieldCell.swift
+//  CSSControlView.swift
 //  SyntaxHighlight
 //
-//  Created by Sbarex on 06/11/2019.
+//  Created by Sbarex on 16/11/2019.
 //  Copyright © 2019 sbarex. All rights reserved.
 //
 //
@@ -22,19 +22,28 @@
 
 import Cocoa
 
-class VerticallyCenteredTextFieldCell : NSTextFieldCell {
-    override func titleRect(forBounds rect: NSRect) -> NSRect {
-        var titleRect = super.titleRect(forBounds: rect)
-
-        let minimumHeight = self.cellSize(forBounds: rect).height
-        titleRect.origin.y += (titleRect.height - minimumHeight) / 2
-        titleRect.size.height = minimumHeight
-
-        return titleRect
+class CSSControlView: NSViewController {
+    var cssCode: String = "" {
+        didSet {
+            textView?.string = cssCode
+        }
     }
-
-    override func drawInterior(withFrame cellFrame: NSRect, in controlView: NSView) {
-        super.drawInterior(withFrame: titleRect(forBounds: cellFrame), in: controlView)
+    var handler: ((String)->Void)?
+    
+    @IBOutlet weak var textView: NSTextView!
+    
+    @IBAction func showHelp(_ sender: Any) {
+        if let locBookName = Bundle.main.object(forInfoDictionaryKey: "CFBundleHelpBookName") as? String {
+            NSHelpManager.shared.openHelpAnchor("SyntaxHighlight_CUSTOMCSS", inBook: locBookName)
+        }
+    }
+    
+    @IBAction func doSave(_ sender: Any) {
+        handler?(textView.string)
+        dismiss(sender)
+    }
+    
+    override func viewDidLoad() {
+        textView?.string = cssCode
     }
 }
-

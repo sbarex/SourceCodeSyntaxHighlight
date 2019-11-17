@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Syntac Highlight Help</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="Syntac Highlight Specific Format Preferences">
+    <link rel="stylesheet" type="text/css" href="../css/main.css" />
+</head>
+<body>
+    <a name="SyntaxHighlight_SPECIFIC_PREFERENCES"></a>
+
+    <div class=header"><a href="help:anchor=SyntaxHighlight_INDEX bookID=org.sbarex.SourceCodeSyntaxHighlight.help">index</a></div>
+    
+    <h1>Specific format preferences</h1>
+
+    <p>In addition to the <a href="help:anchor=SyntaxHighlight_PREFERENCES bookID=org.sbarex.SourceCodeSyntaxHighlight.help">global settings</a> you can set specific preferences for every handled file format.</p>
+
+    <div><img src="images/settings_specific.png" alt="File type settings window" /></div>
+
+    <p>In the file type Specific settings there is a list of all file types supported by the quicklook extension. <br />
+        For an explanation on the behavior of file types <a href="help:anchor=SyntaxHighlight_UTI bookID=org.sbarex.SourceCodeSyntaxHighlight.help">click here</a>.</p>
+    <p></p>The grayout items on the list are those currenty managed by others UTI. Clicking on the exclamation mark icon you will show which UTI is used for a given file extension.<p>
+
+    <div><img src="images/settings_specific_warn.png" alt="File type settings window" /></div>
+
+    <p>For an explanation of the various parameters see the page of <a href="help:anchor=SyntaxHighlight_PREFERENCES bookID=org.sbarex.SourceCodeSyntaxHighlight.help">global settings</a>.</p>
+    <p>In the specific settings you can also set a preprocessor utility. The preprocessor handle the source file before it is elaborated by highlight.<br />
+    Preprocessor can be any cli utility or shell script which receives as the last parameter the name of the file to be processed and output to stdout the data to pass to highlight. </p>
+    <p>The excution of the preprocessor is made inside the same env of the script that handle highlight. For  a list of environments plese see the file <code>colorize.sh</code> in <code>Syntax Highlight.app/Contents/XPCServices/Syntax Highlight XPC Service.xpc/Contents/Resources/</code></p>
+    <p>Specifying the preprocessor disables standard preprocessors:</p>
+    <table>
+        <tr><th>file type</th><th>default proprocessor</th></tr>
+        <tr>
+            <td>.class</td>
+            <td><code>/usr/local/bin/jad -ff -dead -noctor -p -t </code></td>
+        </tr>
+        <tr>
+            <td>.ascr | .scpt</td>
+            <td><code>/usr/bin/osadecompile</code></td>
+        </tr>
+        <tr>
+            <td>.plist</td>
+            <td><code>/usr/bin/plutil -convert xml1 -o - </code></td>
+        </tr>
+        <tr>
+            <td>all files</td>
+            <td><code>cat </code></td>
+        </tr>
+    </table>
+    
+    <br />
+</body>
+</html>

@@ -12,34 +12,13 @@
 		830D154D23780A4200D5535C /* SCSHTheme+Lua.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830D154C23780A4200D5535C /* SCSHTheme+Lua.swift */; };
 		830D15542378182800D5535C /* SCSHTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835923EB235A3A85001506B6 /* SCSHTheme.swift */; };
 		830D15552378419F00D5535C /* NSColor+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835923E9235A022C001506B6 /* NSColor+ext.swift */; };
-		830D15572379542500D5535C /* example.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = 830D15562379542500D5535C /* example.ini */; };
 		830D1559237961C900D5535C /* WarningUTIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830D1558237961C900D5535C /* WarningUTIViewController.swift */; };
-		830D155D237985F900D5535C /* example.jsx in CopyFiles */ = {isa = PBXBuildFile; fileRef = 830D155C237985F900D5535C /* example.jsx */; };
-		830D155F2379869100D5535C /* example.scpt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 830D155E2379865C00D5535C /* example.scpt */; };
-		830D1561237986E000D5535C /* example.cs in CopyFiles */ = {isa = PBXBuildFile; fileRef = 830D1560237986E000D5535C /* example.cs */; };
-		830D1563237987DF00D5535C /* example.diff in CopyFiles */ = {isa = PBXBuildFile; fileRef = 830D1562237987DE00D5535C /* example.diff */; };
-		830D15652379883C00D5535C /* example.go in CopyFiles */ = {isa = PBXBuildFile; fileRef = 830D15642379882800D5535C /* example.go */; };
-		830D15672379889000D5535C /* example.java in CopyFiles */ = {isa = PBXBuildFile; fileRef = 830D15662379889000D5535C /* example.java */; };
-		830D15692379891700D5535C /* example.lua in CopyFiles */ = {isa = PBXBuildFile; fileRef = 830D15682379891700D5535C /* example.lua */; };
-		830D156B23798E4000D5535C /* example.rb in CopyFiles */ = {isa = PBXBuildFile; fileRef = 830D156A23798E4000D5535C /* example.rb */; };
-		830D156D23798E6700D5535C /* example.sql in CopyFiles */ = {isa = PBXBuildFile; fileRef = 830D156C23798E6700D5535C /* example.sql */; };
-		830D156F23798EF500D5535C /* example.vb in CopyFiles */ = {isa = PBXBuildFile; fileRef = 830D156E23798EF500D5535C /* example.vb */; };
-		830D1571237990A900D5535C /* example.swift in CopyFiles */ = {isa = PBXBuildFile; fileRef = 830D15702379909200D5535C /* example.swift */; };
-		8311D9AC235DA0E4006DC138 /* example.json in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8311D9AA235D99B8006DC138 /* example.json */; };
-		8311D9B0235DA127006DC138 /* example.fsx in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8311D9AE235DA124006DC138 /* example.fsx */; };
-		8311D9B3235DB8D7006DC138 /* example.c in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8311D9B1235DB8CA006DC138 /* example.c */; };
-		8311D9B6235DB970006DC138 /* example.cpp in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8311D9B4235DB93C006DC138 /* example.cpp */; };
-		8311D9B9235DBB44006DC138 /* example.m in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8311D9B8235DBB28006DC138 /* example.m */; };
-		8311D9BA235DBB47006DC138 /* example.dart in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8311D9B7235DB9C7006DC138 /* example.dart */; };
-		8311D9BC235DBBE2006DC138 /* example.pl in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8311D9BB235DBBC9006DC138 /* example.pl */; };
-		8311D9C0235DBDC7006DC138 /* example.yaml in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8311D9BF235DBD51006DC138 /* example.yaml */; };
-		8311D9C1235DBDC7006DC138 /* example.ts in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8311D9BE235DBCB3006DC138 /* example.ts */; };
-		8311D9C2235DBDC7006DC138 /* example.py in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8311D9BD235DBC32006DC138 /* example.py */; };
-		8311D9C5235DBF29006DC138 /* example.plist in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8311D9C3235DBF0E006DC138 /* example.plist */; };
 		8311D9C7235DE6D7006DC138 /* Data+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8311D9C6235DE6D7006DC138 /* Data+Ext.swift */; };
 		8311D9C8235DE6D7006DC138 /* Data+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8311D9C6235DE6D7006DC138 /* Data+Ext.swift */; };
 		831D5F55237F0CF1007340E7 /* CustomTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831D5F54237F0CF1007340E7 /* CustomTypeViewController.swift */; };
 		831D5F5B237F1E87007340E7 /* UTI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831D5F5A237F1E87007340E7 /* UTI.swift */; };
+		83408DDE23804A0700128B0C /* examples in Resources */ = {isa = PBXBuildFile; fileRef = 83408DDD23804A0600128B0C /* examples */; };
+		83408DE02380505000128B0C /* CSSControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83408DDF2380505000128B0C /* CSSControlView.swift */; };
 		83592349235599F6001506B6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83592348235599F6001506B6 /* AppDelegate.swift */; };
 		8359234B235599F6001506B6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8359234A235599F6001506B6 /* ViewController.swift */; };
 		8359234D235599F9001506B6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8359234C235599F9001506B6 /* Assets.xcassets */; };
@@ -61,12 +40,6 @@
 		8359239E23570C5B001506B6 /* SCSHError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8359239C23570C52001506B6 /* SCSHError.swift */; };
 		8359239F23570C5C001506B6 /* SCSHError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8359239C23570C52001506B6 /* SCSHError.swift */; };
 		835923BF23571FB7001506B6 /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835923BE23571FB7001506B6 /* Document.swift */; };
-		835923D92358597C001506B6 /* example.php in CopyFiles */ = {isa = PBXBuildFile; fileRef = 835923CF2357A524001506B6 /* example.php */; };
-		835923E423585E11001506B6 /* example.sh in CopyFiles */ = {isa = PBXBuildFile; fileRef = 835923DA23585DAE001506B6 /* example.sh */; };
-		835923E523585E13001506B6 /* example.css in CopyFiles */ = {isa = PBXBuildFile; fileRef = 835923DC23585DC5001506B6 /* example.css */; };
-		835923E623585E16001506B6 /* example.js in CopyFiles */ = {isa = PBXBuildFile; fileRef = 835923E023585DE7001506B6 /* example.js */; };
-		835923E723585E18001506B6 /* example.xml in CopyFiles */ = {isa = PBXBuildFile; fileRef = 835923E223585DFB001506B6 /* example.xml */; };
-		835923E823585E27001506B6 /* example.html in CopyFiles */ = {isa = PBXBuildFile; fileRef = 835923DE23585DD9001506B6 /* example.html */; };
 		835923EA235A022C001506B6 /* NSColor+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835923E9235A022C001506B6 /* NSColor+ext.swift */; };
 		835923EC235A3A85001506B6 /* SCSHTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835923EB235A3A85001506B6 /* SCSHTheme.swift */; };
 		835923EE235A5D33001506B6 /* SCSHSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835923ED235A5D33001506B6 /* SCSHSettings.swift */; };
@@ -74,10 +47,16 @@
 		835923F0235A5EBA001506B6 /* SCSHSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835923ED235A5D33001506B6 /* SCSHSettings.swift */; };
 		835923F1235A6F16001506B6 /* NSColor+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835923E9235A022C001506B6 /* NSColor+ext.swift */; };
 		837CFC8B2372EF5E00641AE4 /* VerticallyCenteredTextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837CFC8A2372EF5E00641AE4 /* VerticallyCenteredTextFieldCell.swift */; };
-		837CFC9A2374BF9200641AE4 /* example.pas in CopyFiles */ = {isa = PBXBuildFile; fileRef = 837CFC982374B44300641AE4 /* example.pas */; };
 		837DFC222375FE1E00920E72 /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837DFC212375FE1E00920E72 /* PreferencesViewController.swift */; };
+		837F088623802A8000D3893B /* SyntaxHighlight.help in Resources */ = {isa = PBXBuildFile; fileRef = 837F088523802A8000D3893B /* SyntaxHighlight.help */; };
+		838F164F2380B05600A13F0F /* settings.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8311D9A6235CE0A8006DC138 /* settings.png */; };
+		838F16502380B05800A13F0F /* settings_specific.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 830D155A23797CC100D5535C /* settings_specific.png */; };
+		838F16512380B05B00A13F0F /* extensions.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8311D9A8235CE6D7006DC138 /* extensions.png */; };
+		838F16522380B06200A13F0F /* settings_specific_warn.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 830D155B23797D8000D5535C /* settings_specific_warn.png */; };
 		839098C52379E353005D3E7C /* String+GShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839098C32379E34A005D3E7C /* String+GShell.swift */; };
 		839098D82379FA72005D3E7C /* Syntax Highlight XPC Service.xpc in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8359237B23563BDF001506B6 /* Syntax Highlight XPC Service.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		8390B18B23815B6500EA028A /* ThemeSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8390B18A23815B6500EA028A /* ThemeSelectorViewController.swift */; };
+		8390B19123815FF200EA028A /* ThemeCollectionViewItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8390B19023815FF200EA028A /* ThemeCollectionViewItem.xib */; };
 		83A0691123672FD100C795D6 /* style.css in Resources */ = {isa = PBXBuildFile; fileRef = 83A0691023672FD100C795D6 /* style.css */; };
 		83A06912236730D800C795D6 /* style.css in Resources */ = {isa = PBXBuildFile; fileRef = 83A0691023672FD100C795D6 /* style.css */; };
 		83C09FC223638E4F0062BF39 /* outhtml_commandbar.lua in Resources */ = {isa = PBXBuildFile; fileRef = 83C09FC0236367140062BF39 /* outhtml_commandbar.lua */; };
@@ -152,42 +131,16 @@
 			name = "Embed XPC Services";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		835923D823585979001506B6 /* CopyFiles */ = {
+		838F164E2380B01200A13F0F /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
-			dstPath = examples;
+			dstPath = SyntaxHighlight.help/Contents/Resources/English.lproj/images;
 			dstSubfolderSpec = 7;
 			files = (
-				830D156F23798EF500D5535C /* example.vb in CopyFiles */,
-				830D1571237990A900D5535C /* example.swift in CopyFiles */,
-				830D1561237986E000D5535C /* example.cs in CopyFiles */,
-				830D156D23798E6700D5535C /* example.sql in CopyFiles */,
-				830D156B23798E4000D5535C /* example.rb in CopyFiles */,
-				830D15692379891700D5535C /* example.lua in CopyFiles */,
-				830D15652379883C00D5535C /* example.go in CopyFiles */,
-				830D155F2379869100D5535C /* example.scpt in CopyFiles */,
-				830D1563237987DF00D5535C /* example.diff in CopyFiles */,
-				835923D92358597C001506B6 /* example.php in CopyFiles */,
-				830D15672379889000D5535C /* example.java in CopyFiles */,
-				830D155D237985F900D5535C /* example.jsx in CopyFiles */,
-				830D15572379542500D5535C /* example.ini in CopyFiles */,
-				837CFC9A2374BF9200641AE4 /* example.pas in CopyFiles */,
-				835923E423585E11001506B6 /* example.sh in CopyFiles */,
-				835923E523585E13001506B6 /* example.css in CopyFiles */,
-				835923E823585E27001506B6 /* example.html in CopyFiles */,
-				835923E623585E16001506B6 /* example.js in CopyFiles */,
-				835923E723585E18001506B6 /* example.xml in CopyFiles */,
-				8311D9AC235DA0E4006DC138 /* example.json in CopyFiles */,
-				8311D9B0235DA127006DC138 /* example.fsx in CopyFiles */,
-				8311D9C0235DBDC7006DC138 /* example.yaml in CopyFiles */,
-				8311D9C1235DBDC7006DC138 /* example.ts in CopyFiles */,
-				8311D9C2235DBDC7006DC138 /* example.py in CopyFiles */,
-				8311D9BC235DBBE2006DC138 /* example.pl in CopyFiles */,
-				8311D9BA235DBB47006DC138 /* example.dart in CopyFiles */,
-				8311D9B9235DBB44006DC138 /* example.m in CopyFiles */,
-				8311D9B6235DB970006DC138 /* example.cpp in CopyFiles */,
-				8311D9C5235DBF29006DC138 /* example.plist in CopyFiles */,
-				8311D9B3235DB8D7006DC138 /* example.c in CopyFiles */,
+				838F164F2380B05600A13F0F /* settings.png in CopyFiles */,
+				838F16502380B05800A13F0F /* settings_specific.png in CopyFiles */,
+				838F16522380B06200A13F0F /* settings_specific_warn.png in CopyFiles */,
+				838F16512380B05B00A13F0F /* extensions.png in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -207,39 +160,18 @@
 		83088A62236CB19A0092180E /* Lua.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Lua.xcodeproj; path = lua4swift/Lua.xcodeproj; sourceTree = "<group>"; };
 		83088A82236CC0330092180E /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		830D154C23780A4200D5535C /* SCSHTheme+Lua.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SCSHTheme+Lua.swift"; sourceTree = "<group>"; };
-		830D15562379542500D5535C /* example.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = example.ini; sourceTree = "<group>"; };
 		830D1558237961C900D5535C /* WarningUTIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarningUTIViewController.swift; sourceTree = "<group>"; };
 		830D155A23797CC100D5535C /* settings_specific.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings_specific.png; sourceTree = "<group>"; };
 		830D155B23797D8000D5535C /* settings_specific_warn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings_specific_warn.png; sourceTree = "<group>"; };
-		830D155C237985F900D5535C /* example.jsx */ = {isa = PBXFileReference; lastKnownFileType = text; path = example.jsx; sourceTree = "<group>"; };
-		830D155E2379865C00D5535C /* example.scpt */ = {isa = PBXFileReference; lastKnownFileType = text; path = example.scpt; sourceTree = "<group>"; };
-		830D1560237986E000D5535C /* example.cs */ = {isa = PBXFileReference; lastKnownFileType = text; path = example.cs; sourceTree = "<group>"; };
-		830D1562237987DE00D5535C /* example.diff */ = {isa = PBXFileReference; lastKnownFileType = text; path = example.diff; sourceTree = "<group>"; };
-		830D15642379882800D5535C /* example.go */ = {isa = PBXFileReference; lastKnownFileType = text; path = example.go; sourceTree = "<group>"; };
-		830D15662379889000D5535C /* example.java */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.java; lineEnding = 0; path = example.java; sourceTree = "<group>"; };
-		830D15682379891700D5535C /* example.lua */ = {isa = PBXFileReference; lastKnownFileType = text; path = example.lua; sourceTree = "<group>"; };
-		830D156A23798E4000D5535C /* example.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = example.rb; sourceTree = "<group>"; };
-		830D156C23798E6700D5535C /* example.sql */ = {isa = PBXFileReference; lastKnownFileType = text; path = example.sql; sourceTree = "<group>"; };
-		830D156E23798EF500D5535C /* example.vb */ = {isa = PBXFileReference; lastKnownFileType = text; path = example.vb; sourceTree = "<group>"; };
-		830D15702379909200D5535C /* example.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = example.swift; sourceTree = "<group>"; };
 		8311D9A3235CDAA1006DC138 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		8311D9A6235CE0A8006DC138 /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings.png; sourceTree = "<group>"; };
 		8311D9A8235CE6D7006DC138 /* extensions.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = extensions.png; sourceTree = "<group>"; };
-		8311D9AA235D99B8006DC138 /* example.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = example.json; sourceTree = "<group>"; };
-		8311D9AE235DA124006DC138 /* example.fsx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = example.fsx; sourceTree = "<group>"; };
-		8311D9B1235DB8CA006DC138 /* example.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = example.c; sourceTree = "<group>"; };
-		8311D9B4235DB93C006DC138 /* example.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = example.cpp; sourceTree = "<group>"; };
-		8311D9B7235DB9C7006DC138 /* example.dart */ = {isa = PBXFileReference; explicitFileType = text; path = example.dart; sourceTree = "<group>"; };
-		8311D9B8235DBB28006DC138 /* example.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = example.m; sourceTree = "<group>"; };
-		8311D9BB235DBBC9006DC138 /* example.pl */ = {isa = PBXFileReference; lastKnownFileType = text.script.perl; path = example.pl; sourceTree = "<group>"; };
-		8311D9BD235DBC32006DC138 /* example.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = example.py; sourceTree = "<group>"; };
-		8311D9BE235DBCB3006DC138 /* example.ts */ = {isa = PBXFileReference; explicitFileType = text; path = example.ts; sourceTree = "<group>"; };
-		8311D9BF235DBD51006DC138 /* example.yaml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = example.yaml; sourceTree = "<group>"; };
-		8311D9C3235DBF0E006DC138 /* example.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = example.plist; sourceTree = "<group>"; };
 		8311D9C6235DE6D7006DC138 /* Data+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Ext.swift"; sourceTree = "<group>"; };
 		831D5F54237F0CF1007340E7 /* CustomTypeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTypeViewController.swift; sourceTree = "<group>"; };
 		831D5F5A237F1E87007340E7 /* UTI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UTI.swift; sourceTree = "<group>"; };
 		833C295C236028B000B14757 /* LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
+		83408DDD23804A0600128B0C /* examples */ = {isa = PBXFileReference; lastKnownFileType = folder; path = examples; sourceTree = "<group>"; };
+		83408DDF2380505000128B0C /* CSSControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSSControlView.swift; sourceTree = "<group>"; };
 		83592345235599F6001506B6 /* Syntax Highlight.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Syntax Highlight.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		83592348235599F6001506B6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8359234A235599F6001506B6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -265,19 +197,15 @@
 		8359239A23565890001506B6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		8359239C23570C52001506B6 /* SCSHError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCSHError.swift; sourceTree = "<group>"; };
 		835923BE23571FB7001506B6 /* Document.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Document.swift; sourceTree = "<group>"; };
-		835923CF2357A524001506B6 /* example.php */ = {isa = PBXFileReference; lastKnownFileType = text.script.php; path = example.php; sourceTree = "<group>"; };
-		835923DA23585DAE001506B6 /* example.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = example.sh; sourceTree = "<group>"; };
-		835923DC23585DC5001506B6 /* example.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = example.css; sourceTree = "<group>"; };
-		835923DE23585DD9001506B6 /* example.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = example.html; sourceTree = "<group>"; };
-		835923E023585DE7001506B6 /* example.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = example.js; sourceTree = "<group>"; };
-		835923E223585DFB001506B6 /* example.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = example.xml; sourceTree = "<group>"; };
 		835923E9235A022C001506B6 /* NSColor+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSColor+ext.swift"; sourceTree = "<group>"; };
 		835923EB235A3A85001506B6 /* SCSHTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCSHTheme.swift; sourceTree = "<group>"; };
 		835923ED235A5D33001506B6 /* SCSHSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCSHSettings.swift; sourceTree = "<group>"; };
 		837CFC8A2372EF5E00641AE4 /* VerticallyCenteredTextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticallyCenteredTextFieldCell.swift; sourceTree = "<group>"; };
-		837CFC982374B44300641AE4 /* example.pas */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.pascal; path = example.pas; sourceTree = "<group>"; usesTabs = 1; };
 		837DFC212375FE1E00920E72 /* PreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
+		837F088523802A8000D3893B /* SyntaxHighlight.help */ = {isa = PBXFileReference; lastKnownFileType = folder; path = SyntaxHighlight.help; sourceTree = "<group>"; };
 		839098C32379E34A005D3E7C /* String+GShell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+GShell.swift"; sourceTree = "<group>"; };
+		8390B18A23815B6500EA028A /* ThemeSelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeSelectorViewController.swift; sourceTree = "<group>"; };
+		8390B19023815FF200EA028A /* ThemeCollectionViewItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThemeCollectionViewItem.xib; sourceTree = "<group>"; };
 		83A0691023672FD100C795D6 /* style.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = style.css; sourceTree = "<group>"; };
 		83C09FC0236367140062BF39 /* outhtml_commandbar.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = outhtml_commandbar.lua; sourceTree = "<group>"; };
 		83C09FDA2365B9360062BF39 /* highlight */ = {isa = PBXFileReference; lastKnownFileType = folder; path = highlight; sourceTree = "<group>"; };
@@ -368,7 +296,8 @@
 				831D5F5A237F1E87007340E7 /* UTI.swift */,
 				835923E9235A022C001506B6 /* NSColor+ext.swift */,
 				837CFC8A2372EF5E00641AE4 /* VerticallyCenteredTextFieldCell.swift */,
-				835923CE2357A4F6001506B6 /* examples */,
+				83408DDD23804A0600128B0C /* examples */,
+				837F088523802A8000D3893B /* SyntaxHighlight.help */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -413,43 +342,6 @@
 			path = XPCService;
 			sourceTree = "<group>";
 		};
-		835923CE2357A4F6001506B6 /* examples */ = {
-			isa = PBXGroup;
-			children = (
-				835923CF2357A524001506B6 /* example.php */,
-				830D1562237987DE00D5535C /* example.diff */,
-				830D15642379882800D5535C /* example.go */,
-				830D155C237985F900D5535C /* example.jsx */,
-				830D155E2379865C00D5535C /* example.scpt */,
-				830D156C23798E6700D5535C /* example.sql */,
-				830D15682379891700D5535C /* example.lua */,
-				830D1560237986E000D5535C /* example.cs */,
-				835923DA23585DAE001506B6 /* example.sh */,
-				835923DC23585DC5001506B6 /* example.css */,
-				835923DE23585DD9001506B6 /* example.html */,
-				835923E023585DE7001506B6 /* example.js */,
-				837CFC982374B44300641AE4 /* example.pas */,
-				835923E223585DFB001506B6 /* example.xml */,
-				830D15702379909200D5535C /* example.swift */,
-				830D15662379889000D5535C /* example.java */,
-				8311D9AA235D99B8006DC138 /* example.json */,
-				8311D9AE235DA124006DC138 /* example.fsx */,
-				8311D9BF235DBD51006DC138 /* example.yaml */,
-				8311D9BE235DBCB3006DC138 /* example.ts */,
-				830D156E23798EF500D5535C /* example.vb */,
-				8311D9BD235DBC32006DC138 /* example.py */,
-				830D156A23798E4000D5535C /* example.rb */,
-				8311D9BB235DBBC9006DC138 /* example.pl */,
-				8311D9B7235DB9C7006DC138 /* example.dart */,
-				8311D9B8235DBB28006DC138 /* example.m */,
-				8311D9B4235DB93C006DC138 /* example.cpp */,
-				8311D9C3235DBF0E006DC138 /* example.plist */,
-				8311D9B1235DB8CA006DC138 /* example.c */,
-				830D15562379542500D5535C /* example.ini */,
-			);
-			path = examples;
-			sourceTree = "<group>";
-		};
 		83729D19236180B3002F400C /* resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -467,6 +359,9 @@
 				837DFC212375FE1E00920E72 /* PreferencesViewController.swift */,
 				830D1558237961C900D5535C /* WarningUTIViewController.swift */,
 				831D5F54237F0CF1007340E7 /* CustomTypeViewController.swift */,
+				83408DDF2380505000128B0C /* CSSControlView.swift */,
+				8390B18A23815B6500EA028A /* ThemeSelectorViewController.swift */,
+				8390B19023815FF200EA028A /* ThemeCollectionViewItem.xib */,
 			);
 			name = Preferences;
 			sourceTree = "<group>";
@@ -478,12 +373,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 83592355235599F9001506B6 /* Build configuration list for PBXNativeTarget "Syntax Highlight" */;
 			buildPhases = (
+				83408DE12380547200128B0C /* Indexing help */,
 				83592341235599F6001506B6 /* Sources */,
 				83592342235599F6001506B6 /* Frameworks */,
 				83592343235599F6001506B6 /* Resources */,
 				8359236E23559A2B001506B6 /* Embed App Extensions */,
 				8359238A23563BDF001506B6 /* Embed XPC Services */,
-				835923D823585979001506B6 /* CopyFiles */,
+				838F164E2380B01200A13F0F /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -618,6 +514,9 @@
 				8359234D235599F9001506B6 /* Assets.xcassets in Resources */,
 				83A0691123672FD100C795D6 /* style.css in Resources */,
 				83592350235599F9001506B6 /* Main.storyboard in Resources */,
+				83408DDE23804A0700128B0C /* examples in Resources */,
+				837F088623802A8000D3893B /* SyntaxHighlight.help in Resources */,
+				8390B19123815FF200EA028A /* ThemeCollectionViewItem.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -642,6 +541,27 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		83408DE12380547200128B0C /* Indexing help */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Indexing help";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\necho \"Indexing help…\"\nBASEDIR=${SRCROOT}/Application/SyntaxHighlight.help/Contents/Resources/ \ncd \"$BASEDIR\"\necho $BASEDIR\nfor f in *.lproj; do \n    echo \"Processing $f …\";\n    cd \"${BASEDIR}$f\"\n    echo `pwd`\n\n    hiutil -C --stopwords=en -v --anchors -I lsm -f \"search.helpindex\" .\n    hiutil -C --stopwords=en -v --anchors -I corespotlight -f \"search.cshelpindex\" .\n    hiutil -I corespotlight -T -v -f search.cshelpindex\n    hiutil -I corespotlight --list-anchors -v -f search.cshelpindex\n    # hiutil -I corespotlight --list-anchor-dictionary -v -f search.cshelpindex\n    cd \"$BASEDIR\"\ndone\n\n# echo \"Purge helpd cache…\"\n# hiutil --purge-caches\n# exit 0 # hiutil --purge-caches return a non zero exit code.\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		83592341235599F6001506B6 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -658,7 +578,9 @@
 				830D1559237961C900D5535C /* WarningUTIViewController.swift in Sources */,
 				831D5F5B237F1E87007340E7 /* UTI.swift in Sources */,
 				835923F0235A5EBA001506B6 /* SCSHSettings.swift in Sources */,
+				8390B18B23815B6500EA028A /* ThemeSelectorViewController.swift in Sources */,
 				835923EA235A022C001506B6 /* NSColor+ext.swift in Sources */,
+				83408DE02380505000128B0C /* CSSControlView.swift in Sources */,
 				8311D9C7235DE6D7006DC138 /* Data+Ext.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

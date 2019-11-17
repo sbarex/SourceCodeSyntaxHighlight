@@ -6,23 +6,27 @@
 //  Copyright © 2019 sbarex. All rights reserved.
 //
 //
-//  This file is part of SourceCodeSyntaxHighlight.
-//  SourceCodeSyntaxHighlight is free software: you can redistribute it and/or modify
+//  This file is part of SyntaxHighlight.
+//  SyntaxHighlight is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
 //  (at your option) any later version.
 //
-//  SourceCodeSyntaxHighlight is distributed in the hope that it will be useful,
+//  SyntaxHighlight is distributed in the hope that it will be useful,
 //  but WITHOUT ANY WARRANTY; without even the implied warranty of
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 //  GNU General Public License for more details.
 //
 //  You should have received a copy of the GNU General Public License
-//  along with SourceCodeSyntaxHighlight. If not, see <http://www.gnu.org/licenses/>.
+//  along with SyntaxHighlight. If not, see <http://www.gnu.org/licenses/>.
 
 import Foundation
 
-public class SCSHTheme {
+public class SCSHTheme: Equatable {
+    public static func == (lhs: SCSHTheme, rhs: SCSHTheme) -> Bool {
+        return lhs.name == rhs.name && lhs.isBase16 == rhs.isBase16
+    }
+    
     public struct ThemeProperty {
         public let color: String
         public let isBold: Bool
@@ -217,7 +221,7 @@ public class SCSHTheme {
     }
     
     /// Get a html code for preview the theme settings.
-    public func getHtmlExample(fontName: String, fontSize: Float) -> String {
+    public func getHtmlExample(fontName: String, fontSize: Float, showColorCodes: Bool = true) -> String {
         var cssFont = ""
         if fontName != "" {
             cssFont = "font-family: \(fontName); font-size: \(fontSize)pt; "
@@ -240,54 +244,66 @@ html, body {
     \(cssFont)
     user-select: none;
 }
+.color_code {
+    \(cssFont)
+    \(textColor)
+    display: \(showColorCodes ? "initial" : "none")
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+td {
+    padding: 2px;
+}
 </style>
 </head>
 <body>
         <table>
         <tr>
             <td style="\(self.properties.defaultProp.toCssStyle())\(cssFont)">standard color</td>
-            <td style="\(cssFont)\(textColor)">\(self.properties.defaultProp.color)</td>
+            <td class="color_code" style="\(cssFont)\(textColor)">\(self.properties.defaultProp.color)</td>
         </tr>
         <tr>
             <td style="\(self.properties.number.toCssStyle())\(cssFont)">number</td>
-            <td style="\(cssFont)\(textColor)">\(self.properties.number.color)</td>
+            <td class="color_code">\(self.properties.number.color)</td>
         </tr>
         <tr>
             <td style="\(self.properties.string.toCssStyle())\(cssFont)">string</td>
-            <td style="\(textColor)\(cssFont)">\(self.properties.string.color)</td>
+            <td class="color_code">\(self.properties.string.color)</td>
         </tr>
         <tr>
             <td style="\(self.properties.stringPreProc.toCssStyle())\(cssFont)">string pre proc</td>
-            <td style="\(textColor)\(cssFont)">\(self.properties.stringPreProc.color)</td>
+            <td class="color_code">\(self.properties.stringPreProc.color)</td>
         </tr>
         <tr>
             <td style="\(self.properties.operatorProp.toCssStyle())\(cssFont)">operators</td>
-            <td style="\(cssFont)\(textColor)">\(self.properties.operatorProp.color)</td>
+            <td class="color_code">\(self.properties.operatorProp.color)</td>
         </tr>
         <tr>
             <td style="\(self.properties.blockComment.toCssStyle())\(cssFont)">block comment</td>
-            <td style="\(cssFont)\(textColor)">\(self.properties.blockComment.color)</td>
+            <td class="color_code">\(self.properties.blockComment.color)</td>
         </tr>
         <tr>
             <td style="\(self.properties.lineComment.toCssStyle())\(cssFont)">inline comment</td>
-            <td style="\(cssFont)\(textColor)">\(self.properties.lineComment.color)</td>
+            <td class="color_code">\(self.properties.lineComment.color)</td>
         </tr>
         
         <tr>
             <td style="\(self.properties.escape.toCssStyle())\(cssFont)">escape</td>
-            <td style="\(cssFont)\(textColor)">\(self.properties.escape.color)</td>
+            <td class="color_code">\(self.properties.escape.color)</td>
         </tr>
         <tr>
             <td style="\(self.properties.preProcessor.toCssStyle())\(cssFont)">pre processor</td>
-            <td style="\(cssFont)\(textColor)">\(self.properties.preProcessor.color)</td>
+            <td class="color_code">\(self.properties.preProcessor.color)</td>
         </tr>
         <tr>
             <td style="\(self.properties.interpolation.toCssStyle())\(cssFont)">interpolation</td>
-            <td style="\(cssFont)\(textColor)">\(self.properties.interpolation.color)</td>
+            <td class="color_code">\(self.properties.interpolation.color)</td>
         </tr>
         <tr>
             <td style="\(self.properties.lineNum.toCssStyle())\(cssFont)">line number</td>
-            <td style="\(cssFont)\(textColor)">\(self.properties.lineNum.color)</td>
+            <td class="color_code">\(self.properties.lineNum.color)</td>
         </tr>
         
         \(keywords)
@@ -298,7 +314,7 @@ html, body {
     }
     
     /// Get a NSAttributedString for preview the theme settings.
-    public func getAttributedExample(fontName: String, fontSize: Float) -> NSAttributedString {
-        return NSAttributedString(html: getHtmlExample(fontName: fontName, fontSize: fontSize).data(using: .utf8)!, options: [:], documentAttributes: nil)!
+    public func getAttributedExample(fontName: String, fontSize: Float, showColorCodes: Bool = true) -> NSAttributedString {
+        return NSAttributedString(html: getHtmlExample(fontName: fontName, fontSize: fontSize, showColorCodes: showColorCodes).data(using: .utf8)!, options: [:], documentAttributes: nil)!
     }
 }

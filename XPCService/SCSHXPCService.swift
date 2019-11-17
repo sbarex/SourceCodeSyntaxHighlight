@@ -6,19 +6,19 @@
 //  Copyright © 2019 sbarex. All rights reserved.
 //
 //
-//  This file is part of SourceCodeSyntaxHighlight.
-//  SourceCodeSyntaxHighlight is free software: you can redistribute it and/or modify
+//  This file is part of SyntaxHighlight.
+//  SyntaxHighlight is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
 //  (at your option) any later version.
 //
-//  SourceCodeSyntaxHighlight is distributed in the hope that it will be useful,
+//  SyntaxHighlight is distributed in the hope that it will be useful,
 //  but WITHOUT ANY WARRANTY; without even the implied warranty of
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 //  GNU General Public License for more details.
 //
 //  You should have received a copy of the GNU General Public License
-//  along with SourceCodeSyntaxHighlight. If not, see <http://www.gnu.org/licenses/>.
+//  along with SyntaxHighlight. If not, see <http://www.gnu.org/licenses/>.
 
 import Foundation
 import OSLog
@@ -214,6 +214,17 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
             env["fontSizePoints"] = String(format: "%.2f", fontSize * (custom_settings.format == .html ? 0.75 : 1))
         }
         
+        var customCSS: URL? = nil
+        defer {
+            if let url = customCSS {
+                do {
+                    try FileManager.default.removeItem(at: url)
+                } catch {
+                    print(error)
+                }
+            }
+        }
+        
         // Output format.
         extraHLFlags.append("--out-format=\(format.rawValue)")
         if custom_settings.format == .rtf {
@@ -221,11 +232,30 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
             extraHLFlags.append("--char-styles")
         } else {
             if custom_settings.embedCustomStyle, let style = Bundle.main.path(forResource: "style", ofType: "css") {
-                extraHLFlags.append("--style-infile=\(style.g_shell_quote())")
+                extraHLFlags.append("--style-infile=\(style)")
+            }
+            
+            if let css = custom_settings.css, !css.isEmpty {
+                let directory = NSTemporaryDirectory()
+                let fileName = NSUUID().uuidString + ".css"
+                
+                customCSS = URL(fileURLWithPath: directory).appendingPathComponent(fileName)
+                // customCSS = URL(fileURLWithPath: NSHomeDirectory(), isDirectory: true).appendingPathComponent("Desktop/colorize.css")
+                do {
+                    try css.write(to: customCSS!, atomically: false, encoding: .utf8)
+                    extraHLFlags.append("--style-infile=\(customCSS!.path)")
+                } catch {
+                    customCSS = nil
+                }
             }
         }
         
-        env["extraHLFlags"] = extraHLFlags.joined(separator: "^")
+        env["extraHLFlags"] = extraHLFlags.joined(separator: "•")
+        if let preprocessor = try? custom_settings.preprocessor?.trimmingCharacters(in: CharacterSet.whitespaces).tokenize_command_line() {
+            env["preprocessorHL"] = preprocessor.joined(separator: "•")
+        } else {
+            env.removeValue(forKey: "preprocessorHL")
+        }
         
         /// Command to execute.
         let cmd = "\(self.rsrcEsc)/colorize.sh".g_shell_quote() + " " + self.rsrcEsc.g_shell_quote() + " " + target.g_shell_quote() + " 0"
@@ -241,7 +271,7 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
             let e = SCSHError.shellError(cmd: cmd, exitCode: result.exitCode, stdOut: result.output() ?? "", stdErr: result.errorOutput() ?? "", message: "QLColorCode: colorize.sh failed with exit code \(result.exitCode). Command was (\(cmd)).")
             throw e
         } else {
-            var final_settings = settings.overriding([
+            var final_settings = settings.overriding(fromDictionary: [
                 SCSHSettings.Key.format: format,
             ])
             if let t = theme {
@@ -412,7 +442,7 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
     /// Set and store the settings.
     func setSettings(_ settings: NSDictionary, reply: @escaping (Bool) -> Void) {
         if let s = settings as? [String: Any] {
-            self.settings.fromDictionary(s)
+            self.settings.override(fromDictionary: s)
             reply(self.settings.synchronize())
         } else {
             reply(false)

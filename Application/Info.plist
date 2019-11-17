@@ -2,6 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CFBundleHelpBookName</key>
+	<string>org.sbarex.SourceCodeSyntaxHighlight.help</string>
+	<key>CFBundleHelpBookFolder</key>
+	<string>SyntaxHighlight.help</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDocumentTypes</key>
@@ -113,7 +117,6 @@
 				<string>public.tex</string>
 				<string>public.text</string>
 				<string>public.xml</string>
-				<string>public.xsd</string>
 				<string>public.yaml</string>
 				<string>tk.tcl.tcl</string>
 				<string>tk.tcl.tcl-source</string>

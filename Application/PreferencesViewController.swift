@@ -1,24 +1,24 @@
 //
 //  PreferencesViewController.swift
-//  SourceCodeSyntaxHighlight
+//  SyntaxHighlight
 //
 //  Created by Sbarex on 08/11/2019.
 //  Copyright © 2019 sbarex. All rights reserved.
 //
 //
-//  This file is part of SourceCodeSyntaxHighlight.
-//  SourceCodeSyntaxHighlight is free software: you can redistribute it and/or modify
+//  This file is part of SyntaxHighlight.
+//  SyntaxHighlight is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
 //  (at your option) any later version.
 //
-//  SourceCodeSyntaxHighlight is distributed in the hope that it will be useful,
+//  SyntaxHighlight is distributed in the hope that it will be useful,
 //  but WITHOUT ANY WARRANTY; without even the implied warranty of
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 //  GNU General Public License for more details.
 //
 //  You should have received a copy of the GNU General Public License
-//  along with SourceCodeSyntaxHighlight. If not, see <http://www.gnu.org/licenses/>.
+//  along with SyntaxHighlight. If not, see <http://www.gnu.org/licenses/>.
 
 import Cocoa
 import WebKit
@@ -103,7 +103,11 @@ class PreferencesViewController: NSViewController {
     @IBOutlet weak var highlightPathPopup: NSPopUpButton!
     @IBOutlet weak var formatModeControl: NSSegmentedControl!
     @IBOutlet weak var themeLightPopup: NSPopUpButton!
+    @IBOutlet weak var themeLightButton: NSButton!
     @IBOutlet weak var themeDarkPopup: NSPopUpButton!
+    @IBOutlet weak var themeDarkButton: NSButton!
+    @IBOutlet weak var customCSSButton: NSButton!
+    
     @IBOutlet weak var fontPreviewTextField: NSTextField!
     @IBOutlet weak var fontChooseButton: NSButton!
     @IBOutlet weak var wordWrapPopup: NSPopUpButton!
@@ -132,7 +136,11 @@ class PreferencesViewController: NSViewController {
     
     @IBOutlet weak var utiThemeCheckbox: NSButton!
     @IBOutlet weak var utiThemeLightPopup: NSPopUpButton!
+    @IBOutlet weak var utiThemeLightButton: NSButton!
     @IBOutlet weak var utiThemeDarkPopup: NSPopUpButton!
+    @IBOutlet weak var utiThemeDarkButton: NSButton!
+    @IBOutlet weak var utiCustomCSSCheckbox: NSButton!
+    @IBOutlet weak var utiCustomCSSButton: NSButton!
     
     @IBOutlet weak var utiFontChecbox: NSButton!
     @IBOutlet weak var utiFontPreviewTextField: NSTextField!
@@ -151,6 +159,9 @@ class PreferencesViewController: NSViewController {
     
     @IBOutlet weak var utiArgumentsChecbox: NSButton!
     @IBOutlet weak var utiArgumentsTextField: NSTextField!
+    
+    @IBOutlet weak var utiPreprocessorCheckbox: NSButton!
+    @IBOutlet weak var utiPreprocessorTextField: NSTextField!
     
     @IBOutlet weak var utiPreviewThemeControl: NSSegmentedControl!
     @IBOutlet weak var utiRefreshIndicator: NSProgressIndicator!
@@ -214,6 +225,9 @@ class PreferencesViewController: NSViewController {
         }
     }
     
+    var customCSS: String? = nil
+    var utiCustomCSS: String? = nil
+    
     /// UTI settings in the detail view.
     var currentUTISettings: SCSHSettings? {
         didSet {
@@ -235,15 +249,25 @@ class PreferencesViewController: NSViewController {
                 utiSpecificArgumentsTextField.stringValue = currentUTISettings.utiExtra ?? ""
                 
                 utiThemeCheckbox.state = currentUTISettings.lightTheme != nil ? .on : .off
-                utiThemeLightPopup.isEnabled = utiThemeCheckbox.state == .on
-                utiThemeDarkPopup.isEnabled = utiThemeCheckbox.state == .on
+                utiThemeLightPopup.isEnabled = utiThemeCheckbox.state == .on && themes.count > 0
+                utiThemeLightButton.isEnabled = utiThemeLightPopup.isEnabled
+                utiThemeDarkPopup.isEnabled = utiThemeCheckbox.state == .on && themes.count > 0
+                utiThemeDarkButton.isEnabled = utiThemeDarkPopup.isEnabled
                 
                 let lightTheme = currentUTISettings.lightTheme ?? settings?.lightTheme ?? ""
-                let lightIndex = themes.firstIndex(where: { $0.name == lightTheme }) ?? 0
+                let lightTheme16 = currentUTISettings.lightThemeIsBase16 ?? settings?.lightThemeIsBase16 ?? false
+                let lightIndex = themes.firstIndex(where: { $0.name == lightTheme && $0.isBase16 == lightTheme16 }) ?? 0
                 utiThemeLightPopup.selectItem(at: lightIndex)
                 
+                utiCustomCSS = currentUTISettings.css
+                
+                utiCustomCSSCheckbox.isEnabled = formatModeControl.selectedSegment == 0
+                utiCustomCSSCheckbox.state = utiCustomCSS != nil ? .on : .off
+                utiCustomCSSButton.isEnabled = utiCustomCSSCheckbox.state == .on && utiCustomCSSCheckbox.isEnabled
+                
                 let darkTheme = currentUTISettings.darkTheme ?? settings?.darkTheme ?? ""
-                let darkIndex = themes.firstIndex(where: { $0.name  == darkTheme }) ?? 0
+                let darkTheme16 = currentUTISettings.darkThemeIsBase16 ?? settings?.darkThemeIsBase16 ?? false
+                let darkIndex = themes.firstIndex(where: { $0.name  == darkTheme && $0.isBase16 == darkTheme16 }) ?? 0
                 utiThemeDarkPopup.selectItem(at: darkIndex)
                 
                 utiFontChecbox.state = currentUTISettings.fontFamily != nil ? .on : .off
@@ -296,6 +320,10 @@ class PreferencesViewController: NSViewController {
                 utiArgumentsChecbox.state = currentUTISettings.extra != nil ? .on : .off
                 utiArgumentsTextField.isEnabled = utiArgumentsChecbox.state == .on
                 utiArgumentsTextField.stringValue = currentUTISettings.extra ?? settings?.extra ?? ""
+                
+                utiPreprocessorCheckbox.state = currentUTISettings.preprocessor != nil ? .on : .off
+                utiPreprocessorTextField.isEnabled = utiPreprocessorCheckbox.state == .on
+                utiPreprocessorTextField.stringValue = currentUTISettings.preprocessor ?? ""
                 
                 refreshUtiPreview(self)
                 
@@ -366,6 +394,13 @@ class PreferencesViewController: NSViewController {
         }
         examplesPopup.isEnabled = true
         
+        for view in [webView, scrollView, utiWebView, utiScrollView] {
+            view?.wantsLayer = true;
+            view?.layer?.cornerRadius = 4
+            view?.layer?.masksToBounds = true
+            view?.layer?.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        }
+        
         fetchSettings()
     }
     
@@ -381,6 +416,47 @@ class PreferencesViewController: NSViewController {
     override func prepare(for segue: NSStoryboardSegue, sender: Any?) {
         if segue.identifier == "WarningUTISegue", let vc = segue.destinationController as? WarningUTIViewController {
             vc.data = fileTypes.first(where: { $0.uti.UTI == currentUTISettings?.uti })?.getSuppressedExtensions(handledUti: allFileTypes.map( { $0.uti.UTI } )) ?? []
+        } else if segue.identifier == "CustomCSSSegue", let vc = segue.destinationController as? CSSControlView {
+            if sender as? NSButton == customCSSButton {
+                vc.cssCode = customCSS ?? ""
+                vc.handler = { css in
+                    self.customCSS = css.isEmpty ? nil : css
+                    self.refreshPreview(self)
+                }
+            } else {
+                vc.cssCode = utiCustomCSS ?? ""
+                vc.handler = { css in
+                    self.utiCustomCSS = css.isEmpty ? nil : css
+                    self.refreshUtiPreview(self)
+                }
+            }
+        } else if segue.identifier == "ThemeSegue", let vc = segue.destinationController as? ThemeSelectorViewController {
+            vc.allThemes = self.themes.map({ SCSHThemePreview(theme: $0) })
+            if let btn = sender as? NSButton {
+                vc.style = btn == themeLightButton || btn == utiThemeLightButton ? .light : .dark
+                
+                let popup: NSPopUpButton?
+                if btn == themeLightButton {
+                    popup = themeLightPopup
+                } else if btn == themeDarkButton {
+                    popup = themeDarkPopup
+                } else if btn == utiThemeLightButton {
+                    popup = utiThemeLightPopup
+                } else if btn == utiThemeDarkButton {
+                    popup = utiThemeDarkPopup
+                } else {
+                    popup = nil
+                }
+                
+                if let p = popup {
+                    vc.handler = { theme in
+                        if let i = self.themes.firstIndex(where: { $0 == theme }) {
+                            p.selectItem(at: i)
+                            self.handleThemeChange(p)
+                        }
+                    }
+                }
+            }
         }
     }
     
@@ -413,6 +489,7 @@ class PreferencesViewController: NSViewController {
         service.getSettings() {
             if let s = $0 as? [String: Any] {
                 self.settings = SCSHSettings(dictionary: s)
+                self.customCSS = self.settings?.css
             }
             
             self.processNextInitTask()
@@ -502,6 +579,8 @@ class PreferencesViewController: NSViewController {
         // HTML/RTF format
         self.formatModeControl.setSelected(true, forSegment: self.settings?.format == .rtf ? 1 : 0)
         self.formatModeControl.isEnabled = settings != nil
+        
+        customCSSButton.isEnabled = settings?.format == .html
         
         updateThemes()
         
@@ -606,7 +685,9 @@ class PreferencesViewController: NSViewController {
         }
         
         themeLightPopup.isEnabled = themes.count > 0
+        themeLightButton.isEnabled = themeLightPopup.isEnabled
         themeDarkPopup.isEnabled = themes.count > 0
+        themeDarkButton.isEnabled = themeDarkPopup.isEnabled
         
         if themes.count == 0 {
             themeLightPopup.addItem(withTitle: "No theme available")
@@ -678,6 +759,7 @@ class PreferencesViewController: NSViewController {
             settings.darkThemeIsBase16 = theme.isBase16
             settings.rtfDarkBackgroundColor = theme.backgroundColor
         }
+        settings.css = customCSS
         
         settings.fontFamily = self.fontPreviewTextField.font?.fontName
         if let size = self.fontPreviewTextField.font?.pointSize {
@@ -725,8 +807,7 @@ class PreferencesViewController: NSViewController {
     }
     
     /// Get a settings based on current customized global with apply the customization of active UTI.
-    func getUtiSettings() -> SCSHSettings
-    {
+    func getUtiSettings() -> SCSHSettings {
         var settings = getSettings()
         
         if utiThemeCheckbox.state == .on {
@@ -740,6 +821,10 @@ class PreferencesViewController: NSViewController {
                 settings.darkThemeIsBase16 = theme.isBase16
                 settings.rtfDarkBackgroundColor = theme.backgroundColor
             }
+        }
+        
+        if utiCustomCSSCheckbox.state == .on {
+            settings.css = utiCustomCSS
         }
         
         if utiFontChecbox.state == .on {
@@ -783,6 +868,10 @@ class PreferencesViewController: NSViewController {
         if utiArgumentsChecbox.state == .on {
             settings.extra = argumentsTextField.stringValue
         }
+        if utiPreprocessorCheckbox.state == .on {
+            let v = utiPreprocessorTextField.stringValue.trimmingCharacters(in: CharacterSet.whitespaces)
+            settings.preprocessor = v.isEmpty ? nil : v
+        }
         
         settings.extra = (settings.extra != nil ? settings.extra! + " " : "") + utiSpecificArgumentsTextField.stringValue
         
@@ -824,6 +913,12 @@ class PreferencesViewController: NSViewController {
             utiSettings.darkTheme = nil
             utiSettings.darkThemeIsBase16 = nil
             utiSettings.rtfDarkBackgroundColor = nil
+        }
+        
+        if utiCustomCSSCheckbox.state == .on {
+            utiSettings.css = utiCustomCSS ?? ""
+        } else {
+            utiSettings.css = nil
         }
         
         if utiFontChecbox.state == .on {
@@ -885,6 +980,13 @@ class PreferencesViewController: NSViewController {
             utiSettings.extra = nil
         }
         
+        if utiPreprocessorCheckbox.state == .on {
+            let v = utiPreprocessorTextField.stringValue.trimmingCharacters(in: CharacterSet.whitespaces)
+            utiSettings.preprocessor = v.isEmpty ? nil : v
+        } else {
+            utiSettings.preprocessor = nil
+        }
+        
         if utiSettings.isCustomized {
             settings?.setUTISettings(utiSettings)
         } else {
@@ -930,12 +1032,13 @@ class PreferencesViewController: NSViewController {
         
         let fontFamily: String
         let fontSize: Float
-        if tabView.tabViewItems.first?.tabState == .selectedTab {
-            fontFamily = settings?.fontFamily ?? "Menlo"
-            fontSize = settings?.fontSize ?? 10
+        
+        if tabView.selectedTabViewItem?.identifier as? String != "SpecificSettingsView" {
+            fontFamily = fontPreviewTextField.font?.fontName ?? "Menlo"
+            fontSize = Float(fontPreviewTextField.font?.pointSize ?? 12)
         } else {
-            fontFamily = currentUTISettings?.fontFamily ?? "Menlo"
-            fontSize = currentUTISettings?.fontSize ?? 10
+            fontFamily = utiFontPreviewTextField.font?.fontName ?? "Menlo"
+            fontSize = Float(utiFontPreviewTextField.font?.pointSize ?? 12)
         }
         if let font = NSFont(name: fontFamily, size: CGFloat(fontSize)) {
             fontPanel.setPanelFont(font, isMultiple: false)
@@ -963,15 +1066,19 @@ class PreferencesViewController: NSViewController {
     
     /// Handle format output change.
     @IBAction func handleFormatChange(_ sender: NSSegmentedControl) {
-        if sender == self.formatModeControl {
-            webView.isHidden = sender.indexOfSelectedItem != 0
-            scrollView.isHidden = sender.indexOfSelectedItem == 0
-            refreshPreview(sender)
-        } else {
-            utiWebView.isHidden = sender.indexOfSelectedItem != 0
-            utiScrollView.isHidden = sender.indexOfSelectedItem == 0
-            refreshUtiPreview(sender)
-        }
+        webView.isHidden = sender.indexOfSelectedItem != 0
+        scrollView.isHidden = sender.indexOfSelectedItem == 0
+        refreshPreview(sender)
+    
+        utiWebView.isHidden = sender.indexOfSelectedItem != 0
+        utiScrollView.isHidden = sender.indexOfSelectedItem == 0
+        
+        customCSSButton.isEnabled = sender.indexOfSelectedItem == 0
+        
+        utiCustomCSSCheckbox.isEnabled = self.currentUTISettings != nil && sender.indexOfSelectedItem == 0
+        utiCustomCSSButton.isEnabled = utiCustomCSSCheckbox.isEnabled && utiCustomCSSCheckbox.state == .on
+        
+        refreshUtiPreview(sender)
     }
     
     /// Handle theme change.
@@ -1084,6 +1191,14 @@ class PreferencesViewController: NSViewController {
     @IBAction func handleUtiThemeCheckbox(_ sender: NSButton) {
         utiThemeLightPopup.isEnabled = sender.state == .on
         utiThemeDarkPopup.isEnabled = sender.state == .on
+        utiThemeLightButton.isEnabled = sender.state == .on
+        utiThemeDarkButton.isEnabled = sender.state == .on
+        
+        refreshUtiPreview(sender)
+    }
+    
+    @IBAction func handleUtiCustomCSSCheckbox(_ sender: NSButton) {
+        utiCustomCSSButton.isEnabled = sender.state == .on
         refreshUtiPreview(sender)
     }
     
@@ -1111,6 +1226,11 @@ class PreferencesViewController: NSViewController {
     
     @IBAction func handleUtiArgumentsCheckbox(_ sender: NSButton) {
         utiArgumentsTextField.isEnabled = sender.state == .on
+        refreshUtiPreview(sender)
+    }
+    
+    @IBAction func handleUtiPreprocessorCheckbox(_ sender: NSButton) {
+        utiPreprocessorTextField.isEnabled = sender.state == .on
         refreshUtiPreview(sender)
     }
     
@@ -1182,9 +1302,9 @@ class PreferencesViewController: NSViewController {
             // Show standard theme preview.
             if let theme: SCSHTheme = themes.first(where: { $0.name == custom_settings.theme }) {
                 if custom_settings.format == .html {
-                    webView.loadHTMLString(theme.getHtmlExample(fontName: settings.fontFamily ?? "Menlo", fontSize: (settings.fontSize ?? 12) * 1), baseURL: nil)
+                    webView.loadHTMLString(theme.getHtmlExample(fontName: settings.fontFamily ?? "Menlo", fontSize: (settings.fontSize ?? 12) * 0.75), baseURL: nil)
                 } else {
-                    textView.textStorage?.setAttributedString(theme.getAttributedExample(fontName: custom_settings.fontFamily ?? "Menlo", fontSize: custom_settings.fontSize ?? 12))
+                    textView.textStorage?.setAttributedString(theme.getAttributedExample(fontName: custom_settings.fontFamily ?? "Menlo", fontSize: (custom_settings.fontSize ?? 12) * 0.75))
                     
                     if let bg = custom_settings.rtfBackgroundColor, let c = NSColor(fromHexString: bg) {
                         textView.backgroundColor = c
@@ -1198,6 +1318,19 @@ class PreferencesViewController: NSViewController {
     }
     
     // MARK: -
+    
+    @IBAction func showHelp(_ sender: Any) {
+        if let locBookName = Bundle.main.object(forInfoDictionaryKey: "CFBundleHelpBookName") as? String {
+            let anchor: String
+            if tabView.selectedTabViewItem?.identifier as? String == "SpecificSettingsView" {
+                anchor = "SyntaxHighlight_SPECIFIC_PREFERENCES"
+            } else {
+                anchor = "SyntaxHighlight_PREFERENCES"
+            }
+            
+            NSHelpManager.shared.openHelpAnchor(anchor, inBook: locBookName)
+        }
+    }
     
     /// Save the settings.
     @IBAction func saveAction(_ sender: Any) {
@@ -1282,10 +1415,10 @@ extension PreferencesViewController: NSFontChanging {
         
         if tabView.selectedTabViewItem?.identifier as? String == "GlobalSettingsView" {
             refreshFontPanel(withFont: font, isGlobal: true)
-            // refreshPreview(self)
+            refreshPreview(self)
         } else if tabView.selectedTabViewItem?.identifier as? String == "SpecificSettingsView" && utiFontChecbox.state == .on {
             refreshFontPanel(withFont: font, isGlobal: false)
-            // refreshUtiPreview(self)
+            refreshUtiPreview(self)
         }
     }
     

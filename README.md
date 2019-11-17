@@ -27,6 +27,8 @@ After the first execution, the quicklook extension will be available among those
 
 This extension don't provide a thumbnail service for the Finder icon. 
 
+SyntaxHighlight is distributed in the hope that it will be useful but WITHOUT ANY WARRANTY.
+
 
 ## File format management
 
@@ -50,7 +52,7 @@ In addition to the global settings for all supported file formats, you can set s
 ![File type settings window](settings_specific.png)
 
 In the file type Specific settings, there is a list of all file types supported by the quicklook extension.
-In this list the grayout items are those urrenty managed by others UTI. Clicking on the exclamation mark icon you will show which UTI is used for a given file extension.
+In this list the grayout items are those currenty managed by others UTI. Clicking on the exclamation mark icon you will show which UTI is used for a given file extension.
 
 ![File type settings window](settings_specific_warn.png)
 
