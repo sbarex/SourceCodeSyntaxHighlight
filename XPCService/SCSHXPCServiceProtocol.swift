@@ -30,8 +30,13 @@ import Foundation
     func setSettings(_ settings: NSDictionary, reply: @escaping (Bool) -> Void)
     
     func colorize(url: URL, overrideSettings: NSDictionary?, withReply reply: @escaping (Data, NSDictionary, Error?) -> Void)
+    func colorize(url: URL, settings: NSDictionary?, withReply reply: @escaping (Data, NSDictionary, Error?) -> Void)
+    
     func htmlColorize(url: URL, overrideSettings: NSDictionary?, withReply reply: @escaping (String, NSDictionary, Error?) -> Void)
+    func htmlColorize(url: URL,settings: NSDictionary?, withReply reply: @escaping (String, NSDictionary, Error?) -> Void)
+    
     func rtfColorize(url: URL, overrideSettings: NSDictionary?, withReply reply: @escaping (Data, NSDictionary, Error?) -> Void)
+    func rtfColorize(url: URL, settings: NSDictionary?, withReply reply: @escaping (Data, NSDictionary, Error?) -> Void)
     
     func getThemes(withReply reply: @escaping ([NSDictionary], Error?) -> Void)
     func getThemes(highlight path: String, withReply reply: @escaping ([NSDictionary], Error?) -> Void)

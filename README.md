@@ -32,12 +32,27 @@ SyntaxHighlight is distributed in the hope that it will be useful but WITHOUT AN
 
 ## File format management
 
-On MacOs every file extension is associated to an [Uniform Type Identifier (UTI)](https://developer.apple.com/library/archive/documentation/FileManagement/Conceptual/understanding_utis/understand_utis_intro/understand_utis_intro.html). Some files are directlly assocated to an UTI by the system. Other format are registered by the owner applications. In this way some extensions can be associated to multiple UTIs based on the applications currently installed. 
+The quicklook extension uses the [Uniform Type Identifier (UTI)](https://developer.apple.com/library/archive/documentation/FileManagement/Conceptual/understanding_utis/understand_utis_intro/understand_utis_intro.html) to handle the supported formats (and not simply the file name extension). 
+Inside the definition on an UTI there are the list of extensions and mime type assiaciated with it.
+
+Some file types are directlly assocated to an UTI by the system. Other formats are registered by the owner application. In this way some extensions can be associated to multiple UTIs based on the applications currently installed. 
 
 For this reason, this application supports many UTIs even if they are apparently redundant. 
 
 Apparently the operating system does not allow to manage some file formats including (but not limited to) .xml, .plist, .html, .ts, .dart.
 
+It's likely that I didn't associate all the possible extensions managed by `highlight`.
+
+With the inquiry window you can see if a specific file type is handled by the quicklook extension and also if it is recognized by `highlight`.
+
+![Inquiry window](inquiry.png)
+
+On Terminal you can see the UTI of a file with this command: 
+
+```
+$ mdls -name kMDItemContentType -name kMDItemContentTypeTree filename.ext
+```
+If you found an unhandled format please send me the output of above command.
 
 ## Application preferences
 

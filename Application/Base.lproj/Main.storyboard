@@ -394,7 +394,7 @@ DQ
                                                 <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="EwM-Mk-zsa">
                                                     <rect key="frame" x="129" y="546" width="119" height="21"/>
                                                     <segmentedCell key="cell" controlSize="small" enabled="NO" borderStyle="border" alignment="left" style="rounded" trackingMode="selectOne" id="LVJ-eE-W71">
-                                                        <font key="font" metaFont="message" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <segments>
                                                             <segment label="HTML" width="56" selected="YES"/>
                                                             <segment label="RTF" width="56" tag="1"/>
@@ -567,7 +567,7 @@ DQ
                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="o37-jg-sJl">
                                                     <rect key="frame" x="129" y="320" width="79" height="14"/>
                                                     <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" title="Not converted" id="RtN-RH-NFA">
-                                                        <font key="font" metaFont="message" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
@@ -575,7 +575,7 @@ DQ
                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rKz-8Q-Pro">
                                                     <rect key="frame" x="829" y="320" width="43" height="14"/>
                                                     <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" title="Spaces" id="Y3S-zs-Zi2">
-                                                        <font key="font" metaFont="message" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
@@ -668,7 +668,7 @@ DQ
                                                                 <rect key="frame" x="7" y="7" width="836" height="22"/>
                                                                 <popUpButtonCell key="cell" type="push" title="waiting…" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" enabled="NO" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="nxS-JN-x5m" id="ZRS-Qp-Xia">
                                                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                                                    <font key="font" metaFont="message" size="11"/>
+                                                                    <font key="font" metaFont="controlContent" size="11"/>
                                                                     <menu key="menu" autoenablesItems="NO" id="Zgg-nd-UWc">
                                                                         <items>
                                                                             <menuItem title="waiting…" state="on" id="nxS-JN-x5m"/>
@@ -716,7 +716,7 @@ DQ
                                                             <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6v5-gN-q1D">
                                                                 <rect key="frame" x="89" y="34" width="94" height="21"/>
                                                                 <segmentedCell key="cell" controlSize="small" enabled="NO" borderStyle="border" alignment="left" segmentDistribution="fillEqually" style="rounded" trackingMode="selectOne" id="Kvs-hB-Zmh">
-                                                                    <font key="font" metaFont="message" size="11"/>
+                                                                    <font key="font" metaFont="controlContent" size="11"/>
                                                                     <segments>
                                                                         <segment label="Light" selected="YES"/>
                                                                         <segment label="Dark" tag="1"/>
@@ -730,7 +730,7 @@ DQ
                                                                 <rect key="frame" x="814" y="30" width="31" height="27"/>
                                                                 <buttonCell key="cell" type="push" bezelStyle="rounded" image="NSRefreshTemplate" imagePosition="overlaps" alignment="center" controlSize="small" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="4Qa-U0-kd6">
                                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                                    <font key="font" metaFont="message" size="11"/>
+                                                                    <font key="font" metaFont="controlContent" size="11"/>
                                                                 </buttonCell>
                                                                 <connections>
                                                                     <action selector="refreshPreview:" target="Nbr-xI-AXM" id="xNt-9B-uMu"/>
@@ -739,7 +739,7 @@ DQ
                                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fK5-ia-3Mi">
                                                                 <rect key="frame" x="8" y="38" width="77" height="14"/>
                                                                 <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" title="Preview style:" id="GVZ-7d-eZX">
-                                                                    <font key="font" metaFont="message" size="11"/>
+                                                                    <font key="font" metaFont="controlContent" size="11"/>
                                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                 </textFieldCell>
@@ -1316,6 +1316,7 @@ DQ
                                                             </button>
                                                             <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8Dd-kc-vz4">
                                                                 <rect key="frame" x="149" y="210" width="419" height="21"/>
+                                                                <string key="toolTip">Preprocessor is any command line program or shell script that receives the name of the file to be processed as the last parameter and returns the data to be formatted on stdout.</string>
                                                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="zRn-Xy-5Ww">
                                                                     <font key="font" usesAppearanceFont="YES"/>
                                                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -1961,7 +1962,7 @@ Gw
                                                 <segmentedControl verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="anU-8k-vjf">
                                                     <rect key="frame" x="285" y="1" width="102" height="20"/>
                                                     <segmentedCell key="cell" borderStyle="border" alignment="left" style="roundRect" trackingMode="selectOne" id="Xdm-Hu-yVB">
-                                                        <font key="font" metaFont="controlContent"/>
+                                                        <font key="font" metaFont="label" size="12"/>
                                                         <segments>
                                                             <segment toolTip="All styles." image="mixed" width="32" selected="YES"/>
                                                             <segment toolTip="Only light style." image="light" width="32" tag="1"/>
@@ -2025,7 +2026,7 @@ Gw
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" resizable="YES"/>
                         <windowCollectionBehavior key="collectionBehavior" fullScreenNone="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-                        <rect key="contentRect" x="196" y="240" width="480" height="270"/>
+                        <rect key="contentRect" x="196" y="240" width="480" height="103"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
                         <connections>
                             <outlet property="delegate" destination="2nQ-WR-o2W" id="qvs-PI-QgB"/>
@@ -2037,29 +2038,18 @@ Gw
                 </windowController>
                 <customObject id="Agl-xh-fQX" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2201" y="-24"/>
+            <point key="canvasLocation" x="2227" y="-409.5"/>
         </scene>
         <!--Custom Type View Controller-->
         <scene sceneID="RfF-TF-f3H">
             <objects>
                 <viewController id="PoJ-5u-dmW" customClass="CustomTypeViewController" customModule="Syntax_Highlight" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="dlh-YW-hhq">
-                        <rect key="frame" x="0.0" y="0.0" width="450" height="169"/>
+                        <rect key="frame" x="0.0" y="0.0" width="451" height="183"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Wo3-40-UKc" customClass="DropView" customModule="Syntax_Highlight" customModuleProvider="target">
-                                <rect key="frame" x="18" y="49" width="414" height="100"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="100" id="O3J-cC-yfl"/>
-                                </constraints>
-                                <textFieldCell key="cell" lineBreakMode="truncatingMiddle" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="center" title="Drag a file here." id="x0c-3I-f9U" customClass="VerticallyCenteredTextFieldCell" customModule="Syntax_Highlight" customModuleProvider="target">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
                             <stackView distribution="fill" orientation="horizontal" alignment="centerY" spacing="2" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="y1t-Wr-MP3">
-                                <rect key="frame" x="20" y="23" width="339" height="16"/>
+                                <rect key="frame" x="20" y="23" width="340" height="16"/>
                                 <subviews>
                                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="h5a-an-b47">
                                         <rect key="frame" x="0.0" y="0.0" width="16" height="16"/>
@@ -2070,7 +2060,7 @@ Gw
                                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="NSStatusPartiallyAvailable" id="aBU-l4-gjK"/>
                                     </imageView>
                                     <textField horizontalHuggingPriority="251" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Ner-ej-Wgb">
-                                        <rect key="frame" x="16" y="1" width="325" height="14"/>
+                                        <rect key="frame" x="16" y="1" width="326" height="14"/>
                                         <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" title="Not supported by highlight." id="Dzi-hL-J9I">
                                             <font key="font" metaFont="message" size="11"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -2088,7 +2078,7 @@ Gw
                                 </customSpacing>
                             </stackView>
                             <button horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5A8-0N-fGY">
-                                <rect key="frame" x="361" y="13" width="75" height="32"/>
+                                <rect key="frame" x="362" y="13" width="75" height="32"/>
                                 <buttonCell key="cell" type="push" title="Close" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="98F-N3-olo">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -2100,27 +2090,49 @@ Gw
                                     <action selector="performClose:" target="sQm-hJ-8MR" id="J8z-k5-rPO"/>
                                 </connections>
                             </button>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="Ghr-IO-dv8" customClass="DropView" customModule="Syntax_Highlight" customModuleProvider="target">
+                                <rect key="frame" x="20" y="61" width="411" height="102"/>
+                                <subviews>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xhD-o8-2qG">
+                                        <rect key="frame" x="155" y="43" width="101" height="16"/>
+                                        <textFieldCell key="cell" lineBreakMode="clipping" selectable="YES" alignment="center" title="Drag a file here" id="1mh-Ef-NZO">
+                                            <font key="font" usesAppearanceFont="YES"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="100" id="8EX-64-LkX"/>
+                                    <constraint firstItem="xhD-o8-2qG" firstAttribute="centerX" secondItem="Ghr-IO-dv8" secondAttribute="centerX" id="e8q-27-bzp"/>
+                                    <constraint firstItem="xhD-o8-2qG" firstAttribute="centerY" secondItem="Ghr-IO-dv8" secondAttribute="centerY" id="e9L-qM-0MX"/>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="xhD-o8-2qG" secondAttribute="trailing" constant="20" symbolic="YES" id="hsT-I3-sJC"/>
+                                    <constraint firstItem="xhD-o8-2qG" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Ghr-IO-dv8" secondAttribute="leading" constant="20" symbolic="YES" id="nwM-cV-ir5"/>
+                                </constraints>
+                            </customView>
                         </subviews>
                         <constraints>
+                            <constraint firstItem="Ghr-IO-dv8" firstAttribute="leading" secondItem="dlh-YW-hhq" secondAttribute="leading" constant="20" symbolic="YES" id="1QY-sf-SJw"/>
                             <constraint firstItem="y1t-Wr-MP3" firstAttribute="leading" secondItem="dlh-YW-hhq" secondAttribute="leading" constant="20" symbolic="YES" id="6J2-6d-FUi"/>
                             <constraint firstAttribute="trailing" secondItem="5A8-0N-fGY" secondAttribute="trailing" constant="20" symbolic="YES" id="AWT-g6-Zyh"/>
-                            <constraint firstAttribute="trailing" secondItem="Wo3-40-UKc" secondAttribute="trailing" constant="20" symbolic="YES" id="BfZ-Zt-Mc5"/>
                             <constraint firstItem="5A8-0N-fGY" firstAttribute="leading" secondItem="y1t-Wr-MP3" secondAttribute="trailing" constant="8" symbolic="YES" id="E1s-TJ-p6z"/>
-                            <constraint firstItem="Wo3-40-UKc" firstAttribute="leading" secondItem="dlh-YW-hhq" secondAttribute="leading" constant="20" symbolic="YES" id="Iyz-Qr-6yi"/>
-                            <constraint firstItem="Wo3-40-UKc" firstAttribute="top" secondItem="dlh-YW-hhq" secondAttribute="top" constant="20" symbolic="YES" id="cli-lT-j9S"/>
+                            <constraint firstItem="5A8-0N-fGY" firstAttribute="top" secondItem="Ghr-IO-dv8" secondAttribute="bottom" constant="20" symbolic="YES" id="NyW-WW-aVM"/>
+                            <constraint firstItem="Ghr-IO-dv8" firstAttribute="top" secondItem="dlh-YW-hhq" secondAttribute="top" constant="20" symbolic="YES" id="bem-t3-0Mx"/>
+                            <constraint firstAttribute="trailing" secondItem="Ghr-IO-dv8" secondAttribute="trailing" constant="20" symbolic="YES" id="caa-i2-j81"/>
                             <constraint firstItem="y1t-Wr-MP3" firstAttribute="centerY" secondItem="5A8-0N-fGY" secondAttribute="centerY" id="dfm-CO-978"/>
                             <constraint firstAttribute="bottom" secondItem="5A8-0N-fGY" secondAttribute="bottom" constant="20" symbolic="YES" id="e7f-tX-Bb6"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="dropView" destination="Wo3-40-UKc" id="JUm-ti-TFS"/>
+                        <outlet property="dropView" destination="Ghr-IO-dv8" id="AQF-ZT-B2N"/>
+                        <outlet property="labelView" destination="xhD-o8-2qG" id="mLz-GT-6pq"/>
                         <outlet property="warningImage" destination="h5a-an-b47" id="a5Y-c0-LhR"/>
                         <outlet property="warningLabel" destination="Ner-ej-Wgb" id="c9u-ch-b4x"/>
                     </connections>
                 </viewController>
                 <customObject id="sQm-hJ-8MR" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2201" y="339.5"/>
+            <point key="canvasLocation" x="2228" y="-133"/>
         </scene>
     </scenes>
     <resources>

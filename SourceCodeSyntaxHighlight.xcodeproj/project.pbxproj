@@ -49,6 +49,7 @@
 		837CFC8B2372EF5E00641AE4 /* VerticallyCenteredTextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837CFC8A2372EF5E00641AE4 /* VerticallyCenteredTextFieldCell.swift */; };
 		837DFC222375FE1E00920E72 /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837DFC212375FE1E00920E72 /* PreferencesViewController.swift */; };
 		837F088623802A8000D3893B /* SyntaxHighlight.help in Resources */ = {isa = PBXBuildFile; fileRef = 837F088523802A8000D3893B /* SyntaxHighlight.help */; };
+		838B78B5238293EE00619951 /* inquiry.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 838B78B0238292FD00619951 /* inquiry.png */; };
 		838F164F2380B05600A13F0F /* settings.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8311D9A6235CE0A8006DC138 /* settings.png */; };
 		838F16502380B05800A13F0F /* settings_specific.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 830D155A23797CC100D5535C /* settings_specific.png */; };
 		838F16512380B05B00A13F0F /* extensions.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8311D9A8235CE6D7006DC138 /* extensions.png */; };
@@ -141,6 +142,7 @@
 				838F16502380B05800A13F0F /* settings_specific.png in CopyFiles */,
 				838F16522380B06200A13F0F /* settings_specific_warn.png in CopyFiles */,
 				838F16512380B05B00A13F0F /* extensions.png in CopyFiles */,
+				838B78B5238293EE00619951 /* inquiry.png in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -203,6 +205,7 @@
 		837CFC8A2372EF5E00641AE4 /* VerticallyCenteredTextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticallyCenteredTextFieldCell.swift; sourceTree = "<group>"; };
 		837DFC212375FE1E00920E72 /* PreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
 		837F088523802A8000D3893B /* SyntaxHighlight.help */ = {isa = PBXFileReference; lastKnownFileType = folder; path = SyntaxHighlight.help; sourceTree = "<group>"; };
+		838B78B0238292FD00619951 /* inquiry.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = inquiry.png; sourceTree = "<group>"; };
 		839098C32379E34A005D3E7C /* String+GShell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+GShell.swift"; sourceTree = "<group>"; };
 		8390B18A23815B6500EA028A /* ThemeSelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeSelectorViewController.swift; sourceTree = "<group>"; };
 		8390B19023815FF200EA028A /* ThemeCollectionViewItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThemeCollectionViewItem.xib; sourceTree = "<group>"; };
@@ -262,6 +265,7 @@
 				830D155A23797CC100D5535C /* settings_specific.png */,
 				830D155B23797D8000D5535C /* settings_specific_warn.png */,
 				8311D9A8235CE6D7006DC138 /* extensions.png */,
+				838B78B0238292FD00619951 /* inquiry.png */,
 				83088A82236CC0330092180E /* .gitignore */,
 				83592347235599F6001506B6 /* Application */,
 				8359236023559A2B001506B6 /* QLExtension */,
@@ -777,7 +781,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 13;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = Application/Info.plist;
@@ -802,7 +806,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 13;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = Application/Info.plist;

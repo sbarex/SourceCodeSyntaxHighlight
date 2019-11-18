@@ -2,10 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>CFBundleHelpBookName</key>
-	<string>org.sbarex.SourceCodeSyntaxHighlight.help</string>
-	<key>CFBundleHelpBookFolder</key>
-	<string>SyntaxHighlight.help</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDocumentTypes</key>
@@ -23,6 +19,7 @@
 				<string>com.apple.applescript.script</string>
 				<string>com.apple.applescript.text</string>
 				<string>com.apple.property-list</string>
+				<string>com.barebones.bbedit.scss-source</string>
 				<string>com.barebones.bbedit.verilog-hdl-source</string>
 				<string>com.barebones.bbedit.vhdl-source</string>
 				<string>com.dhowett.logos</string>
@@ -135,6 +132,10 @@
 	</array>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleHelpBookFolder</key>
+	<string>SyntaxHighlight.help</string>
+	<key>CFBundleHelpBookName</key>
+	<string>org.sbarex.SourceCodeSyntaxHighlight.help</string>
 	<key>CFBundleIconFile</key>
 	<string></string>
 	<key>CFBundleIdentifier</key>
@@ -1307,6 +1308,25 @@
 	</array>
 	<key>UTImportedTypeDeclarations</key>
 	<array>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.source-code</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>SCSS source file</string>
+			<key>UTTypeIconFile</key>
+			<string>BBEditTextDocument.icns</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.barebones.bbedit.scss-source</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>scss</string>
+				</array>
+			</dict>
+		</dict>
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<string>public.text</string>

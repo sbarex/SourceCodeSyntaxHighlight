@@ -172,11 +172,11 @@ go4it () {
     
     debug "# generating the preview…"
     if [ "${thumb}" = "1" ]; then
-        ${reader} | head -n 100 | head -c 20000 | "${cmd}" ${cmdOpts} 2>> ${err_device} && exit 0
+        ${reader} 2>> ${err_device} | head -n 100 | head -c 20000 | "${cmd}" ${cmdOpts} 2>> ${err_device} && exit 0
     elif [ -n "${maxFileSize}" ]; then
-        ${reader} | head -c ${maxFileSize} | "${cmd}" -T "${target}" ${cmdOpts} 2>> ${err_device} && exit 0
+        ${reader} 2>> ${err_device} | head -c ${maxFileSize} | "${cmd}" -T "${target}" ${cmdOpts} 2>> ${err_device} && exit 0
     else
-        ${reader} | "${cmd}" -T "${target}" ${cmdOpts} 2>> ${err_device} && exit 0
+        ${reader} 2>> ${err_device} | "${cmd}" -T "${target}" ${cmdOpts} 2>> ${err_device} && exit 0
     fi
 }
 

@@ -23,7 +23,7 @@
 import Cocoa
 import Syntax_Highlight_XPC_Service
 
-class DropView: NSTextField {
+class DropView: NSView {
     weak var dropDelegate: DropViewDelegate?
     
     var acceptableTypes: [NSPasteboard.PasteboardType] { return [.fileURL] }
@@ -61,25 +61,10 @@ class DropView: NSTextField {
             do {
                 let v = try url.resourceValues(forKeys: [URLResourceKey.typeIdentifierKey])
                 if let uti = v.typeIdentifier {
-                    let s = NSMutableAttributedString()
-                    
                     let u = UTI(uti)
                     dropDelegate?.setUTI(u)
-                    
-                    var label: String = u.description
-                    if u.extensions.count > 0 {
-                        label += (label.isEmpty ? "" : " ") + "[.\(u.extensions.joined(separator: ", ."))]"
-                    }
-                    
-                    let style = NSMutableParagraphStyle()
-                    style.alignment = .center
-        
-                    if !label.isEmpty {
-                        s.append(NSAttributedString(string: label + "\n", attributes: [NSAttributedString.Key.paragraphStyle: style]))
-                    }
-                    s.append(NSAttributedString(string: uti, attributes: [NSAttributedString.Key.font : NSFont.systemFont(ofSize: NSFont.systemFontSize(for: NSControl.ControlSize.small)), NSAttributedString.Key.paragraphStyle: style]))
-                    
-                    self.attributedStringValue = s
+                } else {
+                    dropDelegate?.setUTI(nil)
                 }
             } catch {
                 dropDelegate?.setUTI(nil)
@@ -97,9 +82,9 @@ protocol DropViewDelegate: class {
 
 class CustomTypeViewController: NSViewController, DropViewDelegate {
     @IBOutlet weak var dropView: DropView!
+    @IBOutlet weak var labelView: NSTextField!
     @IBOutlet weak var warningLabel: NSTextField!
     @IBOutlet weak var warningImage: NSImageView!
-    @IBOutlet weak var saveButton: NSButton?
     
     var service: SCSHXPCServiceProtocol? {
         return (NSApplication.shared.delegate as? AppDelegate)?.service
@@ -111,31 +96,45 @@ class CustomTypeViewController: NSViewController, DropViewDelegate {
         didSet {
             warningLabel.isHidden = true
             warningImage.isHidden = true
-            saveButton?.isEnabled = false
             isUTIValid = false
             
             if let uti = self.UTI {
+                let s = NSMutableAttributedString()
+                var label: String = uti.description
+                if uti.extensions.count > 0 {
+                    label += (label.isEmpty ? "" : " ") + "[.\(uti.extensions.joined(separator: ", ."))]"
+                }
+                
+                let style = NSMutableParagraphStyle()
+                style.alignment = .center
+    
+                if !label.isEmpty {
+                    s.append(NSAttributedString(string: label + "\n", attributes: [NSAttributedString.Key.paragraphStyle: style]))
+                }
+                s.append(NSAttributedString(string: uti.UTI, attributes: [NSAttributedString.Key.font : NSFont.systemFont(ofSize: NSFont.systemFontSize(for: NSControl.ControlSize.small)), NSAttributedString.Key.paragraphStyle: style]))
+                
+                labelView.attributedStringValue = s
+                
                 if let _ = handledUTIs.first(where: { $0.uti == uti }) {
                     self.warningLabel.stringValue = "Format recognized by the extension."
                     self.warningImage.image = NSImage(named: NSImage.statusAvailableName)
                     
                     self.warningLabel.isHidden = false
                     self.warningImage.isHidden = false
-                    self.saveButton?.isEnabled = false
                     
                     return
                 } else {
                     service?.areSomeSyntaxSupported(uti.extensions, overrideSettings: nil, reply: { (state) in
-                        self.warningLabel.stringValue = state ? "Format handled by highlight but not by the extension" : "Format not supported by highlight."
+                        self.warningLabel.stringValue = state ? "Format handled by highlight but not by the extension." : "Format not supported by highlight."
                         self.warningImage.image = NSImage(named: state ? NSImage.statusPartiallyAvailableName : NSImage.statusUnavailableName)
-                        self.warningLabel.isHidden = state
-                        self.warningImage.isHidden = state
-                        self.saveButton?.isEnabled = true
+                        self.warningLabel.isHidden = false
+                        self.warningImage.isHidden = false
                         
                         self.isUTIValid = state
                     })
                 }
-                
+            } else {
+                labelView.stringValue = "Drag a file here"
             }
         }
     }
@@ -147,7 +146,6 @@ class CustomTypeViewController: NSViewController, DropViewDelegate {
         
         self.warningLabel.isHidden = true
         self.warningImage.isHidden = true
-        self.saveButton?.isEnabled = false
         
         handledUTIs = (NSApplication.shared.delegate as? AppDelegate)?.fetchHandledUTIs() ?? []
     }

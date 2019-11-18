@@ -871,6 +871,8 @@ class PreferencesViewController: NSViewController {
         if utiPreprocessorCheckbox.state == .on {
             let v = utiPreprocessorTextField.stringValue.trimmingCharacters(in: CharacterSet.whitespaces)
             settings.preprocessor = v.isEmpty ? nil : v
+        } else {
+            settings.preprocessor = nil
         }
         
         settings.extra = (settings.extra != nil ? settings.extra! + " " : "") + utiSpecificArgumentsTextField.stringValue
@@ -1269,7 +1271,7 @@ class PreferencesViewController: NSViewController {
             /// Show a file.
             if custom_settings.format == .html {
                 webView.isHidden = true
-                service?.htmlColorize(url: url, overrideSettings: custom_settings.toDictionary() as NSDictionary) { (html, extra, error) in
+                service?.htmlColorize(url: url, settings: custom_settings.toDictionary() as NSDictionary) { (html, extra, error) in
                     DispatchQueue.main.async {
                         webView.loadHTMLString(html, baseURL: nil)
                         indicator.stopAnimation(self)
@@ -1278,7 +1280,7 @@ class PreferencesViewController: NSViewController {
                 }
             } else {
                 scrollText.isHidden = true
-                service?.rtfColorize(url: url, overrideSettings: custom_settings.toDictionary() as NSDictionary) { (response, effective_settings, error) in
+                service?.rtfColorize(url: url, settings: custom_settings.toDictionary() as NSDictionary) { (response, effective_settings, error) in
                     let text: NSAttributedString
                     if let e = error {
                         text = NSAttributedString(string: String(data: response, encoding: .utf8) ?? e.localizedDescription)

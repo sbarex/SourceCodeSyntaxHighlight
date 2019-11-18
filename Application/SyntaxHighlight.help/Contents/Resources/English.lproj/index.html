@@ -44,15 +44,28 @@
 
     <p>SyntaxHighlight is distributed in the hope that it will be useful but WITHOUT ANY WARRANTY.</p>
 
+
     <h2><a name="SyntaxHighlight_UTI"></a>File format management</h2>
 
-    <p>On MacOs every file extension is associated to an <a href="https://developer.apple.com/library/archive/documentation/FileManagement/Conceptual/understanding_utis/understand_utis_intro/understand_utis_intro.html">Uniform Type Identifier (UTI)</a>. Some files are directlly assocated to an UTI by the system. Other format are registered by the owner applications. In this way some extensions can be associated to multiple UTIs based on the applications currently installed.</p>
-
-    <p>For this reason, this application supports many UTIs even if they are apparently redundant.</p>
+    <p>The quicklook extension uses the <a href="https://developer.apple.com/library/archive/documentation/FileManagement/Conceptual/understanding_utis/understand_utis_intro/understand_utis_intro.html">Uniform Type Identifier (UTI)</a> to handle the supported formats (and not simply the file name extension).
+    Inside the definition on an UTI there are the list of extensions and mime type assiaciated with it. </p>
+    
+    <p>Some file types are directlly assocated to an UTI by the system. Other formats are registered by the owner application. In this way some extensions can be associated to multiple UTIs based on the applications currently installed. <br />
+        For this reason, this application supports many UTIs even if they are apparently redundant. </p>
 
     <p>Apparently the operating system does not allow to manage some file formats including (but not limited to) .xml, .plist, .html, .ts, .dart.</p>
 
+    <p>With the inquiry window you can see if a specific file type is handled by the quicklook extension and also if it is recognized by <code>highlight</code>.</p>
+
+    <div><img src="images/inquiry.png" alt="Inquiry window" /></div>
+
+    <p>On Terminal you can see the UTI of a file with this command: </p>
+
+    <pre>$ mdls -name kMDItemContentType -name kMDItemContentTypeTree filename.ext</pre>
+
+    <p>If you found an unhandled format please send me the output of above command.</p>
     <br />
+    <hr />
 
     <ul>
         <li><a href="help:anchor=SyntaxHighlight_PREFERENCES bookID=org.sbarex.SourceCodeSyntaxHighlight.help">Global settings</a></li>

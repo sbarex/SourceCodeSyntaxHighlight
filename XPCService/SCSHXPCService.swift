@@ -124,7 +124,7 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
     /// - parameters:
     ///   - url: File url to colorize.
     ///   - format: Format output.
-    ///   - overrideSettings: Settings thar override standard preferences.
+    ///   - custom_settings: Settings.
     private func colorize(url: URL, custom_settings: SCSHSettings) throws -> (result: TaskResult, settings: [String: Any]) {
         // Set environment variables.
         // All values on env are automatically quoted escaped.
@@ -302,6 +302,9 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
     }
     
     /// Colorize a source file returning a formatted rtf code.
+    /// - parameters
+    ///   - url: Url of source file to format.
+    ///   - overrideSettings: list of settings that override the current preferences. Only elements defined inside the dict are overriden.
     func colorize(url: URL, overrideSettings: NSDictionary? = nil, withReply reply: @escaping (Data, NSDictionary, Error?) -> Void) {
         var custom_settings: SCSHSettings
         
@@ -311,6 +314,27 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
             custom_settings = SCSHSettings(settings: settings)
         }
         custom_settings.override(fromDictionary: overrideSettings as? [String: Any])
+        
+        colorize(url: url, settings: custom_settings.toDictionary() as NSDictionary, withReply: reply)
+    }
+    
+    /// Colorize a source file returning a formatted rtf code.
+    /// - parameters
+    ///   - url: Url of source file to format.
+    ///   - settings: settings to use, is nil uses the current settings.
+    func colorize(url: URL, settings: NSDictionary? = nil, withReply reply: @escaping (Data, NSDictionary, Error?) -> Void) {
+        var custom_settings: SCSHSettings
+        
+        if let s = settings as? [String : Any] {
+            custom_settings = SCSHSettings(dictionary: s)
+        } else {
+            if let uti = (try? url.resourceValues(forKeys: [.typeIdentifierKey]))?.typeIdentifier {
+                custom_settings = self.settings.getGlobalSettingsForUti(uti) ?? SCSHSettings(settings: self.settings)
+            } else {
+                custom_settings = SCSHSettings(settings: self.settings)
+            }
+        }
+        
         do {
             let result = try colorize(url: url, custom_settings: custom_settings)
             reply(result.result.data, result.settings as NSDictionary, nil)
@@ -329,7 +353,23 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
             custom_settings = SCSHSettings(settings: settings)
         }
         custom_settings.override(fromDictionary: overrideSettings as? [String: Any])
-
+        
+        htmlColorize(url: url, settings: custom_settings.toDictionary() as NSDictionary, withReply: reply)
+    }
+    
+    func htmlColorize(url: URL, settings: NSDictionary? = nil, withReply reply: @escaping (String, NSDictionary, Error?) -> Void) {
+        var custom_settings: SCSHSettings
+        
+        if let s = settings as? [String: Any] {
+            custom_settings = SCSHSettings(dictionary: s)
+        } else {
+            if let uti = (try? url.resourceValues(forKeys: [.typeIdentifierKey]))?.typeIdentifier {
+                custom_settings = self.settings.getGlobalSettingsForUti(uti) ?? SCSHSettings(settings: self.settings)
+            } else {
+                custom_settings = SCSHSettings(settings: self.settings)
+            }
+        }
+        
         custom_settings.format = SCSHFormat.html
         do {
             let result = try colorize(url: url, custom_settings: custom_settings)
@@ -350,7 +390,23 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
         }
         custom_settings.override(fromDictionary: overrideSettings as? [String: Any])
         
+        rtfColorize(url: url, settings: custom_settings.toDictionary() as NSDictionary, withReply: reply)
+    }
+    
+    func rtfColorize(url: URL, settings: NSDictionary? = nil, withReply reply: @escaping (Data, NSDictionary, Error?) -> Void) {
+        var custom_settings: SCSHSettings
+        
+        if let s = settings as? [String: Any] {
+            custom_settings = SCSHSettings(dictionary: s)
+        } else {
+            if let uti = (try? url.resourceValues(forKeys: [.typeIdentifierKey]))?.typeIdentifier {
+                custom_settings = self.settings.getGlobalSettingsForUti(uti) ?? SCSHSettings(settings: self.settings)
+            } else {
+                custom_settings = SCSHSettings(settings: self.settings)
+            }
+        }
         custom_settings.format = SCSHFormat.rtf
+        
         do {
             let result = try colorize(url: url, custom_settings: custom_settings)
             reply(result.result.data, result.settings as NSDictionary, nil)
