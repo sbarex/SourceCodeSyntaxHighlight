@@ -123,6 +123,7 @@
 				<string>public.zsh-script</string>
 				<string>tk.tcl.tcl</string>
 				<string>tk.tcl.tcl-source</string>
+				<string>dyn.ah62d4rv4ge81g22</string>
 				<string>dyn.ah62d4rv4ge81g6pq</string>
 				<string>dyn.ah62d4rv4ge8007a</string>
 				<string>dyn.ah62d4rv4ge80s6xbqv0gn</string>
@@ -1216,6 +1217,7 @@
 			<array>
 				<string>public.source-code</string>
 				<string>dyn.ah62d4rv4ge81g22</string>
+				<string>dyn.ah62d4rv4ge81g25brvuu</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>Scala Source Code</string>
