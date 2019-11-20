@@ -89,6 +89,7 @@
 				<string>org.lua.lua-source</string>
 				<string>org.microsoft.inf</string>
 				<string>org.nfo</string>
+				<string>org.n8gray.awk</string>
 				<string>org.n8gray.bat</string>
 				<string>org.n8gray.diff-script</string>
 				<string>org.n8gray.idl</string>
@@ -116,6 +117,7 @@
 				<string>org.tug.tex</string>
 				<string>org.vim.vim-script</string>
 				<string>org.xul.source</string>
+				<string>public.bash-script</string>
 				<string>public.css</string>
 				<string>public.c-source</string>
 				<string>public.c-plus-plus-source</string>
@@ -136,16 +138,20 @@
 				<string>public.text</string>
 				<string>public.xml</string>
 				<string>public.yaml</string>
+				<string>public.zsh-script</string>
 				<string>tk.tcl.tcl</string>
 				<string>tk.tcl.tcl-source</string>
-				<string>dyn.ah62d4rv4ge81g6pq</string>
 				<string>dyn.ah62d4rv4ge8007a</string>
-				<string>dyn.ah62d4rv4ge80s6xbqv0gn</string>
-				<string>dyn.ah62d4rv4ge81g25brvuu</string>
+				<string>dyn.ah62d4rv4ge80c75p</string>
 				<string>dyn.ah62d4rv4ge80g62</string>
-				<string>dyn.ah62d4rv4ge80w5pq</string>
 				<string>dyn.ah62d4rv4ge80s52</string>
+				<string>dyn.ah62d4rv4ge80s6xbqv0gn</string>
+				<string>dyn.ah62d4rv4ge80w5pq</string>
 				<string>dyn.ah62d4rv4ge80y652</string>
+				<string>dyn.ah62d4rv4ge81g22</string>
+				<string>dyn.ah62d4rv4ge81g25brvuu</string>
+				<string>dyn.ah62d4rv4ge81g25xsq</string>
+				<string>dyn.ah62d4rv4ge81g6pq</string>
 			</array>
 			<key>QLSupportsSearchableItems</key>
 			<false/>
