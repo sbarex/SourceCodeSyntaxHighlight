@@ -72,6 +72,7 @@
 				<string>org.lua.lua-source</string>
 				<string>org.microsoft.inf</string>
 				<string>org.nfo</string>
+				<string>org.n8gray.awk</string>
 				<string>org.n8gray.bat</string>
 				<string>org.n8gray.diff-script</string>
 				<string>org.n8gray.idl</string>
@@ -123,15 +124,17 @@
 				<string>public.zsh-script</string>
 				<string>tk.tcl.tcl</string>
 				<string>tk.tcl.tcl-source</string>
-				<string>dyn.ah62d4rv4ge81g22</string>
-				<string>dyn.ah62d4rv4ge81g6pq</string>
 				<string>dyn.ah62d4rv4ge8007a</string>
-				<string>dyn.ah62d4rv4ge80s6xbqv0gn</string>
-				<string>dyn.ah62d4rv4ge81g25brvuu</string>
+				<string>dyn.ah62d4rv4ge80c75p</string>
 				<string>dyn.ah62d4rv4ge80g62</string>
-				<string>dyn.ah62d4rv4ge80w5pq</string>
 				<string>dyn.ah62d4rv4ge80s52</string>
+				<string>dyn.ah62d4rv4ge80s6xbqv0gn</string>
+				<string>dyn.ah62d4rv4ge80w5pq</string>
 				<string>dyn.ah62d4rv4ge80y652</string>
+				<string>dyn.ah62d4rv4ge81g22</string>
+				<string>dyn.ah62d4rv4ge81g25brvuu</string>
+				<string>dyn.ah62d4rv4ge81g25xsq</string>
+				<string>dyn.ah62d4rv4ge81g6pq</string>
 			</array>
 			<key>NSDocumentClass</key>
 			<string>$(PRODUCT_MODULE_NAME).Document</string>
@@ -842,6 +845,24 @@
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.source-code</string>
+				<string>dyn.ah62d4rv4ge80c75p</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>G(AWK) Source File</string>
+			<key>UTTypeIdentifier</key>
+			<string>org.n8gray.awk</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>awk</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.source-code</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>DOS Batch Source File</string>
@@ -1395,6 +1416,7 @@
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.source-code</string>
+				<string>dyn.ah62d4rv4ge81g25xsq</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>SCSS source file</string>
