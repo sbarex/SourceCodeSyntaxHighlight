@@ -42,12 +42,14 @@
 				<string>com.sun.javafx</string>
 				<string>com.sun.java-class</string>
 				<string>com.sun.manifest</string>
+				<string>com.unknown.lhs</string>
 				<string>net.daringfireball.markdown</string>
 				<string>org.applescript.source</string>
 				<string>org.arduino.ino-source</string>
 				<string>org.arduino.source</string>
 				<string>org.asm.source</string>
 				<string>org.bash.source</string>
+				<string>org.clojure</string>
 				<string>org.codehaus.groovy-source</string>
 				<string>org.coffee.source</string>
 				<string>org.coffeescript.coffeescript</string>
@@ -90,8 +92,10 @@
 				<string>org.ocaml.ocaml-source</string>
 				<string>org.omg.ecore</string>
 				<string>org.rdf.source</string>
+				<string>org.rust-lang.source</string>
 				<string>org.sbarex.dart</string>
 				<string>org.scala.source</string>
+				<string>org.tug.lua</string>
 				<string>org.tug.tex</string>
 				<string>org.vim.vim-script</string>
 				<string>org.xul.source</string>
@@ -528,6 +532,7 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>bashrc</string>
+					<string>zshrc</string>
 				</array>
 			</dict>
 		</dict>
@@ -694,6 +699,7 @@
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.source-code</string>
+				<string>com.unknown.lhs</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>Literate Haskell Source File</string>
@@ -781,6 +787,7 @@
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.source-code</string>
+				<string>org.tug.lua</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>Lua Source File</string>
@@ -850,6 +857,7 @@
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.script</string>
+				<string>public.patch-file</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>Diff File</string>
@@ -938,6 +946,7 @@
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.source-code</string>
+				<string>org.clojure</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>Lisp Source File</string>
@@ -1167,6 +1176,24 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
+				<string>public.source-code</string>
+				<string>dyn.ah62d4rv4ge81e62</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Rust Source File</string>
+			<key>UTTypeIdentifier</key>
+			<string>org.rust-lang.source</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>rust</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
 				<string>public.text</string>
 				<string>public.source-code</string>
 			</array>
@@ -1186,6 +1213,7 @@
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.source-code</string>
+				<string>dyn.ah62d4rv4ge81g22</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>Scala Source Code</string>
@@ -1195,6 +1223,8 @@
 			<dict>
 				<key>public.filename-extension</key>
 				<array>
+					<string>sc</string>
+					<string>sbt</string>
 					<string>scala</string>
 				</array>
 			</dict>
@@ -1291,6 +1321,19 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
+				<string>public.plain-text</string>
+			</array>
+			<key>UTTypeIdentifier</key>
+			<string>public.text</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<string>text</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
 				<string>public.source-code</string>
 			</array>
 			<key>UTTypeDescription</key>
@@ -1338,6 +1381,7 @@
 			<dict>
 				<key>public.filename-extension</key>
 				<string>xml</string>
+				<string>plist</string>
 				<key>public.mime-type</key>
 				<array>
 					<string>application/xml</string>
