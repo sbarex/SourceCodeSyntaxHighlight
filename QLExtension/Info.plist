@@ -120,6 +120,7 @@
 				<string>org.xul.source</string>
 				<string>public.bash-script</string>
 				<string>public.css</string>
+				<string>public.c-header</string>
 				<string>public.c-source</string>
 				<string>public.c-plus-plus-source</string>
 				<string>public.json</string>
