@@ -61,7 +61,6 @@
 				<string>com.sun.java-class</string>
 				<string>com.sun.manifest</string>
 				<string>com.unknown.lhs</string>
-				<string>net.daringfireball.markdown</string>
 				<string>org.applescript.source</string>
 				<string>org.arduino.ino-source</string>
 				<string>org.arduino.source</string>
