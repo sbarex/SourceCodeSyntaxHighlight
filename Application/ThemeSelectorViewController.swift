@@ -202,47 +202,11 @@ class ThemeCollectionViewItem: NSCollectionViewItem {
                 self.textField?.stringValue = theme.theme.desc
                 
                 if theme.image == nil {
-                    theme.image = theme.theme.getImage(size: CGSize(width: view.bounds.width, height: view.bounds.height - (textField?.bounds.height ?? 0)), font: NSFont(name: "Menlo", size: 4) ?? NSFont.systemFont(ofSize: 4))
+                    theme.image = theme.theme.getImage(size: CGSize(width: 90, height: 90), font: NSFont(name: "Menlo", size: 4) ?? NSFont.systemFont(ofSize: 4))
                 }
                 
                 self.imageView?.image = theme.image
                 self.textField?.toolTip = theme.theme.desc
-                
-                /*
-                if let rep = NSBitmapImageRep(
-                    bitmapDataPlanes: nil,
-                    pixelsWide: Int(size.width),
-                    pixelsHigh: Int(size.height),
-                    bitsPerSample: 8,
-                    samplesPerPixel: 4,
-                    hasAlpha: true,
-                    isPlanar: false,
-                    colorSpaceName: NSColorSpaceName.calibratedRGB,
-                    bytesPerRow: 0,
-                    bitsPerPixel: 0) {
-                
-                    if let context = NSGraphicsContext(bitmapImageRep: rep) {
-                
-                        NSGraphicsContext.saveGraphicsState()
-                        NSGraphicsContext.current = context
-                    
-                        if let c = NSColor(fromHexString: theme.backgroundColor) {
-                            c.set()
-                            rect.fill()
-                            
-                            //context.cgContext.setFillColor(c.cgColor)
-                            //context.cgContext.fill(rect)
-                        }
-    
-                        // drawFunc()
-                
-                        NSGraphicsContext.restoreGraphicsState()
-                    }
-                
-                    let image = NSImage(size: size)
-                    image.addRepresentation(rep)
-                }
-                */
             } else {
                 self.textField?.stringValue = ""
                 self.textField?.toolTip = nil

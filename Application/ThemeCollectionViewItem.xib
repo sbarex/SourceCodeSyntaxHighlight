@@ -10,30 +10,37 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <view id="lQb-Wa-IJH">
-            <rect key="frame" x="0.0" y="0.0" width="120" height="131"/>
+            <rect key="frame" x="0.0" y="0.0" width="90" height="120"/>
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
-                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mZv-j4-rQ5">
-                    <rect key="frame" x="0.0" y="11" width="120" height="120"/>
-                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageAlignment="top" imageScaling="proportionallyUpOrDown" id="EdP-Qy-28B"/>
+                <imageView translatesAutoresizingMaskIntoConstraints="NO" id="mZv-j4-rQ5">
+                    <rect key="frame" x="0.0" y="30" width="90" height="90"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="90" id="lXQ-2b-36D"/>
+                        <constraint firstAttribute="width" constant="90" id="trl-dU-azC"/>
+                    </constraints>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" id="EdP-Qy-28B"/>
                 </imageView>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsExpansionToolTips="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tkO-ff-Wmy">
-                    <rect key="frame" x="-2" y="0.0" width="124" height="11"/>
-                    <textFieldCell key="cell" controlSize="mini" lineBreakMode="truncatingMiddle" allowsUndo="NO" alignment="center" title="Label" usesSingleLineMode="YES" id="an3-3N-5ct">
+                <textField allowsExpansionToolTips="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tkO-ff-Wmy">
+                    <rect key="frame" x="-2" y="0.0" width="94" height="26"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="26" id="xlj-ps-iGe"/>
+                    </constraints>
+                    <textFieldCell key="cell" controlSize="mini" allowsUndo="NO" alignment="center" id="an3-3N-5ct">
                         <font key="font" metaFont="label" size="9"/>
+                        <string key="title">Label
+Label</string>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                     </textFieldCell>
                 </textField>
             </subviews>
             <constraints>
-                <constraint firstItem="tkO-ff-Wmy" firstAttribute="top" secondItem="mZv-j4-rQ5" secondAttribute="bottom" id="0Zg-TD-ewW"/>
                 <constraint firstAttribute="trailing" secondItem="tkO-ff-Wmy" secondAttribute="trailing" id="8SB-Tp-xEm"/>
                 <constraint firstAttribute="bottom" secondItem="tkO-ff-Wmy" secondAttribute="bottom" id="P98-PS-AiZ"/>
+                <constraint firstItem="mZv-j4-rQ5" firstAttribute="centerX" secondItem="lQb-Wa-IJH" secondAttribute="centerX" id="cyQ-1z-12o"/>
                 <constraint firstItem="mZv-j4-rQ5" firstAttribute="top" secondItem="lQb-Wa-IJH" secondAttribute="top" id="efS-k1-ZmJ"/>
-                <constraint firstItem="mZv-j4-rQ5" firstAttribute="leading" secondItem="lQb-Wa-IJH" secondAttribute="leading" id="hqe-lu-gh8"/>
                 <constraint firstItem="tkO-ff-Wmy" firstAttribute="leading" secondItem="lQb-Wa-IJH" secondAttribute="leading" id="lgO-pl-jsS"/>
-                <constraint firstAttribute="trailing" secondItem="mZv-j4-rQ5" secondAttribute="trailing" id="xXN-qi-zbE"/>
             </constraints>
             <point key="canvasLocation" x="139" y="154"/>
         </view>
