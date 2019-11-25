@@ -1,3 +1,9 @@
+1.0.b14
+
+New features:
+- merge pull request https://github.com/sbarex/SourceCodeSyntaxHighlight/pull/18 (support for awk, bash, clojure, diff, haskell, lua, patch, rust, scala, text, zsh)
+- added support for .r file format.
+
 1.0.b13
 
 New features:

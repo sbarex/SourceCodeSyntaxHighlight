@@ -36,6 +36,7 @@
 				<string>com.apple.applescript.script</string>
 				<string>com.apple.applescript.text</string>
 				<string>com.apple.property-list</string>
+				<string>com.apple.rez-source</string>
 				<string>com.barebones.bbedit.scss-source</string>
 				<string>com.barebones.bbedit.verilog-hdl-source</string>
 				<string>com.barebones.bbedit.vhdl-source</string>
