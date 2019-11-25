@@ -42,12 +42,14 @@
 				<string>com.sun.javafx</string>
 				<string>com.sun.java-class</string>
 				<string>com.sun.manifest</string>
+				<string>com.unknown.lhs</string>
 				<string>net.daringfireball.markdown</string>
 				<string>org.applescript.source</string>
 				<string>org.arduino.ino-source</string>
 				<string>org.arduino.source</string>
 				<string>org.asm.source</string>
 				<string>org.bash.source</string>
+				<string>org.clojure</string>
 				<string>org.codehaus.groovy-source</string>
 				<string>org.coffee.source</string>
 				<string>org.coffeescript.coffeescript</string>
@@ -70,6 +72,7 @@
 				<string>org.lua.lua-source</string>
 				<string>org.microsoft.inf</string>
 				<string>org.nfo</string>
+				<string>org.n8gray.awk</string>
 				<string>org.n8gray.bat</string>
 				<string>org.n8gray.diff-script</string>
 				<string>org.n8gray.idl</string>
@@ -90,11 +93,14 @@
 				<string>org.ocaml.ocaml-source</string>
 				<string>org.omg.ecore</string>
 				<string>org.rdf.source</string>
+				<string>org.rust-lang.source</string>
 				<string>org.sbarex.dart</string>
 				<string>org.scala.source</string>
+				<string>org.tug.lua</string>
 				<string>org.tug.tex</string>
 				<string>org.vim.vim-script</string>
 				<string>org.xul.source</string>
+				<string>public.bash-script</string>
 				<string>public.css</string>
 				<string>public.c-source</string>
 				<string>public.c-plus-plus-source</string>
@@ -115,16 +121,20 @@
 				<string>public.text</string>
 				<string>public.xml</string>
 				<string>public.yaml</string>
+				<string>public.zsh-script</string>
 				<string>tk.tcl.tcl</string>
 				<string>tk.tcl.tcl-source</string>
-				<string>dyn.ah62d4rv4ge81g6pq</string>
 				<string>dyn.ah62d4rv4ge8007a</string>
-				<string>dyn.ah62d4rv4ge80s6xbqv0gn</string>
-				<string>dyn.ah62d4rv4ge81g25brvuu</string>
+				<string>dyn.ah62d4rv4ge80c75p</string>
 				<string>dyn.ah62d4rv4ge80g62</string>
-				<string>dyn.ah62d4rv4ge80w5pq</string>
 				<string>dyn.ah62d4rv4ge80s52</string>
+				<string>dyn.ah62d4rv4ge80s6xbqv0gn</string>
+				<string>dyn.ah62d4rv4ge80w5pq</string>
 				<string>dyn.ah62d4rv4ge80y652</string>
+				<string>dyn.ah62d4rv4ge81g22</string>
+				<string>dyn.ah62d4rv4ge81g25brvuu</string>
+				<string>dyn.ah62d4rv4ge81g25xsq</string>
+				<string>dyn.ah62d4rv4ge81g6pq</string>
 			</array>
 			<key>NSDocumentClass</key>
 			<string>$(PRODUCT_MODULE_NAME).Document</string>
@@ -528,6 +538,7 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>bashrc</string>
+					<string>zshrc</string>
 				</array>
 			</dict>
 		</dict>
@@ -694,6 +705,7 @@
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.source-code</string>
+				<string>com.unknown.lhs</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>Literate Haskell Source File</string>
@@ -781,6 +793,7 @@
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.source-code</string>
+				<string>org.tug.lua</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>Lua Source File</string>
@@ -832,6 +845,24 @@
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.source-code</string>
+				<string>dyn.ah62d4rv4ge80c75p</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>G(AWK) Source File</string>
+			<key>UTTypeIdentifier</key>
+			<string>org.n8gray.awk</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>awk</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.source-code</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>DOS Batch Source File</string>
@@ -850,6 +881,7 @@
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.script</string>
+				<string>public.patch-file</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>Diff File</string>
@@ -938,6 +970,7 @@
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.source-code</string>
+				<string>org.clojure</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>Lisp Source File</string>
@@ -1167,6 +1200,24 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
+				<string>public.source-code</string>
+				<string>dyn.ah62d4rv4ge81e62</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Rust Source File</string>
+			<key>UTTypeIdentifier</key>
+			<string>org.rust-lang.source</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>rust</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
 				<string>public.text</string>
 				<string>public.source-code</string>
 			</array>
@@ -1186,6 +1237,8 @@
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.source-code</string>
+				<string>dyn.ah62d4rv4ge81g22</string>
+				<string>dyn.ah62d4rv4ge81g25brvuu</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>Scala Source Code</string>
@@ -1195,6 +1248,8 @@
 			<dict>
 				<key>public.filename-extension</key>
 				<array>
+					<string>sc</string>
+					<string>sbt</string>
 					<string>scala</string>
 				</array>
 			</dict>
@@ -1230,6 +1285,24 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>xul</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.source-code</string>
+				<string>public.shell-script</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Bash Script</string>
+			<key>UTTypeIdentifier</key>
+			<string>public.bash-script</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>bash</string>
 				</array>
 			</dict>
 		</dict>
@@ -1291,6 +1364,37 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
+				<string>public.plain-text</string>
+			</array>
+			<key>UTTypeIdentifier</key>
+			<string>public.text</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<string>text</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.source-code</string>
+				<string>public.shell-script</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Zsh Script</string>
+			<key>UTTypeIdentifier</key>
+			<string>public.zsh-script</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>zsh</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
 				<string>public.source-code</string>
 			</array>
 			<key>UTTypeDescription</key>
@@ -1312,6 +1416,7 @@
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.source-code</string>
+				<string>dyn.ah62d4rv4ge81g25xsq</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>SCSS source file</string>
@@ -1338,6 +1443,7 @@
 			<dict>
 				<key>public.filename-extension</key>
 				<string>xml</string>
+				<string>plist</string>
 				<key>public.mime-type</key>
 				<array>
 					<string>application/xml</string>
