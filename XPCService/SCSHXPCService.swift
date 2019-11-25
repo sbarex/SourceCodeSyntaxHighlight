@@ -219,6 +219,19 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
         var temporaryThemeFile: URL? = nil
         
         defer {
+            if custom_settings.debug {
+                let log = URL(fileURLWithPath: NSHomeDirectory(), isDirectory: true).appendingPathComponent("Desktop/colorize.log")
+                
+                // Log the custom theme.
+                if let url = temporaryThemeFile, let s = try? String(contentsOf: url) {
+                    try? "\n\n#######\n# Custom Theme:\n\(s)\n\n#######".append(to: log)
+                }
+                // Log the custom style.
+                if let url = temporaryCSSFile, let s = try? String(contentsOf: url) {
+                    try? "\n\n#######\n# Custom CSS:\n\(s)\n\n#######".append(to: log)
+                }
+            }
+            
             if let url = temporaryCSSFile {
                 do {
                     // Delete the temporary css.
@@ -414,19 +427,6 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
             os_log(OSLogType.error, log: self.log, "QLColorCode: colorize.sh failed with exit code %d. Command was (%{public}@).", result.exitCode, cmd)
             
             let e = SCSHError.shellError(cmd: cmd, exitCode: result.exitCode, stdOut: result.output() ?? "", stdErr: result.errorOutput() ?? "", message: "QLColorCode: colorize.sh failed with exit code \(result.exitCode). Command was (\(cmd)).")
-            
-            if custom_settings.debug {
-                let log = URL(fileURLWithPath: NSHomeDirectory(), isDirectory: true).appendingPathComponent("Desktop/colorize.log")
-                
-                // Log the custom theme.
-                if let url = temporaryThemeFile, let s = try? String(contentsOf: url) {
-                    try? "\n\n#######\n# Custom Theme:\n\(s)\n\n#######".append(to: log)
-                }
-                // Log the custom style.
-                if let url = temporaryCSSFile, let s = try? String(contentsOf: url) {
-                    try? "\n\n#######\n# Custom CSS:\n\(s)\n\n#######".append(to: log)
-                }
-            }
             
             throw e
         } else {
