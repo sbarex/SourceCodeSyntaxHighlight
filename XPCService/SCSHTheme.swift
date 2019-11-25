@@ -160,7 +160,7 @@ public class SCSHTheme: NSObject, Sequence {
             static let standardProperties: [Name] = [.canvas, .plain, .number, .string, .operatorProp, .blockComment, .lineComment, .lineNum, .escape, .preProcessor, .stringPreProc, .interpolation]
             
             /// Returns a progressive index (zero based) of a keyword property name.
-            /// Returns nil il the name is not a keyword.
+            /// Returns nil if the name is not a keyword.
             public static func indexOfKeyword(_ name: Name) -> Int? {
                 switch name {
                 case .keyword1:
@@ -944,7 +944,7 @@ body {
 \(cssFont)
 \(textColor)
     display: \(showColorCodes ? "initial" : "none");
-    text-aling: right;
+    text-align: right;
 }
 table {
     width: 100%;

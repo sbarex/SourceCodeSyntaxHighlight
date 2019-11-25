@@ -159,7 +159,7 @@ class CustomTypeViewController: NSViewController, DropViewDelegate {
             
             let alert = NSAlert()
             alert.messageText = "Warning"
-            alert.informativeText = "Modifiy the supported format break code signature!\nDo you want to continue?"
+            alert.informativeText = "Modify the supported format break code signature!\nDo you want to continue?"
             alert.addButton(withTitle: "Continue")
             alert.addButton(withTitle: "Cancel")
             alert.alertStyle = .critical

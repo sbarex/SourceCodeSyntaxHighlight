@@ -16,7 +16,7 @@ This project consists of these components:
 MacOS 10.15 Catalina require sandboxed extension that prevent the execution of external processes (like shell script). 
 To work around this problem, it is possible to use an XPC service that may have different security policies than the application / extension that invokes it. In this case the XPC service is not sandboxed.
 
-The XPC service is executed automatically when requested by the application or the quicklook extension. After closing the quicklook preview the process is automatically closed after some seconds relasing the resources.
+The XPC service is executed automatically when requested by the application or the quicklook extension. After closing the quicklook preview the process is automatically closed after some seconds releasing the resources.
 
 The app and quicklook extension can preview files showing the formatted code as html, inside a WKWebView, or as rtf inside a NSTextView.
 
@@ -33,9 +33,9 @@ SyntaxHighlight is distributed in the hope that it will be useful but WITHOUT AN
 ## File format management
 
 The quicklook extension uses the [Uniform Type Identifier (UTI)](https://developer.apple.com/library/archive/documentation/FileManagement/Conceptual/understanding_utis/understand_utis_intro/understand_utis_intro.html) to handle the supported formats (and not simply the file name extension). 
-Inside the definition on an UTI there are the list of extensions and mime type assiaciated with it.
+Inside the definition on an UTI there are the list of extensions and mime type associated with it.
 
-Some file types are directlly assocated to an UTI by the system. Other formats are registered by the owner application. In this way some extensions can be associated to multiple UTIs based on the applications currently installed. 
+Some file types are directly associated to an UTI by the system. Other formats are registered by the owner application. In this way some extensions can be associated to multiple UTIs based on the applications currently installed. 
 
 For this reason, this application supports many UTIs even if they are apparently redundant. 
 
@@ -67,7 +67,7 @@ In addition to the global settings for all supported file formats, you can set s
 ![File type settings window](settings_specific.png)
 
 In the file type Specific settings, there is a list of all file types supported by the quicklook extension.
-In this list the grayout items are those currenty managed by others UTI. Clicking on the exclamation mark icon you will show which UTI is used for a given file extension.
+In this list the grayout items are those currently managed by others UTI. Clicking on the exclamation mark icon you will show which UTI is used for a given file extension.
 
 ![File type settings window](settings_specific_warn.png)
 
@@ -75,8 +75,8 @@ The debug option on settings panel enable the creation of two files on your Desk
 - colorize.log: log of the colorize operations
 - colorize.[html|rtf] output of the syntax highlight
 
-The settings are stored in `~/Library/Preferences/org.sbarex.SourceCodeSyntaxHightlight.plist`.
-Customized themes and styles are saved in `~/Library/Application Support/Syntax Highlight`.
+The settings are stored in `~/Library/Preferences/org.sbarex.SourceCodeSyntaxHighlight.plist`.
+Custom themes and styles are saved in `~/Library/Application Support/Syntax Highlight`.
 
 
 ## Theme editor
@@ -92,7 +92,7 @@ Clicking on an element of the preview blinks the corresponding item in the edito
 Customized themes are saved in `~/Library/Application Support/Syntax Highlight/Themes`.
 
 
-## Note for download precompiled realease
+## Note for download precompiled release
 The precompiled app is not notarized or signed.
 When you download the precompiled app you must strip quarantine flag before execute:
 
@@ -103,7 +103,7 @@ $ xattr -r -d com.apple.quarantine "Syntax Highlight.app"
 This must resolve the error of damage application when launch the app.
 
 ## Note for developers
-After cloning remeber to fetch submodules:
+After cloning remember to fetch submodules:
 
 ```
 $ git submodule init 

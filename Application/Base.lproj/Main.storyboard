@@ -736,7 +736,7 @@ DQ
                                                         </constraints>
                                                     </view>
                                                 </box>
-                                                <button toolTip="Higlight info." verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="BVc-Hv-LdG">
+                                                <button toolTip="Highlight info." verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="BVc-Hv-LdG">
                                                     <rect key="frame" x="740" y="577" width="35" height="16"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="16" id="O9D-4d-ndQ"/>
@@ -777,7 +777,7 @@ DQ
                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jaE-qb-gMY">
                                                     <rect key="frame" x="155" y="450" width="27" height="11"/>
                                                     <textFieldCell key="cell" controlSize="mini" lineBreakMode="clipping" title="Light" id="Vgr-oo-FDE">
-                                                        <font key="font" metaFont="menu" size="9"/>
+                                                        <font key="font" metaFont="label" size="9"/>
                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
@@ -807,7 +807,7 @@ DQ
                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nok-Kk-Ipf">
                                                     <rect key="frame" x="482" y="450" width="25" height="11"/>
                                                     <textFieldCell key="cell" controlSize="mini" lineBreakMode="clipping" title="Dark" id="FwG-A0-aLk">
-                                                        <font key="font" metaFont="menu" size="9"/>
+                                                        <font key="font" metaFont="label" size="9"/>
                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
@@ -956,7 +956,7 @@ DQ
                                                                 <rect key="frame" x="0.0" y="31" width="238" height="542"/>
                                                                 <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="7C5-UK-hbl">
                                                                     <rect key="frame" x="0.0" y="0.0" width="238" height="542"/>
-                                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                                    <autoresizingMask key="autoresizingMask"/>
                                                                     <subviews>
                                                                         <tableView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" enabled="NO" id="Uze-ct-Vd3">
                                                                             <rect key="frame" x="0.0" y="0.0" width="238" height="542"/>
@@ -1081,7 +1081,7 @@ DQ
                                                         <rect key="frame" x="1" y="1" width="493" height="573"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <subviews>
-                                                            <textField toolTip="Higlight aguments added to the global extra arguments. Any arguments with space inside must be protect inside quote." verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="IOL-Fy-iJZ">
+                                                            <textField toolTip="Highlight arguments added to the global extra arguments. Any arguments with space must be protect inside quote." verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="IOL-Fy-iJZ">
                                                                 <rect key="frame" x="149" y="496" width="324" height="21"/>
                                                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="7gW-yF-KNJ">
                                                                     <font key="font" metaFont="system"/>
@@ -1387,7 +1387,7 @@ DQ
                                                                             <rect key="frame" x="1" y="38" width="451" height="76"/>
                                                                             <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="gpX-aT-KFz">
                                                                                 <rect key="frame" x="0.0" y="0.0" width="451" height="76"/>
-                                                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                                                <autoresizingMask key="autoresizingMask"/>
                                                                                 <subviews>
                                                                                     <textView editable="NO" selectable="NO" verticallyResizable="YES" allowsCharacterPickerTouchBarItem="NO" allowsDocumentBackgroundColorChange="YES" textCompletion="NO" id="qfh-yB-eh4">
                                                                                         <rect key="frame" x="0.0" y="0.0" width="451" height="76"/>
@@ -1474,7 +1474,7 @@ DQ
                                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="HCE-0A-MVj">
                                                                 <rect key="frame" x="173" y="398" width="27" height="11"/>
                                                                 <textFieldCell key="cell" controlSize="mini" lineBreakMode="clipping" title="Light" id="AXI-O5-ZQl">
-                                                                    <font key="font" metaFont="menu" size="9"/>
+                                                                    <font key="font" metaFont="label" size="9"/>
                                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                 </textFieldCell>
@@ -1504,7 +1504,7 @@ DQ
                                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Lku-bS-sWh">
                                                                 <rect key="frame" x="340" y="398" width="25" height="11"/>
                                                                 <textFieldCell key="cell" controlSize="mini" lineBreakMode="clipping" title="Dark" id="Kyx-7K-HJB">
-                                                                    <font key="font" metaFont="menu" size="9"/>
+                                                                    <font key="font" metaFont="label" size="9"/>
                                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                 </textFieldCell>
@@ -1694,7 +1694,7 @@ DQ
                         <outlet property="fontPreviewTextField" destination="crs-L2-dD8" id="wMs-iQ-ZB0"/>
                         <outlet property="formatModeControl" destination="EwM-Mk-zsa" id="0Aj-m3-JnG"/>
                         <outlet property="highlightPathPopup" destination="4uW-bL-e1I" id="ftV-zd-McB"/>
-                        <outlet property="lineLenghLabel" destination="xR4-wI-w1W" id="T9O-tR-akb"/>
+                        <outlet property="lineLengthLabel" destination="xR4-wI-w1W" id="PDo-u3-Enn"/>
                         <outlet property="lineLengthTextField" destination="SDB-Fw-vSP" id="K6H-FS-vy0"/>
                         <outlet property="lineNumbersPopup" destination="Mk9-tK-Ja9" id="Qlx-Vh-Pms"/>
                         <outlet property="previewThemeControl" destination="6v5-gN-q1D" id="qtv-Pw-hQe"/>
@@ -1711,19 +1711,19 @@ DQ
                         <outlet property="themeDarkLabel" destination="0pp-BB-4UU" id="gXb-TF-yYO"/>
                         <outlet property="themeLightIcon" destination="Sdr-N9-8i8" id="uwC-Ro-ir5"/>
                         <outlet property="themeLightLabel" destination="4R0-SN-nU7" id="Rlm-ic-KBg"/>
-                        <outlet property="utiArgumentsChecbox" destination="XVH-fE-RTR" id="opX-Fg-Ve1"/>
+                        <outlet property="utiArgumentsCheckbox" destination="XVH-fE-RTR" id="RlG-14-wiW"/>
                         <outlet property="utiArgumentsTextField" destination="idG-0I-NMs" id="hPE-62-Sek"/>
                         <outlet property="utiCustomCSSButton" destination="L9G-WU-cJ0" id="3sh-UB-8A9"/>
                         <outlet property="utiCustomCSSCheckbox" destination="iM7-O1-e2q" id="6eO-wp-lnm"/>
                         <outlet property="utiCustomCSSImage" destination="8YC-N0-UtE" id="Xk7-Ab-ofU"/>
                         <outlet property="utiDetailView" destination="SZA-my-5FJ" id="NcG-jJ-SDX"/>
                         <outlet property="utiErrorButton" destination="C7d-08-H3j" id="6ZG-DC-hnf"/>
-                        <outlet property="utiFontChecbox" destination="Jcf-v8-d2G" id="uUd-9M-ROG"/>
+                        <outlet property="utiFontCheckbox" destination="Jcf-v8-d2G" id="vU9-3e-Ny3"/>
                         <outlet property="utiFontChooseButton" destination="mXP-FB-6wp" id="Tdb-kL-b6r"/>
                         <outlet property="utiFontPreviewTextField" destination="5lp-4a-VZb" id="Oq4-Bc-CrW"/>
-                        <outlet property="utiLineLenghLabel" destination="5ap-kV-nIE" id="NkB-AQ-iZz"/>
+                        <outlet property="utiLineLengthLabel" destination="5ap-kV-nIE" id="YVM-PU-RIO"/>
                         <outlet property="utiLineLengthTextField" destination="fna-YA-rI7" id="fCs-nA-tWb"/>
-                        <outlet property="utiLineNumberChecbox" destination="kO8-5D-z6P" id="g3V-Zb-nGo"/>
+                        <outlet property="utiLineNumberCheckbox" destination="kO8-5D-z6P" id="QMi-KQ-Gcs"/>
                         <outlet property="utiLineNumbersPopup" destination="qOh-g5-NqX" id="f5s-Fm-xob"/>
                         <outlet property="utiPreprocessorCheckbox" destination="mrU-bs-0Iw" id="Jo2-wJ-6xS"/>
                         <outlet property="utiPreprocessorTextField" destination="8Dd-kc-vz4" id="I1O-31-Den"/>
@@ -1732,7 +1732,7 @@ DQ
                         <outlet property="utiRefreshIndicator" destination="Rtf-83-HHu" id="hiJ-YU-FGS"/>
                         <outlet property="utiScrollView" destination="enk-pw-AdR" id="7ws-ro-I45"/>
                         <outlet property="utiSpecificArgumentsTextField" destination="IOL-Fy-iJZ" id="hKk-Pi-bbd"/>
-                        <outlet property="utiTabSpacesChecbox" destination="AnV-wu-X5Z" id="YmT-t8-mAF"/>
+                        <outlet property="utiTabSpacesCheckbox" destination="AnV-wu-X5Z" id="gm2-3C-mv2"/>
                         <outlet property="utiTabSpacesSlider" destination="amw-LZ-AkX" id="d7c-pZ-jyO"/>
                         <outlet property="utiTextView" destination="qfh-yB-eh4" id="5gP-aY-10H"/>
                         <outlet property="utiThemeCheckbox" destination="ens-XU-3Mi" id="nhB-f2-fDr"/>
@@ -1742,7 +1742,7 @@ DQ
                         <outlet property="utiThemeLightLabel" destination="JYh-PQ-LQY" id="8Cs-GH-sEW"/>
                         <outlet property="utiTitleTextField" destination="vGk-7Y-pfd" id="p7b-Si-fB3"/>
                         <outlet property="utiWebView" destination="X2W-uH-97y" id="rfV-qx-5VW"/>
-                        <outlet property="utiWordWrapChecbox" destination="qbC-dj-hBa" id="AMW-4Z-Hgv"/>
+                        <outlet property="utiWordWrapCheckbox" destination="qbC-dj-hBa" id="wTS-Tb-Rcl"/>
                         <outlet property="utiWordWrapPopup" destination="1vo-XG-Kme" id="zoz-1k-5Bi"/>
                         <outlet property="webView" destination="KDm-Tz-8Uy" id="Kej-oR-E7Q"/>
                         <outlet property="wordWrapPopup" destination="s2A-cN-lOd" id="Wcq-AZ-Ihe"/>
@@ -2410,10 +2410,10 @@ Gw
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <box horizontalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="7r5-6M-ONG">
-                                <rect key="frame" x="258" y="0.0" width="5" height="477"/>
+                                <rect key="frame" x="258" y="0.0" width="5" height="472"/>
                             </box>
                             <visualEffectView blendingMode="behindWindow" material="underWindowBackground" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="kpv-4y-tiy">
-                                <rect key="frame" x="0.0" y="0.0" width="260" height="477"/>
+                                <rect key="frame" x="0.0" y="0.0" width="260" height="472"/>
                                 <subviews>
                                     <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="G4d-Ud-cTN">
                                         <rect key="frame" x="0.0" y="28" width="260" height="5"/>
@@ -2435,7 +2435,7 @@ Gw
                                                 </connections>
                                             </button>
                                             <button toolTip="Delete current customized theme." verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Gbg-SY-6TS">
-                                                <rect key="frame" x="26" y="8" width="12" height="14"/>
+                                                <rect key="frame" x="27" y="8" width="11" height="14"/>
                                                 <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSRemoveTemplate" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="ZOO-gV-eyf">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -2502,13 +2502,13 @@ Gw
                                         </customSpacing>
                                     </stackView>
                                     <scrollView focusRingType="none" borderType="none" autohidesScrollers="YES" horizontalLineScroll="103" horizontalPageScroll="10" verticalLineScroll="103" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="niQ-bu-HDe">
-                                        <rect key="frame" x="0.0" y="31" width="260" height="446"/>
+                                        <rect key="frame" x="0.0" y="31" width="260" height="441"/>
                                         <clipView key="contentView" drawsBackground="NO" id="AxT-XV-sDg">
-                                            <rect key="frame" x="0.0" y="0.0" width="260" height="446"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="260" height="441"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="100" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="8" autosaveExpandedItems="YES" outlineTableColumn="ROQ-Ow-FIV" id="gqF-5q-802">
-                                                    <rect key="frame" x="0.0" y="0.0" width="260" height="446"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="260" height="441"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <size key="intercellSpacing" width="2" height="3"/>
                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
@@ -2625,7 +2625,7 @@ Gw
                                 </constraints>
                             </visualEffectView>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="H2K-EL-2Mr">
-                                <rect key="frame" x="405" y="246" width="56" height="16"/>
+                                <rect key="frame" x="405" y="244" width="56" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" enabled="NO" alignment="center" title="Preview" id="Txd-rC-BU1">
                                     <font key="font" usesAppearanceFont="YES"/>
                                     <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -2633,7 +2633,7 @@ Gw
                                 </textFieldCell>
                             </textField>
                             <wkWebView wantsLayer="YES" allowsLinkPreview="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EpR-xA-UXw">
-                                <rect key="frame" x="261" y="31" width="344" height="446"/>
+                                <rect key="frame" x="261" y="31" width="344" height="441"/>
                                 <wkWebViewConfiguration key="configuration" suppressesIncrementalRendering="YES">
                                     <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
                                     <wkPreferences key="preferences" javaScriptCanOpenWindowsAutomatically="NO"/>
@@ -2687,19 +2687,19 @@ Gw
                                 </customSpacing>
                             </stackView>
                             <box horizontalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="tpy-nX-jLP">
-                                <rect key="frame" x="603" y="0.0" width="5" height="477"/>
+                                <rect key="frame" x="603" y="0.0" width="5" height="472"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="1" id="mZv-AU-9VY"/>
                                 </constraints>
                             </box>
                             <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="25" horizontalPageScroll="10" verticalLineScroll="25" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZnV-SA-vVd">
-                                <rect key="frame" x="606" y="30" width="299" height="447"/>
+                                <rect key="frame" x="606" y="30" width="299" height="442"/>
                                 <clipView key="contentView" drawsBackground="NO" id="pq8-mb-WNU">
-                                    <rect key="frame" x="0.0" y="0.0" width="299" height="447"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="299" height="442"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="firstColumnOnly" selectionHighlightStyle="none" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="23" viewBased="YES" floatsGroupRows="NO" id="Kti-Pv-Clb">
-                                            <rect key="frame" x="0.0" y="0.0" width="299" height="447"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="299" height="442"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" red="0.11764705882352941" green="0.11764705882352941" blue="0.11764705882352941" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
@@ -3067,7 +3067,7 @@ Gw
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="actionsPupupButton" destination="FAU-hA-3FN" id="mtC-9C-XOC"/>
+                        <outlet property="actionsPopupButton" destination="FAU-hA-3FN" id="08p-HF-fvg"/>
                         <outlet property="addKeywordMenuItem" destination="SJb-o9-S2g" id="2ne-jg-85V"/>
                         <outlet property="addThemeButton" destination="eas-O3-2kC" id="Hlv-uj-d8O"/>
                         <outlet property="changedFilterButton" destination="Q3z-zm-Ep4" id="1Ti-An-lfp"/>

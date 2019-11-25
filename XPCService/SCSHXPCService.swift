@@ -61,7 +61,7 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
         return OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "quicklook.xpc-service")
     }()
     
-    let XPCDomain = "org.sbarex.SourceCodeSyntaxHightlight"
+    let XPCDomain = "org.sbarex.SourceCodeSyntaxHighlight"
     
     var settings: SCSHSettings
     let rsrcEsc: String
@@ -70,6 +70,10 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
         let rsrcDirURL = Bundle.main.resourceURL!
         self.rsrcEsc = rsrcDirURL.path
         
+        if let url = SCSHXPCService.preferencesUrl?.appendingPathComponent("org.sbarex.SourceCodeSyntaxHightlight.plist"), let url1 = SCSHXPCService.preferencesUrl?.appendingPathComponent(XPCDomain + ".plist"), FileManager.default.fileExists(atPath: url.path) && !FileManager.default.fileExists(atPath: url1.path) {
+            // Rename old preferences to new name (typo fix).
+            try? FileManager.default.moveItem(at: url, to: url1)
+        }
         // Set up preferences
         self.settings = SCSHSettings(domain: XPCDomain)
         
@@ -147,8 +151,13 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
     }
     
     /// Return the folder for the application support files.
-    var applicationSupporUrl: URL? {
+    var applicationSupportUrl: URL? {
         return FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first?.appendingPathComponent("Syntax Highlight")
+    }
+    
+    /// Return the folder for the application support files.
+    static var preferencesUrl: URL? {
+        return FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).first?.appendingPathComponent("Preferences")
     }
     
     /// Execute a shell task
@@ -206,7 +215,7 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
         let directory = NSTemporaryDirectory()
         /// Temp file for the css style.
         var temporaryCSSFile: URL? = nil
-        /// Themp file for the theme.
+        /// Temp file for the theme.
         var temporaryThemeFile: URL? = nil
         
         defer {
@@ -235,7 +244,7 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
         
         var highlightPath = custom_settings.highlightProgramPath
         if highlightPath == "" || highlightPath == "-" {
-            let p  = self.getEmbededHiglight()
+            let p  = self.getEmbeddedHighlight()
             highlightPath = p.path
             env.merge(p.env) { (_, new) in new }
         }
@@ -244,7 +253,7 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
             throw SCSHError.missingHighlight
         }
         
-        // Extra arguments for _highlight_ splitted in single arguments.
+        // Extra arguments for _highlight_ spliced in single arguments.
         // Warning: all white spaces that are not arguments separators must be quote protected.
         let extra = custom_settings.extra?.trimmingCharacters(in: CharacterSet.whitespaces) ?? ""
         var extraHLFlags: [String] = extra.isEmpty ? [] : try extra.shell_parse_argv()
@@ -270,17 +279,17 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
             "qlcc_debug": custom_settings.debug ? "1" : "",
         ]) { (_, new) in new }
         
-        if let e = defaults.persistentDomain(forName: XPCDomain) as? [String: String] {
-            // Export al settings inside the defaults to the environment.
-            env.merge(e) { (_, new) in new }
-        }
+        // if let e = defaults.persistentDomain(forName: XPCDomain) as? [String: String] {
+        //     // Export all settings inside the defaults to the environment.
+        //     env.merge(e) { (_, new) in new }
+        // }
         let isOSThemeLight = (defaults.string(forKey: "AppleInterfaceStyle") ?? "Light") == "Light"
         
         var theme = custom_settings.theme ?? (isOSThemeLight ? custom_settings.lightTheme : custom_settings.darkTheme)
         if (theme ?? "").hasPrefix("!") {
             // Custom theme.
             theme!.remove(at: theme!.startIndex)
-            if let theme_url = self.getCustomThemesUrl(createIfmissing: false)?.appendingPathComponent("\(theme!).theme") {
+            if let theme_url = self.getCustomThemesUrl(createIfMissing: false)?.appendingPathComponent("\(theme!).theme") {
                 extraHLFlags.append("--config-file=\(theme_url.path)")
             }
         }
@@ -351,12 +360,12 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
                 cssCode! += "\(css)\n"
             } else {
                 // Import global css style.
-                if let css_url = getCustomStylesUrl(createIfmissing: false)?.appendingPathComponent("global.css"), FileManager.default.fileExists(atPath: css_url.path), let s = try? String(contentsOf: css_url, encoding: .utf8) {
+                if let css_url = getCustomStylesUrl(createIfMissing: false)?.appendingPathComponent("global.css"), FileManager.default.fileExists(atPath: css_url.path), let s = try? String(contentsOf: css_url, encoding: .utf8) {
                     cssCode! += "\(s)\n"
                 }
                 
                 // Import per file css style.
-                if let uti = (try? url.resourceValues(forKeys: [.typeIdentifierKey]))?.typeIdentifier, let css_url = getCustomStylesUrl(createIfmissing: false)?.appendingPathComponent("\(uti).css"), FileManager.default.fileExists(atPath: css_url.path), let s = try? String(contentsOf: css_url, encoding: .utf8) {
+                if let uti = (try? url.resourceValues(forKeys: [.typeIdentifierKey]))?.typeIdentifier, let css_url = getCustomStylesUrl(createIfMissing: false)?.appendingPathComponent("\(uti).css"), FileManager.default.fileExists(atPath: css_url.path), let s = try? String(contentsOf: css_url, encoding: .utf8) {
                     cssCode! += "\(s)\n"
                 }
             }
@@ -455,7 +464,7 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
     /// Colorize a source file returning a formatted rtf code.
     /// - parameters
     ///   - url: Url of source file to format.
-    ///   - overrideSettings: list of settings that override the current preferences. Only elements defined inside the dict are overriden.
+    ///   - overrideSettings: list of settings that override the current preferences. Only elements defined inside the dict are overridden.
     func colorize(url: URL, overrideSettings: NSDictionary? = nil, withReply reply: @escaping (Data, NSDictionary, Error?) -> Void) {
         var custom_settings: SCSHSettings
         
@@ -568,12 +577,12 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
     
     // MARK: - Themes
     
-    /// Return the url of the forder of the custom themes.
+    /// Return the url of the folder of the custom themes.
     /// - parameters:
     ///   - create: If the folder don't exists try to create it.
     /// - returns: The url of the custom themes folder. If is requested to create if missing and the creations fail will be return nil.
-    func getCustomThemesUrl(createIfmissing create: Bool = true) -> URL? {
-        if let url = applicationSupporUrl?.appendingPathComponent("Themes") {
+    func getCustomThemesUrl(createIfMissing create: Bool = true) -> URL? {
+        if let url = applicationSupportUrl?.appendingPathComponent("Themes") {
             if create && !FileManager.default.fileExists(atPath: url.path) {
                 do {
                     try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true, attributes: nil)
@@ -614,7 +623,7 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
         let fileManager = FileManager.default
         
         // Search for custom themes.
-        if let customThemeDir = getCustomThemesUrl(createIfmissing: false) {
+        if let customThemeDir = getCustomThemesUrl(createIfMissing: false) {
             let files: [URL]
             do {
                 files = try fileManager.contentsOfDirectory(at: customThemeDir, includingPropertiesForKeys: nil, options: [])
@@ -638,7 +647,7 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
         let highlight_executable: String
         let env: [String: String]
         if highlightPath == "-" || highlightPath == "" {
-            let r = self.getEmbededHiglight()
+            let r = self.getEmbeddedHighlight()
             highlight_executable = r.path
             env = r.env
         } else {
@@ -704,12 +713,12 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
     ///   - error: Error on saving operation.
     func saveTheme(_ theme: NSDictionary, withReply reply: @escaping (_ success: Bool, _ error: Error?) -> Void) {
         if let t = SCSHTheme(dict: theme as? [String: Any]) {
-            if let u = getCustomThemesUrl(createIfmissing: true)?.appendingPathComponent("\(t.name).theme") {
+            if let u = getCustomThemesUrl(createIfMissing: true)?.appendingPathComponent("\(t.name).theme") {
                 do {
                     let originalName = t.originalName
                     // Save to the url.
                     try t.save(to: u)
-                    if originalName != "" && originalName != t.name, let originalUrl = getCustomThemesUrl(createIfmissing: true)?.appendingPathComponent("\(originalName).theme"), FileManager.default.fileExists(atPath: originalUrl.path) {
+                    if originalName != "" && originalName != t.name, let originalUrl = getCustomThemesUrl(createIfMissing: true)?.appendingPathComponent("\(originalName).theme"), FileManager.default.fileExists(atPath: originalUrl.path) {
                         // The theme previously had another name.
                         
                         // Delete the previous file.
@@ -760,7 +769,7 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
     ///   - success: True if the theme is correctly deleted.
     ///   - error: Error on deleting operation.
     func deleteTheme(name: String, withReply reply: @escaping (_ success: Bool, _ error: Error?) -> Void) {
-        if let originalUrl = getCustomThemesUrl(createIfmissing: false)?.appendingPathComponent("\(name).theme"), FileManager.default.fileExists(atPath: originalUrl.path) {
+        if let originalUrl = getCustomThemesUrl(createIfMissing: false)?.appendingPathComponent("\(name).theme"), FileManager.default.fileExists(atPath: originalUrl.path) {
             do {
                 try FileManager.default.removeItem(at: originalUrl)
                 
@@ -801,12 +810,12 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
     
     // MARK: - Custom styles
     
-    /// Return the url of the forder of the custom CSS styles.
+    /// Return the url of the folder of the custom CSS styles.
     /// - parameters:
     ///   - create: If the folder don't exists try to create it.
     /// - returns: The url of the custom styles folder. If is requested to create if missing and the creations fail will be return nil.
-    func getCustomStylesUrl(createIfmissing create: Bool = true) -> URL? {
-        if let url = applicationSupporUrl?.appendingPathComponent("Styles") {
+    func getCustomStylesUrl(createIfMissing create: Bool = true) -> URL? {
+        if let url = applicationSupportUrl?.appendingPathComponent("Styles") {
             if create && !FileManager.default.fileExists(atPath: url.path) {
                 do {
                     try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true, attributes: nil)
@@ -825,7 +834,7 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
     ///   - uti: UTI associated to the style. Il empty is search the global style for all files.
     /// - returns: Return an empty string if there the css style don't exists.
     func getCustomStyleForUTI(uti: String) throws -> String {
-        if let url = getCustomStylesUrl(createIfmissing: false)?.appendingPathComponent(uti.isEmpty ? "global" : uti).appendingPathExtension("css"), FileManager.default.fileExists(atPath: url.path) {
+        if let url = getCustomStylesUrl(createIfMissing: false)?.appendingPathComponent(uti.isEmpty ? "global" : uti).appendingPathExtension("css"), FileManager.default.fileExists(atPath: url.path) {
             return try String(contentsOf: url, encoding: .utf8)
         } else {
             return ""
@@ -836,7 +845,7 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
     /// - parameters:
     ///   - uti: UTI associated to the style. Il empty is search the global style for all files.
     ///   - style: Custom CSS style.
-    ///   - error: Error on savign file.
+    ///   - error: Error on saving file.
     func getCustomStyleForUTI(uti: String, reply: @escaping (_ style: String, _ error: Error?) -> Void) {
         do {
             let s = try getCustomStyleForUTI(uti: uti)
@@ -852,7 +861,7 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
     ///   - uti: UTI associated to the style. Il empty is used for all files.
     @discardableResult
     func setCustomStyle(_ style: String, forUTI uti: String) throws -> Bool {
-        guard let url = getCustomStylesUrl(createIfmissing: true)?.appendingPathComponent(uti.isEmpty ? "global" : uti).appendingPathExtension("css") else {
+        guard let url = getCustomStylesUrl(createIfMissing: true)?.appendingPathComponent(uti.isEmpty ? "global" : uti).appendingPathExtension("css") else {
             return false
         }
         
@@ -871,7 +880,7 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
     ///   - style: CSS style.
     ///   - uti: UTI associated to the style. Il empty is used for all files.
     ///   - success: True if file is saved correctly.
-    ///   - error: Error on savign file.
+    ///   - error: Error on saving file.
     func setCustomStyle(_ style: String, forUTI uti: String, reply: @escaping (_ success: Bool, _ error: Error?) -> Void) {
         do {
             let r = try setCustomStyle(style, forUTI: uti)
@@ -887,7 +896,7 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
     /// Get settings.
     func getSettings(withReply reply: @escaping (NSDictionary) -> Void) {
         // Populate the custom css.
-        if let stylesDir = getCustomStylesUrl(createIfmissing: false), let files = try? FileManager.default.contentsOfDirectory(at: stylesDir, includingPropertiesForKeys: nil, options: []) {
+        if let stylesDir = getCustomStylesUrl(createIfMissing: false), let files = try? FileManager.default.contentsOfDirectory(at: stylesDir, includingPropertiesForKeys: nil, options: []) {
             for file in files {
                 guard file.pathExtension == "css" else {
                     continue
@@ -924,10 +933,10 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
     
     /// Return the url of the application support folder that contains themes and custom css styles.
     func getApplicationSupport(reply: @escaping (_ url: URL?)->Void) {
-        reply(applicationSupporUrl)
+        reply(applicationSupportUrl)
     }
     
-    func getEmbededHiglight() -> (path: String, env: [String: String]) {
+    func getEmbeddedHighlight() -> (path: String, env: [String: String]) {
         if let path = Bundle.main.path(forResource: "highlight", ofType: nil, inDirectory: "highlight/bin"), let data_dir = Bundle.main.path(forResource: "share", ofType: nil, inDirectory: "highlight") {
             return (path: path, env: ["HIGHLIGHT_DATADIR": "\(data_dir)/"])
         } else {
@@ -956,9 +965,9 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
         
         var result: [[Any]] = []
         
-        let embedHiglight = self.getEmbededHiglight()
-        if let v = parse_version(embedHiglight.path, embedHiglight.env) {
-            result.append([embedHiglight.path, v, true])
+        let embedHighlight = self.getEmbeddedHighlight()
+        if let v = parse_version(embedHighlight.path, embedHighlight.env) {
+            result.append([embedHighlight.path, v, true])
         }
         var found = false
         if let r = try? SCSHXPCService.runTask(script: "which -a highlight", env: env), r.isSuccess, let output = r.output() {
@@ -989,7 +998,7 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
         
         var highlightPath = highlight
         if highlightPath == "" || highlightPath == "-" {
-            let p  = self.getEmbededHiglight()
+            let p  = self.getEmbeddedHighlight()
             highlightPath = p.path
             env.merge(p.env) { (_, new) in new }
         }
@@ -1040,7 +1049,7 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
         
         var highlightPath = custom_settings.highlightProgramPath
         if highlightPath == "" || highlightPath == "-" {
-            let p  = self.getEmbededHiglight()
+            let p  = self.getEmbeddedHighlight()
             highlightPath = p.path
             env.merge(p.env) { (_, new) in new }
         }
@@ -1075,7 +1084,7 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
         
         var highlightPath = custom_settings.highlightProgramPath
         if highlightPath == "" || highlightPath == "-" {
-            let p  = self.getEmbededHiglight()
+            let p  = self.getEmbeddedHighlight()
             highlightPath = p.path
             env.merge(p.env) { (_, new) in new }
         }

@@ -4,11 +4,14 @@ New features:
 - merge pull request https://github.com/sbarex/SourceCodeSyntaxHighlight/pull/18 (support for awk, bash, clojure, diff, haskell, lua, patch, rust, scala, text, zsh)
 - added support for .r file format.
 
+Bugfix:
+- Correction of many typos.
+
 1.0.b13
 
 New features:
 - Embedded highlight updated to 5.3.4.
-- Info panel about highlight (from App menu and from a info butto on preferences window).
+- Info panel about highlight (from App menu and from a info button on preferences window).
 - Menu item inside app menu for open in the Finder the application support folder.
 - Redesign of preferences window for the theme selection.
 - GUI to view and edit the themes.

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <title>Syntax Highlight Help</title>
     <meta charset="UTF-8">
@@ -9,7 +9,7 @@
 <body>
     <a name="SyntaxHighlight_SPECIFIC_PREFERENCES"></a>
 
-    <div class=header"><a href="help:anchor=SyntaxHighlight_INDEX bookID=org.sbarex.SourceCodeSyntaxHighlight.help">index</a></div>
+    <div class="header"><a href="help:anchor=SyntaxHighlight_INDEX bookID=org.sbarex.SourceCodeSyntaxHighlight.help">index</a></div>
     
     <h1>Specific format preferences</h1>
 
@@ -19,7 +19,7 @@
 
     <p>In the file type Specific settings there is a list of all file types supported by the quicklook extension. <br />
         For an explanation on the behavior of file types <a href="help:anchor=SyntaxHighlight_UTI bookID=org.sbarex.SourceCodeSyntaxHighlight.help">click here</a>.</p>
-    <p></p>The grayout items on the list are those currenty managed by others UTI. Clicking on the exclamation mark icon you will show which UTI is used for a given file extension.<p>
+    <p></p>The grayout items on the list are those currently managed by others UTI. Clicking on the exclamation mark icon you will show which UTI is used for a given file extension.<p>
 
     <div><img src="images/settings_specific_warn.png" alt="File type settings window" /></div>
 
@@ -27,10 +27,10 @@
     <p>In the specific settings you can also set a <i>preprocessor utility</i>. The preprocessor handle the source file before it is elaborated by <code>highlight</code>.<br />
     Preprocessor can be any cli utility or shell script which receives as the last parameter the name of the file to be processed and output to stdout the data to pass to <code>highlight</code>. </p>
     <p>Preprocessor can be useful to convert a format into another (eg from binary to text), decompile, pretty printing…</p>
-    <p>The excution of the preprocessor is made inside the same env of the script that handle <code>highlight</code>. For a list of environments plese see the file <code>colorize.sh</code> in <code>Syntax Highlight.app/Contents/XPCServices/Syntax Highlight XPC Service.xpc/Contents/Resources/</code></p>
+    <p>The execution of the preprocessor is made inside the same env of the script that handle <code>highlight</code>. For a list of environments please see the file <code>colorize.sh</code> in <code>Syntax Highlight.app/Contents/XPCServices/Syntax Highlight XPC Service.xpc/Contents/Resources/</code></p>
     <p>Specifying a custom preprocessor disables the predefined preprocessors:</p>
     <table>
-        <tr><th>file type</th><th>default proprocessor</th><th>action</th></tr>
+        <tr><th>file type</th><th>default pre processor</th><th>action</th></tr>
         <tr>
             <td>.class</td>
             <td><code>/usr/local/bin/jad -ff -dead -noctor -p -t </code></td>

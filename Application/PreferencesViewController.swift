@@ -116,7 +116,7 @@ class PreferencesViewController: NSViewController {
     
     @IBOutlet weak var wordWrapPopup: NSPopUpButton!
     @IBOutlet weak var lineLengthTextField: NSTextField!
-    @IBOutlet weak var lineLenghLabel: NSTextField!
+    @IBOutlet weak var lineLengthLabel: NSTextField!
     @IBOutlet weak var lineNumbersPopup: NSPopUpButton!
     @IBOutlet weak var tabSpacesSlider: NSSlider!
     @IBOutlet weak var argumentsTextField: NSTextField!
@@ -148,22 +148,22 @@ class PreferencesViewController: NSViewController {
     @IBOutlet weak var utiCustomCSSButton: NSButton!
     @IBOutlet weak var utiCustomCSSImage: NSImageView!
     
-    @IBOutlet weak var utiFontChecbox: NSButton!
+    @IBOutlet weak var utiFontCheckbox: NSButton!
     @IBOutlet weak var utiFontPreviewTextField: NSTextField!
     @IBOutlet weak var utiFontChooseButton: NSButton!
     
-    @IBOutlet weak var utiWordWrapChecbox: NSButton!
+    @IBOutlet weak var utiWordWrapCheckbox: NSButton!
     @IBOutlet weak var utiWordWrapPopup: NSPopUpButton!
     @IBOutlet weak var utiLineLengthTextField: NSTextField!
-    @IBOutlet weak var utiLineLenghLabel: NSTextField!
+    @IBOutlet weak var utiLineLengthLabel: NSTextField!
     
-    @IBOutlet weak var utiLineNumberChecbox: NSButton!
+    @IBOutlet weak var utiLineNumberCheckbox: NSButton!
     @IBOutlet weak var utiLineNumbersPopup: NSPopUpButton!
     
-    @IBOutlet weak var utiTabSpacesChecbox: NSButton!
+    @IBOutlet weak var utiTabSpacesCheckbox: NSButton!
     @IBOutlet weak var utiTabSpacesSlider: NSSlider!
     
-    @IBOutlet weak var utiArgumentsChecbox: NSButton!
+    @IBOutlet weak var utiArgumentsCheckbox: NSButton!
     @IBOutlet weak var utiArgumentsTextField: NSTextField!
     
     @IBOutlet weak var utiPreprocessorCheckbox: NSButton!
@@ -189,7 +189,7 @@ class PreferencesViewController: NSViewController {
         }
     }
     
-    /// Gliobal settings.
+    /// Global settings.
     var settings: SCSHSettings?
     
     typealias HighlightPath = (path: String, ver: String, embedded: Bool)
@@ -220,7 +220,7 @@ class PreferencesViewController: NSViewController {
         }
     }
     
-    /// Show only UTI with customized settings.
+    /// Show only UTI with custom settings.
     var filterOnlyChanged: Bool = false {
         didSet {
             guard oldValue != filterOnlyChanged else {
@@ -317,40 +317,40 @@ class PreferencesViewController: NSViewController {
                 utiCustomCSSButton.isEnabled = utiCustomCSSCheckbox.state == .on && utiCustomCSSCheckbox.isEnabled
                 utiCustomCSSImage.image = NSImage(named: utiCustomCSSCheckbox.state == .on ? NSImage.statusAvailableName : NSImage.statusNoneName)
                     
-                utiFontChecbox.state = currentUTISettings.fontFamily != nil ? .on : .off
-                utiFontPreviewTextField.isEnabled = utiFontChecbox.state == .on
-                utiFontChooseButton.isEnabled = utiFontChecbox.state == .on
+                utiFontCheckbox.state = currentUTISettings.fontFamily != nil ? .on : .off
+                utiFontPreviewTextField.isEnabled = utiFontCheckbox.state == .on
+                utiFontChooseButton.isEnabled = utiFontCheckbox.state == .on
                 refreshFontPanel(withFontFamily: currentUTISettings.fontFamily ?? settings?.fontFamily ?? "Menlo", size: currentUTISettings.fontSize ?? settings?.fontSize ?? 12, isGlobal: false)
                 
-                utiWordWrapChecbox.state = currentUTISettings.wordWrap != nil ? .on : .off
-                utiWordWrapPopup.isEnabled = utiWordWrapChecbox.state == .on
+                utiWordWrapCheckbox.state = currentUTISettings.wordWrap != nil ? .on : .off
+                utiWordWrapPopup.isEnabled = utiWordWrapCheckbox.state == .on
                 switch currentUTISettings.wordWrap ?? settings?.wordWrap ?? .off {
                 case .off:
                     utiWordWrapPopup.selectItem(at: 0)
                     
                     utiLineLengthTextField.isHidden = true
-                    utiLineLenghLabel.isHidden = true
+                    utiLineLengthLabel.isHidden = true
                     
                     utiLineNumbersPopup.menu?.item(at: 2)?.isEnabled = false
                 case .simple:
                     utiWordWrapPopup.selectItem(at: 1)
                     
                     utiLineLengthTextField.isHidden = false
-                    utiLineLenghLabel.isHidden = false
+                    utiLineLengthLabel.isHidden = false
                     
                     utiLineNumbersPopup.menu?.item(at: 2)?.isEnabled = true
                 case .standard:
                     utiWordWrapPopup.selectItem(at: 2)
                     
                     utiLineLengthTextField.isHidden = false
-                    utiLineLenghLabel.isHidden = false
+                    utiLineLengthLabel.isHidden = false
                     
                     utiLineNumbersPopup.menu?.item(at: 2)?.isEnabled = true
                 }
                 utiLineLengthTextField.integerValue = currentUTISettings.lineLength ?? settings?.lineLength ?? 80
                 
-                utiLineNumberChecbox.state = currentUTISettings.lineNumbers != nil ? .on : .off
-                utiLineNumbersPopup.isEnabled = utiLineNumberChecbox.state == .on
+                utiLineNumberCheckbox.state = currentUTISettings.lineNumbers != nil ? .on : .off
+                utiLineNumbersPopup.isEnabled = utiLineNumberCheckbox.state == .on
                 switch currentUTISettings.lineNumbers ?? settings?.lineNumbers ?? .hidden {
                 case .hidden:
                     utiLineNumbersPopup.selectItem(at: 0)
@@ -358,12 +358,12 @@ class PreferencesViewController: NSViewController {
                     utiLineNumbersPopup.selectItem(at: omittingWrapLines ? 2 : 1)
                 }
                 
-                utiTabSpacesChecbox.state = currentUTISettings.tabSpaces != nil ? .on : .off
-                utiTabSpacesSlider.isEnabled = utiTabSpacesChecbox.state == .on
+                utiTabSpacesCheckbox.state = currentUTISettings.tabSpaces != nil ? .on : .off
+                utiTabSpacesSlider.isEnabled = utiTabSpacesCheckbox.state == .on
                 utiTabSpacesSlider.integerValue = currentUTISettings.tabSpaces ?? settings?.tabSpaces ?? 4
                 
-                utiArgumentsChecbox.state = currentUTISettings.extra != nil ? .on : .off
-                utiArgumentsTextField.isEnabled = utiArgumentsChecbox.state == .on
+                utiArgumentsCheckbox.state = currentUTISettings.extra != nil ? .on : .off
+                utiArgumentsTextField.isEnabled = utiArgumentsCheckbox.state == .on
                 utiArgumentsTextField.stringValue = currentUTISettings.extra ?? settings?.extra ?? ""
                 
                 utiPreprocessorCheckbox.state = currentUTISettings.preprocessor != nil ? .on : .off
@@ -444,7 +444,7 @@ class PreferencesViewController: NSViewController {
         
         fetchSettings()
         
-        // Register the objservers for theme save and delete notifications.
+        // Register the observers for theme save and delete notifications.
         NotificationCenter.default.addObserver(self, selector: #selector(onThemeDidSaved(_:)), name: .themeDidSaved, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(onThemeDidDeleted(_:)), name: .themeDidDeleted, object: nil)
     }
@@ -507,7 +507,7 @@ class PreferencesViewController: NSViewController {
     
     // MARK: - Settings
     
-    /// Filter the visible UTIs based on search cryteria.
+    /// Filter the visible UTIs based on search criteria.
     func filterUTIs() {
         guard !filter.isEmpty || filterOnlyChanged else {
             fileTypes = self.allFileTypes
@@ -592,7 +592,7 @@ class PreferencesViewController: NSViewController {
             }
             
         case 3:
-            // Intialize all gui controls.
+            // Initialize all gui controls.
             DispatchQueue.main.async {
                 self.populateSettings()
             }
@@ -641,15 +641,15 @@ class PreferencesViewController: NSViewController {
             switch ln {
             case .off:
                 wordWrapPopup.selectItem(at: 0)
-                lineLenghLabel.isHidden = true
+                lineLengthLabel.isHidden = true
                 lineLengthTextField.isHidden = true
             case .simple:
                 wordWrapPopup.selectItem(at: 1)
-                lineLenghLabel.isHidden = false
+                lineLengthLabel.isHidden = false
                 lineLengthTextField.isHidden = false
             case .standard:
                 wordWrapPopup.selectItem(at: 2)
-                lineLenghLabel.isHidden = false
+                lineLengthLabel.isHidden = false
                 lineLengthTextField.isHidden = false
             }
         }
@@ -714,7 +714,7 @@ class PreferencesViewController: NSViewController {
     
     /// Get a theme by name.
     /// - parameters:
-    ///   - name: Name of the theme. If has ! prefix search for a customized theme, otherwise fot a standalone theme.
+    ///   - name: Name of the theme. If has ! prefix search for a customized theme, otherwise for a standalone theme.
     func getTheme(name: String?) -> SCSHTheme? {
         guard name != nil else {
             return nil
@@ -832,14 +832,14 @@ class PreferencesViewController: NSViewController {
             settings.css = (settings.css != nil ? settings.css! : "") + utiCustomCSS
         }
         
-        if utiFontChecbox.state == .on {
+        if utiFontCheckbox.state == .on {
             settings.fontFamily = self.utiFontPreviewTextField.font?.fontName
             if let size = self.utiFontPreviewTextField.font?.pointSize {
                 settings.fontSize = Float(size)
             }
         }
         
-        if utiWordWrapChecbox.state == .on {
+        if utiWordWrapCheckbox.state == .on {
             switch wordWrapPopup.indexOfSelectedItem {
             case 0:
                 settings.wordWrap = .off
@@ -854,7 +854,7 @@ class PreferencesViewController: NSViewController {
             }
         }
         
-        if utiLineNumberChecbox.state == .on {
+        if utiLineNumberCheckbox.state == .on {
             switch lineNumbersPopup.indexOfSelectedItem {
             case 0:
                 settings.lineNumbers = .hidden
@@ -867,10 +867,10 @@ class PreferencesViewController: NSViewController {
             }
         }
         
-        if utiTabSpacesChecbox.state == .on {
+        if utiTabSpacesCheckbox.state == .on {
             settings.tabSpaces = tabSpacesSlider.integerValue
         }
-        if utiArgumentsChecbox.state == .on {
+        if utiArgumentsCheckbox.state == .on {
             settings.extra = argumentsTextField.stringValue
         }
         if utiPreprocessorCheckbox.state == .on {
@@ -924,7 +924,7 @@ class PreferencesViewController: NSViewController {
             utiSettings.css = nil
         }
         
-        if utiFontChecbox.state == .on {
+        if utiFontCheckbox.state == .on {
             utiSettings.fontFamily = utiFontPreviewTextField.font?.fontName ?? "Menlo"
             utiSettings.fontSize = Float(utiFontPreviewTextField.font?.pointSize ?? 12)
         } else {
@@ -932,17 +932,17 @@ class PreferencesViewController: NSViewController {
             utiSettings.fontSize = nil
         }
         
-        if utiWordWrapChecbox.state == .on {
+        if utiWordWrapCheckbox.state == .on {
             switch utiWordWrapPopup.indexOfSelectedItem {
             case 0:
                 utiSettings.wordWrap = .off
                 utiSettings.lineLength = nil
             case 1:
                 utiSettings.wordWrap = .simple
-                utiSettings.lineLength = utiLineLenghLabel.integerValue
+                utiSettings.lineLength = utiLineLengthLabel.integerValue
             case 2:
                 utiSettings.wordWrap = .standard
-                utiSettings.lineLength = utiLineLenghLabel.integerValue
+                utiSettings.lineLength = utiLineLengthLabel.integerValue
             default:
                 utiSettings.wordWrap = nil
                 utiSettings.lineLength = nil
@@ -952,7 +952,7 @@ class PreferencesViewController: NSViewController {
             utiSettings.lineLength = nil
         }
         
-        if utiLineNumberChecbox.state == .on {
+        if utiLineNumberCheckbox.state == .on {
             switch utiLineNumbersPopup.indexOfSelectedItem {
             case 0:
                 utiSettings.lineNumbers = .hidden
@@ -971,13 +971,13 @@ class PreferencesViewController: NSViewController {
             utiSettings.lineNumbers = nil
         }
         
-        if utiTabSpacesChecbox.state == .on {
+        if utiTabSpacesCheckbox.state == .on {
             utiSettings.tabSpaces = utiTabSpacesSlider.integerValue
         } else {
             utiSettings.tabSpaces = nil
         }
         
-        if utiArgumentsChecbox.state == .on {
+        if utiArgumentsCheckbox.state == .on {
             utiSettings.extra = utiArgumentsTextField.stringValue
         } else {
             utiSettings.extra = nil
@@ -1006,7 +1006,7 @@ class PreferencesViewController: NSViewController {
     /// Handle word wrap change.
     @IBAction func handleWordWrapChange(_ sender: NSPopUpButton) {
         let lineTextField = sender == wordWrapPopup ? lineLengthTextField : utiLineLengthTextField
-        let lineTextLabel = sender == wordWrapPopup ? lineLenghLabel : utiLineLenghLabel
+        let lineTextLabel = sender == wordWrapPopup ? lineLengthLabel : utiLineLengthLabel
         let lineNumbersPopup = sender == wordWrapPopup ? self.lineNumbersPopup : utiLineNumbersPopup
         
         lineTextField?.isHidden = sender.indexOfSelectedItem == 0
@@ -1197,7 +1197,7 @@ class PreferencesViewController: NSViewController {
     
     // MARK: -
     
-    /// Show only customized UTIs.
+    /// Show only custom UTIs.
     @IBAction func handleFilterButton(_ sender: NSButton) {
         filterOnlyChanged = sender.state == .on
         
@@ -1383,7 +1383,7 @@ class PreferencesViewController: NSViewController {
             return
         }
         guard let i = themes.firstIndex(where: { $0.name == data.oldName && !$0.isStandalone }) else {
-            // Addeded a new theme.
+            // Added a new theme.
             var t = themes
             t.append(theme)
             t.sort { (a, b) in
@@ -1436,7 +1436,7 @@ class PreferencesViewController: NSViewController {
         
         var t = themes
         t[i] = theme
-        // Resort the themes, the descriotion may has been changed.
+        // Resort the themes, the description may has been changed.
         t.sort { (a, b) in
             return a.desc < b.desc
         }
@@ -1550,7 +1550,7 @@ extension PreferencesViewController: NSFontChanging {
         if tabView.selectedTabViewItem?.identifier as? String == "GlobalSettingsView" {
             refreshFontPanel(withFont: font, isGlobal: true)
             refreshPreview(self)
-        } else if tabView.selectedTabViewItem?.identifier as? String == "SpecificSettingsView" && utiFontChecbox.state == .on {
+        } else if tabView.selectedTabViewItem?.identifier as? String == "SpecificSettingsView" && utiFontCheckbox.state == .on {
             refreshFontPanel(withFont: font, isGlobal: false)
             refreshUtiPreview(self)
         }

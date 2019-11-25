@@ -78,8 +78,8 @@ class StaticTextView: NSTextView {
 
 class PreviewViewController: NSViewController, QLPreviewingController, WKNavigationDelegate {
     @IBOutlet weak var draggingView: MyDraggingView!
-    @IBOutlet weak var trailingDragginViewConstraint: NSLayoutConstraint!
-    @IBOutlet weak var bottomDragginViewConstraint: NSLayoutConstraint!
+    @IBOutlet weak var trailingDraggingViewConstraint: NSLayoutConstraint!
+    @IBOutlet weak var bottomDraggingViewConstraint: NSLayoutConstraint!
     
     /// Url of current file.
     var fileUrl: URL?
@@ -97,8 +97,8 @@ class PreviewViewController: NSViewController, QLPreviewingController, WKNavigat
         // Do any additional setup after loading the view.
         
         let w = NSScroller.scrollerWidth(for: NSControl.ControlSize.regular, scrollerStyle: NSScroller.Style.overlay)
-        self.trailingDragginViewConstraint.constant = w
-        self.bottomDragginViewConstraint.constant = w
+        self.trailingDraggingViewConstraint.constant = w
+        self.bottomDraggingViewConstraint.constant = w
     }
 
     /*

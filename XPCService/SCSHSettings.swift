@@ -164,7 +164,7 @@ class SCSHSettings {
     let domain: String
     
     /// Custom style sheet.
-    /// When the settings are stored the value is writed to a file.
+    /// When the settings are stored the value is written to a file.
     var css: String?
     
     var preprocessor: String?

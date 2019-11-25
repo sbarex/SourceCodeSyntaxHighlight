@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1- transitional.dtd">
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 <head>
     <title>Syntax Highlight Help</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -31,7 +31,7 @@
     <p>MacOS 10.15 Catalina require sandboxed extension that prevent the execution of external processes (like shell script).<br />
     To work around this problem, it is possible to use an XPC service that may have different security policies than the application / extension that invokes it. In this case the XPC service is not sandboxed.</p>
 
-    <p>The XPC service is executed automatically when requested by the application or the quicklook extension. After closing the quicklook preview the process is automatically closed after some seconds relasing the resources.</p>
+    <p>The XPC service is executed automatically when requested by the application or the quicklook extension. After closing the quicklook preview the process is automatically closed after some seconds releasing the resources.</p>
 
     <p>The app and quicklook extension can preview files showing the formatted code as html, inside a WKWebView, or as rtf inside a NSTextView.</p>
 
@@ -48,9 +48,9 @@
     <h2><a name="SyntaxHighlight_UTI"></a>File format management</h2>
 
     <p>The quicklook extension uses the <a href="https://developer.apple.com/library/archive/documentation/FileManagement/Conceptual/understanding_utis/understand_utis_intro/understand_utis_intro.html">Uniform Type Identifier (UTI)</a> to handle the supported formats (and not simply the file name extension).
-    Inside the definition on an UTI there are the list of extensions and mime type assiaciated with it. </p>
+    Inside the definition on an UTI there are the list of extensions and mime type associated with it. </p>
     
-    <p>Some file types are directlly assocated to an UTI by the system. Other formats are registered by the owner application. In this way some extensions can be associated to multiple UTIs based on the applications currently installed. <br />
+    <p>Some file types are directly associated to an UTI by the system. Other formats are registered by the owner application. In this way some extensions can be associated to multiple UTIs based on the applications currently installed. <br />
         For this reason, this application supports many UTIs even if they are apparently redundant. </p>
 
     <p>Apparently the operating system does not allow to manage some file formats including (but not limited to) .xml, .plist, .html, .ts, .dart.</p>
@@ -70,7 +70,7 @@
     <ul>
         <li><a href="help:anchor=SyntaxHighlight_PREFERENCES bookID=org.sbarex.SourceCodeSyntaxHighlight.help">Global settings</a></li>
         <li><a href="help:anchor=SyntaxHighlight_SPECIFIC_PREFERENCES bookID=org.sbarex.SourceCodeSyntaxHighlight.help">Specific settings</a></li>
-        <li><a href="help:anchor=SyntaxHighlight_CUSTOMCSS bookID=org.sbarex.SourceCodeSyntaxHighlight.help">Custom style scheet</a></li>
+        <li><a href="help:anchor=SyntaxHighlight_CUSTOMCSS bookID=org.sbarex.SourceCodeSyntaxHighlight.help">Custom style sheet</a></li>
         <li><a href="help:anchor=SyntaxHighlight_THEMES bookID=org.sbarex.SourceCodeSyntaxHighlight.help">Theme editor</a></li>
     </ul>
     

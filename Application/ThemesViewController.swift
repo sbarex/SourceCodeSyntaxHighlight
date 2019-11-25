@@ -40,7 +40,7 @@ class ThemesViewController: NSViewController {
     @IBOutlet weak var tableView: NSTableView!
     @IBOutlet weak var addKeywordMenuItem: NSMenuItem!
     @IBOutlet weak var delThemeMenuItem: NSMenuItem!
-    @IBOutlet weak var actionsPupupButton: NSPopUpButton!
+    @IBOutlet weak var actionsPopupButton: NSPopUpButton!
     @IBOutlet weak var saveButton: NSButton!
     
     var service: SCSHXPCServiceProtocol? {
@@ -108,7 +108,7 @@ class ThemesViewController: NSViewController {
             refreshThemes()
         }
     }
-    /// Filter fot theme style (light/dark).
+    /// Filter for theme style (light/dark).
     var style: ThemeStyleFilterEnum = .all {
         didSet {
             refreshThemes()
@@ -239,7 +239,7 @@ class ThemesViewController: NSViewController {
         }
     }
     
-    /// Update the list of themes shoowing only changed themes.
+    /// Update the list of themes showing only changed themes.
     @IBAction func handleOnlyChangedFilter(_ sender: NSButton) {
         showOnlyChanged = !showOnlyChanged
     }
@@ -398,7 +398,7 @@ class ThemesViewController: NSViewController {
         }
     }
     
-    /// Add a new kwyword to the current theme.
+    /// Add a new keyword to the current theme.
     @IBAction func handleAddKeyword(_ sender: NSButton) {
         guard  let theme = self.theme, !theme.isStandalone else {
             return
@@ -537,7 +537,7 @@ class ThemesViewController: NSViewController {
         let filter_func = { (theme: SCSHThemePreview) -> Bool in
             if self.filter != "" {
                 guard let _ = theme.theme.desc.range(of: self.filter, options: String.CompareOptions.caseInsensitive) else {
-                    // Name don't match the search cryteria.
+                    // Name don't match the search criteria.
                     return false
                 }
             }
@@ -583,7 +583,7 @@ class ThemesViewController: NSViewController {
         refreshButton.isEnabled = theme != nil
         
         addKeywordMenuItem.isEnabled = !(theme?.isStandalone ?? true)
-        actionsPupupButton.isEnabled = theme != nil
+        actionsPopupButton.isEnabled = theme != nil
         saveButton.isEnabled = theme?.isDirty ?? false
         delThemeMenuItem.isEnabled = !(theme?.isStandalone ?? true)
         
@@ -609,7 +609,7 @@ extension ThemesViewController: SCSHThemeDelegate {
         if theme == self.theme {
             refreshPreview(self)
             if let t = customThemes.first(where: { $0.theme == theme }) {
-                // Reset current immage forcing refresh.
+                // Reset current image forcing refresh.
                 t.image = nil
                 // Reload the row.
                 outlineView.reloadItem(t)
@@ -620,7 +620,7 @@ extension ThemesViewController: SCSHThemeDelegate {
     
     func themeDidChangeName(_ theme: SCSHTheme) {
         if let t = customThemes.first(where: { $0.theme == theme }) {
-            // Relod the row in the outline view.
+            // Reload the row in the outline view.
             outlineView.reloadItem(t)
         }
     }
@@ -1102,7 +1102,7 @@ class ThemePropertyLabelTableCellView: NSTableCellView {
     }
 }
 
-/// Show the label of a kyword of a theme.
+/// Show the label of a keyword of a theme.
 class ThemeKeywordLabelTableCellView: NSTableCellView {
     @IBOutlet weak var addButton: NSButton!
     @IBOutlet weak var delButton: NSButton!
@@ -1284,7 +1284,7 @@ class ThemeNameFormatter: Formatter {
             
             if s != modString {
                 obj?.pointee = modString as NSString
-                error?.pointee = "Invalid characters: allow only letters, numbers, hypen and underscore."
+                error?.pointee = "Invalid characters: allow only letters, numbers, hyphen and underscore."
                 return false
             }
             

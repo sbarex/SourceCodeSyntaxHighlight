@@ -45,7 +45,7 @@ extension SCSHTheme.CanvasProperty {
 }
 
 extension SCSHTheme {
-    /** states which may occour during input file parsing */
+    /** states which may occurs during input file parsing */
     fileprivate enum State: Int {
         case STANDARD=0
         case STRING
@@ -124,7 +124,7 @@ extension SCSHTheme {
         vm.globals["Identifiers"]=REGEX_IDENTIFIER;
         vm.globals["Digits"]=REGEX_NUMBER
 
-        //initialize environment for hook functions
+        // Initialize environment for hook functions
         vm.globals["HL_STANDARD"]=State.STANDARD.rawValue
         vm.globals["HL_STRING"]=State.STRING.rawValue
         vm.globals["HL_NUMBER"]=State.NUMBER.rawValue
