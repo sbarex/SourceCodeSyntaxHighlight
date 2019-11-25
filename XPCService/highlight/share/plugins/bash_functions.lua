@@ -2,30 +2,30 @@
 Sample plugin file for highlight 3.2
 
 Adds additional function names to keyword list to recognize them later
-without parantheses
+without parentheses
 ]]
 
 Description="Add function names to keyword list"
-    
+
 Categories = {"bash"}
 
 -- optional parameter: syntax description
 function syntaxUpdate(desc)
   if desc=="Bash" then
 
-	--add function name pattern ("f_" prefix omitted but maybe reasonable)
-	table.insert( Keywords,
+  --add function name pattern ("f_" prefix omitted but maybe reasonable)
+  table.insert( Keywords,
                   { Id=5, Regex=[[(\w+)\s*\(]]
                   } )
 
     -- add keywords to list 5 if pattern matches
-     function OnStateChange(oldState, newState, token, kwgroup)
+    function OnStateChange(oldState, newState, token, kwgroup)
 
-       if newState==HL_KEYWORD and kwgroup==5 then
-	  --if string.find(token, "f_%a+") then
-	    AddKeyword(token, 5)
-	  --end
-	  --more patterns could be defined here
+      if newState==HL_KEYWORD and kwgroup==5 then
+    --if string.find(token, "f_%a+") then
+      AddKeyword(token, 5)
+    --end
+    --more patterns could be defined here
       end
       return newState
     end

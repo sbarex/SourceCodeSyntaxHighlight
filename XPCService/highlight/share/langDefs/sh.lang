@@ -35,7 +35,7 @@ Keywords={
         "reset", "clear", "script", "factor", "bc", "dc", "jot", "seq", "yes", "banner",
         "printenv", "lp", "tee", "mkfifo", "pathchk", "dd", "od", "hexdump", "m4"},
   },
-  
+
   -- fixes issue with expressions like ${SHELL="${CONFIG_SHELL-/bin/sh}"}
   -- the [^\}]+ part fixes issue with "s#@PATH@#/opt/${pkgname}/bin/# ${pkgdir}/etc/profile.d/${pkgname}.sh"
   { Id=4,
@@ -46,6 +46,11 @@ Keywords={
   },
   { Id=2,
     Regex=[[ \-\-?[\w\-]+ ]],
+  },
+
+  --see OnStateChange
+  { Id=5,
+    Regex=[[ \*\[.*?\]\* ]],
   }
 }
 
@@ -62,27 +67,32 @@ Comments={
   },
 }
 
-Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-]]
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-|\|]]
 
-function OnStateChange(oldState, newState, token)
+function OnStateChange(oldState, newState, token, kwClass)
 
-   if oldState==HL_STRING and token==hereDoc then
-      hereDoc = nil
-      return HL_STRING_END
-   end
-      
-   if  (string.sub(token,1,1) =="$" )  and oldState==HL_STRING and newState==HL_KEYWORD then
-      return HL_INTERPOLATION
-   end
-    
+  if oldState==HL_STRING and token==hereDoc then
+    hereDoc = nil
+    return HL_STRING_END
+  end
+
+  if  (string.sub(token,1,1) =="$" )  and oldState==HL_STRING and newState==HL_KEYWORD then
+    return HL_INTERPOLATION
+  end
+
+  -- fix of code like case $1 in  *[\\\`\"\$]*)
+  if  kwClass==5 then
+    return HL_OPERATOR
+  end
+
   if hereDoc~=nil then
     return HL_STRING
-   end
+  end
 
-   --recognize hereDoc multine strings
-   if oldState==HL_STANDARD and newState==HL_STRING  then
-      hereDoc = string.match(token, "<<%-?%s*%'?([%-%a%d_]+)" )
-    end
-    
-   return newState
+  --recognize hereDoc multine strings
+  if oldState==HL_STANDARD and newState==HL_STRING  then
+    hereDoc = string.match(token, "<<%-?%s*%'?([%-%a%d_]+)" )
+  end
+
+  return newState
 end

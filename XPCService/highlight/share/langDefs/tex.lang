@@ -8,7 +8,7 @@ Keywords={
     Regex=[[\\\w+]],
   },
   { Id=2,
-    List={"a4paper", "report", "ngerman", "dvips", "graphicx", "latin1", "inputenc", 
+    List={"a4paper", "report", "ngerman", "dvips", "graphicx", "latin1", "inputenc",
             "T1", "fontenc", "color", "alltt", "document", "tabbing", "tocdepth"},
   },
   { Id=3,

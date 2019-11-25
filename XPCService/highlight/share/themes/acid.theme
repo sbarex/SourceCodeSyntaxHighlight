@@ -1,6 +1,8 @@
 
 Description="Acid"
 
+-- Theme created by Alexandre Bonneau
+
 Categories = {"light"}
 
 Default        = { Colour="#000000" }

@@ -23,7 +23,7 @@ Keywords={
 }
 
 Strings={
-  Delimiter=[["|']],
+  Delimiter=[["""|"|']],
   Escape = [[ \\u\d{4}|\\x?\d{3}|\\\w|\\[\'\\\"] ]]
 }
 

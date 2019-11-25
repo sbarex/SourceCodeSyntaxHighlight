@@ -46,14 +46,18 @@
 		835923EF235A5EB9001506B6 /* SCSHSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835923ED235A5D33001506B6 /* SCSHSettings.swift */; };
 		835923F0235A5EBA001506B6 /* SCSHSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835923ED235A5D33001506B6 /* SCSHSettings.swift */; };
 		835923F1235A6F16001506B6 /* NSColor+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835923E9235A022C001506B6 /* NSColor+ext.swift */; };
+		836D01DA23847E7800B85545 /* String+GShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839098C32379E34A005D3E7C /* String+GShell.swift */; };
+		836D01E22386BE9F00B85545 /* SCSHTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835923EB235A3A85001506B6 /* SCSHTheme.swift */; };
+		836D01E42386C7CD00B85545 /* File+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836D01E32386C7CD00B85545 /* File+Ext.swift */; };
+		836D01E72386DE5300B85545 /* String+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836D01E52386DE4E00B85545 /* String+ext.swift */; };
 		837CFC8B2372EF5E00641AE4 /* VerticallyCenteredTextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837CFC8A2372EF5E00641AE4 /* VerticallyCenteredTextFieldCell.swift */; };
 		837DFC222375FE1E00920E72 /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837DFC212375FE1E00920E72 /* PreferencesViewController.swift */; };
 		837F088623802A8000D3893B /* SyntaxHighlight.help in Resources */ = {isa = PBXBuildFile; fileRef = 837F088523802A8000D3893B /* SyntaxHighlight.help */; };
-		838B78B5238293EE00619951 /* inquiry.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 838B78B0238292FD00619951 /* inquiry.png */; };
-		838F164F2380B05600A13F0F /* settings.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8311D9A6235CE0A8006DC138 /* settings.png */; };
-		838F16502380B05800A13F0F /* settings_specific.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 830D155A23797CC100D5535C /* settings_specific.png */; };
-		838F16512380B05B00A13F0F /* extensions.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8311D9A8235CE6D7006DC138 /* extensions.png */; };
-		838F16522380B06200A13F0F /* settings_specific_warn.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 830D155B23797D8000D5535C /* settings_specific_warn.png */; };
+		838B78B5238293EE00619951 /* inquiry.png in Copy Image help */ = {isa = PBXBuildFile; fileRef = 838B78B0238292FD00619951 /* inquiry.png */; };
+		838F164F2380B05600A13F0F /* settings.png in Copy Image help */ = {isa = PBXBuildFile; fileRef = 8311D9A6235CE0A8006DC138 /* settings.png */; };
+		838F16502380B05800A13F0F /* settings_specific.png in Copy Image help */ = {isa = PBXBuildFile; fileRef = 830D155A23797CC100D5535C /* settings_specific.png */; };
+		838F16512380B05B00A13F0F /* extensions.png in Copy Image help */ = {isa = PBXBuildFile; fileRef = 8311D9A8235CE6D7006DC138 /* extensions.png */; };
+		838F16522380B06200A13F0F /* settings_specific_warn.png in Copy Image help */ = {isa = PBXBuildFile; fileRef = 830D155B23797D8000D5535C /* settings_specific_warn.png */; };
 		839098C52379E353005D3E7C /* String+GShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839098C32379E34A005D3E7C /* String+GShell.swift */; };
 		839098D82379FA72005D3E7C /* Syntax Highlight XPC Service.xpc in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8359237B23563BDF001506B6 /* Syntax Highlight XPC Service.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		8390B18B23815B6500EA028A /* ThemeSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8390B18A23815B6500EA028A /* ThemeSelectorViewController.swift */; };
@@ -62,6 +66,10 @@
 		83A06912236730D800C795D6 /* style.css in Resources */ = {isa = PBXBuildFile; fileRef = 83A0691023672FD100C795D6 /* style.css */; };
 		83C09FC223638E4F0062BF39 /* outhtml_commandbar.lua in Resources */ = {isa = PBXBuildFile; fileRef = 83C09FC0236367140062BF39 /* outhtml_commandbar.lua */; };
 		83C09FDB2365B9360062BF39 /* highlight in Resources */ = {isa = PBXBuildFile; fileRef = 83C09FDA2365B9360062BF39 /* highlight */; };
+		83C981F1238AA33C00718132 /* InfoHighlightController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C981F0238AA33C00718132 /* InfoHighlightController.swift */; };
+		83C981F3238B04CD00718132 /* custom_css.png in Copy Image help */ = {isa = PBXBuildFile; fileRef = 83C981F2238B04BC00718132 /* custom_css.png */; };
+		83C981F5238B0C6E00718132 /* theme_editor.png in Copy Image help */ = {isa = PBXBuildFile; fileRef = 83C981F4238B0C6100718132 /* theme_editor.png */; };
+		83D499982382F9BF001686CF /* ThemesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D499972382F9BF001686CF /* ThemesViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -132,18 +140,21 @@
 			name = "Embed XPC Services";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		838F164E2380B01200A13F0F /* CopyFiles */ = {
+		838F164E2380B01200A13F0F /* Copy Image help */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = SyntaxHighlight.help/Contents/Resources/English.lproj/images;
 			dstSubfolderSpec = 7;
 			files = (
-				838F164F2380B05600A13F0F /* settings.png in CopyFiles */,
-				838F16502380B05800A13F0F /* settings_specific.png in CopyFiles */,
-				838F16522380B06200A13F0F /* settings_specific_warn.png in CopyFiles */,
-				838F16512380B05B00A13F0F /* extensions.png in CopyFiles */,
-				838B78B5238293EE00619951 /* inquiry.png in CopyFiles */,
+				838F164F2380B05600A13F0F /* settings.png in Copy Image help */,
+				838F16502380B05800A13F0F /* settings_specific.png in Copy Image help */,
+				838F16522380B06200A13F0F /* settings_specific_warn.png in Copy Image help */,
+				838F16512380B05B00A13F0F /* extensions.png in Copy Image help */,
+				838B78B5238293EE00619951 /* inquiry.png in Copy Image help */,
+				83C981F3238B04CD00718132 /* custom_css.png in Copy Image help */,
+				83C981F5238B0C6E00718132 /* theme_editor.png in Copy Image help */,
 			);
+			name = "Copy Image help";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		839098D72379FA60005D3E7C /* CopyFiles */ = {
@@ -202,6 +213,9 @@
 		835923E9235A022C001506B6 /* NSColor+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSColor+ext.swift"; sourceTree = "<group>"; };
 		835923EB235A3A85001506B6 /* SCSHTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCSHTheme.swift; sourceTree = "<group>"; };
 		835923ED235A5D33001506B6 /* SCSHSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCSHSettings.swift; sourceTree = "<group>"; };
+		836D01DF2385214D00B85545 /* CHANGELOG.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CHANGELOG.txt; sourceTree = "<group>"; };
+		836D01E32386C7CD00B85545 /* File+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "File+Ext.swift"; sourceTree = "<group>"; };
+		836D01E52386DE4E00B85545 /* String+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+ext.swift"; sourceTree = "<group>"; };
 		837CFC8A2372EF5E00641AE4 /* VerticallyCenteredTextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticallyCenteredTextFieldCell.swift; sourceTree = "<group>"; };
 		837DFC212375FE1E00920E72 /* PreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
 		837F088523802A8000D3893B /* SyntaxHighlight.help */ = {isa = PBXFileReference; lastKnownFileType = folder; path = SyntaxHighlight.help; sourceTree = "<group>"; };
@@ -212,6 +226,10 @@
 		83A0691023672FD100C795D6 /* style.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = style.css; sourceTree = "<group>"; };
 		83C09FC0236367140062BF39 /* outhtml_commandbar.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = outhtml_commandbar.lua; sourceTree = "<group>"; };
 		83C09FDA2365B9360062BF39 /* highlight */ = {isa = PBXFileReference; lastKnownFileType = folder; path = highlight; sourceTree = "<group>"; };
+		83C981F0238AA33C00718132 /* InfoHighlightController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoHighlightController.swift; sourceTree = "<group>"; };
+		83C981F2238B04BC00718132 /* custom_css.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = custom_css.png; sourceTree = "<group>"; };
+		83C981F4238B0C6100718132 /* theme_editor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = theme_editor.png; sourceTree = "<group>"; };
+		83D499972382F9BF001686CF /* ThemesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -260,11 +278,14 @@
 			children = (
 				83088A62236CB19A0092180E /* Lua.xcodeproj */,
 				8311D9A3235CDAA1006DC138 /* README.md */,
+				836D01DF2385214D00B85545 /* CHANGELOG.txt */,
 				833C295C236028B000B14757 /* LICENSE.txt */,
 				8311D9A6235CE0A8006DC138 /* settings.png */,
 				830D155A23797CC100D5535C /* settings_specific.png */,
 				830D155B23797D8000D5535C /* settings_specific_warn.png */,
 				8311D9A8235CE6D7006DC138 /* extensions.png */,
+				83C981F2238B04BC00718132 /* custom_css.png */,
+				83C981F4238B0C6100718132 /* theme_editor.png */,
 				838B78B0238292FD00619951 /* inquiry.png */,
 				83088A82236CC0330092180E /* .gitignore */,
 				83592347235599F6001506B6 /* Application */,
@@ -293,10 +314,12 @@
 				83592348235599F6001506B6 /* AppDelegate.swift */,
 				8359234A235599F6001506B6 /* ViewController.swift */,
 				837CFC962373FB7700641AE4 /* Preferences */,
+				83D499922382F9A9001686CF /* Themes */,
 				835923BE23571FB7001506B6 /* Document.swift */,
 				8359234C235599F9001506B6 /* Assets.xcassets */,
 				8359234E235599F9001506B6 /* Main.storyboard */,
 				8311D9C6235DE6D7006DC138 /* Data+Ext.swift */,
+				836D01E52386DE4E00B85545 /* String+ext.swift */,
 				831D5F5A237F1E87007340E7 /* UTI.swift */,
 				835923E9235A022C001506B6 /* NSColor+ext.swift */,
 				837CFC8A2372EF5E00641AE4 /* VerticallyCenteredTextFieldCell.swift */,
@@ -332,6 +355,7 @@
 			children = (
 				8359238323563BDF001506B6 /* Info.plist */,
 				839098C32379E34A005D3E7C /* String+GShell.swift */,
+				836D01E32386C7CD00B85545 /* File+Ext.swift */,
 				8359238B23563C1E001506B6 /* XPCServiceRelease.entitlements */,
 				835923EB235A3A85001506B6 /* SCSHTheme.swift */,
 				830D154C23780A4200D5535C /* SCSHTheme+Lua.swift */,
@@ -364,10 +388,19 @@
 				830D1558237961C900D5535C /* WarningUTIViewController.swift */,
 				831D5F54237F0CF1007340E7 /* CustomTypeViewController.swift */,
 				83408DDF2380505000128B0C /* CSSControlView.swift */,
-				8390B18A23815B6500EA028A /* ThemeSelectorViewController.swift */,
-				8390B19023815FF200EA028A /* ThemeCollectionViewItem.xib */,
+				83C981F0238AA33C00718132 /* InfoHighlightController.swift */,
 			);
 			name = Preferences;
+			sourceTree = "<group>";
+		};
+		83D499922382F9A9001686CF /* Themes */ = {
+			isa = PBXGroup;
+			children = (
+				8390B19023815FF200EA028A /* ThemeCollectionViewItem.xib */,
+				8390B18A23815B6500EA028A /* ThemeSelectorViewController.swift */,
+				83D499972382F9BF001686CF /* ThemesViewController.swift */,
+			);
+			name = Themes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -383,7 +416,7 @@
 				83592343235599F6001506B6 /* Resources */,
 				8359236E23559A2B001506B6 /* Embed App Extensions */,
 				8359238A23563BDF001506B6 /* Embed XPC Services */,
-				838F164E2380B01200A13F0F /* CopyFiles */,
+				838F164E2380B01200A13F0F /* Copy Image help */,
 			);
 			buildRules = (
 			);
@@ -572,8 +605,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				835923BF23571FB7001506B6 /* Document.swift in Sources */,
+				83D499982382F9BF001686CF /* ThemesViewController.swift in Sources */,
 				837CFC8B2372EF5E00641AE4 /* VerticallyCenteredTextFieldCell.swift in Sources */,
 				837DFC222375FE1E00920E72 /* PreferencesViewController.swift in Sources */,
+				836D01E72386DE5300B85545 /* String+ext.swift in Sources */,
 				830D15542378182800D5535C /* SCSHTheme.swift in Sources */,
 				8359234B235599F6001506B6 /* ViewController.swift in Sources */,
 				831D5F55237F0CF1007340E7 /* CustomTypeViewController.swift in Sources */,
@@ -582,7 +617,9 @@
 				830D1559237961C900D5535C /* WarningUTIViewController.swift in Sources */,
 				831D5F5B237F1E87007340E7 /* UTI.swift in Sources */,
 				835923F0235A5EBA001506B6 /* SCSHSettings.swift in Sources */,
+				836D01DA23847E7800B85545 /* String+GShell.swift in Sources */,
 				8390B18B23815B6500EA028A /* ThemeSelectorViewController.swift in Sources */,
+				83C981F1238AA33C00718132 /* InfoHighlightController.swift in Sources */,
 				835923EA235A022C001506B6 /* NSColor+ext.swift in Sources */,
 				83408DE02380505000128B0C /* CSSControlView.swift in Sources */,
 				8311D9C7235DE6D7006DC138 /* Data+Ext.swift in Sources */,
@@ -595,6 +632,7 @@
 			files = (
 				835923F1235A6F16001506B6 /* NSColor+ext.swift in Sources */,
 				8311D9C8235DE6D7006DC138 /* Data+Ext.swift in Sources */,
+				836D01E22386BE9F00B85545 /* SCSHTheme.swift in Sources */,
 				8359236223559A2B001506B6 /* PreviewViewController.swift in Sources */,
 				835923EF235A5EB9001506B6 /* SCSHSettings.swift in Sources */,
 				8359239E23570C5B001506B6 /* SCSHError.swift in Sources */,
@@ -613,6 +651,7 @@
 				835923EE235A5D33001506B6 /* SCSHSettings.swift in Sources */,
 				8359238F23564497001506B6 /* SCSHXPCService.swift in Sources */,
 				830D15552378419F00D5535C /* NSColor+ext.swift in Sources */,
+				836D01E42386C7CD00B85545 /* File+Ext.swift in Sources */,
 				835923EC235A3A85001506B6 /* SCSHTheme.swift in Sources */,
 				830D154D23780A4200D5535C /* SCSHTheme+Lua.swift in Sources */,
 			);
@@ -708,6 +747,7 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_SWIFT_FLAGS = "";
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";

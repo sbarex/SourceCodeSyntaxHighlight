@@ -1,6 +1,8 @@
 
 Description="Extended Backus-Naur Form"
 
+-- Syntax file created by Mate Ory
+
 Categories = {"protocol"}
 
 Keywords={
@@ -20,11 +22,10 @@ Strings={
 }
 
 Comments = {
-   { Block=true,
-     Nested=false,
-     Delimiter = { [[\(\*]], [[\*\)]] }
-   },
-
+  { Block=true,
+    Nested=false,
+    Delimiter = { [[\(\*]], [[\*\)]] }
+  },
 }
 
 IgnoreCase=false

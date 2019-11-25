@@ -29,6 +29,9 @@ import Syntax_Highlight_XPC_Service
 
 class MyDraggingView: NSTextView {
     var trackArea: NSTrackingArea? = nil
+    var doubleClickTimer: Timer?
+    /// Url of current file.
+    var url: URL?
     
     override var isOpaque: Bool {
         get {
@@ -37,7 +40,12 @@ class MyDraggingView: NSTextView {
     }
     
     override func mouseDown(with event: NSEvent) {
-        self.window?.performDrag(with: event)
+        if event.clickCount > 1, let u = self.url {
+            // Open the source file by a double click on the quicklook preview window.
+            NSWorkspace.shared.open(u)
+        } else {
+            self.window?.performDrag(with: event)
+        }
     }
     
     override func becomeFirstResponder() -> Bool {
@@ -72,6 +80,9 @@ class PreviewViewController: NSViewController, QLPreviewingController, WKNavigat
     @IBOutlet weak var draggingView: MyDraggingView!
     @IBOutlet weak var trailingDragginViewConstraint: NSLayoutConstraint!
     @IBOutlet weak var bottomDragginViewConstraint: NSLayoutConstraint!
+    
+    /// Url of current file.
+    var fileUrl: URL?
     
     private let log = {
         return OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "quicklook.scsh-extension")
@@ -112,6 +123,9 @@ class PreviewViewController: NSViewController, QLPreviewingController, WKNavigat
         // Call the completion handler so Quick Look knows that the preview is fully loaded.
         // Quick Look will display a loading spinner while the completion handler is not called.
         
+        self.fileUrl = url
+        draggingView?.url = url
+        
         let connection = NSXPCConnection(serviceName: "org.sbarex.SourceCodeSyntaxHighlight.XPCService")
         connection.remoteObjectInterface = NSXPCInterface(with: SCSHXPCServiceProtocol.self)
         connection.resume()
@@ -124,7 +138,7 @@ class PreviewViewController: NSViewController, QLPreviewingController, WKNavigat
             return
         }
         
-        service.colorize(url: url, overrideSettings: nil) { (response, settings, error) in
+        service.colorize(url: url, overrideSettings: nil) { (response: Data, settings: NSDictionary, error: Error?) in
             let format = settings[SCSHSettings.Key.format] as? String ?? SCSHFormat.html.rawValue
             DispatchQueue.main.async {
                 if format == SCSHFormat.rtf.rawValue {

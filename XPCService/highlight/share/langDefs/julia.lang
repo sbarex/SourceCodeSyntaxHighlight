@@ -5,23 +5,23 @@ Categories = {"source"}
 
 
 Keywords={
-  {  Id=1,
-   List={   
-    "function", "global", "for", "end", "while", "if", "else", "elseif", "break",
-    "switch", "case", "otherwise", "try", "catch",  "const", "immutable",
-    "import", "importall", "export", "type", "typealias", "return", "true",
-    "false", "macro", "quote", "in", "abstract", "module", "using", "continue",
-    "ifelse", "do", "eval", "let", "finally", "throw", "struct", "where", "new", "primitive", "isa"
-   }
+  { Id=1,
+    List={
+      "function", "global", "for", "end", "while", "if", "else", "elseif", "break",
+      "switch", "case", "otherwise", "try", "catch",  "const", "immutable",
+      "import", "importall", "export", "type", "typealias", "return", "true",
+      "false", "macro", "quote", "in", "abstract", "module", "using", "continue",
+      "ifelse", "do", "eval", "let", "finally", "throw", "struct", "where", "new", "primitive", "isa"
+    }
   },
-  {  Id=2,
-   List={
-    "Int8", "UInt8", "Int16", "UInt16", "Int32", "UInt32", "Int64", "UInt64",
-    "Int128", "UInt128", "Float16", "Float32", "Float64", "Any", "Number", 
-    "Real", "AbstractFloat", "Integer", "Signed", "Unsigned"
-   }
+  { Id=2,
+    List={
+      "Int8", "UInt8", "Int16", "UInt16", "Int32", "UInt32", "Int64", "UInt64",
+      "Int128", "UInt128", "Float16", "Float32", "Float64", "Any", "Number",
+      "Real", "AbstractFloat", "Integer", "Signed", "Unsigned"
+    }
   },
- { Id=3,
+  { Id=3,
     Regex=[[@\w+]]
   },
   { Id=4,
@@ -33,7 +33,7 @@ Keywords={
 }
 
 Strings = {
-  
+
   Delimiter=[["""|"|`]],
   Escape=[=[\\[ntvbrfa\\\?'"]|\\u\d+]=],
   Interpolation=[[ [%$]\w+|\$\(.+?\) ]],
@@ -43,10 +43,10 @@ Comments = {
 { Block=true,
   Nested=false,
   Delimiter = { [[#=]], [[=#]] }  },
-   {
-     Block=false,
-     Delimiter = { [[#]] }
-   }
+  {
+    Block=false,
+    Delimiter = { [[#]] }
+  }
 }
 
 IgnoreCase=false

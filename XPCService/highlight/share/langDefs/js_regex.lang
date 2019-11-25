@@ -6,14 +6,14 @@ Description = "Javascript Regex"
 Categories = {"source", "script"}
 
 Keywords = {
-   { -- backslash literals
-     Id = 1,
-     Regex = [=[\\.]]=]
-   },
-   { -- character classes
-     Id = 2,
-     Regex = [[ (\:(alnum|alpha|blank|cntrl|graph|print|punct|xdigit|unicode|word|space|digit|lower|upper)\:) ]], Group=1
-   }
+  { -- backslash literals
+    Id = 1,
+    Regex = [=[\\.]]=]
+  },
+  { -- character classes
+    Id = 2,
+    Regex = [[ (\:(alnum|alpha|blank|cntrl|graph|print|punct|xdigit|unicode|word|space|digit|lower|upper)\:) ]], Group=1
+  }
 }
 
 Strings = { -- character sets

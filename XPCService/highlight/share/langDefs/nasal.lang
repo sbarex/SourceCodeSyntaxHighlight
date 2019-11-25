@@ -6,8 +6,8 @@ Categories = {"source"}
 
 Keywords={
   { Id=1,
-    List={"and",  "or",  "nil",  "if",  "elsif",  "else",  "for",  "foreach", 
-        "while",  "return", "break",  "continue",  "func",  "size",  "keys",  "append",  
+    List={"and",  "or",  "nil",  "if",  "elsif",  "else",  "for",  "foreach",
+        "while",  "return", "break",  "continue",  "func",  "size",  "keys",  "append",
         "pop",  "int",  "streq",  "substr", "contains", "typeof"},
   },
   { Id=2,

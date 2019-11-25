@@ -26,7 +26,7 @@ IgnoreCase = true --> Alan is not case-sensitive
 EnableIndentation = false
 
 --[[============================================================================
-                                  IDENTIFIERS                                   
+                                  IDENTIFIERS
 ================================================================================
 RegEx that defines keywords identifier's pattern — ie, which tokens are valid
 keyword candidates. Alan keywords are letters-only, but:
@@ -44,15 +44,15 @@ This hack is needed to avoid highlighting as keywords the contents of Quoted IDs
 Identifiers = [=[ (?x)(
   # Quoted Identifiers:
   '.*?'(?!'')|
-  
+
   # Special Kewyords:
   \=>|\.|,|:|
-  
+
   # Alan Keywords:
   (?<!')\b[a-zA-Z]+\b
             ) ]=]
 --==============================================================================
---                                  COMMENTS                                    
+--                                  COMMENTS
 --==============================================================================
 -- Define SINGLE-LINE-COMMENTS delimiter:
 Comments = {
@@ -62,17 +62,17 @@ Comments = {
   }
 }
 --==============================================================================
---                                 STRINGS                                      
+--                                 STRINGS
 --==============================================================================
 Strings = {
 --~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
---                              STRING DELIMITERS                               
+--                              STRING DELIMITERS
 --~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   Delimiter = [=[ " ]=],
   AssertEqualLength = true,  -- Delimiters must have the same length?
 
 --[[~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-                                ESCAPE SEQUENCES                                
+                                ESCAPE SEQUENCES
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Character combinations with special meaning for the printout:
   $p  => New paragraph (usually one empty line)
@@ -88,7 +88,7 @@ Character combinations with special meaning for the printout:
   Escape = [=[ [\$][pnitalv\$] ]=],
 
 --[[~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-                                INTERPOLATION                                   
+                                INTERPOLATION
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 These refer to parameters while executing a verb:
   $<n>   => The parameter <n> (<n> is a digit > 0, e.g. "$1")
@@ -102,7 +102,7 @@ These refer to parameters while executing a verb:
 }
 
 --[[============================================================================
-                                   OPERATORS                                    
+                                  OPERATORS
 ================================================================================
 Arythmetic: '+', '-', '*', '/'
 Comparison: '=', '<', '>', '<=', '>=', '<>', '=='
@@ -116,19 +116,19 @@ NOTE: This RegEx is designed to avoid capturing '=>' as an operator, because we
 Operators = [=[ \+|\-|\*|\/|<|(?<!\=)>|<>|<\=|>\=|\=(?!>)|\=\=|\(|\)|\{|\}|! ]=]
 
 --[[============================================================================
-                                     DIGITS                                     
+                                    DIGITS
 ================================================================================
 Alan has only integer-type numerals.
 ------------------------------------------------------------------------------]]
 Digits = [=[ \b\d+\b ]=]
 
 --==============================================================================
---                                   KEYWORDS                                   
+--                                   KEYWORDS
 --==============================================================================
 -- NOTE: All keywords must be in lowercase here, because of 'IgnoreCase = true'.
 Keywords = {
 --------------------------------------------------------------------------------
---                              Alan Keywords List                              
+--                              Alan Keywords List
 --------------------------------------------------------------------------------
   { Id = 1,
     List = {
@@ -156,10 +156,10 @@ Keywords = {
     }
   },
 --------------------------------------------------------------------------------
---                           Predefined Alan Classes                            
+--                           Predefined Alan Classes
 --------------------------------------------------------------------------------
 -- These are the seven predefined classes of the Alan language.
--- 
+--
 -- NOTE: Usually there is no need to syntax-highlight the predefined classes or
 --       the 'hero' instance (next keywords group) as there isn't anything
 --       special about them beside being hard-coded into the language.
@@ -173,7 +173,7 @@ Keywords = {
     }
   },
 --------------------------------------------------------------------------------
---                             Predefined Instances                             
+--                             Predefined Instances
 --------------------------------------------------------------------------------
 -- The 'hero' is a special predefined actor instance, used for the protagonist.
 -- (See NOTE above!)
@@ -210,7 +210,7 @@ function OnStateChange(oldState, newState, token, kwgroup)
 end
 
 --[[============================================================================
-                                   CHANGELOG                                    
+                                  CHANGELOG
 ================================================================================
 This syntax definition abides to Semantic Versioning 2.0.0:
     http://semver.org

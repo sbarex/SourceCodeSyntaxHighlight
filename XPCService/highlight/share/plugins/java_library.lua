@@ -13,8 +13,8 @@ Categories = {"java" }
 function syntaxUpdate(desc)
   if desc=="Java" then
 
-	table.insert( Keywords,
-        { Id=2, List={
+  table.insert( Keywords,
+    { Id=2, List={
 "AWTError", "AWTEvent", "AWTEventListener", "AWTEventListenerProxy",
 "AWTEventMulticaster", "AWTException", "AWTKeyStroke", "AWTPermission",
 "AbstractAction", "AbstractBorderAbstractButton", "AbstractCellEditor",

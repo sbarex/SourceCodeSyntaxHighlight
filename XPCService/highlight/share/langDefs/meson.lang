@@ -4,8 +4,8 @@ Description="Meson"
 Categories = {"config"}
 
 Keywords={
- {  Id=1,
-   List={  "if", "elif", "else", "endif", "foreach", "endforeach",
+  { Id=1,
+    List={  "if", "elif", "else", "endif", "foreach", "endforeach",
         }
   },
   { Id=2,
@@ -22,15 +22,14 @@ Keywords={
 }
 
 Strings = {
-   Delimiter=[["""|'''|"|']],
+  Delimiter=[["""|'''|"|']],
 }
 
 Comments = {
-   
-   {
-     Block=false,
-     Delimiter = { [[#]] }
-   }
+  {
+    Block=false,
+    Delimiter = { [[#]] }
+  }
 }
 
 IgnoreCase=false

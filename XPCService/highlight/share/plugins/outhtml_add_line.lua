@@ -15,7 +15,7 @@ function themeUpdate()
   if (HL_OUTPUT == HL_FORMAT_HTML or HL_OUTPUT == HL_FORMAT_XHTML) then
     Injections[#Injections+1]="pre.hl, ol.hl { padding-left: 1em; border-left: 5px solid "..Keywords[1].Colour..";}"
   end
- 
+
 end
 
 

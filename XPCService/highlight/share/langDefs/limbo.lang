@@ -5,9 +5,10 @@ Categories = {"source"}
 
 
 Keywords={
-  {  Id=1,
-   List={ "if", "else", "while", "do", "return", "list", "of", 
-          "ref", "load", "import", "include"}
+  { Id=1,
+    List={
+      "if", "else", "while", "do", "return", "list", "of",
+      "ref", "load", "import", "include"}
   },
 
   { Id=2,
@@ -26,10 +27,10 @@ Strings = {
 }
 
 Comments = {
-   {
-     Block=false,
-     Delimiter = { [[#]] }
-   }
+  {
+    Block=false,
+    Delimiter = { [[#]] }
+  }
 }
 
 IgnoreCase=false

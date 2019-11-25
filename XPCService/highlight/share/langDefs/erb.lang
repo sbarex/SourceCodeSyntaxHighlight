@@ -12,7 +12,7 @@ Keywords={
 
 Strings={
   Delimiter=[["]],
-  Escape=[[\A(?!x)x]] 
+  Escape=[[\A(?!x)x]]
   -- see http://stackoverflow.com/questions/1723182/a-regex-that-will-never-be-matched-by-anything
 }
 
@@ -34,9 +34,9 @@ IgnoreCase=true
 
 function OnStateChange(oldState, newState, token, groupID)
 
-   if token=="%>"  and newState==HL_EMBEDDED_CODE_END and oldState==HL_BLOCK_COMMENT then
-      return HL_BLOCK_COMMENT_END
-   end
-   
-   return newState
+  if token=="%>"  and newState==HL_EMBEDDED_CODE_END and oldState==HL_BLOCK_COMMENT then
+    return HL_BLOCK_COMMENT_END
+  end
+
+  return newState
 end

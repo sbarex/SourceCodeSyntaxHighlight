@@ -5,9 +5,9 @@ Categories = {"source"}
 
 Keywords={
   { Id=1,
-    List={"default", "definition", "derive", "case", "class", "code", "export", 
-        "from", "if", "implementation", "import", "in", "infix", "infixl", "infixr", 
-        "instance", "let", "module", "of", "otherwise", "special", "system", 
+    List={"default", "definition", "derive", "case", "class", "code", "export",
+        "from", "if", "implementation", "import", "in", "infix", "infixl", "infixr",
+        "instance", "let", "module", "of", "otherwise", "special", "system",
         "where", "with"},
         },
   { Id=2,

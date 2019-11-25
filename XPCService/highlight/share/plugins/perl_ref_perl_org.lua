@@ -10,7 +10,7 @@ Categories = {"perl", "html", "rtf", "latex", "odt" }
 function syntaxUpdate(desc)
 
   if desc~="Perl" then
-     return
+    return
   end
 
   function Set (list)
@@ -19,7 +19,7 @@ function syntaxUpdate(desc)
       return set
   end
 
-   function_items = Set {"chomp", "chop", "chr", "crypt", "hex", "index", "lc",
+  function_items = Set {"chomp", "chop", "chr", "crypt", "hex", "index", "lc",
     "lcfirst", "length", "oct", "ord", "pack", "qq", "reverse", "rindex", "sprintf",
     "substr", "tr", "uc", "ucfirst,",  "pos", "quotemeta", "split", "study",
     "qr", "abs", "atan2", "cos", "exp", "hex", "int", "log", "oct", "rand", "sin",
@@ -67,20 +67,20 @@ function syntaxUpdate(desc)
     "shmget", "shmread", "shmwrite", "socket", "socketpair", "stat", "symlink",
     "syscall", "sysopen", "system", "times", "truncate", "umask", "unlink", "utime",
     "wait", "waitpid" }
- 
-   function getURL(token)
-     url='http://perldoc.perl.org/functions/'..string.lower(token).. '.html'
-     
-     if (HL_OUTPUT== HL_FORMAT_HTML or HL_OUTPUT == HL_FORMAT_XHTML) then
-        return '<a class="hl" target="new" href="' .. url .. '">'.. token .. '</a>'
-     elseif (HL_OUTPUT == HL_FORMAT_LATEX) then
-	return '\\href{'..url..'}{'..token..'}'
-      elseif (HL_OUTPUT == HL_FORMAT_RTF) then
-	return '{{\\field{\\*\\fldinst HYPERLINK "'..url..'" }{\\fldrslt\\ul\\ulc0 '..token..'}}}'
-      elseif (HL_OUTPUT == HL_FORMAT_ODT) then
-	return '<text:a xlink:type="simple" xlink:href="'..url..'">'..token..'</text:a>'
-     end
-   end
+
+  function getURL(token)
+    url='http://perldoc.perl.org/functions/'..string.lower(token).. '.html'
+
+    if (HL_OUTPUT== HL_FORMAT_HTML or HL_OUTPUT == HL_FORMAT_XHTML) then
+      return '<a class="hl" target="new" href="' .. url .. '">'.. token .. '</a>'
+    elseif (HL_OUTPUT == HL_FORMAT_LATEX) then
+      return '\\href{'..url..'}{'..token..'}'
+    elseif (HL_OUTPUT == HL_FORMAT_RTF) then
+      return '{{\\field{\\*\\fldinst HYPERLINK "'..url..'" }{\\fldrslt\\ul\\ulc0 '..token..'}}}'
+    elseif (HL_OUTPUT == HL_FORMAT_ODT) then
+      return '<text:a xlink:type="simple" xlink:href="'..url..'">'..token..'</text:a>'
+    end
+  end
 
 
   function Decorate(token, state)
@@ -91,7 +91,6 @@ function syntaxUpdate(desc)
 
     if function_items[token] then
       return getURL(token)
-
     end
 
   end

@@ -4,22 +4,22 @@ Sample plugin file for highlight 3.14
 Assumes that CSS is enabled (ie Inline CSS is not set)
 ]]
 
-Description="Shows matching parantheses and curly brackets in HTML output."
+Description="Shows matching parentheses and curly brackets in HTML output."
 
 Categories = {"format", "html", "usability" }
 
 -- optional parameter: syntax description
 function syntaxUpdate(desc)
-  
+
   if (desc=="Bash") then
-     return 
+    return
   end
-  
+
   if (HL_OUTPUT == HL_FORMAT_HTML or HL_OUTPUT == HL_FORMAT_XHTML) then
     pID=0      -- just a sequential counter to generate HTML IDs
-    pCnt=0     -- paranthesis counter to keep track of opening and closing pairs
+    pCnt=0     -- parenthesis counter to keep track of opening and closing pairs
     openPID={} -- save opening IDs as they are needed again for the close tag IDs
-  
+
     HeaderInjection=[=[
 <script type="text/javascript">
 /* <![CDATA[ */
@@ -35,26 +35,26 @@ function syntaxUpdate(desc)
 </script>
 ]=]
     end
-  
+
   function getTag(token, id, kind)
     return '<span class="hl box" id="'..kind..'_'..id..'" onclick="showMP(this);">'..token..'</span>'
   end
-  
-  function getOpenParen(token, kind)
-     pID=pID+1
-     pCnt=pCnt+1
-     openPID[pCnt] = pID
-     return getTag(token, pID, kind) 
-   end
 
-   function getCloseParen(token, kind)
-     oID=openPID[pCnt]
-     if oID then
+  function getOpenParen(token, kind)
+    pID=pID+1
+    pCnt=pCnt+1
+    openPID[pCnt] = pID
+    return getTag(token, pID, kind)
+  end
+
+  function getCloseParen(token, kind)
+    oID=openPID[pCnt]
+    if oID then
       pCnt=pCnt-1
-      return getTag(token, oID, kind) 
-     end
-   end
-   
+      return getTag(token, oID, kind)
+    end
+  end
+
   function Decorate(token, state)
 
     if (state ~= HL_OPERATOR or HL_OUTPUT ~= HL_FORMAT_HTML) then
@@ -68,7 +68,7 @@ function syntaxUpdate(desc)
     if string.find(token, '%)')==1 then
       return getCloseParen(token, 'cp')
     end
-    
+
     if string.find(token, '%{')==1 then
       return getOpenParen(token, 'ob')
     end
@@ -76,7 +76,7 @@ function syntaxUpdate(desc)
     if string.find(token, '%}')==1 then
       return getCloseParen(token, 'cb')
     end
-    
+
   end
 end
 

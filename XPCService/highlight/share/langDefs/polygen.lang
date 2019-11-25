@@ -1,43 +1,44 @@
---[[*****************************************************************************
-    *                                                                           *
-    *                     Polygen Grammars Syntax Definition                    *
-    *                                                                           *
-    *               v1.0.1 (2018/01/18) | Highlight v3.41 | Lua 5.3             *
-    *                                                                           *
-    *                             by Tristano Ajmone                            *
-    *                                                                           *
-    *****************************************************************************
-    Associated file extensions: ".grm"
-    Syntax type: EBNF
-    -----------------------------------------------------------------------------
-    Polygen is a cross-platform command line tool for generating random sentences
-    according to a grammar definition -- ie: following custom syntactical and
-    lexical rules. It takes an Ascii text file ("*.grm") as source program defining
-    a grammar by means of EBNF-like probabilistic rules and executes it. At each
-    execution, the grammar will be run against different random seeds, therefore
-    producing a different text output.
+--[[
+********************************************************************************
+*                                                                              *
+*                       Polygen Grammars Syntax Definition                     *
+*                                                                              *
+*                 v1.0.1 (2018/01/18) | Highlight v3.41 | Lua 5.3              *
+*                                                                              *
+*                               by Tristano Ajmone                             *
+*                                                                              *
+********************************************************************************
+Associated file extensions: ".grm"
+Syntax type: EBNF
+--------------------------------------------------------------------------------
+Polygen is a cross-platform command line tool for generating random sentences
+according to a grammar definition -- ie: following custom syntactical and
+lexical rules. It takes an Ascii text file ("*.grm") as source program defining
+a grammar by means of EBNF-like probabilistic rules and executes it. At each
+execution, the grammar will be run against different random seeds, therefore
+producing a different text output.
 
-    The main goal of Polygen is to generate cursory nonsense for entertainment;
-    or, in the words of its author, "a first effort towards satyre in computer
-    science". Polygen was created by Alvise Spanò.
+The main goal of Polygen is to generate cursory nonsense for entertainment;
+or, in the words of its author, "a first effort towards satyre in computer
+science". Polygen was created by Alvise Spanò.
 
-    Polygen Website and GitHub repository:
-        http://www.polygen.org/
-        https://github.com/alvisespano/Polygen
+Polygen Website and GitHub repository:
+    http://www.polygen.org/
+    https://github.com/alvisespano/Polygen
 
-    Polygen grammars documentation (in Italian):
-        http://www.polygen.org/it/manuale
+Polygen grammars documentation (in Italian):
+    http://www.polygen.org/it/manuale
 
-    An outdated English translation (probably from an earlier version of Polygen,
-    since it doesn't cover the full syntax) can be found at:
-        http://lapo.it/polygen/polygen-1.0.6-20040705-doc.zip
-    -----------------------------------------------------------------------------
-    Written by Tristano Ajmone:
-        <tajmone@gmail.com>
-        https://github.com/tajmone
-    Released into the public domain according to the Unlicense terms:
-        http://unlicense.org/
-    -----------------------------------------------------------------------------
+An outdated English translation (probably from an earlier version of Polygen,
+since it doesn't cover the full syntax) can be found at:
+    http://lapo.it/polygen/polygen-1.0.6-20040705-doc.zip
+--------------------------------------------------------------------------------
+Written by Tristano Ajmone:
+    <tajmone@gmail.com>
+    https://github.com/tajmone
+Released into the public domain according to the Unlicense terms:
+    http://unlicense.org/
+--------------------------------------------------------------------------------
 --]]
 Description="Polygen"
 
@@ -72,20 +73,20 @@ Comments={
     }
   },
 }
--- ==============================================================================
+-- =============================================================================
 --                                    STRINGS
--- ==============================================================================
+-- =============================================================================
 Strings={
-  -------------------------------------------------------------------------------
+  ------------------------------------------------------------------------------
   --                             STRING DELIMITERS
-  -------------------------------------------------------------------------------
+  ------------------------------------------------------------------------------
   -- Polygen reckognises only double quotes as string delimiter: "...STRING..."
   Delimiter=[=[ " ]=],
---[[-----------------------------------------------------------------------------
+--[[----------------------------------------------------------------------------
                                   ESCAPE SEQUENCES
-   ------------------------------------------------------------------------------
-   Escape sequences can occur only inside strings -- here enforced via a custom
-   OnStateChange() hook-function, further on. Valid escape sequences:
+    ----------------------------------------------------------------------------
+    Escape sequences can occur only inside strings -- here enforced via a custom
+    OnStateChange() hook-function, further on. Valid escape sequences:
 
       \\    Backslash
       \"    Quote
@@ -96,43 +97,43 @@ Strings={
       \nnn  ASCII decimal code (must always be three digits)                 --]]
   Escape=[=[ \\\d{3}|\\[nrbt\\"] ]=],
 }
---[[=============================================================================
-                                     OPERATORS
-    =============================================================================
+--[[============================================================================
+                                    OPERATORS
+    ============================================================================
     ::=   :=    :   ;   ^   .   ,   _   |   +   -   >   <   \
     >>  <<  (   )   [   ]   {   }
 
 --]]
 Operators=[=[ ::?=|\^|\.|:|\+|-|>|<|\(|\)|\[|]|\{|}|\||,|;|_|\\ ]=]
--- ==============================================================================
+-- =============================================================================
 --                                    KEYWORDS
--- ==============================================================================
+-- =============================================================================
 Keywords={
   -- KNOWN ISSUES: An unspaced non-terminal symbol definition will be parsed as
   -- as a label (eg: 'S::=` and 'X:=`, instead of 'S ::=` and 'X :=`) because of
   -- the colon; and a label with spaces before the colon will be parsed as a non-
   -- terminal symbol (eg: 'Label :' instead of 'Label:'). Since both usages are
-  -- considered bad (albeit valid) styles in Polygen grammars (and indeed are 
+  -- considered bad (albeit valid) styles in Polygen grammars (and indeed are
   -- rarely found in actual gramamrs), it's not worth implementing complex RegExs
   -- to capture such edge cases.
-  -------------------------------------------------------------------------------
+  ------------------------------------------------------------------------------
   --                            Non-Terminal Symbol
-  -------------------------------------------------------------------------------
+  ------------------------------------------------------------------------------
   { Id=1,
     Regex=[=[ (?<!\.)([A-Z][A-Za-z0-9]*)\b(?!:) ]=],
     Group=1
   },
-  -------------------------------------------------------------------------------
+  ------------------------------------------------------------------------------
   --                              Label Identifier
-  -------------------------------------------------------------------------------
-  -- Captures a label identifier at definition time:     LABEL: <..definition...>
+  ------------------------------------------------------------------------------
+  -- Captures a label identifier at definition time:    LABEL: <..definition...>
   { Id=2,
     Regex=[=[ ([A-Za-z0-9]+)(?::) ]=],
     Group=1
   },
-  -------------------------------------------------------------------------------
+  ------------------------------------------------------------------------------
   --                               Label Selector
-  -------------------------------------------------------------------------------
+  ------------------------------------------------------------------------------
   -- Either a dot followed by a single Label or by a group of labels within round
   -- brackets:    .LABEL    .(LABEL1|LABEL2)    .(++LABEL1|-LABEL2)
   -- The dot selector is excluded from the match; the whole bracketed group will
@@ -142,15 +143,15 @@ Keywords={
     Group=1
   },
 }
--- ******************************************************************************
--- *                                                                            *
--- *                           CUSTOM HOOK-FUNCTIONS                            *
--- *                                                                            *
--- ******************************************************************************
+-- *****************************************************************************
+-- *                                                                           *
+-- *                          CUSTOM HOOK-FUNCTIONS                            *
+-- *                                                                           *
+-- *****************************************************************************
 
--- ==============================================================================
---                      Escape Sequences Only Inside String
--- ==============================================================================
+-- =============================================================================
+--                     Escape Sequences Only Inside String
+-- =============================================================================
 function OnStateChange(oldState, newState, token, kwgroup)
 --  This function ensures that escape sequences outside strings are ignored.
 --  Based on André Simon's reply to Issue #23:
@@ -160,12 +161,12 @@ function OnStateChange(oldState, newState, token, kwgroup)
   end
   return newState
 end
---[[==============================================================================
-                                        CHANGELOG
-==================================================================================
- v1.0.1 (2018/01/18) | Highlight v3.41)
-    - Changed "PolyGen" to "Polygen" (the author has now officially adopted the
-      latter syntax).
- v1.0.0 (2018/01/04) | Highlight v3.41)
-    - First release.
+--[[============================================================================
+                                    CHANGELOG
+================================================================================
+v1.0.1 (2018/01/18) | Highlight v3.41)
+  - Changed "PolyGen" to "Polygen" (the author has now officially adopted the
+    latter syntax).
+v1.0.0 (2018/01/04) | Highlight v3.41)
+  - First release.
 --]]

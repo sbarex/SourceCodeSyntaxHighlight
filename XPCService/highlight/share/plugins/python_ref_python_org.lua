@@ -10,7 +10,7 @@ Categories = {"python", "html", "rtf", "latex", "odt" }
 function syntaxUpdate(desc)
 
   if desc~="Python" then
-     return
+    return
   end
 
   function Set (list)
@@ -19,22 +19,22 @@ function syntaxUpdate(desc)
       return set
   end
 
-   simple_items = Set {"assert","pass","del","print","return","yield","raise","break","continue","import","global","exec" }
-   compound_items = Set {"if","while", "for","try", "with" }
-   
-   function getURL(token, cat)
-     url='http://docs.python.org/reference/'..cat..'_stmts.html#the-'..token.. '-statement'
-     
-      if (HL_OUTPUT== HL_FORMAT_HTML or HL_OUTPUT == HL_FORMAT_XHTML) then
-        return '<a class="hl" target="new" href="' .. url .. '">'.. token .. '</a>'
-      elseif (HL_OUTPUT == HL_FORMAT_LATEX) then
-	return '\\href{'..url..'}{'..token..'}'
-      elseif (HL_OUTPUT == HL_FORMAT_RTF) then
-	return '{{\\field{\\*\\fldinst HYPERLINK "'..url..'" }{\\fldrslt\\ul\\ulc0 '..token..'}}}'
-      elseif (HL_OUTPUT == HL_FORMAT_ODT) then
-	return '<text:a xlink:type="simple" xlink:href="'..url..'">'..token..'</text:a>'
-     end
-   end
+  simple_items = Set {"assert","pass","del","print","return","yield","raise","break","continue","import","global","exec" }
+  compound_items = Set {"if","while", "for","try", "with" }
+
+  function getURL(token, cat)
+    url='http://docs.python.org/reference/'..cat..'_stmts.html#the-'..token.. '-statement'
+
+    if (HL_OUTPUT== HL_FORMAT_HTML or HL_OUTPUT == HL_FORMAT_XHTML) then
+      return '<a class="hl" target="new" href="' .. url .. '">'.. token .. '</a>'
+    elseif (HL_OUTPUT == HL_FORMAT_LATEX) then
+      return '\\href{'..url..'}{'..token..'}'
+    elseif (HL_OUTPUT == HL_FORMAT_RTF) then
+      return '{{\\field{\\*\\fldinst HYPERLINK "'..url..'" }{\\fldrslt\\ul\\ulc0 '..token..'}}}'
+    elseif (HL_OUTPUT == HL_FORMAT_ODT) then
+      return '<text:a xlink:type="simple" xlink:href="'..url..'">'..token..'</text:a>'
+    end
+  end
 
   function Decorate(token, state)
 

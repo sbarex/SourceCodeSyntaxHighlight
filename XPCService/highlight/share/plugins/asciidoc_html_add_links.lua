@@ -10,9 +10,9 @@ Categories = {"html", "asciidoc", "hyperlinks"}
 function syntaxUpdate(desc)
 
   if desc~="AsciiDoc" then
-     return
+    return
   end
-  
+
   if (HL_OUTPUT ~= HL_FORMAT_HTML and HL_OUTPUT ~= HL_FORMAT_XHTML) then
       return
   end
@@ -33,12 +33,12 @@ end
 
 
 function themeUpdate(desc)
-  
+
   if (HL_OUTPUT ~= HL_FORMAT_HTML and HL_OUTPUT ~= HL_FORMAT_XHTML) then
-      return
+    return
   end
-   -- inherit formatting of enclosing span tags
-   Injections[#Injections+1]="a.hl, a.hl:visited {color:inherit;font-weight:inherit;}"
+  -- inherit formatting of enclosing span tags
+  Injections[#Injections+1]="a.hl, a.hl:visited {color:inherit;font-weight:inherit;}"
 end
 
 --The Plugins array assigns code chunks to themes or language definitions.

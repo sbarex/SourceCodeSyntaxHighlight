@@ -10,7 +10,7 @@ Categories = {"format" }
 function syntaxUpdate(desc)
 
   if IgnoreCase ~=true then
-     return
+    return
   end
 
   function Decorate(token, state)

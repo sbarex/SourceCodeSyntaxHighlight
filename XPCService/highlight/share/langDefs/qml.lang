@@ -4,10 +4,11 @@ Description="QML"
 Categories = {"markup"}
 
 Keywords={
-  {  Id=1,
-   List={"import", "color","bool","coordinate","date","double","enumeration","font","geocircle",
-         "georectangle","geoshape","int","list","matrix4x4","point","real","rect","size","string",
-         "url","var","variant","vector2d","vector3d","vector4d","true","false", "if", "else", "function", "signal", "property"}
+  { Id=1,
+    List={
+      "import", "color","bool","coordinate","date","double","enumeration","font","geocircle",
+      "georectangle","geoshape","int","list","matrix4x4","point","real","rect","size","string",
+      "url","var","variant","vector2d","vector3d","vector4d","true","false", "if", "else", "function", "signal", "property"}
   },
   { Id=2,
     List= {"Accelerometer","AccelerometerReading","Accessible","Action","Address","Affector"
@@ -103,14 +104,14 @@ Strings = {
 }
 
 Comments = {
-   { Block=true,
-     Nested=false,
-     Delimiter = { [[\/\*]], [[\*\/]] }
-   },
-   {
-     Block=false,
-     Delimiter = { [[//]] }
-   }
+  { Block=true,
+    Nested=false,
+    Delimiter = { [[\/\*]], [[\*\/]] }
+  },
+  {
+    Block=false,
+    Delimiter = { [[//]] }
+  }
 }
 
 IgnoreCase=false

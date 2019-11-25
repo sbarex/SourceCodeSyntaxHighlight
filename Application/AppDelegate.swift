@@ -23,6 +23,8 @@
 import Cocoa
 import Syntax_Highlight_XPC_Service
 
+typealias ExampleItem = (url: URL, title: String, uti: String)
+
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
     lazy var connection: NSXPCConnection = {
@@ -56,7 +58,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func applicationDidBecomeActive(_ notification: Notification) {
-        if firstAppear && NSApplication.shared.windows.count == 0, let menu = NSApp.menu?.item(at: 0)?.submenu?.item(withTag: 100), let a = menu.action {
+        if firstAppear, NSApplication.shared.windows.first(where: { $0.contentViewController is ViewController }) == nil, let menu = NSApp.menu?.item(at: 0)?.submenu?.item(withTag: 100), let a = menu.action {
+            // Open the settings window if there are no windows opened.
             NSApp.sendAction(a, to: menu.target, from: menu)
         }
         firstAppear = false
@@ -97,7 +100,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             if uti.isValid {
                 fileTypes.append(uti)
             } else {
-                print("Ignoring \(type) uti.")
+                print("Ignoring `\(type)` uti because it has no mime or file extension associated.")
             }
         }
         
@@ -107,6 +110,49 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
         
         return fileTypes
+    }
+    
+    /// Get the list of available source file example.
+    func getAvailableExamples() -> [ExampleItem] {
+        // Populate the example files list.
+        var examples: [ExampleItem] = []
+        if let examplesDirURL = Bundle.main.url(forResource: "examples", withExtension: nil) {
+            let fileManager = FileManager.default
+            if let files = try? fileManager.contentsOfDirectory(at: examplesDirURL, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles]) {
+                for file in files {
+                    let title: String
+                    if let uti = UTI(URL: file) {
+                        title = uti.description + " (." + file.pathExtension + ")"
+                        examples.append((url: file, title: title, uti: uti.UTI))
+                    } else {
+                        title = file.lastPathComponent
+                        examples.append((url: file, title: title, uti: ""))
+                    }
+                    
+                }
+                examples.sort { (a, b) -> Bool in
+                    a.title < b.title
+                }
+            }
+        }
+        return examples
+    }
+    
+    @IBAction func openApplicationSupportFolder(_ sender: Any) {
+        service?.getApplicationSupport(reply: { (url) in
+            if let u = url, FileManager.default.fileExists(atPath: u.path) {
+                // Open the Finder to the application support folder.
+                NSWorkspace.shared.activateFileViewerSelecting([u])
+            } else {
+                let alert = NSAlert()
+                alert.messageText = "Attention"
+                alert.informativeText = "The application support folder don't exists."
+                alert.addButton(withTitle: "Close")
+                alert.alertStyle = .informational
+                
+                alert.runModal()
+            }
+        })
     }
 }
 

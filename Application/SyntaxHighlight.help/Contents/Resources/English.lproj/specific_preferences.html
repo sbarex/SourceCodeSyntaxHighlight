@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Syntac Highlight Help</title>
+    <title>Syntax Highlight Help</title>
     <meta charset="UTF-8">
-    <meta name="description" content="Syntac Highlight Specific Format Preferences">
+    <meta name="description" content="Syntax Highlight Specific Format Preferences">
     <link rel="stylesheet" type="text/css" href="../css/main.css" />
 </head>
 <body>
@@ -24,11 +24,11 @@
     <div><img src="images/settings_specific_warn.png" alt="File type settings window" /></div>
 
     <p>For an explanation of the various parameters see the page of <a href="help:anchor=SyntaxHighlight_PREFERENCES bookID=org.sbarex.SourceCodeSyntaxHighlight.help">global settings</a>.</p>
-    <p>In the specific settings you can also set a preprocessor utility. The preprocessor handle the source file before it is elaborated by <code>highlight</code>.<br />
+    <p>In the specific settings you can also set a <i>preprocessor utility</i>. The preprocessor handle the source file before it is elaborated by <code>highlight</code>.<br />
     Preprocessor can be any cli utility or shell script which receives as the last parameter the name of the file to be processed and output to stdout the data to pass to <code>highlight</code>. </p>
     <p>Preprocessor can be useful to convert a format into another (eg from binary to text), decompile, pretty printing…</p>
     <p>The excution of the preprocessor is made inside the same env of the script that handle <code>highlight</code>. For a list of environments plese see the file <code>colorize.sh</code> in <code>Syntax Highlight.app/Contents/XPCServices/Syntax Highlight XPC Service.xpc/Contents/Resources/</code></p>
-    <p>Specifying the preprocessor disables standard preprocessors:</p>
+    <p>Specifying a custom preprocessor disables the predefined preprocessors:</p>
     <table>
         <tr><th>file type</th><th>default proprocessor</th><th>action</th></tr>
         <tr>

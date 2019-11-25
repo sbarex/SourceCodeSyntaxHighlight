@@ -4,8 +4,8 @@ Description="Charmm"
 Categories = {"source"}
 
 Keywords={
-  {  Id=1,
-   List={"if", "then", "set", "goto", "label", "stream", "increment", 
+  { Id=1,
+    List={"if", "then", "set", "goto", "label", "stream", "increment",
         "decrement", "rewind", "return", "endif", "define", "calc", "set", "stop",
         "gt", "ge", "eq", "ne", "le", "lt"
         }
@@ -34,10 +34,10 @@ Strings = {
 }
 
 Comments = {
-   {
-     Block=false,
-     Delimiter = { [[\!]] }
-   }
+  {
+    Block=false,
+    Delimiter = { [[\!]] }
+  }
 }
 
 IgnoreCase=true

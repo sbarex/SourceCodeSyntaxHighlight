@@ -1,6 +1,8 @@
 
 Description="Matlab Editor"
 
+-- Theme created by David
+
 Categories = {"light"}
 
 Default        = { Colour="#000000" }

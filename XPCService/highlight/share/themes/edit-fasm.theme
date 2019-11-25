@@ -6,7 +6,7 @@
 *                             v1.0 - 2017/03/14                              *
 *                                                                            *
 ******************************************************************************
-This theme mimicks the native color scheme of Flat assembler's editor:
+This theme mimics the native color scheme of Flat assembler's editor:
     https://flatassembler.net
 
 Color names calculated using Name That Color (NTC) foss CLI tool:
@@ -44,15 +44,15 @@ LineNum       = { Colour="#0078D7" }  -- "Lochmara" blue (in FASM IDE: Selection
 
 PreProcessor  = Operator -- (not used by FASM syntax)
 
-Keywords = {
+Keywords =  {
                 Default, -- REGISTERS
                 Default, -- INSTRUCTIONS
                 Default, -- LABELS
                 Default, -- DIRECTIVES
-           }
+            }
 --[[
 ==============================================================================
-                                  CHANGELOG                                   
+                                  CHANGELOG
 ==============================================================================
 v1.0 (2017/03/14)
   -- First release.

@@ -7,12 +7,13 @@ Digits = [[ (?:0x)[0-9a-fA-F']+|\d*[\.]?\d+(?:[eE][\-\+]\d+)?[blLuU]* ]]
 
 Keywords={
   {  Id=1,
-   List={ "all", "any", "assert", "assume", "bool", "break", "byte", "case", 
-        "catch", "continue", "debug", "default", "do", "else", "ensures", "export", 
-        "false", "fail", "finite", "for", "function", "if", "import", "in", "int", "is", 
-        "method", "native", "new", "no", "null", "package", "private", "protected", 
-        "public", "requires", "return", "skip", "some", "switch", "throw", "throws", 
-        "total", "true", "try", "void", "where", "while" }
+    List={
+      "all", "any", "assert", "assume", "bool", "break", "byte", "case",
+      "catch", "continue", "debug", "default", "do", "else", "ensures", "export",
+      "false", "fail", "finite", "for", "function", "if", "import", "in", "int", "is",
+      "method", "native", "new", "no", "null", "package", "private", "protected",
+      "public", "requires", "return", "skip", "some", "switch", "throw", "throws",
+      "total", "true", "try", "void", "where", "while" }
   },
   { Id=2,
     List= { "constant", "from", "type" }
@@ -30,14 +31,14 @@ Strings = {
 }
 
 Comments = {
-   { Block=true,
-     Nested=false,
-     Delimiter = { [[\/\*]], [[\*\/]] }
-   },
-   {
-     Block=false,
-     Delimiter = { [[//]] }
-   }
+  { Block=true,
+    Nested=false,
+    Delimiter = { [[\/\*]], [[\*\/]] }
+  },
+  {
+    Block=false,
+    Delimiter = { [[//]] }
+  }
 }
 
 IgnoreCase=false

@@ -12,14 +12,14 @@ Categories = {"format", "html", "usability" }
 function syntaxUpdate(desc)
 
   if (desc=="Bash") then
-     return 
+    return
   end
-    
+
   if (HL_OUTPUT == HL_FORMAT_HTML or HL_OUTPUT == HL_FORMAT_XHTML) then
     pID=0     -- just a sequential counter to generate HTML IDs
-    pCount=0    -- paranthesis counter to keep track of opening and closing pairs
+    pCount=0    -- parenthesis counter to keep track of opening and closing pairs
     openPID={} -- save opening IDs as they are needed again for the close tag IDs
-  
+
     HeaderInjection=[=[
 <script type="text/javascript">
   /* <![CDATA[ */
@@ -33,27 +33,27 @@ function syntaxUpdate(desc)
   /* ]]> */
 </script>
 ]=]
-    end
-  
+  end
+
   function getTag(token, id, kind)
     return '<span class="hl box" id="'..kind..'b_'..id..'" onclick="showMB(this);">'..token..'</span>'
   end
-  
-  function getOpenParen(token)
-     pID=pID+1
-     pCount=pCount+1
-     openPID[pCount] = pID
-     return getTag(token, pID, 'o') 
-   end
 
-   function getCloseParen(token)
-     oID=openPID[pCount]
-     if oID then
+  function getOpenParen(token)
+    pID=pID+1
+    pCount=pCount+1
+    openPID[pCount] = pID
+    return getTag(token, pID, 'o')
+  end
+
+  function getCloseParen(token)
+    oID=openPID[pCount]
+    if oID then
       pCount=pCount-1
-      return getTag(token, oID, 'c') 
-     end
-   end
-   
+      return getTag(token, oID, 'c')
+    end
+  end
+
   function Decorate(token, state)
 
     if (state ~= HL_OPERATOR or HL_OUTPUT ~= HL_FORMAT_HTML) then
@@ -67,7 +67,7 @@ function syntaxUpdate(desc)
     if string.find(token, "}")==1 then
       return getCloseParen(token)
     end
-    
+
   end
 end
 

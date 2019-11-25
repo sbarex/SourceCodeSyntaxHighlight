@@ -12,7 +12,7 @@ Keywords={
           }
   },
 
- { Id=3,
+  { Id=3,
     Regex=[[(\w+)\s*\=]]
   },
   { Id=2,
@@ -30,14 +30,14 @@ Strings={
 }
 
 Comments = {
-   { Block=true,
-     Nested=false,
-     Delimiter = { [[\/\*]], [[\*\/]] }
-   },
-   {
-     Block=false,
-     Delimiter = { [[#]] }
-   }
+  { Block=true,
+    Nested=false,
+    Delimiter = { [[\/\*]], [[\*\/]] }
+  },
+  {
+    Block=false,
+    Delimiter = { [[#]] }
+  }
 }
 
 IgnoreCase=false
@@ -47,24 +47,23 @@ Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-]]
 
 function OnStateChange(oldState, newState, token)
 
-   if oldState==HL_STRING and token==hereDoc then
-      hereDoc = nil
-      return HL_STRING_END
-   end
-      
-   if  (string.sub(token,1,1) =="$" )  and oldState==HL_STRING and newState==HL_KEYWORD then
-      return HL_INTERPOLATION
-   end
-    
+  if oldState==HL_STRING and token==hereDoc then
+    hereDoc = nil
+    return HL_STRING_END
+  end
+
+  if  (string.sub(token,1,1) =="$" )  and oldState==HL_STRING and newState==HL_KEYWORD then
+    return HL_INTERPOLATION
+  end
+
   if hereDoc~=nil then
     return HL_STRING
-   end
+  end
 
-   --recognize hereDoc multine strings
-   if oldState==HL_STANDARD and newState==HL_STRING  then
-      hereDoc = string.match(token, "<<%-?%s*%'?([%-%a%d_]+)" )
-    end
-    
-   return newState
+  --recognize hereDoc multine strings
+  if oldState==HL_STANDARD and newState==HL_STRING  then
+    hereDoc = string.match(token, "<<%-?%s*%'?([%-%a%d_]+)" )
+  end
+
+  return newState
 end
-

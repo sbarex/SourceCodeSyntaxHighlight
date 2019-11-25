@@ -10,16 +10,16 @@ function syntaxUpdate(desc)
   HeaderInjection="<figure class=\"hl\"><figcaption>"..HL_PLUGIN_PARAM.."</figcaption>\n"
   FooterInjection="\n</figure>"
 end
-  
+
 function themeUpdate(desc)
   if (HL_OUTPUT == HL_FORMAT_HTML or HL_OUTPUT == HL_FORMAT_XHTML) then
-    
+
     Injections[#Injections+1]=[[
 figure.hl {
-   margin-left: 0px; 
-   color: ]]..Default.Colour..[[;
+  margin-left: 0px;
+  color: ]]..Default.Colour..[[;
 }
- ]]
+  ]]
   end
 end
 

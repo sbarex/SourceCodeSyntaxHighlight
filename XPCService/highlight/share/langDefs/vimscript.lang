@@ -1,5 +1,8 @@
 Description="vimscript"
 
+-- Syntax file created by Max Christian Pohle
+
+
 Categories = {"script", "config"}
 
 Digits = [[ (?:[0-9])(?:0x|0X|0b)[0-9a-fA-F']+|#?\d*[\.]?\d+(?:[eE][\-\+]\d+)?[lLuU]* ]]
@@ -22,18 +25,18 @@ Keywords={
 
 Strings = {
   Delimiter=[[']],
-  
-   DelimiterPairs= {
+
+  DelimiterPairs= {
     { Open=[["(?=.*")]], Close=[["]] }
   }
 }
 
 Comments = {
-   {
-     Block=false,
-     Nested=false,
-     Delimiter = { [[ ^"|"(?!.*")]] }
-   }
+  {
+    Block=false,
+    Nested=false,
+    Delimiter = { [[ ^"|"(?!.*")]] }
+  }
 }
 
 IgnoreCase=true
@@ -42,14 +45,14 @@ Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\.|\:|\&|<|>|\!|=|\/|\*|\%|\+|\-|\~|\||\^]]
 
 function OnStateChange(oldState, newState, token)
 
-   if newState==HL_STRING  then
-      openDelim=token
-   end
+  if newState==HL_STRING  then
+    openDelim=token
+  end
 
-   if oldState==HL_STRING and token==openDelim then
-      openDelim = nil
-      return HL_STRING_END
-   end
-   
-   return newState
+  if oldState==HL_STRING and token==openDelim then
+    openDelim = nil
+    return HL_STRING_END
+  end
+
+  return newState
 end

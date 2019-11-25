@@ -30,9 +30,9 @@ function themeUpdate()
     Injections[#Injections+1]="pre.hl, ol.hl { margin:2em; box-shadow:10px 10px 0.5em "..lighten(Default.Colour).."; border: 1px solid "..lighten(Default.Colour)..";}"
     Injections[#Injections+1]="pre.hl {padding:1em;}"
     Injections[#Injections+1]="ol.hl {padding:1em 1em 1em 4em;}"
-    Injections[#Injections+1]="body.hl { background-color:"..lighten(Canvas.Colour).."; }"   
+    Injections[#Injections+1]="body.hl { background-color:"..lighten(Canvas.Colour).."; }"
   end
- 
+
 end
 
 Plugins={

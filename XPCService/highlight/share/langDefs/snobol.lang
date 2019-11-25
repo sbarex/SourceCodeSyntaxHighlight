@@ -5,10 +5,10 @@ Categories = {"source"}
 
 Keywords={
   { Id=1,
-    List={  "output", "terminal", "screen", "input", "arb", "arbno", "pos", 
-            "rpos", "tab", "trim", "size", "rtab", "replace", "dupl", "datatype", "convert", 
-            "len", "define", "trace", "stoptr", "code", "rem", "differ", "ident", "array", 
-            "table", "gt", "ge", "le", "eq", "lt", "ne", "lgt", "any", "notany", "break", 
+    List={  "output", "terminal", "screen", "input", "arb", "arbno", "pos",
+            "rpos", "tab", "trim", "size", "rtab", "replace", "dupl", "datatype", "convert",
+            "len", "define", "trace", "stoptr", "code", "rem", "differ", "ident", "array",
+            "table", "gt", "ge", "le", "eq", "lt", "ne", "lgt", "any", "notany", "break",
             "span", "date", "substr", "opsyn", "integer", "remdr", "bal"},
   },
   { Id=3,

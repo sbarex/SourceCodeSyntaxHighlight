@@ -6,10 +6,10 @@ Categories = {"source", "script"}
 
 Keywords={
   { Id=1,
-    List={"new", "instanceof", "castToBoolean", "castToString", 
-        "castToExactNumber", "castToInexactNumber", "var", "writeln", "if", "while", 
-        "for", "break", "continue", "try", "catch", "finally", "throw", "synchronized", 
-        "const", "public", "function", "extends", "return", "eval", "this", "true", 
+    List={"new", "instanceof", "castToBoolean", "castToString",
+        "castToExactNumber", "castToInexactNumber", "var", "writeln", "if", "while",
+        "for", "break", "continue", "try", "catch", "finally", "throw", "synchronized",
+        "const", "public", "function", "extends", "return", "eval", "this", "true",
         "false", "null", "import", "write"},
   },
   { Id=2,

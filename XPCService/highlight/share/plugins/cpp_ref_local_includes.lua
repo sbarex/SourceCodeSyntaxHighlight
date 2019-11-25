@@ -12,28 +12,28 @@ function syntaxUpdate(desc)
 
     -- INSERT BASE URL HERE
   base_url=''
-  
+
   if desc~="C and C++" then
-     return
+    return
   end
- 
+
   --see comment in themeUpdate
   table.insert( Keywords, { Id=#Keywords+1, Regex=[[\w+\.h[px]*]] } )
 
   function getURL(token)
-     url=base_url..string.lower(token).. '.html'
-     
-     if (HL_OUTPUT== HL_FORMAT_HTML or HL_OUTPUT == HL_FORMAT_XHTML) then
-        return '<a class="hl" target="new" href="' .. url .. '">'.. token .. '</a>'
-     elseif (HL_OUTPUT == HL_FORMAT_LATEX) then
-        return '\\href{'..url..'}{'..token..'}'
-      elseif (HL_OUTPUT == HL_FORMAT_RTF) then
-        return '{{\\field{\\*\\fldinst HYPERLINK "'..url..'" }{\\fldrslt\\ul\\ulc0 '..token..'}}}'
-      elseif (HL_OUTPUT == HL_FORMAT_ODT) then
-        return '<text:a xlink:type="simple" xlink:href="'..url..'">'..token..'</text:a>'
-     end
-   end
-   
+    url=base_url..string.lower(token).. '.html'
+
+    if (HL_OUTPUT== HL_FORMAT_HTML or HL_OUTPUT == HL_FORMAT_XHTML) then
+      return '<a class="hl" target="new" href="' .. url .. '">'.. token .. '</a>'
+    elseif (HL_OUTPUT == HL_FORMAT_LATEX) then
+      return '\\href{'..url..'}{'..token..'}'
+    elseif (HL_OUTPUT == HL_FORMAT_RTF) then
+      return '{{\\field{\\*\\fldinst HYPERLINK "'..url..'" }{\\fldrslt\\ul\\ulc0 '..token..'}}}'
+    elseif (HL_OUTPUT == HL_FORMAT_ODT) then
+      return '<text:a xlink:type="simple" xlink:href="'..url..'">'..token..'</text:a>'
+    end
+  end
+
   function Decorate(token, state)
 
     if state==HL_PREPROC_STRING and string.find(token, "%w+.h[px]*")==1 then
@@ -45,9 +45,9 @@ end
 
 
 function themeUpdate(desc)
-   -- no need to add a bogus style for the 6th keyword class defined in syntaxUpdate,
-   -- the regex is just needed to get the complete token, but it will be recognized
-   -- as string because string has higher priority
+  -- no need to add a bogus style for the 6th keyword class defined in syntaxUpdate,
+  -- the regex is just needed to get the complete token, but it will be recognized
+  -- as string because string has higher priority
 
   if (HL_OUTPUT == HL_FORMAT_HTML or HL_OUTPUT == HL_FORMAT_XHTML) then
     Injections[#Injections+1]="a.hl, a.hl:visited {color:inherit;font-weight:inherit;}"

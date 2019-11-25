@@ -1,0 +1,14 @@
+1.0.b13
+
+New features:
+- Embedded highlight updated to 5.3.4.
+- Info panel about highlight (from App menu and from a info butto on preferences window).
+- Menu item inside app menu for open in the Finder the application support folder.
+- Redesign of preferences window for the theme selection.
+- GUI to view and edit the themes.
+- Inside the application support folder are saved the custom css styles and customized themes.
+
+Bugfix:
+- Now double click on the quicklook preview open the file.
+- Bugfix on font preferences.
+- System for purging and migrating old settings to new system.

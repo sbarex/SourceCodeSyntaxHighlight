@@ -13,17 +13,17 @@ Categories = {"c++", "qt" }
 -- optional parameter: syntax description
 function syntaxUpdate(desc)
   if desc=="C and C++" then
-	-- insert Qt keywords
-	table.insert( Keywords,
+  -- insert Qt keywords
+  table.insert( Keywords,
                   { Id=1, List={"slots" }
                   } )
-	table.insert( Keywords,
+  table.insert( Keywords,
                   { Id=2, Regex=[[Q[A-Z]\w+]]
                   } )
-	table.insert( Keywords,
+  table.insert( Keywords,
                   { Id=5, List={"SIGNAL", "SLOT"}
                   } )
-	table.insert( Keywords,
+  table.insert( Keywords,
                   { Id=6, Regex=[[Q_[A-Z]+]]
                   } )
   end

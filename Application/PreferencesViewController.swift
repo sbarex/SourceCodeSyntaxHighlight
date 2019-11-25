@@ -102,14 +102,18 @@ class PreferencesViewController: NSViewController {
     
     @IBOutlet weak var highlightPathPopup: NSPopUpButton!
     @IBOutlet weak var formatModeControl: NSSegmentedControl!
-    @IBOutlet weak var themeLightPopup: NSPopUpButton!
-    @IBOutlet weak var themeLightButton: NSButton!
-    @IBOutlet weak var themeDarkPopup: NSPopUpButton!
-    @IBOutlet weak var themeDarkButton: NSButton!
+    
+    @IBOutlet weak var themeLightIcon: NSButton!
+    @IBOutlet weak var themeLightLabel: NSTextField!
+    @IBOutlet weak var themeDarkIcon: NSButton!
+    @IBOutlet weak var themeDarkLabel: NSTextField!
+
     @IBOutlet weak var customCSSButton: NSButton!
+    @IBOutlet weak var customCSSImage: NSImageView!
     
     @IBOutlet weak var fontPreviewTextField: NSTextField!
     @IBOutlet weak var fontChooseButton: NSButton!
+    
     @IBOutlet weak var wordWrapPopup: NSPopUpButton!
     @IBOutlet weak var lineLengthTextField: NSTextField!
     @IBOutlet weak var lineLenghLabel: NSTextField!
@@ -135,12 +139,14 @@ class PreferencesViewController: NSViewController {
     @IBOutlet weak var utiSpecificArgumentsTextField: NSTextField!
     
     @IBOutlet weak var utiThemeCheckbox: NSButton!
-    @IBOutlet weak var utiThemeLightPopup: NSPopUpButton!
-    @IBOutlet weak var utiThemeLightButton: NSButton!
-    @IBOutlet weak var utiThemeDarkPopup: NSPopUpButton!
-    @IBOutlet weak var utiThemeDarkButton: NSButton!
+    @IBOutlet weak var utiThemeLightIcon: NSButton!
+    @IBOutlet weak var utiThemeLightLabel: NSTextField!
+    @IBOutlet weak var utiThemeDarkIcon: NSButton!
+    @IBOutlet weak var utiThemeDarkLabel: NSTextField!
+    
     @IBOutlet weak var utiCustomCSSCheckbox: NSButton!
     @IBOutlet weak var utiCustomCSSButton: NSButton!
+    @IBOutlet weak var utiCustomCSSImage: NSImageView!
     
     @IBOutlet weak var utiFontChecbox: NSButton!
     @IBOutlet weak var utiFontPreviewTextField: NSTextField!
@@ -225,8 +231,50 @@ class PreferencesViewController: NSViewController {
         }
     }
     
+    /// Update a theme icon.
+    func refreshTheme(_ theme: SCSHTheme?, button: NSButton, label: NSTextField) {
+        if let t = theme {
+            button.image = t.getImage(size: button.bounds.size, font: NSFont(name: "Menlo", size: 4) ?? NSFont.systemFont(ofSize: 4))
+            let text = NSMutableAttributedString()
+            if !t.desc.isEmpty {
+                text.append(NSAttributedString(string: "\(t.desc)\n", attributes: [.font: NSFont.labelFont(ofSize: NSFont.systemFontSize)]))
+            }
+            text.append(NSAttributedString(string: "\(t.name)", attributes: [.font: NSFont.labelFont(ofSize: NSFont.smallSystemFontSize)]))
+            
+            label.attributedStringValue = text
+        } else {
+            button.image = nil
+            label.stringValue = "-"
+        }
+    }
+    
     var customCSS: String? = nil
+    var lightTheme: SCSHTheme? {
+        didSet {
+            refreshTheme(lightTheme, button: themeLightIcon, label: themeLightLabel)
+            refreshPreview(self)
+        }
+    }
+    var darkTheme: SCSHTheme? {
+        didSet {
+            refreshTheme(darkTheme, button: themeDarkIcon, label: themeDarkLabel)
+            refreshPreview(self)
+        }
+    }
+    
     var utiCustomCSS: String? = nil
+    var utiLightTheme: SCSHTheme? {
+        didSet {
+            refreshTheme(utiLightTheme, button: utiThemeLightIcon, label: utiThemeLightLabel)
+            refreshUtiPreview(self)
+        }
+    }
+    var utiDarkTheme: SCSHTheme? {
+        didSet {
+            refreshTheme(utiDarkTheme, button: utiThemeDarkIcon, label: utiThemeDarkLabel)
+            refreshUtiPreview(self)
+        }
+    }
     
     /// UTI settings in the detail view.
     var currentUTISettings: SCSHSettings? {
@@ -249,33 +297,30 @@ class PreferencesViewController: NSViewController {
                 utiSpecificArgumentsTextField.stringValue = currentUTISettings.utiExtra ?? ""
                 
                 utiThemeCheckbox.state = currentUTISettings.lightTheme != nil ? .on : .off
-                utiThemeLightPopup.isEnabled = utiThemeCheckbox.state == .on && themes.count > 0
-                utiThemeLightButton.isEnabled = utiThemeLightPopup.isEnabled
-                utiThemeDarkPopup.isEnabled = utiThemeCheckbox.state == .on && themes.count > 0
-                utiThemeDarkButton.isEnabled = utiThemeDarkPopup.isEnabled
+                utiThemeLightIcon.isEnabled = utiThemeCheckbox.state == .on && themes.count > 0
+                utiThemeDarkIcon.isEnabled = utiThemeCheckbox.state == .on && themes.count > 0
                 
-                let lightTheme = currentUTISettings.lightTheme ?? settings?.lightTheme ?? ""
-                let lightTheme16 = currentUTISettings.lightThemeIsBase16 ?? settings?.lightThemeIsBase16 ?? false
-                let lightIndex = themes.firstIndex(where: { $0.name == lightTheme && $0.isBase16 == lightTheme16 }) ?? 0
-                utiThemeLightPopup.selectItem(at: lightIndex)
-                
+                if let theme = getTheme(name: currentUTISettings.lightTheme) {
+                    utiLightTheme = theme
+                } else {
+                    utiLightTheme = lightTheme
+                }
+                if let theme = getTheme(name: currentUTISettings.darkTheme) {
+                    utiDarkTheme = theme
+                } else {
+                    utiDarkTheme = darkTheme
+                }
                 utiCustomCSS = currentUTISettings.css
                 
                 utiCustomCSSCheckbox.isEnabled = formatModeControl.selectedSegment == 0
-                utiCustomCSSCheckbox.state = utiCustomCSS != nil ? .on : .off
+                utiCustomCSSCheckbox.state = utiCustomCSS != nil && !utiCustomCSS!.isEmpty ? .on : .off
                 utiCustomCSSButton.isEnabled = utiCustomCSSCheckbox.state == .on && utiCustomCSSCheckbox.isEnabled
-                
-                let darkTheme = currentUTISettings.darkTheme ?? settings?.darkTheme ?? ""
-                let darkTheme16 = currentUTISettings.darkThemeIsBase16 ?? settings?.darkThemeIsBase16 ?? false
-                let darkIndex = themes.firstIndex(where: { $0.name  == darkTheme && $0.isBase16 == darkTheme16 }) ?? 0
-                utiThemeDarkPopup.selectItem(at: darkIndex)
-                
+                utiCustomCSSImage.image = NSImage(named: utiCustomCSSCheckbox.state == .on ? NSImage.statusAvailableName : NSImage.statusNoneName)
+                    
                 utiFontChecbox.state = currentUTISettings.fontFamily != nil ? .on : .off
                 utiFontPreviewTextField.isEnabled = utiFontChecbox.state == .on
                 utiFontChooseButton.isEnabled = utiFontChecbox.state == .on
-                if let f = NSFont(name: currentUTISettings.fontFamily ?? settings?.fontFamily ?? "Menlo", size: CGFloat(currentUTISettings.fontSize ?? settings?.fontSize ?? 12)) {
-                    self.refreshFontPanel(withFont: f, isGlobal: false)
-                }
+                refreshFontPanel(withFontFamily: currentUTISettings.fontFamily ?? settings?.fontFamily ?? "Menlo", size: currentUTISettings.fontSize ?? settings?.fontSize ?? 12, isGlobal: false)
                 
                 utiWordWrapChecbox.state = currentUTISettings.wordWrap != nil ? .on : .off
                 utiWordWrapPopup.isEnabled = utiWordWrapChecbox.state == .on
@@ -350,8 +395,22 @@ class PreferencesViewController: NSViewController {
     /// List of example files.
     private var examples: [ExampleInfo] = []
     
+    deinit {
+        // Remove the theme observer.
+        NotificationCenter.default.removeObserver(self, name: .themeDidSaved, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .themeDidDeleted, object: nil)
+    }
+    
     // MARK: -
     override func viewDidLoad() {
+        for btn in [themeLightIcon, themeDarkIcon, utiThemeLightIcon, utiThemeDarkIcon] {
+            // Add round corners and border to the theme icons.
+            btn?.wantsLayer = true
+            btn?.layer?.cornerRadius = 8
+            btn?.layer?.borderWidth = 1
+            btn?.layer?.borderColor = NSColor.gridColor.cgColor
+        }
+        
         // Populate UTIs list.
         allFileTypes = (NSApplication.shared.delegate as? AppDelegate)?.fetchHandledUTIs() ?? []
         fileTypes = allFileTypes
@@ -363,34 +422,14 @@ class PreferencesViewController: NSViewController {
         utiPreviewThemeControl.setSelected(true, forSegment: macosThemeLight ? 0 : 1)
         
         // Populate the example files list.
-        examples = []
+        examples = (NSApplication.shared.delegate as? AppDelegate)?.getAvailableExamples() ?? []
         examplesPopup.removeAllItems()
         examplesPopup.addItem(withTitle: "Theme colors")
         examplesPopup.menu?.addItem(NSMenuItem.separator())
-        if let examplesDirURL = Bundle.main.url(forResource: "examples", withExtension: nil) {
-            let fileManager = FileManager.default
-            if let files = try? fileManager.contentsOfDirectory(at: examplesDirURL, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles]) {
-                for file in files {
-                    let title: String
-                    if let uti = UTI(URL: file) {
-                        title = uti.description + " (." + file.pathExtension + ")"
-                        examples.append((url: file, title: title, uti: uti.UTI))
-                    } else {
-                        title = file.lastPathComponent
-                        examples.append((url: file, title: title, uti: ""))
-                    }
-                    
-                }
-                examples.sort { (a, b) -> Bool in
-                    a.title < b.title
-                }
-                
-                for file in examples {
-                    let m = NSMenuItem(title: file.title, action: nil, keyEquivalent: "")
-                    m.toolTip = file.uti
-                    examplesPopup.menu?.addItem(m)
-                }
-            }
+        for file in examples {
+            let m = NSMenuItem(title: file.title, action: nil, keyEquivalent: "")
+            m.toolTip = file.uti
+            examplesPopup.menu?.addItem(m)
         }
         examplesPopup.isEnabled = true
         
@@ -401,7 +440,13 @@ class PreferencesViewController: NSViewController {
             view?.layer?.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         }
         
+        utiDetailView.isHidden = true
+        
         fetchSettings()
+        
+        // Register the objservers for theme save and delete notifications.
+        NotificationCenter.default.addObserver(self, selector: #selector(onThemeDidSaved(_:)), name: .themeDidSaved, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(onThemeDidDeleted(_:)), name: .themeDidDeleted, object: nil)
     }
     
     /// Handle change on search field.
@@ -419,41 +464,41 @@ class PreferencesViewController: NSViewController {
         } else if segue.identifier == "CustomCSSSegue", let vc = segue.destinationController as? CSSControlView {
             if sender as? NSButton == customCSSButton {
                 vc.cssCode = customCSS ?? ""
+                vc.isUTIWarningHidden = true
                 vc.handler = { css in
                     self.customCSS = css.isEmpty ? nil : css
+                    self.customCSSImage.image = NSImage(named: !css.isEmpty ? NSImage.statusAvailableName : NSImage.statusNoneName)
                     self.refreshPreview(self)
                 }
             } else {
                 vc.cssCode = utiCustomCSS ?? ""
+                vc.isUTIWarningHidden = false
                 vc.handler = { css in
                     self.utiCustomCSS = css.isEmpty ? nil : css
+                    self.utiCustomCSSImage.image = NSImage(named: !css.isEmpty ? NSImage.statusAvailableName : NSImage.statusNoneName)
                     self.refreshUtiPreview(self)
                 }
             }
         } else if segue.identifier == "ThemeSegue", let vc = segue.destinationController as? ThemeSelectorViewController {
             vc.allThemes = self.themes.map({ SCSHThemePreview(theme: $0) })
             if let btn = sender as? NSButton {
-                vc.style = btn == themeLightButton || btn == utiThemeLightButton ? .light : .dark
+                vc.style = btn == themeLightIcon || btn == utiThemeLightIcon ? .light : .dark
                 
-                let popup: NSPopUpButton?
-                if btn == themeLightButton {
-                    popup = themeLightPopup
-                } else if btn == themeDarkButton {
-                    popup = themeDarkPopup
-                } else if btn == utiThemeLightButton {
-                    popup = utiThemeLightPopup
-                } else if btn == utiThemeDarkButton {
-                    popup = utiThemeDarkPopup
-                } else {
-                    popup = nil
-                }
-                
-                if let p = popup {
+                if btn == themeLightIcon {
                     vc.handler = { theme in
-                        if let i = self.themes.firstIndex(where: { $0 == theme }) {
-                            p.selectItem(at: i)
-                            self.handleThemeChange(p)
-                        }
+                        self.lightTheme = theme
+                    }
+                } else if btn == themeDarkIcon {
+                    vc.handler = { theme in
+                        self.darkTheme = theme
+                    }
+                } else if btn == utiThemeLightIcon {
+                    vc.handler = { theme in
+                        self.utiLightTheme = theme
+                    }
+                } else if btn == utiThemeDarkIcon {
+                    vc.handler = { theme in
+                        self.utiDarkTheme = theme
                     }
                 }
             }
@@ -532,8 +577,15 @@ class PreferencesViewController: NSViewController {
         case 2:
             // Fetch themes.
             self.service?.getThemes(highlight: self.settings?.highlightProgramPath ?? "-") { (results, error) in
+                var themes: [SCSHTheme] = []
+                for dict in results {
+                    if let d = dict as? [String: Any], let theme = SCSHTheme(dict: d) {
+                        themes.append(theme)
+                    }
+                }
+                
                 DispatchQueue.main.async {
-                    self.themes = results.map({ SCSHTheme(dict: $0) })
+                    self.themes = themes
                     self.processNextInitTask()
                 }
                 // print(results)
@@ -580,6 +632,7 @@ class PreferencesViewController: NSViewController {
         self.formatModeControl.setSelected(true, forSegment: self.settings?.format == .rtf ? 1 : 0)
         self.formatModeControl.isEnabled = settings != nil
         
+        customCSSImage.image = NSImage(named: settings?.format == .html && settings?.css != nil && !settings!.css!.isEmpty ? NSImage.statusAvailableName : NSImage.statusNoneName)
         customCSSButton.isEnabled = settings?.format == .html
         
         updateThemes()
@@ -628,6 +681,7 @@ class PreferencesViewController: NSViewController {
         argumentsTextField.isEnabled = settings != nil
         
         fontChooseButton.isEnabled = settings != nil
+        refreshFontPanel(withFontFamily: settings?.fontFamily ?? "Menlo", size: settings?.fontSize ?? 12, isGlobal: true)
         
         debugButton.state = settings?.debug ?? false ? .on : .off
         debugButton.isEnabled = settings != nil
@@ -643,72 +697,11 @@ class PreferencesViewController: NSViewController {
     
     /// Update the theme popups.
     func updateThemes() {
-        themeLightPopup.removeAllItems()
-        themeDarkPopup.removeAllItems()
+        themeLightIcon.isEnabled = themes.count > 0
+        themeDarkIcon.isEnabled = themes.count > 0
         
-        utiThemeLightPopup.removeAllItems()
-        utiThemeDarkPopup.removeAllItems()
-        
-        var i = 0
-        var lightIndex = -1
-        var darkIndex = -1
-        
-        var lightIndexUti = -1
-        var darkIndexUti = -1
-        
-        for theme in self.themes {
-            let name = theme.name
-            
-            if name == self.settings?.lightTheme {
-                lightIndex = i
-            }
-            if name == self.settings?.darkTheme {
-                darkIndex = i
-            }
-            
-            if name == currentUTISettings?.lightTheme {
-                lightIndexUti = i
-            }
-            if name == currentUTISettings?.darkTheme {
-                darkIndexUti = i
-            }
-            
-            let desc = theme.fullDesc
-            
-            themeLightPopup.addItem(withTitle: desc)
-            themeDarkPopup.addItem(withTitle: desc)
-            
-            utiThemeLightPopup.addItem(withTitle: desc)
-            utiThemeDarkPopup.addItem(withTitle: desc)
-            
-            i += 1
-        }
-        
-        themeLightPopup.isEnabled = themes.count > 0
-        themeLightButton.isEnabled = themeLightPopup.isEnabled
-        themeDarkPopup.isEnabled = themes.count > 0
-        themeDarkButton.isEnabled = themeDarkPopup.isEnabled
-        
-        if themes.count == 0 {
-            themeLightPopup.addItem(withTitle: "No theme available")
-            themeDarkPopup.addItem(withTitle: "No theme available")
-            
-            utiThemeLightPopup.addItem(withTitle: "No theme available")
-            utiThemeDarkPopup.addItem(withTitle: "No theme available")
-        } else {
-            if lightIndex >= 0 {
-                themeLightPopup.selectItem(at: lightIndex)
-            }
-            if darkIndex >= 0 {
-                themeDarkPopup.selectItem(at: darkIndex)
-            }
-            if lightIndexUti >= 0 {
-                utiThemeLightPopup.selectItem(at: lightIndexUti)
-            }
-            if darkIndexUti >= 0 {
-                utiThemeDarkPopup.selectItem(at: darkIndexUti)
-            }
-        }
+        lightTheme = getTheme(name: self.settings?.lightTheme)
+        darkTheme = getTheme(name: self.settings?.darkTheme)
     }
     
     /// Get theme at the index.
@@ -717,6 +710,22 @@ class PreferencesViewController: NSViewController {
             return nil
         }
         return themes[index]
+    }
+    
+    /// Get a theme by name.
+    /// - parameters:
+    ///   - name: Name of the theme. If has ! prefix search for a customized theme, otherwise fot a standalone theme.
+    func getTheme(name: String?) -> SCSHTheme? {
+        guard name != nil else {
+            return nil
+        }
+        if name!.hasPrefix("!") {
+            var n = name!
+            n.remove(at: n.startIndex)
+            return themes.first(where: { !$0.isStandalone && $0.name == n })
+        } else {
+            return themes.first(where: { $0.isStandalone && $0.name == name! })
+        }
     }
     
     /// Return the url of an example file for specified UTI.
@@ -745,18 +754,16 @@ class PreferencesViewController: NSViewController {
     
     /// Get current edited global settings, without any custom settings for UTIs.
     func getSettings() -> SCSHSettings {
-        var settings = SCSHSettings()
+        let settings = SCSHSettings()
         settings.highlightProgramPath = self.settings?.highlightProgramPath ?? "-"
         settings.format = formatModeControl.selectedSegment == 0 ? .html : .rtf
         
-        if let theme = getTheme(at: themeLightPopup.indexOfSelectedItem) {
-            settings.lightTheme = theme.name
-            settings.lightThemeIsBase16 = theme.isBase16
+        if let theme = lightTheme {
+            settings.lightTheme = (theme.isStandalone ? "" : "!") + theme.name
             settings.rtfLightBackgroundColor = theme.backgroundColor
         }
-        if let theme = getTheme(at: themeDarkPopup.indexOfSelectedItem) {
-            settings.darkTheme = theme.name
-            settings.darkThemeIsBase16 = theme.isBase16
+        if let theme = darkTheme {
+            settings.darkTheme = (theme.isStandalone ? "" : "!") + theme.name
             settings.rtfDarkBackgroundColor = theme.backgroundColor
         }
         settings.css = customCSS
@@ -808,23 +815,21 @@ class PreferencesViewController: NSViewController {
     
     /// Get a settings based on current customized global with apply the customization of active UTI.
     func getUtiSettings() -> SCSHSettings {
-        var settings = getSettings()
+        let settings = getSettings()
         
         if utiThemeCheckbox.state == .on {
-            if let theme = getTheme(at: utiThemeLightPopup.indexOfSelectedItem) {
-                settings.lightTheme = theme.name
-                settings.lightThemeIsBase16 = theme.isBase16
+            if let theme = utiLightTheme {
+                settings.lightTheme = (theme.isStandalone ? "" : "!") + theme.name
                 settings.rtfLightBackgroundColor = theme.backgroundColor
             }
-            if let theme = getTheme(at: utiThemeDarkPopup.indexOfSelectedItem) {
-                settings.darkTheme = theme.name
-                settings.darkThemeIsBase16 = theme.isBase16
+            if let theme = utiDarkTheme {
+                settings.darkTheme = (theme.isStandalone ? "" : "!") + theme.name
                 settings.rtfDarkBackgroundColor = theme.backgroundColor
             }
         }
         
-        if utiCustomCSSCheckbox.state == .on {
-            settings.css = utiCustomCSS
+        if utiCustomCSSCheckbox.state == .on, let utiCustomCSS = self.utiCustomCSS, !utiCustomCSS.isEmpty {
+            settings.css = (settings.css != nil ? settings.css! : "") + utiCustomCSS
         }
         
         if utiFontChecbox.state == .on {
@@ -889,7 +894,7 @@ class PreferencesViewController: NSViewController {
     
     /// Save the state of the UTI panels to a settings for the specified UTI.
     func saveCurrentUtiSettings(_ uti: String) {
-        var utiSettings = SCSHSettings(UTI: uti)
+        let utiSettings = SCSHSettings(UTI: uti)
         
         if utiSpecificArgumentsTextField.stringValue.isEmpty {
             utiSettings.utiExtra = nil
@@ -898,27 +903,23 @@ class PreferencesViewController: NSViewController {
         }
         
         if utiThemeCheckbox.state == .on {
-            if let theme = getTheme(at: utiThemeLightPopup.indexOfSelectedItem) {
-                utiSettings.lightTheme = theme.name
-                utiSettings.lightThemeIsBase16 = theme.isBase16
+            if let theme = utiLightTheme {
+                utiSettings.lightTheme = (theme.isStandalone ? "" : "!") + theme.name
                 utiSettings.rtfLightBackgroundColor = theme.backgroundColor
             }
-            if let theme = getTheme(at: utiThemeDarkPopup.indexOfSelectedItem) {
-                utiSettings.darkTheme = theme.name
-                utiSettings.darkThemeIsBase16 = theme.isBase16
+            if let theme = utiDarkTheme {
+                utiSettings.darkTheme = (theme.isStandalone ? "" : "!") + theme.name
                 utiSettings.rtfDarkBackgroundColor = theme.backgroundColor
             }
         } else {
             utiSettings.lightTheme = nil
-            utiSettings.lightThemeIsBase16 = nil
             utiSettings.rtfLightBackgroundColor = nil
             utiSettings.darkTheme = nil
-            utiSettings.darkThemeIsBase16 = nil
             utiSettings.rtfDarkBackgroundColor = nil
         }
         
         if utiCustomCSSCheckbox.state == .on {
-            utiSettings.css = utiCustomCSS ?? ""
+            utiSettings.css = utiCustomCSS
         } else {
             utiSettings.css = nil
         }
@@ -1066,6 +1067,13 @@ class PreferencesViewController: NSViewController {
         fontPreview?.font = font
     }
     
+    /// Refresh the preview font.
+    func refreshFontPanel(withFontFamily font: String, size: Float, isGlobal: Bool) {
+        if let f = NSFont(name: font, size: CGFloat(size)) {
+            self.refreshFontPanel(withFont: f, isGlobal: isGlobal)
+        }
+    }
+    
     /// Handle format output change.
     @IBAction func handleFormatChange(_ sender: NSSegmentedControl) {
         webView.isHidden = sender.indexOfSelectedItem != 0
@@ -1081,15 +1089,6 @@ class PreferencesViewController: NSViewController {
         utiCustomCSSButton.isEnabled = utiCustomCSSCheckbox.isEnabled && utiCustomCSSCheckbox.state == .on
         
         refreshUtiPreview(sender)
-    }
-    
-    /// Handle theme change.
-    @IBAction func handleThemeChange(_ sender: NSPopUpButton) {
-        if (sender == themeLightPopup && previewThemeControl.selectedSegment == 0) || sender == themeDarkPopup && previewThemeControl.selectedSegment == 1 {
-            refreshPreview(sender)
-        } else if (sender == utiThemeLightPopup && utiPreviewThemeControl.selectedSegment == 0) || sender == utiThemeDarkPopup && utiPreviewThemeControl.selectedSegment == 1 {
-            refreshUtiPreview(sender)
-        }
     }
     
     /// Handle highlight theme change.
@@ -1137,25 +1136,21 @@ class PreferencesViewController: NSViewController {
             return
         }
         
-        themeLightPopup.removeAllItems()
-        themeLightPopup.isEnabled = false
-        themeLightPopup.addItem(withTitle: "loading…")
+        themeLightIcon.isEnabled = false
+        themeDarkIcon.isEnabled = false
         
-        themeDarkPopup.removeAllItems()
-        themeDarkPopup.isEnabled = false
-        themeDarkPopup.addItem(withTitle: "loading…")
-        
-        utiThemeLightPopup.removeAllItems()
-        utiThemeLightPopup.isEnabled = false
-        utiThemeLightPopup.addItem(withTitle: "loading…")
-        
-        utiThemeDarkPopup.removeAllItems()
-        utiThemeDarkPopup.isEnabled = false
-        utiThemeDarkPopup.addItem(withTitle: "loading…")
+        utiThemeLightIcon.isEnabled = false
+        utiThemeDarkIcon.isEnabled = false
         
         self.service?.getThemes(highlight: self.settings?.highlightProgramPath ?? "-") { (results, error) in
+            var themes: [SCSHTheme] = []
+            for dict in results {
+                if let d = dict as? [String: Any], let theme = SCSHTheme(dict: d) {
+                    themes.append(theme)
+                }
+            }
             DispatchQueue.main.async {
-                self.themes = results.map({ SCSHTheme(dict: $0) })
+                self.themes = themes
                 self.refreshPreview(self)
                 if self.currentUTISettings != nil {
                     self.refreshUtiPreview(self)
@@ -1164,7 +1159,27 @@ class PreferencesViewController: NSViewController {
         }
     }
     
+    /// Shows the about highlight window,
+    @IBAction func handleInfoButton(_ sender: Any) {
+        service?.highlightInfo(highlight: self.settings?.highlightProgramPath ?? "-", reply: { (result) in
+            if let vc = self.storyboard?.instantiateController(withIdentifier: "HighlightInfo") as? InfoHighlightController {
+                vc.text = result
+                self.presentAsSheet(vc)
+            }
+            
+        })
+    }
+    
     // MARK: -
+    
+    // Called from refresh menu item.
+    @IBAction func refresh(_ sender: Any) {
+        if tabView.selectedTabViewItem?.identifier as? String == "SpecificSettingsView" {
+            refreshUtiPreview(sender)
+        } else {
+            refreshPreview(sender)
+        }
+    }
     
     /// Refresh global preview.
     @IBAction func refreshPreview(_ sender: Any) {
@@ -1186,15 +1201,13 @@ class PreferencesViewController: NSViewController {
     @IBAction func handleFilterButton(_ sender: NSButton) {
         filterOnlyChanged = sender.state == .on
         
-        sender.image = NSImage(named: sender.state == .on ? "WorkingCopyNavigatorTemplate-ON_Normal" : "WorkingCopyNavigatorTemplate_Normal")
+        sender.image = NSImage(named: sender.state == .on ? "Customized-ON_Normal" : "Customized_Normal")
         sender.contentTintColor = sender.state == .on ? NSColor.controlAccentColor : NSColor.secondaryLabelColor
     }
     
     @IBAction func handleUtiThemeCheckbox(_ sender: NSButton) {
-        utiThemeLightPopup.isEnabled = sender.state == .on
-        utiThemeDarkPopup.isEnabled = sender.state == .on
-        utiThemeLightButton.isEnabled = sender.state == .on
-        utiThemeDarkButton.isEnabled = sender.state == .on
+        utiThemeLightIcon.isEnabled = sender.state == .on
+        utiThemeDarkIcon.isEnabled = sender.state == .on
         
         refreshUtiPreview(sender)
     }
@@ -1253,15 +1266,13 @@ class PreferencesViewController: NSViewController {
     ///   - indicator:
     ///   - example: Url of a file to render. Nil to render the standard theme settings preview.
     private func refreshPreview(light: Bool, settings: SCSHSettings, webView: WKWebView, scrollText: NSScrollView, textView: NSTextView, indicator: NSProgressIndicator, example: URL?) {
-        var custom_settings = SCSHSettings(settings: settings)
+        let custom_settings = SCSHSettings(settings: settings)
         
         if light {
             custom_settings.theme = custom_settings.lightTheme
-            custom_settings.themeIsBase16 = custom_settings.lightThemeIsBase16
             custom_settings.rtfBackgroundColor = custom_settings.rtfLightBackgroundColor
         } else {
             custom_settings.theme = custom_settings.darkTheme
-            custom_settings.themeIsBase16 = custom_settings.darkThemeIsBase16
             custom_settings.rtfBackgroundColor = custom_settings.rtfDarkBackgroundColor
         }
         
@@ -1302,11 +1313,12 @@ class PreferencesViewController: NSViewController {
             }
         } else {
             // Show standard theme preview.
-            if let theme: SCSHTheme = themes.first(where: { $0.name == custom_settings.theme }) {
+            if let theme = getTheme(name: custom_settings.theme) {
                 if custom_settings.format == .html {
                     webView.loadHTMLString(theme.getHtmlExample(fontName: settings.fontFamily ?? "Menlo", fontSize: (settings.fontSize ?? 12) * 0.75), baseURL: nil)
                 } else {
-                    textView.textStorage?.setAttributedString(theme.getAttributedExample(fontName: custom_settings.fontFamily ?? "Menlo", fontSize: (custom_settings.fontSize ?? 12) * 0.75))
+                    let example = theme.getAttributedExample(fontName: custom_settings.fontFamily ?? "Menlo", fontSize: (custom_settings.fontSize ?? 12) * 0.75)
+                    textView.textStorage?.setAttributedString(example)
                     
                     if let bg = custom_settings.rtfBackgroundColor, let c = NSColor(fromHexString: bg) {
                         textView.backgroundColor = c
@@ -1338,7 +1350,7 @@ class PreferencesViewController: NSViewController {
     @IBAction func saveAction(_ sender: Any) {
         saveCurrentUtiSettings()
         
-        var settings = self.getSettings()
+        let settings = self.getSettings()
         
         if let globalSettings = self.settings {
             for (_, utiSettings) in globalSettings.customizedSettings {
@@ -1360,6 +1372,126 @@ class PreferencesViewController: NSViewController {
                 }
             }
         }
+    }
+    
+    /// Called when a theme is saved.
+    @objc func onThemeDidSaved(_ notification: Notification) {
+        guard let data = notification.object as? NotificationThemeSavedData else {
+            return
+        }
+        guard let theme = SCSHTheme(dict: data.theme.toDictionary()) else {
+            return
+        }
+        guard let i = themes.firstIndex(where: { $0.name == data.oldName && !$0.isStandalone }) else {
+            // Addeded a new theme.
+            var t = themes
+            t.append(theme)
+            t.sort { (a, b) in
+                return a.desc < b.desc
+            }
+            themes = t
+            return
+        }
+        
+        // An exists theme is changed.
+        
+        /// Original name.
+        let oldName = "!\(data.oldName)"
+        /// Current name (may be different from the old name if the theme has been renamed).
+        let newName = "!\(data.theme.name)"
+        
+        // Update the theme used in the settings.
+        if let t = lightTheme, !t.isStandalone, t.name == data.oldName {
+            lightTheme = theme
+        }
+        if self.settings?.lightTheme == oldName {
+            self.settings?.lightTheme = newName
+        }
+        
+        if let t = darkTheme, !t.isStandalone, t.name == data.oldName {
+            darkTheme = theme
+        }
+        if self.settings?.darkTheme == oldName {
+            self.settings?.darkTheme = newName
+        }
+        
+        if let t = utiLightTheme, !t.isStandalone, t.name == data.oldName {
+            utiLightTheme = theme
+        }
+        if let t = utiDarkTheme, !t.isStandalone, t.name == data.oldName {
+            utiDarkTheme = theme
+        }
+        
+        if newName != oldName {
+            // Theme renamed, search inside the settings if it is used by some uti.
+            for (_, settings) in self.settings?.customizedSettings ?? [:] {
+                if settings.lightTheme == oldName {
+                    settings.lightTheme = newName
+                }
+                if settings.darkTheme == oldName {
+                    settings.darkTheme = newName
+                }
+            }
+        }
+        
+        var t = themes
+        t[i] = theme
+        // Resort the themes, the descriotion may has been changed.
+        t.sort { (a, b) in
+            return a.desc < b.desc
+        }
+        themes = t
+    }
+    
+    /// Called when a theme is deleted.
+    @objc func onThemeDidDeleted(_ notification: Notification) {
+        guard let name = notification.object as? NotificationThemeDeletedData else {
+            return
+        }
+        guard let i = themes.firstIndex(where: { $0.name == name && !$0.isStandalone }) else {
+            // Theme non presents in the list.
+            return
+        }
+        
+        let theme = themes[i]
+        /// First standalone light theme.
+        let ltheme = themes.first(where: { $0.isLight && $0.isStandalone } )
+        /// First standalone dark theme.
+        let dtheme = themes.first(where: { $0.isDark && $0.isStandalone } )
+        
+        let oldName = "!\(name)"
+        
+        if lightTheme == theme {
+            lightTheme = ltheme
+        }
+        if settings?.lightTheme == oldName {
+            settings?.lightTheme = ltheme?.name
+        }
+        if darkTheme == theme {
+            darkTheme = dtheme
+        }
+        if settings?.darkTheme == oldName {
+            settings?.darkTheme = dtheme?.name
+        }
+        
+        if utiLightTheme == theme {
+            utiLightTheme = ltheme
+        }
+        if utiDarkTheme == theme {
+            utiDarkTheme = dtheme
+        }
+        
+        
+        for (_, settings) in self.settings?.customizedSettings ?? [:] {
+            if settings.lightTheme == oldName {
+                settings.lightTheme = ltheme?.name
+            }
+            if settings.darkTheme == oldName {
+                settings.darkTheme = dtheme?.name
+            }
+        }
+        
+        themes.remove(at: i)
     }
 }
 

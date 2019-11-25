@@ -4,19 +4,19 @@ Categories = {"config", "protocol"}
 
 
 Keywords={
-   { Id=1,
+  { Id=1,
     Regex=[[ \{|\} ]],
-   },
-   { Id=2,
+  },
+  { Id=2,
     Regex=[=[ \[|\] ]=],
-   },
-   { Id=3,
+  },
+  { Id=3,
     Regex=[[ (\"[\w\.\-\d]+?\")\: ]],
   },
   { Id=4,
     Regex=[[ (\"\$[\w\.\-\d\$]+?\")\: ]],
   }
-  
+
 }
 
 Strings = {
@@ -24,14 +24,14 @@ Strings = {
 }
 
 Comments = {
-   { Block=true,
-     Nested=false,
-     Delimiter = { [[\/\*]], [[\*\/]] }
-   },
-   {
-     Block=false,
-     Delimiter = { [[//]] }
-   }
+  { Block=true,
+    Nested=false,
+    Delimiter = { [[\/\*]], [[\*\/]] }
+  },
+  {
+    Block=false,
+    Delimiter = { [[//]] }
+  }
 }
 
 IgnoreCase=false

@@ -10,23 +10,23 @@ Categories = {"c++", "wxwidgets", "html", "rtf", "latex", "odt" }
 function syntaxUpdate(desc)
 
   if desc~="C and C++" then
-     return
+    return
   end
 
   function getURL(token)
-     urltoken, cnt = string.gsub(token, "%u", "_%1")
-     url='http://docs.wxwidgets.org/trunk/class'..string.lower(urltoken).. '.html'
+    urltoken, cnt = string.gsub(token, "%u", "_%1")
+    url='http://docs.wxwidgets.org/trunk/class'..string.lower(urltoken).. '.html'
 
-     if (HL_OUTPUT== HL_FORMAT_HTML or HL_OUTPUT == HL_FORMAT_XHTML) then
-        return '<a class="hl" target="new" href="' .. url .. '">'.. token .. '</a>'
-     elseif (HL_OUTPUT == HL_FORMAT_LATEX) then
-	return '\\href{'..url..'}{'..token..'}'
-      elseif (HL_OUTPUT == HL_FORMAT_RTF) then
-	return '{{\\field{\\*\\fldinst HYPERLINK "'..url..'" }{\\fldrslt\\ul\\ulc0 '..token..'}}}'
-      elseif (HL_OUTPUT == HL_FORMAT_ODT) then
-	return '<text:a xlink:type="simple" xlink:href="'..url..'">'..token..'</text:a>'
-     end
-   end
+    if (HL_OUTPUT== HL_FORMAT_HTML or HL_OUTPUT == HL_FORMAT_XHTML) then
+      return '<a class="hl" target="new" href="' .. url .. '">'.. token .. '</a>'
+    elseif (HL_OUTPUT == HL_FORMAT_LATEX) then
+      return '\\href{'..url..'}{'..token..'}'
+    elseif (HL_OUTPUT == HL_FORMAT_RTF) then
+      return '{{\\field{\\*\\fldinst HYPERLINK "'..url..'" }{\\fldrslt\\ul\\ulc0 '..token..'}}}'
+    elseif (HL_OUTPUT == HL_FORMAT_ODT) then
+      return '<text:a xlink:type="simple" xlink:href="'..url..'">'..token..'</text:a>'
+    end
+  end
 
 
   function Decorate(token, state)

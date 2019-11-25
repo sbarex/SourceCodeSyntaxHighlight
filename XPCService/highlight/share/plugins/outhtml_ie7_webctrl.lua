@@ -16,11 +16,11 @@ function syntaxUpdate(desc)
     { Param="Spacer", Value="&nbsp;" },
     { Param="MaskWS", Value="true" },
   }
-  
+
   function DecorateLineBegin(lineNumber)
-    return '&nbsp;' 
+    return '&nbsp;'
   end
-    
+
 end
 
 Plugins={

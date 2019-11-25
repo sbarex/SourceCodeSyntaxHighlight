@@ -4,7 +4,7 @@ Description="CMake"
 Categories = {"config", "script"}
 
 Keywords={
-   { Id=1,
+  { Id=1,
     List={
     "if", "elseif", "else", "endif", "foreach", "endforeach", "and", "while", "endwhile", "macro", "endmacro", "function", "endfunction", "set", "unset"
     },
@@ -15,7 +15,7 @@ Keywords={
   { Id=3,
     Regex=[[\$\{.+\$\{.+?\}.+?\}|\$\{.+?\} ]],
   },
- { Id=3,
+  { Id=3,
     Regex=[[ [A-Z_\>]+\:([\w/]+) ]],
   },
   { Id=4,
@@ -51,13 +51,13 @@ Operators=[[\(|\)|\{|\}|\[|\]|\,|\;|\.|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-|\~|\#|\\]]
 -- resolve issue with ]] close delimiter which ends comments and strings
 function OnStateChange(oldState, newState, token)
 
-   if token=="]]" and oldState==HL_STRING and newState==HL_BLOCK_COMMENT_END then
-      return HL_STRING_END
-   end
-   
-   if  (string.sub(token,1,1) =="$" )  and oldState==HL_STRING and newState==HL_KEYWORD then
-      return HL_INTERPOLATION
-   end
-   
-   return newState
+  if token=="]]" and oldState==HL_STRING and newState==HL_BLOCK_COMMENT_END then
+    return HL_STRING_END
+  end
+
+  if  (string.sub(token,1,1) =="$" )  and oldState==HL_STRING and newState==HL_KEYWORD then
+    return HL_INTERPOLATION
+  end
+
+  return newState
 end

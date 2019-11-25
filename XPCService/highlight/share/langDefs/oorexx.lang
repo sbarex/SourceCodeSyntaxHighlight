@@ -5,7 +5,7 @@ Categories = {"source"}
 
 Keywords={
   { Id=1,
-    List={"address", "additional", "any", "arg", "arguments", "array", "by", 
+    List={"address", "additional", "any", "arg", "arguments", "array", "by",
     "call", "caseless", "continue", "class", "description", "digits", "do", "drop",
     "end", "engineering", "error", "exit", "expose", "else", "failure", "for",
     "forever", "form", "forward", "fuzz", "guard", "halt", "if", "interpret",
@@ -20,7 +20,7 @@ Keywords={
     List={"class", "method", "requires", "routine"},
   },
   { Id=3,
-    List={"abbrev",  "abs",  "address", "arg",  "b2x",  "beep", 
+    List={"abbrev",  "abs",  "address", "arg",  "b2x",  "beep",
     "bitand",  "bitor",  "bitxor",  "c2d",  "c2x",  "center",
     "changestr", "charin",  "charout",  "chars",  "compare", "condition",
     "copies", "countstr", "d2c",  "d2x", "datatype", "date", "delstr",

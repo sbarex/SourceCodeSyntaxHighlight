@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Syntac Highlight Help</title>
+    <title>Syntax Highlight Help</title>
     <meta charset="UTF-8">
-    <meta name="description" content="Syntac Highlight Preferences">
+    <meta name="description" content="Syntax Highlight Preferences">
     <link rel="stylesheet" type="text/css" href="../css/main.css" />
 </head>
 <body>
@@ -33,8 +33,12 @@
         <tr>
             <td>Theme</td>
             <td>You can choose a theme for light and dark style of the OS. The list of theme is automatically generated quering highlight.<br />
-            For html output mode you can edit a custom css style to override some settings. <br/>
-            <small>(corresponds to --style and --base16 highlight arguments)</small>
+            <small>(corresponds to --style highlight arguments)</small>
+        </td>
+        <tr>
+            <td>Custom style</td>
+            <td>For html output mode you can edit a custom css style to override the theme settings. <br/>
+            Custom style is saved on the application support folder.
         </td>
         </tr>
         <tr>
@@ -60,6 +64,7 @@
         <tr>
             <td>Extra arguments</td>
             <td>Any highlight additional arguments. Please don't provide arguments handled by the prefefrences GUI.</br />
+                <b>Each parameter value that contains spaces must be protected within single quotes. </b>Eg <code>--doc-title='title with space'</code>.<br />
                 <small>(see man highlight to a list of valid arguments and plugins)</small></td>
         </tr>
 
@@ -74,6 +79,9 @@
         </tr>
     </table>
     
+    <p>The settings are stored in <code>~/Library/Preferences/org.sbarex.SourceCodeSyntaxHightlight.plist</code>.<br />
+    Customized themes and styles are saved in <code>~/Library/Application Support/Syntax Highlight</code>.</p>
+
     <p>If you want you can also <a href="help:anchor=SyntaxHighlight_SPECIFIC_PREFERENCES bookID=org.sbarex.SourceCodeSyntaxHighlight.help">specify specific settings</a> for every supported format overriding the global preferences.</p>
 
     <br />

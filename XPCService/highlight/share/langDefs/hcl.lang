@@ -7,9 +7,9 @@ Categories = {"source"}
 
 Keywords={
   { Id=1,
-    List={"append", "break", "catch", "continue", "eq", "eval", "filter", "for", 
-        "foreach", "global", "hash", "if", "incr", "intro", "join", "lappend", "lindex", 
-        "list", "llen", "lset", "proc", "puts", "return", "search", "set", "sindex", 
+    List={"append", "break", "catch", "continue", "eq", "eval", "filter", "for",
+        "foreach", "global", "hash", "if", "incr", "intro", "join", "lappend", "lindex",
+        "list", "llen", "lset", "proc", "puts", "return", "search", "set", "sindex",
         "slen", "sort", "source", "split", "time", "append", "upeval", "while"},
   },
   { Id=2,

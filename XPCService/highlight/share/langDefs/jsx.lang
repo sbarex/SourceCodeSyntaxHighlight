@@ -17,14 +17,14 @@ table.insert(Keywords,
 table.insert(Keywords,
   { Id=3,
     Regex=[[<[!?]?(?!\-\-)\/?[\w\:\-]+>?|[/?]?>]],
-    Group=0,  
+    Group=0,
   }
 )
 
 table.insert(Keywords,
   { Id=2,
     List={"Array", "boolean", "Boolean", "Date", "number", "Number", "Map", "int",
-            "Object", "string", "String", "RegExp", "JSON", "Nullable", "variant", 
+            "Object", "string", "String", "RegExp", "JSON", "Nullable", "variant",
             "Error", "EvalError", "RangeError", "ReferenceError", "SyntaxError", "TypeError", "URIError",
           "HTMLElement", "HTMLCanvasElement", "CanvasRenderingContext2D", "HTMLImageElement" },
   }

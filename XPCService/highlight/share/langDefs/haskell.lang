@@ -33,7 +33,7 @@ function OnStateChange(oldState, newState, token, kwgroup)
   if newState==HL_ESC_SEQ and oldState~=HL_STRING or string.match(token, "%a+'" ) and oldState==HL_STRING then
     return HL_REJECT
   end
-  
+
   return newState
 end
 

@@ -6,9 +6,8 @@
 # Copyright 2007 Nathaniel Gray.
 # Copyright 2012-2018 Anthony Gelibert.
 #
-# Expects   $1 = path to resources dir of bundle
-#           $2 = name of file to colorize
-#           $3 = 1 if you want enough for a thumbnail, 0 for the full file
+# Expects   $1 = name of file to colorize
+#           $2 = 1 if you want enough for a thumbnail, 0 for the full file
 #
 # Produces HTML on stdout with exit code 0 on success
 ###############################################################################
@@ -17,9 +16,8 @@
 setopt err_exit
 
 # Set the read-only variables
-rsrcDir="$1"
-target="$2"
-thumb="$3"
+target="$1"
+thumb="$2"
 cmd="$pathHL"
 
 function debug() {
@@ -30,13 +28,13 @@ function debug() {
 
 if [ "x$qlcc_debug" != "x" ]; then
     echo `date +"%Y-%m-%d %H:%M:%S"` > ~/Desktop/colorize.log
+    # file to store stderr
     err_device=~/Desktop/colorize.log
 else
     err_device=/dev/stderr
 fi
 
 debug "Starting colorize.sh by setting reader"
-#debug "rsrcDir: ${rsrcDir}"
 #debug "target: ${target}"
 #debug "thumb: ${thumb}"
 #debug "cmd: ${cmd}"
@@ -135,27 +133,20 @@ case ${target} in
 esac
 
 if [[ ${preprocessorHL} != "" ]]; then
-    # Split preprocessorHL to an array of arguments using • as separator.
+    # Split preprocessorHL to an array of arguments using '•' as separator.
     reader=("${(@s/•/)preprocessorHL}")
+    # append the target name.
     reader+=("${target}")
 fi
 
 debug "Resolved ${target} to language $lang"
 
 go4it () {
-    if [[ ${hlTheme16} == 1 ]]; then
-        theme="--base16=${hlTheme}"
-    else
-        if [[ ${hlTheme} == base16* ]]; then
-            theme="--base16=${hlTheme#"base16/"}"
-        else
-            theme="--style=${hlTheme}"
-        fi
-    fi
+    theme="--style=${hlTheme}"
     
-    # Split extraHLFlags to an array of arguments using • as separator.
+    # Split extraHLFlags to an array of arguments using '•' as separator.
     #
-    # Do not use zsh {= expansion because it split the string on all space ignoring quotes causing error.
+    # Do not use zsh {= expansion because it split the string on all space ignoring quotes and causing error.
     cmdExtra=("${(@s/•/)extraHLFlags}")
     
     cmdOpts=(${plugin} --syntax=${lang} --quiet --include-style --font=${font} --font-size=${fontSizePoints} ${=theme} --encoding=${textEncoding} ${cmdExtra} --validate-input)

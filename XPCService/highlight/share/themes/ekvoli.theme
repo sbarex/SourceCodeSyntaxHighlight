@@ -11,7 +11,7 @@ String	= { Colour="#87c6f0" , Italic=true}
 BlockComment	= { Colour="#78d590" , Italic=true}
 StringPreProc = String
 LineComment   = BlockComment
-Operator      = { Colour="#ffd899" } 
+Operator      = { Colour="#ffd899" }
 LineNum      = { Colour="#909090" }
 PreProcessor      = { Colour="#90d1c2" }
 Interpolation  = { Colour="#DB87D9" }

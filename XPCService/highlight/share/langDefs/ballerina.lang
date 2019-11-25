@@ -1,0 +1,47 @@
+
+Description="Ballerina"
+
+Categories = {"source"}
+
+Keywords={
+  { Id=1,
+    List={
+      "boolean", "int","float","decimal","string",
+      "send","receive","flush","checking","trap","fork",
+      "start","wait","default","final","type","xmlns","as","if","else",
+      "match","var","error","foreach","while","continue","break","panic",
+      "return","import","version","public","listener","service","on",
+      "function","external","type","annotation","parameter","resource",
+      "is", "returns" },
+  },
+  { Id=2,
+    List={
+      "false", "true", "nil"
+  },
+  },
+  { Id=3,
+    Regex=[[@\w+]],
+  },
+  { Id=4,
+    Regex=[[(\w+)\s*\(]],
+  },
+}
+
+Strings={
+  Delimiter=[["|']],
+  Escape = [[ \\u\d{4}|\\x?\d{3}|\\\w|\\[\'\\\"] ]],
+  Interpolation=[[ \$\{.+?\} ]],
+}
+
+IgnoreCase=false
+
+Comments={
+  {
+    Block=false,
+    Delimiter= { [[\/\/|#]] },
+  }
+}
+
+Operators=[[\?|\(|\)|\[|\]|\{|\}|\,|\;|\.|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-|\|]]
+
+EnableIndentation=false

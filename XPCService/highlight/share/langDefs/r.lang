@@ -13,7 +13,7 @@ Keywords={
   },
   { Id=4,
     Regex=[[([\w+_\.]+)\s*\(]],
-  }  
+  }
 }
 
 Strings={

@@ -4,7 +4,7 @@ Categories = {"source"}
 
 Keywords={
   { Id=1,
-    
+
 List={"abstract","as","base","bool","break","byte","case","catch","char",
       "checked","class","const","continue","decimal","default","delegate","do",
       "double","else","enum","event","explicit","extern","false","finally","fixed",
@@ -19,8 +19,8 @@ List={"abstract","as","base","bool","break","byte","case","catch","char",
       "remove","select","set","value","var","where ","yield"},
   },
   { Id=2,
-    List={"object", "bool", "byte", "char", "const", "decimal", "double", 
-          "enum", "float", "int", "long", "sbyte", "short", "string", "struct", "uint", 
+    List={"object", "bool", "byte", "char", "const", "decimal", "double",
+          "enum", "float", "int", "long", "sbyte", "short", "string", "struct", "uint",
           "ulong", "ushort", "void"},
   },
   { Id=3,

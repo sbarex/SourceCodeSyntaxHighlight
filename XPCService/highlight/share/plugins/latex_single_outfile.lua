@@ -8,7 +8,7 @@ Description="Inserts a section into each LaTeX output file to concatenate the re
 Categories = {"latex" }
 
 function formatUpdate(desc)
-    
+
     function DocumentHeader(numFiles, currFile, options)
         if (HL_OUTPUT == HL_FORMAT_LATEX and numFiles > 1) then
             title=string.gsub(options.title,"_","\\textunderscore ")
@@ -21,7 +21,7 @@ function formatUpdate(desc)
             return "", currFile==numFiles
         end
     end
-  
+
 end
 
 Plugins={

@@ -7,11 +7,11 @@ Categories = {"source"}
 Digits = [[(?:0x|0X)[0-9a-fA-F]+|\d*[\.]?\d+(?:[eE][\-\+]?\d+)?[lLuU]*]]
 
 Keywords={
-  {  Id=1,
-   List={"class", "for", "while", "in", "if", "else", "const",
-         "oper", "return", "this", "abstract", "static", "enum",
-         "import", "is", "try", "except", "throw", "bind", "release",
-         "init", "del"
+  { Id=1,
+    List={"class", "for", "while", "in", "if", "else", "const",
+          "oper", "return", "this", "abstract", "static", "enum",
+          "import", "is", "try", "except", "throw", "bind", "release",
+          "init", "del"
         }
   },
   { Id=2,
@@ -35,18 +35,18 @@ Strings = {
 }
 
 Comments = {
-   { Block=true,
-     Nested=false,
-     Delimiter = { [[\/\*]], [[\*\/]] }
-   },
-   {
-     Block=false,
-     Delimiter = { [[//]] }
-   },
-   {
-     Block=false,
-     Delimiter = { [[#]] }
-   }
+  { Block=true,
+    Nested=false,
+    Delimiter = { [[\/\*]], [[\*\/]] }
+  },
+  {
+    Block=false,
+    Delimiter = { [[//]] }
+  },
+  {
+    Block=false,
+    Delimiter = { [[#]] }
+  }
 }
 
 IgnoreCase=false

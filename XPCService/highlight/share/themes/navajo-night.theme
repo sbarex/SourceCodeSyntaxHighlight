@@ -14,7 +14,7 @@ StringPreProc = String
 LineComment   = BlockComment
 Operator      = Default
 LineNum      = BlockComment
-PreProcessor      = { Colour="#a3743b" } 
+PreProcessor      = { Colour="#a3743b" }
 Interpolation  = Escape
 
 Keywords = {

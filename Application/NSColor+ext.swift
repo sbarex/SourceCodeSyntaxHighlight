@@ -48,9 +48,12 @@ extension NSColor {
     }
     
     func toHexString() -> String {
-        if self.colorSpace.numberOfColorComponents != 3 {
-            return self.usingColorSpace(.deviceRGB)?.toHexString() ?? "#000000"
-        }
+        // Force the conversion su device RGB color.
+        // For NSColor creted by named color you cannot test .colorSpace property (cause an uncatchable exception!)
+        return self.usingColorSpace(.deviceRGB)?._toHexString() ?? "#000000"
+    }
+    
+    fileprivate func _toHexString() -> String {
         var r:CGFloat = 0
         var g:CGFloat = 0
         var b:CGFloat = 0
@@ -61,5 +64,14 @@ extension NSColor {
         let rgb:Int = (Int)(r*255)<<16 | (Int)(g*255)<<8 | (Int)(b*255)<<0
         
         return String(format:"#%06x", rgb)
+    }
+    
+    class func random() -> NSColor {
+        let red =   CGFloat.random(in: 0...255)
+        let green = CGFloat.random(in: 0...255)
+        let blue =  CGFloat.random(in: 0...255)
+        
+        let color = NSColor(red: red / 255, green: green / 255, blue: blue / 255, alpha: 1)
+        return color
     }
 }

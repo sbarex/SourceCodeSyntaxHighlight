@@ -22,7 +22,11 @@
 
 import Cocoa
 
-class SCSHThemePreview {
+class SCSHThemePreview: Equatable {
+    static func == (lhs: SCSHThemePreview, rhs: SCSHThemePreview) -> Bool {
+        return lhs.theme == rhs.theme
+    }
+    
     let theme: SCSHTheme
     var image: NSImage?
     
@@ -38,10 +42,17 @@ enum ThemeStyleFilterEnum: Int {
     case dark
 }
 
+enum ThemeOriginFilterEnum: Int {
+    case all
+    case standalone
+    case customized
+}
+
 class ThemeSelectorViewController: NSViewController {
     @IBOutlet weak var collectionView: NSCollectionView!
     @IBOutlet weak var themeSegmentedControl: NSSegmentedControl!
     @IBOutlet weak var searchField: NSSearchField!
+    @IBOutlet weak var originFilterControl: NSSegmentedControl!
     
     var handler: ((SCSHTheme)->Void)?
     
@@ -67,6 +78,11 @@ class ThemeSelectorViewController: NSViewController {
             refreshThemes()
         }
     }
+    var origin: ThemeOriginFilterEnum = .all {
+        didSet {
+            refreshThemes()
+        }
+    }
     
     @IBAction func handleStyleChange(_ sender: NSSegmentedControl) {
         if let style = ThemeStyleFilterEnum(rawValue: sender.selectedSegment) {
@@ -74,14 +90,34 @@ class ThemeSelectorViewController: NSViewController {
         }
     }
     
+    @IBAction func handleOriginChange(_ sender: NSSegmentedControl) {
+        if let origin = ThemeOriginFilterEnum(rawValue: sender.selectedSegment) {
+            self.origin = origin
+        }
+    }
+    
     func refreshThemes() {
-        print("filter themes", filter, style.rawValue)
         themes = allThemes.filter({ theme in
-            guard filter != "" || style != .all else {
+            guard filter != "" || style != .all || origin != .all else {
                 return true
             }
-            if filter != "" && !theme.theme.desc.contains(filter) {
-                return false
+            if filter != "" {
+                guard let _ = theme.theme.desc.range(of: filter, options: String.CompareOptions.caseInsensitive) else {
+                    return false
+                }
+            }
+            
+            switch origin {
+            case .all:
+                break
+            case .standalone:
+                if !theme.theme.isStandalone {
+                    return false
+                }
+            case .customized:
+                if theme.theme.isStandalone {
+                    return false
+                }
             }
             
             switch style {
@@ -154,8 +190,10 @@ class ThemeCollectionViewItem: NSCollectionViewItem {
     override func awakeFromNib() {
         super.awakeFromNib()
         imageView?.wantsLayer = true
-        imageView?.layer?.cornerRadius = 6
+        imageView?.layer?.cornerRadius = 8
         imageView?.layer?.masksToBounds = true
+        imageView?.layer?.borderWidth = 1
+        imageView?.layer?.borderColor = NSColor.gridColor.cgColor
     }
     
     var theme: SCSHThemePreview? {
@@ -164,41 +202,11 @@ class ThemeCollectionViewItem: NSCollectionViewItem {
                 self.textField?.stringValue = theme.theme.desc
                 
                 if theme.image == nil {
-                    let format = theme.theme.getAttributedExample(fontName: "Menlo", fontSize: 4, showColorCodes: false)
-                    
-                    var rect = self.view.bounds
-                    rect.size.height -= textField?.bounds.height ?? 0
-                    
-                    let colorSpace = CGColorSpaceCreateDeviceRGB()
-                    let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.premultipliedLast.rawValue)
-                    if let context = CGContext(
-                        data: nil,
-                        width: Int(rect.width),
-                        height: Int(rect.height),
-                        bitsPerComponent: 8,
-                        bytesPerRow: 0,
-                        space: colorSpace,
-                        bitmapInfo: bitmapInfo.rawValue) {
-                        
-                        if let c = NSColor(fromHexString: theme.theme.backgroundColor) {
-                            context.setFillColor(c.cgColor)
-                            context.fill(rect)
-                        }
-                        
-                        let graphicsContext = NSGraphicsContext(cgContext: context, flipped: false)
-                        NSGraphicsContext.current = graphicsContext
-                        
-                        format.draw(in: rect)
-                        
-                        NSGraphicsContext.current = nil
-                        
-                        if let image = context.makeImage() {
-                            theme.image =  NSImage(cgImage: image, size: CGSize(width: context.width, height: context.height))
-                        }
-                    }
+                    theme.image = theme.theme.getImage(size: CGSize(width: view.bounds.width, height: view.bounds.height - (textField?.bounds.height ?? 0)), font: NSFont(name: "Menlo", size: 4) ?? NSFont.systemFont(ofSize: 4))
                 }
                 
                 self.imageView?.image = theme.image
+                self.textField?.toolTip = theme.theme.desc
                 
                 /*
                 if let rep = NSBitmapImageRep(
@@ -237,6 +245,7 @@ class ThemeCollectionViewItem: NSCollectionViewItem {
                 */
             } else {
                 self.textField?.stringValue = ""
+                self.textField?.toolTip = nil
                 self.imageView?.image = nil
             }
             

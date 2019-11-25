@@ -5,12 +5,12 @@ Categories = {"source"}
 
 Keywords={
   { Id=1,
-    List={"as",  "break",  "continue",  "else",  "finish",  "for",  "foreach",  
-        "if",  "implements",  "in",  "input",  "isa", "namespace", "output", "static",  
+    List={"as",  "break",  "continue",  "else",  "finish",  "for",  "foreach",
+        "if",  "implements",  "in",  "input",  "isa", "namespace", "output", "static",
         "store",  "struct",  "typedef", "wait",  "waitfor", "while", "println"},
   },
   { Id=2,
-    List={"bool", "char", "string", "vector", "map", "set", "null", "error", 
+    List={"bool", "char", "string", "vector", "map", "set", "null", "error",
         "enum", "range", "int", "double"},
   },
   { Id=3,

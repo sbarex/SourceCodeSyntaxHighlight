@@ -5,9 +5,9 @@ Categories = {"source"}
 
 Keywords={
   { Id=1,
-    List={"assert", "break", "case", "char", "const", "continue", "default", 
-    "defined", "do", "else", "enum", "exit", "for", "forward", "goto", "if", 
-    "native", "new", "operator", "public", "return", "sizeof", "sleep", "static", 
+    List={"assert", "break", "case", "char", "const", "continue", "default",
+    "defined", "do", "else", "enum", "exit", "for", "forward", "goto", "if",
+    "native", "new", "operator", "public", "return", "sizeof", "sleep", "static",
     "stock", "switch", "while"},
   },
   { Id=2,

@@ -41,7 +41,7 @@ function themeUpdate()
   Operator.Colour=invert(Operator.Colour)
 
   for k, v in pairs(Keywords) do
-   v.Colour=invert(v.Colour)
+    v.Colour=invert(v.Colour)
   end
 end
 

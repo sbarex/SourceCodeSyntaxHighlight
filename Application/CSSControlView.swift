@@ -28,9 +28,15 @@ class CSSControlView: NSViewController {
             textView?.string = cssCode
         }
     }
+    var isUTIWarningHidden: Bool = true {
+        didSet {
+            warningMessage?.isHidden = isUTIWarningHidden
+        }
+    }
     var handler: ((String)->Void)?
     
     @IBOutlet weak var textView: NSTextView!
+    @IBOutlet weak var warningMessage: NSTextField!
     
     @IBAction func showHelp(_ sender: Any) {
         if let locBookName = Bundle.main.object(forInfoDictionaryKey: "CFBundleHelpBookName") as? String {
@@ -44,6 +50,7 @@ class CSSControlView: NSViewController {
     }
     
     override func viewDidLoad() {
+        warningMessage.isHidden = isUTIWarningHidden
         textView?.string = cssCode
     }
 }

@@ -12,7 +12,7 @@ Categories = {"scala", "html", "rtf", "latex", "odt" }
 function syntaxUpdate(desc)
 
   if desc~="Scala" then
-     return
+    return
   end
 
   function Set (list)
@@ -21,155 +21,146 @@ function syntaxUpdate(desc)
       return set
   end
 
-   scala_items = Set
-  {"Any","AnyRef","AnyVal","App","Application","Array","Boolean","Byte","Cell",
-  "Char","cloneable","Console","CountedIterator","DelayedInit","deprecated",
-  "deprecatedName","Double","Dynamic","Either","Enumeration","Equals",
-  "FallbackArrayBuilding","Float","Function","Function1","Function2","Immutable",
-  "inline","Int","Left","Long","LowPriorityImplicits","MatchError","Math",
-  "Mutable","native","noinline","None","NotDefinedError","Nothing","NotNull",
-  "Null","Option","PartialFunction","Predef","Product","Product1","Product2",
-  "Proxy","remote","Responder","Right","Serializable","SerialVersionUID","Short",
-  "Some","specialized","Symbol","throws","transient","Tuple1","Tuple2","unchecked"
-  ,"UninitializedError","UninitializedFieldError","Unit","volatile" }
+  scala_items = Set
+  { "Any","AnyRef","AnyVal","App","Application","Array","Boolean","Byte","Cell",
+    "Char","cloneable","Console","CountedIterator","DelayedInit","deprecated",
+    "deprecatedName","Double","Dynamic","Either","Enumeration","Equals",
+    "FallbackArrayBuilding","Float","Function","Function1","Function2","Immutable",
+    "inline","Int","Left","Long","LowPriorityImplicits","MatchError","Math",
+    "Mutable","native","noinline","None","NotDefinedError","Nothing","NotNull",
+    "Null","Option","PartialFunction","Predef","Product","Product1","Product2",
+    "Proxy","remote","Responder","Right","Serializable","SerialVersionUID","Short",
+    "Some","specialized","Symbol","throws","transient","Tuple1","Tuple2","unchecked",
+    "UninitializedError","UninitializedFieldError","Unit","volatile" }
 
-  
+
   actor_items = Set
-  {"AbstractActor","Actor","CanReply","Channel","DaemonActor","Debug","Exit",
-   "Future","Futures","InputChannel","IScheduler","MessageQueue",
-   "MessageQueueElement","OutputChannel","Reaction","Reactor","ReplyReactor",
-   "Scheduler","SchedulerAdapter","TIMEOUT","UncaughtException"
-  }
-  
-   remote_items = Set
-{"ExitFun","FreshNameCreator","JavaSerializer","LinkToFun","LocalApply0",
-"Locator","NamedSend","Node","RemoteActor","RemoteApply0","SendTo","Serializer",
-"Service","TcpService","Terminate","UnlinkFromFun"}
-  
+  { "AbstractActor","Actor","CanReply","Channel","DaemonActor","Debug","Exit",
+    "Future","Futures","InputChannel","IScheduler","MessageQueue",
+    "MessageQueueElement","OutputChannel","Reaction","Reactor","ReplyReactor",
+    "Scheduler","SchedulerAdapter","TIMEOUT","UncaughtException" }
+
+  remote_items = Set
+  { "ExitFun","FreshNameCreator","JavaSerializer","LinkToFun","LocalApply0",
+    "Locator","NamedSend","Node","RemoteActor","RemoteApply0","SendTo","Serializer",
+    "Service","TcpService","Terminate","UnlinkFromFun" }
+
   actors_scheduler_items = Set
-{"ActorGC","DaemonScheduler","ExecutorScheduler","ForkJoinScheduler",
-"ResizableThreadPoolScheduler","SingleThreadedScheduler"}
+  { "ActorGC","DaemonScheduler","ExecutorScheduler","ForkJoinScheduler",
+    "ResizableThreadPoolScheduler","SingleThreadedScheduler" }
 
-annotation_items = Set
+  annotation_items = Set
+  { "Annotation","ClassfileAnnotation","elidable","implicitNotFound","serializable",
+    "StaticAnnotation","strictfp","switch","tailrec","TypeConstraint","varargs" }
 
-{"Annotation","ClassfileAnnotation","elidable","implicitNotFound","serializable"
-,"StaticAnnotation","strictfp","switch","tailrec","TypeConstraint","varargs"}
-
-annotation_target_items = Set
-{"beanGetter","beanSetter","field","getter","param","setter"}
-
-
-annotation_unchecked_items= Set
-{ "uncheckedStable","uncheckedVariance"}
+  annotation_target_items = Set
+  { "beanGetter","beanSetter","field","getter","param","setter" }
 
 
-collection_items= Set{
-"BitSet","BitSetLike","BufferedIterator","CustomParallelizable","DefaultMap",
-"GenIterable","GenIterableLike","GenIterableView","GenIterableViewLike","GenMap"
-,"GenMapLike","GenSeq","GenSeqLike","GenSeqView","GenSeqViewLike","GenSet",
-"GenSetLike","GenTraversable","GenTraversableLike","GenTraversableOnce",
-"GenTraversableView","GenTraversableViewLike","IndexedSeq","IndexedSeqLike",
-"IndexedSeqOptimized","Iterable","IterableLike","IterableProxy",
-"IterableProxyLike","IterableView","IterableViewLike","Iterator",
-"JavaConversions","JavaConverters","LinearSeq","LinearSeqLike",
-"LinearSeqOptimized","Map","MapLike","MapProxy","MapProxyLike","Parallel",
-"Parallelizable","Seq","SeqLike","SeqProxy","SeqProxyLike","SeqView",
-"SeqViewLike","Set","SetLike","SetProxy","SetProxyLike","SortedMap",
-"SortedMapLike","SortedSet","SortedSetLike","Traversable","TraversableLike",
-"TraversableOnce","TraversableProxy","TraversableProxyLike","TraversableView",
-"TraversableViewLike","ViewMkString","focushide" }
+  annotation_unchecked_items= Set
+  { "uncheckedStable","uncheckedVariance" }
 
 
-collection_generic_items= Set
-{
-"Addable","AtomicIndexFlag","BitSetFactory","CanBuildFrom","CanCombineFrom",
-"ClassManifestTraversableFactory","DefaultSignalling","DelegatedContext",
-"DelegatedSignalling","FilterMonadic","GenericClassManifestCompanion",
-"GenericClassManifestTraversableTemplate","GenericCompanion",
-"GenericOrderedCompanion","GenericOrderedTraversableTemplate",
-"GenericParCompanion","GenericParMapCompanion","GenericParMapTemplate",
-"GenericParTemplate","GenericSeqCompanion","GenericSetTemplate",
-"GenericTraversableTemplate","GenMapFactory","GenSeqFactory","GenSetFactory",
-"GenTraversableFactory","Growable","HasNewBuilder","HasNewCombiner",
-"IdleSignalling","ImmutableMapFactory","ImmutableSetFactory",
-"ImmutableSortedMapFactory","ImmutableSortedSetFactory","IterableForwarder",
-"MapFactory","MutableMapFactory","MutableSetFactory","OrderedTraversableFactory"
-,"ParFactory","ParMapFactory","ParSetFactory","SeqFactory","SeqForwarder",
-"SetFactory","Shrinkable","Signalling","Sizing","SliceInterval","Sorted",
-"SortedMapFactory","SortedSetFactory","Subtractable","TaggedDelegatedContext",
-"TraversableFactory","TraversableForwarder","VolatileAbort" }
-
-collection_immutable_items= Set
-{
-"BitSet","DefaultMap","HashMap","HashSet","IndexedSeq","IntMap","Iterable",
-"LinearSeq","List","ListMap","ListSet","LongMap","Map","MapLike","MapProxy",
-"Nil","NumericRange","RangeUtils","PagedSeq","Queue","Range","RedBlack","Seq",
-"Set","SetProxy","SortedMap","SortedSet","Stack","Stream","StreamIterator",
-"StreamView","StreamViewLike","StringLike","StringOps","Traversable","TreeMap",
-"TreeSet","Vector","VectorBuilder","VectorIterator","WrappedString" }
+  collection_items= Set
+  { "BitSet","BitSetLike","BufferedIterator","CustomParallelizable","DefaultMap",
+    "GenIterable","GenIterableLike","GenIterableView","GenIterableViewLike","GenMap",
+    "GenMapLike","GenSeq","GenSeqLike","GenSeqView","GenSeqViewLike","GenSet",
+    "GenSetLike","GenTraversable","GenTraversableLike","GenTraversableOnce",
+    "GenTraversableView","GenTraversableViewLike","IndexedSeq","IndexedSeqLike",
+    "IndexedSeqOptimized","Iterable","IterableLike","IterableProxy",
+    "IterableProxyLike","IterableView","IterableViewLike","Iterator",
+    "JavaConversions","JavaConverters","LinearSeq","LinearSeqLike",
+    "LinearSeqOptimized","Map","MapLike","MapProxy","MapProxyLike","Parallel",
+    "Parallelizable","Seq","SeqLike","SeqProxy","SeqProxyLike","SeqView",
+    "SeqViewLike","Set","SetLike","SetProxy","SetProxyLike","SortedMap",
+    "SortedMapLike","SortedSet","SortedSetLike","Traversable","TraversableLike",
+    "TraversableOnce","TraversableProxy","TraversableProxyLike","TraversableView",
+    "TraversableViewLike","ViewMkString","focushide" }
 
 
-collection_interfaces_items= Set
-{
-"IterableMethods","MapMethods","SeqMethods","SetMethods","SubtractableMethods",
-"TraversableMethods","TraversableOnceMethods" }
+  collection_generic_items= Set
+  { "Addable","AtomicIndexFlag","BitSetFactory","CanBuildFrom","CanCombineFrom",
+    "ClassManifestTraversableFactory","DefaultSignalling","DelegatedContext",
+    "DelegatedSignalling","FilterMonadic","GenericClassManifestCompanion",
+    "GenericClassManifestTraversableTemplate","GenericCompanion",
+    "GenericOrderedCompanion","GenericOrderedTraversableTemplate",
+    "GenericParCompanion","GenericParMapCompanion","GenericParMapTemplate",
+    "GenericParTemplate","GenericSeqCompanion","GenericSetTemplate",
+    "GenericTraversableTemplate","GenMapFactory","GenSeqFactory","GenSetFactory",
+    "GenTraversableFactory","Growable","HasNewBuilder","HasNewCombiner",
+    "IdleSignalling","ImmutableMapFactory","ImmutableSetFactory",
+    "ImmutableSortedMapFactory","ImmutableSortedSetFactory","IterableForwarder",
+    "MapFactory","MutableMapFactory","MutableSetFactory","OrderedTraversableFactory",
+    "ParFactory","ParMapFactory","ParSetFactory","SeqFactory","SeqForwarder",
+    "SetFactory","Shrinkable","Signalling","Sizing","SliceInterval","Sorted",
+    "SortedMapFactory","SortedSetFactory","Subtractable","TaggedDelegatedContext",
+    "TraversableFactory","TraversableForwarder","VolatileAbort" }
+
+  collection_immutable_items= Set
+  { "BitSet","DefaultMap","HashMap","HashSet","IndexedSeq","IntMap","Iterable",
+    "LinearSeq","List","ListMap","ListSet","LongMap","Map","MapLike","MapProxy",
+    "Nil","NumericRange","RangeUtils","PagedSeq","Queue","Range","RedBlack","Seq",
+    "Set","SetProxy","SortedMap","SortedSet","Stack","Stream","StreamIterator",
+    "StreamView","StreamViewLike","StringLike","StringOps","Traversable","TreeMap",
+    "TreeSet","Vector","VectorBuilder","VectorIterator","WrappedString" }
 
 
-collection_mutable_items= Set
-{
-"AddingBuilder","ArrayBuffer","ArrayBuilder","ArrayLike","ArrayOps","ArraySeq",
-"ArrayStack","BitSet","Buffer","BufferLike","BufferProxy","Builder","Cloneable",
-"ConcurrentMap","DefaultEntry","DefaultMapModel","DoubleLinkedList",
-"DoubleLinkedListLike","FlatHashTable","GrowingBuilder","HashEntry","HashMap",
-"HashSet","HashTable","History","ImmutableMapAdaptor","ImmutableSetAdaptor",
-"IndexedSeq","IndexedSeqLike","IndexedSeqOptimized","IndexedSeqView","Iterable",
-"LazyBuilder","LinearSeq","LinkedEntry","LinkedHashMap","LinkedHashSet",
-"LinkedList","LinkedListLike","ListBuffer","ListMap","Map","MapBuilder",
-"MapLike","MapProxy","MultiMap","MutableList","ObservableBuffer","ObservableMap"
-,"ObservableSet","OpenHashMap","PriorityQueue","PriorityQueueProxy","Publisher",
-"Queue","QueueProxy","ResizableArray","RevertibleHistory","Seq","SeqLike","Set",
-"SetBuilder","SetLike","SetProxy","Stack","StackProxy","StringBuilder",
-"Subscriber","SynchronizedBuffer","SynchronizedMap","SynchronizedPriorityQueue",
-"SynchronizedQueue","SynchronizedSet","SynchronizedStack","Traversable",
-"Undoable","UnrolledBuffer","WeakHashMap","WrappedArray","WrappedArrayBuilder" }
+  collection_interfaces_items= Set
+  { "IterableMethods","MapMethods","SeqMethods","SetMethods","SubtractableMethods",
+    "TraversableMethods","TraversableOnceMethods" }
 
 
-collection_parallel_items= Set
-{
-"AdaptiveWorkStealingForkJoinTasks","AdaptiveWorkStealingTasks",
-"AdaptiveWorkStealingThreadPoolTasks","Combiner","ForkJoinTasks",
-"FutureThreadPoolTasks","HavingForkJoinPool","IterableSplitter",
-"CompositeThrowable","FactoryOps","ThrowableOps","TraversableOps","ParIterable",
-"ParIterableLike","ParIterableView","ParIterableViewLike","ParMap","ParMapLike",
-"ParSeq","ParSeqLike","ParSeqView","ParSeqViewLike","ParSet","ParSetLike",
-"PreciseSplitter","SeqSplitter","Splitter","Tasks","TaskSupport",
-"ThreadPoolTasks" }
+  collection_mutable_items= Set
+  { "AddingBuilder","ArrayBuffer","ArrayBuilder","ArrayLike","ArrayOps","ArraySeq",
+    "ArrayStack","BitSet","Buffer","BufferLike","BufferProxy","Builder","Cloneable",
+    "ConcurrentMap","DefaultEntry","DefaultMapModel","DoubleLinkedList",
+    "DoubleLinkedListLike","FlatHashTable","GrowingBuilder","HashEntry","HashMap",
+    "HashSet","HashTable","History","ImmutableMapAdaptor","ImmutableSetAdaptor",
+    "IndexedSeq","IndexedSeqLike","IndexedSeqOptimized","IndexedSeqView","Iterable",
+    "LazyBuilder","LinearSeq","LinkedEntry","LinkedHashMap","LinkedHashSet",
+    "LinkedList","LinkedListLike","ListBuffer","ListMap","Map","MapBuilder",
+    "MapLike","MapProxy","MultiMap","MutableList","ObservableBuffer","ObservableMap",
+    "ObservableSet","OpenHashMap","PriorityQueue","PriorityQueueProxy","Publisher",
+    "Queue","QueueProxy","ResizableArray","RevertibleHistory","Seq","SeqLike","Set",
+    "SetBuilder","SetLike","SetProxy","Stack","StackProxy","StringBuilder",
+    "Subscriber","SynchronizedBuffer","SynchronizedMap","SynchronizedPriorityQueue",
+    "SynchronizedQueue","SynchronizedSet","SynchronizedStack","Traversable",
+    "Undoable","UnrolledBuffer","WeakHashMap","WrappedArray","WrappedArrayBuilder" }
 
 
-collection_parallel_immutable_items= Set
-{
-"Builder","HashSetCombiner","ParHashMap","ParHashSet","ParIterable","ParMap",
-"ParRange","ParSeq","ParSet","ParVector" }
+  collection_parallel_items= Set
+  { "AdaptiveWorkStealingForkJoinTasks","AdaptiveWorkStealingTasks",
+    "AdaptiveWorkStealingThreadPoolTasks","Combiner","ForkJoinTasks",
+    "FutureThreadPoolTasks","HavingForkJoinPool","IterableSplitter",
+    "CompositeThrowable","FactoryOps","ThrowableOps","TraversableOps","ParIterable",
+    "ParIterableLike","ParIterableView","ParIterableViewLike","ParMap","ParMapLike",
+    "ParSeq","ParSeqLike","ParSeqView","ParSeqViewLike","ParSet","ParSetLike",
+    "PreciseSplitter","SeqSplitter","Splitter","Tasks","TaskSupport",
+    "ThreadPoolTasks" }
 
-collection_parallel_mutable_items= Set
-{
-"LazyCombiner","ParArray","ParFlatHashTable","ParHashMap","ParHashSet",
-"ParHashTable","ParIterable","ParMap","ParMapLike","ParSeq","ParSet",
-"ParSetLike","ResizableParArrayCombiner","UnrolledParArrayCombiner" }
-     
+
+  collection_parallel_immutable_items= Set
+  { "Builder","HashSetCombiner","ParHashMap","ParHashSet","ParIterable","ParMap",
+    "ParRange","ParSeq","ParSet","ParVector" }
+
+  collection_parallel_mutable_items= Set
+  { "LazyCombiner","ParArray","ParFlatHashTable","ParHashMap","ParHashSet",
+    "ParHashTable","ParIterable","ParMap","ParMapLike","ParSeq","ParSet",
+    "ParSetLike","ResizableParArrayCombiner","UnrolledParArrayCombiner" }
+
   function getURL(token, cat)
-     url='http://www.scala-lang.org/api/current/scala/'..cat..'/'..token.. '.html'
-     
-     if (HL_OUTPUT== HL_FORMAT_HTML or HL_OUTPUT == HL_FORMAT_XHTML) then
-        return '<a class="hl" target="new" href="' .. url .. '">'.. token .. '</a>'
-     elseif (HL_OUTPUT == HL_FORMAT_LATEX) then
-	return '\\href{'..url..'}{'..token..'}'
-      elseif (HL_OUTPUT == HL_FORMAT_RTF) then
-	return '{{\\field{\\*\\fldinst HYPERLINK "'..url..'" }{\\fldrslt\\ul\\ulc0 '..token..'}}}'
-      elseif (HL_OUTPUT == HL_FORMAT_ODT) then
-	return '<text:a xlink:type="simple" xlink:href="'..url..'">'..token..'</text:a>'
-     end
-   end
+    url='http://www.scala-lang.org/api/current/scala/'..cat..'/'..token.. '.html'
+
+    if (HL_OUTPUT== HL_FORMAT_HTML or HL_OUTPUT == HL_FORMAT_XHTML) then
+      return '<a class="hl" target="new" href="' .. url .. '">'.. token .. '</a>'
+    elseif (HL_OUTPUT == HL_FORMAT_LATEX) then
+      return '\\href{'..url..'}{'..token..'}'
+    elseif (HL_OUTPUT == HL_FORMAT_RTF) then
+      return '{{\\field{\\*\\fldinst HYPERLINK "'..url..'" }{\\fldrslt\\ul\\ulc0 '..token..'}}}'
+    elseif (HL_OUTPUT == HL_FORMAT_ODT) then
+      return '<text:a xlink:type="simple" xlink:href="'..url..'">'..token..'</text:a>'
+    end
+  end
 
 
   function Decorate(token, state)

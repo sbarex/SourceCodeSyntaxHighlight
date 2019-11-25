@@ -5,9 +5,9 @@ Categories = {"source"}
 
 Keywords={
   { Id=1,
-    List={"AND", "BEGIN", "CASE", "DIV", "DO", "ELSE", "ELSIF", "END", "ESAC", 
-        "EXIT", "FI", "FOR", "GOTO", "IF", "IN", "MOD", "NOT", "OD", "OF", "ON", "OR", 
-        "OUT", "RESULT", "RETURN", "THEN", "THEN", "TO", "UNTIL", "USES", "WHILE", 
+    List={"AND", "BEGIN", "CASE", "DIV", "DO", "ELSE", "ELSIF", "END", "ESAC",
+        "EXIT", "FI", "FOR", "GOTO", "IF", "IN", "MOD", "NOT", "OD", "OF", "ON", "OR",
+        "OUT", "RESULT", "RETURN", "THEN", "THEN", "TO", "UNTIL", "USES", "WHILE",
         "WITH", "XOR"},
   },
   { Id=2,

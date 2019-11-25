@@ -5,15 +5,15 @@ Categories = {"source", "script"}
 
 
 Keywords = {
-   { -- backslash literals
-     Id = 1,
-     Regex = [=[\\[][0-9'"\\.?()]]=]
-   },
-   { -- interpolation
-     Id = 2,
-     Regex = [[#\{.*}]]
-   },
-   
+  { -- backslash literals
+    Id = 1,
+    Regex = [=[\\[][0-9'"\\.?()]]=]
+  },
+  { -- interpolation
+    Id = 2,
+    Regex = [[#\{.*}]]
+  },
+
 }
 
 Comments = {

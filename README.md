@@ -75,6 +75,23 @@ The debug option on settings panel enable the creation of two files on your Desk
 - colorize.log: log of the colorize operations
 - colorize.[html|rtf] output of the syntax highlight
 
+The settings are stored in `~/Library/Preferences/org.sbarex.SourceCodeSyntaxHightlight.plist`.
+Customized themes and styles are saved in `~/Library/Application Support/Syntax Highlight`.
+
+
+## Theme editor
+The application has a gui theme editor accessible form menu `View/Themes editor`. 
+With this interface you can create a custom theme to use with highlight.
+
+![Theme editor](theme_editor.png)
+
+Standard themes provided by `highlight` cannot be edited but can be duplicated and then customized.
+
+Clicking on an element of the preview blinks the corresponding item in the editor and vice versa.
+
+Customized themes are saved in `~/Library/Application Support/Syntax Highlight/Themes`.
+
+
 ## Note for download precompiled realease
 The precompiled app is not notarized or signed.
 When you download the precompiled app you must strip quarantine flag before execute:

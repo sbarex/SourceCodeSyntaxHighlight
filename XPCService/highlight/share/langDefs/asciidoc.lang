@@ -54,7 +54,7 @@ EnableIndentation = false -- Syntax may be reformatted and indented? (true/false
 Identifiers = [=[ [a-zA-Z_]\w* ]=] -- Highlight's default Identifiers definition
 
 --[[============================================================================
-                                    COMMENTS                                    
+                                    COMMENTS
 ================================================================================
 AsciiDoc comments delimiters must always be placed at beginning of line and end
 the line without other characters.
@@ -74,15 +74,15 @@ Comments = {
   }
 }
 --[[============================================================================
-                                    STRINGS                                     
+                                    STRINGS
 ================================================================================
 Strings = { Delimiter|DelimiterPairs={Open, Close, Raw?}, Escape?, Interpolation?,
             RawPrefix?, AssertEqualLength? }
 
   Delimiter:         String, regular expression which describes string delimiters
   DelimiterPairs:    List, includes open and close delimiter expressions if not
-                     equal, includes optional Raw flag as boolean which marks
-                     delimiter pair to contain a raw string
+                      equal, includes optional Raw flag as boolean which marks
+                      delimiter pair to contain a raw string
   Escape:            String, regex of escape sequences (optional)
   Interpolation:     String, regex of interpolation sequences (optional)
   RawPrefix:         String, defines raw string indicator (optional)
@@ -93,7 +93,7 @@ Strings = { Delimiter|DelimiterPairs={Open, Close, Raw?}, Escape?, Interpolation
 Strings = {
 
 --------------------------------------------------------------------------------
---                              STRING DELIMITERS                               
+--                              STRING DELIMITERS
 --------------------------------------------------------------------------------
 
   -- SYMMETRICAL STRINGS DELIMITERS
@@ -112,7 +112,7 @@ Strings = {
   -- RAW-STRING PREFIX (if language supports it)
   RawPrefix = "R",           -- Raw string indicator (optional): R (C style)
 --[[----------------------------------------------------------------------------
-                                ESCAPE SEQUENCES                                
+                                ESCAPE SEQUENCES
 --------------------------------------------------------------------------------
 If the language at hand supports escape sequences, define a RegEx pattern to
 capture them.
@@ -132,7 +132,7 @@ NOTE: Escape sequences are not restricted to occur inside strings only, they
   -- Escape = [=[ \\u[[:xdigit:]]{4}|\\\d{3}|\\x[[:xdigit:]]{2}|\\[ntvbrfa\\\?'"] ]=],
   Escape = NeverMatch,
 --[[----------------------------------------------------------------------------
-                                INTERPOLATION                                   
+                                INTERPOLATION
 --------------------------------------------------------------------------------
 String, regex of interpolation sequences (optional)
 
@@ -140,7 +140,7 @@ To understand interpolation, here is an example from Javascript:
 
     var apples = 6;
     console.log(`There are ${apples} apples in the basket!`);
-    
+
 which will otuput:
 
     There are 6 apples in the basket!
@@ -156,7 +156,7 @@ References:
 
 
 --[[============================================================================
-                                  PREPROCESSOR                                  
+                                  PREPROCESSOR
 ================================================================================
 PreProcessor = { Prefix, Continuation? }
 
@@ -166,10 +166,10 @@ PreProcessor = { Prefix, Continuation? }
 NOTE: This element is treated by Highlight parser in a similar way to single-
       line comments: it swallows up everything from the matching Prefix up to
       the end of the line -- but unlike comment lines (which can't contain
-      further syntax elements), the parser will still be looking for some 
+      further syntax elements), the parser will still be looking for some
       syntax elements (in the current line) which might be reasonably found
       within a line of preprocessor directives (eg: strings and comments);
-      but once these elements are dealt with, the parser will resume the 
+      but once these elements are dealt with, the parser will resume the
       PreProcessor state to carry on parsing the rest of the line.
 
       Furthermore, the Continuation character allows this element to span
@@ -183,13 +183,13 @@ PreProcessor = {
 --]]
 
 --[[============================================================================
-                                   OPERATORS                                    
+                                  OPERATORS
 ============================================================================--]]
--- Operators = [=[ \&|<|>|\!|\||\=|\/|\*|\%|\+|\-|~ ]=] -- Match: &<>!|=/*%+-~ 
+-- Operators = [=[ \&|<|>|\!|\||\=|\/|\*|\%|\+|\-|~ ]=] -- Match: &<>!|=/*%+-~
 
 
 --[[============================================================================
-                                       KEYWORDS                                   
+                                  KEYWORDS
 ================================================================================
 Keywords = { Id, List|Regex, Group? }
 
@@ -198,8 +198,8 @@ Keywords = { Id, List|Regex, Group? }
   List:  List, list of keywords
   Regex: String, regular expression
   Group: Integer, capturing group id of regular expression, defines part of regex
-         which should be returned as keyword (optional; if not set, the match
-         with the highest group number is returned (counts from left to right))
+          which should be returned as keyword (optional; if not set, the match
+          with the highest group number is returned (counts from left to right))
 
 NOTE: Keyword group Ids are not limited to 4, you can create as many as you
       need; but bare in mind that most themes that ship with Highlight usually
@@ -210,7 +210,7 @@ NOTE: Keyword group Ids are not limited to 4, you can create as many as you
 
 Keywords = {
 --------------------------------------------------------------------------------
---                                  Keywords 1                                  
+--                                  Keywords 1
 --------------------------------------------------------------------------------
 -- NOTE: If you've set `IgnoreCase = false` then all keywords in the list must
 --       be in lowercase otherwise they'll never match! With case-insensitive
@@ -224,7 +224,7 @@ Keywords = {
   --   }
   -- },
 --------------------------------------------------------------------------------
---                                  Keywords 2                                  
+--                                  Keywords 2
 --------------------------------------------------------------------------------
 -- Preprocessor Directives
   { Id = 4,
@@ -250,7 +250,7 @@ end
 --]]
 
 --[[============================================================================
-                                   CHANGELOG                                   
+                                  CHANGELOG
 ================================================================================
 v0.0.4 | 2019/01/01 | Highlight v3.48
   - Define:

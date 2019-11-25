@@ -19,7 +19,7 @@ Keywords={
 
 Strings={
   Delimiter=[["]],
-  Escape=[[\A(?!x)x]] 
+  Escape=[[\A(?!x)x]]
   -- see http://stackoverflow.com/questions/1723182/a-regex-that-will-never-be-matched-by-anything
 }
 

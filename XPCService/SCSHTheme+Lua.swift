@@ -23,45 +23,25 @@
 import Foundation
 import Lua
 
-extension SCSHTheme.ThemeProperty {
-    
+extension SCSHTheme.Property {
     /// Initialize from a Lua Table.
-    init(table: Table?) {
+    convenience init(table: Table?) {
         let color = table?["Colour"] as? String ?? ""
         let isBold = table?["Bold"] as? Bool ?? false
         let isItalic = table?["Italic"] as? Bool ?? false
-        self.init(color: color, isBold: isBold, isItalic: isItalic)
+        let isUnderline = table?["Underline"] as? Bool ?? false
+        
+        self.init(color: color, isBold: isBold, isItalic: isItalic, isUnderline: isUnderline)
     }
 }
 
-extension SCSHTheme.ThemeProperties {
-    
+extension SCSHTheme.CanvasProperty {
     /// Initialize from a Lua Table.
-    init(table: Table) {
-        var k: [SCSHTheme.ThemeProperty] = []
-        if let kk = table["Keywords"] as? [Table] {
-            for t in kk {
-                k.append(SCSHTheme.ThemeProperty(table: t))
-            }
-        }
+    convenience init(table: Table?) {
+        let color = table?["Colour"] as? String ?? ""
         
-        self.init(
-            defaultProp: SCSHTheme.ThemeProperty(table: table["Default"] as? Table),
-            canvas: SCSHTheme.ThemeProperty(table: table["Canvas"] as? Table),
-            number: SCSHTheme.ThemeProperty(table: table["Number"] as? Table),
-            escape: SCSHTheme.ThemeProperty(table: table["Escape"] as? Table),
-            string: SCSHTheme.ThemeProperty(table: table["String"] as? Table),
-            blockComment: SCSHTheme.ThemeProperty(table: table["BlockComment"] as? Table),
-            lineComment: SCSHTheme.ThemeProperty(table: table["LineComment"] as? Table),
-            stringPreProc: SCSHTheme.ThemeProperty(table: table["StringPreProc"] as? Table),
-            operatorProp: SCSHTheme.ThemeProperty(table: table["Operator"] as? Table),
-            lineNum: SCSHTheme.ThemeProperty(table: table["LineNum"] as? Table),
-            preProcessor: SCSHTheme.ThemeProperty(table: table["PreProcessor"] as? Table),
-            interpolation: SCSHTheme.ThemeProperty(table: table["Interpolation"] as? Table),
-            keywords: k
-        )
+        self.init(color: color)
     }
-    
 }
 
 extension SCSHTheme {
@@ -202,19 +182,33 @@ extension SCSHTheme {
                 categories = []
             }
             
-            let isBase16: Bool
-            if let _ = vm.globals["base00"] as? String {
-                isBase16 = true
-            } else if let _ = vm.globals["Canvas"] as? Table {
-                isBase16 = false
-            } else {
-                isBase16 = false
+            let plain = Property(table: vm.globals[Property.Name.plain.rawValue] as? Table)
+            let canvas = CanvasProperty(table: vm.globals[Property.Name.canvas.rawValue] as? Table)
+            let number = Property(table: vm.globals[Property.Name.number.rawValue] as? Table)
+            let string = Property(table: vm.globals[Property.Name.string.rawValue] as? Table)
+            let escape = Property(table: vm.globals[Property.Name.escape.rawValue] as? Table)
+            let preProcessor = Property(table: vm.globals[Property.Name.preProcessor.rawValue] as? Table)
+            let stringPreProc = Property(table: vm.globals[Property.Name.stringPreProc.rawValue] as? Table)
+            let blockComment = Property(table: vm.globals[Property.Name.blockComment.rawValue] as? Table)
+            let lineComment = Property(table: vm.globals[Property.Name.lineComment.rawValue] as? Table)
+            let lineNum = Property(table: vm.globals[Property.Name.lineNum.rawValue] as? Table)
+            let operatorProp = Property(table: vm.globals[Property.Name.operatorProp.rawValue] as? Table)
+            let interpolation = Property(table: vm.globals[Property.Name.interpolation.rawValue] as? Table)
+
+            var keywords: [Property] = []
+            if let kk = vm.globals["Keywords"] as? Table {
+                for n in kk.keys() {
+                    if let t = kk[n] as? Table {
+                        keywords.append(Property(table: t))
+                    } else {
+                        print(n)
+                    }
+                }
             }
             
-            let properties = ThemeProperties(table: vm.globals)
-            
-            self.init(name: name, desc: desc, categories: categories, isBase16: isBase16, properties: properties)
-
+            self.init(name: name, desc: desc, categories: Set<String>(categories), plain: plain, canvas: canvas, number: number, string: string, escape: escape, preProcessor: preProcessor, stringPreProc: stringPreProc, blockComment: blockComment, lineComment: lineComment, lineNum: lineNum, operatorProp: operatorProp, interpolation: interpolation, keywords: keywords)
+            originalName = name
+            self.isDirty = false
         case .error(let s):
             throw LuaError.error(message: s)
         }

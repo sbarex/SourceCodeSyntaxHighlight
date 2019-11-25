@@ -1,4 +1,4 @@
---[[ "nim.lang" v1.1.1 (2019/01/09) | Nim 0.19.2 | Highlight 3.48 
+--[[ "nim.lang" v1.1.1 (2019/01/09) | Nim 0.19.2 | Highlight 3.48
 ********************************************************************************
 *                                                                              *
 *                           Nim Language Definition                            *
@@ -12,7 +12,7 @@ Categories = {"source"}
 
 
 --------------------------------------------------------------------------------
---                                   Numerals                                   
+--                                   Numerals
 --------------------------------------------------------------------------------
 -- Based on Nim numerical constants definition found at:
 --  https://nim-lang.org/docs/manual.html#lexical-analysis-numerical-constants
@@ -25,15 +25,15 @@ RE_exponent  = [[(?:e[\+\-]?\d[\d_]*)]]
 Digits=[[(?xi)
 
   # ========== HEX / HEX FLOAT ================
-  
+
     \b0x[\da-f][\d_a-f]*\b]]..RE_suffx_flt..[[
 
   # ========== OCTAL / OCTAL FLOAT ============
-  
+
   | \b0(?-i:o)[0-7][0-7_]*\b]]..RE_suffx_flt..[[
 
   # ========== BINARY / BINARY FLOAT ==========
-  
+
   | \b0b[01][01_]*\b]]..RE_suffx_flt..[[
 
   # ========== FLOATS =========================
@@ -44,7 +44,7 @@ Digits=[[(?xi)
 
   | \b\d[\d_]*\b]]..RE_suffx_int..[[
   ]]
--------------------------------------------------------------------------------- 
+--------------------------------------------------------------------------------
 
 Keywords={
   {  Id=1,
@@ -60,8 +60,9 @@ Keywords={
     }
   },
   { Id=2,
-    List= {"int", "int8", "int16", "int32", "int64", "uint", "uint8", "uint16", "uint32", "uint64", 
-           "float", "float32", "float64", "char", "string", "pointer"}
+    List= {
+      "int", "int8", "int16", "int32", "int64", "uint", "uint8", "uint16", "uint32", "uint64",
+      "float", "float32", "float64", "char", "string", "pointer"}
   },
   { Id=3,
     List= {}
@@ -82,10 +83,10 @@ Comments = {
   { Block=false,
     Delimiter= { [=[ ##(?!\[)|#(?![\[#]) ]=] },
   },
-   { Block=true,
-     Nested=true,
-     Delimiter = { [[ ##?\[ ]], [[ \]##? ]] }
-   }
+  { Block=true,
+    Nested=true,
+    Delimiter = { [[ ##?\[ ]], [[ \]##? ]] }
+  }
 
 }
 
@@ -94,7 +95,7 @@ IgnoreCase=false
 Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\.|\:|\&|<|>|\!|=|\/|\*|\%|\+|\-|\~|\||\^]]
 
 --[[============================================================================
-                                   CHANGELOG                                    
+                                  CHANGELOG
 ================================================================================
 v1.1.1 (2019/01/09)  | Nim 0.19.2 | Highlight 3.48
   Updated by Tristano Ajmone:

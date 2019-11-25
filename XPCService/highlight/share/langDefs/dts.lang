@@ -4,16 +4,17 @@ Description="Device Tree Source"
 Categories = {"config"}
 
 Keywords={
-  {  Id=1,
-   Regex=[[([\w-]+(@.+)?)\s*\{]],
-   Group=1
+  { Id=1,
+    Regex=[[([\w-]+(@.+)?)\s*\{]],
+    Group=1
   },
   { Id=2,
-    List= { "compatible", "reg", "interrupts", "cpus", "external-bus", "ranges"
-          }
+    List= {
+      "compatible", "reg", "interrupts", "cpus", "external-bus", "ranges"
+    }
   },
   { Id=3,
-     Regex=[[\/[\w\-]+\/]]
+    Regex=[[\/[\w\-]+\/]]
   },
   { Id=4,
     Regex=[[#[\w\-]+]]
@@ -27,14 +28,14 @@ Strings = {
 }
 
 Comments = {
-   { Block=true,
-     Nested=false,
-     Delimiter = { [[\/\*]], [[\*\/]] }
-   },
-   {
-     Block=false,
-     Delimiter = { [[//]] }
-   }
+  { Block=true,
+    Nested=false,
+    Delimiter = { [[\/\*]], [[\*\/]] }
+  },
+  {
+    Block=false,
+    Delimiter = { [[//]] }
+  }
 }
 
 IgnoreCase=false

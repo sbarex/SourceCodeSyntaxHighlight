@@ -1,7 +1,7 @@
 Description="Active Server Pages"
 
 Categories = {"source", "script"}
- 
+
 Keywords={
   { Id=1,
     Regex=[[<[!?]?(?!\-\-)\/?[\w\:\-\.]+>?|[/?]?>]],
@@ -14,20 +14,20 @@ Keywords={
     Regex=[[\&\#?\w+;]],
   },
 }
- 
+
 Strings={
   Delimiter=[["]],
 }
- 
+
 IgnoreCase=true
- 
+
 Comments={
   { Block=true,
     Nested=false,
     Delimiter= { [[<[%!]\-\-]],[[\-\-%?>]] }
   }
 }
- 
+
 NestedSections = {
   { Lang="csharp", Delimiter= { [[<%(?!\-\-)[=#\$]?]], [[%>]] } },
   { Lang="css", Delimiter= { [[<style\s+type\=[\'\"]text\/css[\'\"]>]], [[<\/style>]] } },

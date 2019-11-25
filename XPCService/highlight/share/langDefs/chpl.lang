@@ -13,17 +13,18 @@ Categories = {"source"}
 
 Keywords={
   { Id=1,
-   List={"as", "align", "atomic", "begin", "break", "by", "class", "cobegin",
-         "coforall", "config", "const", "continue", "proc", "iter", "delete",
-         "dmapped", "do", "domain", "else", "enum", "except", "export",
-         "extern", "false", "for", "forall", "if", "in", "index", "inline",
-         "inout", "label", "lambda", "let", "local", "module", "new", "nil",
-         "noinit", "on", "only", "otherwise", "out", "param", "private",
-         "public", "record", "reduce", "ref", "require", "return", "scan",
-         "select", "serial", "single", "sparse", "subdomain", "sync", "then",
-         "true", "type", "union", "use", "var", "when", "where", "while",
-         "with", "yield", "zip"
-        }
+    List={
+      "as", "align", "atomic", "begin", "break", "by", "class", "cobegin",
+      "coforall", "config", "const", "continue", "proc", "iter", "delete",
+      "dmapped", "do", "domain", "else", "enum", "except", "export",
+      "extern", "false", "for", "forall", "if", "in", "index", "inline",
+      "inout", "label", "lambda", "let", "local", "module", "new", "nil",
+      "noinit", "on", "only", "otherwise", "out", "param", "private",
+      "public", "record", "reduce", "ref", "require", "return", "scan",
+      "select", "serial", "single", "sparse", "subdomain", "sync", "then",
+      "true", "type", "union", "use", "var", "when", "where", "while",
+      "with", "yield", "zip"
+    }
   },
   { Id=2,
     List= { "bool", "complex", "imag", "int", "opaque", "range", "real",
@@ -40,14 +41,14 @@ Strings = {
 }
 
 Comments = {
-   { Block=true,
-     Nested=true,
-     Delimiter = { [[\/\*]], [[\*\/]] }
-   },
-   {
-     Block=false,
-     Delimiter = { [[//]] }
-   }
+  { Block=true,
+    Nested=true,
+    Delimiter = { [[\/\*]], [[\*\/]] }
+  },
+  {
+    Block=false,
+    Delimiter = { [[//]] }
+  }
 }
 
 IgnoreCase=false

@@ -17,7 +17,7 @@ under the same license of Highlight (GNU GPL v3).
 This langDef doesn't fully cover the Delphi syntax -- I've just updated the list
 of native data types keywords, as a way of "patching holes", but no effort was
 taken to systematically go over the full syntax definition to make it fully
-compliant to Delphi. 
+compliant to Delphi.
 
 It should be considered an Alpha version and won't reach v1.0 until someone with
 better knwoledge of Delphi than I have revises the whole syntax to ensure it's
@@ -33,7 +33,7 @@ Digits=[[ (?:0x|0X|\$)[0-9a-fA-F]+|\d*[\.\_]?\d+(?:[eE][\-\+]\d+)?[lLuUbfdm]* ]]
 
 Keywords={
   -- ===========================================================================
-  --                              Delphi Keywords                               
+  --                              Delphi Keywords
   -- ===========================================================================
   -- Keywords list is the same as the original Pascal langDef.
   -- ---------------------------------------------------------------------------
@@ -129,7 +129,7 @@ Keywords={
     },
   },
   -- ===========================================================================
-  --                             Delphi Data Types                              
+  --                             Delphi Data Types
   -- ===========================================================================
   -- Keywords list updated based on:
   -- http://docwiki.embarcadero.com/RADStudio/Tokyo/en/Delphi_Data_Types_for_API_Integration
@@ -242,22 +242,22 @@ PreProcessor = {
 }
 
 NestedSections = {
-  { 
-    Lang="assembler", 
-    Delimiter= { [[asm]], [[end;]] } 
+  {
+    Lang="assembler",
+    Delimiter= { [[asm]], [[end;]] }
   }
 }
 
 Operators=[[\(|\)|\[|\]|,|;|:|&|<|>|\!|\=|\/|\*|\%|\+|\-|\@|\.|\^]]
 
 function OnStateChange(oldState, newState, token)
-   if token=="}" and oldState==HL_PREPROC then
-      return HL_PREPROC_END
-   end   
-   return newState
+  if token=="}" and oldState==HL_PREPROC then
+    return HL_PREPROC_END
+  end
+  return newState
 end
 --[[============================================================================
-                                   CHANGELOG                                    
+                                  CHANGELOG
 ================================================================================
 v0.0.1  - 2019/01/05 (Highlight v3.48)
         - First release. Adapted from the Pascal syntax definition ("pas.lang").

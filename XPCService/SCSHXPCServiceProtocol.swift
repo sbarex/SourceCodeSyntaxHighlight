@@ -40,12 +40,23 @@ import Foundation
     
     func getThemes(withReply reply: @escaping ([NSDictionary], Error?) -> Void)
     func getThemes(highlight path: String, withReply reply: @escaping ([NSDictionary], Error?) -> Void)
+    func saveTheme(_ theme: NSDictionary, withReply reply: @escaping (Bool, Error?) -> Void)
+    func deleteTheme(name: String, withReply reply: @escaping (Bool, Error?) -> Void)
+    
+    func getCustomStyleForUTI(uti: String, reply: @escaping (String, Error?) -> Void)
+    func setCustomStyle(_ style: String, forUTI uti: String, reply: @escaping (Bool, Error?) -> Void)
+    
+    func getApplicationSupport(reply: @escaping (URL?)->Void)
     
     func locateHighlight(reply: @escaping ([[Any]]) -> Void)
+    func highlightInfo(highlight: String, reply: @escaping (String) -> Void)
+    func highlightInfo(reply: @escaping (String) -> Void)
     
     func isSyntaxSupported(_ syntax: String, overrideSettings: NSDictionary?, reply: @escaping (Bool) -> Void)
     
     func areSomeSyntaxSupported(_ syntax: [String], overrideSettings: NSDictionary?, reply: @escaping (Bool) ->Void)
+    
+    func getXPCPath(replay: @escaping (URL)->Void)
 }
 
 /*

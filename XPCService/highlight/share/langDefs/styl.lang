@@ -10,7 +10,7 @@ Keywords={
     { Id=1,
       Regex=[[\{[\w\-]+?\}]],
     },
-    
+
     { Id=2,
       List={'for','in','is','defined','not','and','or','is','isnt','a','if','unless','else','yes','no','return'},
     },
@@ -18,7 +18,7 @@ Keywords={
     Regex=[[ [@|$][\w\-]+ ]],
     },
     { Id=4,
-     Regex=[[([\w\-]+)\s*\(]],
+      Regex=[[([\w\-]+)\s*\(]],
     }
 }
 
@@ -29,14 +29,14 @@ Strings={
 IgnoreCase=false
 
 Comments = {
-   { Block=true,
-     Nested=false,
-     Delimiter = { [[\/\*]], [[\*\/]] }
-   },
-   {
-     Block=false,
-     Delimiter = { [[//]] }
-   }
+  { Block=true,
+    Nested=false,
+    Delimiter = { [[\/\*]], [[\*\/]] }
+  },
+  {
+    Block=false,
+    Delimiter = { [[//]] }
+  }
 }
 
 Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\.|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-|\~|\#]]

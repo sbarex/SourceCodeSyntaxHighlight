@@ -4,15 +4,16 @@ Description="ALGOL 68"
 Categories = {"source"}
 
 Keywords={
-  {  Id=1,
-   List={"mode", "op", "prio", "proc", "flex", "heap", "loc", "long", "ref",
-        "short", "bits", "bool", "bytes", "char", "compl", "int", "real", "sema",
-        "string", "void", "channel", "file", "format", "struct", "union", "of", "at",
-        "is", "isnt", "true", "false", "empty", "nil", "skip", "co", "comment", "pr",
-        "pragmat", "case", "in", "ouse", "in", "out", "esac", "for", "from", "to", "by",
-        "while", "do", "od", "if", "then", "elif", "then", "else", "fi", "par", "begin",
-        "end", "go", "to", "goto", "exit"
-        }
+  { Id=1,
+    List={
+      "mode", "op", "prio", "proc", "flex", "heap", "loc", "long", "ref",
+      "short", "bits", "bool", "bytes", "char", "compl", "int", "real", "sema",
+      "string", "void", "channel", "file", "format", "struct", "union", "of", "at",
+      "is", "isnt", "true", "false", "empty", "nil", "skip", "co", "comment", "pr",
+      "pragmat", "case", "in", "ouse", "in", "out", "esac", "for", "from", "to", "by",
+      "while", "do", "od", "if", "then", "elif", "then", "else", "fi", "par", "begin",
+      "end", "go", "to", "goto", "exit"
+    }
   },
 
   { Id=4,
@@ -22,11 +23,10 @@ Keywords={
 }
 
 Comments = {
-
-   {
-     Block=false,
-     Delimiter = { [[#]] }
-   }
+  {
+    Block=false,
+    Delimiter = { [[#]] }
+  }
 }
 
 Strings = {

@@ -45,7 +45,7 @@ Keywords={
     "except", "exception", "exclude", "excluding", "exclusive", "exec", "execute",
     "existing", "exists", "exp", "explain", "external", "extract", "false",
     "family", "fetch", "file", "filter", "final", "first", "first_value", "flag",
-     "floor", "following", "for", "force", "foreign", "fortran", "forward",
+    "floor", "following", "for", "force", "foreign", "fortran", "forward",
     "found", "free", "freeze", "from", "fs", "full", "function", "functions",
     "fusion", "general", "generated", "get", "global", "go", "goto", "grant",
     "granted", "greatest", "group", "grouping", "handler", "having", "header",

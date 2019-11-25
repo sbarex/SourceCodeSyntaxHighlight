@@ -2,7 +2,7 @@
 -- Language definition for PDF files
 -- Author: Roland Hieber <rohieb@rohieb.name>
 -- Date: 2013-11-22
--- Known Bugs: 
+-- Known Bugs:
 --  * Does not highlight files with MacOS (CR-only) line endings
 --  * Does not (yet) highlight inside streams due to limitations in the library
 --
