@@ -1442,8 +1442,10 @@
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>public.filename-extension</key>
-				<string>xml</string>
-				<string>plist</string>
+				<array>
+					<string>xml</string>
+					<string>plist</string>
+				</array>
 				<key>public.mime-type</key>
 				<array>
 					<string>application/xml</string>
