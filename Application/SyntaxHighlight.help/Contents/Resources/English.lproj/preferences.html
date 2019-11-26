@@ -25,7 +25,7 @@
             <td>Highlight</td>
             <td>Path of the highlight utils. You can choose the embedded version or select a different version (compiled by hand or installed with homebrew for example).</td></tr>
         <tr>
-            <td>Mode</td>
+            <td>Output mode</td>
             <td>Output mode in html or rtf. Html output is rendered inside a WKWebView. Rtf output is rendered inside a NSTextView.<br />
                 <small>(corresponds to --out-format highlight argument)</small>
             </td>
@@ -66,6 +66,13 @@
             <td>Any highlight additional arguments. Please don't provide arguments handled by the preferences GUI.</br />
                 <b>Each parameter value that contains spaces must be protected within single quotes. </b>Eg <code>--doc-title='title with space'</code>.<br />
                 <small>(see man highlight to a list of valid arguments and plugins)</small></td>
+        </tr>
+
+        <tr>
+            <td>Interactive preview</td>
+            <td>If enabled allow the execution of javascript code inside the quicklook preview. Enable only when in extra arguments you use a custom plugins that embed js code inside the <code>highlight</code> output.<br />
+            When enabled you cannot drag the quicklook panel with click and drag on the window but only dragging the title bar. Also doubleclick action to open the file is disabled.<br />
+            Is valid only html output mode.</td>
         </tr>
 
         <tr>

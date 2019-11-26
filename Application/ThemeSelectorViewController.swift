@@ -70,16 +70,25 @@ class ThemeSelectorViewController: NSViewController {
     
     var filter: String = "" {
         didSet {
+            guard oldValue != filter else {
+                return
+            }
             refreshThemes()
         }
     }
     var style: ThemeStyleFilterEnum = .all {
         didSet {
+            guard style != style else {
+                return
+            }
             refreshThemes()
         }
     }
     var origin: ThemeOriginFilterEnum = .all {
         didSet {
+            guard origin != origin else {
+                return
+            }
             refreshThemes()
         }
     }
@@ -140,11 +149,7 @@ class ThemeSelectorViewController: NSViewController {
     override func viewDidLoad() {
         searchField.stringValue = filter
         themeSegmentedControl.setSelected(true, forSegment: style.rawValue)
-        
-        refreshThemes()
     }
-    
-    
 }
 
 // MARK: - NSControlTextEditingDelegate
@@ -200,20 +205,32 @@ class ThemeCollectionViewItem: NSCollectionViewItem {
         didSet {
             if let theme = self.theme {
                 self.textField?.stringValue = theme.theme.desc
+                self.textField?.toolTip = theme.theme.desc
                 
                 if theme.image == nil {
                     theme.image = theme.theme.getImage(size: CGSize(width: 90, height: 90), font: NSFont(name: "Menlo", size: 4) ?? NSFont.systemFont(ofSize: 4))
                 }
                 
                 self.imageView?.image = theme.image
-                self.textField?.toolTip = theme.theme.desc
+                self.imageView?.toolTip = theme.theme.desc
             } else {
                 self.textField?.stringValue = ""
                 self.textField?.toolTip = nil
                 self.imageView?.image = nil
+                self.imageView?.toolTip = nil
             }
             
         }
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        self.imageView?.image = nil
+        self.imageView?.toolTip = nil
+        
+        self.textField?.stringValue = ""
+        self.textField?.toolTip = nil
     }
     
 }

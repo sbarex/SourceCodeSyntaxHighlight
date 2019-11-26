@@ -120,7 +120,8 @@ class PreferencesViewController: NSViewController {
     @IBOutlet weak var lineNumbersPopup: NSPopUpButton!
     @IBOutlet weak var tabSpacesSlider: NSSlider!
     @IBOutlet weak var argumentsTextField: NSTextField!
-    @IBOutlet weak var debugButton: NSButton!
+    @IBOutlet weak var interactiveButton: NSSwitch!
+    @IBOutlet weak var debugButton: NSSwitch!
     
     @IBOutlet weak var examplesPopup: NSPopUpButton!
     
@@ -165,6 +166,9 @@ class PreferencesViewController: NSViewController {
     
     @IBOutlet weak var utiArgumentsCheckbox: NSButton!
     @IBOutlet weak var utiArgumentsTextField: NSTextField!
+    
+    @IBOutlet weak var utiInteractiveCheckbox: NSButton!
+    @IBOutlet weak var utiInteractiveButton: NSSwitch!
     
     @IBOutlet weak var utiPreprocessorCheckbox: NSButton!
     @IBOutlet weak var utiPreprocessorTextField: NSTextField!
@@ -366,6 +370,10 @@ class PreferencesViewController: NSViewController {
                 utiArgumentsTextField.isEnabled = utiArgumentsCheckbox.state == .on
                 utiArgumentsTextField.stringValue = currentUTISettings.extra ?? settings?.extra ?? ""
                 
+                utiInteractiveCheckbox.state = currentUTISettings.allowInteractiveActions != nil ? .on : .off
+                utiInteractiveButton.isEnabled = utiInteractiveCheckbox.state == .on
+                utiInteractiveButton.state = currentUTISettings.allowInteractiveActions ?? false ? .on : .off
+                
                 utiPreprocessorCheckbox.state = currentUTISettings.preprocessor != nil ? .on : .off
                 utiPreprocessorTextField.isEnabled = utiPreprocessorCheckbox.state == .on
                 utiPreprocessorTextField.stringValue = currentUTISettings.preprocessor ?? ""
@@ -441,6 +449,7 @@ class PreferencesViewController: NSViewController {
         }
         
         utiDetailView.isHidden = true
+        utiInteractiveButton.toolTip = interactiveButton.toolTip
         
         fetchSettings()
         
@@ -480,7 +489,6 @@ class PreferencesViewController: NSViewController {
                 }
             }
         } else if segue.identifier == "ThemeSegue", let vc = segue.destinationController as? ThemeSelectorViewController {
-            vc.allThemes = self.themes.map({ SCSHThemePreview(theme: $0) })
             if let btn = sender as? NSButton {
                 vc.style = btn == themeLightIcon || btn == utiThemeLightIcon ? .light : .dark
                 
@@ -502,6 +510,7 @@ class PreferencesViewController: NSViewController {
                     }
                 }
             }
+            vc.allThemes = self.themes.map({ SCSHThemePreview(theme: $0) })
         }
     }
     
@@ -683,6 +692,9 @@ class PreferencesViewController: NSViewController {
         fontChooseButton.isEnabled = settings != nil
         refreshFontPanel(withFontFamily: settings?.fontFamily ?? "Menlo", size: settings?.fontSize ?? 12, isGlobal: true)
         
+        interactiveButton.state = settings?.allowInteractiveActions ?? false ? .on : .off
+        interactiveButton.isEnabled = settings != nil
+        
         debugButton.state = settings?.debug ?? false ? .on : .off
         debugButton.isEnabled = settings != nil
         
@@ -800,6 +812,8 @@ class PreferencesViewController: NSViewController {
         settings.tabSpaces = tabSpacesSlider.integerValue
         settings.extra = argumentsTextField.stringValue
         
+        settings.allowInteractiveActions = interactiveButton.state == .on
+        
         settings.debug = debugButton.state == .on
         
         return settings
@@ -873,6 +887,10 @@ class PreferencesViewController: NSViewController {
         if utiArgumentsCheckbox.state == .on {
             settings.extra = argumentsTextField.stringValue
         }
+        if utiInteractiveCheckbox.state == .on {
+            settings.allowInteractiveActions = utiInteractiveButton.state == .on
+        }
+        
         if utiPreprocessorCheckbox.state == .on {
             let v = utiPreprocessorTextField.stringValue.trimmingCharacters(in: CharacterSet.whitespaces)
             settings.preprocessor = v.isEmpty ? nil : v
@@ -981,6 +999,12 @@ class PreferencesViewController: NSViewController {
             utiSettings.extra = utiArgumentsTextField.stringValue
         } else {
             utiSettings.extra = nil
+        }
+        
+        if utiInteractiveCheckbox.state == .on {
+            utiSettings.allowInteractiveActions = utiInteractiveButton.state == .on
+        } else {
+            utiSettings.allowInteractiveActions = nil
         }
         
         if utiPreprocessorCheckbox.state == .on {
@@ -1242,6 +1266,10 @@ class PreferencesViewController: NSViewController {
     @IBAction func handleUtiArgumentsCheckbox(_ sender: NSButton) {
         utiArgumentsTextField.isEnabled = sender.state == .on
         refreshUtiPreview(sender)
+    }
+    
+    @IBAction func handleUtiInteractiveCheckbox(_ sender: NSButton) {
+        utiInteractiveButton.isEnabled = sender.state == .on
     }
     
     @IBAction func handleUtiPreprocessorCheckbox(_ sender: NSButton) {

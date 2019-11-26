@@ -1,8 +1,21 @@
+1.0.b15
+New features:
+- Support for .h header files.
+- Target to 10.15 (now the standard swift library is not embedded).
+- New interactive preview setting to allow the execution of js code inside the quicklook preview.
+
+Bugfix:
+- Removed markdown support in the quicklook extension.
+- Fix little space for theme name on popover theme selector.
+- Images of help files have been compressed.
+- Added a margin aroud the preview on the quicklook window.
+- Fast generation of theme icons.
+
 1.0.b14
 
 New features:
-- merge pull request https://github.com/sbarex/SourceCodeSyntaxHighlight/pull/18 (support for awk, bash, clojure, diff, haskell, lua, patch, rust, scala, text, zsh)
-- added support for .r file format.
+- Merge pull request https://github.com/sbarex/SourceCodeSyntaxHighlight/pull/18 (support for awk, bash, clojure, diff, haskell, lua, patch, rust, scala, text, zsh)
+- Added support for .r file format.
 
 Bugfix:
 - Correction of many typos.

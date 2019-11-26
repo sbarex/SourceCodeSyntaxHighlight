@@ -10,11 +10,11 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <view id="lQb-Wa-IJH">
-            <rect key="frame" x="0.0" y="0.0" width="90" height="120"/>
+            <rect key="frame" x="0.0" y="0.0" width="90" height="116"/>
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
                 <imageView translatesAutoresizingMaskIntoConstraints="NO" id="mZv-j4-rQ5">
-                    <rect key="frame" x="0.0" y="30" width="90" height="90"/>
+                    <rect key="frame" x="0.0" y="26" width="90" height="90"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="90" id="lXQ-2b-36D"/>
                         <constraint firstAttribute="width" constant="90" id="trl-dU-azC"/>
@@ -22,9 +22,9 @@
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" id="EdP-Qy-28B"/>
                 </imageView>
                 <textField allowsExpansionToolTips="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tkO-ff-Wmy">
-                    <rect key="frame" x="-2" y="0.0" width="94" height="26"/>
+                    <rect key="frame" x="-2" y="0.0" width="94" height="24"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="26" id="xlj-ps-iGe"/>
+                        <constraint firstAttribute="height" constant="24" id="xlj-ps-iGe"/>
                     </constraints>
                     <textFieldCell key="cell" controlSize="mini" allowsUndo="NO" alignment="center" id="an3-3N-5ct">
                         <font key="font" metaFont="label" size="9"/>

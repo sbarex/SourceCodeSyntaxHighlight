@@ -35,9 +35,9 @@ extension NSColor {
         // Ensure it only contains valid hex characters 0
         let validHexPattern = "[a-fA-F0-9]+"
         if cleanedString.range(of: validHexPattern, options: String.CompareOptions.regularExpression) != nil {
-            var theInt: UInt32 = 0
+            var theInt: UInt64 = 0
             let scanner = Scanner(string: cleanedString)
-            scanner.scanHexInt32(&theInt)
+            scanner.scanHexInt64(&theInt)
             let red = CGFloat((theInt & 0xFF0000) >> 16) / 255.0
             let green = CGFloat((theInt & 0xFF00) >> 8) / 255.0
             let blue = CGFloat((theInt & 0xFF)) / 255.0

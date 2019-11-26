@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15505" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15505"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="PreviewViewController" customModule="Syntax_Highlight_Quicklook_Extension" customModuleProvider="target">
             <connections>
-                <outlet property="bottomDraggingViewConstraint" destination="xKZ-KO-Wzz" id="0qc-6m-Kiw"/>
-                <outlet property="draggingView" destination="NfA-mm-0IH" id="VOf-cT-1yI"/>
-                <outlet property="trailingDraggingViewConstraint" destination="ENl-LH-Wyx" id="Od3-3x-odg"/>
                 <outlet property="view" destination="c22-O7-iKe" id="NRM-P4-wb6"/>
             </connections>
         </customObject>
@@ -19,17 +15,6 @@
         <customView id="c22-O7-iKe" userLabel="Preview View">
             <rect key="frame" x="0.0" y="0.0" width="480" height="400"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-            <subviews>
-                <customView translatesAutoresizingMaskIntoConstraints="NO" id="NfA-mm-0IH" customClass="MyDraggingView" customModule="Syntax_Highlight_Quicklook_Extension" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="0.0" width="480" height="400"/>
-                </customView>
-            </subviews>
-            <constraints>
-                <constraint firstItem="NfA-mm-0IH" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="A6g-9E-T33"/>
-                <constraint firstAttribute="trailing" secondItem="NfA-mm-0IH" secondAttribute="trailing" id="ENl-LH-Wyx"/>
-                <constraint firstItem="NfA-mm-0IH" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="V9p-0D-dN7"/>
-                <constraint firstAttribute="bottom" secondItem="NfA-mm-0IH" secondAttribute="bottom" id="xKZ-KO-Wzz"/>
-            </constraints>
             <point key="canvasLocation" x="139" y="262"/>
         </customView>
     </objects>

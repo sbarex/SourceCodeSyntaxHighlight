@@ -299,12 +299,15 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
         let isOSThemeLight = (defaults.string(forKey: "AppleInterfaceStyle") ?? "Light") == "Light"
         
         var theme = custom_settings.theme ?? (isOSThemeLight ? custom_settings.lightTheme : custom_settings.darkTheme)
+        var themeBackground = custom_settings.rtfBackgroundColor ?? (isOSThemeLight ? custom_settings.rtfLightBackgroundColor : custom_settings.rtfDarkBackgroundColor)
+        
         if (theme ?? "").hasPrefix("!") {
             // Custom theme.
             theme!.remove(at: theme!.startIndex)
             if let theme_url = self.getCustomThemesUrl(createIfMissing: false)?.appendingPathComponent("\(theme!).theme") {
                 extraHLFlags.append("--config-file=\(theme_url.path)")
             }
+            themeBackground = nil
         }
         
         // Theme to use.
@@ -322,6 +325,8 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
             } catch {
                 temporaryThemeFile = nil
             }
+            
+            themeBackground = inline_theme.backgroundColor
         }
         
         // Show line numbers.
@@ -384,7 +389,7 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
             }
             
             // Embed the custom standard style.
-            if custom_settings.embedCustomStyle, let style = Bundle.main.path(forResource: "style", ofType: "css") {
+            if custom_settings.renderForExtension, let style = Bundle.main.path(forResource: "style", ofType: "css") {
                 if !cssCode!.isEmpty {
                     cssCode! += "\n"
                 }
@@ -431,11 +436,14 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
             throw e
         } else {
             let final_settings = settings.overriding(fromDictionary: [
-                SCSHSettings.Key.format: format,
+                SCSHSettings.Key.format: format
             ])
+            
             if let t = theme {
                 final_settings.theme = t
             }
+            final_settings.rtfBackgroundColor = themeBackground
+            
             if let style = cssCode {
                 custom_settings.css = style
             }

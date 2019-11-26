@@ -68,7 +68,7 @@ class SCSHSettings {
         
         static let debug = "debug"
         
-        static let embedCustomStyle = "embed-style"
+        static let renderForExtension = "appex"
         
         static let customizedUTISettings = "uti-settings"
         
@@ -78,6 +78,7 @@ class SCSHSettings {
         static let preprocessor = "preprocessor"
         
         static let inline_theme = "inline_theme"
+        static let interactive = "interactive"
         static let version = "version"
     }
     
@@ -108,7 +109,7 @@ class SCSHSettings {
             if utiExtra != nil && utiExtra != "" {
                 // Extra arguments are defined.
                 return true
-            } else if (lightTheme != nil && lightTheme != "") || (darkTheme != nil && darkTheme != "") || lineNumbers != nil || fontFamily != nil || wordWrap != nil || lineLength != nil || tabSpaces != nil || extra != nil || preprocessor != nil {
+            } else if (lightTheme != nil && lightTheme != "") || (darkTheme != nil && darkTheme != "") || lineNumbers != nil || fontFamily != nil || wordWrap != nil || lineLength != nil || tabSpaces != nil || extra != nil || preprocessor != nil || allowInteractiveActions != nil {
                 return true
             } else if let css = self.css {
                 return !css.isEmpty
@@ -157,8 +158,8 @@ class SCSHSettings {
     
     var debug = false
     
-    /// Embed custom style in the output.
-    var embedCustomStyle = true
+    /// Indicate if the output is for the quicklook extension.
+    var renderForExtension = true
     
     /// Domain for storing defaults.
     let domain: String
@@ -168,6 +169,10 @@ class SCSHSettings {
     var css: String?
     
     var preprocessor: String?
+    
+    /// If true enable js action on the quicklook preview but disable dblclick and click and drag on window.
+    var allowInteractiveActions: Bool?
+    
     var customizedSettings: [String: SCSHSettings] = [:]
     
     /// Create a global settings.
@@ -242,6 +247,8 @@ class SCSHSettings {
         }
         
         self.debug = defaultsDomain[Key.debug] as? Bool ?? false
+        self.allowInteractiveActions = defaultsDomain[Key.interactive] as? Bool ?? false
+        
         self.version = defaultsDomain[Key.version] as? Float ?? 1
     }
     
@@ -344,6 +351,12 @@ class SCSHSettings {
             defaultsDomain.removeValue(forKey: Key.preprocessor)
         }
         
+        if let v = self.allowInteractiveActions {
+            defaultsDomain[Key.interactive] = v
+        } else {
+            defaultsDomain.removeValue(forKey: Key.interactive)
+        }
+        
         defaultsDomain[Key.debug] = self.debug
         
         let userDefaults = UserDefaults()
@@ -365,7 +378,7 @@ class SCSHSettings {
                 r[Key.format] = format.rawValue
             }
             
-            r[Key.embedCustomStyle] = self.embedCustomStyle
+            r[Key.renderForExtension] = self.renderForExtension
             
             var customized_formats: [String: [String: Any]] = [:]
             for (uti, settings) in self.customizedSettings {
@@ -438,6 +451,10 @@ class SCSHSettings {
             r[Key.inline_theme] = inline_theme.toDictionary()
         } else {
             r[Key.inline_theme] = nil
+        }
+        
+        if let allowInteractiveActions = self.allowInteractiveActions {
+            r[Key.interactive] = allowInteractiveActions
         }
         
         return r
@@ -549,8 +566,12 @@ class SCSHSettings {
             self.preprocessor = v
         }
         
-        if let v = data[Key.embedCustomStyle] as? Bool {
-            self.embedCustomStyle = v
+        if let v = data[Key.renderForExtension] as? Bool {
+            self.renderForExtension = v
+        }
+        
+        if let v = data[Key.interactive] as? Bool {
+            self.allowInteractiveActions = v
         }
         
         if let inline_theme = data[Key.inline_theme] as? [String: Any] {

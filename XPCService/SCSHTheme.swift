@@ -998,12 +998,50 @@ td {
         return NSAttributedString(html: getHtmlExample(fontName: fontName, fontSize: fontSize, smartCaption: smartCaption, showColorCodes: showColorCodes, extraCSS: css).data(using: .utf8)!, options: [:], documentAttributes: nil)!
     }
     
+    /// Get a NSAttributedString for preview the theme settings in the icon.
+    /// This code don't call internally the getHtmlExample and is more (about 6x)  fast!
+    internal func getAttributedExampleForIcon(font: NSFont) -> NSAttributedString {
+        let color = NSColor(fromHexString: self.backgroundColor) ?? NSColor.black
+        
+        let s = NSMutableAttributedString()
+        var name = Property.Name.standardProperties.first
+        while name != nil {
+            guard let prop = self[name!] as? Property else {
+                name = name!.next
+                continue
+            }
+            var attributes: [NSAttributedString.Key: Any] = [
+                .font: font,
+                .backgroundColor: color,
+                .foregroundColor: NSColor(fromHexString: prop.color) ?? NSColor.black
+            ]
+            if prop.isUnderline {
+                attributes[.underlineStyle] = NSUnderlineStyle.single
+            }
+            var fontTraits: NSFontTraitMask = []
+            if prop.isBold {
+                fontTraits.insert(.boldFontMask)
+            } else if prop.isItalic {
+                fontTraits.insert(.italicFontMask)
+            }
+            attributes[.font] = font
+            if !fontTraits.isEmpty, let f = NSFontManager.shared.font(withFamily: font.familyName ?? font.fontName, traits: fontTraits, weight: 0, size: font.pointSize) {
+                attributes[.font] = f
+            }
+            
+            s.append(NSAttributedString(string: name!.description + "\n", attributes: attributes))
+            name = name!.next
+        }
+        
+        return s
+    }
+    
     /// Get an image preview of the theme.
     /// - parameters:
     ///   - size: Image size.
     ///   - font: Font.
     func getImage(size: CGSize, font: NSFont) -> NSImage? {
-        let format = getAttributedExample(font: font, smartCaption: true, showColorCodes: false, extraCSS: "td { padding: 1px }")
+        let format = getAttributedExampleForIcon(font: font)
         
         let rect = CGRect(origin: .zero, size: size)
         
@@ -1027,11 +1065,13 @@ td {
             let graphicsContext = NSGraphicsContext(cgContext: context, flipped: false)
             NSGraphicsContext.current = graphicsContext
             
-            format.draw(in: rect.insetBy(dx: 2, dy: 2))
+            format.draw(in: rect.insetBy(dx: 4, dy: 4))
+            
             // Restore the context.
             NSGraphicsContext.current = c
             
             if !isStandalone {
+                // Fill a corner to notify that this is a custom theme.
                 context.setLineWidth(0)
                 context.setFillColor(NSColor.controlAccentColor.cgColor)
                 context.move(to: CGPoint(x: rect.maxX, y: rect.minY))

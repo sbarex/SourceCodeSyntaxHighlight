@@ -142,7 +142,7 @@ class ViewController: NSViewController {
         webView?.isHidden = true
         textScrollView?.isHidden = true
         
-        service?.colorize(url: documentUrl, overrideSettings: [SCSHSettings.Key.embedCustomStyle: false]) { (response, settings, error) in
+        service?.colorize(url: documentUrl, overrideSettings: [SCSHSettings.Key.renderForExtension: false]) { (response, settings, error) in
             let format = SCSHFormat(rawValue: settings[SCSHSettings.Key.format] as? String ?? "html") ?? .html
             DispatchQueue.main.async {
                 self.initializeView(forMode: format)

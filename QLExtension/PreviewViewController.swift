@@ -72,15 +72,40 @@ class MyDraggingView: NSTextView {
 
 class StaticTextView: NSTextView {
     override func mouseDown(with event: NSEvent) {
+        if event.clickCount > 1, let u = (self.window?.contentViewController as? PreviewViewController)?.fileUrl {
+            // Open the source file by a double click on the quicklook preview window.
+            NSWorkspace.shared.open(u)
+        } else {
+            self.window?.performDrag(with: event)
+        }
         self.window?.performDrag(with: event)
     }
 }
 
-class PreviewViewController: NSViewController, QLPreviewingController, WKNavigationDelegate {
-    @IBOutlet weak var draggingView: MyDraggingView!
-    @IBOutlet weak var trailingDraggingViewConstraint: NSLayoutConstraint!
-    @IBOutlet weak var bottomDraggingViewConstraint: NSLayoutConstraint!
+class StaticWebView: WKWebView {
+    var fileUrl: URL?
+    static let scrollerSize = NSScroller.scrollerWidth(for: .regular, scrollerStyle: .overlay)
     
+    override func mouseDown(with event: NSEvent) {
+        if event.clickCount > 1, let u = fileUrl {
+            // Open the source file by a double click on the quicklook preview window.
+            NSWorkspace.shared.open(u)
+        } else {
+            let pos = self.convert(event.locationInWindow, from: nil)
+            var rect = bounds
+            rect.size.width -= StaticWebView.scrollerSize
+            rect.size.height -= StaticWebView.scrollerSize
+            if rect.contains(pos) {
+                self.window?.performDrag(with: event)
+            } else {
+                // Ignore the event to allow interaction with scrollbars.
+                super.mouseDown(with: event)
+            }
+        }
+    }
+}
+
+class PreviewViewController: NSViewController, QLPreviewingController, WKNavigationDelegate {
     /// Url of current file.
     var fileUrl: URL?
     
@@ -95,10 +120,10 @@ class PreviewViewController: NSViewController, QLPreviewingController, WKNavigat
     override func loadView() {
         super.loadView()
         // Do any additional setup after loading the view.
-        
-        let w = NSScroller.scrollerWidth(for: NSControl.ControlSize.regular, scrollerStyle: NSScroller.Style.overlay)
-        self.trailingDraggingViewConstraint.constant = w
-        self.bottomDraggingViewConstraint.constant = w
+        /*
+        self.view.wantsLayer = true
+        self.view.layer?.backgroundColor = NSColor.red.cgColor
+        */
     }
 
     /*
@@ -124,7 +149,6 @@ class PreviewViewController: NSViewController, QLPreviewingController, WKNavigat
         // Quick Look will display a loading spinner while the completion handler is not called.
         
         self.fileUrl = url
-        draggingView?.url = url
         
         let connection = NSXPCConnection(serviceName: "org.sbarex.SourceCodeSyntaxHighlight.XPCService")
         connection.remoteObjectInterface = NSXPCInterface(with: SCSHXPCServiceProtocol.self)
@@ -141,13 +165,22 @@ class PreviewViewController: NSViewController, QLPreviewingController, WKNavigat
         service.colorize(url: url, overrideSettings: nil) { (response: Data, settings: NSDictionary, error: Error?) in
             let format = settings[SCSHSettings.Key.format] as? String ?? SCSHFormat.html.rawValue
             DispatchQueue.main.async {
+                /*
+                if let color = settings[SCSHSettings.Key.rtfBackgroundColor] as? String, let c = NSColor(fromHexString: color) {
+                    // Apply the background color to the container view.
+                    self.view.layer?.backgroundColor = c.cgColor
+                } else {
+                    self.view.layer?.backgroundColor = NSColor.clear.cgColor
+                }
+                */
+                let previewRect = self.view.bounds.insetBy(dx: 2, dy: 2)
                 if format == SCSHFormat.rtf.rawValue {
-                    let textScrollView = NSScrollView(frame: self.view.bounds)
+                    let textScrollView = NSScrollView(frame: previewRect)
                     textScrollView.autoresizingMask = [.height, .width]
                     textScrollView.hasHorizontalScroller = true
                     textScrollView.hasVerticalScroller = true
-                    textScrollView.borderType = .noBorder
-                    self.view.addSubview(textScrollView, positioned: NSWindow.OrderingMode.below, relativeTo: self.draggingView)
+                    textScrollView.borderType = .bezelBorder
+                    self.view.addSubview(textScrollView)
                     
                     let textView = StaticTextView(frame: CGRect(origin: .zero, size: textScrollView.contentSize))
                     
@@ -201,12 +234,32 @@ class PreviewViewController: NSViewController, QLPreviewingController, WKNavigat
                     let configuration = WKWebViewConfiguration()
                     configuration.preferences = preferences
                     configuration.allowsAirPlayForMediaPlayback = false
+                    // configuration.userContentController.add(self, name: "jsHandler")
                     
-                    let webView = WKWebView(frame: self.view.bounds, configuration: configuration)
+                    let webView: WKWebView
+                    if let v = settings[SCSHSettings.Key.interactive] as? Bool, v {
+                        webView = WKWebView(frame: previewRect, configuration: configuration)
+                    } else {
+                        webView = StaticWebView(frame: previewRect, configuration: configuration)
+                        (webView as! StaticWebView).fileUrl = self.fileUrl
+                    }
+                    
+                    // Draw a border around the web view
+                    webView.wantsLayer = true
+                    webView.layer?.borderColor = NSColor.gridColor.cgColor
+                    webView.layer?.borderWidth = 1
+                    
                     webView.navigationDelegate = self
+                    
                     webView.autoresizingMask = [.height, .width]
                     
-                    self.view.addSubview(webView, positioned: NSWindow.OrderingMode.below, relativeTo: self.draggingView)
+                    self.view.addSubview(webView)
+                    
+                    /*
+                    webView.translatesAutoresizingMaskIntoConstraints = false
+                    self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-2-[subview]-2-|", options: .directionLeadingToTrailing, metrics: nil, views: ["subview": webView]))
+                    self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[subview]-0-|", options: .directionLeadingToTrailing, metrics: nil, views: ["subview": webView]))
+                    */
                     
                     webView.loadHTMLString(html, baseURL: nil)
                     self.handler = handler
@@ -218,6 +271,37 @@ class PreviewViewController: NSViewController, QLPreviewingController, WKNavigat
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         if let handler = self.handler {
             // Show the quicklook preview only after the complete rendering (preventing a flickering glitch).
+            /*
+            let w = NSScroller.scrollerWidth(for: NSControl.ControlSize.regular, scrollerStyle: NSScroller.Style.overlay)
+            webView.evaluateJavaScript("""
+            document.body.onmousedown = function(event) {
+                const height = document.body.scrollHeight;
+                const width = document.body.scrollWidth;
+                const hasHorizontalScrollbar = width >  window.innerWidth;
+                const hasVerticalScrollbar = height > window.innerHeight;
+                const scroller = \(w);
+                if (hasVerticalScrollbar && event.clientX >= window.innerWidth - scroller) {
+                    // Mouse over scrollbar.
+                    return;
+                } else if (hasHorizontalScrollbar && event.clientY >= window.innerHeight - scroller) {
+                    // Mouse over scrollbar.
+                    return;
+                } else {
+                    event.stopPropagation();
+                    window.webkit.messageHandlers.jsHandler.postMessage({event: "mousedown"});
+                }
+            }
+            body.ondblclick = function(event) {
+                window.webkit.messageHandlers.jsHandler.postMessage({event: "dblclick"});
+                event.stopPropagation();
+            }
+            true; // result returned to swift
+            """){ (result, error) in
+                if let e = error {
+                    print(e)
+                }
+            }
+            */
             handler(nil)
             self.handler = nil
         }
@@ -230,3 +314,24 @@ class PreviewViewController: NSViewController, QLPreviewingController, WKNavigat
         }
     }
 }
+
+/*
+// MARK: - WKScriptMessageHandler
+extension PreviewViewController: WKScriptMessageHandler {
+    /// Handle messages from the webkit.
+    func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+        guard message.name == "jsHandler", let result = message.body as? [String: Any] else {
+            return
+        }
+        
+        if result["event"] as? String == "mousedown" {
+        let event = NSEvent.mouseEvent(with: NSEvent.EventType.leftMouseDown, location: NSEvent.mouseLocation, modifierFlags: [], timestamp: TimeInterval(), windowNumber: 0, context: nil, eventNumber: 0, clickCount: 1, pressure: 1)!
+        self.view.window?.performDrag(with: event)
+        } else if result["event"] as? String == "dblclick" {
+            NSWorkspace.shared.open(fileUrl!)
+        } else {
+            print(result)
+        }
+    }
+}
+*/
