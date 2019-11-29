@@ -24,8 +24,6 @@
 import Foundation
 
 @objc public protocol SCSHXPCServiceProtocol {
-    var XPCDomain: String { get }
-    
     func getSettings(withReply reply: @escaping (NSDictionary) -> Void)
     func setSettings(_ settings: NSDictionary, reply: @escaping (Bool) -> Void)
     

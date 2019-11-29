@@ -26,77 +26,59 @@ import OSLog
 // This object implements the protocol which we have defined. It provides the actual behavior for the service. It is 'exported' by the service to make it available to the process hosting the service over an NSXPCConnection.
 
 
-class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
-    struct TaskResult {
-        /// stdout data.
-        let data: Data
-        /// stderr data.
-        let dataErr: Data
-        /// Program exit code.
-        let exitCode: Int
-        
-        init(output data: Data, error: Data, exitCode: Int) {
-            self.data = data
-            self.dataErr = error
-            self.exitCode = exitCode
-        }
-        
-        var isSuccess: Bool {
-            return self.exitCode == 0
-        }
-        
-        /// Convert stdout data to a string.
-        func output(encoding: String.Encoding = String.Encoding.utf8) -> String? {
-            return (String(data: data, encoding: String.Encoding.utf8) ?? "").trimmingCharacters(in: CharacterSet.newlines)
-        }
-        
-        /// Convert stderr data to a string.
-        func errorOutput(encoding: String.Encoding = String.Encoding.utf8) -> String? {
-            return (String(data: dataErr, encoding: String.Encoding.utf8) ?? "").trimmingCharacters(in: CharacterSet.newlines)
-        }
+class SCSHXPCService: SCSHBaseXPCService, SCSHXPCServiceProtocol {
+    // MARK: Initializers
+    
+    /// Return the folder for the application support files.
+    static var preferencesUrl: URL? {
+        return FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).first?.appendingPathComponent("Preferences")
     }
     
-    
-    private let log = {
-        return OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "quicklook.xpc-service")
-    }()
-    
-    let XPCDomain = "org.sbarex.SourceCodeSyntaxHighlight"
-    
-    var settings: SCSHSettings
-    let rsrcEsc: String
+    override internal class func initSettings() -> SCSHGlobalBaseSettings {
+        return SCSHSettings(defaultsDomain: XPCDomain)
+    }
     
     override init() {
-        let rsrcDirURL = Bundle.main.resourceURL!
-        self.rsrcEsc = rsrcDirURL.path
-        
-        if let url = SCSHXPCService.preferencesUrl?.appendingPathComponent("org.sbarex.SourceCodeSyntaxHightlight.plist"), let url1 = SCSHXPCService.preferencesUrl?.appendingPathComponent(XPCDomain + ".plist"), FileManager.default.fileExists(atPath: url.path) && !FileManager.default.fileExists(atPath: url1.path) {
-            // Rename old preferences to new name (typo fix).
-            try? FileManager.default.moveItem(at: url, to: url1)
+        if let pref = SCSHXPCService.preferencesUrl {
+            /// Old settings name.
+            let url_old = pref.appendingPathComponent("org.sbarex.SourceCodeSyntaxHightlight.plist")
+            /// New settings name.
+            let url_new = pref.appendingPathComponent(type(of: self).XPCDomain + ".plist")
+            if FileManager.default.fileExists(atPath: url_old.path) && !FileManager.default.fileExists(atPath: url_new.path) {
+                // Rename old preferences to new name (typo fix).
+                try? FileManager.default.moveItem(at: url_old, to: url_new)
+            }
         }
-        // Set up preferences
-        self.settings = SCSHSettings(domain: XPCDomain)
         
         super.init()
         
-        migrate(settings: &settings)
+        migrate(settings: settings)
     }
 
     /// Migrate the stored settings to the current format.
     @discardableResult
-    internal func migrate(settings: inout SCSHSettings) -> Bool {
-        guard settings.isGlobal, settings.version < SCSHSettings.version else {
+    internal func migrate(settings: SCSHGlobalBaseSettings) -> Bool {
+        guard settings.version < SCSHSettings.version else {
             return false
         }
         
         let defaults = UserDefaults.standard
-        var defaultsDomain = defaults.persistentDomain(forName: settings.domain) ?? [:]
+        var defaultsDomain = defaults.persistentDomain(forName: type(of: self).XPCDomain) ?? [:]
+        
+        if let c = defaultsDomain["rtf-background-color-light"] as? String {
+            settings.lightBackgroundColor = c
+            defaultsDomain.removeValue(forKey: "rtf-background-color-light")
+        }
+        if let c = defaultsDomain["rtf-background-color-dark"] as? String {
+            settings.darkBackgroundColor = c
+            defaultsDomain.removeValue(forKey: "rtf-background-color-dark")
+        }
         
         // "commands-toolbar" is not yet used.
         defaultsDomain.removeValue(forKey: "commands-toolbar")
         
         // "theme-light-is16" and "theme-dark-is16" are replaced by "base16/" prefix on theme name.
-        let migrateBase16 = { (settings: inout SCSHSettings, defaultsDomain: inout [String: Any]) -> Bool in
+        let migrateBase16 = { (settings: SCSHBaseSettings, defaultsDomain: inout [String: Any]) -> Bool in
             var changed = false
             if let lightThemeIsBase16 = defaultsDomain["theme-light-is16"] as? Bool {
                 if lightThemeIsBase16, let t = settings.lightTheme, !t.hasPrefix("base16") {
@@ -116,10 +98,10 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
         }
         
         // Custom CSS are saved on external files.
-        let migrateCSS = { (settings: inout SCSHSettings, defaultsDomain: inout [String: Any]) -> Bool in
+        let migrateCSS = { (settings: SCSHBaseSettings, defaultsDomain: inout [String: Any]) -> Bool in
             var changed = false
             if let customCSS = defaultsDomain["css"] as? String {
-                if let success = try? self.setCustomStyle(customCSS, forUTI: settings.uti), success {
+                if let success = try? self.setCustomStyle(customCSS, forUTI: (settings as? SCSHUTIBaseSettings)?.uti ?? ""), success {
                     defaultsDomain.removeValue(forKey: "css")
                     changed = true
                 }
@@ -127,14 +109,24 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
             return changed
         }
         
-        _ = migrateBase16(&settings, &defaultsDomain)
-        _ = migrateCSS(&settings, &defaultsDomain)
+        _ = migrateBase16(settings, &defaultsDomain)
+        _ = migrateCSS(settings, &defaultsDomain)
         
         if let custom_formats = defaultsDomain[SCSHSettings.Key.customizedUTISettings] as? [String: [String: Any]] {
             for (uti, _) in custom_formats {
-                if var s = settings.getSettings(forUTI: uti) {
-                    _ = migrateBase16(&s, &defaultsDomain)
-                    _ = migrateCSS(&s, &defaultsDomain)
+                var utiDefaultsDomain = custom_formats[uti]!
+                if let s = settings.getCustomizedSettings(forUTI: uti) {
+                    _ = migrateBase16(s, &utiDefaultsDomain)
+                    _ = migrateCSS(s, &utiDefaultsDomain)
+                    
+                    if let c = defaultsDomain["rtf-background-color-light"] as? String {
+                        s.lightBackgroundColor = c
+                        utiDefaultsDomain.removeValue(forKey: "rtf-background-color-light")
+                    }
+                    if let c = defaultsDomain["rtf-background-color-dark"] as? String {
+                        s.darkBackgroundColor = c
+                        utiDefaultsDomain.removeValue(forKey: "rtf-background-color-dark")
+                    }
                 }
             }
         }
@@ -144,74 +136,21 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
         defaultsDomain[SCSHSettings.Key.version] = SCSHSettings.version
         
         // Store the converted settings.
-        defaults.setPersistentDomain(defaultsDomain, forName: settings.domain)
+        defaults.setPersistentDomain(defaultsDomain, forName: type(of: self).XPCDomain)
         defaults.synchronize()
         
         return true
     }
     
-    /// Return the folder for the application support files.
-    var applicationSupportUrl: URL? {
-        return FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first?.appendingPathComponent("Syntax Highlight")
-    }
     
-    /// Return the folder for the application support files.
-    static var preferencesUrl: URL? {
-        return FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).first?.appendingPathComponent("Preferences")
-    }
+    // MARK: Colorize
     
-    /// Execute a shell task
-    /// - parameters:
-    ///   - script: Program to execute.
-    ///   - env: Environment variables.
-    private static func runTask(script: String, env: [String: String] = [:]) throws -> TaskResult {
-        let task = Process()
-        
-        task.currentDirectoryPath = NSTemporaryDirectory()
-        task.environment = env
-        task.executableURL = URL(fileURLWithPath: "/bin/sh")
-        task.arguments = ["-c", script]
-        
-        let pipe = Pipe()
-        task.standardOutput = pipe
-        
-        // Let stderr go to the usual place
-        let pipeErr = Pipe()
-        task.standardError = pipeErr
-        
-        do {
-            try task.run()
-        } catch {
-            throw SCSHError.shellError(cmd: script, exitCode: -1, stdOut: "", stdErr: "", message: error.localizedDescription)
-        }
-        
-        let file = pipe.fileHandleForReading
-        let fileErr = pipeErr.fileHandleForReading
-        
-        defer {
-            if #available(OSX 10.15, *) {
-                /* The docs claim this isn't needed, but we leak descriptors otherwise */
-                try? file.close()
-                try? fileErr.close()
-            }
-        }
-        
-        let data = file.readDataToEndOfFile()
-        let dataErr = file.readDataToEndOfFile()
-        
-        task.waitUntilExit()
-        
-        let r = TaskResult(output: data, error: dataErr, exitCode: Int(task.terminationStatus))
-        
-        return r
-    }
-    
+    /*
     /// Colorize a source file.
     /// - parameters:
     ///   - url: File url to colorize.
-    ///   - format: Format output.
     ///   - custom_settings: Settings.
-    private func colorize(url: URL, custom_settings: SCSHSettings) throws -> (result: TaskResult, settings: [String: Any]) {
+    func colorize(url: URL, custom_settings: SCSHSettings) throws -> (result: ShellTask.TaskResult, settings: [String: Any]) {
         let directory = NSTemporaryDirectory()
         /// Temp file for the css style.
         var temporaryCSSFile: URL? = nil
@@ -299,7 +238,7 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
         let isOSThemeLight = (defaults.string(forKey: "AppleInterfaceStyle") ?? "Light") == "Light"
         
         var theme = custom_settings.theme ?? (isOSThemeLight ? custom_settings.lightTheme : custom_settings.darkTheme)
-        var themeBackground = custom_settings.rtfBackgroundColor ?? (isOSThemeLight ? custom_settings.rtfLightBackgroundColor : custom_settings.rtfDarkBackgroundColor)
+        var themeBackground = custom_settings.backgroundColor ?? (isOSThemeLight ? custom_settings.lightBackgroundColor : custom_settings.darkBackgroundColor)
         
         if (theme ?? "").hasPrefix("!") {
             // Custom theme.
@@ -313,7 +252,7 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
         // Theme to use.
         env["hlTheme"] = theme
         
-        if let inline_theme = custom_settings.inline_theme {
+        if let inline_theme = custom_settings.inlineTheme {
             // Use a temporary file for the theme.
             let fileName = NSUUID().uuidString + ".theme"
             
@@ -366,6 +305,7 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
         }
         
         var cssCode: String?
+        
         // Output format.
         extraHLFlags.append("--out-format=\(format.rawValue)")
         if custom_settings.format == .rtf {
@@ -426,7 +366,7 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
         os_log(OSLogType.debug, log: self.log, "cmd = %{public}@", cmd)
         os_log(OSLogType.debug, log: self.log, "env = %@", env)
         
-        let result = try SCSHXPCService.runTask(script: cmd, env: env)
+        let result = try ShellTask.runTask(script: cmd, env: env)
             
         if result.exitCode != 0 {
             os_log(OSLogType.error, log: self.log, "QLColorCode: colorize.sh failed with exit code %d. Command was (%{public}@).", result.exitCode, cmd)
@@ -435,24 +375,24 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
             
             throw e
         } else {
-            let final_settings = settings.overriding(fromDictionary: [
+            let final_settings = custom_settings.overriding(fromDictionary: [
                 SCSHSettings.Key.format: format
-            ])
+            ]) as! SCSHSettings
             
             if let t = theme {
                 final_settings.theme = t
             }
-            final_settings.rtfBackgroundColor = themeBackground
+            final_settings.backgroundColor = themeBackground
             
             if let style = cssCode {
-                custom_settings.css = style
+                final_settings.css = style
             }
             
-            if format == .rtf {
-                let bgLight = custom_settings.rtfLightBackgroundColor
-                let bgDark = custom_settings.rtfDarkBackgroundColor
-                let bg = custom_settings.rtfBackgroundColor ?? (isOSThemeLight ? bgLight : bgDark)
-                final_settings.rtfBackgroundColor = bg
+            if format == .rtf && final_settings.backgroundColor == nil {
+                let bgLight = custom_settings.lightBackgroundColor
+                let bgDark = custom_settings.darkBackgroundColor
+                let bg = custom_settings.backgroundColor ?? (isOSThemeLight ? bgLight : bgDark)
+                final_settings.backgroundColor = bg
             }
             
             if custom_settings.debug {
@@ -468,43 +408,62 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
             return (result: result, settings: final_settings.toDictionary())
         }
     }
+    */
+    
+    override func getColorizeArguments(url: URL, custom_settings: SCSHGlobalBaseSettings) throws -> ColorizeArguments {
+        var r = try super.getColorizeArguments(url: url, custom_settings: custom_settings)
+        
+        if let settings = custom_settings as? SCSHSettings, let inline_theme = settings.inlineTheme {
+            r.inlineTheme = inline_theme.getLua()
+            r.theme = inline_theme.name
+            r.backgroundColor = inline_theme.backgroundColor
+        }
+        
+        return r
+    }
     
     /// Colorize a source file returning a formatted rtf code.
     /// - parameters
     ///   - url: Url of source file to format.
-    ///   - overrideSettings: list of settings that override the current preferences. Only elements defined inside the dict are overridden.
+    ///   - overrideSettings: List of settings that override the current preferences. Only elements defined inside the dict are overridden.
     func colorize(url: URL, overrideSettings: NSDictionary? = nil, withReply reply: @escaping (Data, NSDictionary, Error?) -> Void) {
-        var custom_settings: SCSHSettings
+        var custom_settings: SCSHGlobalBaseSettings
         
+        // Get current settings.
         if let uti = (try? url.resourceValues(forKeys: [.typeIdentifierKey]))?.typeIdentifier {
-            custom_settings = settings.getGlobalSettingsForUti(uti) ?? SCSHSettings(settings: settings)
+            custom_settings = settings.getGlobalSettings(forUTI: uti)
         } else {
             custom_settings = SCSHSettings(settings: settings)
         }
+        
+        // Override the settings.
         custom_settings.override(fromDictionary: overrideSettings as? [String: Any])
         
         colorize(url: url, settings: custom_settings.toDictionary() as NSDictionary, withReply: reply)
     }
     
     /// Colorize a source file returning a formatted rtf code.
-    /// - parameters
+    /// - parameters:
     ///   - url: Url of source file to format.
-    ///   - settings: settings to use, is nil uses the current settings.
-    func colorize(url: URL, settings: NSDictionary? = nil, withReply reply: @escaping (Data, NSDictionary, Error?) -> Void) {
-        var custom_settings: SCSHSettings
+    ///   - settings: Settings to use, is nil uses the current settings.
+    ///   - data: Data returned by highlight.
+    ///   - error: Error returned by the colorize process.
+    func colorize(url: URL, settings: NSDictionary? = nil, withReply reply: @escaping (_ data: Data, NSDictionary, _ error: Error?) -> Void) {
+        var custom_settings: SCSHGlobalBaseSettings
         
         if let s = settings as? [String : Any] {
-            custom_settings = SCSHSettings(dictionary: s)
+            custom_settings = SCSHSettings(settings: s)
         } else {
+            // Get current settings.
             if let uti = (try? url.resourceValues(forKeys: [.typeIdentifierKey]))?.typeIdentifier {
-                custom_settings = self.settings.getGlobalSettingsForUti(uti) ?? SCSHSettings(settings: self.settings)
+                custom_settings = self.settings.getGlobalSettings(forUTI: uti)
             } else {
                 custom_settings = SCSHSettings(settings: self.settings)
             }
         }
         
         do {
-            let result = try colorize(url: url, custom_settings: custom_settings)
+            let result = try doColorize(url: url, custom_settings: custom_settings)
             reply(result.result.data, result.settings as NSDictionary, nil)
         } catch {
             reply(error.localizedDescription.data(using: String.Encoding.utf8)!, custom_settings.toDictionary() as NSDictionary, error)
@@ -512,11 +471,17 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
     }
     
     /// Colorize a source file returning a formatted html code.
-    func htmlColorize(url: URL, overrideSettings: NSDictionary? = nil, withReply reply: @escaping (String, NSDictionary, Error?) -> Void) {
-        var custom_settings: SCSHSettings
+    /// - parameters:
+    ///   - url: Url of source file to format.
+    ///   - overrideSettings: List of settings that override the current preferences. Only elements defined inside the dict are overridden.
+    ///   - html: The html output code.l
+    ///   - settings: Render settings.
+    ///   - error: Error returned by the colorize process.
+    func htmlColorize(url: URL, overrideSettings: NSDictionary? = nil, withReply reply: @escaping (_ html: String, _ settings: NSDictionary, _ error: Error?) -> Void) {
+        let custom_settings: SCSHGlobalBaseSettings
         
         if let uti = (try? url.resourceValues(forKeys: [.typeIdentifierKey]))?.typeIdentifier {
-            custom_settings = settings.getGlobalSettingsForUti(uti) ?? SCSHSettings(settings: settings)
+            custom_settings = settings.getGlobalSettings(forUTI: uti)
         } else {
             custom_settings = SCSHSettings(settings: settings)
         }
@@ -525,22 +490,29 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
         htmlColorize(url: url, settings: custom_settings.toDictionary() as NSDictionary, withReply: reply)
     }
     
-    func htmlColorize(url: URL, settings: NSDictionary? = nil, withReply reply: @escaping (String, NSDictionary, Error?) -> Void) {
-        var custom_settings: SCSHSettings
+    /// Colorize a source file returning a formatted html code.
+    /// - parameters:
+    ///   - url: Url of source file to format.
+    ///   - settings: Render settings.
+    ///   - html: The html output code.
+    ///   - settings: Render settings.
+    ///   - error: Error returned by the colorize process.
+    func htmlColorize(url: URL, settings: NSDictionary? = nil, withReply reply: @escaping (_ html: String, _ settings: NSDictionary, _ error: Error?) -> Void) {
+        let custom_settings: SCSHGlobalBaseSettings
         
         if let s = settings as? [String: Any] {
-            custom_settings = SCSHSettings(dictionary: s)
+            custom_settings = SCSHSettings(settings: s)
         } else {
             if let uti = (try? url.resourceValues(forKeys: [.typeIdentifierKey]))?.typeIdentifier {
-                custom_settings = self.settings.getGlobalSettingsForUti(uti) ?? SCSHSettings(settings: self.settings)
+                custom_settings = self.settings.getGlobalSettings(forUTI: uti)
             } else {
                 custom_settings = SCSHSettings(settings: self.settings)
             }
         }
         
-        custom_settings.format = SCSHFormat.html
+        custom_settings.format = .html
         do {
-            let result = try colorize(url: url, custom_settings: custom_settings)
+            let result = try doColorize(url: url, custom_settings: custom_settings)
             reply(result.result.output() ?? "", result.settings as NSDictionary, nil)
         } catch {
             reply("<pre>" + error.localizedDescription + "</pre>", custom_settings.toDictionary() as NSDictionary, error)
@@ -548,11 +520,17 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
     }
     
     /// Colorize a source file returning a formatted rtf code.
-    func rtfColorize(url: URL, overrideSettings: NSDictionary? = nil, withReply reply: @escaping (Data, NSDictionary, Error?) -> Void) {
-        var custom_settings: SCSHSettings
+    /// - parameters:
+    ///   - url: Url of source file to format.
+    ///   - overrideSettings: List of settings that override the current preferences. Only elements defined inside the dict are overridden.
+    ///   - rtfData: Data with the rtf code.
+    ///   - settings: Render settings.
+    ///   - error: Error returned by the colorize process.
+    func rtfColorize(url: URL, overrideSettings: NSDictionary? = nil, withReply reply: @escaping (_ rtfData: Data, _ settings: NSDictionary, _ error: Error?) -> Void) {
+        let custom_settings: SCSHGlobalBaseSettings
         
         if let uti = (try? url.resourceValues(forKeys: [.typeIdentifierKey]))?.typeIdentifier {
-            custom_settings = settings.getGlobalSettingsForUti(uti) ?? SCSHSettings(settings: settings)
+            custom_settings = settings.getGlobalSettings(forUTI: uti)
         } else {
             custom_settings = SCSHSettings(settings: settings)
         }
@@ -561,57 +539,49 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
         rtfColorize(url: url, settings: custom_settings.toDictionary() as NSDictionary, withReply: reply)
     }
     
-    func rtfColorize(url: URL, settings: NSDictionary? = nil, withReply reply: @escaping (Data, NSDictionary, Error?) -> Void) {
-        var custom_settings: SCSHSettings
+    /// Colorize a source file returning a formatted rtf code.
+    /// - parameters:
+    ///   - url: Url of source file to format.
+    ///   - settings: Render settings.
+    ///   - rtfData: Data with the rtf code.
+    ///   - settings: Render settings.
+    ///   - error: Error returned by the colorize process.
+    func rtfColorize(url: URL, settings: NSDictionary? = nil, withReply reply: @escaping (_ rtfData: Data, _ settings: NSDictionary, _ error: Error?) -> Void) {
+        let custom_settings: SCSHGlobalBaseSettings
         
         if let s = settings as? [String: Any] {
-            custom_settings = SCSHSettings(dictionary: s)
+            custom_settings = SCSHSettings(settings: s)
         } else {
             if let uti = (try? url.resourceValues(forKeys: [.typeIdentifierKey]))?.typeIdentifier {
-                custom_settings = self.settings.getGlobalSettingsForUti(uti) ?? SCSHSettings(settings: self.settings)
+                custom_settings = self.settings.getGlobalSettings(forUTI: uti)
             } else {
                 custom_settings = SCSHSettings(settings: self.settings)
             }
         }
-        custom_settings.format = SCSHFormat.rtf
         
+        custom_settings.format = .rtf
         do {
-            let result = try colorize(url: url, custom_settings: custom_settings)
+            let result = try doColorize(url: url, custom_settings: custom_settings)
             reply(result.result.data, result.settings as NSDictionary, nil)
         } catch {
             reply(error.localizedDescription.data(using: String.Encoding.utf8)!, custom_settings.toDictionary() as NSDictionary, error)
         }
     }
     
+    
     // MARK: - Themes
     
-    /// Return the url of the folder of the custom themes.
-    /// - parameters:
-    ///   - create: If the folder don't exists try to create it.
-    /// - returns: The url of the custom themes folder. If is requested to create if missing and the creations fail will be return nil.
-    func getCustomThemesUrl(createIfMissing create: Bool = true) -> URL? {
-        if let url = applicationSupportUrl?.appendingPathComponent("Themes") {
-            if create && !FileManager.default.fileExists(atPath: url.path) {
-                do {
-                    try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true, attributes: nil)
-                } catch {
-                    return nil
-                }
-            }
-            return url
-        } else {
-            return nil
-        }
-    }
-    
     /// Get the list of available themes.
-    func getThemes(withReply reply: @escaping ([NSDictionary], Error?) -> Void) {
+    /// - parameters:
+    ///   - themes: Array of themes exported as a dictionary [String: Any].
+    ///   - error: Error during the extraction of the themes.   
+    func getThemes(withReply reply: @escaping (_ themes: [NSDictionary], _ error: Error?) -> Void) {
         self.getThemes(highlight: self.settings.highlightProgramPath, withReply: reply)
     }
     
     /// Get the list of available themes.
     /// - parameters:
-    ///   - highlightPath: Path of highlight. If empty or - use the embed highlight.
+    ///   - highlightPath: Path of highlight. If empty or "-" use the embedded highlight.
     ///   - reply: Callback.
     ///   - themes: Array of themes exported as a dictionary [String: Any].
     ///   - error: Error during the extraction of the themes.
@@ -650,7 +620,7 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
         }
         
         // Search for standalone themes.
-        let result: TaskResult
+        let result: ShellTask.TaskResult
         
         let highlight_executable: String
         let env: [String: String]
@@ -666,7 +636,7 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
             guard highlight_executable != "", highlight_executable != "false" else {
                 return
             }
-            result = try SCSHXPCService.runTask(script: "\(highlight_executable.g_shell_quote()) --list-scripts=theme", env: env)
+            result = try ShellTask.runTask(script: "\(highlight_executable.g_shell_quote()) --list-scripts=theme", env: env)
             guard result.isSuccess else {
                 return
             }
@@ -756,7 +726,7 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
                         }
                         if changed {
                             // Save the changed settings.
-                            settings.synchronize()
+                            (settings as? SCSHSettings)?.synchronize(domain: type(of: self).XPCDomain)
                         }
                     }
                     
@@ -804,7 +774,7 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
                 }
                 if changed {
                     // Save the changed settings.
-                    settings.synchronize()
+                    (settings as? SCSHSettings)?.synchronize(domain: type(of: self).XPCDomain)
                 }
                 
                 reply(true, nil)
@@ -816,26 +786,8 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
         }
     }
     
-    // MARK: - Custom styles
     
-    /// Return the url of the folder of the custom CSS styles.
-    /// - parameters:
-    ///   - create: If the folder don't exists try to create it.
-    /// - returns: The url of the custom styles folder. If is requested to create if missing and the creations fail will be return nil.
-    func getCustomStylesUrl(createIfMissing create: Bool = true) -> URL? {
-        if let url = applicationSupportUrl?.appendingPathComponent("Styles") {
-            if create && !FileManager.default.fileExists(atPath: url.path) {
-                do {
-                    try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true, attributes: nil)
-                } catch {
-                    return nil
-                }
-            }
-            return url
-        } else {
-            return nil
-        }
-    }
+    // MARK: - Custom styles
     
     /// Get a custom CSS style for a UTI.
     /// - parameters:
@@ -899,10 +851,12 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
     }
     
     
-    // MARK: -
+    // MARK: - Settings
     
     /// Get settings.
     func getSettings(withReply reply: @escaping (NSDictionary) -> Void) {
+        let settings = SCSHSettings(settings: self.settings)
+        
         // Populate the custom css.
         if let stylesDir = getCustomStylesUrl(createIfMissing: false), let files = try? FileManager.default.contentsOfDirectory(at: stylesDir, includingPropertiesForKeys: nil, options: []) {
             for file in files {
@@ -913,7 +867,7 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
                 if let style = try? String(contentsOf: file, encoding: .utf8) {
                     let uti = file.deletingPathExtension().lastPathComponent
                     if uti != "global" {
-                        let s = settings.getSettings(forUTI: uti)
+                        let s = settings.getCustomizedSettings(forUTI: uti)
                         s?.css = style
                     } else {
                         settings.css = style
@@ -922,17 +876,27 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
             }
         }
         
-        reply(self.settings.toDictionary() as NSDictionary)
+        reply(settings.toDictionary() as NSDictionary)
     }
     
     /// Set and store the settings.
     func setSettings(_ settings: NSDictionary, reply: @escaping (Bool) -> Void) {
         if let s = settings as? [String: Any] {
-            self.settings.override(fromDictionary: s)
-            reply(self.settings.synchronize())
+            let UTIs = Array(self.settings.customizedSettings.keys)
+            let new_settings = SCSHSettings(settings: s)
+            self.settings = new_settings
+            reply(new_settings.synchronize(domain: type(of: self).XPCDomain))
+            
+            let newUTIs = Array(self.settings.customizedSettings.keys)
+            
+            // Save / Delete the custom css code.
             _ = try? setCustomStyle(self.settings.css ?? "", forUTI: "")
             for (uti, utiSettings) in self.settings.customizedSettings {
                 _ = try? setCustomStyle(utiSettings.css ?? "", forUTI: uti)
+            }
+            for uti in UTIs.filter({ !newUTIs.contains($0) }) {
+                // Delete custom CSS for a not handled uti.
+                _ = try? setCustomStyle("", forUTI: uti)
             }
         } else {
             reply(false)
@@ -944,13 +908,11 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
         reply(applicationSupportUrl)
     }
     
-    func getEmbeddedHighlight() -> (path: String, env: [String: String]) {
-        if let path = Bundle.main.path(forResource: "highlight", ofType: nil, inDirectory: "highlight/bin"), let data_dir = Bundle.main.path(forResource: "share", ofType: nil, inDirectory: "highlight") {
-            return (path: path, env: ["HIGHLIGHT_DATADIR": "\(data_dir)/"])
-        } else {
-            return (path: "false", env: [:])
-        }
+    func getXPCPath(replay: @escaping (URL)->Void) {
+        replay(Bundle.main.bundleURL)
     }
+    
+    // MARK: Highlight
     
     func locateHighlight(reply: @escaping ([[Any]]) -> Void) {
         let current = self.settings.highlightProgramPath
@@ -958,7 +920,7 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
         env["PATH"] = (env["PATH"] ?? "") + ":/usr/local/bin:/usr/local/sbin"
         
         let parse_version = { (path: String, env: [String: String]) -> String? in
-            guard let r = try? SCSHXPCService.runTask(script: "\(path.g_shell_quote()) --version", env: env), r.isSuccess, let output = r.output(), output.contains("Andre Simon"), let regex = try? NSRegularExpression(pattern: #"highlight version (\d\.\d+)"#, options: []) else {
+            guard let r = try? ShellTask.runTask(script: "\(path.g_shell_quote()) --version", env: env), r.isSuccess, let output = r.output(), output.contains("Andre Simon"), let regex = try? NSRegularExpression(pattern: #"highlight version (\d\.\d+)"#, options: []) else {
                 return nil
             }
             
@@ -978,7 +940,7 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
             result.append([embedHighlight.path, v, true])
         }
         var found = false
-        if let r = try? SCSHXPCService.runTask(script: "which -a highlight", env: env), r.isSuccess, let output = r.output() {
+        if let r = try? ShellTask.runTask(script: "which -a highlight", env: env), r.isSuccess, let output = r.output() {
             let paths = output.split(separator: "\n")
             for path in paths {
                 if let v = parse_version(String(path), env) {
@@ -1016,22 +978,22 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
         /// Command to execute.
         var cmd = "\(highlightPath.g_shell_quote()) --version"
         
-        if let result = try? SCSHXPCService.runTask(script: cmd, env: env), let s = result.output() {
+        if let result = try? ShellTask.runTask(script: cmd, env: env), let s = result.output() {
             text += s + "\n\n"
         }
         
         cmd = "\(highlightPath.g_shell_quote()) --list-scripts=langs"
-        if let result = try? SCSHXPCService.runTask(script: cmd, env: env), let s = result.output() {
+        if let result = try? ShellTask.runTask(script: cmd, env: env), let s = result.output() {
             text += s + "\n\n"
         }
         
         cmd = "\(highlightPath.g_shell_quote()) --list-scripts=themes"
-        if let result = try? SCSHXPCService.runTask(script: cmd, env: env), let s = result.output() {
+        if let result = try? ShellTask.runTask(script: cmd, env: env), let s = result.output() {
             text += s + "\n\n"
         }
         
         cmd = "\(highlightPath.g_shell_quote()) --list-scripts=plugins"
-        if let result = try? SCSHXPCService.runTask(script: cmd, env: env), let s = result.output()  {
+        if let result = try? ShellTask.runTask(script: cmd, env: env), let s = result.output()  {
             text += s + "\n\n"
         }
         
@@ -1073,7 +1035,7 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
         os_log(OSLogType.debug, log: self.log, "cmd = %{public}@", cmd)
         os_log(OSLogType.debug, log: self.log, "env = %@", env)
         
-        if let result = try? SCSHXPCService.runTask(script: cmd, env: env) {
+        if let result = try? ShellTask.runTask(script: cmd, env: env) {
             reply(result.exitCode == 0)
         } else {
             reply(false)
@@ -1109,16 +1071,12 @@ class SCSHXPCService: NSObject, SCSHXPCServiceProtocol {
             os_log(OSLogType.debug, log: self.log, "cmd = %{public}@", cmd)
             os_log(OSLogType.debug, log: self.log, "env = %@", env)
             
-            if let result = try? SCSHXPCService.runTask(script: cmd, env: env), result.exitCode == 0 {
+            if let result = try? ShellTask.runTask(script: cmd, env: env), result.exitCode == 0 {
                 reply(true)
                 return
             }
         }
         
         reply(false)
-    }
-    
-    func getXPCPath(replay: @escaping (URL)->Void) {
-        replay(Bundle.main.bundleURL)
     }
 }

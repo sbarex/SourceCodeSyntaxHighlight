@@ -113,18 +113,18 @@ public class SCSHTheme: NSObject, Sequence {
     }
     
     public class Property: SCSHThemePropertyProtocol {
-        public enum Name: String {
-            case plain = "Default"
+        public enum Name: String, CaseIterable {
             case canvas = "Canvas"
+            case plain = "Default"
             case number = "Number"
-            case escape = "Escape"
             case string = "String"
-            case preProcessor = "PreProcessor"
-            case stringPreProc = "StringPreProc"
+            case operatorProp = "Operator"
             case blockComment = "BlockComment"
             case lineComment = "LineComment"
             case lineNum = "LineNum"
-            case operatorProp = "Operator"
+            case escape = "Escape"
+            case preProcessor = "PreProcessor"
+            case stringPreProc = "StringPreProc"
             case interpolation = "Interpolation"
             
             case keyword1 = "Keyword 1"
@@ -153,9 +153,6 @@ public class SCSHTheme: NSObject, Sequence {
             case keyword24 = "Keyword 24"
             case keyword25 = "Keyword 25"
             case keyword26 = "Keyword 26"
-            
-            static let first: Name = standardProperties.first!
-            static let last: Name = .keyword26
             
             static let standardProperties: [Name] = [.canvas, .plain, .number, .string, .operatorProp, .blockComment, .lineComment, .lineNum, .escape, .preProcessor, .stringPreProc, .interpolation]
             
@@ -285,14 +282,10 @@ public class SCSHTheme: NSObject, Sequence {
             
             /// Returns the property name at index (zero based).
             public static func nameAtIndex(_ index: Int) -> Name? {
-                if index < standardProperties.count {
-                    return standardProperties[index]
+                if index >= 0 && index < Name.allCases.count {
+                    return Name.allCases[index]
                 } else {
-                    if let keyword = Name.keywordAtIndex(index - Name.standardProperties.count) {
-                        return keyword
-                    } else {
-                        return nil
-                    }
+                    return nil
                 }
             }
             
@@ -333,12 +326,9 @@ public class SCSHTheme: NSObject, Sequence {
             
             /// Returns the next property name.
             public var next: Name? {
-                if self == Name.standardProperties.last {
-                    return .keyword1
-                } else if let i = Name.standardProperties.firstIndex(of: self) {
-                    return Name.standardProperties[i+1]
-                } else if let k = Name.indexOfKeyword(self) {
-                    return Name.keywordAtIndex(k+1)
+                let index = Name.allCases.firstIndex(of: self)!
+                if index < Name.allCases.count - 1 {
+                    return Name.allCases[index + 1]
                 } else {
                     return nil
                 }
@@ -346,18 +336,9 @@ public class SCSHTheme: NSObject, Sequence {
             
             /// Returns the previous property name.
             public var prev: Name? {
-                if let i = Name.standardProperties.firstIndex(of: self) {
-                    if i == 0 {
-                        return nil
-                    } else {
-                        return Name.standardProperties[i-1]
-                    }
-                } else if let k = Name.indexOfKeyword(self) {
-                    if k == 0 {
-                        return  Name.standardProperties.last
-                    } else {
-                        return Name.keywordAtIndex(k-1)
-                    }
+                let index = Name.allCases.firstIndex(of: self)!
+                if index > 1 {
+                    return Name.allCases[index - 1]
                 } else {
                     return nil
                 }
@@ -859,7 +840,8 @@ public class SCSHTheme: NSObject, Sequence {
         return dict
     }
     
-    func save(to url: URL) throws {
+    /// Get the lua code of the theme.
+    func getLua() -> String {
         var s = "Description=\"\(desc.escapingForLua())\"\n\n"
         s += "Categories = {" + categories.map({ "\"" + $0.escapingForLua() + "\"" }).joined(separator: ", ") + "}\n\n"
         
@@ -879,6 +861,12 @@ public class SCSHTheme: NSObject, Sequence {
         s += "\nKeywords = {\n\t" +
             keywords.map({ $0.output() }).joined(separator: ", \n\t") +
             "\n}\n\n"
+        return s
+    }
+    
+    /// Save the lua code of the teme to the url.
+    func save(to url: URL) throws {
+        let s = getLua()
         do {
             try s.write(to: url, atomically: true, encoding: .utf8)
             isDirty = false
@@ -891,11 +879,11 @@ public class SCSHTheme: NSObject, Sequence {
     
     /// Get a html code for preview the theme settings.
     public func getHtmlExample(font: NSFont, smartCaption: Bool, showColorCodes: Bool = true, extraCSS css: String = "") -> String {
-        return getHtmlExample(fontName: font.fontName, fontSize: Float(font.pointSize), smartCaption: smartCaption, showColorCodes: showColorCodes, extraCSS: css)
+        return getHtmlExample(fontName: font.fontName, fontSize: font.pointSize, smartCaption: smartCaption, showColorCodes: showColorCodes, extraCSS: css)
     }
     
     /// Get a html code for preview the theme settings.
-    public func getHtmlExample(fontName: String = "Menlo", fontSize: Float = 12, smartCaption: Bool = false, showColorCodes: Bool = true, extraCSS css: String = "") -> String {
+    public func getHtmlExample(fontName: String = "Menlo", fontSize: CGFloat = 12, smartCaption: Bool = false, showColorCodes: Bool = true, extraCSS css: String = "") -> String {
         var cssFont = ""
         if fontName != "" {
             cssFont = "    font-family: \(fontName);\n    font-size: \(fontSize)pt;\n"
@@ -906,7 +894,10 @@ public class SCSHTheme: NSObject, Sequence {
         }
         var style = ""
         
-        for name in Property.Name.standardProperties {
+        for name in Property.Name.allCases {
+            guard !name.isKeyword else {
+                break
+            }
             guard let prop = self[name] else {
                 continue
             }
@@ -952,6 +943,7 @@ table {
 }
 td {
     padding: 2px;
+    background-color: \(self.canvas.color);
 }
         
 \(style)
@@ -962,22 +954,19 @@ td {
 <body class="hl">
     <pre class="hl"><table>
 """
-        var name = Property.Name.standardProperties.first
-        while name != nil {
+        for name in Property.Name.allCases  {
             if name == .canvas {
-                name = name!.next
                 continue
             }
-            guard let prop = self[name!] else {
+            guard let prop = self[name] else {
                 break
             }
             s += """
         <tr>
-            <td class="\(name!.getCSSClasses().joined(separator: " "))">\(smartCaption ? name!.rawValue : name!.description)</td>
+            <td class="\(name.getCSSClasses().joined(separator: " "))">\(smartCaption ? name.rawValue : name.description)</td>
             <td class="color_code">\(prop.color)</td>
         </tr>
 """
-            name = name!.next
         }
         
         s += """
@@ -990,11 +979,11 @@ td {
     
     /// Get a NSAttributedString for preview the theme settings.
     public func getAttributedExample(font: NSFont, smartCaption: Bool = false, showColorCodes: Bool = true, extraCSS css: String = "") -> NSAttributedString {
-        return getAttributedExample(fontName: font.fontName, fontSize: Float(font.pointSize), smartCaption: smartCaption, showColorCodes: showColorCodes, extraCSS: css)
+        return getAttributedExample(fontName: font.fontName, fontSize: font.pointSize, smartCaption: smartCaption, showColorCodes: showColorCodes, extraCSS: css)
     }
     
     /// Get a NSAttributedString for preview the theme settings.
-    public func getAttributedExample(fontName: String = "Menlo", fontSize: Float = 12, smartCaption: Bool = false, showColorCodes: Bool = true, extraCSS css: String = "") -> NSAttributedString {
+    public func getAttributedExample(fontName: String = "Menlo", fontSize: CGFloat = 12, smartCaption: Bool = false, showColorCodes: Bool = true, extraCSS css: String = "") -> NSAttributedString {
         return NSAttributedString(html: getHtmlExample(fontName: fontName, fontSize: fontSize, smartCaption: smartCaption, showColorCodes: showColorCodes, extraCSS: css).data(using: .utf8)!, options: [:], documentAttributes: nil)!
     }
     
@@ -1004,10 +993,8 @@ td {
         let color = NSColor(fromHexString: self.backgroundColor) ?? NSColor.black
         
         let s = NSMutableAttributedString()
-        var name = Property.Name.standardProperties.first
-        while name != nil {
-            guard let prop = self[name!] as? Property else {
-                name = name!.next
+        for name in Property.Name.allCases {
+            guard let prop = self[name] as? Property else {
                 continue
             }
             var attributes: [NSAttributedString.Key: Any] = [
@@ -1029,8 +1016,7 @@ td {
                 attributes[.font] = f
             }
             
-            s.append(NSAttributedString(string: name!.description + "\n", attributes: attributes))
-            name = name!.next
+            s.append(NSAttributedString(string: name.description + "\n", attributes: attributes))
         }
         
         return s

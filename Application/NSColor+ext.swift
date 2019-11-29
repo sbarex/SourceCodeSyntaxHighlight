@@ -41,7 +41,7 @@ extension NSColor {
             let red = CGFloat((theInt & 0xFF0000) >> 16) / 255.0
             let green = CGFloat((theInt & 0xFF00) >> 8) / 255.0
             let blue = CGFloat((theInt & 0xFF)) / 255.0
-            self.init(calibratedRed: red, green: green, blue: blue, alpha: alpha)
+            self.init(srgbRed: red, green: green, blue: blue, alpha: alpha)
         } else {
             return nil
         }

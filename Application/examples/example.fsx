@@ -29,8 +29,8 @@ add 2 3                       // Now run the function.
 
 // to define a multiline function, just use indents. No semicolons needed.
 let evens list =
-   let isEven x = x%2 = 0     // Define "isEven" as an inner ("nested") function
-   List.filter isEven list    // List.filter is a library function
+	let isEven x = x%2 = 0     // Define "isEven" as an inner ("nested") function
+	List.filter isEven list    // List.filter is a library function
                               // with two parameters: a boolean function
                               // and a list to work on
 
@@ -40,16 +40,16 @@ evens oneToFive               // Now run the function
 // do "map" first, with two args, then do "sum" on the result.
 // Without the parens, "List.map" would be passed as an arg to List.sum
 let sumOfSquaresTo100 =
-   List.sum ( List.map square [1..100] )
+	List.sum ( List.map square [1..100] )
 
 // You can pipe the output of one operation to the next using "|>"
 // Here is the same sumOfSquares function written using pipes
 let sumOfSquaresTo100piped =
-   [1..100] |> List.map square |> List.sum  // "square" was defined earlier
+	[1..100] |> List.map square |> List.sum  // "square" was defined earlier
 
 // you can define lambdas (anonymous functions) using the "fun" keyword
 let sumOfSquaresTo100withFun =
-   [1..100] |> List.map (fun x->x*x) |> List.sum
+	[1..100] |> List.map (fun x->x*x) |> List.sum
 
 // In F# returns are implicit -- no "return" needed. A function always
 // returns the value of the last expression used.
@@ -57,11 +57,11 @@ let sumOfSquaresTo100withFun =
 // ======== Pattern Matching ========
 // Match..with.. is a supercharged case/switch statement.
 let simplePatternMatch =
-   let x = "a"
-   match x with
-    | "a" -> printfn "x is a"
-    | "b" -> printfn "x is b"
-    | _ -> printfn "x is something else"   // underscore matches anything
+	let x = "a"
+	 match x with
+		| "a" -> printfn "x is a"
+		| "b" -> printfn "x is b"
+		| _ -> printfn "x is something else"   // underscore matches anything
 
 // Some(..) and None are roughly analogous to Nullable wrappers
 let validValue = Some(99)
@@ -70,9 +70,9 @@ let invalidValue = None
 // In this example, match..with matches the "Some" and the "None",
 // and also unpacks the value in the "Some" at the same time.
 let optionPatternMatch input =
-   match input with
-    | Some i -> printfn "input is an int=%d" i
-    | None -> printfn "input is missing"
+	match input with
+		| Some i -> printfn "input is an int=%d" i
+		| None -> printfn "input is missing"
 
 optionPatternMatch validValue
 optionPatternMatch invalidValue
@@ -96,8 +96,8 @@ let temp = DegreesF 98.6
 // Types can be combined recursively in complex ways.
 // E.g. here is a union type that contains a list of the same type:
 type Employee = 
-  | Worker of Person
-  | Manager of Employee list
+	| Worker of Person
+	| Manager of Employee list
 let jdoe = {First="John";Last="Doe"}
 let worker = Worker jdoe
 

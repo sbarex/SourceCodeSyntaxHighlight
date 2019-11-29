@@ -132,6 +132,7 @@ class PreferencesViewController: NSViewController {
     @IBOutlet weak var scrollView: NSScrollView!
     @IBOutlet weak var textView: NSTextView!
     
+    @IBOutlet weak var cancelButton: NSButton!
     @IBOutlet weak var saveButton: NSButton!
     
     @IBOutlet weak var utiTitleTextField: NSTextField!
@@ -186,10 +187,14 @@ class PreferencesViewController: NSViewController {
         return (NSApplication.shared.delegate as? AppDelegate)?.service
     }
     
+    internal var initialized = false
+    
     /// List of themes.
     var themes: [SCSHTheme] = [] {
         didSet {
-            updateThemes()
+            if initialized {
+                updateThemes()
+            }
         }
     }
     
@@ -256,13 +261,17 @@ class PreferencesViewController: NSViewController {
     var lightTheme: SCSHTheme? {
         didSet {
             refreshTheme(lightTheme, button: themeLightIcon, label: themeLightLabel)
-            refreshPreview(self)
+            if initialized {
+                refreshPreview(self)
+            }
         }
     }
     var darkTheme: SCSHTheme? {
         didSet {
             refreshTheme(darkTheme, button: themeDarkIcon, label: themeDarkLabel)
-            refreshPreview(self)
+            if initialized {
+                refreshPreview(self)
+            }
         }
     }
     
@@ -281,7 +290,7 @@ class PreferencesViewController: NSViewController {
     }
     
     /// UTI settings in the detail view.
-    var currentUTISettings: SCSHSettings? {
+    var currentUTISettings: SCSHUTIBaseSettings? {
         didSet {
             if let utiSettings = oldValue {
                 saveCurrentUtiSettings(utiSettings.uti)
@@ -298,7 +307,7 @@ class PreferencesViewController: NSViewController {
                 utiTitleTextField.stringValue = format.description
                 utiTitleTextField.toolTip = format.uti.UTI
                 extensionsTitleTextField.stringValue = format.extensions.count > 0 ? "." + format.extensions.joined(separator: ", .") : ""
-                utiSpecificArgumentsTextField.stringValue = currentUTISettings.utiExtra ?? ""
+                utiSpecificArgumentsTextField.stringValue = currentUTISettings.appendedExtra ?? ""
                 
                 utiThemeCheckbox.state = currentUTISettings.lightTheme != nil ? .on : .off
                 utiThemeLightIcon.isEnabled = utiThemeCheckbox.state == .on && themes.count > 0
@@ -352,6 +361,7 @@ class PreferencesViewController: NSViewController {
                     utiLineNumbersPopup.menu?.item(at: 2)?.isEnabled = true
                 }
                 utiLineLengthTextField.integerValue = currentUTISettings.lineLength ?? settings?.lineLength ?? 80
+                utiLineLengthTextField.isEnabled = utiWordWrapCheckbox.state == .on
                 
                 utiLineNumberCheckbox.state = currentUTISettings.lineNumbers != nil ? .on : .off
                 utiLineNumbersPopup.isEnabled = utiLineNumberCheckbox.state == .on
@@ -370,8 +380,9 @@ class PreferencesViewController: NSViewController {
                 utiArgumentsTextField.isEnabled = utiArgumentsCheckbox.state == .on
                 utiArgumentsTextField.stringValue = currentUTISettings.extra ?? settings?.extra ?? ""
                 
+                utiInteractiveCheckbox.isEnabled = formatModeControl.selectedSegment == 0
                 utiInteractiveCheckbox.state = currentUTISettings.allowInteractiveActions != nil ? .on : .off
-                utiInteractiveButton.isEnabled = utiInteractiveCheckbox.state == .on
+                utiInteractiveButton.isEnabled = utiInteractiveCheckbox.state == .on && utiInteractiveCheckbox.isEnabled
                 utiInteractiveButton.state = currentUTISettings.allowInteractiveActions ?? false ? .on : .off
                 
                 utiPreprocessorCheckbox.state = currentUTISettings.preprocessor != nil ? .on : .off
@@ -525,7 +536,7 @@ class PreferencesViewController: NSViewController {
         
         let filter = self.filter.lowercased()
         fileTypes = self.allFileTypes.filter({ (uti) -> Bool in
-            if filterOnlyChanged && !(settings?.hasCustomizedUTI(uti.uti.UTI) ?? false) {
+            if filterOnlyChanged && !(settings?.hasCustomizedSettings(forUTI: uti.uti.UTI) ?? false) {
                 return false
             }
             if !filter.isEmpty && !uti.fullDescription.lowercased().contains(filter) && !uti.uti.UTI.lowercased().contains(filter) {
@@ -542,7 +553,7 @@ class PreferencesViewController: NSViewController {
         }
         service.getSettings() {
             if let s = $0 as? [String: Any] {
-                self.settings = SCSHSettings(dictionary: s)
+                self.settings = SCSHSettings(settings: s)
                 self.customCSS = self.settings?.css
             }
             
@@ -702,6 +713,11 @@ class PreferencesViewController: NSViewController {
         refreshButton.isEnabled = settings != nil
         saveButton.isEnabled = settings != nil
         
+        webView.isHidden = settings?.format ?? .html != .html
+        scrollView.isHidden = !webView.isHidden
+        
+        initialized = true
+        
         if settings != nil {
             refreshPreview(self)
         }
@@ -772,17 +788,17 @@ class PreferencesViewController: NSViewController {
         
         if let theme = lightTheme {
             settings.lightTheme = (theme.isStandalone ? "" : "!") + theme.name
-            settings.rtfLightBackgroundColor = theme.backgroundColor
+            settings.lightBackgroundColor = theme.backgroundColor
         }
         if let theme = darkTheme {
             settings.darkTheme = (theme.isStandalone ? "" : "!") + theme.name
-            settings.rtfDarkBackgroundColor = theme.backgroundColor
+            settings.darkBackgroundColor = theme.backgroundColor
         }
         settings.css = customCSS
         
         settings.fontFamily = self.fontPreviewTextField.font?.fontName
         if let size = self.fontPreviewTextField.font?.pointSize {
-            settings.fontSize = Float(size)
+            settings.fontSize = size
         }
         
         switch wordWrapPopup.indexOfSelectedItem {
@@ -821,7 +837,7 @@ class PreferencesViewController: NSViewController {
     
     func selectUTI(_ uti: String) -> Bool {
         if let _ = allFileTypes.first(where: { $0.uti.UTI == uti }) {
-            currentUTISettings = settings?.getSettings(forUTI: uti)
+            currentUTISettings = settings?.getCustomizedSettings(forUTI: uti)
             return true
         }
         return false
@@ -834,11 +850,11 @@ class PreferencesViewController: NSViewController {
         if utiThemeCheckbox.state == .on {
             if let theme = utiLightTheme {
                 settings.lightTheme = (theme.isStandalone ? "" : "!") + theme.name
-                settings.rtfLightBackgroundColor = theme.backgroundColor
+                settings.lightBackgroundColor = theme.backgroundColor
             }
             if let theme = utiDarkTheme {
                 settings.darkTheme = (theme.isStandalone ? "" : "!") + theme.name
-                settings.rtfDarkBackgroundColor = theme.backgroundColor
+                settings.darkBackgroundColor = theme.backgroundColor
             }
         }
         
@@ -847,29 +863,30 @@ class PreferencesViewController: NSViewController {
         }
         
         if utiFontCheckbox.state == .on {
-            settings.fontFamily = self.utiFontPreviewTextField.font?.fontName
-            if let size = self.utiFontPreviewTextField.font?.pointSize {
-                settings.fontSize = Float(size)
+            settings.fontFamily = utiFontPreviewTextField.font?.fontName
+            if let size = utiFontPreviewTextField.font?.pointSize {
+                settings.fontSize = size
             }
         }
         
         if utiWordWrapCheckbox.state == .on {
-            switch wordWrapPopup.indexOfSelectedItem {
+            switch utiWordWrapPopup.indexOfSelectedItem {
             case 0:
                 settings.wordWrap = .off
+                settings.lineLength = nil
             case 1:
                 settings.wordWrap = .simple
-                settings.lineLength = lineLengthTextField.integerValue
+                settings.lineLength = utiLineLengthTextField.integerValue
             case 2:
                 settings.wordWrap = .standard
-                settings.lineLength = lineLengthTextField.integerValue
+                settings.lineLength = utiLineLengthTextField.integerValue
             default:
                 break
             }
         }
         
         if utiLineNumberCheckbox.state == .on {
-            switch lineNumbersPopup.indexOfSelectedItem {
+            switch utiLineNumbersPopup.indexOfSelectedItem {
             case 0:
                 settings.lineNumbers = .hidden
             case 1:
@@ -882,10 +899,10 @@ class PreferencesViewController: NSViewController {
         }
         
         if utiTabSpacesCheckbox.state == .on {
-            settings.tabSpaces = tabSpacesSlider.integerValue
+            settings.tabSpaces = utiTabSpacesSlider.integerValue
         }
         if utiArgumentsCheckbox.state == .on {
-            settings.extra = argumentsTextField.stringValue
+            settings.extra = utiArgumentsTextField.stringValue
         }
         if utiInteractiveCheckbox.state == .on {
             settings.allowInteractiveActions = utiInteractiveButton.state == .on
@@ -898,7 +915,9 @@ class PreferencesViewController: NSViewController {
             settings.preprocessor = nil
         }
         
-        settings.extra = (settings.extra != nil ? settings.extra! + " " : "") + utiSpecificArgumentsTextField.stringValue
+        if !utiSpecificArgumentsTextField.stringValue.isEmpty {
+            settings.extra = (settings.extra != nil ? settings.extra! + " " : "") + utiSpecificArgumentsTextField.stringValue
+        }
         
         return settings
     }
@@ -912,28 +931,28 @@ class PreferencesViewController: NSViewController {
     
     /// Save the state of the UTI panels to a settings for the specified UTI.
     func saveCurrentUtiSettings(_ uti: String) {
-        let utiSettings = SCSHSettings(UTI: uti)
+        let utiSettings = SCSHUTIBaseSettings(UTI: uti)
         
         if utiSpecificArgumentsTextField.stringValue.isEmpty {
-            utiSettings.utiExtra = nil
+            utiSettings.appendedExtra = nil
         } else {
-            utiSettings.utiExtra = utiSpecificArgumentsTextField.stringValue
+            utiSettings.appendedExtra = utiSpecificArgumentsTextField.stringValue
         }
         
         if utiThemeCheckbox.state == .on {
             if let theme = utiLightTheme {
                 utiSettings.lightTheme = (theme.isStandalone ? "" : "!") + theme.name
-                utiSettings.rtfLightBackgroundColor = theme.backgroundColor
+                utiSettings.lightBackgroundColor = theme.backgroundColor
             }
             if let theme = utiDarkTheme {
                 utiSettings.darkTheme = (theme.isStandalone ? "" : "!") + theme.name
-                utiSettings.rtfDarkBackgroundColor = theme.backgroundColor
+                utiSettings.darkBackgroundColor = theme.backgroundColor
             }
         } else {
             utiSettings.lightTheme = nil
-            utiSettings.rtfLightBackgroundColor = nil
+            utiSettings.lightBackgroundColor = nil
             utiSettings.darkTheme = nil
-            utiSettings.rtfDarkBackgroundColor = nil
+            utiSettings.darkBackgroundColor = nil
         }
         
         if utiCustomCSSCheckbox.state == .on {
@@ -944,7 +963,7 @@ class PreferencesViewController: NSViewController {
         
         if utiFontCheckbox.state == .on {
             utiSettings.fontFamily = utiFontPreviewTextField.font?.fontName ?? "Menlo"
-            utiSettings.fontSize = Float(utiFontPreviewTextField.font?.pointSize ?? 12)
+            utiSettings.fontSize = utiFontPreviewTextField.font?.pointSize ?? 12
         } else {
             utiSettings.fontFamily = nil
             utiSettings.fontSize = nil
@@ -957,10 +976,10 @@ class PreferencesViewController: NSViewController {
                 utiSettings.lineLength = nil
             case 1:
                 utiSettings.wordWrap = .simple
-                utiSettings.lineLength = utiLineLengthLabel.integerValue
+                utiSettings.lineLength = utiLineLengthTextField.integerValue
             case 2:
                 utiSettings.wordWrap = .standard
-                utiSettings.lineLength = utiLineLengthLabel.integerValue
+                utiSettings.lineLength = utiLineLengthTextField.integerValue
             default:
                 utiSettings.wordWrap = nil
                 utiSettings.lineLength = nil
@@ -1015,9 +1034,9 @@ class PreferencesViewController: NSViewController {
         }
         
         if utiSettings.isCustomized {
-            settings?.setUTISettings(utiSettings)
+            settings?.setCustomizedSettingsForUTI(utiSettings)
         } else {
-            _ = settings?.removeUTISettings(uti: utiSettings.uti)
+            _ = settings?.removeCustomizedSettings(forUTI: utiSettings.uti)
         }
         
         if let i = fileTypes.firstIndex(where: { $0.uti.UTI == utiSettings.uti }) {
@@ -1092,8 +1111,8 @@ class PreferencesViewController: NSViewController {
     }
     
     /// Refresh the preview font.
-    func refreshFontPanel(withFontFamily font: String, size: Float, isGlobal: Bool) {
-        if let f = NSFont(name: font, size: CGFloat(size)) {
+    func refreshFontPanel(withFontFamily font: String, size: CGFloat, isGlobal: Bool) {
+        if let f = NSFont(name: font, size: size) {
             self.refreshFontPanel(withFont: f, isGlobal: isGlobal)
         }
     }
@@ -1108,9 +1127,12 @@ class PreferencesViewController: NSViewController {
         utiScrollView.isHidden = sender.indexOfSelectedItem == 0
         
         customCSSButton.isEnabled = sender.indexOfSelectedItem == 0
+        interactiveButton.isEnabled = sender.indexOfSelectedItem == 0
         
         utiCustomCSSCheckbox.isEnabled = self.currentUTISettings != nil && sender.indexOfSelectedItem == 0
         utiCustomCSSButton.isEnabled = utiCustomCSSCheckbox.isEnabled && utiCustomCSSCheckbox.state == .on
+        utiInteractiveCheckbox.isEnabled = self.currentUTISettings != nil && sender.indexOfSelectedItem == 0
+        utiInteractiveButton.isEnabled = utiInteractiveCheckbox.isEnabled && utiInteractiveCheckbox.state == .on
         
         refreshUtiPreview(sender)
     }
@@ -1298,10 +1320,10 @@ class PreferencesViewController: NSViewController {
         
         if light {
             custom_settings.theme = custom_settings.lightTheme
-            custom_settings.rtfBackgroundColor = custom_settings.rtfLightBackgroundColor
+            custom_settings.backgroundColor = custom_settings.lightBackgroundColor
         } else {
             custom_settings.theme = custom_settings.darkTheme
-            custom_settings.rtfBackgroundColor = custom_settings.rtfDarkBackgroundColor
+            custom_settings.backgroundColor = custom_settings.darkBackgroundColor
         }
         
         indicator.startAnimation(self)
@@ -1329,7 +1351,7 @@ class PreferencesViewController: NSViewController {
                     
                     DispatchQueue.main.async {
                         textView.textStorage?.setAttributedString(text)
-                        if let bg = effective_settings[SCSHSettings.Key.rtfBackgroundColor] as? String, let c = NSColor(fromHexString: bg) {
+                        if let bg = effective_settings[SCSHSettings.Key.backgroundColor] as? String, let c = NSColor(fromHexString: bg) {
                             textView.backgroundColor = c
                         } else {
                             textView.backgroundColor = .clear
@@ -1348,7 +1370,7 @@ class PreferencesViewController: NSViewController {
                     let example = theme.getAttributedExample(fontName: custom_settings.fontFamily ?? "Menlo", fontSize: (custom_settings.fontSize ?? 12) * 0.75)
                     textView.textStorage?.setAttributedString(example)
                     
-                    if let bg = custom_settings.rtfBackgroundColor, let c = NSColor(fromHexString: bg) {
+                    if let bg = custom_settings.backgroundColor, let c = NSColor(fromHexString: bg) {
                         textView.backgroundColor = c
                     } else {
                         textView.backgroundColor = .clear
@@ -1383,14 +1405,20 @@ class PreferencesViewController: NSViewController {
         if let globalSettings = self.settings {
             for (_, utiSettings) in globalSettings.customizedSettings {
                 if utiSettings.isCustomized {
-                    settings.setUTISettings(utiSettings)
+                    settings.setCustomizedSettingsForUTI(utiSettings)
                 }
             }
         }
         
+        self.view.window?.styleMask.remove(NSWindow.StyleMask.closable)
+        
+        saveButton.isEnabled = false
+        cancelButton.isEnabled = false
         service?.setSettings(settings.toDictionary() as NSDictionary) { _ in
             DispatchQueue.main.async {
-                self.view.window?.performClose(sender)
+                self.saveButton.isEnabled = true
+                self.cancelButton.isEnabled = true
+                self.view.window?.styleMask.insert(NSWindow.StyleMask.closable)
                 
                 NSApplication.shared.windows.forEach { (window) in
                     // Refresh all opened view.
@@ -1398,6 +1426,10 @@ class PreferencesViewController: NSViewController {
                         c.refresh(nil)
                     }
                 }
+                
+                //if (NSApplication.shared.delegate as? AppDelegate)?.documentsOpenedAtStart ?? false {
+                    self.view.window?.performClose(sender)
+                //}
             }
         }
     }
@@ -1533,7 +1565,7 @@ extension PreferencesViewController: NSTableViewDataSource {
         if tableColumn?.identifier.rawValue == "Icon" {
             return fileTypes[row].icon
         } else if tableColumn?.identifier.rawValue == "Changed" {
-            return settings?.hasCustomizedUTI(fileTypes[row].uti.UTI) ?? false ? "M" : ""
+            return settings?.hasCustomizedSettings(forUTI: fileTypes[row].uti.UTI) ?? false ? "M" : ""
         } else {
             return fileTypes[row].fullDescription
         }

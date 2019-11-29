@@ -5,21 +5,21 @@
 
 # Computes the number 42 using Bash
 function compute42() {
-    echo $((2 * 3 * (3 + 4)))
+	echo $((2 * 3 * (3 + 4)))
 }
 
 # Computes the number 42 using a subshell command
 function compute42Subshell() {
-    echo "$(echo "2*3*(3+4)" | bc)"
+	echo "$(echo "2*3*(3+4)" | bc)"
 }
 
 # Subtract the second parameter from the first and outputs the result
 # It can only handle integers
 function subtract() {
-    local a=${1:?"First param not set"}
-    local b=${2:?"Second param not set"}
+	local a=${1:?"First param not set"}
+	local b=${2:?"Second param not set"}
 
-    echo -n "$((a - b))"
+	echo -n "$((a - b))"
 }
 
 echo 'The current working directory is: '" ${PWD}"
@@ -40,9 +40,9 @@ empty=""
 [ -z "$empty" ]  && This variable is empty!
 
 cat -  << EOF
-    Dear Mr. X,
-    this is a message to you.
+	Dear Mr. X,
+	this is a message to you.
 
-    With kind regards,
-    Mr. Y
+	With kind regards,
+	Mr. Y
 EOF

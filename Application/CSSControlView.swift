@@ -52,5 +52,9 @@ class CSSControlView: NSViewController {
     override func viewDidLoad() {
         warningMessage.isHidden = isUTIWarningHidden
         textView?.string = cssCode
+        
+        textView.font = NSFont.monospacedSystemFont(ofSize: 11, weight: NSFont.Weight.regular)
+        textView.textColor = NSColor.textColor
+        textView.backgroundColor = NSColor.textBackgroundColor
     }
 }

@@ -59,7 +59,7 @@ class ViewController: NSViewController {
         }
     }
     
-    func initializeView(forMode mode: SCSHFormat) {
+    func initializeView(forMode mode: SCSHBaseSettings.Format) {
         if mode == .rtf {
             if self.textScrollView == nil {
                 self.textScrollView = NSScrollView(frame: self.view.bounds)
@@ -143,7 +143,7 @@ class ViewController: NSViewController {
         textScrollView?.isHidden = true
         
         service?.colorize(url: documentUrl, overrideSettings: [SCSHSettings.Key.renderForExtension: false]) { (response, settings, error) in
-            let format = SCSHFormat(rawValue: settings[SCSHSettings.Key.format] as? String ?? "html") ?? .html
+            let format = SCSHBaseSettings.Format(rawValue: settings[SCSHSettings.Key.format] as? String ?? "html") ?? .html
             DispatchQueue.main.async {
                 self.initializeView(forMode: format)
                 
@@ -157,7 +157,7 @@ class ViewController: NSViewController {
                     
                     self.textView?.textStorage?.setAttributedString(text)
                     // The rtf parser don't apply (why?) the page packground.
-                    if let c = settings[SCSHSettings.Key.rtfBackgroundColor] as? String, let color = NSColor(fromHexString: c) {
+                    if let c = settings[SCSHSettings.Key.backgroundColor] as? String, let color = NSColor(fromHexString: c) {
                         self.textView?.backgroundColor = color
                     } else {
                         self.textView?.backgroundColor = .clear

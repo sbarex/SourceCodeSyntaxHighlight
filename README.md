@@ -1,7 +1,6 @@
 #  Quicklook extension for source files
 
 This application offers a quicklook extension for MacOS 10.15 Catalina for previewing source files.
-It's based on the [anthonygelibert/QLColorCode](https://github.com/anthonygelibert/QLColorCode).
 Inside it uses [Highlight](http://www.andre-simon.de/doku/highlight/en/highlight.php) to render source code with syntax highlighting.
 The application is distributed with a version of the `highlight`. If you want you can use a different version customizing the preferences.
 
@@ -53,6 +52,12 @@ On Terminal you can see the UTI of a file with this command:
 $ mdls -name kMDItemContentType -name kMDItemContentTypeTree filename.ext
 ```
 If you found an unhandled format please send me the output of above command.
+**Only the formats supported by `highlight` can be managed by this application.**
+
+To view the info about `highlight` with the supported file formats and extensions go to the menu `Syntax Highlight/About highlight…`, or in the Preferences window click the *i* info button near the highlight popup button.
+
+![IAbout highlight info panel.](about_highlight.png)
+
 
 ## Application preferences
 
@@ -109,3 +114,8 @@ After cloning remember to fetch submodules:
 $ git submodule init 
 $ git submodule update
 ```
+
+
+## Credits
+
+This application has originated from the [anthonygelibert/QLColorCode](https://github.com/anthonygelibert/QLColorCode).

@@ -5,10 +5,10 @@ using namespace std;
 
 int main()
 {
-    /* comment */
-    int number;
-    cout << "Enter an integer: ";
-    cin >> number;
-    cout << "You entered " << number;
-    return 0;
+	/* comment */
+	int number;
+	cout << "Enter an integer: ";
+	cin >> number;
+	cout << "You entered " << number;
+	return 0;
 }

@@ -10,7 +10,7 @@ C <- matrix(C, dy, dx)       # reshape as square matrix of complex numbers
 Z <- 0                       # initialize Z to zero
 X <- array(0, c(dy, dx, 20)) # initialize output 3D array
 for (k in 1:20) {            # loop with 20 iterations
-  Z <- Z^2 + C               # the central difference equation
-  X[, , k] <- exp(-abs(Z))   # capture results
+	Z <- Z^2 + C               # the central difference equation
+	X[, , k] <- exp(-abs(Z))   # capture results
 }
 write.gif(X, "Mandelbrot.gif", col = jet.colors, delay = 100)

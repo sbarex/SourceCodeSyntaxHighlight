@@ -149,7 +149,7 @@ go4it () {
     # Do not use zsh {= expansion because it split the string on all space ignoring quotes and causing error.
     cmdExtra=("${(@s/•/)extraHLFlags}")
     
-    cmdOpts=(${plugin} --syntax=${lang} --quiet --include-style --font=${font} --font-size=${fontSizePoints} ${=theme} --encoding=${textEncoding} ${cmdExtra} --validate-input)
+    cmdOpts=(${plugin} --syntax=${lang} --quiet --include-style ${=theme} --encoding=${textEncoding} ${cmdExtra} --validate-input)
     
     function join_by { local IFS="$1"; shift; echo "$*"; }
     

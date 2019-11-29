@@ -1,4 +1,12 @@
+1.0.b16
+
+New features:
+- XPC service splitted into two services. One is used by the quicklook extension with only the code to read the current settings and format the preview. The second one has also the code to change the settings, inquiry the themes and all the requested features for the main application interface. I hope this change makes the quicklook extension more reactive and consume less resources.
+- Rewrite the settings engine.
+
+
 1.0.b15
+
 New features:
 - Support for .h header files.
 - Target to 10.15 (now the standard swift library is not embedded).
@@ -11,6 +19,7 @@ Bugfix:
 - Added a margin aroud the preview on the quicklook window.
 - Fast generation of theme icons.
 
+
 1.0.b14
 
 New features:
@@ -19,6 +28,7 @@ New features:
 
 Bugfix:
 - Correction of many typos.
+
 
 1.0.b13
 

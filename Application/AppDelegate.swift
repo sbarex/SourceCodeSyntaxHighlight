@@ -42,6 +42,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         return service
     }()
     
+    private (set) var documentsOpenedAtStart = false
     private var firstAppear = false
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
@@ -58,15 +59,20 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func applicationDidBecomeActive(_ notification: Notification) {
-        if firstAppear, NSApplication.shared.windows.first(where: { $0.contentViewController is ViewController }) == nil, let menu = NSApp.menu?.item(at: 0)?.submenu?.item(withTag: 100), let a = menu.action {
-            // Open the settings window if there are no windows opened.
-            NSApp.sendAction(a, to: menu.target, from: menu)
+        if firstAppear {
+            if NSApplication.shared.windows.first(where: { $0.contentViewController is ViewController }) == nil, let menu = NSApp.menu?.item(at: 0)?.submenu?.item(withTag: 100), let a = menu.action {
+                // Open the settings window if there are no windows opened.
+                NSApp.sendAction(a, to: menu.target, from: menu)
+                documentsOpenedAtStart = false
+            } else {
+                documentsOpenedAtStart = true
+            }
         }
         firstAppear = false
     }
 
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
-        return false
+        return true
     }
     
     /// Get the url of the quicklook extension.

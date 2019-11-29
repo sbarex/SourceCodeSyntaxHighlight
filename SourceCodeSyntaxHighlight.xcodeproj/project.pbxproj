@@ -7,6 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8304B0A4238D8794007A455C /* XPCLightRenderServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838F465C238D813500268B4A /* XPCLightRenderServiceProtocol.swift */; };
+		8304B0A5238D879A007A455C /* XPCLightRenderService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838F465D238D813500268B4A /* XPCLightRenderService.swift */; };
+		8304B0A6238D8954007A455C /* File+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836D01E32386C7CD00B85545 /* File+Ext.swift */; };
+		8304B0A7238D89DA007A455C /* String+GShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839098C32379E34A005D3E7C /* String+GShell.swift */; };
+		8304B0B0238DBCA8007A455C /* SCSHBaseSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8304B0AF238DBCA8007A455C /* SCSHBaseSettings.swift */; };
+		8304B0B1238DBCAB007A455C /* SCSHBaseSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8304B0AF238DBCA8007A455C /* SCSHBaseSettings.swift */; };
+		8304B0B2238DBCAB007A455C /* SCSHBaseSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8304B0AF238DBCA8007A455C /* SCSHBaseSettings.swift */; };
+		8304B0B3238DBCBA007A455C /* SCSHBaseSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8304B0AF238DBCA8007A455C /* SCSHBaseSettings.swift */; };
+		8304B0B5238EE3B7007A455C /* about_highlight.png in Copy Image help */ = {isa = PBXBuildFile; fileRef = 8304B0B4238E8B21007A455C /* about_highlight.png */; };
+		8304B0B7238FA897007A455C /* TaskResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8304B0B6238FA897007A455C /* TaskResult.swift */; };
+		8304B0B8238FA897007A455C /* TaskResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8304B0B6238FA897007A455C /* TaskResult.swift */; };
+		8304B0B9238FA920007A455C /* SCSHError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8359239C23570C52001506B6 /* SCSHError.swift */; };
+		8304B0BA238FB451007A455C /* String+GShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839098C32379E34A005D3E7C /* String+GShell.swift */; };
+		8304B0BC238FBCC4007A455C /* SCSHBaseXPCService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8304B0BB238FBCC4007A455C /* SCSHBaseXPCService.swift */; };
+		8304B0BD238FBCC4007A455C /* SCSHBaseXPCService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8304B0BB238FBCC4007A455C /* SCSHBaseXPCService.swift */; };
+		8304B0BE238FF601007A455C /* Syntax Highlight XPC Render.xpc in CopyFiles */ = {isa = PBXBuildFile; fileRef = 838F465A238D813500268B4A /* Syntax Highlight XPC Render.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		8304B0BF238FFC1C007A455C /* highlight in Resources */ = {isa = PBXBuildFile; fileRef = 83C09FDA2365B9360062BF39 /* highlight */; };
+		8304B0C0238FFC1D007A455C /* colorize.sh in Resources */ = {isa = PBXBuildFile; fileRef = 8359236F2355B19F001506B6 /* colorize.sh */; };
+		8304B0C1238FFC1F007A455C /* style.css in Resources */ = {isa = PBXBuildFile; fileRef = 83A0691023672FD100C795D6 /* style.css */; };
 		83088A7F236CBBB20092180E /* libLua.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 83088A6E236CB19A0092180E /* libLua.dylib */; };
 		83088A87236CC0330092180E /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 83088A82236CC0330092180E /* .gitignore */; };
 		830D154D23780A4200D5535C /* SCSHTheme+Lua.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830D154C23780A4200D5535C /* SCSHTheme+Lua.swift */; };
@@ -58,13 +77,13 @@
 		838F16502380B05800A13F0F /* settings_specific.png in Copy Image help */ = {isa = PBXBuildFile; fileRef = 830D155A23797CC100D5535C /* settings_specific.png */; };
 		838F16512380B05B00A13F0F /* extensions.png in Copy Image help */ = {isa = PBXBuildFile; fileRef = 8311D9A8235CE6D7006DC138 /* extensions.png */; };
 		838F16522380B06200A13F0F /* settings_specific_warn.png in Copy Image help */ = {isa = PBXBuildFile; fileRef = 830D155B23797D8000D5535C /* settings_specific_warn.png */; };
+		838F465F238D813500268B4A /* XPCLightRenderServiceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838F465E238D813500268B4A /* XPCLightRenderServiceDelegate.swift */; };
+		838F4661238D813500268B4A /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838F4660238D813500268B4A /* main.swift */; };
 		839098C52379E353005D3E7C /* String+GShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839098C32379E34A005D3E7C /* String+GShell.swift */; };
-		839098D82379FA72005D3E7C /* Syntax Highlight XPC Service.xpc in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8359237B23563BDF001506B6 /* Syntax Highlight XPC Service.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		8390B18B23815B6500EA028A /* ThemeSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8390B18A23815B6500EA028A /* ThemeSelectorViewController.swift */; };
 		8390B19123815FF200EA028A /* ThemeCollectionViewItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8390B19023815FF200EA028A /* ThemeCollectionViewItem.xib */; };
 		83A0691123672FD100C795D6 /* style.css in Resources */ = {isa = PBXBuildFile; fileRef = 83A0691023672FD100C795D6 /* style.css */; };
 		83A06912236730D800C795D6 /* style.css in Resources */ = {isa = PBXBuildFile; fileRef = 83A0691023672FD100C795D6 /* style.css */; };
-		83C09FC223638E4F0062BF39 /* outhtml_commandbar.lua in Resources */ = {isa = PBXBuildFile; fileRef = 83C09FC0236367140062BF39 /* outhtml_commandbar.lua */; };
 		83C09FDB2365B9360062BF39 /* highlight in Resources */ = {isa = PBXBuildFile; fileRef = 83C09FDA2365B9360062BF39 /* highlight */; };
 		83C981F1238AA33C00718132 /* InfoHighlightController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C981F0238AA33C00718132 /* InfoHighlightController.swift */; };
 		83C981F3238B04CD00718132 /* custom_css.png in Copy Image help */ = {isa = PBXBuildFile; fileRef = 83C981F2238B04BC00718132 /* custom_css.png */; };
@@ -115,6 +134,13 @@
 			remoteGlobalIDString = 8359237A23563BDF001506B6;
 			remoteInfo = XPCService;
 		};
+		838F4663238D813500268B4A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8359233D235599F6001506B6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 838F4659238D813500268B4A;
+			remoteInfo = SyntaxHighlightRenderXPC;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -153,6 +179,7 @@
 				838B78B5238293EE00619951 /* inquiry.png in Copy Image help */,
 				83C981F3238B04CD00718132 /* custom_css.png in Copy Image help */,
 				83C981F5238B0C6E00718132 /* theme_editor.png in Copy Image help */,
+				8304B0B5238EE3B7007A455C /* about_highlight.png in Copy Image help */,
 			);
 			name = "Copy Image help";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -163,13 +190,17 @@
 			dstPath = "$(CONTENTS_FOLDER_PATH)/XPCServices";
 			dstSubfolderSpec = 16;
 			files = (
-				839098D82379FA72005D3E7C /* Syntax Highlight XPC Service.xpc in CopyFiles */,
+				8304B0BE238FF601007A455C /* Syntax Highlight XPC Render.xpc in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		8304B0AF238DBCA8007A455C /* SCSHBaseSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCSHBaseSettings.swift; sourceTree = "<group>"; };
+		8304B0B4238E8B21007A455C /* about_highlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = about_highlight.png; sourceTree = "<group>"; };
+		8304B0B6238FA897007A455C /* TaskResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskResult.swift; sourceTree = "<group>"; };
+		8304B0BB238FBCC4007A455C /* SCSHBaseXPCService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCSHBaseXPCService.swift; sourceTree = "<group>"; };
 		83088A62236CB19A0092180E /* Lua.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Lua.xcodeproj; path = lua4swift/Lua.xcodeproj; sourceTree = "<group>"; };
 		83088A82236CC0330092180E /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		830D154C23780A4200D5535C /* SCSHTheme+Lua.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SCSHTheme+Lua.swift"; sourceTree = "<group>"; };
@@ -220,11 +251,16 @@
 		837DFC212375FE1E00920E72 /* PreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
 		837F088523802A8000D3893B /* SyntaxHighlight.help */ = {isa = PBXFileReference; lastKnownFileType = folder; path = SyntaxHighlight.help; sourceTree = "<group>"; };
 		838B78B0238292FD00619951 /* inquiry.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = inquiry.png; sourceTree = "<group>"; };
+		838F465A238D813500268B4A /* Syntax Highlight XPC Render.xpc */ = {isa = PBXFileReference; explicitFileType = "wrapper.xpc-service"; includeInIndex = 0; path = "Syntax Highlight XPC Render.xpc"; sourceTree = BUILT_PRODUCTS_DIR; };
+		838F465C238D813500268B4A /* XPCLightRenderServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XPCLightRenderServiceProtocol.swift; sourceTree = "<group>"; };
+		838F465D238D813500268B4A /* XPCLightRenderService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XPCLightRenderService.swift; sourceTree = "<group>"; };
+		838F465E238D813500268B4A /* XPCLightRenderServiceDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XPCLightRenderServiceDelegate.swift; sourceTree = "<group>"; };
+		838F4660238D813500268B4A /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		838F4662238D813500268B4A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		839098C32379E34A005D3E7C /* String+GShell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+GShell.swift"; sourceTree = "<group>"; };
 		8390B18A23815B6500EA028A /* ThemeSelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeSelectorViewController.swift; sourceTree = "<group>"; };
 		8390B19023815FF200EA028A /* ThemeCollectionViewItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThemeCollectionViewItem.xib; sourceTree = "<group>"; };
 		83A0691023672FD100C795D6 /* style.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = style.css; sourceTree = "<group>"; };
-		83C09FC0236367140062BF39 /* outhtml_commandbar.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = outhtml_commandbar.lua; sourceTree = "<group>"; };
 		83C09FDA2365B9360062BF39 /* highlight */ = {isa = PBXFileReference; lastKnownFileType = folder; path = highlight; sourceTree = "<group>"; };
 		83C981F0238AA33C00718132 /* InfoHighlightController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoHighlightController.swift; sourceTree = "<group>"; };
 		83C981F2238B04BC00718132 /* custom_css.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = custom_css.png; sourceTree = "<group>"; };
@@ -259,6 +295,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		838F4657238D813500268B4A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -287,10 +330,12 @@
 				83C981F2238B04BC00718132 /* custom_css.png */,
 				83C981F4238B0C6100718132 /* theme_editor.png */,
 				838B78B0238292FD00619951 /* inquiry.png */,
+				8304B0B4238E8B21007A455C /* about_highlight.png */,
 				83088A82236CC0330092180E /* .gitignore */,
 				83592347235599F6001506B6 /* Application */,
 				8359236023559A2B001506B6 /* QLExtension */,
 				8359237C23563BDF001506B6 /* XPCService */,
+				838F465B238D813500268B4A /* SyntaxHighlightRenderXPC */,
 				8359235D23559A2B001506B6 /* Frameworks */,
 				83592346235599F6001506B6 /* Products */,
 			);
@@ -302,6 +347,7 @@
 				83592345235599F6001506B6 /* Syntax Highlight.app */,
 				8359235C23559A2B001506B6 /* Syntax Highlight Quicklook Extension.appex */,
 				8359237B23563BDF001506B6 /* Syntax Highlight XPC Service.xpc */,
+				838F465A238D813500268B4A /* Syntax Highlight XPC Render.xpc */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -357,10 +403,13 @@
 				839098C32379E34A005D3E7C /* String+GShell.swift */,
 				836D01E32386C7CD00B85545 /* File+Ext.swift */,
 				8359238B23563C1E001506B6 /* XPCServiceRelease.entitlements */,
+				8304B0B6238FA897007A455C /* TaskResult.swift */,
 				835923EB235A3A85001506B6 /* SCSHTheme.swift */,
 				830D154C23780A4200D5535C /* SCSHTheme+Lua.swift */,
 				8359239C23570C52001506B6 /* SCSHError.swift */,
+				8304B0AF238DBCA8007A455C /* SCSHBaseSettings.swift */,
 				835923ED235A5D33001506B6 /* SCSHSettings.swift */,
+				8304B0BB238FBCC4007A455C /* SCSHBaseXPCService.swift */,
 				8359237E23563BDF001506B6 /* SCSHXPCService.swift */,
 				8359237D23563BDF001506B6 /* SCSHXPCServiceProtocol.swift */,
 				8359237F23563BDF001506B6 /* SCSHXPCServiceDelegate.swift */,
@@ -373,7 +422,6 @@
 		83729D19236180B3002F400C /* resources */ = {
 			isa = PBXGroup;
 			children = (
-				83C09FC0236367140062BF39 /* outhtml_commandbar.lua */,
 				83C09FDA2365B9360062BF39 /* highlight */,
 				8359236F2355B19F001506B6 /* colorize.sh */,
 				83A0691023672FD100C795D6 /* style.css */,
@@ -391,6 +439,18 @@
 				83C981F0238AA33C00718132 /* InfoHighlightController.swift */,
 			);
 			name = Preferences;
+			sourceTree = "<group>";
+		};
+		838F465B238D813500268B4A /* SyntaxHighlightRenderXPC */ = {
+			isa = PBXGroup;
+			children = (
+				838F465D238D813500268B4A /* XPCLightRenderService.swift */,
+				838F465C238D813500268B4A /* XPCLightRenderServiceProtocol.swift */,
+				838F465E238D813500268B4A /* XPCLightRenderServiceDelegate.swift */,
+				838F4660238D813500268B4A /* main.swift */,
+				838F4662238D813500268B4A /* Info.plist */,
+			);
+			path = SyntaxHighlightRenderXPC;
 			sourceTree = "<group>";
 		};
 		83D499922382F9A9001686CF /* Themes */ = {
@@ -423,6 +483,7 @@
 			dependencies = (
 				8359236923559A2B001506B6 /* PBXTargetDependency */,
 				8359238523563BDF001506B6 /* PBXTargetDependency */,
+				838F4664238D813500268B4A /* PBXTargetDependency */,
 			);
 			name = "Syntax Highlight";
 			productName = QLExt;
@@ -464,6 +525,23 @@
 			productReference = 8359237B23563BDF001506B6 /* Syntax Highlight XPC Service.xpc */;
 			productType = "com.apple.product-type.xpc-service";
 		};
+		838F4659238D813500268B4A /* Syntax Highlight XPC Render */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 838F4666238D813500268B4A /* Build configuration list for PBXNativeTarget "Syntax Highlight XPC Render" */;
+			buildPhases = (
+				838F4656238D813500268B4A /* Sources */,
+				838F4657238D813500268B4A /* Frameworks */,
+				838F4658238D813500268B4A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Syntax Highlight XPC Render";
+			productName = SyntaxHighlightRenderXPC;
+			productReference = 838F465A238D813500268B4A /* Syntax Highlight XPC Render.xpc */;
+			productType = "com.apple.product-type.xpc-service";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -482,6 +560,9 @@
 					};
 					8359237A23563BDF001506B6 = {
 						CreatedOnToolsVersion = 11.0;
+					};
+					838F4659238D813500268B4A = {
+						CreatedOnToolsVersion = 11.2.1;
 					};
 				};
 			};
@@ -507,6 +588,7 @@
 				83592344235599F6001506B6 /* Syntax Highlight */,
 				8359235B23559A2B001506B6 /* Syntax Highlight Quicklook Extension */,
 				8359237A23563BDF001506B6 /* Syntax Highlight XPC Service */,
+				838F4659238D813500268B4A /* Syntax Highlight XPC Render */,
 			);
 		};
 /* End PBXProject section */
@@ -570,9 +652,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				8359239523564B56001506B6 /* colorize.sh in Resources */,
-				83C09FC223638E4F0062BF39 /* outhtml_commandbar.lua in Resources */,
 				83A06912236730D800C795D6 /* style.css in Resources */,
 				83C09FDB2365B9360062BF39 /* highlight in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		838F4658238D813500268B4A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8304B0C0238FFC1D007A455C /* colorize.sh in Resources */,
+				8304B0BF238FFC1C007A455C /* highlight in Resources */,
+				8304B0C1238FFC1F007A455C /* style.css in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -613,6 +704,7 @@
 				8359234B235599F6001506B6 /* ViewController.swift in Sources */,
 				831D5F55237F0CF1007340E7 /* CustomTypeViewController.swift in Sources */,
 				83592349235599F6001506B6 /* AppDelegate.swift in Sources */,
+				8304B0B0238DBCA8007A455C /* SCSHBaseSettings.swift in Sources */,
 				8359239F23570C5C001506B6 /* SCSHError.swift in Sources */,
 				830D1559237961C900D5535C /* WarningUTIViewController.swift in Sources */,
 				831D5F5B237F1E87007340E7 /* UTI.swift in Sources */,
@@ -635,7 +727,9 @@
 				836D01E22386BE9F00B85545 /* SCSHTheme.swift in Sources */,
 				8359236223559A2B001506B6 /* PreviewViewController.swift in Sources */,
 				835923EF235A5EB9001506B6 /* SCSHSettings.swift in Sources */,
+				8304B0B2238DBCAB007A455C /* SCSHBaseSettings.swift in Sources */,
 				8359239E23570C5B001506B6 /* SCSHError.swift in Sources */,
+				8304B0BA238FB451007A455C /* String+GShell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -644,6 +738,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				839098C52379E353005D3E7C /* String+GShell.swift in Sources */,
+				8304B0B1238DBCAB007A455C /* SCSHBaseSettings.swift in Sources */,
 				8359238223563BDF001506B6 /* main.swift in Sources */,
 				8359239D23570C52001506B6 /* SCSHError.swift in Sources */,
 				8359238E2356436C001506B6 /* SCSHXPCServiceProtocol.swift in Sources */,
@@ -651,9 +746,28 @@
 				835923EE235A5D33001506B6 /* SCSHSettings.swift in Sources */,
 				8359238F23564497001506B6 /* SCSHXPCService.swift in Sources */,
 				830D15552378419F00D5535C /* NSColor+ext.swift in Sources */,
+				8304B0BC238FBCC4007A455C /* SCSHBaseXPCService.swift in Sources */,
 				836D01E42386C7CD00B85545 /* File+Ext.swift in Sources */,
+				8304B0B7238FA897007A455C /* TaskResult.swift in Sources */,
 				835923EC235A3A85001506B6 /* SCSHTheme.swift in Sources */,
 				830D154D23780A4200D5535C /* SCSHTheme+Lua.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		838F4656238D813500268B4A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8304B0A4238D8794007A455C /* XPCLightRenderServiceProtocol.swift in Sources */,
+				8304B0A7238D89DA007A455C /* String+GShell.swift in Sources */,
+				838F4661238D813500268B4A /* main.swift in Sources */,
+				8304B0A6238D8954007A455C /* File+Ext.swift in Sources */,
+				8304B0B9238FA920007A455C /* SCSHError.swift in Sources */,
+				8304B0A5238D879A007A455C /* XPCLightRenderService.swift in Sources */,
+				8304B0B8238FA897007A455C /* TaskResult.swift in Sources */,
+				8304B0B3238DBCBA007A455C /* SCSHBaseSettings.swift in Sources */,
+				838F465F238D813500268B4A /* XPCLightRenderServiceDelegate.swift in Sources */,
+				8304B0BD238FBCC4007A455C /* SCSHBaseXPCService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -669,6 +783,11 @@
 			isa = PBXTargetDependency;
 			target = 8359237A23563BDF001506B6 /* Syntax Highlight XPC Service */;
 			targetProxy = 8359238423563BDF001506B6 /* PBXContainerItemProxy */;
+		};
+		838F4664238D813500268B4A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 838F4659238D813500268B4A /* Syntax Highlight XPC Render */;
+			targetProxy = 838F4663238D813500268B4A /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -821,7 +940,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 15;
+				CURRENT_PROJECT_VERSION = 16;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = Application/Info.plist;
@@ -846,7 +965,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 15;
+				CURRENT_PROJECT_VERSION = 16;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = Application/Info.plist;
@@ -953,6 +1072,42 @@
 			};
 			name = Release;
 		};
+		838F4667238D813500268B4A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = SyntaxHighlightRenderXPC/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"@loader_path/../../../../Frameworks",
+					"$(LD_RUNPATH_SEARCH_PATHS_$(IS_MACCATALYST)_$(_BOOL_$(SKIP_INSTALL)))",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.XPCRender;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		838F4668238D813500268B4A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = SyntaxHighlightRenderXPC/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"@loader_path/../../../../Frameworks",
+					"$(LD_RUNPATH_SEARCH_PATHS_$(IS_MACCATALYST)_$(_BOOL_$(SKIP_INSTALL)))",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.XPCRender;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -988,6 +1143,15 @@
 			buildConfigurations = (
 				8359238823563BDF001506B6 /* Debug */,
 				8359238923563BDF001506B6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		838F4666238D813500268B4A /* Build configuration list for PBXNativeTarget "Syntax Highlight XPC Render" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				838F4667238D813500268B4A /* Debug */,
+				838F4668238D813500268B4A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

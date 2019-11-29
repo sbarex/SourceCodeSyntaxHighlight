@@ -25,7 +25,7 @@ import Quartz
 import WebKit
 import OSLog
 
-import Syntax_Highlight_XPC_Service
+import Syntax_Highlight_XPC_Render
 
 class MyDraggingView: NSTextView {
     var trackArea: NSTrackingArea? = nil
@@ -150,20 +150,20 @@ class PreviewViewController: NSViewController, QLPreviewingController, WKNavigat
         
         self.fileUrl = url
         
-        let connection = NSXPCConnection(serviceName: "org.sbarex.SourceCodeSyntaxHighlight.XPCService")
-        connection.remoteObjectInterface = NSXPCInterface(with: SCSHXPCServiceProtocol.self)
+        let connection = NSXPCConnection(serviceName: "org.sbarex.SourceCodeSyntaxHighlight.XPCRender")
+        connection.remoteObjectInterface = NSXPCInterface(with: XPCLightRenderServiceProtocol.self)
         connection.resume()
         
         guard let service = connection.synchronousRemoteObjectProxyWithErrorHandler({ error in
             print("Received error:", error)
             handler(SCSHError.xpcGenericError(error: error))
-        }) as? SCSHXPCServiceProtocol else {
+        }) as? XPCLightRenderServiceProtocol else {
             handler(SCSHError.xpcGenericError(error: nil))
             return
         }
         
-        service.colorize(url: url, overrideSettings: nil) { (response: Data, settings: NSDictionary, error: Error?) in
-            let format = settings[SCSHSettings.Key.format] as? String ?? SCSHFormat.html.rawValue
+        service.colorize(url: url) { (response: Data, settings: NSDictionary, error: Error?) in
+            let format = settings[SCSHSettings.Key.format] as? String ?? SCSHBaseSettings.Format.html.rawValue
             DispatchQueue.main.async {
                 /*
                 if let color = settings[SCSHSettings.Key.rtfBackgroundColor] as? String, let c = NSColor(fromHexString: color) {
@@ -174,12 +174,12 @@ class PreviewViewController: NSViewController, QLPreviewingController, WKNavigat
                 }
                 */
                 let previewRect = self.view.bounds.insetBy(dx: 2, dy: 2)
-                if format == SCSHFormat.rtf.rawValue {
+                if format == SCSHBaseSettings.Format.rtf.rawValue {
                     let textScrollView = NSScrollView(frame: previewRect)
                     textScrollView.autoresizingMask = [.height, .width]
                     textScrollView.hasHorizontalScroller = true
                     textScrollView.hasVerticalScroller = true
-                    textScrollView.borderType = .bezelBorder
+                    textScrollView.borderType = .lineBorder
                     self.view.addSubview(textScrollView)
                     
                     let textView = StaticTextView(frame: CGRect(origin: .zero, size: textScrollView.contentSize))
@@ -209,7 +209,7 @@ class PreviewViewController: NSViewController, QLPreviewingController, WKNavigat
                     textScrollView.documentView = textView
                     
                     // The rtf parser don't apply (why?) the page background color.
-                    if let c = settings[SCSHSettings.Key.rtfBackgroundColor] as? String, let color = NSColor(fromHexString: c) {
+                    if let c = settings[SCSHSettings.Key.backgroundColor] as? String, let color = NSColor(fromHexString: c) {
                         textView.backgroundColor = color
                     } else {
                         textView.backgroundColor = .clear

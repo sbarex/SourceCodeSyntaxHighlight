@@ -2,17 +2,17 @@
 <!DOCTYPE index>
 <!-- Some xml example -->
 <index version="1.0" xmlns:pf="http://test">
-   <name>Main Index</name>
-   <indexitem text="rename" target="refactoring.rename"/>
-   <indexitem text="move" target="refactoring.move"/>
-   <indexitem text="migrate" target="refactoring.migrate"/>
-   <indexitem text="usage search" target="find.findUsages"/>
-   <someTextWithEntityRefs>&amp; &#x00B7;</someTextWithEntityRefs>
-   <withCData><![CDATA[
-          <object class="MyClass" key="constant">
-          </object>
-        ]]>
-   </withCData>
-   <indexitem text="project" target="project.management"/>
-   <pf:foo pf:bar="bar"/>
+	<name>Main Index</name>
+	<indexitem text="rename" target="refactoring.rename"/>
+	<indexitem text="move" target="refactoring.move"/>
+	<indexitem text="migrate" target="refactoring.migrate"/>
+	<indexitem text="usage search" target="find.findUsages"/>
+	<someTextWithEntityRefs>&amp; &#x00B7;</someTextWithEntityRefs>
+	<withCData><![CDATA[
+			 <object class="MyClass" key="constant">
+			 </object>
+		  ]]>
+	</withCData>
+	<indexitem text="project" target="project.management"/>
+	<pf:foo pf:bar="bar"/>
 </index>

@@ -35,12 +35,9 @@ class InfoHighlightController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         textView.string = text
-        if #available(OSX 10.15, *) {
-            textView.font = NSFont.monospacedSystemFont(ofSize: 11, weight: NSFont.Weight.regular)
-        } else {
-            // Fallback on earlier versions
-            textView.font = NSFont(name: "Menlo", size: 11) ?? NSFont.systemFont(ofSize: 11)
-        }
+        textView.font = NSFont.monospacedSystemFont(ofSize: 11, weight: NSFont.Weight.regular)
+        textView.textColor = NSColor.textColor
+        textView.backgroundColor = NSColor.textBackgroundColor
         
         if text.isEmpty {
             progressIndicator.startAnimation(self)

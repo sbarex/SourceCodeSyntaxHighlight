@@ -200,7 +200,7 @@ class ThemesViewController: NSViewController {
             /// Show a file.
             var settings: [String: Any] = [
                 SCSHSettings.Key.theme: theme.name,
-                SCSHSettings.Key.inline_theme: theme.toDictionary(),
+                SCSHSettings.Key.inlineTheme: theme.toDictionary(),
                 SCSHSettings.Key.renderForExtension: false,
                 SCSHSettings.Key.lineNumbers: true,
                 SCSHSettings.Key.customCSS: "* { box-sizing: border-box; } html, body { height: 100%; margin: 0; } body { padding: 0; }"
