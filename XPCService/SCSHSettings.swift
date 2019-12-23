@@ -111,6 +111,12 @@ class SCSHSettings: SCSHGlobalBaseSettings {
         
         updateDomains(Key.preprocessor, preprocessor?.isEmpty ?? true ? nil : preprocessor)
         
+        if let v = maxData, v > 0 {
+            defaultsDomain[Key.maxData] = v
+        } else {
+            defaultsDomain.removeValue(forKey: Key.maxData)
+        }
+        
         updateDomains(Key.interactive, allowInteractiveActions)
         updateDomains(Key.debug, debug ? true : nil)
         

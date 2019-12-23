@@ -152,8 +152,15 @@ class SCSHBaseXPCService: NSObject {
             }
         }
         
+        let maxData: String
+        if let v = custom_settings.maxData {
+            maxData = "\(v)"
+        } else {
+            maxData = ""
+        }
+        
         env.merge([
-            "maxFileSize": "",
+            "maxFileSize": maxData,
             "textEncoding": "UTF-8",
             "webkitTextEncoding": "UTF-8",
             

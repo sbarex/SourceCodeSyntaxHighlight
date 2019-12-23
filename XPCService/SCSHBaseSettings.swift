@@ -82,6 +82,7 @@ class SCSHBaseSettings {
         static let preprocessor = "preprocessor"
         
         static let interactive = "interactive"
+        static let maxData = "max-data"
         static let version = "version"
         
     }
@@ -353,6 +354,8 @@ class SCSHGlobalBaseSettings: SCSHBaseSettings {
     /// Customized settings for UTIs.
     var customizedSettings: [String: SCSHUTIBaseSettings] = [:]
     
+    var maxData: UInt64?
+    
     /// Return if exists customized settings.
     override var isCustomized: Bool {
         // Global settings are always customized.
@@ -422,6 +425,8 @@ class SCSHGlobalBaseSettings: SCSHBaseSettings {
         if allowInteractiveActions == nil {
             allowInteractiveActions = false
         }
+        
+        maxData = settings[Key.maxData] as? UInt64;
     }
     
     /// Initialize the setting based on the preferences provided.
@@ -473,6 +478,10 @@ class SCSHGlobalBaseSettings: SCSHBaseSettings {
             r[Key.backgroundColor] = color
         }
         
+        if let maxData = self.maxData {
+            r[Key.maxData] = maxData
+        }
+        
         r[Key.debug] = self.debug
         r[Key.version] = SCSHBaseSettings.version
         
@@ -518,6 +527,10 @@ class SCSHGlobalBaseSettings: SCSHBaseSettings {
         
         if let v = data[Key.renderForExtension] as? Bool {
             self.renderForExtension = v
+        }
+        
+        if let v = data[Key.maxData] as? UInt64 {
+            self.maxData = v;
         }
         
         super.override(fromDictionary: dict)

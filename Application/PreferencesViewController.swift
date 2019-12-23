@@ -120,6 +120,10 @@ class PreferencesViewController: NSViewController {
     @IBOutlet weak var lineNumbersPopup: NSPopUpButton!
     @IBOutlet weak var tabSpacesSlider: NSSlider!
     @IBOutlet weak var argumentsTextField: NSTextField!
+    
+    @IBOutlet weak var dataSize: NSTextField!
+    @IBOutlet weak var dataSizeUM: NSPopUpButton!
+    
     @IBOutlet weak var interactiveButton: NSSwitch!
     @IBOutlet weak var debugButton: NSSwitch!
     
@@ -703,6 +707,20 @@ class PreferencesViewController: NSViewController {
         fontChooseButton.isEnabled = settings != nil
         refreshFontPanel(withFontFamily: settings?.fontFamily ?? "Menlo", size: settings?.fontSize ?? 12, isGlobal: true)
         
+        if var size = settings?.maxData {
+            size /= 1024 // Convert Bytes to KB.
+            if size % 1024 == 0 {
+                dataSize.intValue = Int32(size / 1024)
+                dataSizeUM.selectItem(at: 1)
+            } else {
+                dataSize.intValue = Int32(size)
+                dataSizeUM.selectItem(at: 0)
+            }
+        } else {
+            dataSize.intValue = 0
+            dataSizeUM.selectItem(at: 0)
+        }
+        
         interactiveButton.state = settings?.allowInteractiveActions ?? false ? .on : .off
         interactiveButton.isEnabled = settings != nil
         
@@ -827,6 +845,16 @@ class PreferencesViewController: NSViewController {
         
         settings.tabSpaces = tabSpacesSlider.integerValue
         settings.extra = argumentsTextField.stringValue
+        
+        if (dataSize.floatValue > 0) {
+            var dataSize = self.dataSize.floatValue
+            if (self.dataSizeUM.indexOfSelectedItem == 1) {
+                dataSize *= 1024 // Convert MB to KB.
+            }
+            dataSize *= 1024 // Convert KB to Bytes.
+            
+            settings.maxData = UInt64(dataSize)
+        }
         
         settings.allowInteractiveActions = interactiveButton.state == .on
         

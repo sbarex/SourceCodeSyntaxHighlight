@@ -72,7 +72,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
-        return true
+        return !documentsOpenedAtStart
     }
     
     /// Get the url of the quicklook extension.

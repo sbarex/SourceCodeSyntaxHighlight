@@ -1,3 +1,7 @@
+1.0.b17
+New features:
+- added an option to limit the amount of data to format.
+
 1.0.b16
 
 New features:

@@ -165,7 +165,107 @@ go4it () {
     if [ "${thumb}" = "1" ]; then
         ${reader} 2>> ${err_device} | head -n 100 | head -c 20000 | "${cmd}" ${cmdOpts} 2>> ${err_device} && exit 0
     elif [ -n "${maxFileSize}" ]; then
-        ${reader} 2>> ${err_device} | head -c ${maxFileSize} | "${cmd}" -T "${target}" ${cmdOpts} 2>> ${err_device} && exit 0
+        # create a temporary file
+        tmpfile=$(mktemp -t colorize)
+        echo "tempfile: $tmpfile"  >> ${err_device}
+        
+        # apply preprocessor
+        ${reader} > "$tmpfile" 2>> ${err_device}
+        
+        # get file size
+        bytes=$((`cat "$tmpfile" | wc -c` + 0))
+        echo "Bytes: $bytes"  >> ${err_device}
+        
+        # Convert to number.
+        bytes=$((bytes + 0))
+        maxFileSize=$((maxFileSize + 0))
+        
+        if [ $bytes -gt $maxFileSize ]; then
+            echo "Truncate data to ${maxFileSize} bytes."  >> ${err_device}
+            comment1=""
+            comment2=""
+            case ${lang} in
+                abap4 | abp | abc | express | exp | vimscript | vim | vimrc )
+                    comment1="\""
+                    ;;
+                abnf | ascend | a4c | delphi | pas | dpr | ebnf | ebnf2 | innosetup | iss | lotos | mod2 | mod | def | mod3 | m3 | i3 | oberon | ooc | ocaml | ml | mli | pas | polygen | grm | tex | sty | cls | znn )
+                    comment1="(* "
+                    comment2=" *)"
+                    ;;
+                actionscript | as | assembler | asm | a51 | 29k | 68s | 68x | x86 | ballerina | bal | bcpl | biferno | bfr | bison | y | bnf | c | c++ | cpp | cxx | cc | h | hh | hxx | hpp | cu | ceylon | chpl | clean | icl | clipper | coldfusion | cfc | cfm | csharp | cs | d | dart | dylan | fame | frink | fsharp | fs | fsx | fx | go | graphviz | dot | haxe | hx | hugo | hug | idl | interlis | ili | java | groovy | grv | jenkinsfile | gradle | js | json | kotlin | kt | less | lindenscript | lsl | luban | lbn | maple | mpl | maya | mel | modelica | mo | nbc | nemerle | n | nxc | objc | m | os | php | php3 | php4 | php5 | php6 | pike | pmod | pov | pure | qml | rpg | rs | sas | scad | scilab | sci | sce | scss | small | sma | solidity | sol | squirrel | nut | styl | swift | ts | ttcn3 | vala | verilog | v | whiley | yang)
+                    comment1="//"
+                    ;;
+                ada | adb | ads | a | gnad | agda | alan | i | applescript | eiffel | e | se | euphoria | ex | exw | wxu | ew | eu | haskell | hs | lua | ms | mssql | netrexx | nrx | oorexx | pl1 | ff | fp | pp | rpp | sf | sp | spb | spp | sps | wp | wf | wpp | wps | wpb | bdy | spe | rexx | rex | the | rx | snmp | mib | smisql | sybase | sp | tsql | vhd )
+                    comment1="--"
+                    ;;
+                algol | alg | ampl | dat | run | amtrix | s4 | s4t | s4h | hnd | t4 | awk | bms | boo | cmake | conf | anacrontab | crk | crystal | cr | cs_block_regex | docker | dockerfile | dts | dtsi | elixir | ex | exs | fish | fstab | gdb | gdscript | gd | hcl | httpd | icon | icn | informix | 4gl | julia | jl | ldif | limbo | b | make | mak | mk | makefile | meson | n3 | ttl | nt | nasal | nas | nginx | nim | octave | perl | pl | cgi | pm | plx | plex | po | ps1 | psl | pyrex | pyx | python | py | q | qmake | pro | qu | r | rnc | ruby | rb | pp | rjs | gemfile | rakefile | s | sh | bash | zsh | ebuild | eclass | spec | tcl | wish | itcl | tcsh | terraform | toml | yaml | yml )
+                    comment1="#"
+                    ;;
+                arc | aspect | was | wud | assembler | asm | a51 | 29k | 68s | 68x | x86 | autohotkey | ahk | autoit | au3 | blitzbasic | bb | clojure | clj | clp | exapunks | exa | fasm | asm | inc | felix | flx | idlang | ini | doxyfile | desktop | kdev3 | jasmin | j | lisp | cl | clisp | el | lsp | sbcl | scom | fas | scm | msl | nbs | nsis | nsi | nsh | paradox | sc | purebasic | pb | pbi | pbf | rebol )
+                    comment1=";"
+                    ;;
+                arm | bat | cmd | vb | bas | basic | bi | vbs )
+                    comment1="rem"
+                    ;;
+                asciidoc )
+                    comment1="////"
+                    comment2="////"
+                    ;;
+                asp | aspx | ashx | ascx | html | xhtml | twig | jinja | mxml | slim | svg | xml | sgm | sgml | nrm | ent | hdr | hub | dtd | glade | wml | vxml | wml | tld | csproj | xsl | ecf | jnlp | xsd | resx)
+                    comment1='<!--'
+                    comment2='-->'
+                    ;;
+                avenue | clearbasic | cb | gambas | class | lotus | ls )
+                    comment1="'"
+                    ;;
+                bibtex | bib | erlang | hrl | erl | inc_luatex | logtalk | lgt | matlab | mercury | oz | pro | ps | )
+                    comment1="%"
+                    ;;
+                charmm | inp | fortran90 | f95 | f90 )
+                    comment1="!"
+                    ;;
+                chill | chl | css | io | pony | spn )
+                    comment1="/*"
+                    comment2="*/"
+                    ;;
+                cobol | cob | cbl )
+                    comment1="*"
+                    ;;
+                coffee )
+                    comment1="###"
+                    comment2="###"
+                    ;;
+                diff | patch )
+                    comment1="---"
+                    ;;
+                fortran77 | f | for | ftn )
+                    comment1="c."
+                    ;;
+                jsp )
+                    comment1="<%--"
+                    comment2="--%>"
+                    ;;
+                miranda )
+                    comment1="\\"
+                    ;;
+                smalltalk | st | gst | sq)
+                    comment1="\""
+                    comment2="\""
+                    ;;
+                snobol | sno)
+                    comment1="*"
+                    ;;
+            esac
+
+            {head -c ${maxFileSize} "$tmpfile" ; printf "\n\n${comment1} Output truncated: the file ($bytes bytes) exceed the $maxFileSize bytes limit. ${comment2}\n\n" } | "${cmd}" -T "${target}" ${cmdOpts} 2>> ${err_device}
+        else
+            echo "No need to truncate the data."  >> ${err_device}
+            cat "$tmpfile" | "${cmd}" -T "${target}" ${cmdOpts} 2>> ${err_device}
+        fi
+        # ${reader} 2>> ${err_device} | head -c ${maxFileSize} | "${cmd}" -T "${target}" ${cmdOpts} 2>> ${err_device} && exit 0
+        # delete the temporary file.
+        rm "$tmpfile"
+        exit 0
     else
         ${reader} 2>> ${err_device} | "${cmd}" -T "${target}" ${cmdOpts} 2>> ${err_device} && exit 0
     fi
