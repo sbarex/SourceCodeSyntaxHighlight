@@ -1,3 +1,7 @@
+1.0.b18
+New features:
+- added support for c++ header files.
+
 1.0.b17
 New features:
 - added an option to limit the amount of data to format.

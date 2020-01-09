@@ -104,8 +104,9 @@
 				<string>public.bash-script</string>
 				<string>public.css</string>
 				<string>public.c-header</string>
-				<string>public.c-source</string>
+				<string>public.c-plus-plus-header</string>
 				<string>public.c-plus-plus-source</string>
+				<string>public.c-source</string>
 				<string>public.json</string>
 				<string>public.objective-c-source</string>
 				<string>public.pascal-source</string>
@@ -1214,6 +1215,24 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>rust</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.text</string>
+				<string>public.source-code</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Dart Source File</string>
+			<key>UTTypeIdentifier</key>
+			<string>org.sbarex.conf</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>conf</string>
 				</array>
 			</dict>
 		</dict>

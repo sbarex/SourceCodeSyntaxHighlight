@@ -111,6 +111,7 @@
 				<string>org.omg.ecore</string>
 				<string>org.rdf.source</string>
 				<string>org.rust-lang.source</string>
+				<string>org.sbarex.conf</string>
 				<string>org.sbarex.dart</string>
 				<string>org.scala.source</string>
 				<string>org.tug.lua</string>
@@ -120,8 +121,9 @@
 				<string>public.bash-script</string>
 				<string>public.css</string>
 				<string>public.c-header</string>
-				<string>public.c-source</string>
+				<string>public.c-plus-plus-header</string>
 				<string>public.c-plus-plus-source</string>
+				<string>public.c-source</string>
 				<string>public.json</string>
 				<string>public.objective-c-source</string>
 				<string>public.pascal-source</string>
@@ -153,6 +155,7 @@
 				<string>dyn.ah62d4rv4ge81g25brvuu</string>
 				<string>dyn.ah62d4rv4ge81g25xsq</string>
 				<string>dyn.ah62d4rv4ge81g6pq</string>
+				<string>dyn.ah62d4rv4ge80g55sq2</string>
 			</array>
 			<key>QLSupportsSearchableItems</key>
 			<false/>
