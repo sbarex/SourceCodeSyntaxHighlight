@@ -98,11 +98,11 @@ Customized themes are saved in `~/Library/Application Support/Syntax Highlight/T
 
 
 ## Note for download precompiled release
-The precompiled app is not notarized or signed.
-When you download the precompiled app you must strip quarantine flag before execute:
+The [precompiled app](https://github.com/sbarex/SourceCodeSyntaxHighlight/releases) is not notarized or signed.
+When you download the precompiled app you must strip quarantine flag before execute this command from the terminal:
 
 ```
-$ xattr -r -d com.apple.quarantine "Syntax Highlight.app" 
+$ xattr -r -d com.apple.quarantine "FULL PATH OF THE Syntax Highlight.app (you can drag the file to get the pull path)" 
 ```
 
 This must resolve the error of damage application when launch the app.
