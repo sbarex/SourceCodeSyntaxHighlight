@@ -23,6 +23,23 @@
 import Cocoa
 import Syntax_Highlight_XPC_Service
 
+enum UTISupported {
+    case unknown
+    case no
+    case yes
+    case highlight
+}
+
+class UTIStatus {
+    let UTI: UTI
+    var supported: UTISupported = .unknown
+    let standard: Bool
+    init(UTI: UTI, standard: Bool) {
+        self.UTI = UTI
+        self.standard = standard
+    }
+}
+
 class DropView: NSView {
     weak var dropDelegate: DropViewDelegate?
     
@@ -48,43 +65,39 @@ class DropView: NSView {
     
     override func draggingEntered(_ sender: NSDraggingInfo) -> NSDragOperation {
         self.layer?.borderColor = NSColor.selectedControlColor.cgColor
+        self.dropDelegate?.enterDrag(sender)
         return .every
     }
     
     override func draggingExited(_ sender: NSDraggingInfo?) {
         self.layer?.borderColor = NSColor.gridColor.cgColor
+        self.dropDelegate?.exitDrag(sender)
     }
     
     override func draggingEnded(_ sender: NSDraggingInfo) {
-        if let fileUrl = sender.draggingPasteboard.pasteboardItems?.first?.propertyList(forType: .fileURL) as? String, let url = URL(string: fileUrl) {
-            
-            do {
-                let v = try url.resourceValues(forKeys: [URLResourceKey.typeIdentifierKey])
-                if let uti = v.typeIdentifier {
-                    let u = UTI(uti)
-                    dropDelegate?.setUTI(u)
-                } else {
-                    dropDelegate?.setUTI(nil)
-                }
-            } catch {
-                dropDelegate?.setUTI(nil)
-            }
-        } else {
-            dropDelegate?.setUTI(nil)
-        }
+        self.dropDelegate?.endDrag(sender)
         self.layer?.borderColor = NSColor.gridColor.cgColor
     }
 }
 
 protocol DropViewDelegate: class {
-    func setUTI(_ type: UTI?)
+    func enterDrag(_ sender: NSDraggingInfo)
+    func exitDrag(_ sender: NSDraggingInfo?)
+    func endDrag(_ sender: NSDraggingInfo)
 }
 
-class CustomTypeViewController: NSViewController, DropViewDelegate {
+class CustomTypeViewController: NSViewController, DropViewDelegate, NSTableViewDelegate, NSTableViewDataSource {
     @IBOutlet weak var dropView: DropView!
     @IBOutlet weak var labelView: NSTextField!
-    @IBOutlet weak var warningLabel: NSTextField!
-    @IBOutlet weak var warningImage: NSImageView!
+    
+    @IBOutlet weak var tableView: NSTableView!
+    @IBOutlet weak var scrollView: NSScrollView!
+    
+    @IBOutlet weak var handledLegend: NSStackView!
+    @IBOutlet weak var notHandledLegend: NSStackView!
+    @IBOutlet weak var supportedLegend: NSStackView!
+    
+    private var firstDrop = true
     
     var service: SCSHXPCServiceProtocol? {
         return (NSApplication.shared.delegate as? AppDelegate)?.service
@@ -92,68 +105,82 @@ class CustomTypeViewController: NSViewController, DropViewDelegate {
     
     var handledUTIs: [UTIDesc] = []
     
-    var UTI: UTI? {
+    var UTIs: [UTIStatus] = [] {
         didSet {
-            warningLabel.isHidden = true
-            warningImage.isHidden = true
-            isUTIValid = false
-            
-            if let uti = self.UTI {
-                let s = NSMutableAttributedString()
-                var label: String = uti.description
-                if uti.extensions.count > 0 {
-                    label += (label.isEmpty ? "" : " ") + "[.\(uti.extensions.joined(separator: ", ."))]"
+            self.handledLegend.isHidden = true
+            self.notHandledLegend.isHidden = true
+            self.supportedLegend.isHidden = true
+            if (self.UTIs.count > 0) {
+                for (i, uti) in self.UTIs.enumerated() {
+                    if let _ = handledUTIs.first(where: { $0.uti == uti.UTI }) {
+                        uti.supported = .yes
+                        self.handledLegend.isHidden = false
+                    } else {
+                        service?.areSomeSyntaxSupported(uti.UTI.extensions, overrideSettings: nil, reply: { (state) in
+                            self.notHandledLegend.isHidden = state
+                            self.supportedLegend.isHidden = !state
+                            uti.supported = state ? .highlight : .no
+                            let c = self.tableView.column(withIdentifier: NSUserInterfaceItemIdentifier("status"))
+                            self.tableView.reloadData(forRowIndexes: IndexSet(integer: i), columnIndexes: IndexSet(integer: c))
+                        })
+                    }
                 }
-                
-                let style = NSMutableParagraphStyle()
-                style.alignment = .center
-    
-                if !label.isEmpty {
-                    s.append(NSAttributedString(string: label + "\n", attributes: [NSAttributedString.Key.paragraphStyle: style]))
-                }
-                s.append(NSAttributedString(string: uti.UTI, attributes: [NSAttributedString.Key.font : NSFont.systemFont(ofSize: NSFont.systemFontSize(for: NSControl.ControlSize.small)), NSAttributedString.Key.paragraphStyle: style]))
-                
-                labelView.attributedStringValue = s
-                
-                if let _ = handledUTIs.first(where: { $0.uti == uti }) {
-                    self.warningLabel.stringValue = "Format recognized by the extension."
-                    self.warningImage.image = NSImage(named: NSImage.statusAvailableName)
-                    
-                    self.warningLabel.isHidden = false
-                    self.warningImage.isHidden = false
-                    
-                    return
-                } else {
-                    service?.areSomeSyntaxSupported(uti.extensions, overrideSettings: nil, reply: { (state) in
-                        self.warningLabel.stringValue = state ? "Format handled by highlight but not by the extension." : "Format not supported by highlight."
-                        self.warningImage.image = NSImage(named: state ? NSImage.statusPartiallyAvailableName : NSImage.statusUnavailableName)
-                        self.warningLabel.isHidden = false
-                        self.warningImage.isHidden = false
-                        
-                        self.isUTIValid = state
-                    })
-                }
-            } else {
-                labelView.stringValue = "Drag a file here"
             }
+            
+            self.tableView.reloadData()
         }
     }
-    
-    fileprivate(set) var isUTIValid: Bool = false
-    
+        
     override func viewDidLoad() {
         self.dropView.dropDelegate = self
         
-        self.warningLabel.isHidden = true
-        self.warningImage.isHidden = true
-        
         handledUTIs = (NSApplication.shared.delegate as? AppDelegate)?.fetchHandledUTIs() ?? []
+        
+        self.handledLegend.isHidden = true
+        self.notHandledLegend.isHidden = true
+        self.supportedLegend.isHidden = true
     }
     
-    func setUTI(_ type: UTI?) {
-        self.UTI = type
+    func enterDrag(_ sender: NSDraggingInfo) {
+        self.scrollView.isHidden = true
+    }
+    func exitDrag(_ sender: NSDraggingInfo?) {
+        self.scrollView.isHidden = firstDrop
+    }
+    func endDrag(_ sender: NSDraggingInfo) {
+        if let fileUrl = sender.draggingPasteboard.pasteboardItems?.first?.propertyList(forType: .fileURL) as? String, let url = URL(string: fileUrl) {
+            
+            var UTIs: [UTIStatus] = []
+            
+            do {
+                let v = try url.resourceValues(forKeys: [URLResourceKey.typeIdentifierKey])
+                if let uti = v.typeIdentifier {
+                    UTIs.append(UTIStatus(UTI: UTI(uti), standard: true))
+                }
+            } catch {
+            }
+            
+            let ext = url.pathExtension
+            if !ext.isEmpty {
+                let tags = UTTypeCreateAllIdentifiersForTag(kUTTagClassFilenameExtension, ext as CFString, nil)
+                if let t = tags?.takeRetainedValue() as? [String] {
+                    for u in t {
+                        if UTIs.first(where: { $0.UTI.UTI == u }) == nil {
+                            UTIs.append(UTIStatus(UTI: UTI(u), standard: false))
+                        }
+                    }
+                }
+            }
+            self.UTIs = UTIs
+            self.scrollView.isHidden = false
+            firstDrop = false
+        } else {
+            self.UTIs = []
+            self.scrollView.isHidden = true
+        }
     }
     
+    /*
     @IBAction func doSave(_ sender: Any) {
         if isUTIValid, let url = (NSApplication.shared.delegate as? AppDelegate)?.getQLAppexUrl(), let bundle = Bundle(url: url) {
             
@@ -189,5 +216,41 @@ class CustomTypeViewController: NSViewController, DropViewDelegate {
             print(u)
         }
         dismiss(sender)
+    }
+     */
+    
+    func numberOfRows(in tableView: NSTableView) -> Int {
+        return self.UTIs.count
+    }
+    
+    func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
+        let uti = self.UTIs[row]
+        let font: NSFont
+              
+        if uti.standard {
+            font = NSFont.boldSystemFont(ofSize: NSFont.systemFontSize)
+        } else {
+            font = NSFont.labelFont(ofSize: NSFont.systemFontSize)
+        }
+        if tableColumn?.identifier == NSUserInterfaceItemIdentifier("description") {
+             return NSAttributedString(string: uti.UTI.description, attributes: [NSAttributedString.Key.font: font])
+        } else if tableColumn?.identifier == NSUserInterfaceItemIdentifier("UTI") {
+            return NSAttributedString(string: uti.UTI.UTI, attributes: [NSAttributedString.Key.font: font])
+        } else if tableColumn?.identifier == NSUserInterfaceItemIdentifier("status") {
+            switch (uti.supported) {
+            case .yes:
+                return NSImage(named: NSImage.statusAvailableName)
+            case .no:
+                return NSImage(named: NSImage.statusUnavailableName)
+            case .highlight:
+                return NSImage(named: NSImage.statusPartiallyAvailableName)
+            case .unknown:
+                return NSImage(named: NSImage.statusNoneName)
+            }
+        } else if tableColumn?.identifier == NSUserInterfaceItemIdentifier("ext") {
+            return uti.UTI.extensions.joined(separator: ", ")
+        }
+        
+        return nil
     }
 }
