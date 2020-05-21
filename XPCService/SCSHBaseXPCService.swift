@@ -57,13 +57,90 @@ class SCSHBaseXPCService: NSObject {
     let settingsType = SCSHGlobalBaseSettings.self
     
     /// Return the folder for the application support files.
-    var applicationSupportUrl: URL? {
+    class var applicationSupportUrl: URL? {
         return FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first?.appendingPathComponent("Syntax Highlight")
     }
     
     // MARK: - Initializer
     internal class func initSettings() -> SCSHGlobalBaseSettings {
-        return  SCSHGlobalBaseSettings(defaultsDomain: XPCDomain)
+        let s = SCSHGlobalBaseSettings(defaultsDomain: XPCDomain)
+        populateSpecialSettings(s)
+        return s
+    }
+    
+    internal class func populateSpecialSettings(_ settings: SCSHGlobalBaseSettings) {
+        for (uti, uti_settings) in settings.customizedSettings {
+            let baseSettings: String
+            if let file = applicationSupportUrl?.appendingPathComponent("defaults/\(uti).plist"), FileManager.default.fileExists(atPath: file.path) {
+                // Customized file inside the application support folder.
+                baseSettings = file.path
+            } else if let file = Bundle.main.path(forResource: uti, ofType: "plist", inDirectory: "defaults") {
+                // Customized file inside the application resources folder.
+                baseSettings = file
+            } else {
+                baseSettings = ""
+            }
+            if !baseSettings.isEmpty, let plistXML = FileManager.default.contents(atPath: baseSettings) {
+                do {
+                    // Customize the base global settings with the special values inside the plist.
+                    if let plistData = try PropertyListSerialization.propertyList(from: plistXML, options: .mutableContainers, format: nil) as? [String:String] {
+                    
+                        uti_settings.specialSettings = plistData
+                    }
+                } catch {
+                    print("Error reading plist \(baseSettings): \(error)")
+                }
+            }
+        }
+        
+        let process = { (file: String, p: URL) in
+            let url = URL(fileURLWithPath: file, relativeTo: p)
+            guard url.pathExtension == "plist" else {
+                return
+            }
+            let name = url.deletingPathExtension().lastPathComponent
+            guard !settings.hasCustomizedSettings(forUTI: name) else {
+                return
+            }
+            
+            if let plistXML = FileManager.default.contents(atPath: url.path) {
+                do {
+                    // Customize the base global settings with the special values inside the plist.
+                    guard let plistData = try PropertyListSerialization.propertyList(from: plistXML, options: .mutableContainers, format: nil) as? [String:String] else {
+                        return
+                    }
+                    let s = type(of: settings).createSettings(forUTI: name, settings: [:])
+                    
+                    s.specialSettings = plistData
+                    settings.setCustomizedSettingsForUTI(s)
+                } catch {
+                    print("Error reading plist \(file): \(error)")
+                }
+            }
+        }
+        
+        var d: ObjCBool = false
+        if let p = applicationSupportUrl?.appendingPathComponent("defaults"), FileManager.default.fileExists(atPath: p.path, isDirectory: &d), d.boolValue {
+            do {
+                for file in try FileManager.default.contentsOfDirectory(atPath: p.path) {
+                    process(file, p)
+                }
+            } catch {
+            }
+        }
+        
+        if let p = Bundle.main.url(forResource: "defaults", withExtension: nil) {
+            do {
+                for file in try FileManager.default.contentsOfDirectory(atPath: p.path) {
+                    if let f = applicationSupportUrl?.appendingPathComponent("defaults/\(file)"), FileManager.default.fileExists(atPath: f.path) {
+                        // Exists a custom file on the application support folder.
+                        continue
+                    }
+                    process(file, p)
+                }
+            } catch {
+            }
+        }
     }
     
     override init() {
@@ -160,18 +237,21 @@ class SCSHBaseXPCService: NSObject {
         }
         
         env.merge([
-            "maxFileSize": maxData,
+            "maxFileSizeHL": maxData,
             "textEncoding": "UTF-8",
             "webkitTextEncoding": "UTF-8",
             
             // Debug
-            "qlcc_debug": custom_settings.debug ? "1" : "",
+            "debugHL": custom_settings.debug ? "1" : "",
         ]) { (_, new) in new }
         
-        if let preprocessor = try? custom_settings.preprocessor?.trimmingCharacters(in: CharacterSet.whitespaces).tokenize_command_line() {
-            env["preprocessorHL"] = preprocessor.joined(separator: "•")
+        if let preprocessor = custom_settings.preprocessor?.trimmingCharacters(in: CharacterSet.whitespaces), !preprocessor.isEmpty {
+            env["preprocessorHL"] = preprocessor
         } else {
             env.removeValue(forKey: "preprocessorHL")
+        }
+        if let syntax = custom_settings.syntax {
+            env["syntaxHL"] = syntax
         }
         
         return ColorizeArguments(highlight: highlightPath, env: env, theme: hlArguments.theme, backgroundColor: hlArguments.backgroundColor, css: cssCode, inlineTheme: nil, arguments: hlArguments.arguments)
@@ -254,13 +334,13 @@ class SCSHBaseXPCService: NSObject {
             "pathHL": colorize.highlight,
             
             // Theme to use.
-            "hlTheme": colorize.theme,
+            "themeHL": colorize.theme,
             
-            "extraHLFlags": colorize.arguments.joined(separator: "•"),
+            "extraFlagsHL": colorize.arguments.joined(separator: "•"),
         ]) { (_, new) in new }
         
         /// Command to execute.
-        let cmd = "\(self.rsrcEsc)/colorize.sh".g_shell_quote() + " " + url.path.g_shell_quote() + " 0"
+        let cmd = "\(self.rsrcEsc)/colorize.sh".g_shell_quote() + " " + url.path.g_shell_quote()
         
         os_log(OSLogType.debug, log: self.log, "cmd = %{public}@", cmd)
         os_log(OSLogType.debug, log: self.log, "env = %@", colorize.env)
@@ -303,7 +383,7 @@ class SCSHBaseXPCService: NSObject {
     ///   - create: If the folder don't exists try to create it.
     /// - returns: The url of the custom themes folder. If is requested to create if missing and the creations fail will be return nil.
     func getCustomThemesUrl(createIfMissing create: Bool = true) -> URL? {
-        if let url = applicationSupportUrl?.appendingPathComponent("Themes") {
+        if let url = type(of: self).applicationSupportUrl?.appendingPathComponent("Themes") {
             if create && !FileManager.default.fileExists(atPath: url.path) {
                 do {
                     try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true, attributes: nil)
@@ -324,7 +404,7 @@ class SCSHBaseXPCService: NSObject {
     ///   - create: If the folder don't exists try to create it.
     /// - returns: The url of the custom styles folder. If is requested to create if missing and the creations fail will be return nil.
     func getCustomStylesUrl(createIfMissing create: Bool = true) -> URL? {
-        if let url = applicationSupportUrl?.appendingPathComponent("Styles") {
+        if let url = type(of: self).applicationSupportUrl?.appendingPathComponent("Styles") {
             if create && !FileManager.default.fileExists(atPath: url.path) {
                 do {
                     try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true, attributes: nil)

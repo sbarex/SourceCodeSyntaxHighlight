@@ -32,42 +32,35 @@ class UTI: Equatable {
     lazy var description: String = {
         let type = self.UTI as CFString
         
-        if let desc = UTTypeCopyDescription(type)?.takeRetainedValue() {
-            return (desc as String).prefix(1).uppercased() + (desc as String).dropFirst()
+        if let desc = UTTypeCopyDescription(type)?.takeRetainedValue() as String? {
+            return desc.prefix(1).uppercased() + desc.dropFirst()
         } else {
-            return ""
+            return self.UTI
         }
     }()
     
     lazy var extensions: [String] = {
-        let type = self.UTI as CFString
-        
-        if let info = UTTypeCopyDeclaration(type)?.takeRetainedValue() as? [String: AnyObject], let specifications = info["UTTypeTagSpecification"] as? [String: AnyObject], let extensions = specifications["public.filename-extension"] {
-            if let ext = extensions as? String {
-                return [ext]
-            } else if let exts = extensions as? [String] {
-                return exts
-            }
+        guard let tags = UTTypeCopyAllTagsWithClass(self.UTI as CFString, kUTTagClassFilenameExtension as CFString)?.takeRetainedValue() else {
+            return []
         }
         
-        return []
+        return tags as NSArray as? [String] ?? []
     }()
     
     lazy var mimeTypes: [String] = {
-        let type = self.UTI as CFString
-        if let info = UTTypeCopyDeclaration(type)?.takeRetainedValue() as? [String: AnyObject], let specifications = info["UTTypeTagSpecification"] as? [String: AnyObject], let mimes = specifications["public.mime-type"] {
-            if let m = mimes as? String {
-                return [m]
-            } else if let m = mimes as? [String] {
-                return m
-            }
+        guard let tags = UTTypeCopyAllTagsWithClass(self.UTI as CFString, kUTTagClassMIMEType as CFString)?.takeRetainedValue() else {
+            return []
         }
         
-        return []
+        return tags as NSArray as? [String] ?? []
     }()
     
     lazy var icon: NSImage? = {
         return NSWorkspace.shared.icon(forFileType: self.UTI)
+    }()
+    
+    lazy var isDynamic: Bool = {
+        return UTTypeIsDynamic(UTI as CFString)
     }()
     
     init(_ UTI: String) {

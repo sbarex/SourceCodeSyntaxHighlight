@@ -4,7 +4,7 @@ This application offers a quicklook extension for MacOS 10.15 Catalina for previ
 Inside it uses [Highlight](http://www.andre-simon.de/doku/highlight/en/highlight.php) to render source code with syntax highlighting.
 The application is distributed with a version of the `highlight`. If you want you can use a different version customizing the preferences.
 
-MacOS 10.15 Catalina has deprecated the qlgenerator APIs. Moreover a .qlgenerator package inside Library/QuickLook must be notarized on 10.15.0 to works. In version 10.15.1 it seems that notarization is no longer required.  
+MacOS 10.15.0 Catalina has deprecated the qlgenerator APIs. Moreover a .qlgenerator package inside Library/QuickLook must be notarized on 10.15.0 to works. In version 10.15.1 it seems that notarization is no longer required.  
 
 This project consists of these components:
 
@@ -38,7 +38,7 @@ Some file types are directly associated to an UTI by the system. Other formats a
 
 For this reason, this application supports many UTIs even if they are apparently redundant. 
 
-Apparently the operating system does not allow to manage some file formats including (but not limited to) .xml, .plist, .html, .ts, .dart.
+_Apparently the operating system does not allow to manage some file formats including (but not limited to) .xml, .plist, .html, .ts, .dart._
 
 It's likely that I didn't associate all the possible extensions managed by `highlight`.
 
@@ -63,30 +63,65 @@ To view the info about `highlight` with the supported file formats and extension
 
 In the standalone app, with the preferences window you can customize the preview settings used by the plugin extension.
 
-![Global settings window](settings.png)
+![Preferences window](settings.png)
 
-Some `highlight` features, such as theme, words wrap, line numbers and tabs, are managed through the preferences gui. It is also possible to choose a different theme when OS use light or dark style.
+The preferences windows has three zones:
+- on the left side the list of the supported UTI file format;
+- on the center the panel to edit the settings;
+- on the right side the preview of current settings.
 
-In addition to the global settings for all supported file formats, you can set specific settings for individual file formats.
+You can set the settings for all file selecting the _Global_ item on the left list or customize for a specific UTI format.
+When you customize the settings of a specific format the global preferences are inherited and you can override only the requested options.
 
-![File type settings window](settings_specific.png)
-
-In the file type Specific settings, there is a list of all file types supported by the quicklook extension.
-In this list the grayout items are those currently managed by others UTI. Clicking on the exclamation mark icon you will show which UTI is used for a given file extension.
+In the list of supported file type the grayout items are those currently managed by others UTI. Clicking on the exclamation mark icon you will show which UTI is used for a given file extension.
 
 ![File type settings window](settings_specific_warn.png)
-
-The debug option on settings panel enable the creation of two files on your Desktop:
-- colorize.log: log of the colorize operations
-- colorize.[html|rtf] output of the syntax highlight
 
 The settings are stored in `~/Library/Preferences/org.sbarex.SourceCodeSyntaxHighlight.plist`.
 Custom themes and styles are saved in `~/Library/Application Support/Syntax Highlight`.
 
 
+### General settings
+![Global settings window](settings_global.png)
+
+Selecting the _Global_ item on the left list you can set the general settings of the engine:
+- *Highlight*: path of the `highlight` utils. You can choose the embedded version or select a different version (compiled by hand or installed with homebrew for example).
+- *Output mode*: set the rendering output. Can be _html_ that use the WebKit or _rtf_ that use a NSTextView.
+- *Data limit*: maximum amount of data to format, data beyond the limit is omitted. Specify 0 to not limit.
+- *Debug*: enable the generation of the _colorize.log_ and _colorize.html|rtf_ on your desktop for debug purpose.
+
+### Appearance settings
+![Appearance settings window](settings_appearance.png)
+
+This section allow to customize the appearance of the rendered source files:
+- *Themes*: You can choose a theme for light and dark style of the MacOS.
+- *Custom style*: for _html_ output mode you can set a custom css style to override the theme settings. 
+- *Font*: font family and size to use in the output. Depending on the theme chosen, italic and bold style may be applied to certain elements. 
+- *Word wrap*: handle the style of the work wrap.
+- *Line number*: you can set the visibility of the line numbers.
+- *Tabs*: set if the tabs must be converted to space. Setting to zero disable tabs conversions.
+
+### Extra settings
+![Appearance settings window](settings_extra.png)
+
+This section allow to customize extra advanced settings:
+- *Interactive preview*: if the global output option is set to _html_ enable javascript inside the preview windows. Use only if you use some `higlight` plugins that embed js code inside the output.
+- *Arguments*: extra arguments for the `highlight` executable. Arguments that contains a white space must be protected inside queted.
+- *Append arguments* (only for custom UTI settings): allow to set extra arguments to be appended to the global arguments.
+- *Pre processor* (only for custom UTI settings): set a program or a shell script to preprocess the source file before the formatting. The program must output to stdout the data to be passed to `highlight`. You **must** pass the name of the source file using the `$targetHL` placeholder. With the preprocessor you can handle file format not directly supported by `highlight`.
+- *Syntax* (only for custom UTI settings): set which language must be used to recognize the source file. If not set will be used the file name extension to recognize the format. 
+
+Some file format have a preconfigured custom settings to handle the data (for example java compiled class file can be decompiled before render).
+
+### Preview
+The preview panel show an example of the output with the current settings.
+You can show the single theme color items or test the output with some example source files.
+You can also browse for a custom file to test the preview.
+
+
 ## Theme editor
 The application has a gui theme editor accessible form menu `View/Themes editor`. 
-With this interface you can create a custom theme to use with highlight.
+With this interface you can create a custom theme to use with `highlight`.
 
 ![Theme editor](theme_editor.png)
 
@@ -99,7 +134,9 @@ Customized themes are saved in `~/Library/Application Support/Syntax Highlight/T
 
 ## Note for download precompiled release
 The [precompiled app](https://github.com/sbarex/SourceCodeSyntaxHighlight/releases) is not notarized or signed.
-When you download the precompiled app you must strip quarantine flag before execute this command from the terminal:
+When you download the precompiled app you must strip quarantine flag.
+You can launch the app with right click (or ctrl click) on the app icon anche choosing the open action.
+Also you can execute this command from the terminal:
 
 ```
 $ xattr -r -d com.apple.quarantine "FULL PATH OF THE Syntax Highlight.app (you can drag the file to get the pull path)" 

@@ -12,10 +12,7 @@ Keywords={
     List={"co-expression", "cset", "tfile", "integer", "list", "null", "real", "set", "string", "table", "window"},
   },
   { Id=3,
-    Regex=[[\&\w+]]
-  },
-  { Id=3,
-    Regex=[[\$\w+]]
+    Regex=[[[\&\$\@]\w+]]
   },
   { Id=4,
     Regex=[[(\w+)\s*\(]]
@@ -34,5 +31,5 @@ Comments={
   },
 }
 
-Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\:|<|>|\!|\-|\+|\=|\/|\*|\+|\-|\~]]
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\:|<|>|\!|\-|\+|\=|\/|\*|\+|\-|\~|\|]]
 

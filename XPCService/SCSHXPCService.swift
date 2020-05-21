@@ -35,7 +35,9 @@ class SCSHXPCService: SCSHBaseXPCService, SCSHXPCServiceProtocol {
     }
     
     override internal class func initSettings() -> SCSHGlobalBaseSettings {
-        return SCSHSettings(defaultsDomain: XPCDomain)
+        let s = SCSHSettings(defaultsDomain: XPCDomain)
+        populateSpecialSettings(s)
+        return s
     }
     
     override init() {
@@ -62,6 +64,18 @@ class SCSHXPCService: SCSHBaseXPCService, SCSHXPCServiceProtocol {
             return false
         }
         
+        if settings.version <= 2.1 {
+            for (_, uti_settings) in settings.customizedSettings {
+                guard let preprocessor = uti_settings.preprocessor, !preprocessor.isEmpty else {
+                    continue
+                }
+                if preprocessor.range(of: #"(?<=\s|^)\$targetHL(?=\s|$)"#, options: .regularExpression, range: nil, locale: nil) == nil {
+                    // Append the target placeholder at the end of the preprocessor command.
+                    uti_settings.preprocessor = preprocessor.appending(" $targetHL")
+                }
+            }
+        }
+        
         let defaults = UserDefaults.standard
         var defaultsDomain = defaults.persistentDomain(forName: type(of: self).XPCDomain) ?? [:]
         
@@ -78,46 +92,62 @@ class SCSHXPCService: SCSHBaseXPCService, SCSHXPCServiceProtocol {
         defaultsDomain.removeValue(forKey: "commands-toolbar")
         
         // "theme-light-is16" and "theme-dark-is16" are replaced by "base16/" prefix on theme name.
-        let migrateBase16 = { (settings: SCSHBaseSettings, defaultsDomain: inout [String: Any]) -> Bool in
+        let migrateBase16 = { (settings: SCSHBaseSettings, defaultsDomain: inout [String: Any], UTI: String) -> Bool in
             var changed = false
-            if let lightThemeIsBase16 = defaultsDomain["theme-light-is16"] as? Bool {
+            if let lightThemeIsBase16 = (UTI.isEmpty ? defaultsDomain : defaultsDomain[customizedTypes: SCSHSettings.Key.customizedUTISettings]![jsonDict: UTI]!)["theme-light-is16"] as? Bool {
                 if lightThemeIsBase16, let t = settings.lightTheme, !t.hasPrefix("base16") {
                     settings.lightTheme = "base16/\(t)"
                 }
-                defaultsDomain.removeValue(forKey: "theme-light-is16")
+                if UTI.isEmpty {
+                    defaultsDomain.removeValue(forKey: "theme-light-is16")
+                } else {
+                    defaultsDomain[customizedTypes: SCSHSettings.Key.customizedUTISettings]?[jsonDict: UTI]?.removeValue(forKey: "theme-light-is16")
+                }
                 changed = true
             }
-            if let darkThemeIsBase16 = defaultsDomain["theme-dark-is16"] as? Bool {
+            if let darkThemeIsBase16 = (UTI.isEmpty ? defaultsDomain : defaultsDomain[customizedTypes: SCSHSettings.Key.customizedUTISettings]![jsonDict: UTI]!)["theme-dark-is16"] as? Bool {
                 if darkThemeIsBase16, let t = settings.darkTheme, !t.hasPrefix("base16") {
                     settings.darkTheme = "base16/\(t)"
                 }
-                defaultsDomain.removeValue(forKey: "theme-dark-is16")
+                if UTI.isEmpty {
+                    defaultsDomain.removeValue(forKey: "theme-dark-is16")
+                } else {
+                    defaultsDomain[customizedTypes: SCSHSettings.Key.customizedUTISettings]?[jsonDict: UTI]?.removeValue(forKey: "theme-dark-is16")
+                }
                 changed = true
             }
             return changed
         }
         
         // Custom CSS are saved on external files.
-        let migrateCSS = { (settings: SCSHBaseSettings, defaultsDomain: inout [String: Any]) -> Bool in
+        let migrateCSS = { (settings: SCSHBaseSettings, defaultsDomain: inout [String: Any], UTI: String) -> Bool in
             var changed = false
-            if let customCSS = defaultsDomain["css"] as? String {
-                if let success = try? self.setCustomStyle(customCSS, forUTI: (settings as? SCSHUTIBaseSettings)?.uti ?? ""), success {
-                    defaultsDomain.removeValue(forKey: "css")
+            if let customCSS = (!UTI.isEmpty ? defaultsDomain[customizedTypes: SCSHSettings.Key.customizedUTISettings]![jsonDict: UTI]! : defaultsDomain)["css"] as? String {
+                if let success = try? self.setCustomStyle(customCSS, forUTI: UTI), success {
+                    if UTI.isEmpty {
+                        defaultsDomain.removeValue(forKey: "css")
+                    } else {
+                        defaultsDomain[customizedTypes: SCSHSettings.Key.customizedUTISettings]?[jsonDict: UTI]?.removeValue(forKey: "css")
+                    }
                     changed = true
                 }
             }
             return changed
         }
         
-        _ = migrateBase16(settings, &defaultsDomain)
-        _ = migrateCSS(settings, &defaultsDomain)
+        _ = migrateBase16(settings, &defaultsDomain, "")
+        _ = migrateCSS(settings, &defaultsDomain, "")
         
-        if let custom_formats = defaultsDomain[SCSHSettings.Key.customizedUTISettings] as? [String: [String: Any]] {
+        if let custom_formats = defaultsDomain[customizedTypes: SCSHSettings.Key.customizedUTISettings] {
             for (uti, _) in custom_formats {
-                var utiDefaultsDomain = custom_formats[uti]!
+                var utiDefaultsDomain = (defaultsDomain[SCSHSettings.Key.customizedUTISettings] as! [String: [String: Any]])[uti]!
                 if let s = settings.getCustomizedSettings(forUTI: uti) {
-                    _ = migrateBase16(s, &utiDefaultsDomain)
-                    _ = migrateCSS(s, &utiDefaultsDomain)
+                    _ = migrateBase16(s, &defaultsDomain, uti)
+                    _ = migrateCSS(s, &defaultsDomain, uti)
+                    
+                    if settings.version <= 2.1, let preprocessor = utiDefaultsDomain["preprocessor"] as? String, !preprocessor.isEmpty, preprocessor.range(of: #"(?<=\s|^)\$targetHL(?=\s|$)"#, options: .regularExpression, range: nil, locale: nil) == nil {
+                        defaultsDomain[customizedTypes: SCSHSettings.Key.customizedUTISettings]![uti]!["preprocessor"] = preprocessor.appending(" $targetHL")
+                    }
                     
                     if let c = defaultsDomain["rtf-background-color-light"] as? String {
                         s.lightBackgroundColor = c
@@ -640,7 +670,7 @@ class SCSHXPCService: SCSHBaseXPCService, SCSHXPCServiceProtocol {
     
     /// Return the url of the application support folder that contains themes and custom css styles.
     func getApplicationSupport(reply: @escaping (_ url: URL?)->Void) {
-        reply(applicationSupportUrl)
+        reply(type(of: self).applicationSupportUrl)
     }
     
     func getXPCPath(replay: @escaping (URL)->Void) {
@@ -742,6 +772,60 @@ class SCSHXPCService: SCSHBaseXPCService, SCSHXPCServiceProtocol {
         highlightInfo(highlight: "-", reply: reply)
     }
     
+    /// Get all syntax format supported by highlight.
+    /// Returns a dictionary, with on the keys the description of the syntax format, and on values an array of recognized extensions.
+    /// - parameters:
+    ///   - highlight: Path of highlight. Empty or "-" for use the embedded version.
+    func highlightAvailableSyntax(highlight: String, reply: @escaping (NSDictionary) -> Void) {
+        // Set environment variables.
+        // All values on env are automatically quoted escaped.
+        var env = ProcessInfo.processInfo.environment
+        env["PATH"] = (env["PATH"] ?? "") + ":/usr/local/bin:/usr/local/sbin"
+        
+        var highlightPath = highlight
+        if highlightPath == "" || highlightPath == "-" {
+            let p  = self.getEmbeddedHighlight()
+            highlightPath = p.path
+            env.merge(p.env) { (_, new) in new }
+        }
+        
+        guard highlightPath != "" else {
+            reply(NSDictionary())
+            return
+        }
+        
+        /// Command to execute.
+        let cmd = "echo \"\" | \(highlightPath.g_shell_quote()) --list-scripts=langs"
+        
+        os_log(OSLogType.debug, log: self.log, "cmd = %{public}@", cmd)
+        os_log(OSLogType.debug, log: self.log, "env = %@", env)
+        
+        var res: [String: [String: Any]] = [:]
+        if let result = try? ShellTask.runTask(script: cmd, env: env), result.exitCode == 0, let s = result.output() {
+            let rows = s.split(separator: "\n")
+            let regex = try! NSRegularExpression(pattern: #"^(.+) +: (.*)$"#)
+            for row in rows {
+                if let match = regex.firstMatch(in: String(row), options: [], range: NSRange(location: 0, length: row.utf16.count)) {
+                    if let descRange = Range(match.range(at: 1), in: row), let extsRange = Range(match.range(at: 2), in: row) {
+                        let desc = String(row[descRange]).trimmingCharacters(in: CharacterSet.whitespaces)
+                        var exts = String(row[extsRange]).split(separator: " ").map({ String($0) })
+                        exts = exts.filter({ $0 != "(" && $0 != ")" })
+                        
+                        res[desc] = [
+                            "extension": exts.first!,
+                            "extensions": exts
+                        ]
+                    }
+                }
+            }
+        }
+        reply(res as NSDictionary)
+    }
+    
+    func highlightAvailableSyntax(reply: @escaping (NSDictionary) -> Void) {
+        highlightAvailableSyntax(highlight: "-", reply: reply)
+    }
+    
     /// Check if a file extension is handled by highlight.
     func isSyntaxSupported(_ syntax: String, overrideSettings: NSDictionary?, reply: @escaping (Bool) -> Void) {
         let custom_settings = SCSHSettings(settings: settings)
@@ -813,5 +897,77 @@ class SCSHXPCService: SCSHBaseXPCService, SCSHXPCServiceProtocol {
         }
         
         reply(false)
+    }
+    
+    /*
+    /// Add a custom uti to the info.plist of the app and the appex.
+    /// **This clear the code signature**
+    ///
+    /// FIXME: Clearing the signature prevent macos to recognize and use the appex!
+    func registerUTI(_ uti: String, result: @escaping (Bool)->Void ) {
+        let infoPlistAppex = Bundle.main.resourceURL!.deletingLastPathComponent().deletingLastPathComponent().deletingLastPathComponent().deletingLastPathComponent().appendingPathComponent("PlugIns/Syntax Highlight Quicklook Extension.appex/Contents/Info.plist")
+        var task = Process()
+        task.launchPath = "/usr/libexec/PlistBuddy"
+        task.arguments = [
+            "-c",
+            "Add :NSExtension:NSExtensionAttributes:QLSupportedContentTypes: string \"\(uti)\"",
+            infoPlistAppex.path
+        ]
+        task.launch()
+        task.waitUntilExit()
+        print("result Appex: \(task.terminationStatus)")
+
+        guard task.terminationStatus == 0 else {
+            result(false)
+            return
+        }
+        
+        let infoPlistApp = Bundle.main.resourceURL!.deletingLastPathComponent().deletingLastPathComponent().deletingLastPathComponent().deletingLastPathComponent().appendingPathComponent("Info.plist")
+        
+        task = Process()
+        task.launchPath = "/usr/libexec/PlistBuddy"
+        task.arguments = [
+            "-c",
+            "Add :CFBundleDocumentTypes:0:LSItemContentTypes: string \"\(uti)\"",
+            infoPlistApp.path
+        ]
+        task.launch()
+        task.waitUntilExit()
+        print("result App: \(task.terminationStatus)")
+        
+        // Strip code signature.
+        task = Process()
+        task.launchPath = "/usr/bin/codesign"
+        task.arguments = [
+            "--remove-signature",
+            infoPlistApp.deletingLastPathComponent().deletingLastPathComponent().path
+        ]
+        task.launch()
+        task.waitUntilExit()
+        print("result remove codesign: \(task.terminationStatus)")
+        
+        result(task.terminationStatus == 0)
+    }
+ 
+    */
+}
+
+fileprivate extension Dictionary {
+    subscript(jsonDict key: Key) -> [String: Any]? {
+        get {
+            return self[key] as? [String: Any]
+        }
+        set {
+            self[key] = newValue as? Value
+        }
+    }
+    
+    subscript(customizedTypes key: Key) -> [String: [String: Any]]? {
+        get {
+            return self[key] as? [String: [String: Any]]
+        }
+        set {
+            self[key] = newValue as? Value
+        }
     }
 }

@@ -26,6 +26,7 @@ Keywords={
 Strings={
   Delimiter=[["]],
   Interpolation=[[ %s ]],
+  Escape=[=[\\[\w]]=],
 }
 
 Comments={
@@ -38,6 +39,6 @@ Comments={
   }
 }
 
-Operators=[[\(|\)|\[|\]|\{|\}|\,|\:|\&|<|>|\!|\+|\=|\/|\*|\']]
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\:|\&|<|>|\!|\+|\=|\/|\*|\'|\#|\%|\^|\.]]
 
 --FIXME no default escchar param: regex(\\\d{3}|\\x[[:xdigit:]]{2}|\\[ntvbrfa\\\?'"])

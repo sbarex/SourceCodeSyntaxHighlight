@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16096" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16096"/>
+        <plugIn identifier="com.apple.WebKit2IBPlugin" version="16096"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="PreviewView" customModule="Syntax_Highlight" customModuleProvider="target">
+            <connections>
+                <outlet property="contentView" destination="M4Z-xe-wa7" id="SdF-e1-bH8"/>
+                <outlet property="examplesPopup" destination="jvo-yT-uGU" id="cRI-lg-e0P"/>
+                <outlet property="previewThemeControl" destination="RZA-c0-Yhy" id="Pjs-67-AdE"/>
+                <outlet property="refreshButton" destination="Fni-CB-jpb" id="mog-9R-2tp"/>
+                <outlet property="refreshIndicator" destination="F2b-Bl-cxc" id="fQI-es-t20"/>
+                <outlet property="scrollView" destination="7yH-3r-BYa" id="0Jb-K6-V6y"/>
+                <outlet property="textView" destination="ii3-9p-pL5" id="kx0-wa-XHW"/>
+                <outlet property="webView" destination="Ut3-5n-H5M" id="jTa-HQ-QCr"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <box boxType="custom" borderType="line" title="Preview" titlePosition="noTitle" id="M4Z-xe-wa7">
+            <rect key="frame" x="0.0" y="0.0" width="281" height="427"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <view key="contentView" id="Ztv-kP-Bj2">
+                <rect key="frame" x="1" y="1" width="279" height="425"/>
+                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                <subviews>
+                    <progressIndicator wantsLayer="YES" maxValue="100" displayedWhenStopped="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="F2b-Bl-cxc">
+                        <rect key="frame" x="189" y="36" width="16" height="16"/>
+                    </progressIndicator>
+                    <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="RZA-c0-Yhy">
+                        <rect key="frame" x="89" y="33" width="94" height="21"/>
+                        <segmentedCell key="cell" controlSize="small" borderStyle="border" alignment="left" segmentDistribution="fillEqually" style="rounded" trackingMode="selectOne" id="8Vb-Uc-dgh">
+                            <font key="font" metaFont="message" size="11"/>
+                            <segments>
+                                <segment label="Light" selected="YES"/>
+                                <segment label="Dark" tag="1"/>
+                            </segments>
+                        </segmentedCell>
+                        <connections>
+                            <action selector="refresh:" target="-2" id="DjJ-jn-ZfT"/>
+                        </connections>
+                    </segmentedControl>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Fni-CB-jpb">
+                        <rect key="frame" x="258" y="36" width="11" height="15"/>
+                        <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="NSRefreshTemplate" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="C8j-60-8i5">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="refresh:" target="-2" id="ovc-gy-WCU"/>
+                        </connections>
+                    </button>
+                    <wkWebView wantsLayer="YES" allowsLinkPreview="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ut3-5n-H5M" customClass="WKWebViewDrop" customModule="Syntax_Highlight" customModuleProvider="target">
+                        <rect key="frame" x="1" y="61" width="277" height="364"/>
+                        <wkWebViewConfiguration key="configuration">
+                            <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                            <wkPreferences key="preferences"/>
+                        </wkWebViewConfiguration>
+                    </wkWebView>
+                    <scrollView hidden="YES" appearanceType="aqua" borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" translatesAutoresizingMaskIntoConstraints="NO" id="7yH-3r-BYa">
+                        <rect key="frame" x="1" y="61" width="277" height="364"/>
+                        <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="4qc-TQ-7Oy">
+                            <rect key="frame" x="0.0" y="0.0" width="277" height="364"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <subviews>
+                                <textView editable="NO" selectable="NO" verticallyResizable="YES" allowsCharacterPickerTouchBarItem="NO" allowsDocumentBackgroundColorChange="YES" textCompletion="NO" id="ii3-9p-pL5" customClass="NSTextViewNoDrop" customModule="Syntax_Highlight" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="277" height="364"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    <size key="minSize" width="277" height="364"/>
+                                    <size key="maxSize" width="877" height="10000000"/>
+                                    <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                </textView>
+                            </subviews>
+                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                        </clipView>
+                        <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="xUI-G9-rPN">
+                            <rect key="frame" x="0.0" y="348" width="277" height="16"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </scroller>
+                        <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="GiB-eg-5Ew">
+                            <rect key="frame" x="751" y="0.0" width="16" height="44"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </scroller>
+                    </scrollView>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xl2-bU-Avc">
+                        <rect key="frame" x="8" y="37" width="77" height="14"/>
+                        <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" title="Preview style:" id="jhp-KN-Z8m">
+                            <font key="font" metaFont="message" size="11"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="ttO-dX-T1v">
+                        <rect key="frame" x="1" y="58" width="277" height="5"/>
+                    </box>
+                    <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jvo-yT-uGU">
+                        <rect key="frame" x="7" y="7" width="265" height="22"/>
+                        <popUpButtonCell key="cell" type="push" title="Theme colors" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="6eD-E5-ltz" id="XuG-YS-bFt">
+                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="message" size="11"/>
+                            <menu key="menu" autoenablesItems="NO" id="tXB-ei-Vam">
+                                <items>
+                                    <menuItem title="Theme colors" state="on" id="6eD-E5-ltz"/>
+                                    <menuItem isSeparatorItem="YES" id="fqh-3V-mCw"/>
+                                    <menuItem title="Custom" hidden="YES" id="IQC-dX-EpY">
+                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                    </menuItem>
+                                    <menuItem title="Browse…" id="Pwi-Zh-n4C">
+                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                    </menuItem>
+                                </items>
+                            </menu>
+                        </popUpButtonCell>
+                        <connections>
+                            <action selector="handleExampleChanged:" target="-2" id="kcc-dY-iYL"/>
+                        </connections>
+                    </popUpButton>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="ttO-dX-T1v" secondAttribute="trailing" constant="1" id="0fA-nC-WFK"/>
+                    <constraint firstItem="F2b-Bl-cxc" firstAttribute="leading" secondItem="RZA-c0-Yhy" secondAttribute="trailing" constant="8" symbolic="YES" id="1Lg-Sq-hd9"/>
+                    <constraint firstItem="F2b-Bl-cxc" firstAttribute="centerY" secondItem="Fni-CB-jpb" secondAttribute="centerY" id="6Xe-va-Za6"/>
+                    <constraint firstItem="ttO-dX-T1v" firstAttribute="top" secondItem="Ut3-5n-H5M" secondAttribute="bottom" id="8z0-Z3-yAw"/>
+                    <constraint firstItem="jvo-yT-uGU" firstAttribute="top" secondItem="Fni-CB-jpb" secondAttribute="bottom" constant="8" symbolic="YES" id="AbK-j8-hwQ"/>
+                    <constraint firstItem="Fni-CB-jpb" firstAttribute="top" secondItem="Ut3-5n-H5M" secondAttribute="bottom" constant="10" id="CrK-HU-2IV"/>
+                    <constraint firstItem="7yH-3r-BYa" firstAttribute="top" secondItem="Ut3-5n-H5M" secondAttribute="top" id="Nul-4w-IpM"/>
+                    <constraint firstItem="Ut3-5n-H5M" firstAttribute="top" secondItem="Ztv-kP-Bj2" secondAttribute="top" id="OtB-Uu-68Y"/>
+                    <constraint firstItem="RZA-c0-Yhy" firstAttribute="centerY" secondItem="Fni-CB-jpb" secondAttribute="centerY" id="RDH-pB-Wxs"/>
+                    <constraint firstItem="RZA-c0-Yhy" firstAttribute="leading" secondItem="xl2-bU-Avc" secondAttribute="trailing" constant="8" symbolic="YES" id="UJs-Cu-zxT"/>
+                    <constraint firstAttribute="trailing" secondItem="jvo-yT-uGU" secondAttribute="trailing" constant="10" id="UeQ-Fn-Dem"/>
+                    <constraint firstItem="jvo-yT-uGU" firstAttribute="leading" secondItem="Ztv-kP-Bj2" secondAttribute="leading" constant="10" id="XLo-01-5LB"/>
+                    <constraint firstItem="Ut3-5n-H5M" firstAttribute="leading" secondItem="Ztv-kP-Bj2" secondAttribute="leading" constant="1" id="XR7-Iy-anI"/>
+                    <constraint firstItem="7yH-3r-BYa" firstAttribute="leading" secondItem="Ut3-5n-H5M" secondAttribute="leading" id="XU6-39-R8W"/>
+                    <constraint firstItem="7yH-3r-BYa" firstAttribute="bottom" secondItem="Ut3-5n-H5M" secondAttribute="bottom" id="XjP-2l-eRp"/>
+                    <constraint firstItem="Fni-CB-jpb" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="F2b-Bl-cxc" secondAttribute="trailing" constant="8" symbolic="YES" id="ZBP-Jc-Ksj"/>
+                    <constraint firstAttribute="bottom" secondItem="jvo-yT-uGU" secondAttribute="bottom" constant="10" id="bKX-4k-aQV"/>
+                    <constraint firstItem="ttO-dX-T1v" firstAttribute="leading" secondItem="Ztv-kP-Bj2" secondAttribute="leading" constant="1" id="gR1-Gf-FLL"/>
+                    <constraint firstItem="7yH-3r-BYa" firstAttribute="trailing" secondItem="Ut3-5n-H5M" secondAttribute="trailing" id="lII-OC-0vN"/>
+                    <constraint firstItem="xl2-bU-Avc" firstAttribute="firstBaseline" secondItem="RZA-c0-Yhy" secondAttribute="firstBaseline" id="len-eE-Ao4"/>
+                    <constraint firstItem="xl2-bU-Avc" firstAttribute="leading" secondItem="Ztv-kP-Bj2" secondAttribute="leading" constant="10" id="p92-xb-fVw"/>
+                    <constraint firstAttribute="trailing" secondItem="Ut3-5n-H5M" secondAttribute="trailing" constant="1" id="rW8-2o-22J"/>
+                    <constraint firstAttribute="trailing" secondItem="Fni-CB-jpb" secondAttribute="trailing" constant="10" id="vJT-BO-Ern"/>
+                </constraints>
+            </view>
+            <color key="borderColor" name="gridColor" catalog="System" colorSpace="catalog"/>
+            <color key="fillColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+            <point key="canvasLocation" x="-157.5" y="754.5"/>
+        </box>
+    </objects>
+    <resources>
+        <image name="NSRefreshTemplate" width="11" height="15"/>
+    </resources>
+</document>

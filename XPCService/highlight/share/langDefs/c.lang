@@ -44,6 +44,7 @@ Keywords={
 Strings = {
   Delimiter=[["|']],
   RawPrefix="R",
+  Interpolation = [[ %\w ]],
 }
 
 Comments = {

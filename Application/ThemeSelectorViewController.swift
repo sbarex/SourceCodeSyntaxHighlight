@@ -78,7 +78,7 @@ class ThemeSelectorViewController: NSViewController {
     }
     var style: ThemeStyleFilterEnum = .all {
         didSet {
-            guard style != style else {
+            guard oldValue != style else {
                 return
             }
             refreshThemes()
@@ -86,7 +86,7 @@ class ThemeSelectorViewController: NSViewController {
     }
     var origin: ThemeOriginFilterEnum = .all {
         didSet {
-            guard origin != origin else {
+            guard oldValue != origin else {
                 return
             }
             refreshThemes()
@@ -149,6 +149,8 @@ class ThemeSelectorViewController: NSViewController {
     override func viewDidLoad() {
         searchField.stringValue = filter
         themeSegmentedControl.setSelected(true, forSegment: style.rawValue)
+        
+        // collectionView.register(NSNib(nibNamed: "ThemeCollectionViewItem", bundle: nil), forItemWithIdentifier: NSUserInterfaceItemIdentifier(rawValue: "ThemeCollectionViewItem"))
     }
 }
 
@@ -182,7 +184,10 @@ extension ThemeSelectorViewController: NSCollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
-        let a = collectionView.makeItem(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "ThemeCollectionViewItem"), for: indexPath) as! ThemeCollectionViewItem
+        
+        guard let a = collectionView.makeItem(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "ThemeCollectionViewItem"), for: indexPath) as? ThemeCollectionViewItem else {
+            return NSCollectionViewItem()
+        }
         a.theme = themes[indexPath.item]
         return a
         // return themes[indexPath.item]
@@ -191,46 +196,4 @@ extension ThemeSelectorViewController: NSCollectionViewDataSource {
     
 }
 
-class ThemeCollectionViewItem: NSCollectionViewItem {
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        imageView?.wantsLayer = true
-        imageView?.layer?.cornerRadius = 8
-        imageView?.layer?.masksToBounds = true
-        imageView?.layer?.borderWidth = 1
-        imageView?.layer?.borderColor = NSColor.gridColor.cgColor
-    }
-    
-    var theme: SCSHThemePreview? {
-        didSet {
-            if let theme = self.theme {
-                self.textField?.stringValue = theme.theme.desc
-                self.textField?.toolTip = theme.theme.desc
-                
-                if theme.image == nil {
-                    theme.image = theme.theme.getImage(size: CGSize(width: 90, height: 90), font: NSFont(name: "Menlo", size: 4) ?? NSFont.systemFont(ofSize: 4))
-                }
-                
-                self.imageView?.image = theme.image
-                self.imageView?.toolTip = theme.theme.desc
-            } else {
-                self.textField?.stringValue = ""
-                self.textField?.toolTip = nil
-                self.imageView?.image = nil
-                self.imageView?.toolTip = nil
-            }
-            
-        }
-    }
-    
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        
-        self.imageView?.image = nil
-        self.imageView?.toolTip = nil
-        
-        self.textField?.stringValue = ""
-        self.textField?.toolTip = nil
-    }
-    
-}
+

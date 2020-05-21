@@ -30,7 +30,7 @@ Keywords={
 Strings={
   Delimiter=[["|']],
   RawPrefix="@",
-  Interpolation=[[ %\w|\$\w+ ]],
+  Interpolation=[[ %\w|\$\w+|\{\d\} ]],
 }
 
 IgnoreCase=false

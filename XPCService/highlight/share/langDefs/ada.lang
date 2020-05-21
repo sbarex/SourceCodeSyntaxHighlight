@@ -3,8 +3,8 @@ Description="ADA95"
 
 Categories = {"source"}
 
-
 Keywords={
+
     { Id=1,
       List={"abort", "else", "new", "return", "abs", "elsif", "not", "reverse",
             "abstract", "end", "null", "accept", "entry", "select", "access", "exception",
@@ -15,32 +15,30 @@ Keywords={
             "is", "use", "raise", "declare", "range", "when", "delay", "limited", "record",
             "while", "delta", "loop", "rem", "with", "digits", "renames", "do", "mod",
             "requeue", "xor"},
-      },
+    },
     { Id=2,
       List={"boolean", "integer", "natural", "positive", "float", "character",
             "string", "duration", "short_integer", "long_integer", "short_float",
-            "long_float"},
-      },
+            "long_float", "wide_character", "wide_string", "short_short_integer",
+            "long_long_integer", "short_short_float", "long_long_float"},
+    },
+
     { Id=3,
-      List={"wide_character", "wide_string", "short_short_integer", "long_long_integer",
-            "short_short_float", "long_long_float"},
-      },
+      Regex=[[(\w+)\s*\(]]
+    },
     { Id=4,
       List={"true", "false"},
-      },
+    },
     { Id=4,
       Regex=[[ [\w\)]+('\w+) ]],
-      },
+    },
     { Id=4,
       Regex=[[''']],
-      }
+    }
+
 }
 
--- Workaround: distinguish string delimiters and event markers
--- (same eymbol: ')
-
 --workaround for special string '''
-
 Strings={
     Delimiter=[["|']],
     Escape = [[ \\[^'] ]]
@@ -55,4 +53,7 @@ Comments={
     }
 
 Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-|\.]]
+
+Digits=[[ (?:0x|0X|0b)[0-9a-fA-F_]+|\d*[\.\_]?\d+(?:[eE][\-\+]?\d+)?[fFlLuU]? ]]
+
 

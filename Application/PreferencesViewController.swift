@@ -25,7 +25,7 @@ import WebKit
 import Syntax_Highlight_XPC_Service
 
 typealias SuppressedExtension = (ext: String, uti: String)
-
+typealias ExampleInfo = (url: URL, title: String, uti: String)
 class UTIDesc: Equatable {
     /// Uniform Type Identifiers.
     let uti: UTI
@@ -61,7 +61,6 @@ class UTIDesc: Equatable {
         return self.uti.icon
     }()
     
-   
     lazy var suppressedExtensions: [SuppressedExtension] = {
         var e: [SuppressedExtension] = []
         for ext in extensions {
@@ -94,119 +93,57 @@ class UTIDesc: Equatable {
 
 class PreferencesViewController: NSViewController {
     // MARK: -
+    
+    @IBOutlet weak var generalTabButton: NSButton!
+    @IBOutlet weak var appearanceTabButton: NSButton!
+    @IBOutlet weak var extraTabButton: NSButton!
+    
     @IBOutlet weak var tabView: NSTabView!
     
+    /// List of UTIs and global settings.
     @IBOutlet weak var tableView: NSTableView!
+    /// Search field for filter the UTI list.
     @IBOutlet weak var searchField: NSSearchField!
     @IBOutlet weak var filterButton: NSButton!
-    
-    @IBOutlet weak var highlightPathPopup: NSPopUpButton!
-    @IBOutlet weak var formatModeControl: NSSegmentedControl!
-    
-    @IBOutlet weak var themeLightIcon: NSButton!
-    @IBOutlet weak var themeLightLabel: NSTextField!
-    @IBOutlet weak var themeDarkIcon: NSButton!
-    @IBOutlet weak var themeDarkLabel: NSTextField!
-
-    @IBOutlet weak var customCSSButton: NSButton!
-    @IBOutlet weak var customCSSImage: NSImageView!
-    
-    @IBOutlet weak var fontPreviewTextField: NSTextField!
-    @IBOutlet weak var fontChooseButton: NSButton!
-    
-    @IBOutlet weak var wordWrapPopup: NSPopUpButton!
-    @IBOutlet weak var lineLengthTextField: NSTextField!
-    @IBOutlet weak var lineLengthLabel: NSTextField!
-    @IBOutlet weak var lineNumbersPopup: NSPopUpButton!
-    @IBOutlet weak var tabSpacesSlider: NSSlider!
-    @IBOutlet weak var argumentsTextField: NSTextField!
-    
-    @IBOutlet weak var dataSize: NSTextField!
-    @IBOutlet weak var dataSizeUM: NSPopUpButton!
-    
-    @IBOutlet weak var interactiveButton: NSSwitch!
-    @IBOutlet weak var debugButton: NSSwitch!
-    
-    @IBOutlet weak var examplesPopup: NSPopUpButton!
-    
-    @IBOutlet weak var previewThemeControl: NSSegmentedControl!
-    @IBOutlet weak var refreshIndicator: NSProgressIndicator!
-    @IBOutlet weak var refreshButton: NSButton!
-    @IBOutlet weak var webView: WKWebView!
-    @IBOutlet weak var scrollView: NSScrollView!
-    @IBOutlet weak var textView: NSTextView!
+            
+    /// Preview view.
+    @IBOutlet weak var previewView: PreviewView!
     
     @IBOutlet weak var cancelButton: NSButton!
     @IBOutlet weak var saveButton: NSButton!
     
-    @IBOutlet weak var utiTitleTextField: NSTextField!
+    @IBOutlet weak var descriptionTextField: NSTextField!
+    @IBOutlet weak var utiTextField: NSTextField!
     @IBOutlet weak var extensionsTitleTextField: NSTextField!
     @IBOutlet weak var utiErrorButton: NSButton!
-    @IBOutlet weak var utiSpecificArgumentsTextField: NSTextField!
+                            
+    @IBOutlet weak var globalSettingsView: GlobalSettingsView!
+    @IBOutlet weak var appearanceView: AppearanceView!
+    @IBOutlet weak var extraSettingsView: ExtraSettingsView!
     
-    @IBOutlet weak var utiThemeCheckbox: NSButton!
-    @IBOutlet weak var utiThemeLightIcon: NSButton!
-    @IBOutlet weak var utiThemeLightLabel: NSTextField!
-    @IBOutlet weak var utiThemeDarkIcon: NSButton!
-    @IBOutlet weak var utiThemeDarkLabel: NSTextField!
-    
-    @IBOutlet weak var utiCustomCSSCheckbox: NSButton!
-    @IBOutlet weak var utiCustomCSSButton: NSButton!
-    @IBOutlet weak var utiCustomCSSImage: NSImageView!
-    
-    @IBOutlet weak var utiFontCheckbox: NSButton!
-    @IBOutlet weak var utiFontPreviewTextField: NSTextField!
-    @IBOutlet weak var utiFontChooseButton: NSButton!
-    
-    @IBOutlet weak var utiWordWrapCheckbox: NSButton!
-    @IBOutlet weak var utiWordWrapPopup: NSPopUpButton!
-    @IBOutlet weak var utiLineLengthTextField: NSTextField!
-    @IBOutlet weak var utiLineLengthLabel: NSTextField!
-    
-    @IBOutlet weak var utiLineNumberCheckbox: NSButton!
-    @IBOutlet weak var utiLineNumbersPopup: NSPopUpButton!
-    
-    @IBOutlet weak var utiTabSpacesCheckbox: NSButton!
-    @IBOutlet weak var utiTabSpacesSlider: NSSlider!
-    
-    @IBOutlet weak var utiArgumentsCheckbox: NSButton!
-    @IBOutlet weak var utiArgumentsTextField: NSTextField!
-    
-    @IBOutlet weak var utiInteractiveCheckbox: NSButton!
-    @IBOutlet weak var utiInteractiveButton: NSSwitch!
-    
-    @IBOutlet weak var utiPreprocessorCheckbox: NSButton!
-    @IBOutlet weak var utiPreprocessorTextField: NSTextField!
-    
-    @IBOutlet weak var utiPreviewThemeControl: NSSegmentedControl!
-    @IBOutlet weak var utiRefreshIndicator: NSProgressIndicator!
-    @IBOutlet weak var utiRefreshButton: NSButton!
-    @IBOutlet weak var utiWebView: WKWebView!
-    @IBOutlet weak var utiScrollView: NSScrollView!
-    @IBOutlet weak var utiTextView: NSTextView!
-    
-    @IBOutlet weak var utiDetailView: NSView!
+    internal var initialized = false
     
     var service: SCSHXPCServiceProtocol? {
         return (NSApplication.shared.delegate as? AppDelegate)?.service
     }
     
-    internal var initialized = false
+    /// Global settings.
+    var settings: SCSHSettings?
     
     /// List of themes.
     var themes: [SCSHTheme] = [] {
         didSet {
-            if initialized {
-                updateThemes()
-            }
+            self.previewView.themes = themes
+            self.appearanceView.themes = themes
         }
     }
     
-    /// Global settings.
-    var settings: SCSHSettings?
-    
-    typealias HighlightPath = (path: String, ver: String, embedded: Bool)
-    var highlightPaths: [HighlightPath] = []
+    /// List of example files.
+    private var examples: [ExampleInfo] = [] {
+        didSet {
+            previewView.examples = examples
+        }
+    }
     
     /// All supported UTIs.
     var allFileTypes: [UTIDesc] = []
@@ -218,9 +155,11 @@ class PreferencesViewController: NSViewController {
                 return
             }
             tableView?.reloadData()
-            tableView?.isEnabled = fileTypes.count > 0
+            tableView?.isEnabled = true // fileTypes.count > 0
         }
     }
+    
+    var currentUTI: UTIDesc?
     
     /// Filter for the UTI description.
     var filter: String = "" {
@@ -244,179 +183,71 @@ class PreferencesViewController: NSViewController {
         }
     }
     
-    /// Update a theme icon.
-    func refreshTheme(_ theme: SCSHTheme?, button: NSButton, label: NSTextField) {
-        if let t = theme {
-            button.image = t.getImage(size: button.bounds.size, font: NSFont(name: "Menlo", size: 4) ?? NSFont.systemFont(ofSize: 4))
-            let text = NSMutableAttributedString()
-            if !t.desc.isEmpty {
-                text.append(NSAttributedString(string: "\(t.desc)\n", attributes: [.font: NSFont.labelFont(ofSize: NSFont.systemFontSize)]))
-            }
-            text.append(NSAttributedString(string: "\(t.name)", attributes: [.font: NSFont.labelFont(ofSize: NSFont.smallSystemFontSize)]))
-            
-            label.attributedStringValue = text
-        } else {
-            button.image = nil
-            label.stringValue = "-"
-        }
-    }
     
-    var customCSS: String? = nil
-    var lightTheme: SCSHTheme? {
-        didSet {
-            refreshTheme(lightTheme, button: themeLightIcon, label: themeLightLabel)
-            if initialized {
-                refreshPreview(self)
-            }
-        }
-    }
-    var darkTheme: SCSHTheme? {
-        didSet {
-            refreshTheme(darkTheme, button: themeDarkIcon, label: themeDarkLabel)
-            if initialized {
-                refreshPreview(self)
-            }
-        }
-    }
+    var lightTheme: SCSHTheme?
+    var darkTheme: SCSHTheme?
     
-    var utiCustomCSS: String? = nil
-    var utiLightTheme: SCSHTheme? {
-        didSet {
-            refreshTheme(utiLightTheme, button: utiThemeLightIcon, label: utiThemeLightLabel)
-            refreshUtiPreview(self)
-        }
-    }
-    var utiDarkTheme: SCSHTheme? {
-        didSet {
-            refreshTheme(utiDarkTheme, button: utiThemeDarkIcon, label: utiThemeDarkLabel)
-            refreshUtiPreview(self)
-        }
-    }
+    var utiLightTheme: SCSHTheme?
+    var utiDarkTheme: SCSHTheme?
     
     /// UTI settings in the detail view.
     var currentUTISettings: SCSHUTIBaseSettings? {
         didSet {
             if let utiSettings = oldValue {
                 saveCurrentUtiSettings(utiSettings.uti)
+            } else {
+                saveGlobalSettings()
             }
+            
+            generalTabButton.isEnabled = currentUTISettings != nil
+            generalTabButton.isHidden = currentUTISettings != nil
+            if generalTabButton.isHidden && generalTabButton.state == .on {
+                tabView.selectTabViewItem(at: 1)
+                appearanceTabButton.state = .on
+                generalTabButton.state = .off
+            }
+            
+            previewView.isLooked = true
             
             if let currentUTISettings = self.currentUTISettings {
                 guard let format = fileTypes.first(where: { $0.uti.UTI == currentUTISettings.uti }) else {
-                    utiDetailView.isHidden = true
                     return
                 }
                 
+                appearanceView.populateFromSettings(currentUTISettings)
+                extraSettingsView.populateFromSettings(currentUTISettings)
+                
+                previewView.selectExampleForUTI(currentUTISettings.uti)
+                
+                descriptionTextField.stringValue = format.description
+                utiTextField.stringValue = format.uti.UTI
+                utiTextField.isHidden = false
+                extensionsTitleTextField.stringValue = format.extensions.count > 0 ? "." + format.extensions.joined(separator: ", .") : ""
                 utiErrorButton.isHidden = format.getSuppressedExtensions(handledUti: allFileTypes.map({ $0.uti.UTI })).count == 0
                 
-                utiTitleTextField.stringValue = format.description
-                utiTitleTextField.toolTip = format.uti.UTI
-                extensionsTitleTextField.stringValue = format.extensions.count > 0 ? "." + format.extensions.joined(separator: ", .") : ""
-                utiSpecificArgumentsTextField.stringValue = currentUTISettings.appendedExtra ?? ""
-                
-                utiThemeCheckbox.state = currentUTISettings.lightTheme != nil ? .on : .off
-                utiThemeLightIcon.isEnabled = utiThemeCheckbox.state == .on && themes.count > 0
-                utiThemeDarkIcon.isEnabled = utiThemeCheckbox.state == .on && themes.count > 0
-                
-                if let theme = getTheme(name: currentUTISettings.lightTheme) {
-                    utiLightTheme = theme
-                } else {
-                    utiLightTheme = lightTheme
-                }
-                if let theme = getTheme(name: currentUTISettings.darkTheme) {
-                    utiDarkTheme = theme
-                } else {
-                    utiDarkTheme = darkTheme
-                }
-                utiCustomCSS = currentUTISettings.css
-                
-                utiCustomCSSCheckbox.isEnabled = formatModeControl.selectedSegment == 0
-                utiCustomCSSCheckbox.state = utiCustomCSS != nil && !utiCustomCSS!.isEmpty ? .on : .off
-                utiCustomCSSButton.isEnabled = utiCustomCSSCheckbox.state == .on && utiCustomCSSCheckbox.isEnabled
-                utiCustomCSSImage.image = NSImage(named: utiCustomCSSCheckbox.state == .on ? NSImage.statusAvailableName : NSImage.statusNoneName)
-                    
-                utiFontCheckbox.state = currentUTISettings.fontFamily != nil ? .on : .off
-                utiFontPreviewTextField.isEnabled = utiFontCheckbox.state == .on
-                utiFontChooseButton.isEnabled = utiFontCheckbox.state == .on
-                refreshFontPanel(withFontFamily: currentUTISettings.fontFamily ?? settings?.fontFamily ?? "Menlo", size: currentUTISettings.fontSize ?? settings?.fontSize ?? 12, isGlobal: false)
-                
-                utiWordWrapCheckbox.state = currentUTISettings.wordWrap != nil ? .on : .off
-                utiWordWrapPopup.isEnabled = utiWordWrapCheckbox.state == .on
-                switch currentUTISettings.wordWrap ?? settings?.wordWrap ?? .off {
-                case .off:
-                    utiWordWrapPopup.selectItem(at: 0)
-                    
-                    utiLineLengthTextField.isHidden = true
-                    utiLineLengthLabel.isHidden = true
-                    
-                    utiLineNumbersPopup.menu?.item(at: 2)?.isEnabled = false
-                case .simple:
-                    utiWordWrapPopup.selectItem(at: 1)
-                    
-                    utiLineLengthTextField.isHidden = false
-                    utiLineLengthLabel.isHidden = false
-                    
-                    utiLineNumbersPopup.menu?.item(at: 2)?.isEnabled = true
-                case .standard:
-                    utiWordWrapPopup.selectItem(at: 2)
-                    
-                    utiLineLengthTextField.isHidden = false
-                    utiLineLengthLabel.isHidden = false
-                    
-                    utiLineNumbersPopup.menu?.item(at: 2)?.isEnabled = true
-                }
-                utiLineLengthTextField.integerValue = currentUTISettings.lineLength ?? settings?.lineLength ?? 80
-                utiLineLengthTextField.isEnabled = utiWordWrapCheckbox.state == .on
-                
-                utiLineNumberCheckbox.state = currentUTISettings.lineNumbers != nil ? .on : .off
-                utiLineNumbersPopup.isEnabled = utiLineNumberCheckbox.state == .on
-                switch currentUTISettings.lineNumbers ?? settings?.lineNumbers ?? .hidden {
-                case .hidden:
-                    utiLineNumbersPopup.selectItem(at: 0)
-                case .visible(let omittingWrapLines):
-                    utiLineNumbersPopup.selectItem(at: omittingWrapLines ? 2 : 1)
-                }
-                
-                utiTabSpacesCheckbox.state = currentUTISettings.tabSpaces != nil ? .on : .off
-                utiTabSpacesSlider.isEnabled = utiTabSpacesCheckbox.state == .on
-                utiTabSpacesSlider.integerValue = currentUTISettings.tabSpaces ?? settings?.tabSpaces ?? 4
-                
-                utiArgumentsCheckbox.state = currentUTISettings.extra != nil ? .on : .off
-                utiArgumentsTextField.isEnabled = utiArgumentsCheckbox.state == .on
-                utiArgumentsTextField.stringValue = currentUTISettings.extra ?? settings?.extra ?? ""
-                
-                utiInteractiveCheckbox.isEnabled = formatModeControl.selectedSegment == 0
-                utiInteractiveCheckbox.state = currentUTISettings.allowInteractiveActions != nil ? .on : .off
-                utiInteractiveButton.isEnabled = utiInteractiveCheckbox.state == .on && utiInteractiveCheckbox.isEnabled
-                utiInteractiveButton.state = currentUTISettings.allowInteractiveActions ?? false ? .on : .off
-                
-                utiPreprocessorCheckbox.state = currentUTISettings.preprocessor != nil ? .on : .off
-                utiPreprocessorTextField.isEnabled = utiPreprocessorCheckbox.state == .on
-                utiPreprocessorTextField.stringValue = currentUTISettings.preprocessor ?? ""
-                
-                refreshUtiPreview(self)
-                
-                utiDetailView.isHidden = false
-                
                 if let i = fileTypes.firstIndex(where: { $0.uti.UTI == currentUTISettings.uti }) {
-                    if tableView.selectedRow != i {
-                        tableView.selectRowIndexes(IndexSet(integer: i), byExtendingSelection: false)
-                        tableView.scrollRowToVisible(i)
+                    if tableView.selectedRow != i + 3 {
+                        tableView.selectRowIndexes(IndexSet(integer: i + 3), byExtendingSelection: false)
+                        tableView.scrollRowToVisible(i + 3)
                     }
                 } else {
                     tableView.deselectAll(nil)
                 }
             } else {
-                utiDetailView.isHidden = true
-                if tableView.selectedRow != -1 {
-                    tableView.deselectAll(nil)
+                descriptionTextField.stringValue = "Global settings"
+                utiTextField.isHidden = true
+                extensionsTitleTextField.stringValue = ""
+                utiErrorButton.isHidden = true
+                                
+                if let settings = self.settings {
+                    appearanceView.populateFromSettings(settings)
+                    extraSettingsView.populateFromSettings(settings)
                 }
             }
+            previewView.isLooked = false
+            previewView.refresh(self)
         }
     }
-    
-    typealias ExampleInfo = (url: URL, title: String, uti: String)
-    /// List of example files.
-    private var examples: [ExampleInfo] = []
     
     deinit {
         // Remove the theme observer.
@@ -426,46 +257,34 @@ class PreferencesViewController: NSViewController {
     
     // MARK: -
     override func viewDidLoad() {
-        for btn in [themeLightIcon, themeDarkIcon, utiThemeLightIcon, utiThemeDarkIcon] {
-            // Add round corners and border to the theme icons.
-            btn?.wantsLayer = true
-            btn?.layer?.cornerRadius = 8
-            btn?.layer?.borderWidth = 1
-            btn?.layer?.borderColor = NSColor.gridColor.cgColor
+        globalSettingsView.delegate = self
+        appearanceView.delegate = self
+        extraSettingsView.delegate = self
+                
+        previewView.getSettings = {
+            let settings: SCSHSettings
+            if self.tableView.selectedRow != 1 {
+                settings = self.getUtiSettings()
+            } else {
+                settings = self.getSettings()
+            }
+            self.appearanceView.mergeSettings(on: settings)
+            self.extraSettingsView.mergeSettings(on: settings)
+            
+            return settings
         }
         
         // Populate UTIs list.
         allFileTypes = (NSApplication.shared.delegate as? AppDelegate)?.fetchHandledUTIs() ?? []
         fileTypes = allFileTypes
         
-        let defaults = UserDefaults.standard
-        /// Current OS style.
-        let macosThemeLight = (defaults.string(forKey: "AppleInterfaceStyle") ?? "Light") == "Light"
-        previewThemeControl.setSelected(true, forSegment: macosThemeLight ? 0 : 1)
-        utiPreviewThemeControl.setSelected(true, forSegment: macosThemeLight ? 0 : 1)
-        
         // Populate the example files list.
         examples = (NSApplication.shared.delegate as? AppDelegate)?.getAvailableExamples() ?? []
-        examplesPopup.removeAllItems()
-        examplesPopup.addItem(withTitle: "Theme colors")
-        examplesPopup.menu?.addItem(NSMenuItem.separator())
-        for file in examples {
-            let m = NSMenuItem(title: file.title, action: nil, keyEquivalent: "")
-            m.toolTip = file.uti
-            examplesPopup.menu?.addItem(m)
-        }
-        examplesPopup.isEnabled = true
+                
+        // Select the global settings on the UTI list.
+        tableView.selectRowIndexes(IndexSet(integer: 1), byExtendingSelection: false)
         
-        for view in [webView, scrollView, utiWebView, utiScrollView] {
-            view?.wantsLayer = true;
-            view?.layer?.cornerRadius = 4
-            view?.layer?.masksToBounds = true
-            view?.layer?.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        }
-        
-        utiDetailView.isHidden = true
-        utiInteractiveButton.toolTip = interactiveButton.toolTip
-        
+        // Fetch the global settings.
         fetchSettings()
         
         // Register the observers for theme save and delete notifications.
@@ -485,47 +304,6 @@ class PreferencesViewController: NSViewController {
     override func prepare(for segue: NSStoryboardSegue, sender: Any?) {
         if segue.identifier == "WarningUTISegue", let vc = segue.destinationController as? WarningUTIViewController {
             vc.data = fileTypes.first(where: { $0.uti.UTI == currentUTISettings?.uti })?.getSuppressedExtensions(handledUti: allFileTypes.map( { $0.uti.UTI } )) ?? []
-        } else if segue.identifier == "CustomCSSSegue", let vc = segue.destinationController as? CSSControlView {
-            if sender as? NSButton == customCSSButton {
-                vc.cssCode = customCSS ?? ""
-                vc.isUTIWarningHidden = true
-                vc.handler = { css in
-                    self.customCSS = css.isEmpty ? nil : css
-                    self.customCSSImage.image = NSImage(named: !css.isEmpty ? NSImage.statusAvailableName : NSImage.statusNoneName)
-                    self.refreshPreview(self)
-                }
-            } else {
-                vc.cssCode = utiCustomCSS ?? ""
-                vc.isUTIWarningHidden = false
-                vc.handler = { css in
-                    self.utiCustomCSS = css.isEmpty ? nil : css
-                    self.utiCustomCSSImage.image = NSImage(named: !css.isEmpty ? NSImage.statusAvailableName : NSImage.statusNoneName)
-                    self.refreshUtiPreview(self)
-                }
-            }
-        } else if segue.identifier == "ThemeSegue", let vc = segue.destinationController as? ThemeSelectorViewController {
-            if let btn = sender as? NSButton {
-                vc.style = btn == themeLightIcon || btn == utiThemeLightIcon ? .light : .dark
-                
-                if btn == themeLightIcon {
-                    vc.handler = { theme in
-                        self.lightTheme = theme
-                    }
-                } else if btn == themeDarkIcon {
-                    vc.handler = { theme in
-                        self.darkTheme = theme
-                    }
-                } else if btn == utiThemeLightIcon {
-                    vc.handler = { theme in
-                        self.utiLightTheme = theme
-                    }
-                } else if btn == utiThemeDarkIcon {
-                    vc.handler = { theme in
-                        self.utiDarkTheme = theme
-                    }
-                }
-            }
-            vc.allThemes = self.themes.map({ SCSHThemePreview(theme: $0) })
         }
     }
     
@@ -551,14 +329,13 @@ class PreferencesViewController: NSViewController {
     }
     
     /// Fetch current settings.
-    func fetchSettings() {
+    private func fetchSettings() {
         guard let service = self.service else {
             return
         }
         service.getSettings() {
             if let s = $0 as? [String: Any] {
                 self.settings = SCSHSettings(settings: s)
-                self.customCSS = self.settings?.css
             }
             
             self.processNextInitTask()
@@ -573,15 +350,17 @@ class PreferencesViewController: NSViewController {
         switch internal_state {
         case 1:
             // Fetch highlight path.
-            self.highlightPaths = []
+            self.globalSettingsView.highlightPaths = []
             self.service?.locateHighlight { (paths) in
+                var hl_paths: [HighlightPath] = []
+                
                 let currentHighlightPath = self.settings?.highlightProgramPath
                 var found = false
                 for info in paths {
                     guard info.count == 3, let path = info[0] as? String, let ver = info[1] as? String, let embedded = info[2] as? Bool else {
                         continue
                     }
-                    self.highlightPaths.append((path: embedded ? "-" : path, ver: ver, embedded: embedded))
+                    hl_paths.append((path: embedded ? "-" : path, ver: ver, embedded: embedded))
                     
                     if let p = currentHighlightPath, (p == "-" && embedded) || p == path {
                         if embedded {
@@ -592,9 +371,9 @@ class PreferencesViewController: NSViewController {
                 }
                 if !found, let p = currentHighlightPath {
                     // Append current customized path.
-                    self.highlightPaths.append((path: p, ver: "", embedded: false))
+                    hl_paths.append((path: p, ver: "", embedded: false))
                 }
-                
+                self.globalSettingsView.highlightPaths = hl_paths
                 self.processNextInitTask()
             }
             
@@ -610,6 +389,7 @@ class PreferencesViewController: NSViewController {
                 
                 DispatchQueue.main.async {
                     self.themes = themes
+
                     self.processNextInitTask()
                 }
                 // print(results)
@@ -625,129 +405,24 @@ class PreferencesViewController: NSViewController {
         }
     }
     
-    /// Initialize gui elements with current settings.
-    func populateSettings() {
-        self.highlightPathPopup.removeAllItems()
-        
-        let currentHighlightPath = self.settings?.highlightProgramPath
-        for (i, path) in self.highlightPaths.enumerated() {
-            let m = NSMenuItem(title: "\(path.embedded ? "Internal" : path.path)\(path.ver != "" ? " (ver. \(path.ver))" : "")", action: nil, keyEquivalent: "")
-            m.tag = i
-            self.highlightPathPopup.menu?.addItem(m)
-            if currentHighlightPath == path.path {
-                self.highlightPathPopup.select(m)
-            }
-            if path.embedded && self.highlightPaths.count > 1 {
-                let sep = NSMenuItem.separator()
-                sep.tag = -2
-                self.highlightPathPopup.menu?.addItem(sep)
-            }
-        }
-        let sep = NSMenuItem.separator()
-        sep.tag = -2
-        self.highlightPathPopup.menu?.addItem(sep)
-        
-        let m = NSMenuItem(title: "other…", action: nil, keyEquivalent: "")
-        m.tag = -1
-        self.highlightPathPopup.menu?.addItem(m)
-        self.highlightPathPopup.isEnabled = settings != nil
-        
+    /// Initialize gui elements with current global settings.
+    private func populateSettings() {
         // HTML/RTF format
-        self.formatModeControl.setSelected(true, forSegment: self.settings?.format == .rtf ? 1 : 0)
-        self.formatModeControl.isEnabled = settings != nil
-        
-        customCSSImage.image = NSImage(named: settings?.format == .html && settings?.css != nil && !settings!.css!.isEmpty ? NSImage.statusAvailableName : NSImage.statusNoneName)
-        customCSSButton.isEnabled = settings?.format == .html
-        
-        updateThemes()
-        
-        if let ln = settings?.wordWrap {
-            switch ln {
-            case .off:
-                wordWrapPopup.selectItem(at: 0)
-                lineLengthLabel.isHidden = true
-                lineLengthTextField.isHidden = true
-            case .simple:
-                wordWrapPopup.selectItem(at: 1)
-                lineLengthLabel.isHidden = false
-                lineLengthTextField.isHidden = false
-            case .standard:
-                wordWrapPopup.selectItem(at: 2)
-                lineLengthLabel.isHidden = false
-                lineLengthTextField.isHidden = false
-            }
-        }
-        wordWrapPopup.isEnabled = settings != nil
-        
-        // Line length.
-        lineLengthTextField.integerValue = settings?.lineLength ?? 80
-        lineLengthTextField.isEnabled = settings != nil
-        
-        // Line numbers.
-        if let ln = settings?.lineNumbers {
-            switch (ln) {
-            case .hidden:
-                lineNumbersPopup.selectItem(at: 0)
-            case .visible(let omittingWrapLines):
-                lineNumbersPopup.selectItem(at: omittingWrapLines && wordWrapPopup.indexOfSelectedItem != 0 ? 2 : 1)
-            }
-        }
-        lineNumbersPopup.menu?.item(at: 2)?.isEnabled = wordWrapPopup.indexOfSelectedItem != 0
-        lineNumbersPopup.isEnabled = settings != nil
-        
-        // Tab/spaces.
-        let spaces = settings?.tabSpaces ?? 0
-        tabSpacesSlider.integerValue = spaces
-        tabSpacesSlider.isEnabled = settings != nil
-        
-        // Extra.
-        argumentsTextField.stringValue = settings?.extra ?? ""
-        argumentsTextField.isEnabled = settings != nil
-        
-        fontChooseButton.isEnabled = settings != nil
-        refreshFontPanel(withFontFamily: settings?.fontFamily ?? "Menlo", size: settings?.fontSize ?? 12, isGlobal: true)
-        
-        if var size = settings?.maxData {
-            size /= 1024 // Convert Bytes to KB.
-            if size % 1024 == 0 {
-                dataSize.intValue = Int32(size / 1024)
-                dataSizeUM.selectItem(at: 1)
-            } else {
-                dataSize.intValue = Int32(size)
-                dataSizeUM.selectItem(at: 0)
-            }
-        } else {
-            dataSize.intValue = 0
-            dataSizeUM.selectItem(at: 0)
-        }
-        
-        interactiveButton.state = settings?.allowInteractiveActions ?? false ? .on : .off
-        interactiveButton.isEnabled = settings != nil
-        
-        debugButton.state = settings?.debug ?? false ? .on : .off
-        debugButton.isEnabled = settings != nil
-        
-        previewThemeControl.isEnabled = settings != nil
-        refreshButton.isEnabled = settings != nil
-        saveButton.isEnabled = settings != nil
-        
-        webView.isHidden = settings?.format ?? .html != .html
-        scrollView.isHidden = !webView.isHidden
+        self.appearanceView.renderMode = self.settings?.format ?? .html
+        self.extraSettingsView.renderMode = self.settings?.format ?? .html
+        self.previewView.renderMode = self.settings?.format ?? .html
         
         initialized = true
         
         if settings != nil {
-            refreshPreview(self)
+            globalSettingsView.populateFromSettings(settings!)
+            appearanceView.populateFromSettings(settings!)
+            extraSettingsView.populateFromSettings(settings!)
+            
+            previewView.refresh(self)
         }
-    }
-    
-    /// Update the theme popups.
-    func updateThemes() {
-        themeLightIcon.isEnabled = themes.count > 0
-        themeDarkIcon.isEnabled = themes.count > 0
         
-        lightTheme = getTheme(name: self.settings?.lightTheme)
-        darkTheme = getTheme(name: self.settings?.darkTheme)
+        saveButton.isEnabled = settings != nil
     }
     
     /// Get theme at the index.
@@ -776,9 +451,13 @@ class PreferencesViewController: NSViewController {
     
     /// Return the url of an example file for specified UTI.
     func getExample(forUTI uti: String)-> URL? {
+        return getExampleInfo(forUTI: uti)?.url
+    }
+    
+    func getExampleInfo(forUTI uti: String)-> ExampleInfo? {
         if let e = examples.first(where: { $0.uti == currentUTISettings?.uti }) {
             // Exists an example specific for the requested UTI.
-            return e.url
+            return e
         }
         
         // Search an example valid for the file extension associated to the UTI.
@@ -792,7 +471,7 @@ class PreferencesViewController: NSViewController {
             }
         }
         if let e = examples.first(where: { uti_extensions.contains($0.url.pathExtension) }) {
-            return e.url
+            return e
         }
         
         return nil
@@ -800,151 +479,39 @@ class PreferencesViewController: NSViewController {
     
     /// Get current edited global settings, without any custom settings for UTIs.
     func getSettings() -> SCSHSettings {
-        let settings = SCSHSettings()
-        settings.highlightProgramPath = self.settings?.highlightProgramPath ?? "-"
-        settings.format = formatModeControl.selectedSegment == 0 ? .html : .rtf
-        
-        if let theme = lightTheme {
-            settings.lightTheme = (theme.isStandalone ? "" : "!") + theme.name
-            settings.lightBackgroundColor = theme.backgroundColor
-        }
-        if let theme = darkTheme {
-            settings.darkTheme = (theme.isStandalone ? "" : "!") + theme.name
-            settings.darkBackgroundColor = theme.backgroundColor
-        }
-        settings.css = customCSS
-        
-        settings.fontFamily = self.fontPreviewTextField.font?.fontName
-        if let size = self.fontPreviewTextField.font?.pointSize {
-            settings.fontSize = size
-        }
-        
-        switch wordWrapPopup.indexOfSelectedItem {
-        case 0:
-            settings.wordWrap = .off
-        case 1:
-            settings.wordWrap = .simple
-            settings.lineLength = lineLengthTextField.integerValue
-        case 2:
-            settings.wordWrap = .standard
-            settings.lineLength = lineLengthTextField.integerValue
-        default:
-            break
-        }
-        
-        switch lineNumbersPopup.indexOfSelectedItem {
-        case 0:
-            settings.lineNumbers = .hidden
-        case 1:
-            settings.lineNumbers = .visible(omittingWrapLines: false)
-        case 2:
-            settings.lineNumbers = .visible(omittingWrapLines: true)
-        default:
-            break
-        }
-        
-        settings.tabSpaces = tabSpacesSlider.integerValue
-        settings.extra = argumentsTextField.stringValue
-        
-        if (dataSize.floatValue > 0) {
-            var dataSize = self.dataSize.floatValue
-            if (self.dataSizeUM.indexOfSelectedItem == 1) {
-                dataSize *= 1024 // Convert MB to KB.
-            }
-            dataSize *= 1024 // Convert KB to Bytes.
-            
-            settings.maxData = UInt64(dataSize)
-        }
-        
-        settings.allowInteractiveActions = interactiveButton.state == .on
-        
-        settings.debug = debugButton.state == .on
+        let settings = SCSHSettings(settings: self.settings ?? SCSHSettings())
+        globalSettingsView.saveSettings(on: settings)
         
         return settings
     }
     
     func selectUTI(_ uti: String) -> Bool {
-        if let _ = allFileTypes.first(where: { $0.uti.UTI == uti }) {
+        if let utiDesc = allFileTypes.first(where: { $0.uti.UTI == uti }) {
+            currentUTI = utiDesc
             currentUTISettings = settings?.getCustomizedSettings(forUTI: uti)
             return true
         }
         return false
     }
     
+    func selectGlobalSettings() {
+        currentUTISettings = nil
+        currentUTI = nil
+        descriptionTextField.stringValue = "Global settings"
+        utiTextField.isHidden = true
+        extensionsTitleTextField.stringValue = ""
+        utiErrorButton.isHidden = true
+        
+        generalTabButton.isHidden = false
+        generalTabButton.isEnabled = true
+    }
+    
     /// Get a settings based on current customized global with apply the customization of active UTI.
     func getUtiSettings() -> SCSHSettings {
         let settings = getSettings()
-        
-        if utiThemeCheckbox.state == .on {
-            if let theme = utiLightTheme {
-                settings.lightTheme = (theme.isStandalone ? "" : "!") + theme.name
-                settings.lightBackgroundColor = theme.backgroundColor
-            }
-            if let theme = utiDarkTheme {
-                settings.darkTheme = (theme.isStandalone ? "" : "!") + theme.name
-                settings.darkBackgroundColor = theme.backgroundColor
-            }
-        }
-        
-        if utiCustomCSSCheckbox.state == .on, let utiCustomCSS = self.utiCustomCSS, !utiCustomCSS.isEmpty {
-            settings.css = (settings.css != nil ? settings.css! : "") + utiCustomCSS
-        }
-        
-        if utiFontCheckbox.state == .on {
-            settings.fontFamily = utiFontPreviewTextField.font?.fontName
-            if let size = utiFontPreviewTextField.font?.pointSize {
-                settings.fontSize = size
-            }
-        }
-        
-        if utiWordWrapCheckbox.state == .on {
-            switch utiWordWrapPopup.indexOfSelectedItem {
-            case 0:
-                settings.wordWrap = .off
-                settings.lineLength = nil
-            case 1:
-                settings.wordWrap = .simple
-                settings.lineLength = utiLineLengthTextField.integerValue
-            case 2:
-                settings.wordWrap = .standard
-                settings.lineLength = utiLineLengthTextField.integerValue
-            default:
-                break
-            }
-        }
-        
-        if utiLineNumberCheckbox.state == .on {
-            switch utiLineNumbersPopup.indexOfSelectedItem {
-            case 0:
-                settings.lineNumbers = .hidden
-            case 1:
-                settings.lineNumbers = .visible(omittingWrapLines: false)
-            case 2:
-                settings.lineNumbers = .visible(omittingWrapLines: true)
-            default:
-                break
-            }
-        }
-        
-        if utiTabSpacesCheckbox.state == .on {
-            settings.tabSpaces = utiTabSpacesSlider.integerValue
-        }
-        if utiArgumentsCheckbox.state == .on {
-            settings.extra = utiArgumentsTextField.stringValue
-        }
-        if utiInteractiveCheckbox.state == .on {
-            settings.allowInteractiveActions = utiInteractiveButton.state == .on
-        }
-        
-        if utiPreprocessorCheckbox.state == .on {
-            let v = utiPreprocessorTextField.stringValue.trimmingCharacters(in: CharacterSet.whitespaces)
-            settings.preprocessor = v.isEmpty ? nil : v
-        } else {
-            settings.preprocessor = nil
-        }
-        
-        if !utiSpecificArgumentsTextField.stringValue.isEmpty {
-            settings.extra = (settings.extra != nil ? settings.extra! + " " : "") + utiSpecificArgumentsTextField.stringValue
+        if let uti = self.currentUTISettings {
+            settings.overrideSpecialSettings(from: uti)
+            settings.override(fromSettings: uti)
         }
         
         return settings
@@ -960,313 +527,40 @@ class PreferencesViewController: NSViewController {
     /// Save the state of the UTI panels to a settings for the specified UTI.
     func saveCurrentUtiSettings(_ uti: String) {
         let utiSettings = SCSHUTIBaseSettings(UTI: uti)
-        
-        if utiSpecificArgumentsTextField.stringValue.isEmpty {
-            utiSettings.appendedExtra = nil
-        } else {
-            utiSettings.appendedExtra = utiSpecificArgumentsTextField.stringValue
+        if let s = settings?.getCustomizedSettings(forUTI: uti) {
+            utiSettings.specialSettings = s.specialSettings
         }
+        appearanceView.saveSettings(on: utiSettings)
+        extraSettingsView.saveSettings(on: utiSettings)
         
-        if utiThemeCheckbox.state == .on {
-            if let theme = utiLightTheme {
-                utiSettings.lightTheme = (theme.isStandalone ? "" : "!") + theme.name
-                utiSettings.lightBackgroundColor = theme.backgroundColor
-            }
-            if let theme = utiDarkTheme {
-                utiSettings.darkTheme = (theme.isStandalone ? "" : "!") + theme.name
-                utiSettings.darkBackgroundColor = theme.backgroundColor
-            }
-        } else {
-            utiSettings.lightTheme = nil
-            utiSettings.lightBackgroundColor = nil
-            utiSettings.darkTheme = nil
-            utiSettings.darkBackgroundColor = nil
-        }
-        
-        if utiCustomCSSCheckbox.state == .on {
-            utiSettings.css = utiCustomCSS
-        } else {
-            utiSettings.css = nil
-        }
-        
-        if utiFontCheckbox.state == .on {
-            utiSettings.fontFamily = utiFontPreviewTextField.font?.fontName ?? "Menlo"
-            utiSettings.fontSize = utiFontPreviewTextField.font?.pointSize ?? 12
-        } else {
-            utiSettings.fontFamily = nil
-            utiSettings.fontSize = nil
-        }
-        
-        if utiWordWrapCheckbox.state == .on {
-            switch utiWordWrapPopup.indexOfSelectedItem {
-            case 0:
-                utiSettings.wordWrap = .off
-                utiSettings.lineLength = nil
-            case 1:
-                utiSettings.wordWrap = .simple
-                utiSettings.lineLength = utiLineLengthTextField.integerValue
-            case 2:
-                utiSettings.wordWrap = .standard
-                utiSettings.lineLength = utiLineLengthTextField.integerValue
-            default:
-                utiSettings.wordWrap = nil
-                utiSettings.lineLength = nil
-            }
-        } else {
-            utiSettings.wordWrap = nil
-            utiSettings.lineLength = nil
-        }
-        
-        if utiLineNumberCheckbox.state == .on {
-            switch utiLineNumbersPopup.indexOfSelectedItem {
-            case 0:
-                utiSettings.lineNumbers = .hidden
-            case 1:
-                utiSettings.lineNumbers = .visible(omittingWrapLines: false)
-            case 2:
-                if let ww = utiSettings.wordWrap {
-                    utiSettings.lineNumbers = .visible(omittingWrapLines: ww != .off)
-                } else {
-                    utiSettings.lineNumbers = .visible(omittingWrapLines: false)
-                }
-            default:
-                utiSettings.lineNumbers = nil
-            }
-        } else {
-            utiSettings.lineNumbers = nil
-        }
-        
-        if utiTabSpacesCheckbox.state == .on {
-            utiSettings.tabSpaces = utiTabSpacesSlider.integerValue
-        } else {
-            utiSettings.tabSpaces = nil
-        }
-        
-        if utiArgumentsCheckbox.state == .on {
-            utiSettings.extra = utiArgumentsTextField.stringValue
-        } else {
-            utiSettings.extra = nil
-        }
-        
-        if utiInteractiveCheckbox.state == .on {
-            utiSettings.allowInteractiveActions = utiInteractiveButton.state == .on
-        } else {
-            utiSettings.allowInteractiveActions = nil
-        }
-        
-        if utiPreprocessorCheckbox.state == .on {
-            let v = utiPreprocessorTextField.stringValue.trimmingCharacters(in: CharacterSet.whitespaces)
-            utiSettings.preprocessor = v.isEmpty ? nil : v
-        } else {
-            utiSettings.preprocessor = nil
-        }
-        
-        if utiSettings.isCustomized {
-            settings?.setCustomizedSettingsForUTI(utiSettings)
-        } else {
-            _ = settings?.removeCustomizedSettings(forUTI: utiSettings.uti)
-        }
+        settings?.setCustomizedSettingsForUTI(utiSettings)
         
         if let i = fileTypes.firstIndex(where: { $0.uti.UTI == utiSettings.uti }) {
-            tableView.reloadData(forRowIndexes: IndexSet(integer: i), columnIndexes: IndexSet(integer: 2))
+            tableView.reloadData(forRowIndexes: IndexSet(integer: i + 3), columnIndexes: IndexSet(integer: 2))
         }
     }
     
-    // MARK: -
-    
-    /// Handle word wrap change.
-    @IBAction func handleWordWrapChange(_ sender: NSPopUpButton) {
-        let lineTextField = sender == wordWrapPopup ? lineLengthTextField : utiLineLengthTextField
-        let lineTextLabel = sender == wordWrapPopup ? lineLengthLabel : utiLineLengthLabel
-        let lineNumbersPopup = sender == wordWrapPopup ? self.lineNumbersPopup : utiLineNumbersPopup
-        
-        lineTextField?.isHidden = sender.indexOfSelectedItem == 0
-        lineTextLabel?.isHidden = sender.indexOfSelectedItem == 0
-        
-        if sender.indexOfSelectedItem == 0 {
-            if lineNumbersPopup?.indexOfSelectedItem == 2 {
-                lineNumbersPopup?.selectItem(at: 1)
-            }
-            lineNumbersPopup?.menu?.item(at: 2)?.isEnabled = false
-        } else {
-            lineNumbersPopup?.menu?.item(at: 2)?.isEnabled = true
+    func saveGlobalSettings() {
+        if let settings = self.settings {
+            appearanceView.saveSettings(on: settings)
+            extraSettingsView.saveSettings(on: settings)
         }
-        if sender == wordWrapPopup {
-            refreshPreview(sender)
-        } else {
-            refreshUtiPreview(sender)
-        }
-    }
-    
-    /// Show panel to chose a new font.
-    @IBAction func chooseFont(_ sender: NSButton) {
-        let fontPanel = NSFontPanel.shared
-        fontPanel.worksWhenModal = true
-        fontPanel.becomesKeyOnlyIfNeeded = true
-        
-        let fontFamily: String
-        let fontSize: Float
-        
-        if tabView.selectedTabViewItem?.identifier as? String != "SpecificSettingsView" {
-            fontFamily = fontPreviewTextField.font?.fontName ?? "Menlo"
-            fontSize = Float(fontPreviewTextField.font?.pointSize ?? 12)
-        } else {
-            fontFamily = utiFontPreviewTextField.font?.fontName ?? "Menlo"
-            fontSize = Float(utiFontPreviewTextField.font?.pointSize ?? 12)
-        }
-        if let font = NSFont(name: fontFamily, size: CGFloat(fontSize)) {
-            fontPanel.setPanelFont(font, isMultiple: false)
-        }
-        
-        self.view.window?.makeFirstResponder(tabView)
-        fontPanel.makeKeyAndOrderFront(self)
-    }
-    
-    /// Refresh the preview font.
-    func refreshFontPanel(withFont font: NSFont, isGlobal: Bool) {
-        let ff: String
-        if let family = font.familyName {
-            ff = family
-        } else {
-            ff = font.fontName
-        }
-        
-        let fp = font.pointSize
-        
-        let fontPreview = isGlobal ? fontPreviewTextField : utiFontPreviewTextField
-        fontPreview?.stringValue = String(format:"%@ %.1f pt", ff, fp)
-        fontPreview?.font = font
-    }
-    
-    /// Refresh the preview font.
-    func refreshFontPanel(withFontFamily font: String, size: CGFloat, isGlobal: Bool) {
-        if let f = NSFont(name: font, size: size) {
-            self.refreshFontPanel(withFont: f, isGlobal: isGlobal)
-        }
-    }
-    
-    /// Handle format output change.
-    @IBAction func handleFormatChange(_ sender: NSSegmentedControl) {
-        webView.isHidden = sender.indexOfSelectedItem != 0
-        scrollView.isHidden = sender.indexOfSelectedItem == 0
-        refreshPreview(sender)
-    
-        utiWebView.isHidden = sender.indexOfSelectedItem != 0
-        utiScrollView.isHidden = sender.indexOfSelectedItem == 0
-        
-        customCSSButton.isEnabled = sender.indexOfSelectedItem == 0
-        interactiveButton.isEnabled = sender.indexOfSelectedItem == 0
-        
-        utiCustomCSSCheckbox.isEnabled = self.currentUTISettings != nil && sender.indexOfSelectedItem == 0
-        utiCustomCSSButton.isEnabled = utiCustomCSSCheckbox.isEnabled && utiCustomCSSCheckbox.state == .on
-        utiInteractiveCheckbox.isEnabled = self.currentUTISettings != nil && sender.indexOfSelectedItem == 0
-        utiInteractiveButton.isEnabled = utiInteractiveCheckbox.isEnabled && utiInteractiveCheckbox.state == .on
-        
-        refreshUtiPreview(sender)
-    }
-    
-    /// Handle highlight theme change.
-    @IBAction func handleHighLightPathChange(_ sender: NSPopUpButton) {
-        var changed = false
-        if sender.indexOfSelectedItem == sender.numberOfItems - 1 {
-            // Browse for a custom path.
-            let openPanel = NSOpenPanel()
-            openPanel.canChooseFiles = true
-            openPanel.canChooseDirectories = false
-            openPanel.resolvesAliases = false
-            openPanel.showsHiddenFiles = true
-            if let s = self.settings?.highlightProgramPath {
-                let url = URL(fileURLWithPath: s, isDirectory: false)
-                openPanel.directoryURL = url.deletingLastPathComponent()
-            }
-            openPanel.beginSheetModal(for: self.view.window!) { (result) -> Void in
-                if result == .OK, let url = openPanel.url {
-                    self.highlightPaths.append((path: url.path, ver: "", embedded: false))
-                    
-                    let m = NSMenuItem(title: url.path, action: nil, keyEquivalent: "")
-                    m.tag = self.highlightPaths.count-1
-                    self.highlightPathPopup.menu?.insertItem(m, at: sender.numberOfItems-1)
-                    sender.select(m)
-                    
-                    self.settings?.highlightProgramPath = url.path
-                    changed = true
-                } else {
-                    // Restore previous selected path.
-                    if let i = self.highlightPaths.firstIndex(where: { $0.path == self.settings?.highlightProgramPath }), let m = sender.menu?.item(withTag: i) {
-                        sender.select(m)
-                    } else {
-                        sender.selectItem(at: 0)
-                    }
-                }
-            }
-        } else {
-            if let i = sender.selectedItem?.tag, i >= 0, i < self.highlightPaths.count {
-                self.settings?.highlightProgramPath = self.highlightPaths[i].path
-                changed = true
-            }
-        }
-        
-        guard changed else {
-            return
-        }
-        
-        themeLightIcon.isEnabled = false
-        themeDarkIcon.isEnabled = false
-        
-        utiThemeLightIcon.isEnabled = false
-        utiThemeDarkIcon.isEnabled = false
-        
-        self.service?.getThemes(highlight: self.settings?.highlightProgramPath ?? "-") { (results, error) in
-            var themes: [SCSHTheme] = []
-            for dict in results {
-                if let d = dict as? [String: Any], let theme = SCSHTheme(dict: d) {
-                    themes.append(theme)
-                }
-            }
-            DispatchQueue.main.async {
-                self.themes = themes
-                self.refreshPreview(self)
-                if self.currentUTISettings != nil {
-                    self.refreshUtiPreview(self)
-                }
-            }
-        }
-    }
-    
-    /// Shows the about highlight window,
-    @IBAction func handleInfoButton(_ sender: Any) {
-        service?.highlightInfo(highlight: self.settings?.highlightProgramPath ?? "-", reply: { (result) in
-            if let vc = self.storyboard?.instantiateController(withIdentifier: "HighlightInfo") as? InfoHighlightController {
-                vc.text = result
-                self.presentAsSheet(vc)
-            }
-            
-        })
     }
     
     // MARK: -
     
     // Called from refresh menu item.
     @IBAction func refresh(_ sender: Any) {
-        if tabView.selectedTabViewItem?.identifier as? String == "SpecificSettingsView" {
-            refreshUtiPreview(sender)
-        } else {
-            refreshPreview(sender)
-        }
+        previewView.refresh(sender)
     }
     
     /// Refresh global preview.
     @IBAction func refreshPreview(_ sender: Any) {
-        let settings = getSettings()
-        
-        let example: URL?
-        if examplesPopup.indexOfSelectedItem == 0 || examples.count == 0 {
-            example = nil
-        } else {
-            example = self.examples[examplesPopup.indexOfSelectedItem-2].url
-        }
-            
-        self.refreshPreview(light: previewThemeControl.selectedSegment == 0, settings: settings, webView: webView, scrollText: scrollView, textView: textView, indicator: refreshIndicator, example: example)
+        previewView.refresh(self)
+    }
+    
+    @IBAction func performFindPanelAction(_ sender: Any?) {
+        self.view.window?.makeFirstResponder(searchField)
     }
     
     // MARK: -
@@ -1279,145 +573,18 @@ class PreferencesViewController: NSViewController {
         sender.contentTintColor = sender.state == .on ? NSColor.controlAccentColor : NSColor.secondaryLabelColor
     }
     
-    @IBAction func handleUtiThemeCheckbox(_ sender: NSButton) {
-        utiThemeLightIcon.isEnabled = sender.state == .on
-        utiThemeDarkIcon.isEnabled = sender.state == .on
-        
-        refreshUtiPreview(sender)
-    }
-    
-    @IBAction func handleUtiCustomCSSCheckbox(_ sender: NSButton) {
-        utiCustomCSSButton.isEnabled = sender.state == .on
-        refreshUtiPreview(sender)
-    }
-    
-    @IBAction func handleUtiFontCheckbox(_ sender: NSButton) {
-        utiFontChooseButton.isEnabled = sender.state == .on
-        utiFontPreviewTextField.isEnabled = sender.state == .on
-        refreshUtiPreview(sender)
-    }
-    
-    @IBAction func handleUtiWordWrapCheckbox(_ sender: NSButton) {
-        utiWordWrapPopup.isEnabled = sender.state == .on
-        utiLineLengthTextField.isEnabled = sender.state == .on
-        refreshUtiPreview(sender)
-    }
-    
-    @IBAction func handleUtiLineNumbersCheckbox(_ sender: NSButton) {
-        utiLineNumbersPopup.isEnabled = sender.state == .on
-        refreshUtiPreview(sender)
-    }
-    
-    @IBAction func handleUtiTabSpacesCheckbox(_ sender: NSButton) {
-        utiTabSpacesSlider.isEnabled = sender.state == .on
-        refreshUtiPreview(sender)
-    }
-    
-    @IBAction func handleUtiArgumentsCheckbox(_ sender: NSButton) {
-        utiArgumentsTextField.isEnabled = sender.state == .on
-        refreshUtiPreview(sender)
-    }
-    
-    @IBAction func handleUtiInteractiveCheckbox(_ sender: NSButton) {
-        utiInteractiveButton.isEnabled = sender.state == .on
-    }
-    
-    @IBAction func handleUtiPreprocessorCheckbox(_ sender: NSButton) {
-        utiPreprocessorTextField.isEnabled = sender.state == .on
-        refreshUtiPreview(sender)
-    }
-    
-    /// Refresh UTI preview.
-    @IBAction func refreshUtiPreview(_ sender: Any) {
-        let settings = getUtiSettings()
-        
-        self.refreshPreview(light: utiPreviewThemeControl.selectedSegment == 0, settings: settings, webView: utiWebView, scrollText: utiScrollView, textView: utiTextView, indicator: utiRefreshIndicator, example: getExample(forUTI: currentUTISettings?.uti ?? ""))
-    }
-    
-    /// Refresh a preview.
-    /// - parameters:
-    ///   - light: Use light or dark theme.
-    ///   - settings: Settings to use.
-    ///   - webView:
-    ///   - scrollText:
-    ///   - textView:
-    ///   - indicator:
-    ///   - example: Url of a file to render. Nil to render the standard theme settings preview.
-    private func refreshPreview(light: Bool, settings: SCSHSettings, webView: WKWebView, scrollText: NSScrollView, textView: NSTextView, indicator: NSProgressIndicator, example: URL?) {
-        let custom_settings = SCSHSettings(settings: settings)
-        
-        if light {
-            custom_settings.theme = custom_settings.lightTheme
-            custom_settings.backgroundColor = custom_settings.lightBackgroundColor
-        } else {
-            custom_settings.theme = custom_settings.darkTheme
-            custom_settings.backgroundColor = custom_settings.darkBackgroundColor
-        }
-        
-        indicator.startAnimation(self)
-        
-        if let url = example {
-            /// Show a file.
-            if custom_settings.format == .html {
-                webView.isHidden = true
-                service?.htmlColorize(url: url, settings: custom_settings.toDictionary() as NSDictionary) { (html, extra, error) in
-                    DispatchQueue.main.async {
-                        webView.loadHTMLString(html, baseURL: nil)
-                        indicator.stopAnimation(self)
-                        webView.isHidden = false
-                    }
-                }
-            } else {
-                scrollText.isHidden = true
-                service?.rtfColorize(url: url, settings: custom_settings.toDictionary() as NSDictionary) { (response, effective_settings, error) in
-                    let text: NSAttributedString
-                    if let e = error {
-                        text = NSAttributedString(string: String(data: response, encoding: .utf8) ?? e.localizedDescription)
-                    } else {
-                        text = NSAttributedString(rtf: response, documentAttributes: nil) ?? NSAttributedString(string: "Conversion error!")
-                    }
-                    
-                    DispatchQueue.main.async {
-                        textView.textStorage?.setAttributedString(text)
-                        if let bg = effective_settings[SCSHSettings.Key.backgroundColor] as? String, let c = NSColor(fromHexString: bg) {
-                            textView.backgroundColor = c
-                        } else {
-                            textView.backgroundColor = .clear
-                        }
-                        indicator.stopAnimation(self)
-                        scrollText.isHidden = false
-                    }
-                }
-            }
-        } else {
-            // Show standard theme preview.
-            if let theme = getTheme(name: custom_settings.theme) {
-                if custom_settings.format == .html {
-                    webView.loadHTMLString(theme.getHtmlExample(fontName: settings.fontFamily ?? "Menlo", fontSize: (settings.fontSize ?? 12) * 0.75), baseURL: nil)
-                } else {
-                    let example = theme.getAttributedExample(fontName: custom_settings.fontFamily ?? "Menlo", fontSize: (custom_settings.fontSize ?? 12) * 0.75)
-                    textView.textStorage?.setAttributedString(example)
-                    
-                    if let bg = custom_settings.backgroundColor, let c = NSColor(fromHexString: bg) {
-                        textView.backgroundColor = c
-                    } else {
-                        textView.backgroundColor = .clear
-                    }
-                }
-                indicator.stopAnimation(self)
-            }
-        }
-    }
-    
     // MARK: -
     
     @IBAction func showHelp(_ sender: Any) {
         if let locBookName = Bundle.main.object(forInfoDictionaryKey: "CFBundleHelpBookName") as? String {
             let anchor: String
-            if tabView.selectedTabViewItem?.identifier as? String == "SpecificSettingsView" {
-                anchor = "SyntaxHighlight_SPECIFIC_PREFERENCES"
+            // MARK: FIXME
+            if tabView.selectedTabViewItem?.identifier as? String == "Global" {
+                anchor = "SyntaxHighlight_GLOBAL_PREFERENCES"
+            } else if tabView.selectedTabViewItem?.identifier as? String == "Appearance" {
+                anchor = "SyntaxHighlight_APPEARANCE_PREFERENCES"
             } else {
-                anchor = "SyntaxHighlight_PREFERENCES"
+                anchor = "SyntaxHighlight_EXTRA_PREFERENCES"
             }
             
             NSHelpManager.shared.openHelpAnchor(anchor, inBook: locBookName)
@@ -1429,6 +596,12 @@ class PreferencesViewController: NSViewController {
         saveCurrentUtiSettings()
         
         let settings = self.getSettings()
+        if tableView.selectedRow == 1 {
+            appearanceView.saveSettings(on: settings)
+            extraSettingsView.saveSettings(on: settings)
+        } else if let uti = currentUTISettings?.uti {
+            saveCurrentUtiSettings(uti)
+        }
         
         if let globalSettings = self.settings {
             for (_, utiSettings) in globalSettings.customizedSettings {
@@ -1442,6 +615,7 @@ class PreferencesViewController: NSViewController {
         
         saveButton.isEnabled = false
         cancelButton.isEnabled = false
+        
         service?.setSettings(settings.toDictionary() as NSDictionary) { _ in
             DispatchQueue.main.async {
                 self.saveButton.isEnabled = true
@@ -1511,7 +685,7 @@ class PreferencesViewController: NSViewController {
         }
         
         if newName != oldName {
-            // Theme renamed, search inside the settings if it is used by some uti.
+            // Theme renamed, search inside the settings if it is used by some UTI.
             for (_, settings) in self.settings?.customizedSettings ?? [:] {
                 if settings.lightTheme == oldName {
                     settings.lightTheme = newName
@@ -1581,72 +755,220 @@ class PreferencesViewController: NSViewController {
         
         themes.remove(at: i)
     }
+    
+    // MARK: -
+    @IBAction func handleTabButton(_ sender: NSButton) {
+        sender.state = .on
+        if sender.identifier == NSUserInterfaceItemIdentifier("General") {
+            tabView.selectTabViewItem(at: 0)
+            extraTabButton.state = .off
+            appearanceTabButton.state = .off
+        } else if sender.identifier == NSUserInterfaceItemIdentifier("Appearance") {
+            tabView.selectTabViewItem(at: 1)
+            extraTabButton.state = .off
+            generalTabButton.state = .off
+        } else if sender.identifier == NSUserInterfaceItemIdentifier("Extra") {
+            tabView.selectTabViewItem(at: 2)
+            generalTabButton.state = .off
+            appearanceTabButton.state = .off
+        }
+    }
 }
 
 // MARK: - NSTableViewDataSource
 extension PreferencesViewController: NSTableViewDataSource {
     func numberOfRows(in tableView: NSTableView) -> Int {
-        return fileTypes.count
+        return 2 + (self.fileTypes.count > 0 ? 1 : 0) + fileTypes.count
     }
     
     func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
-        if tableColumn?.identifier.rawValue == "Icon" {
-            return fileTypes[row].icon
+       if tableColumn?.identifier.rawValue == "Icon" {
+            return row < 3 ? nil : fileTypes[row-3].icon
         } else if tableColumn?.identifier.rawValue == "Changed" {
-            return settings?.hasCustomizedSettings(forUTI: fileTypes[row].uti.UTI) ?? false ? "M" : ""
+            return row < 3 ? "" : settings?.hasCustomizedSettings(forUTI: fileTypes[row - 3].uti.UTI) ?? false ? "M" : ""
         } else {
-            return fileTypes[row].fullDescription
+            if row == 0 {
+                return "Global settings"
+            } else if row == 1 {
+                return "global"
+            } else if row == 2 {
+                return "Specific settings"
+            } else {
+                return fileTypes[row-3].fullDescription
+            }
         }
     }
 }
 
 // MARK: - NSTableViewDelegate
 extension PreferencesViewController: NSTableViewDelegate {
+    func tableViewSelectionIsChanging(_ notification: Notification) {
+        if currentUTI == nil {
+            if settings != nil {
+                // Save the appaerance settings of the global settings.
+                appearanceView.saveSettings(on: settings!)
+                extraSettingsView.saveSettings(on: settings!)
+            }
+        } else {
+            saveCurrentUtiSettings(currentUTI!.uti.UTI)
+        }
+    }
+    
     func tableViewSelectionDidChange(_ notification: Notification) {
         let index = self.tableView.selectedRow
         guard index >= 0 else {
             return
         }
         
-        _ = selectUTI(self.fileTypes[index].uti.UTI)
+        if index > 2 {
+            _ = selectUTI(self.fileTypes[index - 3].uti.UTI)
+        } else if index == 1 {
+            selectGlobalSettings()
+        }
     }
     
-    func tableView(_ tableView: NSTableView, toolTipFor cell: NSCell, rect: NSRectPointer, tableColumn: NSTableColumn?, row: Int, mouseLocation: NSPoint) -> String {
-        return self.fileTypes[row].uti.UTI
+    func tableView(_ tableView: NSTableView, isGroupRow row: Int) -> Bool {
+        return row == 0 || row == 2
     }
     
-    func tableView(_ tableView: NSTableView, willDisplayCell cell: Any, for tableColumn: NSTableColumn?, row: Int) {
-        if let c = cell as? NSTextFieldCell {
-            if fileTypes[row].extensions.count > 0 && fileTypes[row].suppressedExtensions.count == fileTypes[row].extensions.count {
-                c.textColor = NSColor.disabledControlTextColor
-            } else {
-                c.textColor = NSColor.textColor
+    func tableView(_ tableView: NSTableView, heightOfRow row: Int) -> CGFloat {
+        return row == 0 || row == 2 ? 30 : 38
+    }
+    
+    func tableView(_ tableView: NSTableView, shouldSelectRow row: Int) -> Bool {
+        return row != 0 && row != 2
+    }
+    
+    func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
+        if let column = tableColumn {
+            let v = tableView.makeView(withIdentifier: column.identifier, owner: self) as! NSTableCellView
+            v.toolTip = ""
+            if column.identifier == NSUserInterfaceItemIdentifier("Icon") {
+                if row > 2 {
+                    v.imageView?.image = fileTypes[row - 3].icon
+                } else {
+                    v.imageView?.image = nil
+                }
+            } else if column.identifier == NSUserInterfaceItemIdentifier("Name") {
+                if row > 2 {
+                    let suppressed = fileTypes[row - 3].extensions.count > 0 && fileTypes[row - 3].suppressedExtensions.count == fileTypes[row - 3].extensions.count
+                    if let cell = v as? UTITableCellView {
+                        v.textField?.stringValue = fileTypes[row - 3].description
+                        cell.extensionTextField.stringValue = fileTypes[row - 3].extensions.count > 0 ? "." + fileTypes[row - 3].extensions.joined(separator: ", .") : ""
+                        cell.extensionTextField.isHidden = false
+                        cell.extensionTextField.textColor = suppressed ?  .disabledControlTextColor : .labelColor
+                    } else {
+                        v.textField?.stringValue = fileTypes[row - 3].fullDescription
+                    }
+                    v.toolTip = self.fileTypes[row - 3].uti.UTI
+                    
+                    v.textField?.textColor = suppressed ? .disabledControlTextColor : .labelColor
+                } else if row == 1 {
+                    v.textField?.stringValue = "Global"
+                    v.textField?.textColor = .labelColor
+                    if let cell = v as? UTITableCellView {
+                        cell.extensionTextField.isHidden = true
+                    }
+                } 
+            } else if column.identifier == NSUserInterfaceItemIdentifier("Changed") {
+                v.imageView?.isHidden = !(row > 2 && settings?.hasCustomizedSettings(forUTI: fileTypes[row - 3].uti.UTI) ?? false)
             }
+            return v
+        } else {
+            let v = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("GroupCell"), owner: self) as! NSTableCellView
+            v.textField?.stringValue = row == 0 ? "Global settings" : "Specific settings"
+            return v
         }
     }
 }
 
-// MARK: - NSFontChanging
-extension PreferencesViewController: NSFontChanging {
-    /// Handle the selection of a font.
-    func changeFont(_ sender: NSFontManager?) {
-        guard let fontManager = sender else {
+
+
+// MARK: - NSTabViewDelegate
+extension PreferencesViewController: NSTabViewDelegate {
+    
+}
+
+extension PreferencesViewController: AppearanceViewDelegate {
+    func appearance(appearanceView: AppearanceView, requestBrowserForTheme theme: SCSHTheme?, mode: ThemeStyleFilterEnum, fromView: NSView,  onComplete: @escaping (_ theme: SCSHTheme?)->Void) {
+        guard let vc = self.storyboard?.instantiateController(withIdentifier:"ThemeSelector") as? ThemeSelectorViewController else {
             return
         }
-        let font = fontManager.convert(NSFont.systemFont(ofSize: 13.0))
         
-        if tabView.selectedTabViewItem?.identifier as? String == "GlobalSettingsView" {
-            refreshFontPanel(withFont: font, isGlobal: true)
-            refreshPreview(self)
-        } else if tabView.selectedTabViewItem?.identifier as? String == "SpecificSettingsView" && utiFontCheckbox.state == .on {
-            refreshFontPanel(withFont: font, isGlobal: false)
-            refreshUtiPreview(self)
+        vc.style = mode
+        vc.handler = { theme in
+            onComplete(theme)
         }
+        vc.allThemes = self.themes.map({ SCSHThemePreview(theme: $0) })
+        
+        self.present(vc, asPopoverRelativeTo: fromView.bounds, of: fromView, preferredEdge: NSRectEdge.maxY, behavior: NSPopover.Behavior.semitransient)
     }
     
-    /// Customize font panel.
-    func validModesForFontPanel(_ fontPanel: NSFontPanel) -> NSFontPanel.ModeMask
-    {
-        return [.collection, .face, .size]
+    func appearanceRequestRefreshPreview(appearanceView: AppearanceView) {
+        previewView.refresh(appearanceView)
+    }
+    
+    func appearance(appearanceView: AppearanceView, requestCustomStyle style: String, showingUTIWarning: Bool, onComplete: @escaping (_ style: String)->Void) {
+        guard let vc = self.storyboard?.instantiateController(withIdentifier: "CustomStyleEditor") as? CSSControlView else {
+            return
+        }
+        vc.cssCode = style
+        vc.isUTIWarningHidden = !showingUTIWarning
+        vc.handler = { css in
+            onComplete(css)
+        }
+        self.presentAsSheet(vc)
+    }
+}
+
+extension PreferencesViewController: ExtraSettingsViewDelegate {
+    func extraSettingsRequestRefreshPreview(extraSettingsView: ExtraSettingsView) {
+        previewView.refresh(extraSettingsView)
+    }
+}
+
+extension PreferencesViewController: GlobalSettingsViewDelegate {
+    /// Shows the about highlight window,
+    func globalSettings(globalSettingsView: GlobalSettingsView, showHighlightInfoForPath path: String?) {
+        service?.highlightInfo(highlight: path ?? "-", reply: { (result) in
+            if let vc = self.storyboard?.instantiateController(withIdentifier: "HighlightInfo") as? InfoHighlightController {
+                vc.text = result
+                self.presentAsSheet(vc)
+            }
+        })
+    }
+    
+    /// Handle format output change.
+    func globalSettings(_ globalSettingsView: GlobalSettingsView, outputModeChangedTo format: SCSHBaseSettings.Format) {
+        appearanceView.renderMode = format
+        extraSettingsView.renderMode = format
+        previewView.renderMode = format
+        
+        previewView.refresh(globalSettingsView)
+    }
+    
+    func globalSettings(_ globalSettingsView: GlobalSettingsView, highlightPathChangedTo path: String?) {
+        self.themes = []
+        self.appearanceView.themes = []
+        
+        self.service?.getThemes(highlight: path ?? "-") { (results, error) in
+            var themes: [SCSHTheme] = []
+            for dict in results {
+                if let d = dict as? [String: Any], let theme = SCSHTheme(dict: d) {
+                    themes.append(theme)
+                }
+            }
+            DispatchQueue.main.async {
+                self.themes = themes
+                self.appearanceView.themes = themes
+                self.previewView.themes = themes
+                self.previewView.refresh(self)
+            }
+        }
+        self.service?.highlightAvailableSyntax(highlight: path ?? "-", reply: { (result) in
+            if let result = result as? [String: [String: Any]] {
+                self.extraSettingsView.availableSyntax = result
+            }
+        })
     }
 }

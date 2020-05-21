@@ -80,6 +80,10 @@ class DropView: NSView {
     }
 }
 
+class ActionTableCellView: NSTableCellView {
+    @IBOutlet weak var popupButton: NSPopUpButton!
+}
+
 protocol DropViewDelegate: class {
     func enterDrag(_ sender: NSDraggingInfo)
     func exitDrag(_ sender: NSDraggingInfo?)
@@ -180,6 +184,65 @@ class CustomTypeViewController: NSViewController, DropViewDelegate, NSTableViewD
         }
     }
     
+    @IBAction func addSupportForUTI(_ sender: NSPopUpButton) {
+        guard UTIs[sender.tag].supported != .yes  else {
+            return
+        }
+        
+        let alert = NSAlert()
+        alert.messageText = "Sorry but this action is not supported because strip the code signature and make the extension unusable!"
+        alert.addButton(withTitle: "OK")
+        
+        alert.alertStyle = .warning
+        
+        alert.runModal()
+        /*
+        
+        
+        let uti = UTIs[sender.tag]
+        
+        let alert = NSAlert()
+        alert.window.title = "Warning"
+        alert.messageText = "Adding a custom format WILL REMOVE the code signature and may make it IMPOSSIBLE TO RUN THE APPLICATION. This operation cannot be undone. Please take a backup of the app."
+        alert.informativeText = "Do you want to continue?"
+        var b = alert.addButton(withTitle: "Continue")
+        b.keyEquivalent = ""
+        b = alert.addButton(withTitle: "Cancel")
+        b.keyEquivalent = "\u{1b}" // ESC
+        
+        alert.alertStyle = .critical    
+        
+        guard alert.runModal() == .alertFirstButtonReturn else {
+            return
+        }
+        
+        service?.registerUTI(uti.UTI.UTI, result: { result in
+            print("registration: \(result ? "OK" : "KO")")
+            DispatchQueue.main.async {
+                let alert = NSAlert()
+                alert.messageText = result ? "Custom UTI registered" : "Warning"
+                alert.informativeText = result ? "Restart the app to see the customized UTI.\nIf the app don't start you must reset the code signature with this terminal command: /usr/bin/codesign --remove-signature PATH_OF_THE_APP" : "Unable to add the requested UTI format."
+                alert.addButton(withTitle: "OK")
+                alert.alertStyle = result ? .informational : .warning
+                alert.runModal()
+            }
+        })
+        /*
+        let task = Process()
+        
+        // helper tool path
+        task.launchPath = Bundle.main.path(forResource: "relaunch", ofType: nil)!
+        // self PID as a argument
+        task.arguments = [String(ProcessInfo.processInfo.processIdentifier)]
+        task.launch()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            NSApp.terminate(self)
+        }
+ */
+ */
+    }
+    
     /*
     @IBAction func doSave(_ sender: Any) {
         if isUTIValid, let url = (NSApplication.shared.delegate as? AppDelegate)?.getQLAppexUrl(), let bundle = Bundle(url: url) {
@@ -223,34 +286,44 @@ class CustomTypeViewController: NSViewController, DropViewDelegate, NSTableViewD
         return self.UTIs.count
     }
     
-    func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
+    func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
         let uti = self.UTIs[row]
         let font: NSFont
-              
         if uti.standard {
             font = NSFont.boldSystemFont(ofSize: NSFont.systemFontSize)
         } else {
             font = NSFont.labelFont(ofSize: NSFont.systemFontSize)
         }
-        if tableColumn?.identifier == NSUserInterfaceItemIdentifier("description") {
-             return NSAttributedString(string: uti.UTI.description, attributes: [NSAttributedString.Key.font: font])
-        } else if tableColumn?.identifier == NSUserInterfaceItemIdentifier("UTI") {
-            return NSAttributedString(string: uti.UTI.UTI, attributes: [NSAttributedString.Key.font: font])
-        } else if tableColumn?.identifier == NSUserInterfaceItemIdentifier("status") {
+        
+        guard let tableColumn = tableColumn else {
+            return NSTableCellView()
+        }
+        let view = tableView.makeView(withIdentifier: tableColumn.identifier, owner: self) as! NSTableCellView
+        
+        if tableColumn.identifier == NSUserInterfaceItemIdentifier("description") {
+            view.textField?.attributedStringValue = NSAttributedString(string: uti.UTI.description, attributes: [NSAttributedString.Key.font: font])
+        } else if tableColumn.identifier == NSUserInterfaceItemIdentifier("UTI") {
+            view.textField?.attributedStringValue = NSAttributedString(string: uti.UTI.UTI, attributes: [NSAttributedString.Key.font: font])
+        } else if tableColumn.identifier == NSUserInterfaceItemIdentifier("status") {
             switch (uti.supported) {
             case .yes:
-                return NSImage(named: NSImage.statusAvailableName)
+                view.imageView?.image = NSImage(named: NSImage.statusAvailableName)
             case .no:
-                return NSImage(named: NSImage.statusUnavailableName)
+                view.imageView?.image = NSImage(named: NSImage.statusUnavailableName)
             case .highlight:
-                return NSImage(named: NSImage.statusPartiallyAvailableName)
+                view.imageView?.image = NSImage(named: NSImage.statusPartiallyAvailableName)
             case .unknown:
-                return NSImage(named: NSImage.statusNoneName)
+                view.imageView?.image = NSImage(named: NSImage.statusNoneName)
             }
-        } else if tableColumn?.identifier == NSUserInterfaceItemIdentifier("ext") {
-            return uti.UTI.extensions.joined(separator: ", ")
+        } else if tableColumn.identifier == NSUserInterfaceItemIdentifier("ext") {
+            view.textField?.stringValue = uti.UTI.extensions.joined(separator: ", ")
+        } else if tableColumn.identifier == NSUserInterfaceItemIdentifier("action")/*, let cell = view as? ActionTableCellView */ {
+            return nil
+            
+            /*cell.popupButton.tag = row
+            cell.popupButton.isEnabled = UTIs[row].supported != .yes*/
         }
         
-        return nil
+        return view
     }
 }

@@ -151,8 +151,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 NSWorkspace.shared.activateFileViewerSelecting([u])
             } else {
                 let alert = NSAlert()
-                alert.messageText = "Attention"
-                alert.informativeText = "The application support folder don't exists."
+                alert.window.title = "Attention"
+                alert.messageText = "The application support folder don't exists."
                 alert.addButton(withTitle: "Close")
                 alert.alertStyle = .informational
                 

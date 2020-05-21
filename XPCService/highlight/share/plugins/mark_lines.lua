@@ -11,12 +11,12 @@ function syntaxUpdate(desc)
 
   if #HL_PLUGIN_PARAM == 0 then return end
 
-  --we need a dummy kw class to get the line mark colour into the colour map
+  -- we need a dummy kw class to get the line mark colour into the colour map
   if HL_OUTPUT == HL_FORMAT_RTF then
     table.insert( Keywords, { Id=#Keywords+1, List={"HL_RTF_DUMMY" } } )
   end
 
-  -- explode(seperator, string)
+  -- explode (separator, string)
   function explode(d,p)
     local t, ll
     t={}

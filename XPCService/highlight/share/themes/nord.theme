@@ -1,0 +1,25 @@
+Description="Nord"
+
+-- Theme handcrafted by Dave Hall, based on nordtheme.com
+
+Categories = {"dark"}
+
+Default        = { Colour="#d8dee9" }
+Canvas         = { Colour="#2e3440" }
+Number         = { Colour="#b48ead" }
+Escape         = { Colour="#ebcb8b" }
+String         = { Colour="#a3be8c" }
+StringPreProc  = { Colour="#a3be8c" }
+BlockComment   = { Colour="#4c566a" }
+LineComment    = { Colour="#4c566a" }
+PreProcessor   = { Colour="#5e81ac" }
+LineNum        = Default
+Operator       = { Colour="#81a1c1" }
+Interpolation  = { Colour="#ebcb8b" }
+
+Keywords = {
+  { Colour= "#81a1c1" },
+  { Colour= "#434c5e" },
+  { Colour= "#88c0d0" },
+  { Colour= "#8fbcbb" },
+}

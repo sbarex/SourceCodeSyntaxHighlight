@@ -73,6 +73,9 @@ Keywords={
       "waterfall", "white", "wk1const", "wk1read", "wk1wrec", "wk1write", "xlabel",
       "xor", "xyzchk", "ylabel", "zlabel"},
   },
+  { Id=3,
+    Regex=[[(\w+)\s*\:\:]]
+  },
 }
 
 Strings = {

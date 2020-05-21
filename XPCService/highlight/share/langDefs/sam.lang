@@ -1,0 +1,43 @@
+
+Description="Sequence Alignment Map (use with sam_seq.lua plug-in)"
+
+Categories = {"source"}
+
+--Digits = [[ (?:0x|0X|0b)[0-9a-fA-F']+|\d*[\.]?\d+(?:[eE][\-\+]\d+)?[lLuU]* ]]
+
+Keywords={
+
+    { Id=1,
+    Regex=[[(SRR|SNES)\d+\.\d+]], Group=0
+    },
+    { Id=2,
+    Regex=[[chr\d+]]
+    },
+
+    { Id=3,
+    Regex=[[\d+[DMS][DM\d]*]]
+    },
+
+    { Id=2,
+    Regex=[[ [ASXNMDOGYTR]{2}\: ]]
+    },
+
+    { Id=5,
+    Regex=[[ [ATCG]{64,} ]]
+    },
+
+    { Id=4,
+    Regex=[[ [\S]{100,} ]]
+    }
+}
+
+Comments = {
+    {
+    Block=false,
+    Delimiter = { [[^@]] }
+    }
+}
+
+IgnoreCase=false
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\.|\:|\&|<|>|\!|=|\/|\*|\%|\+|\-|\~|\||\^|\?]]

@@ -100,6 +100,8 @@ Comments={
 --todo for 1..5
 Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\:|\&|<|>|\!|\@|~|\=|\/|\*|\+|\-|\$|\.|\^|\~|\%|\|]]
 
+Digits=[[ (?:0x|0X|0b)[0-9a-fA-F_]+|\d*[\.\_]?\d+(?:[eE][\-\+]?\d+)?[fFlLuU]? ]]
+
 -- fix recognition of $ and other Perl perversions
 function OnStateChange(oldState, newState, token, groupID)
 

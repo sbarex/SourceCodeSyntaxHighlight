@@ -67,6 +67,8 @@ class SCSHBaseSettings {
         static let extraArguments = "extra"
         static let appendedExtraArguments = "uti-extra"
         
+        static let specialSettings = "specialSettings"
+        
         static let fontFamily = "font-family"
         static let fontSize = "font-size"
         
@@ -80,6 +82,7 @@ class SCSHBaseSettings {
 
         static let customCSS = "css"
         static let preprocessor = "preprocessor"
+        static let syntax = "syntax"
         
         static let interactive = "interactive"
         static let maxData = "max-data"
@@ -88,7 +91,7 @@ class SCSHBaseSettings {
     }
     
     /// Current settings version handled by the applications.
-    static let version: Float = 2.1
+    static let version: Float = 2.2
     
     // MARK: - Properties
     
@@ -127,6 +130,7 @@ class SCSHBaseSettings {
     var css: String?
     
     var preprocessor: String?
+    var syntax: String?
     
     /// If true enable js action on the quicklook preview but disable dblclick and click and drag on window.
     var allowInteractiveActions: Bool?
@@ -134,7 +138,7 @@ class SCSHBaseSettings {
     /// Return if exists customized settings.
     /// Global settings are always customized.
     var isCustomized: Bool {
-        if !(lightTheme?.isEmpty ?? true) || !(darkTheme?.isEmpty ?? true) || lineNumbers != nil || fontFamily != nil || wordWrap != nil || lineLength != nil || tabSpaces != nil || !(extra?.isEmpty ?? true) || preprocessor != nil || allowInteractiveActions != nil || !(css?.isEmpty ?? true) {
+        if !(lightTheme?.isEmpty ?? true) || !(darkTheme?.isEmpty ?? true) || lineNumbers != nil || fontFamily != nil || wordWrap != nil || lineLength != nil || tabSpaces != nil || (extra != nil) || preprocessor != nil || syntax != nil || allowInteractiveActions != nil || !(css?.isEmpty ?? true) {
             return true
         } else {
             return false
@@ -171,6 +175,7 @@ class SCSHBaseSettings {
         css = settings[Key.customCSS] as? String
         
         preprocessor = settings[Key.preprocessor] as? String
+        syntax = settings[Key.syntax] as? String
         
         allowInteractiveActions = settings[Key.interactive] as? Bool
     }
@@ -229,6 +234,10 @@ class SCSHBaseSettings {
         
         if let preprocessor = self.preprocessor, !preprocessor.isEmpty {
             r[Key.preprocessor] = preprocessor
+        }
+        
+        if let syntax = self.syntax, !syntax.isEmpty {
+            r[Key.syntax] = syntax
         }
         
         if let lineNumbers = self.lineNumbers {
@@ -312,9 +321,25 @@ class SCSHBaseSettings {
         if let v = data[Key.preprocessor] as? String {
             self.preprocessor = v
         }
+        
+        if let v = data[Key.syntax] as? String {
+            self.syntax = v
+        }
     
         if let v = data[Key.interactive] as? Bool {
             self.allowInteractiveActions = v
+        }
+    }
+    
+    func overrideSpecialSettings(from utiSettings: SCSHUTIBaseSettings) {
+        if let preprocessor = utiSettings.specialSettings[Key.preprocessor] {
+            self.preprocessor = preprocessor
+        }
+        if let syntax = utiSettings.specialSettings[Key.syntax] {
+            self.syntax = syntax
+        }
+        if let extra = utiSettings.specialSettings[Key.extraArguments] {
+            self.extra = (self.extra != nil ? self.extra! + " " : "") + extra
         }
     }
     
@@ -602,10 +627,13 @@ class SCSHGlobalBaseSettings: SCSHBaseSettings {
         let settings = settings_type.init(settings: self.toDictionary())
         
         if let utiSettings = self.customizedSettings[uti] {
+            // Apply special settings.
+            settings.overrideSpecialSettings(from: utiSettings)
+            
             settings.override(fromSettings: utiSettings)
             
-            if let extra = utiSettings.appendedExtra, !extra.isEmpty {
-                settings.extra = (settings.extra != nil ? settings.extra! + " " : "") + extra
+            if let appendArguments = utiSettings.appendedExtra, !appendArguments.isEmpty {
+                settings.extra = (settings.extra != nil ? settings.extra! + " " : "") + appendArguments
             }
         }
         
@@ -686,6 +714,8 @@ class SCSHUTIBaseSettings: SCSHBaseSettings {
     /// Extra arguments added to the global arguments relative to the associated UTI.
     var appendedExtra: String?
     
+    var specialSettings: [String: String] = [:]
+    
     override var isCustomized: Bool {
         return !(appendedExtra?.isEmpty ?? true) || super.isCustomized
     }
@@ -696,6 +726,9 @@ class SCSHUTIBaseSettings: SCSHBaseSettings {
         self.uti = uti
         
         super.init(settings: settings)
+        if let special = settings[Key.specialSettings] as? [String:String] {
+            self.specialSettings = special
+        }
     }
     
     /// Create a settings specific to an UTI.
@@ -722,9 +755,10 @@ class SCSHUTIBaseSettings: SCSHBaseSettings {
     
     override func toDictionary() -> [String : Any] {
         var r = super.toDictionary()
-        if let utiExtra = appendedExtra {
-            r[Key.appendedExtraArguments] = utiExtra
+        if let appendArguments = appendedExtra {
+            r[Key.appendedExtraArguments] = appendArguments
         }
+        r[Key.specialSettings] = self.specialSettings
         
         return r
     }
@@ -733,6 +767,9 @@ class SCSHUTIBaseSettings: SCSHBaseSettings {
         super.override(fromDictionary: dict)
         if let v = dict?[Key.appendedExtraArguments] as? String {
             self.appendedExtra = v
+        }
+        if let v = dict?[Key.specialSettings] as? [String:String] {
+            self.specialSettings = v
         }
     }
 }

@@ -25,7 +25,7 @@ Keywords={
 
   -- may be replaced by NestedSections
   { Id=3,
-    Regex=[[\/[^*\s/].*?[^\\]/[msixpodualgcy]*]],
+    Regex=[[\/[^*\s/][^\s]*?[^\\]/[msixpodualgcy]*]],
     Group=0
   },
 
@@ -73,7 +73,7 @@ EnableIndentation=true
 
 -- resolve issue with regex expression which spans strings like "</i>" + VAR + "</i>"
 function OnStateChange(oldState, newState, token, groupID)
-  if string.sub(token,1,1)=="/" and oldState==HL_STRING and newState==HL_KEYWORD and groupID == 3 then
+  if string.sub(token,1,1)=="/" and (oldState==HL_STRING or oldState==HL_COMMENT) and newState==HL_KEYWORD and groupID == 3 then
     return HL_REJECT
   end
   return newState

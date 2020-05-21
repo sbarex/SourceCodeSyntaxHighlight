@@ -35,9 +35,14 @@
 				<string>com.adobe.jsx</string>
 				<string>com.apple.applescript.script</string>
 				<string>com.apple.applescript.text</string>
+				<string>com.apple.dt.interfacebuilder.document.storyboard</string>
+				<string>com.apple.interfacebuilder.document.cocoa</string>
 				<string>com.apple.property-list</string>
 				<string>com.apple.rez-source</string>
+				<string>com.apple.xcode.strings-text</string>
+				<string>com.barebones.bbedit.ini-configuration</string>
 				<string>com.barebones.bbedit.scss-source</string>
+				<string>com.barebones.bbedit.tex-source</string>
 				<string>com.barebones.bbedit.verilog-hdl-source</string>
 				<string>com.barebones.bbedit.vhdl-source</string>
 				<string>com.dhowett.logos</string>
@@ -54,6 +59,7 @@
 				<string>com.microsoft.vb-source</string>
 				<string>com.microsoft.visual-basic</string>
 				<string>com.netscape.javascript-source</string>
+				<string>com.sun.java-properties</string>
 				<string>com.sun.java-source</string>
 				<string>com.sun.java-server-pages</string>
 				<string>com.sun.java-web-start</string>
@@ -156,6 +162,7 @@
 				<string>dyn.ah62d4rv4ge81g25xsq</string>
 				<string>dyn.ah62d4rv4ge81g6pq</string>
 				<string>dyn.ah62d4rv4ge80g55sq2</string>
+				<string>dyn.ah62d4rv4ge81k3p2</string>
 			</array>
 			<key>QLSupportsSearchableItems</key>
 			<false/>

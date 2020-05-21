@@ -23,7 +23,7 @@ Keywords={
         "Import-Alias", "Import-Clixml", "Import-Csv",
         "Invoke-Expression", "Invoke-History", "Invoke-Item", "Join-Path",
         "Measure-Command", "Measure-Object", "Move-Item", "Move-ItemProperty",
-        "New-Alias", "New-Item", "New-ItemProperty", "New-Object",
+        "New-Alias", "New-Item", "New-ItemProperty", "New-Object", "Write-host",
         "New-PSDrive", "New-Service", "New-TimeSpan", "New-Variable", "Out-Default",
         "Out-File", "Out-Host", "Out-Null", "Out-Printer", "Out-String", "Pop-Location",
         "Push-Location", "Read-Host",
@@ -40,7 +40,7 @@ Keywords={
         "Where-Object", "Write-Debug",
         "Write-Error", "Write-Host", "Write-Output", "Write-Progress",
         "Write-Verbose", "Write-Warning", "switch", "function", "if", "throw", "else",
-        "while", "break", "in", "return", "try", "catch"},
+        "while", "break", "in", "return", "try", "catch", "for"},
   },
   { Id=2,
     List={"ac", "asnp", "clc", "cli", "clp", "clv", "cpi", "cpp", "cvpa",
@@ -77,7 +77,7 @@ Comments={
   },
 }
 
-Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\.|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-|\~|\?|\|]]
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\.|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-|\~|\?|\||\.]]
 
 EnableIndentation=false
 

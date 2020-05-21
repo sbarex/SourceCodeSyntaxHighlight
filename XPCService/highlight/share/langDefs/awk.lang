@@ -21,11 +21,15 @@ Keywords={
   { Id=3,
     List={"function"},
   },
+  { Id=4,
+    Regex=[[ \$[\w]+ ]],
+  }
 }
 
 Strings={
   Delimiter=[["|']],
-  Escape=[[ [\\%]\d{3}|[\\%]x\d{2}|[\\%][ntvbrfa\\\?'"%] ]]
+  Escape=[[ [\\%]\d{3}|[\\%]x\d{2}|[\\%][ntvbrfa\\\?'"%] ]],
+  Interpolation = [[ %\w ]],
 }
 
 IgnoreCase=true

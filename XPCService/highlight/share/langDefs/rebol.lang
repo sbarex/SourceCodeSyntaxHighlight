@@ -23,7 +23,7 @@ IgnoreCase=true
 
 Comments={
   { Block=false,
-    Delimiter= { [[;|\/\/]] },
+    Delimiter= { [[;]] },
   },
   { Block=true,
     Nested=false,

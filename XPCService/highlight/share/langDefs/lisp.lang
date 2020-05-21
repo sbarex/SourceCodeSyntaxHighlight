@@ -12,10 +12,14 @@ Keywords={
   { Id=2,
     Regex=[[ def(un|method)\s+([\w\-]+)]], Group=2
   },
+  { Id=3,
+    Regex=[[ \[.+?\]|\[/\w+\] ]],
+  },
 }
 
 Strings={
-  Delimiter=[[ "|\[\w+\]|\[/\w+\] ]],
+  Delimiter=[[ " ]],
+  Escape=[=[\\[\w]]=],
 }
 
 Comments={

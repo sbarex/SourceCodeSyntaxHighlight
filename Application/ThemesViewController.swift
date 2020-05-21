@@ -220,7 +220,7 @@ class ThemesViewController: NSViewController {
             // Show standard theme preview.
             var schema = theme.getHtmlExample(fontName: "Menlo", fontSize: 12 * 0.75, showColorCodes: false)
             // Embed jquery.
-            if let url = (NSApplication.shared.delegate as? AppDelegate)?.getQLAppexUrl()?.appendingPathComponent("Contents/XPCServices/Syntax Highlight XPC Service.xpc/Contents/Resources/highlight/share/plugins/jquery-3.4.1.min.js"), let s = try? String(contentsOf: url) {
+            if let url = (NSApplication.shared.delegate as? AppDelegate)?.getQLAppexUrl()?.appendingPathComponent("Contents/XPCServices/Syntax Highlight XPC Render.xpc/Contents/Resources/highlight/share/plugins/jquery-3.4.1.min.js"), let s = try? String(contentsOf: url) {
                 schema = schema.replacingOccurrences(of: "<head>", with: "<head>\n<script type='text/javascript'>\(s)</script>")
             }
             
@@ -385,7 +385,7 @@ class ThemesViewController: NSViewController {
                 } else {
                     DispatchQueue.main.async {
                         let alert = NSAlert()
-                        
+                        alert.window.title = "Error"
                         alert.messageText = "Unable to delete the theme \(theme.name)!"
                         alert.informativeText = error?.localizedDescription ?? ""
                         alert.addButton(withTitle: "Close")
@@ -500,11 +500,12 @@ class ThemesViewController: NSViewController {
         if theme.originalName == "" || theme.originalName != theme.name, let _ = customThemes.first(where: { $0.theme != theme && $0.theme.originalName == theme.name }) {
             let alert = NSAlert()
             
-            alert.messageText = "Error"
-            alert.informativeText = "Unable to save the theme \(theme.name) because another already exists with the same name!"
+            alert.window.title = "Error"
+            alert.messageText = "Unable to save the theme \(theme.name) because another already exists with the same name!"
             alert.addButton(withTitle: "Close")
             
             alert.alertStyle = .critical
+            alert.runModal()
             reply?(false)
         }
         
@@ -520,6 +521,7 @@ class ThemesViewController: NSViewController {
                 DispatchQueue.main.sync {
                     let alert = NSAlert()
                     
+                    alert.window.title = "Error"
                     alert.messageText = "Unable to save the theme \(theme.name)!"
                     alert.informativeText = error?.localizedDescription ?? ""
                     alert.addButton(withTitle: "Close")
@@ -1314,8 +1316,8 @@ class ThemesWindowController: NSWindowController, NSWindowDelegate {
         }
         if let _ = contentViewController.customThemes.first(where: { $0.theme.isDirty } ) {
             let alert = NSAlert()
-            alert.messageText = "Warning"
-            alert.informativeText = "There are some modified themes. Do you want to save them before closing?"
+            alert.window.title = "Warning"
+            alert.messageText = "There are some modified themes. Do you want to save them before closing?"
             alert.addButton(withTitle: "Yes")
             alert.addButton(withTitle: "No")
             alert.addButton(withTitle: "Cancel")

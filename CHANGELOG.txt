@@ -1,3 +1,20 @@
+1.0.b20
+New features:
+- new simple UI.
+- support for .strings, .ini and .cfg files.
+- support for .xib and .storyboard files as XML.
+- preview now can show custom source file.
+- better support for standard preprocessor for many file format (if you have previously customized the preprocessor for some formats please check if it require to add the placeholder $targetHL).
+- highlight updated to 3.57.
+Bugfix:
+- rust file extension.
+- settings migration.
+
+1.0.b19
+New features:
+- highlight updated to 3.55.
+- enhanced inquiry panel.
+
 1.0.b18
 New features:
 - added support for c++ header files.

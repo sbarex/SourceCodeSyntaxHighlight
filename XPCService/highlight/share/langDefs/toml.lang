@@ -1,7 +1,11 @@
 
+-- for highlight 3.57
+
 Description="TOML"
 
-Categories = {"markup"}
+Categories = {"config"}
+
+Digits=[[ (?:0x|0o|0b)[0-9a-fA-F]+_?[0-9a-fA-F]*|\d*[\.\_]?[\d_]+(?:[eE][\-\+]?\d+)? ]]
 
 Keywords={
   { Id=1,
@@ -13,10 +17,17 @@ Keywords={
   { Id=3,
     Regex=[[^\s*[\[^=#]+\s*=\s*(\S.*)#?]],
   },
+  { Id=4,
+    List={"inf", "nan", "true", "false"}
+  },
+  { Id=4,
+    Regex=[[\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}[Z]?|\d{4}-\d{2}-\d{2}]]
+  }
 }
 
 Strings={
-  Delimiter=[["]],
+  Delimiter=[["""|'''|"|']],
+  Escape = [[ \\[0%\\\"abfnrtv]|\\U[0-9a-fA-F]{8}|\\u[0-9a-fA-F]{4}|\\x[0-9a-fA-F]{2} ]]
 }
 
 Comments={
@@ -27,3 +38,31 @@ Comments={
 
 Operators=[[\(|\)|\{|\}|\,|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-|\[|\] ]]
 
+
+function OnStateChange(oldState, newState, token, groupID)
+
+  if rawStringDelim~=nil and token==rawStringDelim then
+    rawStringDelim=nil
+    return newState
+  end
+  if oldState==HL_STANDARD and (token=="'''" or token=="'") then
+    rawStringDelim=token
+    OverrideParam("state.string.raw", "true")
+    return newState
+  end
+  return newState
+end
+
+--[[============================================================================
+                                  CHANGELOG
+================================================================================
+
+v1.1 (2020/05/12) | Highlight 3.57
+
+  - makes use of OverrideParam to handle raw strings with identical start/end
+    delimiters
+
+v1.0
+  - initial version
+
+--]]

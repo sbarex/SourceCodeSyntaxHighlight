@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16096" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16096"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="ExtraSettingsView" customModule="Syntax_Highlight" customModuleProvider="target">
+            <connections>
+                <outlet property="appendArgumentsCheckbox" destination="X0d-tm-CS4" id="WJ1-RM-qKg"/>
+                <outlet property="appendArgumentsLabel" destination="gBO-Fw-6M4" id="Dur-4n-9HD"/>
+                <outlet property="appendArgumentsTextField" destination="s1j-uV-t1m" id="LbJ-hQ-J0z"/>
+                <outlet property="contentView" destination="bLm-cq-BzO" id="Ili-6z-E75"/>
+                <outlet property="customWarningLabel" destination="WTb-Fr-bwP" id="ZlX-FC-aNR"/>
+                <outlet property="extraCheckbox" destination="ayY-z1-nWK" id="7Bv-CZ-SsV"/>
+                <outlet property="extraLabel" destination="7Nz-50-fLe" id="8IP-vX-A3j"/>
+                <outlet property="extraTextField" destination="Euk-rf-NNT" id="R9P-tR-WaZ"/>
+                <outlet property="interactiveCheckbox" destination="cgN-EV-JEc" id="b7F-yR-H9v"/>
+                <outlet property="interactiveLabel" destination="r0A-h5-7w1" id="Z1u-zc-13v"/>
+                <outlet property="interactiveSwitch" destination="6i5-st-VPq" id="IQ4-Dg-WpQ"/>
+                <outlet property="interactiveTip" destination="kD1-6V-1FQ" id="adv-L9-xko"/>
+                <outlet property="interpretsCheckbox" destination="gJC-V4-yQF" id="1w5-Ma-gck"/>
+                <outlet property="interpretsLabel" destination="78F-Cz-nc1" id="7LH-ll-b9W"/>
+                <outlet property="interpretsPopup" destination="bol-Vh-MzF" id="DLu-Xm-ucW"/>
+                <outlet property="preprocessorCheckbox" destination="NRF-oa-qet" id="xdd-IJ-IVe"/>
+                <outlet property="preprocessorLabel" destination="Hld-Q3-24w" id="BTh-VZ-fwe"/>
+                <outlet property="preprocessorTextField" destination="B7V-zt-wbv" id="TKZ-hT-FWQ"/>
+                <outlet property="preprocessorWariningImageView" destination="JUc-HZ-ZZw" id="Qok-K8-iOF"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <view id="bLm-cq-BzO">
+            <rect key="frame" x="0.0" y="0.0" width="570" height="570"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Hld-Q3-24w">
+                    <rect key="frame" x="38" y="440" width="124" height="16"/>
+                    <buttonCell key="cell" type="bevel" title="Pre processor:" bezelStyle="rounded" alignment="right" inset="2" id="OnH-DJ-caE">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <color key="contentTintColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                    <connections>
+                        <action selector="handlePreprocessorLabel:" target="-2" id="dmP-ap-SSf"/>
+                    </connections>
+                </button>
+                <textField toolTip="Extra highlight parameters. Any arguments with space inside must be protect inside quotes." verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Euk-rf-NNT">
+                    <rect key="frame" x="170" y="500" width="400" height="21"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" enabled="NO" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="gFu-JE-t9m">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <connections>
+                        <action selector="refresh:" target="-2" id="dMD-9m-9bw"/>
+                    </connections>
+                </textField>
+                <button toolTip="Extra arguments passet to highlight." horizontalHuggingPriority="600" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7Nz-50-fLe">
+                    <rect key="frame" x="38" y="503" width="124" height="16"/>
+                    <buttonCell key="cell" type="bevel" title="Arguments:" bezelStyle="rounded" alignment="right" inset="2" id="bOd-6P-3bj">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <color key="contentTintColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                    <connections>
+                        <action selector="handleExtraLabel:" target="-2" id="WAP-15-EIt"/>
+                    </connections>
+                </button>
+                <button toolTip="Override the global setting." verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ayY-z1-nWK">
+                    <rect key="frame" x="-2" y="502" width="34" height="18"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="30" id="U2L-6I-eQt"/>
+                    </constraints>
+                    <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="overlaps" alignment="left" inset="2" id="buX-ru-UWY">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="handleExtraCheckbox:" target="-2" id="8Oq-Fq-Lqq"/>
+                    </connections>
+                </button>
+                <button toolTip="Override the global setting." verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="NRF-oa-qet">
+                    <rect key="frame" x="-2" y="439" width="34" height="18"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="30" id="qsc-tW-yIJ"/>
+                    </constraints>
+                    <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="overlaps" alignment="left" inset="2" id="Uxq-ZI-bnh">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="handlePreprocessorCheckbox:" target="-2" id="Dmg-Lj-JA4"/>
+                    </connections>
+                </button>
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="B7V-zt-wbv">
+                    <rect key="frame" x="170" y="438" width="400" height="21"/>
+                    <string key="toolTip">Preprocessor is any command line program or shell script that returns to the sdout the data to be formatted.  Use the placeholder $targetHL for the target file name. If you don't use this placehoder, the target file name is passed as last argument.</string>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="cat $targetHL" drawsBackground="YES" usesSingleLineMode="YES" id="JdO-0S-Zpf">
+                        <font key="font" usesAppearanceFont="YES"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <connections>
+                        <action selector="handleProprocessorChange:" target="-2" id="GBC-qO-vHw"/>
+                    </connections>
+                </textField>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="78F-Cz-nc1">
+                    <rect key="frame" x="38" y="412" width="124" height="16"/>
+                    <buttonCell key="cell" type="bevel" title="Syntax:" bezelStyle="rounded" alignment="right" inset="2" id="5CQ-q9-u9J">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <color key="contentTintColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                    <connections>
+                        <action selector="handleInterpretsLabel:" target="-2" id="mgC-7r-oYi"/>
+                    </connections>
+                </button>
+                <button toolTip="Override the global setting." verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gJC-V4-yQF">
+                    <rect key="frame" x="-2" y="411" width="34" height="18"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="30" id="bHy-Dz-ivu"/>
+                    </constraints>
+                    <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="overlaps" alignment="left" inset="2" id="e68-6j-3Sz">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="handleInterpretsCheckbox:" target="-2" id="iRE-wD-ujG"/>
+                    </connections>
+                </button>
+                <popUpButton toolTip="Syntax adopted by highlight to format the source file." verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bol-Vh-MzF">
+                    <rect key="frame" x="168" y="406" width="405" height="25"/>
+                    <popUpButtonCell key="cell" type="push" title="loading…" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" enabled="NO" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="ooD-je-qZq" id="0bL-2N-KWd">
+                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                        <menu key="menu" id="SBx-ip-gNO">
+                            <items>
+                                <menuItem title="loading…" state="on" id="ooD-je-qZq"/>
+                            </items>
+                        </menu>
+                    </popUpButtonCell>
+                    <connections>
+                        <action selector="refresh:" target="-2" id="itH-p3-7uk"/>
+                    </connections>
+                </popUpButton>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WTb-Fr-bwP">
+                    <rect key="frame" x="-2" y="0.0" width="574" height="14"/>
+                    <textFieldCell key="cell" controlSize="small" selectable="YES" allowsUndo="NO" title="Attention, the customized values will overwrite the corresponding global settings." id="pOy-rC-qNQ">
+                        <font key="font" metaFont="message" size="11"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField toolTip="Highlight arguments added to the global arguments. Any arguments with space must be protect inside quote." verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="s1j-uV-t1m">
+                    <rect key="frame" x="170" y="469" width="400" height="21"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" enabled="NO" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="Ydx-iw-V0Q">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <connections>
+                        <action selector="refresh:" target="-2" id="2gh-Gj-soE"/>
+                    </connections>
+                </textField>
+                <button horizontalHuggingPriority="600" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gBO-Fw-6M4">
+                    <rect key="frame" x="38" y="472" width="124" height="16"/>
+                    <buttonCell key="cell" type="bevel" title="Append arguments:" bezelStyle="rounded" alignment="right" inset="2" id="afO-dn-3lq">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <color key="contentTintColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                    <connections>
+                        <action selector="handleAppendArgumentsLabel:" target="-2" id="O4Z-jc-1mq"/>
+                    </connections>
+                </button>
+                <button toolTip="Override the global setting." verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="X0d-tm-CS4">
+                    <rect key="frame" x="-2" y="471" width="34" height="18"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="30" id="MLu-vc-T2X"/>
+                    </constraints>
+                    <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="overlaps" alignment="left" inset="2" id="1SX-Nj-cLt">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="handleAppendArgumentsCheckbox:" target="-2" id="tGp-uc-gWS"/>
+                    </connections>
+                </button>
+                <button horizontalHuggingPriority="600" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="r0A-h5-7w1">
+                    <rect key="frame" x="38" y="532" width="124" height="16"/>
+                    <buttonCell key="cell" type="bevel" title="Interactive preview:" bezelStyle="rounded" alignment="right" inset="2" id="7sd-On-kc4">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <color key="contentTintColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                    <connections>
+                        <action selector="handleInteractiveLabel:" target="-2" id="fYy-Bw-clb"/>
+                    </connections>
+                </button>
+                <switch horizontalHuggingPriority="750" verticalHuggingPriority="750" enabled="NO" baseWritingDirection="leftToRight" alignment="left" translatesAutoresizingMaskIntoConstraints="NO" id="6i5-st-VPq">
+                    <rect key="frame" x="168" y="527" width="42" height="24"/>
+                    <string key="toolTip">If enabled allow javascript on the preview but disable the click and drag window and also doubleclick to open file. Enable only if you use a highlight plugin that use some js code in the output.</string>
+                    <connections>
+                        <action selector="refresh:" target="-2" id="iZt-5E-5g8"/>
+                    </connections>
+                </switch>
+                <button toolTip="Override the global setting." verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cgN-EV-JEc">
+                    <rect key="frame" x="-2" y="531" width="34" height="18"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="30" id="9Uy-qr-fEm"/>
+                    </constraints>
+                    <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="overlaps" alignment="left" inset="2" id="kCa-Fj-adE">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="handleInteractiveCheckbox:" target="-2" id="YLg-NT-a8j"/>
+                    </connections>
+                </button>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kD1-6V-1FQ">
+                    <rect key="frame" x="214" y="533" width="184" height="14"/>
+                    <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" title="(only for global html output mode)" id="21u-4u-kT7">
+                        <font key="font" metaFont="message" size="11"/>
+                        <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <imageView toolTip="The pre processor don't contain the $targetHL placeholder!" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="JUc-HZ-ZZw">
+                    <rect key="frame" x="550" y="441" width="16" height="16"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="16" id="Fxd-IF-bdQ"/>
+                        <constraint firstAttribute="height" constant="16" id="X55-Cv-2QE"/>
+                    </constraints>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="NSCaution" id="yct-R5-aOS"/>
+                </imageView>
+            </subviews>
+            <constraints>
+                <constraint firstItem="bol-Vh-MzF" firstAttribute="leading" secondItem="78F-Cz-nc1" secondAttribute="trailing" constant="8" symbolic="YES" id="0Qd-lK-D6W"/>
+                <constraint firstItem="X0d-tm-CS4" firstAttribute="leading" secondItem="bLm-cq-BzO" secondAttribute="leading" id="0cS-6h-bt6"/>
+                <constraint firstItem="WTb-Fr-bwP" firstAttribute="top" relation="greaterThanOrEqual" secondItem="bol-Vh-MzF" secondAttribute="bottom" constant="8" symbolic="YES" id="23L-fe-hsI"/>
+                <constraint firstItem="Euk-rf-NNT" firstAttribute="top" secondItem="6i5-st-VPq" secondAttribute="bottom" constant="8" symbolic="YES" id="2a9-Td-8uF"/>
+                <constraint firstItem="r0A-h5-7w1" firstAttribute="leading" secondItem="cgN-EV-JEc" secondAttribute="trailing" constant="8" symbolic="YES" id="3QQ-fa-d5U"/>
+                <constraint firstItem="B7V-zt-wbv" firstAttribute="top" secondItem="s1j-uV-t1m" secondAttribute="bottom" constant="10" symbolic="YES" id="7Ac-Ag-3GI"/>
+                <constraint firstItem="cgN-EV-JEc" firstAttribute="leading" secondItem="bLm-cq-BzO" secondAttribute="leading" id="ACc-Wp-fSo"/>
+                <constraint firstItem="NRF-oa-qet" firstAttribute="centerY" secondItem="Hld-Q3-24w" secondAttribute="centerY" id="CDG-8Z-YGf"/>
+                <constraint firstItem="7Nz-50-fLe" firstAttribute="firstBaseline" secondItem="Euk-rf-NNT" secondAttribute="firstBaseline" id="Iwt-2H-bCc"/>
+                <constraint firstItem="Hld-Q3-24w" firstAttribute="firstBaseline" secondItem="B7V-zt-wbv" secondAttribute="firstBaseline" id="J2f-6R-koa"/>
+                <constraint firstItem="Hld-Q3-24w" firstAttribute="trailing" secondItem="r0A-h5-7w1" secondAttribute="trailing" id="Jb2-Vl-JDp"/>
+                <constraint firstItem="JUc-HZ-ZZw" firstAttribute="trailing" secondItem="B7V-zt-wbv" secondAttribute="trailing" constant="-4" id="KIe-mb-blA"/>
+                <constraint firstItem="s1j-uV-t1m" firstAttribute="top" secondItem="Euk-rf-NNT" secondAttribute="bottom" constant="10" symbolic="YES" id="LWI-Xk-3YM"/>
+                <constraint firstItem="Hld-Q3-24w" firstAttribute="leading" secondItem="NRF-oa-qet" secondAttribute="trailing" constant="8" symbolic="YES" id="NWu-xt-XIK"/>
+                <constraint firstItem="78F-Cz-nc1" firstAttribute="centerY" secondItem="bol-Vh-MzF" secondAttribute="centerY" id="PXK-Fq-mBs"/>
+                <constraint firstItem="X0d-tm-CS4" firstAttribute="centerY" secondItem="gBO-Fw-6M4" secondAttribute="centerY" id="T7F-p3-OD6"/>
+                <constraint firstItem="gJC-V4-yQF" firstAttribute="leading" secondItem="bLm-cq-BzO" secondAttribute="leading" id="TfY-PN-xdh"/>
+                <constraint firstItem="Hld-Q3-24w" firstAttribute="trailing" secondItem="7Nz-50-fLe" secondAttribute="trailing" id="Tgw-98-bdH"/>
+                <constraint firstItem="gBO-Fw-6M4" firstAttribute="leading" secondItem="X0d-tm-CS4" secondAttribute="trailing" constant="8" symbolic="YES" id="Vbf-jg-6lc"/>
+                <constraint firstItem="6i5-st-VPq" firstAttribute="top" secondItem="bLm-cq-BzO" secondAttribute="top" constant="20" symbolic="YES" id="W6q-yd-fQU"/>
+                <constraint firstItem="gBO-Fw-6M4" firstAttribute="trailing" secondItem="r0A-h5-7w1" secondAttribute="trailing" id="WEr-C9-nbA"/>
+                <constraint firstAttribute="trailing" secondItem="B7V-zt-wbv" secondAttribute="trailing" id="XQL-wP-8Xt"/>
+                <constraint firstItem="cgN-EV-JEc" firstAttribute="centerY" secondItem="r0A-h5-7w1" secondAttribute="centerY" id="YAn-Mg-q9l"/>
+                <constraint firstAttribute="trailing" secondItem="WTb-Fr-bwP" secondAttribute="trailing" id="bHl-UA-fX1"/>
+                <constraint firstItem="WTb-Fr-bwP" firstAttribute="leading" secondItem="bLm-cq-BzO" secondAttribute="leading" id="cv7-8S-fL2"/>
+                <constraint firstAttribute="trailing" secondItem="s1j-uV-t1m" secondAttribute="trailing" id="dy1-Ek-vqf"/>
+                <constraint firstItem="78F-Cz-nc1" firstAttribute="leading" secondItem="gJC-V4-yQF" secondAttribute="trailing" constant="8" symbolic="YES" id="gDs-yI-TYr"/>
+                <constraint firstItem="gBO-Fw-6M4" firstAttribute="firstBaseline" secondItem="s1j-uV-t1m" secondAttribute="firstBaseline" id="h7Q-Gs-nAd"/>
+                <constraint firstItem="gJC-V4-yQF" firstAttribute="centerY" secondItem="78F-Cz-nc1" secondAttribute="centerY" id="hj2-YO-N2E"/>
+                <constraint firstItem="7Nz-50-fLe" firstAttribute="leading" secondItem="ayY-z1-nWK" secondAttribute="trailing" constant="8" symbolic="YES" id="k5M-CL-qd4"/>
+                <constraint firstAttribute="bottom" secondItem="WTb-Fr-bwP" secondAttribute="bottom" id="lsA-Jl-hlp"/>
+                <constraint firstItem="NRF-oa-qet" firstAttribute="leading" secondItem="bLm-cq-BzO" secondAttribute="leading" id="n8v-aM-7uP"/>
+                <constraint firstItem="6i5-st-VPq" firstAttribute="leading" secondItem="r0A-h5-7w1" secondAttribute="trailing" constant="8" symbolic="YES" id="ov2-s7-OUJ"/>
+                <constraint firstItem="ayY-z1-nWK" firstAttribute="leading" secondItem="bLm-cq-BzO" secondAttribute="leading" id="pEV-qB-80M"/>
+                <constraint firstItem="B7V-zt-wbv" firstAttribute="leading" secondItem="Hld-Q3-24w" secondAttribute="trailing" constant="8" symbolic="YES" id="pfk-d3-Rxb"/>
+                <constraint firstItem="bol-Vh-MzF" firstAttribute="top" secondItem="B7V-zt-wbv" secondAttribute="bottom" constant="8" id="qaT-yX-Jua"/>
+                <constraint firstItem="ayY-z1-nWK" firstAttribute="centerY" secondItem="7Nz-50-fLe" secondAttribute="centerY" id="qg2-xl-CoB"/>
+                <constraint firstAttribute="trailing" secondItem="Euk-rf-NNT" secondAttribute="trailing" id="qkV-VL-MfP"/>
+                <constraint firstItem="kD1-6V-1FQ" firstAttribute="leading" secondItem="6i5-st-VPq" secondAttribute="trailing" constant="8" id="qkw-pO-T1m"/>
+                <constraint firstItem="r0A-h5-7w1" firstAttribute="centerY" secondItem="6i5-st-VPq" secondAttribute="centerY" id="qnZ-o7-MDD"/>
+                <constraint firstAttribute="trailing" secondItem="bol-Vh-MzF" secondAttribute="trailing" id="rC1-Yh-6cK"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="kD1-6V-1FQ" secondAttribute="trailing" id="uVB-dz-59d"/>
+                <constraint firstItem="s1j-uV-t1m" firstAttribute="leading" secondItem="gBO-Fw-6M4" secondAttribute="trailing" constant="8" symbolic="YES" id="vkb-aD-jgk"/>
+                <constraint firstItem="Euk-rf-NNT" firstAttribute="leading" secondItem="7Nz-50-fLe" secondAttribute="trailing" constant="8" symbolic="YES" id="w68-c8-HYV"/>
+                <constraint firstItem="kD1-6V-1FQ" firstAttribute="centerY" secondItem="6i5-st-VPq" secondAttribute="centerY" id="we5-Rz-7JD"/>
+                <constraint firstItem="78F-Cz-nc1" firstAttribute="trailing" secondItem="Hld-Q3-24w" secondAttribute="trailing" id="xNH-dE-22n"/>
+                <constraint firstItem="JUc-HZ-ZZw" firstAttribute="centerY" secondItem="B7V-zt-wbv" secondAttribute="centerY" id="xOx-EF-c5h"/>
+            </constraints>
+            <point key="canvasLocation" x="139" y="-332"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="NSCaution" width="32" height="32"/>
+    </resources>
+</document>

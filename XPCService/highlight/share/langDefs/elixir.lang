@@ -36,8 +36,8 @@ Keywords={
 Strings={
   Delimiter=[["""|'''|"|']],
   RawPrefix="r",
-  Escape=[=[\\[ntvbrfa\\\?'"]|\\\d{3}|\\x[[:xdigit:]]{2}]=],
-  Interpolation=[[ #\{\w+\} ]]
+  Escape=[=[\\[ntvbrfa\\\?'"]|\\\d{3}|\\x[[:xdigit:]]{2}]=]
+
 }
 
 Comments = {
@@ -50,3 +50,4 @@ Comments = {
 IgnoreCase=false
 
 Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\.|\:|\&|<|>|\!|=|\/|\*|\%|\+|\-|\~|\||\^|\?]]
+

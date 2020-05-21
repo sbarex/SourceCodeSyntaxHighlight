@@ -174,7 +174,7 @@ function OnStateChange(oldState, newState, token, groupID)
 
   -- https://fossies.org/linux/misc/puppet-5.3.2.tar.gz/puppet-5.3.2/lib/puppet/indirector/hiera.rb?m=t
 
-  if token==")" or token=="}" or token=="{"  and oldState~=HL_STRING then
+  if token==")" or token=="}"  or token=="]" or token=="{"  and oldState~=HL_STRING then
     return HL_OPERATOR
   end
   return newState

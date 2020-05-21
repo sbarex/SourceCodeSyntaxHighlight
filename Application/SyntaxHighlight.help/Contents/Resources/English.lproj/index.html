@@ -1,88 +1,21 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1- transitional.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN">
 
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-    <title>Syntax Highlight Help</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="AppleTitle" content="Syntax Highlight Help"/>
-    <meta name="description" content="A quicklook extension for MacOS 10.15 Catalina for previewing source files">
-    <meta name="robots" content="anchors" /> 
-    <link rel="stylesheet" type="text/css" href="../css/main.css" />
+  <title>Syntax Highlight Help</title>
+  <meta name="robots" content="noindex"> 
 </head>
-<body>
-    <a name="SyntaxHighlight_INDEX"></a>
-    <h1>Syntax Highlight</h1>
+	
+<body class="Normal">
 
-    <p>This application offers a quicklook extension for MacOS 10.15 Catalina for previewing source files.<br />
-    Inside it uses <a href="http://www.andre-simon.de/doku/highlight/en/highlight.php">Highlight</a> to render source code with syntax highlighting. <br />
-    The application is distributed with a version of the <code>highlight</code>. If you want you can use a different version customizing the preferences.</p>
+  <h1>Table of Contents</h1>
 
-    <p>MacOS 10.15 Catalina has deprecated the qlgenerator APIs. Moreover a .qlgenerator package inside Library/QuickLook must be notarized on 10.15.0 to works. In version 10.15.1 it seems that notarization is no longer required.</p>
-
-    <p>This project consists of these components:</p>
-    <ul>
-        <li>a standalone app that can view source files and provide the interface for the preferences;</li>
-        <li>a quicklook system extension to preview the source files;</li>
-        <li>an XPC service that generate the preview of source file and pass the formatted data to the app or the quicklook extension.</li>
-    </ul>
-
-    <p>MacOS 10.15 Catalina require sandboxed extension that prevent the execution of external processes (like shell script).<br />
-    To work around this problem, it is possible to use an XPC service that may have different security policies than the application / extension that invokes it. In this case the XPC service is not sandboxed.</p>
-
-    <p>The XPC service is executed automatically when requested by the application or the quicklook extension. After closing the quicklook preview the process is automatically closed after some seconds releasing the resources.</p>
-
-    <p>The app and quicklook extension can preview files showing the formatted code as html, inside a WKWebView, or as rtf inside a NSTextView.</p>
-
-    <p>To use the quicklook preview you must launch the application at least once. In this way the quicklook extension will be discovered by the system.<br />
-    After the first execution, the quicklook extension will be available among those present in the System preferences/Extensions.</p>
-
-    <div><img src="images/extensions.png" alt="System preferences/Extensions" /></div>
-    
-    <p>This extension don't provide a thumbnail service for the Finder icon.</p>
-
-    <p>SyntaxHighlight is distributed in the hope that it will be useful but WITHOUT ANY WARRANTY.</p>
-
-
-    <h2><a name="SyntaxHighlight_UTI"></a>File format management</h2>
-
-    <p>The quicklook extension uses the <a href="https://developer.apple.com/library/archive/documentation/FileManagement/Conceptual/understanding_utis/understand_utis_intro/understand_utis_intro.html">Uniform Type Identifier (UTI)</a> to handle the supported formats (and not simply the file name extension).
-    Inside the definition on an UTI there are the list of extensions and mime type associated with it. </p>
-    
-    <p>Some file types are directly associated to an UTI by the system. Other formats are registered by the owner application. In this way some extensions can be associated to multiple UTIs based on the applications currently installed. <br />
-        For this reason, this application supports many UTIs even if they are apparently redundant. </p>
-
-    <p>Apparently the operating system does not allow to manage some file formats including (but not limited to) .xml, .plist, .html, .ts, .dart.</p>
-
-    <p>With the inquiry window you can see if a specific file type is handled by the quicklook extension and also if it is recognized by <code>highlight</code>.</p>
-
-    <div><img src="images/inquiry.png" alt="Inquiry window" /></div>
-
-    <p>On Terminal you can see the UTI of a file with this command: </p>
-
-    <pre>$ mdls -name kMDItemContentType -name kMDItemContentTypeTree filename.ext</pre>
-
-    <p>If you found an unhandled format please send me the output of above command.</p>
-    <p><b>Only the formats supported by <code>highlight</code> can be managed by this application.</b></p>
-
-    <p>To view the info about <code>highlight</code> with the supported file formats and extensions go to the menu <code>Syntax Highlight/About highlight…</code>, or in the Preferences window click the <i>i</i> info button near the highlight popup button.</p>
-    <div><img src="images/about_highlight.png" alt="About highlight info panel."></div>
-
-    <br />
-    <hr />
-
-    <ul>
-        <li><a href="help:anchor=SyntaxHighlight_PREFERENCES bookID=org.sbarex.SourceCodeSyntaxHighlight.help">Global settings</a></li>
-        <li><a href="help:anchor=SyntaxHighlight_SPECIFIC_PREFERENCES bookID=org.sbarex.SourceCodeSyntaxHighlight.help">Specific settings</a></li>
-        <li><a href="help:anchor=SyntaxHighlight_CUSTOMCSS bookID=org.sbarex.SourceCodeSyntaxHighlight.help">Custom style sheet</a></li>
-        <li><a href="help:anchor=SyntaxHighlight_THEMES bookID=org.sbarex.SourceCodeSyntaxHighlight.help">Theme editor</a></li>
-    </ul>
-
-
-    <h2>Credits</h2>
-    <p>This application has originated from the <a href="https://github.com/anthonygelibert/QLColorCode">anthonygelibert/QLColorCode</a>.</p>
-    
-    <br />
-
+  <ul>
+      <li id="Page1"><a href="general.html">General</a></li>
+      <li id="Page2"><a  href="preferences.html">Preferences</a></li>
+      <li id="Page2"><a  href="themes.html">Themes</a></li>
+  </ul>
+	  
 </body>
 </html>

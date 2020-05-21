@@ -47,7 +47,7 @@ Strings = {
   Delimiter=[["]],
   Interpolation = [[ \\\(.+?\)\)? ]],
   RawPrefix="R",
-  Escape = [[ \\t|\\0|\\t|\\v|\\r|\\"|\\'|\\u\{[0-9a-fA-F]+\} ]],
+  Escape = [[ \\t|\\0|\\v|\\r|\\"|\\'|\\u\{[0-9a-fA-F]+\} ]],
 }
 
 Comments = {

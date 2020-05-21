@@ -1,0 +1,70 @@
+
+Description="Haml (HTML Abstraction Markup Language)"
+
+Categories = {"source"}
+
+Keywords={
+
+  --tags:
+  { Id=1,
+    Regex=[[\%\w+]],
+  },
+
+  -- classes
+  { Id=2,
+    Regex=[[\.\w+]],
+  },
+
+  -- ids
+  { Id=3,
+    Regex=[[\#\w+]],
+  },
+
+  -- namespaces
+  { Id=4,
+    Regex=[[^\!\!\!.*]],
+  },
+
+}
+
+Strings={
+  Delimiter=[["]]
+}
+
+IgnoreCase=true
+
+Comments={
+  { Block=false,
+    Delimiter= { [[^\-\#|^\/]] },
+  },
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\:|\&|<|>|\=|\+|\|]]
+
+--tbd
+--NestedSections = {
+--  { Lang="ruby", Delimiter= { [[^\s+\=\s]], [[$]] } },
+--}
+
+
+commentMode=0
+lastLine=0
+
+function OnStateChange(oldState, newState, token, kwGroupID, lno, col)
+
+  if commentMode==1 then
+    if col==0 and newState ~= HL_LINE_COMMENT then
+      commentMode=0
+      return newState
+    else
+      return HL_LINE_COMMENT
+    end
+  end
+
+  if newState==HL_LINE_COMMENT then
+    commentMode=1
+  end
+
+  return newState
+
+end
