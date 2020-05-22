@@ -1,3 +1,7 @@
+1.0.b21
+New features:
+- support for .stringsdict, .csh, .tcsh, .ksh files.
+
 1.0.b20
 New features:
 - new simple UI.

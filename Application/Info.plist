@@ -22,6 +22,7 @@
 				<string>com.apple.interfacebuilder.document.cocoa</string>
 				<string>com.apple.property-list</string>
 				<string>com.apple.rez-source</string>
+				<string>com.apple.xcode.strings-dictionary</string>
 				<string>com.apple.xcode.strings-text</string>
 				<string>com.barebones.bbedit.ini-configuration</string>
 				<string>com.barebones.bbedit.scss-source</string>
@@ -108,13 +109,16 @@
 				<string>org.vim.vim-script</string>
 				<string>org.xul.source</string>
 				<string>public.bash-script</string>
+				<string>public.csh-script</string>
 				<string>public.css</string>
 				<string>public.c-header</string>
 				<string>public.c-plus-plus-header</string>
 				<string>public.c-plus-plus-source</string>
 				<string>public.c-source</string>
 				<string>public.json</string>
+				<string>public.ksh-script</string>
 				<string>public.objective-c-source</string>
+				<string>public.objective-c-plus-plus-source</string>
 				<string>public.pascal-source</string>
 				<string>public.patch-file</string>
 				<string>public.perl-script</string>
@@ -126,6 +130,7 @@
 				<string>public.shell-script</string>
 				<string>public.source-code</string>
 				<string>public.swift-source</string>
+				<string>public.tcsh-script</string>
 				<string>public.tex</string>
 				<string>public.text</string>
 				<string>public.xml</string>
