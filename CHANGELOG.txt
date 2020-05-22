@@ -1,3 +1,7 @@
+1.0.b22
+New features:
+- support for fortran (.f, .for, .f90) files.
+
 1.0.b21
 New features:
 - support for .stringsdict, .csh, .tcsh, .ksh files.
