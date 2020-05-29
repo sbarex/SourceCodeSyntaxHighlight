@@ -1,3 +1,7 @@
+1.0.b23
+New features:
+- support for .nim files.
+
 1.0.b22
 New features:
 - support for fortran (.f, .for, .f90) files.

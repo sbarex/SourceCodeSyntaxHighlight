@@ -102,7 +102,9 @@
 				<string>org.omg.ecore</string>
 				<string>org.rdf.source</string>
 				<string>org.rust-lang.source</string>
+				<string>org.sbarex.conf</string>
 				<string>org.sbarex.dart</string>
+				<string>org.sbarex.nim</string>
 				<string>org.scala.source</string>
 				<string>org.tug.lua</string>
 				<string>org.tug.tex</string>
@@ -1264,6 +1266,24 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>dart</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.text</string>
+				<string>public.source-code</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Nim Source File</string>
+			<key>UTTypeIdentifier</key>
+			<string>org.sbarex.nim</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>nim</string>
 				</array>
 			</dict>
 		</dict>
