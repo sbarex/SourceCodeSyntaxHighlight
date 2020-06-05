@@ -1,3 +1,7 @@
+1.0.b24
+New features:
+- support for powershell (.ps1, .psm1, .psd1) files.
+
 1.0.b23
 New features:
 - support for .nim files.

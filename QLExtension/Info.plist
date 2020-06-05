@@ -120,6 +120,9 @@
 				<string>org.rust-lang.source</string>
 				<string>org.sbarex.conf</string>
 				<string>org.sbarex.dart</string>
+				<string>org.sbarex.ms-powershell</string>
+				<string>org.sbarex.ms-powershell-module</string>
+				<string>org.sbarex.ms-powershell-module-manifest</string>
 				<string>org.sbarex.nim</string>
 				<string>org.scala.source</string>
 				<string>org.tug.lua</string>

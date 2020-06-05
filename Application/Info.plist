@@ -104,6 +104,9 @@
 				<string>org.rust-lang.source</string>
 				<string>org.sbarex.conf</string>
 				<string>org.sbarex.dart</string>
+				<string>org.sbarex.ms-powershell</string>
+				<string>org.sbarex.ms-powershell-module</string>
+				<string>org.sbarex.ms-powershell-module-manifest</string>
 				<string>org.sbarex.nim</string>
 				<string>org.scala.source</string>
 				<string>org.tug.lua</string>
@@ -1266,6 +1269,60 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>dart</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.text</string>
+				<string>public.source-code</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Microsoft Powershell source file</string>
+			<key>UTTypeIdentifier</key>
+			<string>org.sbarex.ms-powershell</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>ps1</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.text</string>
+				<string>public.source-code</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Microsoft Powershell module file</string>
+			<key>UTTypeIdentifier</key>
+			<string>org.sbarex.ms-powershell-module</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>psm1</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.text</string>
+				<string>public.source-code</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Microsoft Powershell module manifest</string>
+			<key>UTTypeIdentifier</key>
+			<string>org.sbarex.ms-powershell-module-manifest</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>psd1</string>
 				</array>
 			</dict>
 		</dict>
