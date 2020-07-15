@@ -185,7 +185,7 @@ go4it () {
                 ada | adb | ads | a | gnad | agda | alan | i | applescript | eiffel | e | se | euphoria | ex | exw | wxu | ew | eu | haskell | hs | lua | ms | mssql | netrexx | nrx | oorexx | pl1 | ff | fp | pp | rpp | sf | sp | spb | spp | sps | wp | wf | wpp | wps | wpb | bdy | spe | rexx | rex | the | rx | snmp | mib | smisql | sybase | tsql | vhd )
                     comment1="--"
                     ;;
-                algol | alg | ampl | dat | run | amtrix | s4 | s4t | s4h | hnd | t4 | awk | bms | boo | cmake | conf | anacrontab | crk | crystal | cr | cs_block_regex | docker | dockerfile | dts | dtsi | elixir | exs | fish | fstab | gdb | gdscript | gd | hcl | httpd | icon | icn | informix | 4gl | julia | jl | ldif | limbo | b | make | mak | mk | makefile | meson | n3 | ttl | nt | nasal | nas | nginx | nim | octave | perl | pl | cgi | pm | plx | plex | po | ps1 | psl | pyrex | pyx | python | py | q | qmake | pro | qu | r | rnc | ruby | rb | rjs | gemfile | rakefile | s | sh | bash | zsh | ebuild | eclass | spec | tcl | wish | itcl | tcsh | terraform | toml | yaml | yml )
+                algol | alg | ampl | dat | run | amtrix | s4 | s4t | s4h | hnd | t4 | awk | bms | boo | cmake | conf | anacrontab | crk | crystal | cr | cs_block_regex | docker | dockerfile | dts | dtsi | elixir | exs | fish | fstab | gdb | gdscript | gd | hcl | httpd | icon | icn | informix | 4gl | julia | jl | ldif | limbo | b | make | mak | mk | makefile | meson | n3 | ttl | nt | nasal | nas | nginx | nim | octave | perl | pl | cgi | pm | plx | plex | po | ps1 | psl | pyrex | pyx | python | py | q | qmake | pro | qu | r | rnc | ruby | rb | rjs | gemfile | rakefile | s | sh | bash | zsh | ebuild | eclass | spec | tcl | wish | itcl | tcsh | terraform | toml | yaml | yml | csh | ksh )
                     comment1="#"
                     ;;
                 arc | aspect | was | wud | assembler | asm | a51 | 29k | 68s | 68x | x86 | autohotkey | ahk | autoit | au3 | blitzbasic | bb | clojure | clj | clp | exapunks | exa | fasm | inc | felix | flx | idlang | ini | doxyfile | desktop | kdev3 | jasmin | j | lisp | cl | clisp | el | lsp | sbcl | scom | fas | scm | msl | nbs | nsis | nsi | nsh | paradox | sc | purebasic | pb | pbi | pbf | rebol )
@@ -198,7 +198,7 @@ go4it () {
                     comment1="////"
                     comment2="////"
                     ;;
-                asp | aspx | ashx | ascx | html | xhtml | twig | jinja | mxml | slim | svg | xml | sgm | sgml | nrm | ent | hdr | hub | dtd | glade | wml | vxml | tld | csproj | xsl | ecf | jnlp | xsd | resx)
+                asp | aspx | ashx | ascx | html | xhtml | twig | jinja | mxml | slim | svg | xml | sgm | sgml | nrm | ent | hdr | hub | dtd | glade | wml | vxml | tld | csproj | xsl | ecf | jnlp | xsd | resx | xib | storyboard )
                     comment1='<!--'
                     comment2='-->'
                     ;;

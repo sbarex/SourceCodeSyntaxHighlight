@@ -50,6 +50,7 @@
 				<string>com.sun.javafx</string>
 				<string>com.sun.java-class</string>
 				<string>com.sun.manifest</string>
+				<string>com.symfony.twig</string>
 				<string>com.unknown.lhs</string>
 				<string>net.daringfireball.markdown</string>
 				<string>org.applescript.source</string>
@@ -58,6 +59,7 @@
 				<string>org.asm.source</string>
 				<string>org.bash.source</string>
 				<string>org.clojure</string>
+				<string>org.cocoapods.podspec</string>
 				<string>org.codehaus.groovy-source</string>
 				<string>org.coffee.source</string>
 				<string>org.coffeescript.coffeescript</string>
@@ -270,6 +272,23 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>xm</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.source-code</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Symfony twig template</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.symfony.twig</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>twig</string>
 				</array>
 			</dict>
 		</dict>
@@ -700,6 +719,24 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>gradle</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.item</string>
+				<string>public.data</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Cocoapod podspec</string>
+			<key>UTTypeIdentifier</key>
+			<string>org.cocoapods.podspec</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>podspec</string>
 				</array>
 			</dict>
 		</dict>

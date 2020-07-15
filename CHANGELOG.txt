@@ -1,3 +1,9 @@
+1.0.b25
+New features:
+- support for symfony .twig files (interpreted ad html).
+- support for .podspec files (interpreted as ruby).
+- new icon with Big Sur style.
+
 1.0.b24
 New features:
 - support for powershell (.ps1, .psm1, .psd1) files.

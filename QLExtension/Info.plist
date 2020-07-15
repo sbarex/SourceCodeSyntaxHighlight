@@ -68,12 +68,14 @@
 				<string>com.sun.java-class</string>
 				<string>com.sun.manifest</string>
 				<string>com.unknown.lhs</string>
+				<string>com.symfony.twig</string>
 				<string>org.applescript.source</string>
 				<string>org.arduino.ino-source</string>
 				<string>org.arduino.source</string>
 				<string>org.asm.source</string>
 				<string>org.bash.source</string>
 				<string>org.clojure</string>
+				<string>org.cocoapods.podspec</string>
 				<string>org.codehaus.groovy-source</string>
 				<string>org.coffee.source</string>
 				<string>org.coffeescript.coffeescript</string>
