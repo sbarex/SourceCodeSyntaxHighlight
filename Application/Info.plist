@@ -114,6 +114,7 @@
 				<string>org.tug.lua</string>
 				<string>org.tug.tex</string>
 				<string>org.vim.vim-script</string>
+				<string>org.vuejs.vue</string>
 				<string>org.xul.source</string>
 				<string>public.bash-script</string>
 				<string>public.csh-script</string>
@@ -1416,6 +1417,24 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>vim</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.item</string>
+				<string>public.data</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Vue source file</string>
+			<key>UTTypeIdentifier</key>
+			<string>org.vuejs.vue</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>vue</string>
 				</array>
 			</dict>
 		</dict>

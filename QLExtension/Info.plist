@@ -130,6 +130,7 @@
 				<string>org.tug.lua</string>
 				<string>org.tug.tex</string>
 				<string>org.vim.vim-script</string>
+				<string>org.vuejs.vue</string>
 				<string>org.xul.source</string>
 				<string>public.bash-script</string>
 				<string>public.csh-script</string>

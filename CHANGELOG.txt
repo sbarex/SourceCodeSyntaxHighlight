@@ -1,3 +1,7 @@
+1.0.b26
+New features:
+- support for .vue files (highlight has a beta support for vue files)
+
 1.0.b25
 New features:
 - support for symfony .twig files (interpreted ad html).

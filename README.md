@@ -1,10 +1,10 @@
 #  Quicklook extension for source files
 
-This application offers a quicklook extension for MacOS 10.15 Catalina for previewing source files.
+This application offers a quicklook extension for MacOS 10.15 Catalina or later for previewing source files.
 Inside it uses [Highlight](http://www.andre-simon.de/doku/highlight/en/highlight.php) to render source code with syntax highlighting.
 The application is distributed with a version of the `highlight`. If you want you can use a different version customizing the preferences.
 
-MacOS 10.15.0 Catalina has deprecated the qlgenerator APIs. Moreover a .qlgenerator package inside Library/QuickLook must be notarized on 10.15.0 to work. In version 10.15.1 it seems that notarization is no longer required.  
+Starting from MacOS 10.15.0 Catalina the qlgenerator APIs are deprecated. Moreover a .qlgenerator package inside Library/QuickLook must be notarized on 10.15.0 to work. In version 10.15.1 it seems that notarization is no longer required.  
 
 This project consists of these components:
 
