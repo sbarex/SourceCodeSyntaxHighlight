@@ -6,6 +6,8 @@
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIconFile</key>
+	<string></string>
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
@@ -16,19 +18,28 @@
 	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
-	<key>CFBundleSupportedPlatforms</key>
-	<array>
-		<string>MacOSX</string>
-	</array>
 	<key>CFBundleVersion</key>
-	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<string>1</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>$(MACOSX_DEPLOYMENT_TARGET)</string>
-	<key>NSExtension</key>
-	<dict>
-		<key>NSExtensionAttributes</key>
+	<key>NSHumanReadableCopyright</key>
+	<string>Copyright © 2020 sbarex. All rights reserved.</string>
+	<key>NSMainStoryboardFile</key>
+	<string>Main</string>
+	<key>NSPrincipalClass</key>
+	<string>NSApplication</string>
+	<key>NSSupportsAutomaticTermination</key>
+	<true/>
+	<key>NSSupportsSuddenTermination</key>
+	<true/>
+	<key>CFBundleDocumentTypes</key>
+	<array>
 		<dict>
-			<key>QLSupportedContentTypes</key>
+			<key>CFBundleTypeName</key>
+			<string>Source files</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
 			<array>
 				<string>com.adobe.actionscript</string>
 				<string>com.adobe.coldfusion</string>
@@ -52,7 +63,6 @@
 				<string>com.jetbrain.source</string>
 				<string>com.macromates.textmate.scheme</string>
 				<string>com.macromates.textmate.standard-ml</string>
-				<string>com.microsoft.asp</string>
 				<string>com.microsoft.csharp-source</string>
 				<string>com.microsoft.c-sharp</string>
 				<string>com.microsoft.f-sharp</string>
@@ -68,8 +78,9 @@
 				<string>com.sun.javafx</string>
 				<string>com.sun.java-class</string>
 				<string>com.sun.manifest</string>
-				<string>com.unknown.lhs</string>
 				<string>com.symfony.twig</string>
+				<string>com.unknown.lhs</string>
+				<string>net.daringfireball.markdown</string>
 				<string>org.applescript.source</string>
 				<string>org.arduino.ino-source</string>
 				<string>org.arduino.source</string>
@@ -92,7 +103,6 @@
 				<string>org.haskell.literate-haskell-source</string>
 				<string>org.inno.source</string>
 				<string>org.iso.sql</string>
-				<string>org.julialang.julia</string>
 				<string>org.kmt.source</string>
 				<string>org.km3</string>
 				<string>org.kotlinlang.source</string>
@@ -122,7 +132,6 @@
 				<string>org.omg.ecore</string>
 				<string>org.rdf.source</string>
 				<string>org.rust-lang.source</string>
-				<string>org.sbarex.compiled-python-script</string>
 				<string>org.sbarex.conf</string>
 				<string>org.sbarex.dart</string>
 				<string>org.sbarex.ms-powershell</string>
@@ -134,8 +143,6 @@
 				<string>org.tug.tex</string>
 				<string>org.vim.vim-script</string>
 				<string>org.vuejs.vue</string>
-				<string>org.w3.xsl</string>
-				<string>org.xml-tools.source</string>
 				<string>org.xul.source</string>
 				<string>public.bash-script</string>
 				<string>public.csh-script</string>
@@ -144,8 +151,8 @@
 				<string>public.c-plus-plus-header</string>
 				<string>public.c-plus-plus-source</string>
 				<string>public.c-source</string>
-				<string>public.fortran-source</string>
 				<string>public.fortran-90-source</string>
+				<string>public.fortran-source</string>
 				<string>public.json</string>
 				<string>public.ksh-script</string>
 				<string>public.objective-c-source</string>
@@ -179,21 +186,11 @@
 				<string>dyn.ah62d4rv4ge81g22</string>
 				<string>dyn.ah62d4rv4ge81g25brvuu</string>
 				<string>dyn.ah62d4rv4ge81g25xsq</string>
-				<string>dyn.ah62d4rv4ge80g55sq2</string>
-				<string>dyn.ah62d4rv4ge81k3p2</string>
-				<string>dyn.ah62d4rv4ge81a8p</string>
 				<string>dyn.ah62d4rv4ge81g6pq</string>
-				<string>dyn.ah62d46dzqm0gw23stb002svvhz6g45a</string>
 			</array>
-			<key>QLSupportsSearchableItems</key>
-			<false/>
+			<key>NSDocumentClass</key>
+			<string>$(PRODUCT_MODULE_NAME).Document</string>
 		</dict>
-		<key>NSExtensionPointIdentifier</key>
-		<string>com.apple.quicklook.preview</string>
-		<key>NSExtensionPrincipalClass</key>
-		<string>$(PRODUCT_MODULE_NAME).PreviewViewController</string>
-	</dict>
-	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2019 SBAREX. All rights reserved.</string>
+	</array>
 </dict>
 </plist>

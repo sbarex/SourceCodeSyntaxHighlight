@@ -47,6 +47,17 @@ class UTI: Equatable {
         return tags as NSArray as? [String] ?? []
     }()
     
+    lazy var conformsTo: [String] = {
+        if let info = UTTypeCopyDeclaration(UTI as CFString)?.takeRetainedValue() as? [String: AnyObject] {
+            if let c = info[kUTTypeConformsToKey as String] as? String {
+                return [c]
+            } else if let c = info[kUTTypeConformsToKey as String] as? [String] {
+                return c
+            }
+        }
+        return []
+    }()
+    
     lazy var mimeTypes: [String] = {
         guard let tags = UTTypeCopyAllTagsWithClass(self.UTI as CFString, kUTTagClassMIMEType as CFString)?.takeRetainedValue() else {
             return []

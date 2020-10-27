@@ -38,7 +38,14 @@ Some file types are directly associated to an UTI by the system. Other formats a
 
 For this reason, this application supports many UTIs even if they are apparently redundant. 
 
-_Apparently the operating system does not allow to manage some file formats including (but not limited to) .xml, .plist, .html, .ts, .dart._
+_MacOS 10.15 does **not** allow to manage some file formats including (but not limited to):_
+- .xml
+- .plist
+- .html
+- .ts 
+- .dart
+- common images (.jpg, .gif, .png)
+- ...
 
 It's likely that I didn't associate all the possible extensions managed by `highlight`.
 

@@ -97,6 +97,7 @@ class PreferencesViewController: NSViewController {
     @IBOutlet weak var generalTabButton: NSButton!
     @IBOutlet weak var appearanceTabButton: NSButton!
     @IBOutlet weak var extraTabButton: NSButton!
+    @IBOutlet weak var infoTabButton: NSButton!
     
     @IBOutlet weak var tabView: NSTabView!
     
@@ -120,6 +121,7 @@ class PreferencesViewController: NSViewController {
     @IBOutlet weak var globalSettingsView: GlobalSettingsView!
     @IBOutlet weak var appearanceView: AppearanceView!
     @IBOutlet weak var extraSettingsView: ExtraSettingsView!
+    @IBOutlet weak var infoSettingsView: UTIInfoView!
     
     internal var initialized = false
     
@@ -199,12 +201,19 @@ class PreferencesViewController: NSViewController {
                 saveGlobalSettings()
             }
             
-            generalTabButton.isEnabled = currentUTISettings != nil
+            generalTabButton.isEnabled = currentUTISettings == nil
             generalTabButton.isHidden = currentUTISettings != nil
+            infoTabButton.isEnabled = currentUTISettings != nil
+            infoTabButton.isHidden = currentUTISettings == nil
+            
             if generalTabButton.isHidden && generalTabButton.state == .on {
                 tabView.selectTabViewItem(at: 1)
                 appearanceTabButton.state = .on
                 generalTabButton.state = .off
+            } else if infoTabButton.isHidden && infoTabButton.state == .on {
+                tabView.selectTabViewItem(at: 0)
+                generalTabButton.state = .on
+                infoTabButton.state = .off
             }
             
             previewView.isLooked = true
@@ -216,6 +225,7 @@ class PreferencesViewController: NSViewController {
                 
                 appearanceView.populateFromSettings(currentUTISettings)
                 extraSettingsView.populateFromSettings(currentUTISettings)
+                infoSettingsView.initFromUTI(format.uti)
                 
                 previewView.selectExampleForUTI(currentUTISettings.uti)
                 
@@ -504,6 +514,8 @@ class PreferencesViewController: NSViewController {
         
         generalTabButton.isHidden = false
         generalTabButton.isEnabled = true
+        infoTabButton.isHidden = true
+        infoTabButton.isEnabled = false
     }
     
     /// Get a settings based on current customized global with apply the customization of active UTI.
@@ -621,13 +633,6 @@ class PreferencesViewController: NSViewController {
                 self.saveButton.isEnabled = true
                 self.cancelButton.isEnabled = true
                 self.view.window?.styleMask.insert(NSWindow.StyleMask.closable)
-                
-                NSApplication.shared.windows.forEach { (window) in
-                    // Refresh all opened view.
-                    if let c = window.contentViewController as? ViewController {
-                        c.refresh(nil)
-                    }
-                }
                 
                 //if (NSApplication.shared.delegate as? AppDelegate)?.documentsOpenedAtStart ?? false {
                     self.view.window?.performClose(sender)
@@ -763,12 +768,20 @@ class PreferencesViewController: NSViewController {
             tabView.selectTabViewItem(at: 0)
             extraTabButton.state = .off
             appearanceTabButton.state = .off
+            infoTabButton.state = .off
         } else if sender.identifier == NSUserInterfaceItemIdentifier("Appearance") {
             tabView.selectTabViewItem(at: 1)
             extraTabButton.state = .off
             generalTabButton.state = .off
+            infoTabButton.state = .off
         } else if sender.identifier == NSUserInterfaceItemIdentifier("Extra") {
             tabView.selectTabViewItem(at: 2)
+            generalTabButton.state = .off
+            appearanceTabButton.state = .off
+            infoTabButton.state = .off
+        } else if sender.identifier == NSUserInterfaceItemIdentifier("Info") {
+            tabView.selectTabViewItem(at: 3)
+            extraTabButton.state = .off
             generalTabButton.state = .off
             appearanceTabButton.state = .off
         }

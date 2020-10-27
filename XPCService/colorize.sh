@@ -73,7 +73,7 @@ fi
 debug "Starting colorize.sh"
 if hash gdate 2>/dev/null; then
 else
-    debug "# install gdate with `brew install coreutils` to show the nanoseconds time stamp #"
+    debug "# install gdate with \`brew install coreutils\` to show the nanoseconds time stamp #"
 fi
 
 # Reader used to get the contents of the target file.
