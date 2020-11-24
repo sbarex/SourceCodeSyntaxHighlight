@@ -475,7 +475,7 @@ class ThemesViewController: NSViewController {
         resignFirstResponder()
         
         if let theme = self.theme, theme.isDirty {
-            _ = saveTheme(theme)
+            saveTheme(theme)
         }
         // Restore previous responder.
         self.view.window?.makeFirstResponder(responder)

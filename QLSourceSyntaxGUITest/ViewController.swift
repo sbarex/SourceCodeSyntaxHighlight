@@ -129,7 +129,7 @@ class ViewController: NSViewController {
         textScrollView?.isHidden = true
         
         service?.colorize(url: documentUrl, overrideSettings: [SCSHSettings.Key.renderForExtension: false]) { (response, settings, error) in
-            let format = SCSHBaseSettings.Format(rawValue: settings[SCSHSettings.Key.format] as? String ?? "html") ?? .html
+            let format = SCSHBaseSettings.Format(rawValue: settings[SCSHSettings.Key.format] as? String ?? "html") ?? SCSHGlobalBaseSettings.preferredFormat
             DispatchQueue.main.async {
                 self.initializeView(forMode: format)
                 

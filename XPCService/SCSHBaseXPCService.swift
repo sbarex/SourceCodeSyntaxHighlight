@@ -365,7 +365,11 @@ class SCSHBaseXPCService: NSObject {
             if custom_settings.debug {
                 if final_settings.format == .html {
                     let u = URL(fileURLWithPath: NSHomeDirectory(), isDirectory: true).appendingPathComponent("Desktop/colorize.html")
-                    try? result.output()?.write(to: u, atomically: true, encoding: .utf8)
+                    do {
+                        try result.data.write(to: u)
+                    } catch {
+                        print("\(error)")
+                    }
                 } else {
                    let u = URL(fileURLWithPath: NSHomeDirectory(), isDirectory: true).appendingPathComponent("Desktop/colorize.rtf")
                     try? result.data.write(to: u)

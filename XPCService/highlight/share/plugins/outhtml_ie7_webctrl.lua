@@ -15,12 +15,18 @@ function syntaxUpdate(desc)
     return '&nbsp;'
   end
 
+  if OnStateChange ~= nil then
+      OrigOnStateChange = OnStateChange;
+  end
   -- trigger OverrideParam
   function OnStateChange(oldState, newState, token, groupID, lineno, column)
     if (called==nil) then
       OverrideParam("format.spacer", "&nbsp;")
       OverrideParam("format.maskws", "true")
       called=1
+    end
+    if OrigOnStateChange then
+        return OrigOnStateChange(oldState, newState, token, groupID, lineno, column)
     end
     return newState
   end

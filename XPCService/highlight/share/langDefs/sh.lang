@@ -3,7 +3,7 @@ Description="Bash"
 
 Categories = {"script", "shell"}
 
-Identifiers=[[ [a-zA-Z_][\w\-]*(?!\/) ]]
+Identifiers=[[ [a-zA-Z_]\w*(?!\w*\/) ]]
 
 Keywords={
   { Id=1,
@@ -19,7 +19,7 @@ Keywords={
         "unset", "wait", "eval", "bg", "cd", "echo", "exec", "exit", "kill"},
   },
   { Id=3,
-    List={"ls", "cat", "tac", "rev", "cp", "mv", "rm", "rmdir", "chmod",
+    List={"ls", "cat", "tac", "rev", "cp", "mv", "rm", "rmdir", "chmod", "mkdir", "ls", "ll",
         "chattr", "ln", "find", "xargs", "expr", "date", "zdump", "time", "touch", "at",
         "batch", "cal", "sleep", "usleep", "hwclock", "clock", "sort", "tsort", "diff",
         "patch", "diff3", "sdiff", "cmp", "comm", "uniq", "expand", "unexpand", "cat",
@@ -39,7 +39,7 @@ Keywords={
   -- fixes issue with expressions like ${SHELL="${CONFIG_SHELL-/bin/sh}"}
   -- the [^\}]+ part fixes issue with "s#@PATH@#/opt/${pkgname}/bin/# ${pkgdir}/etc/profile.d/${pkgname}.sh"
   { Id=4,
-    Regex=[[\$\{[^\}]+\$\{.+?\}.+?\}|\$\{.+?\} ]],
+    Regex=[[\$\{[^\}]+\$\{.+?\}.+?\}|\$\{.+?\}|\$\(.+?\) ]],
   },
   { Id=4,
     Regex=[[ \$[\w\#]+ ]],

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="KWJ-lo-l8G">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="KWJ-lo-l8G">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17156"/>
-        <plugIn identifier="com.apple.WebKit2IBPlugin" version="17156"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17506"/>
+        <plugIn identifier="com.apple.WebKit2IBPlugin" version="17506"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -1457,7 +1457,7 @@ Gw
                                         </customSpacing>
                                     </stackView>
                                     <stackView distribution="fill" orientation="horizontal" alignment="centerY" spacing="2" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="APR-hO-BkY">
-                                        <rect key="frame" x="0.0" y="0.0" width="232" height="16"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="321" height="16"/>
                                         <subviews>
                                             <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dxc-do-OAW">
                                                 <rect key="frame" x="0.0" y="0.0" width="16" height="16"/>
@@ -1468,8 +1468,8 @@ Gw
                                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="NSStatusPartiallyAvailable" id="C7z-I9-gvr"/>
                                             </imageView>
                                             <textField horizontalHuggingPriority="251" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="3m0-3i-Am4">
-                                                <rect key="frame" x="16" y="1" width="218" height="14"/>
-                                                <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" title="Supported by `highlight` but unhandled." id="zpu-ry-Yvp">
+                                                <rect key="frame" x="16" y="1" width="307" height="14"/>
+                                                <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" title="Supported by `highlight` but unhandled by the extension." id="zpu-ry-Yvp">
                                                     <font key="font" metaFont="message" size="11"/>
                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1699,11 +1699,11 @@ Gw
                                                     </popUpButtonCell>
                                                     <prototypeCellViews>
                                                         <tableCellView identifier="action" misplaced="YES" id="FGn-xW-9ja" customClass="ActionTableCellView" customModule="Syntax_Highlight" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="1" width="0.0" height="18"/>
+                                                            <rect key="frame" x="1" y="1" width="0.0" height="18"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <popUpButton translatesAutoresizingMaskIntoConstraints="NO" id="rpV-Kq-3H9">
-                                                                    <rect key="frame" x="1" y="0.0" width="38" height="18"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="38" height="18"/>
                                                                     <popUpButtonCell key="cell" type="inline" bezelStyle="inline" alignment="left" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" pullsDown="YES" id="9eP-a6-Kp4">
                                                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                                         <font key="font" metaFont="smallSystemBold"/>
@@ -1812,10 +1812,10 @@ Gw
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <box horizontalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="7r5-6M-ONG">
-                                <rect key="frame" x="258" y="0.0" width="5" height="395"/>
+                                <rect key="frame" x="258" y="0.0" width="5" height="387"/>
                             </box>
                             <visualEffectView blendingMode="behindWindow" material="underWindowBackground" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="kpv-4y-tiy">
-                                <rect key="frame" x="0.0" y="0.0" width="260" height="395"/>
+                                <rect key="frame" x="0.0" y="0.0" width="260" height="387"/>
                                 <subviews>
                                     <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="G4d-Ud-cTN">
                                         <rect key="frame" x="0.0" y="28" width="260" height="5"/>
@@ -1904,13 +1904,13 @@ Gw
                                         </customSpacing>
                                     </stackView>
                                     <scrollView focusRingType="none" borderType="none" autohidesScrollers="YES" horizontalLineScroll="103" horizontalPageScroll="10" verticalLineScroll="103" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="niQ-bu-HDe">
-                                        <rect key="frame" x="0.0" y="31" width="260" height="364"/>
+                                        <rect key="frame" x="0.0" y="31" width="260" height="356"/>
                                         <clipView key="contentView" drawsBackground="NO" id="AxT-XV-sDg">
-                                            <rect key="frame" x="0.0" y="0.0" width="260" height="364"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="260" height="356"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="100" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="8" autosaveExpandedItems="YES" outlineTableColumn="ROQ-Ow-FIV" id="gqF-5q-802">
-                                                    <rect key="frame" x="0.0" y="0.0" width="260" height="364"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="260" height="356"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <size key="intercellSpacing" width="2" height="3"/>
                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
@@ -2026,7 +2026,7 @@ Gw
                                 </constraints>
                             </visualEffectView>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="H2K-EL-2Mr">
-                                <rect key="frame" x="405" y="205" width="56" height="16"/>
+                                <rect key="frame" x="405" y="201" width="56" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" enabled="NO" alignment="center" title="Preview" id="Txd-rC-BU1">
                                     <font key="font" usesAppearanceFont="YES"/>
                                     <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -2034,7 +2034,7 @@ Gw
                                 </textFieldCell>
                             </textField>
                             <wkWebView wantsLayer="YES" allowsLinkPreview="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EpR-xA-UXw">
-                                <rect key="frame" x="261" y="31" width="344" height="364"/>
+                                <rect key="frame" x="261" y="31" width="344" height="356"/>
                                 <wkWebViewConfiguration key="configuration" suppressesIncrementalRendering="YES">
                                     <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
                                     <wkPreferences key="preferences" javaScriptCanOpenWindowsAutomatically="NO"/>
@@ -2088,19 +2088,19 @@ Gw
                                 </customSpacing>
                             </stackView>
                             <box horizontalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="tpy-nX-jLP">
-                                <rect key="frame" x="603" y="0.0" width="5" height="395"/>
+                                <rect key="frame" x="603" y="0.0" width="5" height="387"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="1" id="mZv-AU-9VY"/>
                                 </constraints>
                             </box>
                             <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="25" horizontalPageScroll="10" verticalLineScroll="25" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZnV-SA-vVd">
-                                <rect key="frame" x="606" y="30" width="299" height="365"/>
+                                <rect key="frame" x="606" y="30" width="299" height="357"/>
                                 <clipView key="contentView" drawsBackground="NO" id="pq8-mb-WNU">
-                                    <rect key="frame" x="0.0" y="0.0" width="299" height="365"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="299" height="357"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="firstColumnOnly" selectionHighlightStyle="none" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="23" viewBased="YES" floatsGroupRows="NO" id="Kti-Pv-Clb">
-                                            <rect key="frame" x="0.0" y="0.0" width="299" height="365"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="299" height="357"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" red="0.11764705882352941" green="0.11764705882352941" blue="0.11764705882352941" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>

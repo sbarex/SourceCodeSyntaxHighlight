@@ -271,6 +271,9 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>vb</string>
+					<string>bas</string>
+					<string>basic</string>
+					<string>vbs</string>
 				</array>
 			</dict>
 		</dict>
@@ -649,10 +652,10 @@
 				<string>dyn.ah62d4rv4ge80y5a</string>
 				<string>public.data</string>
 			</array>
-			<key>UTTypeIdentifier</key>
-			<string>org.julialang.julia</string>
 			<key>UTTypeDescription</key>
 			<string>Julia source file</string>
+			<key>UTTypeIdentifier</key>
+			<string>org.julialang.julia</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>public.filename-extension</key>
@@ -1482,6 +1485,24 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
+				<string>public.xml</string>
+				<string>dyn.ah62d4rv4ge81g3pvsy</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Adobe Acrobat Sequence</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.adobe.acrobat.sequ</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>sequ</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
 				<string>public.source-code</string>
 				<string>public.plain-text</string>
 			</array>
@@ -1554,6 +1575,27 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
+				<string>public.plain-text</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>TeX File</string>
+			<key>UTTypeIdentifier</key>
+			<string>edu.uo.texshop.tex</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>tex</string>
+				</array>
+				<key>public.mime-type</key>
+				<array>
+					<string>application/x-tex</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
 				<string>public.xml</string>
 			</array>
 			<key>UTTypeIdentifier</key>
@@ -1588,10 +1630,10 @@
 			</dict>
 		</dict>
 		<dict>
-			<key>UTTypeIdentifier</key>
-			<string>dyn.ah62d4rv4ge81a8p</string>
 			<key>UTTypeDescription</key>
 			<string>Python Bytecode Document</string>
+			<key>UTTypeIdentifier</key>
+			<string>dyn.ah62d4rv4ge81a8p</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>public.filename-extension</key>

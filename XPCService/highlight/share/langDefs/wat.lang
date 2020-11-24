@@ -1,0 +1,58 @@
+
+Description="Web Assembly Text"
+
+Categories = {"source"}
+
+Keywords={
+  { Id=1,
+    List={
+        "module","type","import","export","memory","table","start","result","elem",
+        "data","nop","block","loop","if","else","br","br_if","br_table","end","return",
+        "drop","select","unreachable","local","div","gt","ge","lt","le","div_u","gt_u",
+        "ge_u","lt_u","le_u","div_s","gt_s","ge_s","lt_s","le_s","const","add","sub",
+        "mul","abs","neg","ceil","floor","trunc","copysign","ceil","nearest","min","max"
+        ,"sqrt","and","or","xor","shl","rotl","rotr","eq","ne","clz","ctz","popcnt",
+        "eqz","shr_s","rem_s","shr_u","rem_u"
+    }
+  },
+  { Id=2,
+    List={ "i32","i64","f32","f64","anyfunc" }
+  },
+
+  { Id=3,
+    List={ "store","store8","store16","store32","load","load8_s","load16_s","load32_s",
+    "load8_u","load16_u","load32_u" }
+  },
+
+  { Id=4,
+    Regex=[[\$\w+]],
+  },
+
+  { Id=5,
+    List={ "grow_memory","current_memory","call","call_indirect","get_local","get_global",
+        "set_local","set_global","tee_local" }
+  },
+
+}
+
+Strings = {
+  Delimiter=[["]],
+  Escape = [[ \\u\d{4}|\\x?\d{3}|\\\w|\\[\'\\\"] ]]
+}
+
+Comments = {
+  { Block=true,
+    Nested=true,
+    Delimiter = { [[\(\;]], [[\;\)]] }
+  },
+  {
+    Block=false,
+    Delimiter = { [[;;]] }
+  }
+}
+
+IgnoreCase=false
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\.|\:|\&|<|>|\!|=|\/|\*|\%|\+|\-|\~|\||\^|\?]]
+
+EnableIndentation=false

@@ -69,7 +69,7 @@ class ExtraSettingsView: NSView {
         }
     }
     
-    var renderMode: SCSHBaseSettings.Format = .html {
+    var renderMode: SCSHBaseSettings.Format = SCSHGlobalBaseSettings.preferredFormat {
         didSet {
             interactiveCheckbox.isEnabled = (isGlobal || interpretsCheckbox.state == .on) && renderMode == .html
             interactiveSwitch.isEnabled = interactiveCheckbox.isEnabled

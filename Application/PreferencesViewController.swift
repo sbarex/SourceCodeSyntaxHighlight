@@ -418,9 +418,9 @@ class PreferencesViewController: NSViewController {
     /// Initialize gui elements with current global settings.
     private func populateSettings() {
         // HTML/RTF format
-        self.appearanceView.renderMode = self.settings?.format ?? .html
-        self.extraSettingsView.renderMode = self.settings?.format ?? .html
-        self.previewView.renderMode = self.settings?.format ?? .html
+        self.appearanceView.renderMode = self.settings?.format ?? SCSHGlobalBaseSettings.preferredFormat
+        self.extraSettingsView.renderMode = self.settings?.format ?? SCSHGlobalBaseSettings.preferredFormat
+        self.previewView.renderMode = self.settings?.format ?? SCSHGlobalBaseSettings.preferredFormat
         
         initialized = true
         

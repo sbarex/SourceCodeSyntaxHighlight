@@ -1,15 +1,18 @@
 
-Description="Marks the lines defined as comma separated list in the plug-in parameter (HTML and RTF only)."
+Description="Marks the lines defined as comma separated list or range in the plug-in parameter (HTML, RTF or Truecolor/xterm256 Escape)."
 
-Categories = {"format", "html", "rtf" }
-
+Categories = {"format", "html", "rtf", "truecolor", "xterm256" }
 
 function syntaxUpdate(desc)
 
-  if HL_OUTPUT ~= HL_FORMAT_HTML and HL_OUTPUT ~= HL_FORMAT_XHTML
-    and HL_OUTPUT ~= HL_FORMAT_RTF then return end
+  if HL_OUTPUT ~= HL_FORMAT_HTML and HL_OUTPUT ~= HL_FORMAT_XHTML and HL_OUTPUT ~= HL_FORMAT_RTF
+      and HL_OUTPUT ~= HL_FORMAT_TRUECOLOR and HL_OUTPUT ~= HL_FORMAT_XTERM256  then
+      return
+  end
 
   if #HL_PLUGIN_PARAM == 0 then return end
+
+  ansiOpenSeq = StoreValue("ansiOpenSeq")
 
   -- we need a dummy kw class to get the line mark colour into the colour map
   if HL_OUTPUT == HL_FORMAT_RTF then
@@ -35,12 +38,41 @@ function syntaxUpdate(desc)
     return t
   end
 
-  linesToMark=explode(',', HL_PLUGIN_PARAM)
+  function range(p)
+    local t, ll
+    t={}
+    ll=0
+    l=string.find(p,'-',ll,true)
+    if l~=nil then
+      for i=tonumber(string.sub(p,ll,l-1)), tonumber(string.sub(p,l+1)), 1 do
+        t[i] = 1
+      end
+    end
+    return t
+  end
+
+  if (string.find(HL_PLUGIN_PARAM,'-')) == nil then
+    linesToMark=explode(',', HL_PLUGIN_PARAM)
+  else
+    linesToMark=range(HL_PLUGIN_PARAM)
+  end
+
   currentLineNumber=0
+
+  function Decorate(token, state)
+    if (linesToMark[currentLineNumber]) then
+      if HL_OUTPUT==HL_FORMAT_TRUECOLOR or HL_OUTPUT==HL_FORMAT_XTERM256 then
+          return ansiOpenSeq..token
+      end
+    end
+  end
 
   function DecorateLineBegin(lineNumber)
     currentLineNumber = lineNumber
     if (linesToMark[currentLineNumber]) then
+      if HL_OUTPUT==HL_FORMAT_TRUECOLOR or HL_OUTPUT==HL_FORMAT_XTERM256 then
+          return ansiOpenSeq
+      end
       if HL_OUTPUT==HL_FORMAT_RTF then
         patternIdx = 12 + #Keywords  -- Index of the style which was added before
         return '\\chcbpat'..patternIdx..'{'
@@ -51,6 +83,9 @@ function syntaxUpdate(desc)
 
   function DecorateLineEnd()
     if (linesToMark[currentLineNumber]) then
+      if HL_OUTPUT==HL_FORMAT_TRUECOLOR or HL_OUTPUT==HL_FORMAT_XTERM256 then
+          return ""
+      end
       if HL_OUTPUT==HL_FORMAT_RTF then
           return '}'
       end
@@ -62,9 +97,9 @@ end
 
 function themeUpdate(desc)
 
-  function lighten(colour)
+  function lighten(colour, fmt)
     if string.match(colour, "#%x+")==nil then
-      return "#000000"
+      return string.format(fmt, 0, 0, 0)
     end
 
     base_rr = ("0x"..string.match(colour, "%x%x", 2))
@@ -76,7 +111,7 @@ function themeUpdate(desc)
     brightness = (min_bright + max_bright) / (255*2.0)
 
     if (brightness < 0.1) then
-      return "#444444"
+      return string.format(fmt, 68, 68, 68)
     elseif (brightness < 0.5) then
       percent = 100
     elseif (brightness > 0.95) then
@@ -89,16 +124,30 @@ function themeUpdate(desc)
     gg = math.floor(base_gg * (100 + percent) / 100 )
     bb = math.floor(base_bb * (100 + percent) / 100 )
 
-    if (rr>255) then rr = 255 end
-    if (gg>255) then gg = 255 end
-    if (bb>255) then bb = 255 end
-    return string.format("#%02x%02x%02x", rr, gg, bb)
+    -- konsole supports up to 0x99, what about other emulators?
+    maxval = 255
+    if (HL_OUTPUT == HL_FORMAT_TRUECOLOR) then maxval = 153 end
+    if (rr>maxval) then rr = maxval end
+    if (gg>maxval) then gg = maxval end
+    if (bb>maxval) then bb = maxval end
+
+    return string.format(fmt, rr, gg, bb)
   end
 
-  if (HL_OUTPUT == HL_FORMAT_HTML or HL_OUTPUT == HL_FORMAT_XHTML) then
-    Injections[#Injections+1]=".hl.mark { background-color:"..lighten(Canvas.Colour).."; width:100%;float:left;}"
+  if (HL_OUTPUT == HL_FORMAT_TRUECOLOR) then
+    StoreValue("ansiOpenSeq", lighten(Canvas.Colour, "\x1B[48;2;%02x;%02x;%02xm"))
+  elseif (HL_OUTPUT == HL_FORMAT_XTERM256) then
+    --https://gist.github.com/MicahElliott/719710/8b8b962033efed8926ad8a8635b0a48630521a67
+    lightCanvas = lighten(Canvas.Colour, "%03d %03d %03d")
+    rr = tonumber(string.match(lightCanvas, "%d%d%d", 0))
+    gg = tonumber(string.match(lightCanvas, "%d%d%d", 4))
+    bb = tonumber(string.match(lightCanvas, "%d%d%d", 8))
+    approx = math.floor(36 * (rr * 5) + 6 * (gg * 5) + (bb * 5) + 16)
+    StoreValue("ansiOpenSeq", "\x1B[48;5;"..approx.."m")
+  elseif (HL_OUTPUT == HL_FORMAT_HTML or HL_OUTPUT == HL_FORMAT_XHTML) then
+    Injections[#Injections+1]=".hl.mark { background-color:"..lighten(Canvas.Colour, "#%02x%02x%02x").."; width:100%;float:left;}"
   elseif (HL_OUTPUT == HL_FORMAT_RTF) then
-    table.insert(Keywords, {Colour=lighten(Canvas.Colour)})
+    table.insert(Keywords, {Colour=lighten(Canvas.Colour, "#%02x%02x%02x")})
   end
 end
 

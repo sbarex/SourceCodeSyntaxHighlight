@@ -1,0 +1,38 @@
+-- http://github.com/open-policy-agent/opa
+
+Description="Rego"
+
+Categories = {"source"}
+
+Digits = [[ (?:0x|0X|0b)[0-9a-fA-F']+|\d*[\.]?\d+(?:[eE][\-\+]\d+)?[lLuU]* ]]
+
+Keywords={
+  { Id=1,
+    List={
+      "as", "default", "else", "false", "import", "package", "not", "null", "true", "with",
+    }
+  },
+  { Id=3,
+    Regex=[[(\w+)\s*\:\:]]
+  },
+  { Id=4,
+    Regex=[[(\w+)\s*\(]]
+  }
+}
+
+Strings = {
+  Delimiter=[["|']],
+  RawPrefix="R",
+  Interpolation = [[ %\w ]],
+}
+
+Comments = {
+  {
+    Block=false,
+    Delimiter = { [[#]] }
+  }
+}
+
+IgnoreCase=false
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\.|\:|\&|<|>|\!|=|\/|\*|\%|\+|\-|\~|\||\^|\?]]

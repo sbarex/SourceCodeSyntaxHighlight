@@ -1,5 +1,5 @@
 
-Description="Adds code folding for C style languages, Pascal, Lua and Ruby and more to HTML output (not compatible with inline CSS or ordered list output)."
+Description="Adds code folding for C style languages, Pascal, Lua, Ruby and more to HTML output (not compatible with inline CSS or ordered list output)."
 
 Categories = {"format", "html", "usability" }
 
@@ -116,6 +116,8 @@ function syntaxUpdate(desc)
     blockBegin["if"] = true
     blockBegin["unless"] = true
     blockBegin["until"] = true
+    blockBegin["["] = true
+    blockEnd["]"] = true
     blockEnd["end"] = true
     blockStates[HL_KEYWORD] = true
 
@@ -237,23 +239,15 @@ function syntaxUpdate(desc)
   end
 
   -- FIX conditional modifiers: add two params
-  function Decorate(token, state, kwclass, trace)
+  function Decorate(token, state, kwclass, lineContainedStmt)
     if (not blockStates[state] or notEmbedded==false) then
       return
     end
 
-    --io.write("TRC "..trace.."  ")
-
     -- FIX conditional modifiers: add condition to avoid recognition of delimiters
-    --     if the last state before is a statement
-    if langDesc=="Ruby" and string.len(trace)>1
-        and ((token=="if" or token=="unless" or token=="while" or token=="until")
-            and (string.ends(trace, ";"..math.floor(HL_KEYWORD)..";")
-                or string.ends(trace, ";"..math.floor(HL_IDENTIFIER_BEGIN)..";")
-                or string.ends(trace, ";"..math.floor(HL_NUMBER)..";")
-                or string.ends(trace, ";"..math.floor(HL_STRING)..";")
-                or string.ends(trace, ";"..math.floor(HL_STANDARD)..";")
-                or string.ends(trace, ";"..math.floor(HL_OPERATOR)..";") ) )
+    --     if the line before is a statement
+    if langDesc=="Ruby" and lineContainedStmt == true
+        and ( token=="if" or token=="unless" or token=="while" or token=="until" )
       then
         return
     end

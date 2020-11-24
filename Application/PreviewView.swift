@@ -63,7 +63,7 @@ class PreviewView: NSView {
     @IBOutlet weak var textView: NSTextView!
     @IBOutlet weak var customMenuItem: NSMenuItem!
     
-    var renderMode: SCSHBaseSettings.Format = .html {
+    var renderMode: SCSHBaseSettings.Format = SCSHGlobalBaseSettings.preferredFormat {
         didSet {
             webView.isHidden = renderMode == .rtf
             scrollView.isHidden = !webView.isHidden
@@ -221,7 +221,7 @@ class PreviewView: NSView {
         if let url = example {
             /// Show a file.
             if custom_settings.format == .html {
-                webView.loadHTMLString("<html><body><p>Waiting…</p></body></html>", baseURL: nil)
+                webView.loadHTMLString("<html><body><p style='font-family:  -apple-system; font-size: 10pt'>Waiting…</p></body></html>", baseURL: nil)
                 //DispatchQueue.global(qos: .default).async {
                     self.service?.htmlColorize(url: url, settings: custom_settings.toDictionary() as NSDictionary) { (html, extra, error) in
                         DispatchQueue.main.async {

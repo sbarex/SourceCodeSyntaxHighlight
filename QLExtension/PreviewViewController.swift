@@ -163,7 +163,7 @@ class PreviewViewController: NSViewController, QLPreviewingController, WKNavigat
         }
         
         service.colorize(url: url) { (response: Data, settings: NSDictionary, error: Error?) in
-            let format = settings[SCSHSettings.Key.format] as? String ?? SCSHBaseSettings.Format.html.rawValue
+            let format = settings[SCSHSettings.Key.format] as? String ?? SCSHGlobalBaseSettings.preferredFormat.rawValue
             DispatchQueue.main.async {
                 /*
                 if let color = settings[SCSHSettings.Key.rtfBackgroundColor] as? String, let c = NSColor(fromHexString: color) {

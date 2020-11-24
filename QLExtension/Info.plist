@@ -30,6 +30,7 @@
 		<dict>
 			<key>QLSupportedContentTypes</key>
 			<array>
+				<string>com.adobe.acrobat.sequ</string>
 				<string>com.adobe.actionscript</string>
 				<string>com.adobe.coldfusion</string>
 				<string>com.adobe.jsx</string>
@@ -70,6 +71,7 @@
 				<string>com.sun.manifest</string>
 				<string>com.unknown.lhs</string>
 				<string>com.symfony.twig</string>
+				<string>edu.uo.texshop.tex</string>
 				<string>org.applescript.source</string>
 				<string>org.arduino.ino-source</string>
 				<string>org.arduino.source</string>

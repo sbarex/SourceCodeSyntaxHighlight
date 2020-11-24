@@ -10,11 +10,11 @@ Keywords={
       "default", "do", "else", "extends", "false", "final", "finally",
       "for", "if", "in", "is", "new", "null", "return", "super", "switch",
       "this", "throw", "true", "try", "var", "void", "while",
-      "static", "const", "new"
+      "static", "const", "new", "late", "required"
     }
   },
   { Id=2,
-    List={ "num", "int", "double", "bool" }
+    List={ "num", "int", "double", "bool", "Never" }
   },
 
   { Id=4,
@@ -51,6 +51,6 @@ Comments = {
 
 IgnoreCase=false
 
-Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\.|\:|\&|<|>|\!|=|\/|\*|\%|\+|\-|\~|\||\^]]
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\.|\:|\&|<|>|\!|=|\/|\*|\%|\+|\-|\~|\||\^|\?]]
 
 EnableIndentation=false

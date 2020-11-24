@@ -1,22 +1,33 @@
+1.0.b28
+New features:
+- universal binary (but not yet tested on Apple Silicon M1).
+- add support for `edu.uo.texshop.tex` UTI used by `.tex` files.
+- `highlight` updated to version 3.59 compiled as universal binary with `lua` 5.4.1 statically linked.
+- The embedded `lua` library used by the main application is upgraded to version 5.4.1.
+
+Bugfix:
+- fixed a bug for the missing preview in html mode on the settings window.
+- predefined output mode set to `.rtf` (less expansive that html).
+
 1.0.b27
 New features:
 - main application can only set the preferences and is no longer a viewer.
-- support for .xsd, .xquery, .xsl, .asp and julia (.jl) formats.
+- support for `.xsd`, `.xquery`, `.xsl`, `.asp` and julia (`.jl`) formats.
 - UTI info panel.
 
 1.0.b26
 New features:
-- support for .vue files (highlight has a beta support for vue files).
+- support for `.vue` files (highlight has a beta support for vue files).
 
 1.0.b25
 New features:
-- support for symfony .twig files (interpreted ad html).
-- support for .podspec files (interpreted as ruby).
+- support for symfony `.twig` files (interpreted ad html).
+- support for `.podspec` files (interpreted as ruby).
 - new icon with Big Sur style.
 
 1.0.b24
 New features:
-- support for powershell (.ps1, .psm1, .psd1) files.
+- support for powershell (`.ps1`, `.psm1`, `.psd1`) files.
 
 1.0.b23
 New features:
@@ -24,27 +35,27 @@ New features:
 
 1.0.b22
 New features:
-- support for fortran (.f, .for, .f90) files.
+- support for fortran (`.f`, `.for`, `.f90`) files.
 
 1.0.b21
 New features:
-- support for .stringsdict, .csh, .tcsh, .ksh files.
+- support for `.stringsdict`, `.csh`, `.tcsh`, `.ksh` files.
 
 1.0.b20
 New features:
 - new simple UI.
-- support for .strings, .ini and .cfg files.
-- support for .xib and .storyboard files as XML.
+- support for `.strings`, `.ini` and `.cfg` files.
+- support for `.xib` and `.storyboard` files as XML.
 - preview now can show custom source file.
 - better support for standard preprocessor for many file format (if you have previously customized the preprocessor for some formats please check if it require to add the placeholder $targetHL).
-- highlight updated to 3.57.
+- `highlight` updated to 3.57.
 Bugfix:
 - rust file extension.
 - settings migration.
 
 1.0.b19
 New features:
-- highlight updated to 3.55.
+- `highlight` updated to 3.55.
 - enhanced inquiry panel.
 
 1.0.b18
@@ -65,7 +76,7 @@ New features:
 1.0.b15
 
 New features:
-- Support for .h header files.
+- Support for `.h` header files.
 - Target to 10.15 (now the standard swift library is not embedded).
 - New interactive preview setting to allow the execution of js code inside the quicklook preview.
 
@@ -81,7 +92,7 @@ Bugfix:
 
 New features:
 - Merge pull request https://github.com/sbarex/SourceCodeSyntaxHighlight/pull/18 (support for awk, bash, clojure, diff, haskell, lua, patch, rust, scala, text, zsh)
-- Added support for .r file format.
+- Added support for `.r` file format.
 
 Bugfix:
 - Correction of many typos.
@@ -90,8 +101,8 @@ Bugfix:
 1.0.b13
 
 New features:
-- Embedded highlight updated to 5.3.4.
-- Info panel about highlight (from App menu and from a info button on preferences window).
+- Embedded `highlight` updated to 5.3.4.
+- Info panel about `highlight` (from App menu and from a info button on preferences window).
 - Menu item inside app menu for open in the Finder the application support folder.
 - Redesign of preferences window for the theme selection.
 - GUI to view and edit the themes.

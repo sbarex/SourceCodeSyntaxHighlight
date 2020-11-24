@@ -32,8 +32,13 @@ function syntaxUpdate(desc)
 ]]
   end
 
+
+  if OnStateChange ~= nil then
+      OrigOnStateChange = OnStateChange;
+  end
+
   --may be triggered twice per keyword
-  function OnStateChange(oldState, newState, token, kwgroup)
+  function OnStateChange(oldState, newState, token, kwgroup, lineno, column)
     if newState==HL_KEYWORD  and kwgroup==keywordGroup then
 
       if kwID[token] == nil then
@@ -45,6 +50,9 @@ function syntaxUpdate(desc)
         kwID[token][1] = kwID[token][1] + 1
       end
 
+    end
+    if OrigOnStateChange then
+        return OrigOnStateChange(oldState, newState, token, kwgroup, lineno, column)
     end
     return newState
   end

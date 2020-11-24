@@ -73,7 +73,7 @@ class AppearanceView: NSView {
            }
        }
     
-    var renderMode: SCSHBaseSettings.Format = .html {
+    var renderMode: SCSHBaseSettings.Format = SCSHGlobalBaseSettings.preferredFormat {
         didSet {
             styleCheckbox.isEnabled = renderMode == .html
             styleLabel.isEnabled = renderMode == .html

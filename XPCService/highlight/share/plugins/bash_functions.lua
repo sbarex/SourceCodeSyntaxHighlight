@@ -13,21 +13,24 @@ Categories = {"bash"}
 function syntaxUpdate(desc)
   if desc=="Bash" then
 
-  --add function name pattern ("f_" prefix omitted but maybe reasonable)
   table.insert( Keywords,
                   { Id=5, Regex=[[(\w+)\s*\(]]
                   } )
+
+    if OnStateChange ~= nil then
+      OrigOnStateChange = OnStateChange;
+    end
 
     -- add keywords to list 5 if pattern matches
     function OnStateChange(oldState, newState, token, kwgroup)
 
       if newState==HL_KEYWORD and kwgroup==5 then
-    --if string.find(token, "f_%a+") then
-      AddKeyword(token, 5)
-    --end
-    --more patterns could be defined here
+        AddKeyword(token, 5)
+        return newState
       end
-      return newState
+      if OrigOnStateChange then
+        return OrigOnStateChange(oldState, newState, token, kwgroup)
+      end
     end
 
   end

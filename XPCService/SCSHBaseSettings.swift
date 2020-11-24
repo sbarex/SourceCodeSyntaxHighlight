@@ -358,6 +358,8 @@ class SCSHBaseSettings {
 // MARK: - Global settings
 
 class SCSHGlobalBaseSettings: SCSHBaseSettings {
+    static let preferredFormat: Format = .rtf
+    
     // MARK: - Properties
     /// Name of theme overriding the light/dark settings
     var theme: String?
@@ -433,7 +435,7 @@ class SCSHGlobalBaseSettings: SCSHBaseSettings {
         }
 
         if format == nil {
-            format = .html
+            format = SCSHGlobalBaseSettings.preferredFormat
         }
         
         if extra == nil {
@@ -651,7 +653,7 @@ class SCSHGlobalBaseSettings: SCSHBaseSettings {
         let defaults = UserDefaults.standard
         
         /// Output format.
-        let format = self.format ?? .html
+        let format = self.format ?? SCSHGlobalBaseSettings.preferredFormat
         let isOSThemeLight = (defaults.string(forKey: "AppleInterfaceStyle") ?? "Light") == "Light"
         
         let theme = isOSThemeLight ? lightTheme ?? "edit-xcode" : darkTheme ?? "neon"
