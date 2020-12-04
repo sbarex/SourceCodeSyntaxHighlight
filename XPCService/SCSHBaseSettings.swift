@@ -31,9 +31,28 @@ class SCSHBaseSettings {
     }
 
     /// Line numbers visibility.
-    enum LineNumbers {
+    enum LineNumbers: Equatable, Hashable {
         case hidden
         case visible(omittingWrapLines: Bool)
+        
+        static func == (lhs: LineNumbers, rhs: LineNumbers) -> Bool {
+            switch lhs {
+            case .hidden:
+                switch rhs {
+                case .hidden:
+                    return true
+                default:
+                    return false
+                }
+            case .visible(let lhs_omittingWrapLines):
+                switch rhs {
+                case .visible(let rhs_omittingWrapLines):
+                    return lhs_omittingWrapLines == rhs_omittingWrapLines
+                default:
+                    return false
+                }
+            }
+        }
     }
 
     /// Word wrap mode.
@@ -194,12 +213,12 @@ class SCSHBaseSettings {
     
     /// Output the settings to a dictionary.
     /// Only customized options are exported.
-    func toDictionary() -> [String: Any] {
+    func toDictionary() -> [String: AnyHashable] {
         guard self.isCustomized else {
             return [:]
         }
         
-        var r: [String: Any] = [:]
+        var r: [String: AnyHashable] = [:]
         
         if let lightTheme = self.lightTheme {
             r[Key.lightTheme] = lightTheme
@@ -353,6 +372,54 @@ class SCSHBaseSettings {
     func overriding(fromDictionary override: [String: Any]?) -> SCSHBaseSettings {
         preconditionFailure("This method must be overridden")
     }
+    
+    func isEqualTo(_ rhs: SCSHBaseSettings) -> Bool {
+        if self.version != rhs.version {
+            return false
+        }
+        
+        if self.lightTheme != rhs.lightTheme || self.lightBackgroundColor != rhs.lightBackgroundColor {
+            return false
+        }
+        
+        if self.darkTheme != rhs.darkTheme || self.darkBackgroundColor != rhs.darkBackgroundColor {
+            return false
+        }
+        
+        if self.lineNumbers != rhs.lineNumbers || self.wordWrap != rhs.wordWrap || self.lineLength != rhs.lineLength {
+            return false
+        }
+        if self.tabSpaces != rhs.tabSpaces {
+            return false
+        }
+        if self.extra != rhs.extra {
+            return false
+        }
+        if self.fontFamily != rhs.fontFamily || self.fontSize != rhs.fontSize {
+            return false
+        }
+        if self.css != rhs.css {
+            return false
+        }
+        if self.preprocessor != rhs.preprocessor {
+            return false
+        }
+        if self.syntax != rhs.syntax {
+            return false
+        }
+        if self.allowInteractiveActions != rhs.allowInteractiveActions {
+            return false
+        }
+        
+        return true
+    }
+}
+
+extension SCSHBaseSettings: Equatable {
+    
+    static func == (lhs: SCSHBaseSettings, rhs: SCSHBaseSettings) -> Bool {
+        return lhs.isEqualTo(rhs)
+    }
 }
 
 // MARK: - Global settings
@@ -479,8 +546,8 @@ class SCSHGlobalBaseSettings: SCSHBaseSettings {
     
     /// Output the settings to a dictionary.
     /// Only customized options are exported.
-    override func toDictionary() -> [String: Any] {
-        var r: [String: Any] = super.toDictionary()
+    override func toDictionary() -> [String: AnyHashable] {
+        var r: [String: AnyHashable] = super.toDictionary()
         
         r[Key.highlightPath] = self.highlightProgramPath
         if let format = self.format {
@@ -489,7 +556,7 @@ class SCSHGlobalBaseSettings: SCSHBaseSettings {
         
         r[Key.renderForExtension] = self.renderForExtension
         
-        var customized_formats: [String: [String: Any]] = [:]
+        var customized_formats: [String: [String: AnyHashable]] = [:]
         for (uti, settings) in self.customizedSettings {
             let d = settings.toDictionary()
             if d.count > 0 {
@@ -704,6 +771,37 @@ class SCSHGlobalBaseSettings: SCSHBaseSettings {
         
         return (theme: theme, backgroundColor: themeBackground, arguments: extraHLFlags)
     }
+    
+    override func isEqualTo(_ rhs: SCSHBaseSettings) -> Bool {
+        guard let rhs2 = rhs as? SCSHGlobalBaseSettings else {
+            return false
+        }
+        guard super.isEqualTo(rhs) else {
+            return false
+        }
+        
+        if self.theme != rhs2.theme || self.backgroundColor != rhs2.backgroundColor {
+            return false
+        }
+        if self.highlightProgramPath != rhs2.highlightProgramPath {
+            return false
+        }
+        if self.format != rhs2.format {
+            return false
+        }
+        if self.debug != rhs2.debug {
+            return false
+        }
+        if self.maxData != rhs2.maxData {
+            return false
+        }
+        
+        if self.customizedSettings != rhs2.customizedSettings {
+            return false
+        }
+        
+        return true
+    }
 }
 
 // MARK: - UTIs settings
@@ -755,7 +853,7 @@ class SCSHUTIBaseSettings: SCSHBaseSettings {
         return final_settings
     }
     
-    override func toDictionary() -> [String : Any] {
+    override func toDictionary() -> [String : AnyHashable] {
         var r = super.toDictionary()
         if let appendArguments = appendedExtra {
             r[Key.appendedExtraArguments] = appendArguments
@@ -773,5 +871,26 @@ class SCSHUTIBaseSettings: SCSHBaseSettings {
         if let v = dict?[Key.specialSettings] as? [String:String] {
             self.specialSettings = v
         }
+    }
+    
+    override func isEqualTo(_ rhs: SCSHBaseSettings) -> Bool {
+        guard let rhs2 = rhs as? SCSHUTIBaseSettings else {
+            return false
+        }
+        guard super.isEqualTo(rhs) else {
+            return false
+        }
+        
+        if self.uti != rhs2.uti {
+            return false
+        }
+        if self.appendedExtra != rhs2.appendedExtra {
+            return false
+        }
+        if self.specialSettings != rhs2.specialSettings {
+            return false
+        }
+        
+        return true
     }
 }

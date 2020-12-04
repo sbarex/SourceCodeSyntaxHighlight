@@ -1,3 +1,11 @@
+1.0.b29
+New features:
+- toolbar and touchbar for access to the inquiry and themes window.
+Bugfix:
+- Cosmetic fix for Big Sur.
+- The html output mode fail on Big Sur. It would appear that there is a bug preventing the recognition of the extension entitlements which causes webkit to fail to run. The use of the deprecated WebView temporarily bypasses the problem.
+- Closing the preferences window with unsaved settings show a confirmation popup.
+
 1.0.b28
 New features:
 - universal binary (but not yet tested on Apple Silicon M1).

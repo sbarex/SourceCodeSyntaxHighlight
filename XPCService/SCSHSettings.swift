@@ -126,8 +126,8 @@ class SCSHSettings: SCSHGlobalBaseSettings {
     }
     
     /// Output the settings to a dictionary.
-    override func toDictionary() -> [String: Any] {
-        var r: [String: Any] = super.toDictionary()
+    override func toDictionary() -> [String: AnyHashable] {
+        var r: [String: AnyHashable] = super.toDictionary()
 
         if let inlineTheme = self.inlineTheme {
             r[Key.inlineTheme] = inlineTheme.toDictionary()

@@ -19,7 +19,7 @@ To work around this problem, it is possible to use an XPC service that may have 
 
 The XPC service is executed automatically when requested by the application or the quicklook extension. After closing the quicklook preview the process is automatically closed after some seconds releasing the resources.
 
-The app and quicklook extension can preview files showing the formatted code as html, inside a WKWebView, or as rtf inside a NSTextView.
+The app and quicklook extension can preview files showing the formatted code as html, inside a WKWebView, or as rtf inside a NSTextView. **The suggested mode is `rtf`.**
 
 To use the quicklook preview you must launch the application at least once. In this way the quicklook extension will be discovered by the system. 
 After the first execution, the quicklook extension will be available among those present in the System preferences/Extensions.
@@ -40,7 +40,7 @@ Some file types are directly associated to an UTI by the system. Other formats a
 
 For this reason, this application supports many UTIs even if they are apparently redundant. 
 
-_MacOS 10.15 does **not** allow to manage some file formats including (but not limited to):_
+_**MacOS 10.15 Catalina does not** allow to manage some file formats including (but not limited to):_
 - .xml
 - .plist
 - .html
@@ -48,6 +48,8 @@ _MacOS 10.15 does **not** allow to manage some file formats including (but not l
 - .dart
 - common images (.jpg, .gif, .png)
 - ...
+On _**MacOS 11 Big Sur**, the system finally allows you to manage these previously unauthorized extensions_:
+- .plist
 
 It's likely that I didn't associate all the possible extensions managed by `highlight`.
 

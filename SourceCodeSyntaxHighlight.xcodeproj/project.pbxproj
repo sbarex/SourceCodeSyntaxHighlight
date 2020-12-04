@@ -21,15 +21,23 @@
 		8304B0BC238FBCC4007A455C /* SCSHBaseXPCService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8304B0BB238FBCC4007A455C /* SCSHBaseXPCService.swift */; };
 		8304B0BD238FBCC4007A455C /* SCSHBaseXPCService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8304B0BB238FBCC4007A455C /* SCSHBaseXPCService.swift */; };
 		8304B0BE238FF601007A455C /* Syntax Highlight XPC Render.xpc in CopyFiles */ = {isa = PBXBuildFile; fileRef = 838F465A238D813500268B4A /* Syntax Highlight XPC Render.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		8304B0BF238FFC1C007A455C /* highlight in Resources */ = {isa = PBXBuildFile; fileRef = 83C09FDA2365B9360062BF39 /* highlight */; };
-		8304B0C0238FFC1D007A455C /* colorize.sh in Resources */ = {isa = PBXBuildFile; fileRef = 8359236F2355B19F001506B6 /* colorize.sh */; };
-		8304B0C1238FFC1F007A455C /* style.css in Resources */ = {isa = PBXBuildFile; fileRef = 83A0691023672FD100C795D6 /* style.css */; };
 		83088A7F236CBBB20092180E /* libLua.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 83088A6E236CB19A0092180E /* libLua.dylib */; };
 		83088A87236CC0330092180E /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 83088A82236CC0330092180E /* .gitignore */; };
 		830D154D23780A4200D5535C /* SCSHTheme+Lua.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830D154C23780A4200D5535C /* SCSHTheme+Lua.swift */; };
 		830D15542378182800D5535C /* SCSHTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835923EB235A3A85001506B6 /* SCSHTheme.swift */; };
 		830D15552378419F00D5535C /* NSColor+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835923E9235A022C001506B6 /* NSColor+ext.swift */; };
 		830D1559237961C900D5535C /* WarningUTIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830D1558237961C900D5535C /* WarningUTIViewController.swift */; };
+		830FE12525766ACF008795EA /* defaults in CopyFiles */ = {isa = PBXBuildFile; fileRef = 83DF2E3524597EAE007DFF76 /* defaults */; };
+		830FE13125766AD3008795EA /* colorize.sh in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8359236F2355B19F001506B6 /* colorize.sh */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		830FE13725766AD6008795EA /* style.css in CopyFiles */ = {isa = PBXBuildFile; fileRef = 83A0691023672FD100C795D6 /* style.css */; };
+		830FE14825766B00008795EA /* defaults in CopyFiles */ = {isa = PBXBuildFile; fileRef = 83DF2E3524597EAE007DFF76 /* defaults */; };
+		830FE15425766B04008795EA /* colorize.sh in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8359236F2355B19F001506B6 /* colorize.sh */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		830FE15A25766B0F008795EA /* style.css in CopyFiles */ = {isa = PBXBuildFile; fileRef = 83A0691023672FD100C795D6 /* style.css */; };
+		830FE18D25766CAF008795EA /* highlight in Copy Files (highligh bin) */ = {isa = PBXBuildFile; fileRef = 830FE18125766CA2008795EA /* highlight */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		830FE1AC25766D87008795EA /* highlight in Copy Files (highligh bin) */ = {isa = PBXBuildFile; fileRef = 830FE18125766CA2008795EA /* highlight */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		830FE5A325766E10008795EA /* share in Resources */ = {isa = PBXBuildFile; fileRef = 830FE5A225766E10008795EA /* share */; };
+		830FE5A925766E12008795EA /* share in Copy Files (highligh share) */ = {isa = PBXBuildFile; fileRef = 830FE5A225766E10008795EA /* share */; };
+		830FE5B025766E26008795EA /* share in Copy Files (highligh share) */ = {isa = PBXBuildFile; fileRef = 830FE5A225766E10008795EA /* share */; };
 		8311D9C7235DE6D7006DC138 /* Data+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8311D9C6235DE6D7006DC138 /* Data+Ext.swift */; };
 		8311D9C8235DE6D7006DC138 /* Data+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8311D9C6235DE6D7006DC138 /* Data+Ext.swift */; };
 		831D5F55237F0CF1007340E7 /* CustomTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831D5F54237F0CF1007340E7 /* CustomTypeViewController.swift */; };
@@ -60,13 +68,11 @@
 		8359236223559A2B001506B6 /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8359236123559A2B001506B6 /* PreviewViewController.swift */; };
 		8359236523559A2B001506B6 /* PreviewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8359236323559A2B001506B6 /* PreviewViewController.xib */; };
 		8359236A23559A2B001506B6 /* Syntax Highlight Quicklook Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 8359235C23559A2B001506B6 /* Syntax Highlight Quicklook Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		8359237623563A81001506B6 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8359237523563A81001506B6 /* WebKit.framework */; };
 		8359238023563BDF001506B6 /* SCSHXPCServiceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8359237F23563BDF001506B6 /* SCSHXPCServiceDelegate.swift */; };
 		8359238223563BDF001506B6 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8359238123563BDF001506B6 /* main.swift */; };
 		8359238623563BDF001506B6 /* Syntax Highlight XPC Service.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = 8359237B23563BDF001506B6 /* Syntax Highlight XPC Service.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		8359238E2356436C001506B6 /* SCSHXPCServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8359237D23563BDF001506B6 /* SCSHXPCServiceProtocol.swift */; };
 		8359238F23564497001506B6 /* SCSHXPCService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8359237E23563BDF001506B6 /* SCSHXPCService.swift */; };
-		8359239523564B56001506B6 /* colorize.sh in Resources */ = {isa = PBXBuildFile; fileRef = 8359236F2355B19F001506B6 /* colorize.sh */; };
 		8359239923565889001506B6 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8359237523563A81001506B6 /* WebKit.framework */; };
 		8359239B23565890001506B6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8359239A23565890001506B6 /* Foundation.framework */; };
 		8359239D23570C52001506B6 /* SCSHError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8359239C23570C52001506B6 /* SCSHError.swift */; };
@@ -101,13 +107,11 @@
 		839CA3A22460699C0048E249 /* String+GShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839098C32379E34A005D3E7C /* String+GShell.swift */; };
 		839CA3A32460699C0048E249 /* String+GShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839098C32379E34A005D3E7C /* String+GShell.swift */; };
 		83A0691123672FD100C795D6 /* style.css in Resources */ = {isa = PBXBuildFile; fileRef = 83A0691023672FD100C795D6 /* style.css */; };
-		83A06912236730D800C795D6 /* style.css in Resources */ = {isa = PBXBuildFile; fileRef = 83A0691023672FD100C795D6 /* style.css */; };
 		83A1C601245C1CEA0045C2AC /* standard_settings.plist in Resources */ = {isa = PBXBuildFile; fileRef = 83A1C600245C1CEA0045C2AC /* standard_settings.plist */; };
 		83A1C607245C28060045C2AC /* UTITableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A1C606245C28060045C2AC /* UTITableCellView.swift */; };
 		83A1C609245C441E0045C2AC /* ThemeCollectionViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A1C608245C441E0045C2AC /* ThemeCollectionViewItem.swift */; };
 		83A1C60A245C45980045C2AC /* ThemeCollectionViewItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8390B19023815FF200EA028A /* ThemeCollectionViewItem.xib */; };
 		83BB33BA247198780022E236 /* inquiry_add_format.png in Resources */ = {isa = PBXBuildFile; fileRef = 83BB33B9247198770022E236 /* inquiry_add_format.png */; };
-		83C09FDB2365B9360062BF39 /* highlight in Resources */ = {isa = PBXBuildFile; fileRef = 83C09FDA2365B9360062BF39 /* highlight */; };
 		83C981F1238AA33C00718132 /* InfoHighlightController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C981F0238AA33C00718132 /* InfoHighlightController.swift */; };
 		83C981F3238B04CD00718132 /* custom_css.png in Copy Image help */ = {isa = PBXBuildFile; fileRef = 83C981F2238B04BC00718132 /* custom_css.png */; };
 		83C981F5238B0C6E00718132 /* theme_editor.png in Copy Image help */ = {isa = PBXBuildFile; fileRef = 83C981F4238B0C6100718132 /* theme_editor.png */; };
@@ -116,8 +120,6 @@
 		83D499982382F9BF001686CF /* ThemesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D499972382F9BF001686CF /* ThemesViewController.swift */; };
 		83DF2E2724576190007DFF76 /* ExtraSettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83DF2E2624576190007DFF76 /* ExtraSettingsView.xib */; };
 		83DF2E2D245761EC007DFF76 /* ExtraSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DF2E2C245761EC007DFF76 /* ExtraSettingsView.swift */; };
-		83DF2E3724597EB2007DFF76 /* defaults in Resources */ = {isa = PBXBuildFile; fileRef = 83DF2E3524597EAE007DFF76 /* defaults */; };
-		83DF2E3824597EB8007DFF76 /* defaults in Resources */ = {isa = PBXBuildFile; fileRef = 83DF2E3524597EAE007DFF76 /* defaults */; };
 		83EC8F592460A56800F71315 /* settings_global.png in Copy Image help */ = {isa = PBXBuildFile; fileRef = 838048F4245F71D0007AA350 /* settings_global.png */; };
 		83EC8F5E2460A56A00F71315 /* settings_appearance.png in Copy Image help */ = {isa = PBXBuildFile; fileRef = 838048FA245F72C7007AA350 /* settings_appearance.png */; };
 		83EC8F5F2460A56E00F71315 /* settings_extra.png in Copy Image help */ = {isa = PBXBuildFile; fileRef = 838048FC245F7427007AA350 /* settings_extra.png */; };
@@ -186,6 +188,74 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		830FE12425766A7B008795EA /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 7;
+			files = (
+				830FE12525766ACF008795EA /* defaults in CopyFiles */,
+				830FE13125766AD3008795EA /* colorize.sh in CopyFiles */,
+				830FE13725766AD6008795EA /* style.css in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		830FE14725766AFC008795EA /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 7;
+			files = (
+				830FE14825766B00008795EA /* defaults in CopyFiles */,
+				830FE15425766B04008795EA /* colorize.sh in CopyFiles */,
+				830FE15A25766B0F008795EA /* style.css in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		830FE17925766C51008795EA /* Copy Files (highligh bin) */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = highlight/bin;
+			dstSubfolderSpec = 7;
+			files = (
+				830FE18D25766CAF008795EA /* highlight in Copy Files (highligh bin) */,
+			);
+			name = "Copy Files (highligh bin)";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		830FE1A425766D64008795EA /* Copy Files (highligh bin) */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 12;
+			dstPath = highlight/bin;
+			dstSubfolderSpec = 7;
+			files = (
+				830FE1AC25766D87008795EA /* highlight in Copy Files (highligh bin) */,
+			);
+			name = "Copy Files (highligh bin)";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		830FE59725766DEB008795EA /* Copy Files (highligh share) */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = highlight;
+			dstSubfolderSpec = 7;
+			files = (
+				830FE5A925766E12008795EA /* share in Copy Files (highligh share) */,
+			);
+			name = "Copy Files (highligh share)";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		830FE5AF25766E21008795EA /* Copy Files (highligh share) */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = highlight;
+			dstSubfolderSpec = 7;
+			files = (
+				830FE5B025766E26008795EA /* share in Copy Files (highligh share) */,
+			);
+			name = "Copy Files (highligh share)";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		83203D9124F288D800F8CBC0 /* Embed XPC Services */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -249,6 +319,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		83A7B3762574E87100623A11 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		83DF2E31245891E2007DFF76 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -279,6 +359,8 @@
 		830D154C23780A4200D5535C /* SCSHTheme+Lua.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SCSHTheme+Lua.swift"; sourceTree = "<group>"; };
 		830D1558237961C900D5535C /* WarningUTIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarningUTIViewController.swift; sourceTree = "<group>"; };
 		830D155B23797D8000D5535C /* settings_specific_warn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings_specific_warn.png; sourceTree = "<group>"; };
+		830FE18125766CA2008795EA /* highlight */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = highlight; path = highlight/bin/highlight; sourceTree = "<group>"; };
+		830FE5A225766E10008795EA /* share */ = {isa = PBXFileReference; lastKnownFileType = folder; name = share; path = highlight/share; sourceTree = "<group>"; };
 		8311D9A3235CDAA1006DC138 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		8311D9A6235CE0A8006DC138 /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings.png; sourceTree = "<group>"; };
 		8311D9A8235CE6D7006DC138 /* extensions.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = extensions.png; sourceTree = "<group>"; };
@@ -345,12 +427,15 @@
 		839098C32379E34A005D3E7C /* String+GShell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+GShell.swift"; sourceTree = "<group>"; };
 		8390B18A23815B6500EA028A /* ThemeSelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeSelectorViewController.swift; sourceTree = "<group>"; };
 		8390B19023815FF200EA028A /* ThemeCollectionViewItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThemeCollectionViewItem.xib; sourceTree = "<group>"; };
+		83911EAE257457AD008B7D95 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = ../../../Downloads/270230/Release/WebKit.framework; sourceTree = "<group>"; };
 		83A0691023672FD100C795D6 /* style.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = style.css; sourceTree = "<group>"; };
 		83A1C600245C1CEA0045C2AC /* standard_settings.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = standard_settings.plist; sourceTree = "<group>"; };
 		83A1C606245C28060045C2AC /* UTITableCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UTITableCellView.swift; sourceTree = "<group>"; };
 		83A1C608245C441E0045C2AC /* ThemeCollectionViewItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeCollectionViewItem.swift; sourceTree = "<group>"; };
+		83A7B36D2574E87100623A11 /* WebKitLegacy.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKitLegacy.framework; path = ../../../Downloads/spostare/webkit/WebKitBuild/Debug/WebKitLegacy.framework; sourceTree = "<group>"; };
+		83A7B36E2574E87100623A11 /* WebCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebCore.framework; path = ../../../Downloads/spostare/webkit/WebKitBuild/Debug/WebCore.framework; sourceTree = "<group>"; };
+		83A7B36F2574E87100623A11 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = ../../../Downloads/spostare/webkit/WebKitBuild/Debug/WebKit.framework; sourceTree = "<group>"; };
 		83BB33B9247198770022E236 /* inquiry_add_format.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = inquiry_add_format.png; sourceTree = "<group>"; };
-		83C09FDA2365B9360062BF39 /* highlight */ = {isa = PBXFileReference; lastKnownFileType = folder; path = highlight; sourceTree = "<group>"; };
 		83C981F0238AA33C00718132 /* InfoHighlightController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoHighlightController.swift; sourceTree = "<group>"; };
 		83C981F2238B04BC00718132 /* custom_css.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = custom_css.png; sourceTree = "<group>"; };
 		83C981F4238B0C6100718132 /* theme_editor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = theme_editor.png; sourceTree = "<group>"; };
@@ -390,7 +475,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8359237623563A81001506B6 /* WebKit.framework in Frameworks */,
 				8359235F23559A2B001506B6 /* Quartz.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -448,7 +532,6 @@
 		8359233C235599F6001506B6 = {
 			isa = PBXGroup;
 			children = (
-				83FD6EED246C71C600F5BDF3 /* Syntax Highlight XPC Render.entitlements */,
 				83088A62236CB19A0092180E /* Lua.xcodeproj */,
 				8311D9A3235CDAA1006DC138 /* README.md */,
 				836D01DF2385214D00B85545 /* CHANGELOG.txt */,
@@ -513,6 +596,10 @@
 		8359235D23559A2B001506B6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				83911EAE257457AD008B7D95 /* WebKit.framework */,
+				83A7B36E2574E87100623A11 /* WebCore.framework */,
+				83A7B36F2574E87100623A11 /* WebKit.framework */,
+				83A7B36D2574E87100623A11 /* WebKitLegacy.framework */,
 				8359239A23565890001506B6 /* Foundation.framework */,
 				8359237523563A81001506B6 /* WebKit.framework */,
 				8359235E23559A2B001506B6 /* Quartz.framework */,
@@ -557,8 +644,9 @@
 		83729D19236180B3002F400C /* resources */ = {
 			isa = PBXGroup;
 			children = (
+				830FE18125766CA2008795EA /* highlight */,
+				830FE5A225766E10008795EA /* share */,
 				83DF2E3524597EAE007DFF76 /* defaults */,
-				83C09FDA2365B9360062BF39 /* highlight */,
 				8359236F2355B19F001506B6 /* colorize.sh */,
 				83A0691023672FD100C795D6 /* style.css */,
 				83A1C600245C1CEA0045C2AC /* standard_settings.plist */,
@@ -592,6 +680,7 @@
 		838F465B238D813500268B4A /* SyntaxHighlightRenderXPC */ = {
 			isa = PBXGroup;
 			children = (
+				83FD6EED246C71C600F5BDF3 /* Syntax Highlight XPC Render.entitlements */,
 				838F465D238D813500268B4A /* XPCLightRenderService.swift */,
 				838F465C238D813500268B4A /* XPCLightRenderServiceProtocol.swift */,
 				838F465E238D813500268B4A /* XPCLightRenderServiceDelegate.swift */,
@@ -675,6 +764,7 @@
 				8359235923559A2B001506B6 /* Frameworks */,
 				8359235A23559A2B001506B6 /* Resources */,
 				839098D72379FA60005D3E7C /* CopyFiles */,
+				83A7B3762574E87100623A11 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -691,7 +781,9 @@
 			buildPhases = (
 				8359237723563BDF001506B6 /* Sources */,
 				8359237823563BDF001506B6 /* Frameworks */,
-				8359237923563BDF001506B6 /* Resources */,
+				830FE14725766AFC008795EA /* CopyFiles */,
+				830FE1A425766D64008795EA /* Copy Files (highligh bin) */,
+				830FE59725766DEB008795EA /* Copy Files (highligh share) */,
 			);
 			buildRules = (
 			);
@@ -708,7 +800,9 @@
 			buildPhases = (
 				838F4656238D813500268B4A /* Sources */,
 				838F4657238D813500268B4A /* Frameworks */,
-				838F4658238D813500268B4A /* Resources */,
+				830FE12425766A7B008795EA /* CopyFiles */,
+				830FE17925766C51008795EA /* Copy Files (highligh bin) */,
+				830FE5AF25766E21008795EA /* Copy Files (highligh share) */,
 			);
 			buildRules = (
 			);
@@ -852,6 +946,7 @@
 				83592350235599F9001506B6 /* Main.storyboard in Resources */,
 				83CE519B251C82D7004950F4 /* UTIInfoView.xib in Resources */,
 				838048FD245F7427007AA350 /* settings_extra.png in Resources */,
+				830FE5A325766E10008795EA /* share in Resources */,
 				838048F9245F71D1007AA350 /* settings_global.png in Resources */,
 				838048FB245F72C8007AA350 /* settings_appearance.png in Resources */,
 				833E57472452FA5800D72715 /* PreviewView.xib in Resources */,
@@ -865,28 +960,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8359236523559A2B001506B6 /* PreviewViewController.xib in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		8359237923563BDF001506B6 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				8359239523564B56001506B6 /* colorize.sh in Resources */,
-				83A06912236730D800C795D6 /* style.css in Resources */,
-				83C09FDB2365B9360062BF39 /* highlight in Resources */,
-				83DF2E3724597EB2007DFF76 /* defaults in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		838F4658238D813500268B4A /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				83DF2E3824597EB8007DFF76 /* defaults in Resources */,
-				8304B0C0238FFC1D007A455C /* colorize.sh in Resources */,
-				8304B0BF238FFC1C007A455C /* highlight in Resources */,
-				8304B0C1238FFC1F007A455C /* style.css in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1083,18 +1156,18 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = QLSourceSyntaxGUITest/QLSourceSyntaxGUITest.entitlements;
 				CODE_SIGN_IDENTITY = "-";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = D5VMCLD3ZK;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = QLSourceSyntaxGUITest/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = sbarex.QLSourceSyntaxGUITest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -1105,9 +1178,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = QLSourceSyntaxGUITest/QLSourceSyntaxGUITest.entitlements;
 				CODE_SIGN_IDENTITY = "-";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = D5VMCLD3ZK;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = QLSourceSyntaxGUITest/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1116,6 +1189,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = sbarex.QLSourceSyntaxGUITest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
@@ -1246,7 +1320,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 28;
+				CURRENT_PROJECT_VERSION = 29;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = Application/Info.plist;
@@ -1254,7 +1328,6 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1268,9 +1341,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Application/SCSHApp.entitlements;
 				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 28;
+				CURRENT_PROJECT_VERSION = 29;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = Application/Info.plist;
@@ -1278,6 +1352,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				OTHER_CODE_SIGN_FLAGS = "--timestamp";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1291,7 +1366,7 @@
 				CODE_SIGN_ENTITLEMENTS = QLExtension/QLExtension.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 28;
+				CURRENT_PROJECT_VERSION = 29;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = QLExtension/Info.plist;
@@ -1300,7 +1375,6 @@
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
-				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.QuicklookExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1314,8 +1388,9 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = QLExtension/QLExtension.entitlements;
 				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 28;
+				CURRENT_PROJECT_VERSION = 29;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = QLExtension/Info.plist;
@@ -1324,6 +1399,7 @@
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
+				OTHER_CODE_SIGN_FLAGS = "--timestamp";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.QuicklookExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1343,7 +1419,6 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = XPCService/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
-				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.XPCService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1359,12 +1434,14 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = XPCService/XPCServiceRelease.entitlements;
 				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = XPCService/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
+				OTHER_CODE_SIGN_FLAGS = "--timestamp";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.XPCService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1378,7 +1455,7 @@
 		838F4667238D813500268B4A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = "Syntax Highlight XPC Render.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "SyntaxHighlightRenderXPC/Syntax Highlight XPC Render.entitlements";
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -1389,7 +1466,6 @@
 					"@loader_path/../../../../Frameworks",
 					"$(LD_RUNPATH_SEARCH_PATHS_$(IS_MACCATALYST)_$(_BOOL_$(SKIP_INSTALL)))",
 				);
-				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.XPCRender;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1400,8 +1476,9 @@
 		838F4668238D813500268B4A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = "Syntax Highlight XPC Render.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "SyntaxHighlightRenderXPC/Syntax Highlight XPC Render.entitlements";
 				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = "";
@@ -1411,6 +1488,7 @@
 					"@loader_path/../../../../Frameworks",
 					"$(LD_RUNPATH_SEARCH_PATHS_$(IS_MACCATALYST)_$(_BOOL_$(SKIP_INSTALL)))",
 				);
+				OTHER_CODE_SIGN_FLAGS = "--timestamp";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.XPCRender;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1425,7 +1503,6 @@
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.relaunch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

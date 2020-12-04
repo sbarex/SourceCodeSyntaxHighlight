@@ -34,7 +34,7 @@ public protocol SCSHThemePropertyProtocol: class {
     var color: String { get set }
     func toCSSStyle() -> String
     func output() -> String
-    func toDictionary() -> [String: Any]
+    func toDictionary() -> [String: AnyHashable]
     
     init(color: String)
     init?(dict: [String: Any]?)
@@ -96,7 +96,7 @@ public class SCSHTheme: NSObject, Sequence {
             self.color = dict?["color"] as? String ?? ""
         }
         
-        public func toDictionary() -> [String: Any] {
+        public func toDictionary() -> [String: AnyHashable] {
             return [
                 "color": color,
             ]
@@ -486,8 +486,8 @@ public class SCSHTheme: NSObject, Sequence {
             self.init(color: dict?["color"] as? String ?? "", isBold: dict?["bold"] as? Bool ?? false, isItalic:  dict?["italic"] as? Bool ?? false, isUnderline: dict?["underline"] as? Bool ?? false)
         }
         
-        public func toDictionary() -> [String: Any] {
-            var dict: [String: Any] = [
+        public func toDictionary() -> [String: AnyHashable] {
+            var dict: [String: AnyHashable] = [
                 "color": color,
             ]
             if isBold {
@@ -812,8 +812,8 @@ public class SCSHTheme: NSObject, Sequence {
         }
     }
     
-    public func toDictionary() -> [String: Any] {
-        let dict: [String: Any] = [
+    public func toDictionary() -> [String: AnyHashable] {
+        let dict: [String: AnyHashable] = [
             "name": name,
             "originalName": originalName,
             "desc": desc,

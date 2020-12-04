@@ -68,10 +68,10 @@ class AppearanceView: NSView {
         }
     }
     var darkTheme: SCSHTheme? {
-           didSet {
-               refreshTheme(darkTheme, button: themeDarkIcon, label: themeDarkLabel)
-           }
+       didSet {
+            refreshTheme(darkTheme, button: themeDarkIcon, label: themeDarkLabel)
        }
+   }
     
     var renderMode: SCSHBaseSettings.Format = SCSHGlobalBaseSettings.preferredFormat {
         didSet {
@@ -103,6 +103,13 @@ class AppearanceView: NSView {
     }
     
     private var isPopulating = false
+    
+    var isDirty = false
+    fileprivate var currentSettings: [String: AnyHashable] = [:] {
+        didSet {
+            isDirty = false
+        }
+    }
     
     fileprivate(set) var isGlobal: Bool = false {
         didSet {
@@ -203,9 +210,24 @@ class AppearanceView: NSView {
         setTabState(settings.tabSpaces != nil ? .on : .off)
         tabSlider.integerValue = settings.tabSpaces ?? 4
         isPopulating = false
+        
+        self.currentSettings = self.settingsToDictionary(settings)
     }
     
-    func saveSettings(on new_settings: SCSHBaseSettings) {
+    internal func settingsToDictionary(_ settings: SCSHBaseSettings) -> [String: AnyHashable] {
+        return [
+            SCSHBaseSettings.Key.lightTheme: settings.lightTheme,
+            SCSHBaseSettings.Key.darkTheme: settings.darkTheme,
+            SCSHBaseSettings.Key.customCSS: settings.css,
+            SCSHBaseSettings.Key.wordWrap: settings.wordWrap,
+            SCSHBaseSettings.Key.fontSize: settings.fontSize,
+            SCSHBaseSettings.Key.lineLength: settings.lineLength,
+            SCSHBaseSettings.Key.lineNumbers: settings.lineNumbers,
+            SCSHBaseSettings.Key.tabSpaces: settings.tabSpaces
+        ]
+    }
+    
+    func exportSettings(on new_settings: SCSHBaseSettings) {
         mergeSettings(on: new_settings)
         guard !isGlobal else {
             return
@@ -239,6 +261,8 @@ class AppearanceView: NSView {
         if tabCheckbox.state == .off {
             new_settings.tabSpaces = nil
         }
+        
+        self.isDirty = self.currentSettings != self.settingsToDictionary(new_settings)
     }
     
     func mergeSettings(on new_settings: SCSHBaseSettings) {

@@ -27,57 +27,24 @@ import OSLog
 
 import Syntax_Highlight_XPC_Render
 
-class MyDraggingView: NSTextView {
-    var trackArea: NSTrackingArea? = nil
-    var doubleClickTimer: Timer?
-    /// Url of current file.
-    var url: URL?
-    
-    override var isOpaque: Bool {
-        get {
-            return false
-        }
-    }
-    
-    override func mouseDown(with event: NSEvent) {
-        if event.clickCount > 1, let u = self.url {
-            // Open the source file by a double click on the quicklook preview window.
-            NSWorkspace.shared.open(u)
-        } else {
-            self.window?.performDrag(with: event)
-        }
-    }
-    
-    override func becomeFirstResponder() -> Bool {
-        return false
-    }
-    
-    override func draw(_ dirtyRect: NSRect) {
-        NSColor.clear.set()
-        dirtyRect.fill()
-    }
-    
-    override func updateTrackingAreas() {
-        if let trackArea = self.trackArea {
-            self.removeTrackingArea(trackArea)
-        }
-        self.trackArea = NSTrackingArea(rect: self.bounds, options: [NSTrackingArea.Options.activeAlways, NSTrackingArea.Options.cursorUpdate], owner: self, userInfo: nil)
-        self.addTrackingArea(self.trackArea!)
-    }
-    
-    override func cursorUpdate(with event: NSEvent) {
-        NSCursor.arrow.set()
-    }
-}
 
 class StaticTextView: NSTextView {
     override func mouseDown(with event: NSEvent) {
         if event.clickCount > 1, let u = (self.window?.contentViewController as? PreviewViewController)?.fileUrl {
             // Open the source file by a double click on the quicklook preview window.
             NSWorkspace.shared.open(u)
-        } else {
-            self.window?.performDrag(with: event)
         }
+        /*
+        if let parent = self.superview?.superview as? NSScrollView {
+            if let _ = parent.verticalScroller?.hitTest(NSPoint(x: event.absoluteX, y: event.absoluteY)) {
+                super.mouseDown(with: event)
+                return
+            } else if let _ = parent.horizontalScroller?.hitTest(NSPoint(x: event.absoluteX, y: event.absoluteY)) {
+                super.mouseDown(with: event)
+                return
+            }
+        }
+        */
         self.window?.performDrag(with: event)
     }
 }
@@ -120,10 +87,10 @@ class PreviewViewController: NSViewController, QLPreviewingController, WKNavigat
     override func loadView() {
         super.loadView()
         // Do any additional setup after loading the view.
-        /*
-        self.view.wantsLayer = true
-        self.view.layer?.backgroundColor = NSColor.red.cgColor
-        */
+        if #available(macOS 11, *) {
+            view.wantsLayer = true
+            view.layer?.borderWidth = 0
+        }
     }
 
     /*
@@ -150,20 +117,44 @@ class PreviewViewController: NSViewController, QLPreviewingController, WKNavigat
         
         self.fileUrl = url
         
+        os_log(
+            "Generating preview for file %{public}s",
+            log: self.log,
+            type: .info,
+            url.path
+        )
+        
         let connection = NSXPCConnection(serviceName: "org.sbarex.SourceCodeSyntaxHighlight.XPCRender")
         connection.remoteObjectInterface = NSXPCInterface(with: XPCLightRenderServiceProtocol.self)
         connection.resume()
         
         guard let service = connection.synchronousRemoteObjectProxyWithErrorHandler({ error in
             print("Received error:", error)
+            
+            let labelView = NSTextField(frame: self.view.bounds)
+            labelView.autoresizingMask = [.height, .width]
+            self.view.addSubview(labelView)
+            labelView.stringValue = "Error: \(error.localizedDescription)"
+            
             handler(SCSHError.xpcGenericError(error: error))
         }) as? XPCLightRenderServiceProtocol else {
+            let labelView = NSTextField(frame: self.view.bounds)
+            labelView.autoresizingMask = [.height, .width]
+            self.view.addSubview(labelView)
+            labelView.stringValue = "Error: invalid XPC service"
+            
             handler(SCSHError.xpcGenericError(error: nil))
             return
         }
         
         service.colorize(url: url) { (response: Data, settings: NSDictionary, error: Error?) in
             let format = settings[SCSHSettings.Key.format] as? String ?? SCSHGlobalBaseSettings.preferredFormat.rawValue
+            os_log(
+                "Output mode: %{public}s",
+                log: self.log,
+                type: .info,
+                format
+            )
             DispatchQueue.main.async {
                 /*
                 if let color = settings[SCSHSettings.Key.rtfBackgroundColor] as? String, let c = NSColor(fromHexString: color) {
@@ -173,16 +164,32 @@ class PreviewViewController: NSViewController, QLPreviewingController, WKNavigat
                     self.view.layer?.backgroundColor = NSColor.clear.cgColor
                 }
                 */
-                let previewRect = self.view.bounds.insetBy(dx: 2, dy: 2)
+                let previewRect: CGRect
+                if #available(macOS 11, *) {
+                    previewRect = self.view.bounds
+                } else {
+                    previewRect = self.view.bounds.insetBy(dx: 2, dy: 2)
+                }
                 if format == SCSHBaseSettings.Format.rtf.rawValue {
                     let textScrollView = NSScrollView(frame: previewRect)
                     textScrollView.autoresizingMask = [.height, .width]
                     textScrollView.hasHorizontalScroller = true
                     textScrollView.hasVerticalScroller = true
-                    textScrollView.borderType = .lineBorder
+                    if #available(macOS 11, *) {
+                        textScrollView.borderType = .noBorder
+                        textScrollView.backgroundColor = NSColor.clear
+                    } else {
+                        textScrollView.borderType = .lineBorder
+                    }
                     self.view.addSubview(textScrollView)
                     
-                    let textView = StaticTextView(frame: CGRect(origin: .zero, size: textScrollView.contentSize))
+                    let textView: NSTextView
+                    if #available(macOS 11, *) {
+                        textView = NSTextView(frame: CGRect(origin: .zero, size: textScrollView.contentSize))
+                    } else {
+                        // Catalina do not automatically handle double click and drag on the ql preview window.
+                        textView = StaticTextView(frame: CGRect(origin: .zero, size: textScrollView.contentSize))
+                    }
                     
                     //textView.minSize = CGSize(width: 0, height: 0)
                     textView.maxSize = CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)
@@ -192,6 +199,8 @@ class PreviewViewController: NSViewController, QLPreviewingController, WKNavigat
                     textView.textContainer?.containerSize = CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)
                     textView.textContainer?.widthTracksTextView = false
                     textView.textContainer?.heightTracksTextView = false
+                    textView.wantsLayer = true
+                    textView.layer?.borderWidth = 0
                     
                     textView.isEditable = false
                     textView.isSelectable = false
@@ -199,7 +208,7 @@ class PreviewViewController: NSViewController, QLPreviewingController, WKNavigat
                     textView.isGrammarCheckingEnabled = false
                     
                     textView.backgroundColor = .clear
-                    textView.drawsBackground = true
+                    
                     textView.allowsDocumentBackgroundColorChange = true
                     textView.usesFontPanel = false
                     textView.usesRuler = false
@@ -211,8 +220,10 @@ class PreviewViewController: NSViewController, QLPreviewingController, WKNavigat
                     // The rtf parser don't apply (why?) the page background color.
                     if let c = settings[SCSHSettings.Key.backgroundColor] as? String, let color = NSColor(fromHexString: c) {
                         textView.backgroundColor = color
+                        textView.drawsBackground = true
                     } else {
                         textView.backgroundColor = .clear
+                        textView.drawsBackground = false
                     }
                     
                     let text = NSAttributedString(rtf: response, documentAttributes: nil) ?? NSAttributedString(string: "Unable to convert data to rtf.")
@@ -226,43 +237,62 @@ class PreviewViewController: NSViewController, QLPreviewingController, WKNavigat
                     if lossy {
                         os_log(OSLogType.error, log: self.log, "Some bytes cannot be decoded and have been replaced!")
                     }
-                    
-                    let preferences = WKPreferences()
-                    preferences.javaScriptEnabled = false
-
-                    // Create a configuration for the preferences
-                    let configuration = WKWebViewConfiguration()
-                    configuration.preferences = preferences
-                    configuration.allowsAirPlayForMediaPlayback = false
-                    // configuration.userContentController.add(self, name: "jsHandler")
-                    
-                    let webView: WKWebView
-                    if let v = settings[SCSHSettings.Key.interactive] as? Bool, v {
-                        webView = WKWebView(frame: previewRect, configuration: configuration)
-                    } else {
-                        webView = StaticWebView(frame: previewRect, configuration: configuration)
-                        (webView as! StaticWebView).fileUrl = self.fileUrl
-                    }
-                    
-                    // Draw a border around the web view
-                    webView.wantsLayer = true
-                    webView.layer?.borderColor = NSColor.gridColor.cgColor
-                    webView.layer?.borderWidth = 1
-                    
-                    webView.navigationDelegate = self
-                    
-                    webView.autoresizingMask = [.height, .width]
-                    
-                    self.view.addSubview(webView)
-                    
-                    /*
-                    webView.translatesAutoresizingMaskIntoConstraints = false
-                    self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-2-[subview]-2-|", options: .directionLeadingToTrailing, metrics: nil, views: ["subview": webView]))
-                    self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[subview]-0-|", options: .directionLeadingToTrailing, metrics: nil, views: ["subview": webView]))
-                    */
-                    
-                    webView.loadHTMLString(html, baseURL: nil)
                     self.handler = handler
+                    
+                    if #available(macOS 11, *) {
+                        // On BigSur 11.0.1 the entitlements on the extesion are ignored and webkit fail to render. Old WebView works.
+                        let webView = WebView(frame: previewRect)
+                        webView.autoresizingMask = [.height, .width]
+                        webView.preferences.isJavaScriptEnabled = false
+                        webView.preferences.allowsAirPlayForMediaPlayback = false
+                        webView.preferences.arePlugInsEnabled = false
+                        
+                        if let v = settings[SCSHSettings.Key.interactive] as? Bool, v {
+                            webView.preferences.isJavaScriptEnabled = true
+                        }
+                        
+                        self.view.addSubview(webView)
+                        webView.mainFrame.loadHTMLString(html, baseURL: nil)
+                        webView.frameLoadDelegate = self
+                    } else {
+                        let preferences = WKPreferences()
+                        preferences.javaScriptEnabled = false
+                        if let v = settings[SCSHSettings.Key.interactive] as? Bool, v {
+                            preferences.javaScriptEnabled = true
+                        }
+
+                        // Create a configuration for the preferences
+                        let configuration = WKWebViewConfiguration()
+                        //configuration.preferences = preferences
+                        configuration.allowsAirPlayForMediaPlayback = false
+                        // configuration.userContentController.add(self, name: "jsHandler")
+                        
+                        let webView: WKWebView
+                        if let v = settings[SCSHSettings.Key.interactive] as? Bool, v {
+                            webView = WKWebView(frame: previewRect, configuration: configuration)
+                        } else {
+                            webView = StaticWebView(frame: previewRect, configuration: configuration)
+                            (webView as! StaticWebView).fileUrl = self.fileUrl
+                        }
+                        webView.autoresizingMask = [.height, .width]
+                        
+                        webView.wantsLayer = true
+                        if #available(macOS 11, *) {
+                            webView.layer?.borderWidth = 0
+                        } else {
+                            // Draw a border around the web view
+                            webView.layer?.borderColor = NSColor.gridColor.cgColor
+                            webView.layer?.borderWidth = 1
+                        }
+                    
+                        webView.navigationDelegate = self
+                        webView.uiDelegate = self
+                    
+
+                        webView.loadHTMLString(html, baseURL: nil)
+                        self.view.addSubview(webView)
+                    }
+                    // handler(nil) // call the handler in the delegate method after complete rendering
                 }
             }
         }
@@ -335,3 +365,23 @@ extension PreviewViewController: WKScriptMessageHandler {
     }
 }
 */
+
+extension PreviewViewController: WKUIDelegate {
+}
+
+@available(macOS, deprecated: 10.14)
+extension PreviewViewController: WebFrameLoadDelegate {
+    func webView(_ sender: WebView!, didFinishLoadFor frame: WebFrame!) {
+        if let handler = self.handler {
+            handler(nil)
+        }
+        self.handler = nil
+    }
+    func webView(_ sender: WebView!, didFailLoadWithError error: Error!, for frame: WebFrame!) {
+        if let handler = self.handler {
+            handler(error)
+        }
+        self.handler = nil
+    }
+}
+

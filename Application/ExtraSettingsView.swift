@@ -46,6 +46,13 @@ class ExtraSettingsView: NSView {
         return (NSApplication.shared.delegate as? AppDelegate)?.service
     }
     
+    var isDirty: Bool = false
+    fileprivate var currentSettings: [String: AnyHashable] = [:] {
+        didSet {
+            isDirty = false
+        }
+    }
+    
     fileprivate(set) var isGlobal: Bool = false {
         didSet {
             extraCheckbox.isHidden = isGlobal
@@ -226,6 +233,21 @@ class ExtraSettingsView: NSView {
         }
     }
     
+    internal func settingsToDictionary(_ settings: SCSHBaseSettings) -> [String: AnyHashable] {
+        var d: [String: AnyHashable] = [
+            SCSHBaseSettings.Key.extraArguments: settings.extra,
+            SCSHBaseSettings.Key.interactive: settings.allowInteractiveActions,
+            SCSHBaseSettings.Key.preprocessor: settings.preprocessor,
+            SCSHBaseSettings.Key.syntax: settings.syntax
+        ]
+        if let settings = settings as? SCSHSettings {
+            d[SCSHBaseSettings.Key.format] = settings.format
+        } else if let settings = settings as? SCSHUTIBaseSettings {
+            d[SCSHBaseSettings.Key.appendedExtraArguments] = settings.appendedExtra
+        }
+        return d
+    }
+    
     func populateFromSettings(_ settings: SCSHBaseSettings) {
         isPopulating = true
         isGlobal = settings as? SCSHSettings != nil
@@ -272,9 +294,10 @@ class ExtraSettingsView: NSView {
             }
         }
         isPopulating = false
+        self.currentSettings = self.settingsToDictionary(settings)
     }
     
-    func saveSettings(on destination_settings: SCSHBaseSettings) {
+    func exportSettings(on destination_settings: SCSHBaseSettings) {
         mergeSettings(on: destination_settings)
         guard !isGlobal else {
             return
@@ -301,6 +324,7 @@ class ExtraSettingsView: NSView {
         if appendArgumentsCheckbox.state == .off, let destination_settings = destination_settings as? SCSHUTIBaseSettings {
             destination_settings.appendedExtra = nil
         }
+        self.isDirty = self.currentSettings != self.settingsToDictionary(destination_settings)
     }
     
     func mergeSettings(on destination_settings: SCSHBaseSettings) {

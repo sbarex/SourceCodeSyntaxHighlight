@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17156" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17156"/>
-        <plugIn identifier="com.apple.WebKit2IBPlugin" version="17156"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17506"/>
+        <plugIn identifier="com.apple.WebKit2IBPlugin" version="17506"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -29,10 +29,10 @@
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
                     <progressIndicator wantsLayer="YES" maxValue="100" displayedWhenStopped="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="F2b-Bl-cxc">
-                        <rect key="frame" x="189" y="36" width="16" height="16"/>
+                        <rect key="frame" x="175" y="31" width="16" height="16"/>
                     </progressIndicator>
                     <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="RZA-c0-Yhy">
-                        <rect key="frame" x="89" y="33" width="94" height="21"/>
+                        <rect key="frame" x="89" y="28" width="80" height="21"/>
                         <segmentedCell key="cell" controlSize="small" borderStyle="border" alignment="left" segmentDistribution="fillEqually" style="rounded" trackingMode="selectOne" id="8Vb-Uc-dgh">
                             <font key="font" metaFont="message" size="11"/>
                             <segments>
@@ -45,7 +45,7 @@
                         </connections>
                     </segmentedControl>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Fni-CB-jpb">
-                        <rect key="frame" x="258" y="36" width="11" height="15"/>
+                        <rect key="frame" x="255" y="31.5" width="14.5" height="16"/>
                         <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="NSRefreshTemplate" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="C8j-60-8i5">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -55,29 +55,28 @@
                         </connections>
                     </button>
                     <wkWebView wantsLayer="YES" allowsLinkPreview="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ut3-5n-H5M" customClass="WKWebViewDrop" customModule="Syntax_Highlight" customModuleProvider="target">
-                        <rect key="frame" x="1" y="61" width="277" height="364"/>
+                        <rect key="frame" x="1" y="53" width="277" height="372"/>
                         <wkWebViewConfiguration key="configuration">
                             <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
                             <wkPreferences key="preferences"/>
                         </wkWebViewConfiguration>
                     </wkWebView>
                     <scrollView hidden="YES" appearanceType="aqua" borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" translatesAutoresizingMaskIntoConstraints="NO" id="7yH-3r-BYa">
-                        <rect key="frame" x="1" y="61" width="277" height="364"/>
+                        <rect key="frame" x="1" y="53" width="277" height="372"/>
                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="4qc-TQ-7Oy">
-                            <rect key="frame" x="0.0" y="0.0" width="277" height="364"/>
+                            <rect key="frame" x="0.0" y="0.0" width="277" height="372"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <textView editable="NO" selectable="NO" verticallyResizable="YES" allowsCharacterPickerTouchBarItem="NO" allowsDocumentBackgroundColorChange="YES" textCompletion="NO" id="ii3-9p-pL5" customClass="NSTextViewNoDrop" customModule="Syntax_Highlight" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="0.0" width="277" height="364"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="277" height="372"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                    <size key="minSize" width="277" height="364"/>
+                                    <size key="minSize" width="277" height="372"/>
                                     <size key="maxSize" width="877" height="10000000"/>
                                     <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                 </textView>
                             </subviews>
-                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                         </clipView>
                         <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="xUI-G9-rPN">
                             <rect key="frame" x="0.0" y="348" width="277" height="16"/>
@@ -89,7 +88,7 @@
                         </scroller>
                     </scrollView>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xl2-bU-Avc">
-                        <rect key="frame" x="8" y="37" width="77" height="14"/>
+                        <rect key="frame" x="8" y="32" width="77" height="14"/>
                         <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" title="Preview style:" id="jhp-KN-Z8m">
                             <font key="font" metaFont="message" size="11"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -97,10 +96,10 @@
                         </textFieldCell>
                     </textField>
                     <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="ttO-dX-T1v">
-                        <rect key="frame" x="1" y="58" width="277" height="5"/>
+                        <rect key="frame" x="1" y="50" width="277" height="5"/>
                     </box>
                     <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jvo-yT-uGU">
-                        <rect key="frame" x="7" y="7" width="265" height="22"/>
+                        <rect key="frame" x="6" y="6" width="267" height="22"/>
                         <popUpButtonCell key="cell" type="push" title="Theme colors" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="6eD-E5-ltz" id="XuG-YS-bFt">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="message" size="11"/>
@@ -148,12 +147,12 @@
                     <constraint firstAttribute="trailing" secondItem="Fni-CB-jpb" secondAttribute="trailing" constant="10" id="vJT-BO-Ern"/>
                 </constraints>
             </view>
-            <color key="borderColor" name="gridColor" catalog="System" colorSpace="catalog"/>
+            <color key="borderColor" name="tertiaryLabelColor" catalog="System" colorSpace="catalog"/>
             <color key="fillColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
             <point key="canvasLocation" x="-157.5" y="754.5"/>
         </box>
     </objects>
     <resources>
-        <image name="NSRefreshTemplate" width="11" height="15"/>
+        <image name="NSRefreshTemplate" width="14" height="16"/>
     </resources>
 </document>

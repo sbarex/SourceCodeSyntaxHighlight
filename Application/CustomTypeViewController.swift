@@ -59,7 +59,7 @@ class DropView: NSView {
         registerForDraggedTypes(acceptableTypes)
         self.wantsLayer = true
         self.layer?.cornerRadius = 12
-        self.layer?.borderColor = NSColor.gridColor.cgColor
+        self.layer?.borderColor = NSColor.tertiaryLabelColor.cgColor
         self.layer?.borderWidth = 4
     }
     

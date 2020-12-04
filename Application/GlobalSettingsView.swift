@@ -35,6 +35,13 @@ class GlobalSettingsView: NSView {
     weak var delegate: GlobalSettingsViewDelegate?
     
     var isPopulating = false
+    var isDirty = false
+    internal var currentSettings: [String: AnyHashable] = [:] {
+        didSet {
+            isDirty = false
+        }
+    }
+    
     var highlightProgramPath: String?
     
     var highlightPaths: [HighlightPath] = []
@@ -174,9 +181,19 @@ class GlobalSettingsView: NSView {
         debugButton.isEnabled = true
         
         isPopulating = false
+        
+        currentSettings = self.settingsToDictionary(settings)
     }
     
-    func saveSettings(on new_settings: SCSHSettings) {
+    internal func settingsToDictionary(_ settings: SCSHSettings) -> [String: AnyHashable] {
+        return [
+            SCSHBaseSettings.Key.highlightPath: settings.highlightProgramPath,
+            SCSHBaseSettings.Key.format: settings.format?.rawValue,
+            SCSHBaseSettings.Key.debug: settings.debug
+        ]
+    }
+    
+    func exportSettings(on new_settings: SCSHSettings) {
         new_settings.highlightProgramPath = self.highlightProgramPath ?? "-"
         new_settings.format = formatModeControl.selectedSegment == 0 ? .html : .rtf
         if self.dataSize.floatValue > 0 {
@@ -187,8 +204,11 @@ class GlobalSettingsView: NSView {
             dataSize *= 1024 // Convert KB to Bytes.
            
             new_settings.maxData = UInt64(dataSize)
+        } else {
+            new_settings.maxData = 0
         }
                
         new_settings.debug = self.debugButton.state == .on
+        self.isDirty = self.currentSettings != self.settingsToDictionary(new_settings)
      }
 }

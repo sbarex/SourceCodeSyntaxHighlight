@@ -125,6 +125,12 @@ class PreferencesViewController: NSViewController {
     
     internal var initialized = false
     
+    internal var isDirty = false {
+        didSet {
+            self.view.window?.isDocumentEdited = isDirty
+        }
+    }
+    
     var service: SCSHXPCServiceProtocol? {
         return (NSApplication.shared.delegate as? AppDelegate)?.service
     }
@@ -300,6 +306,7 @@ class PreferencesViewController: NSViewController {
         // Register the observers for theme save and delete notifications.
         NotificationCenter.default.addObserver(self, selector: #selector(onThemeDidSaved(_:)), name: .themeDidSaved, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(onThemeDidDeleted(_:)), name: .themeDidDeleted, object: nil)
+        self.isDirty = false
     }
     
     /// Handle change on search field.
@@ -490,8 +497,7 @@ class PreferencesViewController: NSViewController {
     /// Get current edited global settings, without any custom settings for UTIs.
     func getSettings() -> SCSHSettings {
         let settings = SCSHSettings(settings: self.settings ?? SCSHSettings())
-        globalSettingsView.saveSettings(on: settings)
-        
+        globalSettingsView.exportSettings(on: settings)
         return settings
     }
     
@@ -542,8 +548,11 @@ class PreferencesViewController: NSViewController {
         if let s = settings?.getCustomizedSettings(forUTI: uti) {
             utiSettings.specialSettings = s.specialSettings
         }
-        appearanceView.saveSettings(on: utiSettings)
-        extraSettingsView.saveSettings(on: utiSettings)
+        appearanceView.exportSettings(on: utiSettings)
+        extraSettingsView.exportSettings(on: utiSettings)
+        if appearanceView.isDirty || extraSettingsView.isDirty {
+            self.isDirty = true
+        }
         
         settings?.setCustomizedSettingsForUTI(utiSettings)
         
@@ -554,8 +563,11 @@ class PreferencesViewController: NSViewController {
     
     func saveGlobalSettings() {
         if let settings = self.settings {
-            appearanceView.saveSettings(on: settings)
-            extraSettingsView.saveSettings(on: settings)
+            appearanceView.exportSettings(on: settings)
+            extraSettingsView.exportSettings(on: settings)
+            if appearanceView.isDirty || extraSettingsView.isDirty {
+                self.isDirty = true
+            }
         }
     }
     
@@ -609,8 +621,11 @@ class PreferencesViewController: NSViewController {
         
         let settings = self.getSettings()
         if tableView.selectedRow == 1 {
-            appearanceView.saveSettings(on: settings)
-            extraSettingsView.saveSettings(on: settings)
+            appearanceView.exportSettings(on: settings)
+            extraSettingsView.exportSettings(on: settings)
+            if appearanceView.isDirty || extraSettingsView.isDirty {
+                self.isDirty = true
+            }
         } else if let uti = currentUTISettings?.uti {
             saveCurrentUtiSettings(uti)
         }
@@ -818,9 +833,13 @@ extension PreferencesViewController: NSTableViewDelegate {
     func tableViewSelectionIsChanging(_ notification: Notification) {
         if currentUTI == nil {
             if settings != nil {
-                // Save the appaerance settings of the global settings.
-                appearanceView.saveSettings(on: settings!)
-                extraSettingsView.saveSettings(on: settings!)
+                // Save the appearance settings of the global settings.
+                appearanceView.exportSettings(on: settings!)
+                extraSettingsView.exportSettings(on: settings!)
+                globalSettingsView.exportSettings(on: settings!)
+                if globalSettingsView.isDirty || appearanceView.isDirty || extraSettingsView.isDirty {
+                    self.isDirty = true
+                }
             }
         } else {
             saveCurrentUtiSettings(currentUTI!.uti.UTI)
@@ -983,5 +1002,40 @@ extension PreferencesViewController: GlobalSettingsViewDelegate {
                 self.extraSettingsView.availableSyntax = result
             }
         })
+    }
+}
+
+
+extension PreferencesViewController: NSTouchBarDelegate {
+    
+}
+
+// MARK: - PreferencesWindowController
+class PreferencesWindowController: NSWindowController, NSWindowDelegate {
+    func windowShouldClose(_ sender: NSWindow) -> Bool {
+        guard let contentViewController = self.contentViewController as? PreferencesViewController else {
+            return true
+        }
+        if contentViewController.isDirty {
+            let alert = NSAlert()
+            alert.alertStyle = .warning
+            alert.messageText = "There are some modified settings. \nDo you want to save them before closing?"
+            alert.addButton(withTitle: "Save").keyEquivalent = "\r"
+            alert.addButton(withTitle: "No")
+            alert.addButton(withTitle: "Cancel").keyEquivalent = "\u{1b}"
+            
+            let r = alert.runModal()
+            switch r {
+            case .OK, .alertFirstButtonReturn:
+                // Save the settings
+                contentViewController.saveAction(contentViewController);
+            case .cancel, .alertThirdButtonReturn: // Cancel
+                // Do not close the window
+                return false
+            default:
+                return true
+            }
+        }
+        return true
     }
 }
