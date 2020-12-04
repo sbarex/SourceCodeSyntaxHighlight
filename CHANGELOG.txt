@@ -1,4 +1,8 @@
 1.0.b29
+Bugfix:
+- fix bug on save settings.
+
+1.0.b29
 New features:
 - toolbar and touchbar for access to the inquiry and themes window.
 Bugfix:

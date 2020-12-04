@@ -565,7 +565,8 @@ class PreferencesViewController: NSViewController {
         if let settings = self.settings {
             appearanceView.exportSettings(on: settings)
             extraSettingsView.exportSettings(on: settings)
-            if appearanceView.isDirty || extraSettingsView.isDirty {
+            globalSettingsView.exportSettings(on: settings)
+            if globalSettingsView.isDirty || appearanceView.isDirty || extraSettingsView.isDirty {
                 self.isDirty = true
             }
         }
@@ -647,6 +648,7 @@ class PreferencesViewController: NSViewController {
             DispatchQueue.main.async {
                 self.saveButton.isEnabled = true
                 self.cancelButton.isEnabled = true
+                self.isDirty = false
                 self.view.window?.styleMask.insert(NSWindow.StyleMask.closable)
                 
                 //if (NSApplication.shared.delegate as? AppDelegate)?.documentsOpenedAtStart ?? false {
@@ -834,12 +836,7 @@ extension PreferencesViewController: NSTableViewDelegate {
         if currentUTI == nil {
             if settings != nil {
                 // Save the appearance settings of the global settings.
-                appearanceView.exportSettings(on: settings!)
-                extraSettingsView.exportSettings(on: settings!)
-                globalSettingsView.exportSettings(on: settings!)
-                if globalSettingsView.isDirty || appearanceView.isDirty || extraSettingsView.isDirty {
-                    self.isDirty = true
-                }
+                saveGlobalSettings()
             }
         } else {
             saveCurrentUtiSettings(currentUTI!.uti.UTI)
@@ -1016,10 +1013,16 @@ class PreferencesWindowController: NSWindowController, NSWindowDelegate {
         guard let contentViewController = self.contentViewController as? PreferencesViewController else {
             return true
         }
+        if contentViewController.currentUTISettings != nil {
+            contentViewController.saveCurrentUtiSettings()
+        } else {
+            contentViewController.saveGlobalSettings()
+        }
         if contentViewController.isDirty {
             let alert = NSAlert()
             alert.alertStyle = .warning
-            alert.messageText = "There are some modified settings. \nDo you want to save them before closing?"
+            alert.messageText = "There are some modified settings"
+            alert.informativeText = "Do you want to save them before closing?"
             alert.addButton(withTitle: "Save").keyEquivalent = "\r"
             alert.addButton(withTitle: "No")
             alert.addButton(withTitle: "Cancel").keyEquivalent = "\u{1b}"

@@ -329,15 +329,6 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		83DF2E31245891E2007DFF76 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = Defaults;
-			dstSubfolderSpec = 7;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		83FD6ECE246B061600F5BDF3 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -427,14 +418,10 @@
 		839098C32379E34A005D3E7C /* String+GShell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+GShell.swift"; sourceTree = "<group>"; };
 		8390B18A23815B6500EA028A /* ThemeSelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeSelectorViewController.swift; sourceTree = "<group>"; };
 		8390B19023815FF200EA028A /* ThemeCollectionViewItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThemeCollectionViewItem.xib; sourceTree = "<group>"; };
-		83911EAE257457AD008B7D95 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = ../../../Downloads/270230/Release/WebKit.framework; sourceTree = "<group>"; };
 		83A0691023672FD100C795D6 /* style.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = style.css; sourceTree = "<group>"; };
 		83A1C600245C1CEA0045C2AC /* standard_settings.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = standard_settings.plist; sourceTree = "<group>"; };
 		83A1C606245C28060045C2AC /* UTITableCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UTITableCellView.swift; sourceTree = "<group>"; };
 		83A1C608245C441E0045C2AC /* ThemeCollectionViewItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeCollectionViewItem.swift; sourceTree = "<group>"; };
-		83A7B36D2574E87100623A11 /* WebKitLegacy.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKitLegacy.framework; path = ../../../Downloads/spostare/webkit/WebKitBuild/Debug/WebKitLegacy.framework; sourceTree = "<group>"; };
-		83A7B36E2574E87100623A11 /* WebCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebCore.framework; path = ../../../Downloads/spostare/webkit/WebKitBuild/Debug/WebCore.framework; sourceTree = "<group>"; };
-		83A7B36F2574E87100623A11 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = ../../../Downloads/spostare/webkit/WebKitBuild/Debug/WebKit.framework; sourceTree = "<group>"; };
 		83BB33B9247198770022E236 /* inquiry_add_format.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = inquiry_add_format.png; sourceTree = "<group>"; };
 		83C981F0238AA33C00718132 /* InfoHighlightController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoHighlightController.swift; sourceTree = "<group>"; };
 		83C981F2238B04BC00718132 /* custom_css.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = custom_css.png; sourceTree = "<group>"; };
@@ -596,10 +583,6 @@
 		8359235D23559A2B001506B6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				83911EAE257457AD008B7D95 /* WebKit.framework */,
-				83A7B36E2574E87100623A11 /* WebCore.framework */,
-				83A7B36F2574E87100623A11 /* WebKit.framework */,
-				83A7B36D2574E87100623A11 /* WebKitLegacy.framework */,
 				8359239A23565890001506B6 /* Foundation.framework */,
 				8359237523563A81001506B6 /* WebKit.framework */,
 				8359235E23559A2B001506B6 /* Quartz.framework */,
@@ -742,7 +725,6 @@
 				8359236E23559A2B001506B6 /* Embed App Extensions */,
 				8359238A23563BDF001506B6 /* Embed XPC Services */,
 				838F164E2380B01200A13F0F /* Copy Image help */,
-				83DF2E31245891E2007DFF76 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -752,6 +734,8 @@
 				838F4664238D813500268B4A /* PBXTargetDependency */,
 			);
 			name = "Syntax Highlight";
+			packageProductDependencies = (
+			);
 			productName = QLExt;
 			productReference = 83592345235599F6001506B6 /* Syntax Highlight.app */;
 			productType = "com.apple.product-type.application";
@@ -869,6 +853,8 @@
 				Base,
 			);
 			mainGroup = 8359233C235599F6001506B6;
+			packageReferences = (
+			);
 			productRefGroup = 83592346235599F6001506B6 /* Products */;
 			projectDirPath = "";
 			projectReferences = (
@@ -1320,9 +1306,13 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 29;
+				CURRENT_PROJECT_VERSION = 30;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = Application/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1344,9 +1334,13 @@
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 29;
+				CURRENT_PROJECT_VERSION = 30;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = Application/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1366,7 +1360,7 @@
 				CODE_SIGN_ENTITLEMENTS = QLExtension/QLExtension.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 29;
+				CURRENT_PROJECT_VERSION = 30;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = QLExtension/Info.plist;
@@ -1390,7 +1384,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 29;
+				CURRENT_PROJECT_VERSION = 30;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = QLExtension/Info.plist;
