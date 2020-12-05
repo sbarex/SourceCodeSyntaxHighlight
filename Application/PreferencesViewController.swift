@@ -640,7 +640,6 @@ class PreferencesViewController: NSViewController {
         }
         
         self.view.window?.styleMask.remove(NSWindow.StyleMask.closable)
-        
         saveButton.isEnabled = false
         cancelButton.isEnabled = false
         
@@ -651,9 +650,10 @@ class PreferencesViewController: NSViewController {
                 self.isDirty = false
                 self.view.window?.styleMask.insert(NSWindow.StyleMask.closable)
                 
-                //if (NSApplication.shared.delegate as? AppDelegate)?.documentsOpenedAtStart ?? false {
-                    self.view.window?.performClose(sender)
-                //}
+                if let w = self.view.window?.windowController as? PreferencesWindowController {
+                    w.askToSave = false
+                }
+                self.view.window?.performClose(sender)
             }
         }
     }
@@ -1009,6 +1009,7 @@ extension PreferencesViewController: NSTouchBarDelegate {
 
 // MARK: - PreferencesWindowController
 class PreferencesWindowController: NSWindowController, NSWindowDelegate {
+    var askToSave = true
     func windowShouldClose(_ sender: NSWindow) -> Bool {
         guard let contentViewController = self.contentViewController as? PreferencesViewController else {
             return true
@@ -1018,7 +1019,7 @@ class PreferencesWindowController: NSWindowController, NSWindowDelegate {
         } else {
             contentViewController.saveGlobalSettings()
         }
-        if contentViewController.isDirty {
+        if self.askToSave && contentViewController.isDirty {
             let alert = NSAlert()
             alert.alertStyle = .warning
             alert.messageText = "There are some modified settings"

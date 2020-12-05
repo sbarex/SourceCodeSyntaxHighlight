@@ -25,7 +25,7 @@
 	<key>CFBundlePackageType</key>
 	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleSupportedPlatforms</key>
 	<array>
 		<string>MacOSX</string>
@@ -46,6 +46,12 @@
 	<true/>
 	<key>NSSupportsSuddenTermination</key>
 	<true/>
+	<key>SUFeedURL</key>
+	<string>https://sbarex.github.io/SourceCodeSyntaxHighlight/appcast.xml</string>
+	<key>SUPublicEDKey</key>
+	<string>J+ikFQXeR6eaUV0jvyfZAJKeYh+9UKGJuD/kJSIXnZk=</string>
+	<key>SUScheduledCheckInterval</key>
+	<integer>604800</integer>
 	<key>UTExportedTypeDeclarations</key>
 	<array>
 		<dict>

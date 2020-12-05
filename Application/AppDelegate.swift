@@ -135,7 +135,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             } else {
                 let alert = NSAlert()
                 alert.window.title = "Attention"
-                alert.messageText = "The application support folder don't exists."
+                alert.messageText = "Application support folder does not exist"
+                alert.informativeText = "You probably haven't created any custom themes or style sheets yet."
                 alert.addButton(withTitle: "Close")
                 alert.alertStyle = .informational
                 

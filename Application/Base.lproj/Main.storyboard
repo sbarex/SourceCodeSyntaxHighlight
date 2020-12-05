@@ -25,6 +25,9 @@
                                                 <action selector="orderFrontStandardAboutPanel:" target="Ady-hI-5gd" id="Exp-CZ-Vem"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem title="Check for Updates…" id="489-Oc-30K">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
                                         <menuItem isSeparatorItem="YES" id="VOq-y0-SEH"/>
                                         <menuItem title="About highlight…" id="27U-j5-YgY">
                                             <modifierMask key="keyEquivalentModifierMask"/>
@@ -32,7 +35,7 @@
                                                 <segue destination="CEI-MK-vOQ" kind="modal" id="R9y-35-Vhk"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Open application support folder" id="TjU-KQ-wH7">
+                                        <menuItem title="Open support folder" id="TjU-KQ-wH7">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="openApplicationSupportFolder:" target="Voe-Tx-rLC" id="bD6-oR-JLw"/>
@@ -74,9 +77,9 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="File" id="bib-Uj-vzu">
                                     <items>
-                                        <menuItem title="Close" keyEquivalent="w" id="DVo-aG-piG">
+                                        <menuItem title="Save and Quit" keyEquivalent="s" id="pxN-rg-phH">
                                             <connections>
-                                                <action selector="performClose:" target="Ady-hI-5gd" id="HmO-Ls-i7Q"/>
+                                                <action selector="saveAction:" target="Ady-hI-5gd" id="5sR-k9-Yc4"/>
                                             </connections>
                                         </menuItem>
                                     </items>
@@ -870,6 +873,7 @@ DQ
                                 <viewController key="viewController" id="rXW-yy-93d">
                                     <button key="view" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5sm-SI-eJn">
                                         <rect key="frame" x="0.0" y="0.0" width="180" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="push" title="Inquiry file" bezelStyle="rounded" image="inquiry" imagePosition="leading" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="1Ag-zw-cs5">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" usesAppearanceFont="YES"/>
@@ -884,6 +888,7 @@ DQ
                                 <viewController key="viewController" id="3o6-C3-Xm4">
                                     <button key="view" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="NIj-cd-CJK">
                                         <rect key="frame" x="0.0" y="0.0" width="162" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="push" title="Themes editor" bezelStyle="rounded" image="themes" imagePosition="leading" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="fyc-jK-CqN">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" usesAppearanceFont="YES"/>
@@ -1883,10 +1888,10 @@ Gw
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <box horizontalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="7r5-6M-ONG">
-                                <rect key="frame" x="258" y="0.0" width="5" height="352"/>
+                                <rect key="frame" x="258" y="0.0" width="5" height="342"/>
                             </box>
                             <visualEffectView blendingMode="behindWindow" material="underWindowBackground" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="kpv-4y-tiy">
-                                <rect key="frame" x="0.0" y="0.0" width="260" height="352"/>
+                                <rect key="frame" x="0.0" y="0.0" width="260" height="342"/>
                                 <subviews>
                                     <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="G4d-Ud-cTN">
                                         <rect key="frame" x="0.0" y="28" width="260" height="5"/>
@@ -1976,13 +1981,13 @@ Gw
                                         </customSpacing>
                                     </stackView>
                                     <scrollView focusRingType="none" borderType="none" autohidesScrollers="YES" horizontalLineScroll="103" horizontalPageScroll="10" verticalLineScroll="103" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="niQ-bu-HDe">
-                                        <rect key="frame" x="0.0" y="31" width="260" height="321"/>
+                                        <rect key="frame" x="0.0" y="31" width="260" height="311"/>
                                         <clipView key="contentView" drawsBackground="NO" id="AxT-XV-sDg">
-                                            <rect key="frame" x="0.0" y="0.0" width="260" height="321"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="260" height="311"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="100" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="8" autosaveExpandedItems="YES" outlineTableColumn="ROQ-Ow-FIV" id="gqF-5q-802">
-                                                    <rect key="frame" x="0.0" y="0.0" width="260" height="321"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="260" height="311"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <size key="intercellSpacing" width="2" height="3"/>
                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
@@ -2098,7 +2103,7 @@ Gw
                                 </constraints>
                             </visualEffectView>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="H2K-EL-2Mr">
-                                <rect key="frame" x="405" y="184" width="56" height="16"/>
+                                <rect key="frame" x="405" y="179" width="56" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" enabled="NO" alignment="center" title="Preview" id="Txd-rC-BU1">
                                     <font key="font" usesAppearanceFont="YES"/>
                                     <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -2106,7 +2111,7 @@ Gw
                                 </textFieldCell>
                             </textField>
                             <wkWebView wantsLayer="YES" allowsLinkPreview="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EpR-xA-UXw">
-                                <rect key="frame" x="261" y="31" width="344" height="321"/>
+                                <rect key="frame" x="261" y="31" width="344" height="311"/>
                                 <wkWebViewConfiguration key="configuration" suppressesIncrementalRendering="YES">
                                     <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
                                     <wkPreferences key="preferences" javaScriptCanOpenWindowsAutomatically="NO"/>
@@ -2161,19 +2166,19 @@ Gw
                                 </customSpacing>
                             </stackView>
                             <box horizontalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="tpy-nX-jLP">
-                                <rect key="frame" x="603" y="0.0" width="5" height="352"/>
+                                <rect key="frame" x="603" y="0.0" width="5" height="342"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="1" id="mZv-AU-9VY"/>
                                 </constraints>
                             </box>
                             <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="25" horizontalPageScroll="10" verticalLineScroll="25" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZnV-SA-vVd">
-                                <rect key="frame" x="606" y="30" width="299" height="322"/>
+                                <rect key="frame" x="606" y="30" width="299" height="312"/>
                                 <clipView key="contentView" drawsBackground="NO" id="pq8-mb-WNU">
-                                    <rect key="frame" x="0.0" y="0.0" width="299" height="322"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="299" height="312"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="firstColumnOnly" selectionHighlightStyle="none" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="23" viewBased="YES" floatsGroupRows="NO" id="Kti-Pv-Clb">
-                                            <rect key="frame" x="0.0" y="0.0" width="299" height="322"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="299" height="312"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" red="0.11764705882352941" green="0.11764705882352941" blue="0.11764705882352941" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
