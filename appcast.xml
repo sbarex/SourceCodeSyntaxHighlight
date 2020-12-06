@@ -1,0 +1,25 @@
+<?xml version="1.0" standalone="yes"?>
+<rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
+    <channel>
+        <title>Syntax Highlight</title>       
+        <item>
+            <title>1.0</title>
+            <pubDate>sab, 05 dic 2020 18:58:08 +0100</pubDate>
+            <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/sbarex/SourceCodeSyntaxHighlight/releases/download/1.0.b29/Syntax.Highlight.zip" sparkle:version="29" sparkle:shortVersionString="1.0" length="11356504" type="application/octet-stream" sparkle:edSignature="SjrfX5Ibt6KfvTtvKHHEReGdqc11mm0R/dxgLZEIzNspQSrAG+9/FGR78DYzJ8u6krsgFhLnKYpNRdK+wmp5AA=="/>
+            <description><![CDATA[
+                <h2>New Features</h2>
+                <ul>
+                    <li>Toolbar and touchbar for access to the inquiry and themes window.</li>
+                </ul>
+                <h2>Bugfix</h2>
+                <ul>
+                    <li>Cosmetic fix for Big Sur.</li>
+                    <li>The html output mode fail on Big Sur. It would appear that there is a bug preventing the recognition of the extension entitlements which causes webkit to fail to run. The use of the deprecated WebView temporarily bypasses the problem.</li>
+                    <li>Closing the preferences window with unsaved settings show a confirmation popup</li>
+                </ul>
+            ]]>
+            </description>
+        </item>
+    </channel>
+</rss>
