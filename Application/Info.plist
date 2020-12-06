@@ -37,7 +37,7 @@
 	<key>LSMinimumSystemVersion</key>
 	<string>$(MACOSX_DEPLOYMENT_TARGET)</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2019 SBAREX. All rights reserved.</string>
+	<string>Copyright © 2020 SBAREX. All rights reserved.</string>
 	<key>NSMainStoryboardFile</key>
 	<string>Main</string>
 	<key>NSPrincipalClass</key>
@@ -51,7 +51,7 @@
 	<key>SUPublicEDKey</key>
 	<string>J+ikFQXeR6eaUV0jvyfZAJKeYh+9UKGJuD/kJSIXnZk=</string>
 	<key>SUScheduledCheckInterval</key>
-	<integer>604800</integer>
+	<integer>86400</integer>
 	<key>UTExportedTypeDeclarations</key>
 	<array>
 		<dict>

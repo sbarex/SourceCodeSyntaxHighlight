@@ -230,7 +230,7 @@ class SCSHBaseXPCService: NSObject {
         }
         
         let maxData: String
-        if let v = custom_settings.maxData {
+        if let v = custom_settings.maxData, v > 0 {
             maxData = "\(v)"
         } else {
             maxData = ""

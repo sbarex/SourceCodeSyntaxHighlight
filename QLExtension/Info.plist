@@ -148,6 +148,7 @@
 				<string>public.c-source</string>
 				<string>public.fortran-source</string>
 				<string>public.fortran-90-source</string>
+				<string>public.ini</string>
 				<string>public.json</string>
 				<string>public.ksh-script</string>
 				<string>public.objective-c-source</string>

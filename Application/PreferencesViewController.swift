@@ -106,6 +106,7 @@ class PreferencesViewController: NSViewController {
     /// Search field for filter the UTI list.
     @IBOutlet weak var searchField: NSSearchField!
     @IBOutlet weak var filterButton: NSButton!
+    @IBOutlet weak var extensionButton: NSButton!
             
     /// Preview view.
     @IBOutlet weak var previewView: PreviewView!
@@ -124,6 +125,15 @@ class PreferencesViewController: NSViewController {
     @IBOutlet weak var infoSettingsView: UTIInfoView!
     
     internal var initialized = false
+    
+    /// Show UTI instead of extensions.
+    var showUTI: Bool = false {
+        didSet {
+            self.extensionButton.image = NSImage(named: !showUTI ? "ext-ON" : "ext")
+            self.extensionButton.contentTintColor = !showUTI ? NSColor.controlAccentColor : NSColor.secondaryLabelColor
+            self.tableView.reloadData()
+        }
+    }
     
     internal var isDirty = false {
         didSet {
@@ -273,6 +283,8 @@ class PreferencesViewController: NSViewController {
     
     // MARK: -
     override func viewDidLoad() {
+        self.showUTI = false // Force the button refresh.
+        
         globalSettingsView.delegate = self
         appearanceView.delegate = self
         extraSettingsView.delegate = self
@@ -598,6 +610,11 @@ class PreferencesViewController: NSViewController {
         sender.contentTintColor = sender.state == .on ? NSColor.controlAccentColor : NSColor.secondaryLabelColor
     }
     
+    /// Show UTIs or extensions.
+    @IBAction func handleExtensionButton(_ sender: NSButton) {
+        self.showUTI = sender.state == .off
+    }
+    
     // MARK: -
     
     @IBAction func showHelp(_ sender: Any) {
@@ -830,7 +847,7 @@ extension PreferencesViewController: NSTableViewDataSource {
     }
 }
 
-// MARK: - NSTableViewDelegate
+// MARK: NSTableViewDelegate
 extension PreferencesViewController: NSTableViewDelegate {
     func tableViewSelectionIsChanging(_ notification: Notification) {
         if currentUTI == nil {
@@ -861,7 +878,7 @@ extension PreferencesViewController: NSTableViewDelegate {
     }
     
     func tableView(_ tableView: NSTableView, heightOfRow row: Int) -> CGFloat {
-        return row == 0 || row == 2 ? 30 : 38
+        return row == 0 || row == 2 ? 30 : 42
     }
     
     func tableView(_ tableView: NSTableView, shouldSelectRow row: Int) -> Bool {
@@ -881,17 +898,21 @@ extension PreferencesViewController: NSTableViewDelegate {
             } else if column.identifier == NSUserInterfaceItemIdentifier("Name") {
                 if row > 2 {
                     let suppressed = fileTypes[row - 3].extensions.count > 0 && fileTypes[row - 3].suppressedExtensions.count == fileTypes[row - 3].extensions.count
+                    v.textField?.stringValue = fileTypes[row - 3].description
+                    v.textField?.textColor = suppressed ? .disabledControlTextColor : .labelColor
                     if let cell = v as? UTITableCellView {
-                        v.textField?.stringValue = fileTypes[row - 3].description
-                        cell.extensionTextField.stringValue = fileTypes[row - 3].extensions.count > 0 ? "." + fileTypes[row - 3].extensions.joined(separator: ", .") : ""
+                        let extensions = fileTypes[row - 3].extensions.count > 0 ? "." + fileTypes[row - 3].extensions.joined(separator: ", .") : ""
+                        if showUTI {
+                            cell.extensionTextField.stringValue = fileTypes[row - 3].uti.UTI
+                        } else {
+                            cell.extensionTextField.stringValue = extensions
+                        }
                         cell.extensionTextField.isHidden = false
                         cell.extensionTextField.textColor = suppressed ?  .disabledControlTextColor : .labelColor
+                        cell.extensionTextField.toolTip = showUTI ? extensions : self.fileTypes[row - 3].uti.UTI
                     } else {
-                        v.textField?.stringValue = fileTypes[row - 3].fullDescription
+                        v.toolTip = self.fileTypes[row - 3].uti.UTI
                     }
-                    v.toolTip = self.fileTypes[row - 3].uti.UTI
-                    
-                    v.textField?.textColor = suppressed ? .disabledControlTextColor : .labelColor
                 } else if row == 1 {
                     v.textField?.stringValue = "Global"
                     v.textField?.textColor = .labelColor
@@ -918,6 +939,7 @@ extension PreferencesViewController: NSTabViewDelegate {
     
 }
 
+// MARK: - AppearanceViewDelegate
 extension PreferencesViewController: AppearanceViewDelegate {
     func appearance(appearanceView: AppearanceView, requestBrowserForTheme theme: SCSHTheme?, mode: ThemeStyleFilterEnum, fromView: NSView,  onComplete: @escaping (_ theme: SCSHTheme?)->Void) {
         guard let vc = self.storyboard?.instantiateController(withIdentifier:"ThemeSelector") as? ThemeSelectorViewController else {
@@ -950,12 +972,14 @@ extension PreferencesViewController: AppearanceViewDelegate {
     }
 }
 
+// MARK: ExtraSettingsViewDelegate
 extension PreferencesViewController: ExtraSettingsViewDelegate {
     func extraSettingsRequestRefreshPreview(extraSettingsView: ExtraSettingsView) {
         previewView.refresh(extraSettingsView)
     }
 }
 
+// MARK: GlobalSettingsViewDelegate
 extension PreferencesViewController: GlobalSettingsViewDelegate {
     /// Shows the about highlight window,
     func globalSettings(globalSettingsView: GlobalSettingsView, showHighlightInfoForPath path: String?) {
@@ -1002,7 +1026,7 @@ extension PreferencesViewController: GlobalSettingsViewDelegate {
     }
 }
 
-
+// MARK: - NSTouchBarDelegate
 extension PreferencesViewController: NSTouchBarDelegate {
     
 }

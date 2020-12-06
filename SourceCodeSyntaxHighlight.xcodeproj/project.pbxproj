@@ -20,7 +20,7 @@
 		8304B0B9238FA920007A455C /* SCSHError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8359239C23570C52001506B6 /* SCSHError.swift */; };
 		8304B0BC238FBCC4007A455C /* SCSHBaseXPCService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8304B0BB238FBCC4007A455C /* SCSHBaseXPCService.swift */; };
 		8304B0BD238FBCC4007A455C /* SCSHBaseXPCService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8304B0BB238FBCC4007A455C /* SCSHBaseXPCService.swift */; };
-		8304B0BE238FF601007A455C /* Syntax Highlight XPC Render.xpc in CopyFiles */ = {isa = PBXBuildFile; fileRef = 838F465A238D813500268B4A /* Syntax Highlight XPC Render.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		8304B0BE238FF601007A455C /* Syntax Highlight XPC Render.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = 838F465A238D813500268B4A /* Syntax Highlight XPC Render.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		83088A7F236CBBB20092180E /* libLua.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 83088A6E236CB19A0092180E /* libLua.dylib */; };
 		83088A87236CC0330092180E /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 83088A82236CC0330092180E /* .gitignore */; };
 		830D154D23780A4200D5535C /* SCSHTheme+Lua.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830D154C23780A4200D5535C /* SCSHTheme+Lua.swift */; };
@@ -35,7 +35,6 @@
 		830FE15A25766B0F008795EA /* style.css in CopyFiles */ = {isa = PBXBuildFile; fileRef = 83A0691023672FD100C795D6 /* style.css */; };
 		830FE18D25766CAF008795EA /* highlight in Copy Files (highligh bin) */ = {isa = PBXBuildFile; fileRef = 830FE18125766CA2008795EA /* highlight */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		830FE1AC25766D87008795EA /* highlight in Copy Files (highligh bin) */ = {isa = PBXBuildFile; fileRef = 830FE18125766CA2008795EA /* highlight */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		830FE5A325766E10008795EA /* share in Resources */ = {isa = PBXBuildFile; fileRef = 830FE5A225766E10008795EA /* share */; };
 		830FE5A925766E12008795EA /* share in Copy Files (highligh share) */ = {isa = PBXBuildFile; fileRef = 830FE5A225766E10008795EA /* share */; };
 		830FE5B025766E26008795EA /* share in Copy Files (highligh share) */ = {isa = PBXBuildFile; fileRef = 830FE5A225766E10008795EA /* share */; };
 		8311D9C7235DE6D7006DC138 /* Data+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8311D9C6235DE6D7006DC138 /* Data+Ext.swift */; };
@@ -102,6 +101,11 @@
 		838F465F238D813500268B4A /* XPCLightRenderServiceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838F465E238D813500268B4A /* XPCLightRenderServiceDelegate.swift */; };
 		838F4661238D813500268B4A /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838F4660238D813500268B4A /* main.swift */; };
 		8390B18B23815B6500EA028A /* ThemeSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8390B18A23815B6500EA028A /* ThemeSelectorViewController.swift */; };
+		8396DF38257C4203005D6489 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8396DF2B257C41E3005D6489 /* Sparkle.framework */; };
+		8396DF39257C4203005D6489 /* Sparkle.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8396DF2B257C41E3005D6489 /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		8396DF3B257C420D005D6489 /* org.sparkle-project.InstallerConnection.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = 8396DF29257C41E2005D6489 /* org.sparkle-project.InstallerConnection.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		8396DF3C257C420D005D6489 /* org.sparkle-project.InstallerLauncher.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = 8396DF28257C41E2005D6489 /* org.sparkle-project.InstallerLauncher.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		8396DF3D257C420D005D6489 /* org.sparkle-project.InstallerStatus.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = 8396DF2A257C41E3005D6489 /* org.sparkle-project.InstallerStatus.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		839CA3A02460699B0048E249 /* String+GShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839098C32379E34A005D3E7C /* String+GShell.swift */; };
 		839CA3A12460699C0048E249 /* String+GShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839098C32379E34A005D3E7C /* String+GShell.swift */; };
 		839CA3A22460699C0048E249 /* String+GShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839098C32379E34A005D3E7C /* String+GShell.swift */; };
@@ -285,6 +289,9 @@
 			dstSubfolderSpec = 16;
 			files = (
 				8359238623563BDF001506B6 /* Syntax Highlight XPC Service.xpc in Embed XPC Services */,
+				8396DF3B257C420D005D6489 /* org.sparkle-project.InstallerConnection.xpc in Embed XPC Services */,
+				8396DF3C257C420D005D6489 /* org.sparkle-project.InstallerLauncher.xpc in Embed XPC Services */,
+				8396DF3D257C420D005D6489 /* org.sparkle-project.InstallerStatus.xpc in Embed XPC Services */,
 			);
 			name = "Embed XPC Services";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -309,22 +316,24 @@
 			name = "Copy Image help";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		839098D72379FA60005D3E7C /* CopyFiles */ = {
+		839098D72379FA60005D3E7C /* Embed XPC Services */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "$(CONTENTS_FOLDER_PATH)/XPCServices";
 			dstSubfolderSpec = 16;
 			files = (
-				8304B0BE238FF601007A455C /* Syntax Highlight XPC Render.xpc in CopyFiles */,
+				8304B0BE238FF601007A455C /* Syntax Highlight XPC Render.xpc in Embed XPC Services */,
 			);
+			name = "Embed XPC Services";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		83A7B3762574E87100623A11 /* Embed Frameworks */ = {
+		8396DF3A257C4203005D6489 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				8396DF39257C4203005D6489 /* Sparkle.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -418,6 +427,14 @@
 		839098C32379E34A005D3E7C /* String+GShell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+GShell.swift"; sourceTree = "<group>"; };
 		8390B18A23815B6500EA028A /* ThemeSelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeSelectorViewController.swift; sourceTree = "<group>"; };
 		8390B19023815FF200EA028A /* ThemeCollectionViewItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThemeCollectionViewItem.xib; sourceTree = "<group>"; };
+		8396DF28257C41E2005D6489 /* org.sparkle-project.InstallerLauncher.xpc */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.xpc-service"; path = "org.sparkle-project.InstallerLauncher.xpc"; sourceTree = "<group>"; };
+		8396DF29257C41E2005D6489 /* org.sparkle-project.InstallerConnection.xpc */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.xpc-service"; path = "org.sparkle-project.InstallerConnection.xpc"; sourceTree = "<group>"; };
+		8396DF2A257C41E3005D6489 /* org.sparkle-project.InstallerStatus.xpc */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.xpc-service"; path = "org.sparkle-project.InstallerStatus.xpc"; sourceTree = "<group>"; };
+		8396DF2B257C41E3005D6489 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
+		8396DF35257C41F5005D6489 /* sign_update */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = sign_update; sourceTree = "<group>"; };
+		8396DF36257C41F5005D6489 /* generate_appcast */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = generate_appcast; sourceTree = "<group>"; };
+		8396DF37257C41F5005D6489 /* generate_keys */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = generate_keys; sourceTree = "<group>"; };
+		8396DF64257C45C2005D6489 /* BinaryDelta */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = BinaryDelta; sourceTree = "<group>"; };
 		83A0691023672FD100C795D6 /* style.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = style.css; sourceTree = "<group>"; };
 		83A1C600245C1CEA0045C2AC /* standard_settings.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = standard_settings.plist; sourceTree = "<group>"; };
 		83A1C606245C28060045C2AC /* UTITableCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UTITableCellView.swift; sourceTree = "<group>"; };
@@ -455,6 +472,7 @@
 				83550720255FCFDF00A9D695 /* Quartz.framework in Frameworks */,
 				8359239B23565890001506B6 /* Foundation.framework in Frameworks */,
 				8359239923565889001506B6 /* WebKit.framework in Frameworks */,
+				8396DF38257C4203005D6489 /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -541,6 +559,7 @@
 				838F465B238D813500268B4A /* SyntaxHighlightRenderXPC */,
 				83FD6ED1246B061600F5BDF3 /* relaunch */,
 				83203D7824F2820300F8CBC0 /* QLSourceSyntaxGUITest */,
+				8396DF23257C41CB005D6489 /* Sparkle */,
 				8359235D23559A2B001506B6 /* Frameworks */,
 				83592346235599F6001506B6 /* Products */,
 			);
@@ -673,6 +692,21 @@
 			path = SyntaxHighlightRenderXPC;
 			sourceTree = "<group>";
 		};
+		8396DF23257C41CB005D6489 /* Sparkle */ = {
+			isa = PBXGroup;
+			children = (
+				8396DF64257C45C2005D6489 /* BinaryDelta */,
+				8396DF36257C41F5005D6489 /* generate_appcast */,
+				8396DF37257C41F5005D6489 /* generate_keys */,
+				8396DF35257C41F5005D6489 /* sign_update */,
+				8396DF29257C41E2005D6489 /* org.sparkle-project.InstallerConnection.xpc */,
+				8396DF28257C41E2005D6489 /* org.sparkle-project.InstallerLauncher.xpc */,
+				8396DF2A257C41E3005D6489 /* org.sparkle-project.InstallerStatus.xpc */,
+				8396DF2B257C41E3005D6489 /* Sparkle.framework */,
+			);
+			path = Sparkle;
+			sourceTree = "<group>";
+		};
 		83D499922382F9A9001686CF /* Themes */ = {
 			isa = PBXGroup;
 			children = (
@@ -725,6 +759,7 @@
 				8359236E23559A2B001506B6 /* Embed App Extensions */,
 				8359238A23563BDF001506B6 /* Embed XPC Services */,
 				838F164E2380B01200A13F0F /* Copy Image help */,
+				8396DF3A257C4203005D6489 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -747,8 +782,7 @@
 				8359235823559A2B001506B6 /* Sources */,
 				8359235923559A2B001506B6 /* Frameworks */,
 				8359235A23559A2B001506B6 /* Resources */,
-				839098D72379FA60005D3E7C /* CopyFiles */,
-				83A7B3762574E87100623A11 /* Embed Frameworks */,
+				839098D72379FA60005D3E7C /* Embed XPC Services */,
 			);
 			buildRules = (
 			);
@@ -932,7 +966,6 @@
 				83592350235599F9001506B6 /* Main.storyboard in Resources */,
 				83CE519B251C82D7004950F4 /* UTIInfoView.xib in Resources */,
 				838048FD245F7427007AA350 /* settings_extra.png in Resources */,
-				830FE5A325766E10008795EA /* share in Resources */,
 				838048F9245F71D1007AA350 /* settings_global.png in Resources */,
 				838048FB245F72C8007AA350 /* settings_appearance.png in Resources */,
 				833E57472452FA5800D72715 /* PreviewView.xib in Resources */,
@@ -1306,12 +1339,13 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 29;
+				CURRENT_PROJECT_VERSION = 30;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Sparkle",
 				);
 				INFOPLIST_FILE = Application/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1335,12 +1369,13 @@
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 29;
+				CURRENT_PROJECT_VERSION = 30;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Sparkle",
 				);
 				INFOPLIST_FILE = Application/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1362,7 +1397,7 @@
 				CODE_SIGN_ENTITLEMENTS = QLExtension/QLExtension.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 29;
+				CURRENT_PROJECT_VERSION = 30;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1391,7 +1426,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 29;
+				CURRENT_PROJECT_VERSION = 30;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (

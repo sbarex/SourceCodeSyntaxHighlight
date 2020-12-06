@@ -1,3 +1,12 @@
+1.0.b30
+New features:
+- Auto update with Sparkle framework. Auto updated works only when run the main application and not from the quicklook extension. You must have launched the application at least twice for the update checks to begin, or you can use the appropriate item in the application menu.
+- In the Preferences window, new button to show UTI instead of the extensions.
+
+Bugfix:
+- Regression fix about data limit.
+- Better layout for the list of the supported languages.
+
 1.0.b29
 New features:
 - toolbar and touchbar for access to the inquiry and themes window.

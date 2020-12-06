@@ -21,12 +21,16 @@
 //  along with SyntaxHighlight. If not, see <http://www.gnu.org/licenses/>.
 
 import Cocoa
+import Sparkle
 import Syntax_Highlight_XPC_Service
 
 typealias ExampleItem = (url: URL, title: String, uti: String)
 
 @NSApplicationMain
-class AppDelegate: NSObject, NSApplicationDelegate {
+class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
+    var userDriver: SPUStandardUserDriver?
+    var updater: SPUUpdater?
+    
     lazy var connection: NSXPCConnection = {
         let connection = NSXPCConnection(serviceName: "org.sbarex.SourceCodeSyntaxHighlight.XPCService")
         connection.remoteObjectInterface = NSXPCInterface(with: SCSHXPCServiceProtocol.self)
@@ -47,6 +51,37 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         if #available(OSX 10.12.2, *) {
             NSApplication.shared.isAutomaticCustomizeTouchBarMenuItemEnabled = true
         }
+        
+        let hostBundle = Bundle.main
+        let applicationBundle = hostBundle;
+        
+        self.userDriver = SPUStandardUserDriver(hostBundle: hostBundle, delegate: nil)
+        self.updater = SPUUpdater(hostBundle: hostBundle, applicationBundle: applicationBundle, userDriver: self.userDriver!, delegate: nil)
+        
+        do {
+            try self.updater!.start()
+        } catch {
+            print("Failed to start updater with error: \(error)")
+            
+            let alert = NSAlert()
+            alert.messageText = "Updater Error"
+            alert.informativeText = "The Updater failed to start. For detailed error information, check the Console.app log."
+            alert.addButton(withTitle: "OK")
+            alert.runModal()
+        }
+    }
+    
+    @IBAction func checkForUpdates(_ sender: Any)
+    {
+        self.updater?.checkForUpdates()
+    }
+
+    func validateMenuItem(_ menuItem: NSMenuItem) -> Bool
+    {
+        if menuItem.action == #selector(self.checkForUpdates(_:)) {
+            return self.userDriver?.canCheckForUpdates ?? false
+        }
+        return true
     }
     
     func applicationWillTerminate(_ aNotification: Notification) {
