@@ -1,7 +1,26 @@
 <?xml version="1.0" standalone="yes"?>
 <rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
     <channel>
-        <title>Syntax Highlight</title>       
+        <title>Syntax Highlight</title> 
+        <item>
+            <title>1.0</title>
+            <pubDate>dom, 06 dic 2020 11:12:25 +0100</pubDate>
+            <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/sbarex/SourceCodeSyntaxHighlight/releases/download/1.0.b30/Syntax.Highlight.zip" sparkle:version="30" sparkle:shortVersionString="1.0" length="13013958" type="application/octet-stream" sparkle:edSignature="xE2smzBDD2tZC5wLKfyXhR1j64coqvMlpEJlC3nv+qH6C3rUM0LTksFS9x33U0jlvYnoNXTMvyQKk+IsUCl8AQ=="/>
+            <description><![CDATA[
+                <h2>New Features</h2>
+                <ul>
+                    <li>Auto update with Sparkle framework. Auto updated works only when run the main application and not from the quicklook extension.</li>
+                    <li>In the Preferences window, new button to show UTI instead of the extensions.</li>
+                </ul>
+                <h2>Bugfix</h2>
+                <ul>
+                    <li>Regression fix about data limit.</li>
+                    <li>Better layout for the list of the supported languages.</li>
+                </ul>
+            ]]>
+            </description>
+        </item>
         <item>
             <title>1.0</title>
             <pubDate>sab, 05 dic 2020 18:58:08 +0100</pubDate>
