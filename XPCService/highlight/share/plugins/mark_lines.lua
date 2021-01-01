@@ -24,7 +24,10 @@ function syntaxUpdate(desc)
     local t, ll
     t={}
     ll=0
-    if(#p == 1) then return {p} end
+    if(#p == 1) then
+      t[tonumber(p)] = 1
+      return t
+    end
     while true do
       l=string.find(p,d,ll,true) -- find the next d in the string
       if l~=nil then -- if "not not" found then..
@@ -58,19 +61,71 @@ function syntaxUpdate(desc)
   end
 
   currentLineNumber=0
+  currentColumn=0
+  markStarts=true
+  linesNoIdent = {}
+
+  if OnStateChange ~= nil then
+    OrigOnStateChange = OnStateChange;
+  end
+
+  function OnStateChange(oldState, newState, token, groupID, lineno, column)
+
+    -- a bit rough using cursor movement and resetting space properties but
+    -- this kind of stuff is not intended at all in the core code
+    if (HL_OUTPUT==HL_FORMAT_TRUECOLOR or HL_OUTPUT==HL_FORMAT_XTERM256) then
+      if  linesToMark[currentLineNumber] then
+        OverrideParam("format.spacer", ansiOpenSeq.." ")
+        OverrideParam("format.maskws", "true")
+
+        if (currentColumn==0) then
+          currentColumn = column
+          if column> 1 then
+            if markStarts then
+              io.write("\x1B["..string.format("%d", 1).."C")
+            elseif not linesNoIdent[currentLineNumber] then
+              io.write("\x1B["..string.format("%d", column).."D")
+            end
+            io.write(ansiOpenSeq)
+            if markStarts then
+              io.write(string.rep(" ", column))
+              io.write("\x1B["..string.format("%d", column+1).."D")
+            elseif not linesNoIdent[currentLineNumber] then
+              io.write(string.rep(" ", column))
+            end
+            markStarts=false
+          else
+            linesNoIdent[currentLineNumber] = 1
+          end
+        end
+      else
+        markStarts=true
+        OverrideParam("format.spacer", " ")
+        OverrideParam("format.maskws", "false")
+      end
+
+    end
+
+    if OrigOnStateChange then
+        return OrigOnStateChange(oldState, newState, token, groupID, lineno, column)
+    end
+    return newState
+  end
 
   function Decorate(token, state)
-    if (linesToMark[currentLineNumber]) then
-      if HL_OUTPUT==HL_FORMAT_TRUECOLOR or HL_OUTPUT==HL_FORMAT_XTERM256 then
-          return ansiOpenSeq..token
-      end
+    if ((HL_OUTPUT==HL_FORMAT_TRUECOLOR or HL_OUTPUT==HL_FORMAT_XTERM256) and linesToMark[currentLineNumber]) then
+      return ansiOpenSeq..token
     end
   end
 
   function DecorateLineBegin(lineNumber)
     currentLineNumber = lineNumber
+    currentColumn=0
+
     if (linesToMark[currentLineNumber]) then
       if HL_OUTPUT==HL_FORMAT_TRUECOLOR or HL_OUTPUT==HL_FORMAT_XTERM256 then
+          OverrideParam("format.spacer", ansiOpenSeq.." ")
+          OverrideParam("format.maskws", "true")
           return ansiOpenSeq
       end
       if HL_OUTPUT==HL_FORMAT_RTF then
@@ -84,6 +139,8 @@ function syntaxUpdate(desc)
   function DecorateLineEnd()
     if (linesToMark[currentLineNumber]) then
       if HL_OUTPUT==HL_FORMAT_TRUECOLOR or HL_OUTPUT==HL_FORMAT_XTERM256 then
+          OverrideParam("format.spacer", " ")
+          OverrideParam("format.maskws", "false")
           return ""
       end
       if HL_OUTPUT==HL_FORMAT_RTF then
@@ -135,7 +192,7 @@ function themeUpdate(desc)
   end
 
   if (HL_OUTPUT == HL_FORMAT_TRUECOLOR) then
-    StoreValue("ansiOpenSeq", lighten(Canvas.Colour, "\x1B[48;2;%02x;%02x;%02xm"))
+    StoreValue("ansiOpenSeq", lighten(Canvas.Colour, "\x1B[48;2;%03d;%03d;%03dm"))
   elseif (HL_OUTPUT == HL_FORMAT_XTERM256) then
     --https://gist.github.com/MicahElliott/719710/8b8b962033efed8926ad8a8635b0a48630521a67
     lightCanvas = lighten(Canvas.Colour, "%03d %03d %03d")

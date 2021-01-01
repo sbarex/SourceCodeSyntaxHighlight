@@ -1,3 +1,12 @@
+1.0.b31
+New features:
+- Support for Google `kml` files (rendered as `xml`).
+- Support for `toml` language.
+- `highlight` updated to version 3.60.
+
+Bugfix:
+- Temporary fix to the webkit bug on Big Sur.
+
 1.0.b30
 New features:
 - Auto update with Sparkle framework. Auto updated works only when run the main application and not from the quicklook extension. You must have launched the application at least twice for the update checks to begin, or you can use the appropriate item in the application menu.

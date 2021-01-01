@@ -50,6 +50,7 @@
 				<string>com.dhowett.logos</string>
 				<string>com.eiffel.eiffelstudio-project-config</string>
 				<string>com.eiffel.source-code</string>
+				<string>com.google.earth.kml</string>
 				<string>com.jetbrain.source</string>
 				<string>com.macromates.textmate.scheme</string>
 				<string>com.macromates.textmate.standard-ml</string>
@@ -186,6 +187,7 @@
 				<string>dyn.ah62d4rv4ge81k3p2</string>
 				<string>dyn.ah62d4rv4ge81a8p</string>
 				<string>dyn.ah62d4rv4ge81g6pq</string>
+				<string>dyn.ah62d4rv4ge81k55rru</string>
 				<string>dyn.ah62d46dzqm0gw23stb002svvhz6g45a</string>
 			</array>
 			<key>QLSupportsSearchableItems</key>
@@ -197,6 +199,6 @@
 		<string>$(PRODUCT_MODULE_NAME).PreviewViewController</string>
 	</dict>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2019 SBAREX. All rights reserved.</string>
+	<string>Copyright © 2019-2021 SBAREX. All rights reserved.</string>
 </dict>
 </plist>

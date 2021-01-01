@@ -116,8 +116,8 @@ This section allow to customize the appearance of the rendered source files:
 ![Appearance settings window](settings_extra.png)
 
 This section allow to customize extra advanced settings:
-- *Interactive preview*: if the global output option is set to _html_ enable javascript inside the preview windows. Use only if you use some `higlight` plugins that embed js code inside the output.
-- *Arguments*: extra arguments for the `highlight` executable. Arguments that contains a white space must be protected inside queted.
+- *Interactive preview*: if the global output option is set to _html_ enable javascript inside the preview windows. Use only if you use some `highlight` plugins that embed js code inside the output.
+- *Arguments*: extra arguments for the `highlight` executable. Arguments that contains a white space must be protected inside quote.
 - *Append arguments* (only for custom UTI settings): allow to set extra arguments to be appended to the global arguments.
 - *Pre processor* (only for custom UTI settings): set a program or a shell script to preprocess the source file before the formatting. The program must output to stdout the data to be passed to `highlight`. You **must** pass the name of the source file using the `$targetHL` placeholder. With the preprocessor you can handle file format not directly supported by `highlight`.
 - *Syntax* (only for custom UTI settings): set which language must be used to recognize the source file. If not set will be used the file name extension to recognize the format. 
@@ -162,6 +162,61 @@ After cloning remember to fetch submodules:
 $ git submodule init 
 $ git submodule update
 ```
+
+Info about deconding dynamic uti identifiers:
+
+- https://gist.github.com/jtbandes/19646e7457208ae9b1ad
+- https://alastairs-place.net/blog/2012/06/06/utis-are-better-than-you-think-and-heres-why/
+- https://github.com/whomwah/qlstephen/issues/87
+- https://www.cocoanetics.com/2012/09/fun-with-uti/
+- **https://github.com/whomwah/qlstephen/issues/87#issuecomment-694528728**:
+> Ok, so according to the [source](https://alastairs-place.net/blog/2012/06/06/utis-are-better-than-you-think-and-heres-why/) I references above, I would do the following:
+> 
+>     1. Generate the dyn content, in this case I guess its `?0=6:1=sql`.
+>        Though I am not sure if the `6` is correct or if it should be `7`. Where numbers are substituted as follows:
+> 
+> 
+> ```
+> 0: UTTypeConformsTo
+> 1: public.filename-extension
+> 2: com.apple.ostype
+> 3: public.mime-type
+> 4: com.apple.nspboard-type
+> 5: public.url-scheme
+> 6: public.data
+> 7: public.text
+> 8: public.plain-text
+> 9: public.utf16-plain-text
+> A: com.apple.traditional-mac-plain-text
+> B: public.image
+> C: public.video
+> D: public.audio
+> E: public.directory
+> F: public.folder
+> ```
+> 
+>     1. Next you put this string into a custom base32 converter. E.g. [this website](https://cryptii.com/pipes/base32)
+>        Input: `?0=6:1=sql`
+>        Variant: `Custom`
+>        Alphabet: `abcdefghkmnpqrstuvwxyz0123456789`
+>        Padding: – Delete if there is any –
+> 
+>     2. The output should be `h62d4rv4ge81g6pq`. If you have any trailing `=` delete it, thats the padding.
+> 
+>     3. Prepend `dyn.a` and that is your final string.
+> 
+>     4. What you should insert in the Info.plist is `dyn.ah62d4rv4ge81g6pq`
+> 
+> 
+> ```
+> <key>LSItemContentTypes</key>
+> <array>
+>     <string>public.data</string>
+>     <string>public.content</string>
+>     <string>public.unix-executable</string>
+>     <string>dyn.ah62d4rv4ge81g6pq</string>
+> </array>
+> ```
 
 
 ## Credits

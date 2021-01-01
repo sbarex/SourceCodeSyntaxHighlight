@@ -1,0 +1,66 @@
+Description="Emacs Org-Mode"
+
+Categories = {"markup"}
+
+Keywords={
+  { Id=2,
+    Regex=[[^#\+\w+\:]],
+  },
+  { Id=2,
+    Regex=[[\:\w+\:]],
+  },
+  { Id=1,
+    Regex=[[ ^[\=\~\*]+$|^\={1,3}\s.+?\={1,3}]],
+  },
+  { Id=4,
+    Regex=[[^\*\*?\s.+]],
+  },
+  { Id=3,
+    Regex=[[ \[\[.+?\]\] ]],
+  },
+  { Id=5,
+    Regex=[[ \/\S+?\/ ]],
+  },
+  { Id=5,
+    Regex=[[ \*\S+?\* ]],
+  },
+  { Id=5,
+    Regex=[[ \_\S+?\_ ]],
+  },
+  { Id=5,
+    Regex=[[ \~\S+?\~ ]],
+  },
+  { Id=5,
+    Regex=[[ \+\S+?\+ ]],
+  },
+  { Id=5,
+    Regex=[[ \=\S+?\= ]],
+  },
+}
+
+IgnoreCase=false
+
+Comments = {
+  { Block=true,
+    Nested=false,
+    Delimiter = { [[ \#\+BEGIN_COMMENT ]], [[ \#\+END_COMMENT ]] }
+  },
+  {
+    Block=false,
+    Delimiter = { [[ ^\s*#\s ]] }
+  }
+}
+
+function OnStateChange(oldState, newState, token, kwgroup, lineNumber, column)
+  if newState==HL_KEYWORD and kwgroup==1 and (token[0]~='#' or token[0]~='~' or token[0]~='*') and lineNumber>1 then
+    AddPersistentState(lineNumber-1, kwgroup, column, #token)
+  end
+end
+
+-- add more here as needed
+NestedSections = {
+  { Lang="python", Delimiter= { [[\#\+begin_src\ python|\#\+BEGIN_SRC\ python]], [[\#\+end_src|\#\+END_SRC]] } },
+  { Lang="sh", Delimiter= { [[\#\+begin_src\ sh|\#\+BEGIN_SRC\ sh]], [[\#\+end_src|\#\+END_SRC]] } },
+  { Lang="perl", Delimiter= { [[\#\+begin_src\ pl|\#\+BEGIN_SRC\ pl]], [[\#\+end_src|\#\+END_SRC]] } },
+  { Lang="ruby", Delimiter= { [[\#\+begin_src\ ruby|\#\+BEGIN_SRC\ ruby]], [[\#\+end_src|\#\+END_SRC]] } },
+}

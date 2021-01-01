@@ -239,59 +239,52 @@ class PreviewViewController: NSViewController, QLPreviewingController, WKNavigat
                     }
                     self.handler = handler
                     
-                    if #available(macOS 11, *) {
-                        // On BigSur 11.0.1 the entitlements on the extesion are ignored and webkit fail to render. Old WebView works.
-                        let webView = WebView(frame: previewRect)
-                        webView.autoresizingMask = [.height, .width]
-                        webView.preferences.isJavaScriptEnabled = false
-                        webView.preferences.allowsAirPlayForMediaPlayback = false
-                        webView.preferences.arePlugInsEnabled = false
-                        
-                        if let v = settings[SCSHSettings.Key.interactive] as? Bool, v {
-                            webView.preferences.isJavaScriptEnabled = true
-                        }
-                        
-                        self.view.addSubview(webView)
-                        webView.mainFrame.loadHTMLString(html, baseURL: nil)
-                        webView.frameLoadDelegate = self
-                    } else {
-                        let preferences = WKPreferences()
-                        preferences.javaScriptEnabled = false
-                        if let v = settings[SCSHSettings.Key.interactive] as? Bool, v {
-                            preferences.javaScriptEnabled = true
-                        }
-
-                        // Create a configuration for the preferences
-                        let configuration = WKWebViewConfiguration()
-                        //configuration.preferences = preferences
-                        configuration.allowsAirPlayForMediaPlayback = false
-                        // configuration.userContentController.add(self, name: "jsHandler")
-                        
-                        let webView: WKWebView
-                        if let v = settings[SCSHSettings.Key.interactive] as? Bool, v {
-                            webView = WKWebView(frame: previewRect, configuration: configuration)
-                        } else {
-                            webView = StaticWebView(frame: previewRect, configuration: configuration)
-                            (webView as! StaticWebView).fileUrl = self.fileUrl
-                        }
-                        webView.autoresizingMask = [.height, .width]
-                        
-                        webView.wantsLayer = true
-                        if #available(macOS 11, *) {
-                            webView.layer?.borderWidth = 0
-                        } else {
-                            // Draw a border around the web view
-                            webView.layer?.borderColor = NSColor.gridColor.cgColor
-                            webView.layer?.borderWidth = 1
-                        }
-                    
-                        webView.navigationDelegate = self
-                        webView.uiDelegate = self
-                    
-
-                        webView.loadHTMLString(html, baseURL: nil)
-                        self.view.addSubview(webView)
+                    let preferences = WKPreferences()
+                    preferences.javaScriptEnabled = false
+                    if let v = settings[SCSHSettings.Key.interactive] as? Bool, v {
+                        preferences.javaScriptEnabled = true
                     }
+
+                    // Create a configuration for the preferences
+                    let configuration = WKWebViewConfiguration()
+                    //configuration.preferences = preferences
+                    configuration.allowsAirPlayForMediaPlayback = false
+                    // configuration.userContentController.add(self, name: "jsHandler")
+                    
+                    /* MARK: FIXME
+                    On Big Sur as far as I know, QuickLook extensions don't honor com.apple.security.network.client, so WebKit process immediately crash.
+                    To temporary fix add this entitlements exception
+                    com.apple.security.temporary-exception.mach-lookup.global-name:
+                    <key>com.apple.security.temporary-exception.mach-lookup.global-name</key>
+                    <array>
+                        <string>com.apple.nsurlsessiond</string>
+                    </array>
+                    */
+
+                    let webView: WKWebView
+                    if let v = settings[SCSHSettings.Key.interactive] as? Bool, v {
+                        webView = WKWebView(frame: previewRect, configuration: configuration)
+                    } else {
+                        webView = StaticWebView(frame: previewRect, configuration: configuration)
+                        (webView as! StaticWebView).fileUrl = self.fileUrl
+                    }
+                    webView.autoresizingMask = [.height, .width]
+                    
+                    webView.wantsLayer = true
+                    if #available(macOS 11, *) {
+                        webView.layer?.borderWidth = 0
+                    } else {
+                        // Draw a border around the web view
+                        webView.layer?.borderColor = NSColor.tertiaryLabelColor.cgColor
+                        webView.layer?.borderWidth = 1
+                    }
+                
+                    webView.navigationDelegate = self
+                    webView.uiDelegate = self
+                
+
+                    webView.loadHTMLString(html, baseURL: nil)
+                    self.view.addSubview(webView)
                     // handler(nil) // call the handler in the delegate method after complete rendering
                 }
             }
@@ -368,20 +361,3 @@ extension PreviewViewController: WKScriptMessageHandler {
 
 extension PreviewViewController: WKUIDelegate {
 }
-
-@available(macOS, deprecated: 10.14)
-extension PreviewViewController: WebFrameLoadDelegate {
-    func webView(_ sender: WebView!, didFinishLoadFor frame: WebFrame!) {
-        if let handler = self.handler {
-            handler(nil)
-        }
-        self.handler = nil
-    }
-    func webView(_ sender: WebView!, didFailLoadWithError error: Error!, for frame: WebFrame!) {
-        if let handler = self.handler {
-            handler(error)
-        }
-        self.handler = nil
-    }
-}
-

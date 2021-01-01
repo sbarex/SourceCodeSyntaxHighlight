@@ -2,6 +2,7 @@ Description="Java"
 
 Categories = {"source"}
 
+-- def is a Groovy reserved word. Added here for convenience
 Keywords={
   { Id=1,
     List={"abstract", "assert", "boolean", "break", "byte", "case", "catch", "char", "class", "const",
@@ -9,7 +10,7 @@ Keywords={
           "float", "for", "goto", "if", "implements", "import", "instanceof", "int", "interface",
           "long", "native", "new", "package", "private", "protected", "public", "return", "short",
           "static", "strictfp", "super", "switch", "synchronized", "this", "throw", "throws",
-          "transient", "try", "void", "volatile", "while", "var"},
+          "transient", "try", "void", "volatile", "while", "var", "def"},
   },
   { Id=2,
     List={"false", "true", "null"},

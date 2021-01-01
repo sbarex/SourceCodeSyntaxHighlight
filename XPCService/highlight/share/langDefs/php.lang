@@ -23,10 +23,10 @@ Keywords={
     },
   },
   { Id=2,
-    List={"int", "integer", "real", "double", "float", "string", "array", "object", "bool", "mixed", "numeric"},
+    List={"int", "integer", "real", "double", "float", "string", "array", "object", "bool", "mixed", "numeric", "void" },
   },
   { Id=3,
-    Regex=[[\$[\w\-"|'|\>]+|\$?\{.+?\}]],
+    Regex=[[\$[\w\-"|']+|\$?\{.+?\}]],
   },
   { Id=4,
     Regex=[[(\w+)\s*\(]],
@@ -44,7 +44,7 @@ IgnoreCase=true
 
 Comments={
   { Block=false,
-    Delimiter= { [[\/\/|\#]] },
+    Delimiter= { [[\/\/|\#(?!\[)]] }, -- distinct comment from PHP8 attribute
   },
   { Block=true,
     Nested=false,
@@ -52,7 +52,8 @@ Comments={
   }
 }
 
-Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\:|\&|<|>|\!|\=|\/|\*|\|\+|\-|\.|\@]]
+-- add #\[ as opening delimiter for PHP 8 attributes
+Operators=[=[ \(|\)|\[|\]|\{|\}|\,|\;|\:|\&|<|>|\!|\=|\/|\*|\|\+|\-|\.|\@|\||#\[|\? ]=]
 
 function OnStateChange(oldState, newState, token)
 

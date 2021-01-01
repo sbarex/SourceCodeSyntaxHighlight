@@ -48,7 +48,7 @@ Strings={
   Delimiter=[["""|'''|"|']],
   RawPrefix="r",
   Escape=[=[\\[ntvbrfa\\\?'"]|\\\d{3}|\\x[[:xdigit:]]{2}]=],
-  Interpolation=[[ %[%#0\-\+diouxXeEfFgGcrs]+|%\(\w+\)[sd]?|\{\w+\} ]]
+  Interpolation=[[ %[%#0\-\+diouxXeEfFgGcrs]+|%\(\w+\)[sd]?|\{[\w\.\:]+\} ]]
 }
 
 IgnoreCase=false

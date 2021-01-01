@@ -1016,7 +1016,7 @@ class ThemeTableCellView: NSTableCellView {
         // Round the image.
         imageView?.layer?.cornerRadius = 8
         imageView?.layer?.masksToBounds = true
-        imageView?.layer?.borderColor = NSColor.gridColor.cgColor
+        imageView?.layer?.borderColor = NSColor.tertiaryLabelColor.cgColor
         imageView?.layer?.borderWidth = 1
     }
 }

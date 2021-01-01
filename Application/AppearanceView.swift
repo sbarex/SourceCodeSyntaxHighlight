@@ -155,7 +155,7 @@ class AppearanceView: NSView {
             btn?.wantsLayer = true
             btn?.layer?.cornerRadius = 8
             btn?.layer?.borderWidth = 1
-            btn?.layer?.borderColor = NSColor.gridColor.cgColor
+            btn?.layer?.borderColor = NSColor.tertiaryLabelColor.cgColor
         }
     }
     
