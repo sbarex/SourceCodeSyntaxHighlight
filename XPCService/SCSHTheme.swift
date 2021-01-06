@@ -929,7 +929,7 @@ html, body {
     height: 100%;
 }
 body {
-    padding: 1em;
+    padding: 12px;
 }
 .color_code {
 \(cssFont)

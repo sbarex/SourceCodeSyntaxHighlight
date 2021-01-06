@@ -197,6 +197,8 @@ class PreviewViewController: NSViewController, QLPreviewingController, WKNavigat
                     textView.isHorizontallyResizable = true
                     textView.autoresizingMask = []
                     textView.textContainer?.containerSize = CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)
+                    textView.textContainerInset = CGSize(width: 6, height: 12)
+                    
                     textView.textContainer?.widthTracksTextView = false
                     textView.textContainer?.heightTracksTextView = false
                     textView.wantsLayer = true

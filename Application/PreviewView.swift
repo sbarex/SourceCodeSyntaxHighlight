@@ -158,6 +158,9 @@ class PreviewView: NSView {
         textView.maxSize = layoutSize
         
         textView.registerForDraggedTypes([.fileURL])
+        textView.textContainerInset = CGSize(width: 6, height: 12)
+        
+        webView.configuration.preferences.setValue(true, forKey: "developerExtrasEnabled")
        
         /*
         // Prevent automatic word wrap.
