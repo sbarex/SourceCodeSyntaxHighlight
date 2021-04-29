@@ -435,6 +435,26 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
+				<string>public.source-code</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Clojure script</string>
+			<key>UTTypeIdentifier</key>
+			<string>org.clojure.script</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>clj</string>
+					<string>cljs</string>
+					<string>cljc</string>
+					<string>edn</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
 				<string>public.item</string>
 				<string>dyn.ah62d4rv4ge80g5pbrrwu</string>
 				<string>public.data</string>
@@ -952,7 +972,6 @@
 					<string>lsp</string>
 					<string>asd</string>
 					<string>el</string>
-					<string>clj</string>
 				</array>
 			</dict>
 		</dict>

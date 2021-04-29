@@ -81,6 +81,7 @@
 				<string>org.clojure</string>
 				<string>org.cmake.makefile</string>
 				<string>org.cmake.cmake</string>
+				<string>org.clojure.script</string>
 				<string>org.cocoapods.podspec</string>
 				<string>org.codehaus.groovy-source</string>
 				<string>org.coffee.source</string>
@@ -195,6 +196,9 @@
 				<string>dyn.ah62d4rv4ge81g6pq</string>
 				<string>dyn.ah62d4rv4ge81k55rru</string>
 				<string>dyn.ah62d46dzqm0gw23stb002svvhz6g45a</string>
+				<string>dyn.ah62d4rv4ge80g5dn</string>
+				<string>dyn.ah62d4rv4ge80g5dnsq</string>
+				<string>dyn.ah62d4rv4ge80g5dnqq</string>
 			</array>
 			<key>QLSupportsSearchableItems</key>
 			<false/>

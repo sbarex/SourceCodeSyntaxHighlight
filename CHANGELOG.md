@@ -1,5 +1,10 @@
 # Changelog
 =======
+
+### 2.0.1
+New features:
+- Added support for `Clojure` files (`.clj`, `.cljc`, `.cljs`,  `.edn`) files.
+
 ### 2.0.0
 New features:
 - Completely redesigned interface.    
