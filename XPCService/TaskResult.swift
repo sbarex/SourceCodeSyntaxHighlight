@@ -54,15 +54,16 @@ class ShellTask {
     
     /// Execute a shell task
     /// - parameters:
-    ///   - script: Program to execute.
+    ///   - command: Program to execute.
+    ///   - arguments: Arguments to pass to the executable.
     ///   - env: Environment variables.
-    static func runTask(script: String, env: [String: String] = [:]) throws -> TaskResult {
+    static func runTask(command: String, arguments: [String], env: [String: String] = [:]) throws -> TaskResult {
         let task = Process()
         
         task.currentDirectoryPath = NSTemporaryDirectory()
         task.environment = env
-        task.executableURL = URL(fileURLWithPath: "/bin/sh")
-        task.arguments = ["-c", script]
+        task.executableURL = URL(fileURLWithPath: command)
+        task.arguments = arguments
         
         let pipe = Pipe()
         task.standardOutput = pipe
@@ -74,7 +75,7 @@ class ShellTask {
         do {
             try task.run()
         } catch {
-            throw SCSHError.shellError(cmd: script, exitCode: -1, stdOut: "", stdErr: "", message: error.localizedDescription)
+            throw SCSHError.shellError(cmd: command+" "+arguments.joined(separator: " "), exitCode: -1, stdOut: "", stdErr: "", message: error.localizedDescription)
         }
         
         let file = pipe.fileHandleForReading
@@ -96,5 +97,13 @@ class ShellTask {
         let r = TaskResult(output: data, error: dataErr, exitCode: Int(task.terminationStatus))
         
         return r
+    }
+        
+    /// Execute a shell task
+    /// - parameters:
+    ///   - script: Script to execute.
+    ///   - env: Environment variables.
+    static func runTask(script: String, env: [String: String] = [:]) throws -> TaskResult {
+        return try runTask(command: "/bin/sh", arguments: ["-c", script], env: env)
     }
 }

@@ -11,16 +11,13 @@ import WebKit
 import Syntax_Highlight_XPC_Service
 
 class NSTextViewNoDrop: NSTextView {
-    
     override var acceptableDragTypes: [NSPasteboard.PasteboardType] { return [.fileURL] }
     
     override func draggingEntered(_ sender: NSDraggingInfo) -> NSDragOperation {
-        print("draggingEntered1")
         return sender.draggingPasteboard.canReadObject(forClasses: [NSURL.self], options: nil) ? .copy : NSDragOperation()
     }
     
     override func draggingUpdated(_ sender: NSDraggingInfo) -> NSDragOperation {
-        print("draggingUpdated1")
         return NSDragOperation.every
     }
     
@@ -30,10 +27,7 @@ class NSTextViewNoDrop: NSTextView {
     
     override func performDragOperation(_ sender: NSDraggingInfo) -> Bool {
         if let p = self.superview?.superview?.superview?.superview?.superview as? PreviewView, let a = sender.draggingPasteboard.propertyList(forType: NSPasteboard.PasteboardType.fileURL) as? String, let url = URL(string: a) {
-            print("draggingEnded1")
-            p.exampleUrl = url.absoluteURL
-            p.examplesPopup.selectItem(at: p.examplesPopup.numberOfItems-2)
-            p.refreshPreview()
+            p.appendExample(url:  url.absoluteURL)
             return true
         } else {
             return false
@@ -46,83 +40,119 @@ class WKWebViewDrop: WKWebView {
         return true
     }
     override func performDragOperation(_ sender: NSDraggingInfo) -> Bool {
-        return false
+        if let p = self.superview as? PreviewView, let a = sender.draggingPasteboard.propertyList(forType: NSPasteboard.PasteboardType.fileURL) as? String, let url = URL(string: a) {
+            print("draggingEnded2")
+            p.appendExample(url:  url.absoluteURL)
+            return true
+        } else {
+            return false
+        }
     }
 }
 
-class PreviewView: NSView {
+class PreviewView: NSView, SettingsSplitViewElement {
     @IBOutlet var contentView: NSView!
     
     @IBOutlet weak var examplesPopup: NSPopUpButton!
     
-    @IBOutlet weak var previewThemeControl: NSSegmentedControl!
     @IBOutlet weak var refreshIndicator: NSProgressIndicator!
-    @IBOutlet weak var refreshButton: NSButton!
+    @IBOutlet weak var appearanceButton: NSButton!
     @IBOutlet weak var webView: WKWebView!
     @IBOutlet weak var scrollView: NSScrollView!
     @IBOutlet weak var textView: NSTextView!
-    @IBOutlet weak var customMenuItem: NSMenuItem!
     
-    var renderMode: SCSHBaseSettings.Format = SCSHGlobalBaseSettings.preferredFormat {
+    var isLocked = false
+    fileprivate (set) var isRefreshig = false
+    
+    
+    var isLight = (UserDefaults.standard.string(forKey: "AppleInterfaceStyle") ?? "Light") == "Light" {
         didSet {
-            webView.isHidden = renderMode == .rtf
-            scrollView.isHidden = !webView.isHidden
-            refresh(self)
+            if oldValue != isLight {
+                self.refreshPreview()
+            }
         }
     }
     
-    var isLooked = false
-    
-    var service: SCSHXPCServiceProtocol? {
-        return (NSApplication.shared.delegate as? AppDelegate)?.service
+    var settings: SettingsBase? {
+        didSet {
+            if let settings = self.settings {
+                appearanceButton.isEnabled = settings.lightThemeName != settings.darkThemeName
+                examplesPopup.isEnabled = true
+            } else {
+                appearanceButton.isEnabled = false
+                examplesPopup.isEnabled = false
+            }
+            self.refreshPreview()
+            highlightedProperty = nil
+        }
     }
     
-    var getSettings = {()->SCSHSettings? in
-        return nil
+    var highlightedProperty: SCSHTheme.PropertyName? {
+        didSet {
+            guard settings?.format == .html, !isRefreshig else {
+                return
+            }
+            if highlightedProperty == nil || highlightedProperty == .canvas || highlightedProperty == .plain {
+                webView.evaluateJavaScript("unhighlight()")
+            } else {
+                webView.evaluateJavaScript("highlight('.\(highlightedProperty!.cssClasses.last!)', true);")
+            }
+        }
     }
     
-    var examples: [ExampleInfo] = [] {
+    var render_settings: SettingsRendering {
+        let render_settings: SettingsRendering
+            
+        if let settings = self.settings as? SettingsRendering {
+            render_settings = settings
+        } else {
+            if let settings = self.settings as? SettingsFormat {
+                render_settings = SettingsRendering(globalSettings: SCSHWrapper.shared.settings ?? Settings(settings: [:]), format: settings)
+            } else if let settings = self.settings as? Settings {
+                render_settings = SettingsRendering(globalSettings: settings, format: nil)
+            } else {
+                render_settings = SettingsRendering(settings: [:])
+            }
+        
+            if isLight {
+                render_settings.themeName = render_settings.lightThemeName
+                render_settings.backgroundColor = render_settings.lightBackgroundColor
+            } else {
+                render_settings.themeName = render_settings.darkThemeName
+                render_settings.backgroundColor = render_settings.darkBackgroundColor
+            }
+            if let theme = HighlightWrapper.shared.getTheme(name: render_settings.themeName), theme.isDirty || !theme.exists {
+                // Embed theme properties if it is not saved.
+                render_settings.themeLua = theme.getLua()
+            }
+        }
+        
+        return render_settings
+    }
+    
+    var examples: [ExampleItem] = [] {
         didSet {
             examplesPopup.removeAllItems()
             
-            examplesPopup.addItem(withTitle: "Theme colors")
+            examplesPopup.addItem(withTitle: "Color schema")
             examplesPopup.menu?.addItem(NSMenuItem.separator())
+            
+            var custom = false
             for file in examples {
+                if !custom && !file.standalone {
+                    custom = true
+                    examplesPopup.menu?.addItem(NSMenuItem.separator())
+                }
                 let m = NSMenuItem(title: file.title, action: nil, keyEquivalent: "")
-                m.toolTip = file.uti
+                m.representedObject = file
+                m.toolTip = file.standalone ? file.uti : "\(file.url.path) (\(file.uti))"
                 examplesPopup.menu?.addItem(m)
             }
-            examplesPopup.isEnabled = true
+            
             examplesPopup.menu?.addItem(NSMenuItem.separator())
-            
-            let m = NSMenuItem(title: "Custom", action: nil, keyEquivalent: "")
-            if let exampleUrl = self.exampleUrl {
-                m.isHidden = false
-                m.toolTip = exampleUrl.path
-            } else {
-                m.isHidden = true
-            }
-            examplesPopup.menu?.addItem(m)
-            customMenuItem = m
-            
             examplesPopup.addItem(withTitle: "Browse…")
-        }
-    }
-    
-    var exampleUrl: URL? {
-        didSet {
-            if let url = exampleUrl {
-                customMenuItem.isHidden = false
-                customMenuItem.toolTip = url.path
-            } else {
-                customMenuItem.isHidden = true
-            }
-        }
-    }
-    
-    var themes: [SCSHTheme] = [] {
-        didSet {
-            refresh(self)
+            
+            examplesPopup.isEnabled = true
         }
     }
 
@@ -148,10 +178,8 @@ class PreviewView: NSView {
             subview.edges == view.edges
         }*/
         
-        examples = [] // Popola la lista degli esempi.
-        
-        let macosThemeLight = (UserDefaults.standard.string(forKey: "AppleInterfaceStyle") ?? "Light") == "Light"
-        previewThemeControl.setSelected(true, forSegment: macosThemeLight ? 0 : 1)
+        // Populate the example files list.
+        examples = (NSApplication.shared.delegate as? AppDelegate)?.getAvailableExamples() ?? []
         
         var layoutSize = textView.maxSize
         layoutSize.width = layoutSize.height;
@@ -160,16 +188,33 @@ class PreviewView: NSView {
         textView.registerForDraggedTypes([.fileURL])
         textView.textContainerInset = CGSize(width: 6, height: 12)
         
+        webView.configuration.userContentController.add(self, name: "nativeProcess")
         webView.configuration.preferences.setValue(true, forKey: "developerExtrasEnabled")
-       
-        /*
+    
         // Prevent automatic word wrap.
         textView.isHorizontallyResizable = true
         textView.textContainer!.widthTracksTextView    =   false
         textView.textContainer!.containerSize          =   CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)
-        */
         
         registerForDraggedTypes([NSPasteboard.PasteboardType.fileURL])
+    }
+    
+    func selectExample(forUTI uti: UTI?) {
+        defer {
+            handleExampleChanged(examplesPopup)
+        }
+        if let uti = uti {
+            for item in examplesPopup.menu?.items ?? [] {
+                guard let file = item.representedObject as? ExampleItem else {
+                    continue
+                }
+                if uti.UTI == file.uti {
+                    examplesPopup.select(item)
+                    return
+                }
+            }
+        }
+        examplesPopup.selectItem(at: 0)
     }
     
     override func draggingEntered(_ sender: NSDraggingInfo) -> NSDragOperation {
@@ -192,91 +237,85 @@ class PreviewView: NSView {
     
     /// Refresh global preview.
     func refreshPreview() {
-        guard !isLooked, let settings = self.getSettings() else {
+        guard !isLocked else {
             return
         }
         
-        let light = previewThemeControl.selectedSegment == 0
-        
-        let custom_settings = SCSHSettings(settings: settings)
-        
-        if light {
-            custom_settings.theme = custom_settings.lightTheme
-            custom_settings.backgroundColor = custom_settings.lightBackgroundColor
-        } else {
-            custom_settings.theme = custom_settings.darkTheme
-            custom_settings.backgroundColor = custom_settings.darkBackgroundColor
+        guard let _ = self.settings else {
+            webView.isHidden = true
+            scrollView.isHidden = true
+            return
         }
         
+        let render_settings = self.render_settings
+        
+        webView.isHidden = render_settings.format == .rtf
+        scrollView.isHidden = !webView.isHidden
         self.refreshIndicator.startAnimation(self)
+        self.isRefreshig = true
         
-        let example: URL?
-        if let e = exampleUrl, examplesPopup.indexOfSelectedItem == examplesPopup.numberOfItems - 2 {
-            example = e
-        } else {
-            if examplesPopup.indexOfSelectedItem == 0 || examples.count == 0 {
-                example = nil
-            } else {
-                example = self.examples[examplesPopup.indexOfSelectedItem-2].url
-            }
-        }
+        let example = (examplesPopup.selectedItem?.representedObject as? ExampleItem)?.url
         
         if let url = example {
             /// Show a file.
-            if custom_settings.format == .html {
-                webView.loadHTMLString("<html><body><p style='font-family:  -apple-system; font-size: 10pt'>Waiting…</p></body></html>", baseURL: nil)
+            if render_settings.format == .html {
+                webView.loadHTMLString("<!DOCTYPE html><html style='background-color: \(render_settings.backgroundColor)'><body style='height: 100%'    ><p style='font-family:  -apple-system; font-size: 10pt'>Waiting…</p></body></html>", baseURL: nil)
                 //DispatchQueue.global(qos: .default).async {
-                    self.service?.htmlColorize(url: url, settings: custom_settings.toDictionary() as NSDictionary) { (html, extra, error) in
-                        DispatchQueue.main.async {
-                            self.webView.loadHTMLString(html, baseURL: nil)
-                            self.refreshIndicator.stopAnimation(self)
-                        }
+                SCSHWrapper.shared.render(url: url, settings: render_settings) { (data, effective_settings, error) in
+                    self.isRefreshig = false
+                    DispatchQueue.main.async {
+                        let html = String(data: data, encoding: .utf8)!
+                        self.webView.loadHTMLString(html, baseURL: nil)
+                        self.refreshIndicator.stopAnimation(self)
                     }
+                }
                 //}
             } else {
                 textView.string = "Waiting…"
                 //DispatchQueue.global(qos: .default).async {
-                    self.service?.rtfColorize(url: url, settings: custom_settings.toDictionary() as NSDictionary) { (response, effective_settings, error) in
+                    SCSHWrapper.shared.render(url: url, settings: render_settings) { (response, effective_settings, error) in
                         let text: NSAttributedString
                         if let e = error {
                             text = NSAttributedString(string: String(data: response, encoding: .utf8) ?? e.localizedDescription)
                         } else {
                             text = NSAttributedString(rtf: response, documentAttributes: nil) ?? NSAttributedString(string: "Conversion error!")
                         }
-                        
+                        self.isRefreshig = false
                         DispatchQueue.main.async {
                             self.textView.textStorage?.setAttributedString(text)
-                            if let bg = effective_settings[SCSHSettings.Key.backgroundColor] as? String, let c = NSColor(fromHexString: bg) {
+                            self.scrollView.contentView.scroll(.zero)
+                            
+                            if let c = NSColor(fromHexString: render_settings.backgroundColor) {
                                 self.textView.backgroundColor = c
                             } else {
                                 self.textView.backgroundColor = .clear
                             }
                             self.refreshIndicator.stopAnimation(self)
                         }
-                    //}
-                }
+                    }
+                //}
             }
         } else {
             // Show standard theme preview.
-            if let t = getTheme(name: custom_settings.theme) {
-                if custom_settings.format == .html {
-                    webView.loadHTMLString(t.getHtmlExample(fontName: settings.fontFamily ?? "Menlo", fontSize: (settings.fontSize ?? 12) * 0.75), baseURL: nil)
+            if let t = HighlightWrapper.shared.getTheme(name: render_settings.themeName) {
+                if render_settings.format == .html {
+                    webView.loadHTMLString(t.getHtmlExample(fontName: render_settings.fontName, fontSize: render_settings.fontSize * 0.75, showLSPTokens: (NSApplication.shared.delegate as? AppDelegate)?.isAdvancedSettingsVisible ?? false), baseURL: nil)
                 } else {
-                    let example = t.getAttributedExample(fontName: custom_settings.fontFamily ?? "Menlo", fontSize: (custom_settings.fontSize ?? 12) * 0.75)
+                    let example = t.getAttributedExample(fontName: render_settings.fontName, fontSize: render_settings.fontSize * 0.75, showLSPTokens: (NSApplication.shared.delegate as? AppDelegate)?.isAdvancedSettingsVisible ?? false)
                     textView.textStorage?.setAttributedString(example)
-                    
-                    if let bg = custom_settings.backgroundColor, let c = NSColor(fromHexString: bg) {
+                    self.scrollView.contentView.scroll(.zero)
+                    if let c = NSColor(fromHexString: render_settings.backgroundColor) {
                         textView.backgroundColor = c
                     } else {
                         textView.backgroundColor = .clear
                     }
                 }
             } else {
-                if custom_settings.format == .html {
-                    webView.loadHTMLString("<html><body><p>Error: no theme</p></body></html>", baseURL: nil)
+                if render_settings.format == .html {
+                    webView.loadHTMLString("<!DOCTYPE html><html style='background-color: \(render_settings.backgroundColor)'><body style='height: 100%'><p style='font-family:  -apple-system; font-size: 10pt'><p>Error: no theme</p></body></html>", baseURL: nil)
                 } else {
                     textView.string = "Error: no theme."
-                    if let bg = custom_settings.backgroundColor, let c = NSColor(fromHexString: bg) {
+                    if let c = NSColor(fromHexString: render_settings.backgroundColor) {
                         textView.backgroundColor = c
                     } else {
                         textView.backgroundColor = .clear
@@ -284,6 +323,7 @@ class PreviewView: NSView {
                 }
             }
             refreshIndicator.stopAnimation(self)
+            self.isRefreshig = false
         }
     }
     
@@ -305,43 +345,46 @@ class PreviewView: NSView {
             dialog.allowsMultipleSelection = false;
             //dialog.allowedFileTypes        = ["txt"];
 
-            if (dialog.runModal() == NSApplication.ModalResponse.OK) {
-                let result = dialog.url // Pathname of the file
-                
-                if (result != nil) {
-                    exampleUrl = result!.absoluteURL
-                    self.examplesPopup.selectItem(at: examplesPopup.numberOfItems-2)
+            if dialog.runModal() == NSApplication.ModalResponse.OK {
+                if let url = dialog.url?.absoluteURL {
+                    self.appendExample(url: url)
                 }
             } else {
                 // User clicked on "Cancel"
                 return
             }
+        } else {
+            self.refreshPreview()
         }
+    }
+    
+    func appendExample(url: URL) {
+        let file = (url: url, title: url.lastPathComponent, uti: UTI(URL: url)?.UTI ?? "", standalone: false)
+        self.examples.append(file)
+        self.examplesPopup.selectItem(at: examplesPopup.numberOfItems - 3)
         self.refreshPreview()
     }
     
-    func selectExampleForUTI(_ uti: String) {
-        if let i = examples.firstIndex(where: { $0.uti == uti}) {
-            examplesPopup.selectItem(at: i+2)
-        } else {
-            examplesPopup.selectItem(at: 0)
-        }
-        refresh(self)
+    @IBAction func handleSwitchAppearance(_ sender: Any) {
+        self.isLight = !self.isLight
     }
-    
-    /// Get a theme by name.
-    /// - parameters:
-    ///   - name: Name of the theme. If has ! prefix search for a customized theme, otherwise for a standalone theme.
-    func getTheme(name: String?) -> SCSHTheme? {
-        guard name != nil else {
-            return nil
-        }
-        if name!.hasPrefix("!") {
-            var n = name!
-            n.remove(at: n.startIndex)
-            return themes.first(where: { !$0.isStandalone && $0.name == n })
-        } else {
-            return themes.first(where: { $0.isStandalone && $0.name == name! })
+}
+
+extension PreviewView: WKScriptMessageHandler {
+    func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+        // print(message.name) // prints nativeProcess string
+        if let message = message.body as? [String: AnyHashable], let name = message["name"] as? String {
+            if name == "select-theme-token", let css = message["token-class"] as? String, let property = SCSHTheme.PropertyName(className: css) {
+                self.themeEditView?.selectProperty(property)
+            } else if name == "domready" && self.highlightedProperty != nil && self.highlightedProperty != .canvas && self.highlightedProperty != .plain {
+                DispatchQueue.main.async {
+                    self.webView.evaluateJavaScript("highlight('.\(self.highlightedProperty!.cssClasses.last!)', true);")
+                }
+            }
         }
     }
+}
+
+class PreviewViewController: NSViewController {
+    @IBOutlet weak var previewView: PreviewView!
 }

@@ -2,19 +2,21 @@
 <head>
     <title>Syntax Highlight Help</title>
     <meta charset="UTF-8">
+    <meta name="AppleTitle" content="Syntax Highlight Help"/>
     <meta name="description" content="Custom style sheet">
     <link rel="stylesheet" type="text/css" href="../css/main.css" />
+    <meta name="robots" content="index, anchors" /> 
 </head>
 <body>
-    <div class="header"><a href="help:anchor=SyntaxHighlight_INDEX bookID=org.sbarex.SourceCodeSyntaxHighlight.help">index</a></div>
+    <div class="header"><a href="general.html">index</a></div>
     
     <a name="SyntaxHighlight_CUSTOMCSS"></a>
-    <h1>Custom style sheet</h1>
-    <p>When output mode is <code>html</code> you can provide a custom style sheet code with which you can customize the formatted output. </p>
+    <h1>Custom CSS style sheet</h1>
+    <p>When the rendering engine is <code>HTML</code> you can provide a custom style sheet code with which you can customize the formatted output. </p>
 
     <div><img src="images/custom_css.png" alt="Custom CSS Editor" /></div>
 
-    <p>With the custom css you can provide/override the style of all html elements.</p>
+    <p>With the custom CSS you can provide/override the style of all HTML elements.</p>
     <p>When you provide a style for a specific format, it is appended to the global style.</p>
 
     <p><code>Highlight</code> use classes to highlight the source code:</p>
@@ -23,7 +25,7 @@
         <tr><td>pre.hl</td><td>Default content</td></tr>
         <tr><td>.hl.num</td><td>Numbers</td></tr>
         <tr><td>.hl.esc</td><td>Escape</td></tr>
-        <tr><td>.hl.str</td><td>String</td></tr>
+        <tr><td>.hl.sng</td><td>String</td></tr>
         <tr><td>.hl.pps</td><td>Preprocessor</td></tr>
         <tr><td>.hl.slc</td><td>Single line comment</td></tr>
         <tr><td>.hl.com</td><td>Multi line comment</td></tr>
@@ -31,17 +33,29 @@
         <tr><td>.hl.opt</td><td>Operator</td></tr>
         <tr><td>.hl.ipl</td><td>Interpolation</td></tr>
         <tr><td>.hl.lin</td><td>Line numbers</td></tr>
-        <tr><td>.hl.kwa</td><td>Keyword 1</td></tr>
-        <tr><td>.hl.kwb</td><td>Keyword 2</td></tr>
-        <tr><td>.hl.kwc</td><td>Keyword 3</td></tr>
-        <tr><td>.hl.kwd</td><td>Keyword 4</td></tr>
-        <tr><td>.hl.kwe</td><td>Keyword 5</td></tr>
-        <tr><td>.hl.kwf</td><td>Keyword 6</td></tr>
+        
+        <tr><td>hl.kw<i>?</i></td><td>Keyword <i>n</i>, where <i>?</i> is a letter from <i>a</i> to </i>z</i> and <i>n</i> is a number from 1 to 26</td></tr>
+        
+        <tr><td>hl.hvr</td><td>LS Hover</td></tr>
+        <tr><td>hl.err</td><td>LS Syntax Error</td></tr>
+        <tr><td>hl.sta</td><td>LS Type</td></tr>
+        <tr><td>hl.stb</td><td>LS Class</td></tr>
+        <tr><td>hl.stc</td><td>LS Struct</td></tr>
+        <tr><td>hl.std</td><td>LS Interface</td></tr>
+        <tr><td>hl.ste</td><td>LS Parameter</td></tr>
+        <tr><td>hl.stf</td><td>LS Variable</td></tr>
+        <tr><td>hl.stg</td><td>LS Enum Member</td></tr>
+        <tr><td>hl.sth</td><td>LS Function</td></tr>
+        <tr><td>hl.sti</td><td>LS Method</td></tr>
+        <tr><td>hl.stj</td><td>LS Keyword</td></tr>
+        <tr><td>hl.stk</td><td>LS Number</td></tr>
+        <tr><td>hl.stl</td><td>LS Regexp</td></tr>
+        <tr><td>hl.stm</td><td>LS Operator</td></tr>
     </table>
 
     <p>Customized styles are saved in <code>~/Library/Application Support/Syntax Highlight/Styles</code>.</p>
 
-    <p>More info about highlight html output on <a href="https://gitlab.com/saalen/highlight/wikis/CSS-Themes">this page</a>.</p>
+    <p>More info about <code>highlight</code> HTML output on <a href="https://gitlab.com/saalen/highlight/wikis/CSS-Themes">this page</a>.</p>
     <br />
 </body>
 </html>

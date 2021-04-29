@@ -1,0 +1,146 @@
+!ifeq UCS 1
+CFLAGS += -DD2U_UNICODE
+!endif
+
+!ifeq UNIFILE 1
+CFLAGS += -DD2U_UNIFILE -D_O_U16TEXT=0x20000
+!endif
+
+!ifeq DEBUGMSG 1
+CFLAGS += -DDEBUG
+!endif
+
+dos2unix.obj :  $(SRCDIR)\dos2unix.c $(SRCDIR)\querycp.h $(SRCDIR)\common.h
+	$(CC) $(CFLAGS) $(SRCDIR)\dos2unix.c
+
+unix2dos.obj :  $(SRCDIR)\unix2dos.c $(SRCDIR)\querycp.h $(SRCDIR)\common.h
+	$(CC) $(CFLAGS) $(SRCDIR)\unix2dos.c
+
+querycp.obj :  $(SRCDIR)\querycp.c $(SRCDIR)\querycp.h
+	$(CC) $(CFLAGS) $(SRCDIR)\querycp.c
+
+common.obj :  $(SRCDIR)\common.c $(SRCDIR)\common.h
+	$(CC) $(CFLAGS) $(SRCDIR)\common.c
+
+wildargv.obj : $(WATCOMSRC)\wildargv.c
+	$(CC) $(CFLAGS) $(WATCOMSRC)\wildargv.c
+
+mac2unix.exe : dos2unix.exe
+	copy /v dos2unix.exe mac2unix.exe
+
+unix2mac.exe : unix2dos.exe
+	copy /v unix2dos.exe unix2mac.exe
+
+
+exec_prefix = $(prefix)
+bindir      = $(exec_prefix)\bin
+datarootdir = $(prefix)\share
+datadir     = $(datarootdir)
+!ifndef docsubdir
+docsubdir   = $(PACKAGE)-$(DOS2UNIX_VERSION)
+!endif
+docdir      = $(datarootdir)\doc\$(docsubdir)
+INSTALL_OBJS_DOC = README.txt NEWS.txt ChangeLog.txt COPYING.txt TODO.txt BUGS.txt $(DOCFILES)
+
+
+$(prefix): .EXISTSONLY
+	mkdir $@
+
+$(bindir): $(prefix) .EXISTSONLY
+	mkdir $@
+
+$(datarootdir): $(prefix) .EXISTSONLY
+	mkdir $@
+
+$(datarootdir)\doc: $(datarootdir) .EXISTSONLY
+	mkdir $@
+
+$(docdir): $(datarootdir)\doc .EXISTSONLY
+	mkdir $@
+
+# We only build and install the English manuals, because wildcards on
+# directory names are not supported in Windows CMD. Like man\*\man1\*.txt will
+# give a syntax error. It could be done with more scripting, but for simplicity
+# we stick to English.
+
+install: $(PROGRAMS) $(DOCFILES) $(bindir) $(docdir) .SYMBOLIC
+	copy dos2unix.exe $(bindir)
+	copy mac2unix.exe $(bindir)
+	copy unix2dos.exe $(bindir)
+	copy unix2mac.exe $(bindir)
+	copy README.txt $(docdir)
+	copy NEWS.txt $(docdir)
+	copy ChangeLog.txt $(docdir)
+	copy COPYING.txt $(docdir)
+	copy TODO.txt $(docdir)
+	copy BUGS.txt $(docdir)
+	copy man\man1\dos2unix.txt $(docdir)
+	copy man\man1\dos2unix.$(HTMLEXT) $(docdir)
+
+man\man1\dos2unix.txt : man\man1\dos2unix.pod
+	pod2text $< > $@
+
+man\man1\dos2unix.$(HTMLEXT) : man\man1\dos2unix.pod
+	pod2html --title="$(PACKAGE) $(DOS2UNIX_VERSION) - DOS/MAC to UNIX and vice versa text file format converter" $< > $@
+
+TXTFILES = man\man1\$(PACKAGE).txt man\es\man1\$(PACKAGE).txt man\nl\man1\$(PACKAGE).txt
+HTMLFILES = man\man1\$(PACKAGE).$(HTMLEXT) man\es\man1\$(PACKAGE).$(HTMLEXT) man\nl\man1\$(PACKAGE).$(HTMLEXT)
+
+txt : $(TXTFILES) .SYMBOLIC
+
+html : $(HTMLFILES) .SYMBOLIC
+
+doc : $(DOCFILES) .SYMBOLIC
+
+uninstall: .SYMBOLIC
+	-del $(bindir)\dos2unix.exe
+	-del $(bindir)\mac2unix.exe
+	-del $(bindir)\unix2dos.exe
+	-del $(bindir)\unix2mac.exe
+	-rmdir /s /q $(docdir)
+
+!ifndef VERSIONSUFFIX
+VERSIONSUFFIX	= -bin
+!endif
+
+!ifndef ZIPFILE
+ZIPFILE = $(PACKAGE)$(DOS2UNIX_VERSION)$(VERSIONSUFFIX).zip
+!endif
+ZIPOBJ = bin\dos2unix.exe bin\mac2unix.exe bin\unix2dos.exe bin\unix2mac.exe share\doc\$(docsubdir) $(ZIPOBJ_EXTRA)
+
+CURDISK = $+ $(%cdrive): $-
+CURDIR = $+ $(%cwd) $-
+
+!ifdef __OS2__
+DISTCMD = dist.cmd
+!else
+DISTCMD = dist.bat
+!endif
+
+dist : .SYMBOLIC
+	@%create $(DISTCMD)
+	@%append $(DISTCMD) set PREFIX=$(prefix)
+	@%append $(DISTCMD) set PREFIXDISK=%PREFIX:~0,2%
+	@%append $(DISTCMD) %PREFIXDISK%
+	@%append $(DISTCMD) cd $(prefix)
+	@%append $(DISTCMD) unix2dos -k share\doc\$(docsubdir)\*.txt
+	@%append $(DISTCMD) unix2dos -k share\doc\$(docsubdir)\*.$(HTMLEXT)
+	@%append $(DISTCMD) zip -r $(ZIPFILE) $(ZIPOBJ)
+	@%append $(DISTCMD) $(CURDISK)
+	@%append $(DISTCMD) cd $(CURDIR)
+	@%append $(DISTCMD) move $(prefix)\$(ZIPFILE) ..
+	.\$(DISTCMD)
+
+
+mostlyclean : .SYMBOLIC
+	-del *.obj
+	-del *.exe
+	-del *.SYM
+	-del *.map
+	-del *.ilk
+	-del *.tmp
+
+clean : mostlyclean .SYMBOLIC
+
+maintainer-clean : clean .SYMBOLIC
+	-del $(DOCFILES)

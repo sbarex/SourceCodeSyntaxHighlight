@@ -76,6 +76,17 @@ class PreviewViewController: NSViewController, QLPreviewingController, WKNavigat
     /// Url of current file.
     var fileUrl: URL?
     
+    var textScrollView: NSScrollView?
+    var textView: NSTextView?
+    var webView: WKWebView?
+    
+    lazy var connection: NSXPCConnection = {
+        let connection = NSXPCConnection(serviceName: "org.sbarex.SourceCodeSyntaxHighlight.XPCRender")
+        connection.remoteObjectInterface = NSXPCInterface(with: XPCLightRenderServiceProtocol.self)
+        connection.resume()
+        return connection
+    }()
+    
     private let log = {
         return OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "quicklook.scsh-extension")
     }()
@@ -91,8 +102,24 @@ class PreviewViewController: NSViewController, QLPreviewingController, WKNavigat
             view.wantsLayer = true
             view.layer?.borderWidth = 0
         }
+        
+        DistributedNotificationCenter.default().addObserver(self, selector: #selector(self.handleSettingsChanged(_:)), name: .SettingsUpdated, object: nil)
     }
 
+    deinit {
+        self.connection.invalidate()
+        DistributedNotificationCenter.default().removeObserver(self, name: .SettingsUpdated, object: nil)
+    }
+    
+    @objc internal func handleSettingsChanged(_ notification: Notification) {
+        guard let service = connection.synchronousRemoteObjectProxyWithErrorHandler({ error in
+            print("Received error:", error)
+        }) as? XPCLightRenderServiceProtocol else {
+            return
+        }
+        service.reloadSettings()
+    }
+    
     /*
      * Implement this method and set QLSupportsSearchableItems to YES in the Info.plist of the extension if you support CoreSpotlight.
      *
@@ -124,10 +151,6 @@ class PreviewViewController: NSViewController, QLPreviewingController, WKNavigat
             url.path
         )
         
-        let connection = NSXPCConnection(serviceName: "org.sbarex.SourceCodeSyntaxHighlight.XPCRender")
-        connection.remoteObjectInterface = NSXPCInterface(with: XPCLightRenderServiceProtocol.self)
-        connection.resume()
-        
         guard let service = connection.synchronousRemoteObjectProxyWithErrorHandler({ error in
             print("Received error:", error)
             
@@ -148,145 +171,222 @@ class PreviewViewController: NSViewController, QLPreviewingController, WKNavigat
         }
         
         service.colorize(url: url) { (response: Data, settings: NSDictionary, error: Error?) in
-            let format = settings[SCSHSettings.Key.format] as? String ?? SCSHGlobalBaseSettings.preferredFormat.rawValue
+            let format = settings[SettingsBase.Key.format] as? String ?? Settings.Format.rtf.rawValue
             os_log(
                 "Output mode: %{public}s",
                 log: self.log,
                 type: .info,
                 format
             )
-            DispatchQueue.main.async {
-                /*
-                if let color = settings[SCSHSettings.Key.rtfBackgroundColor] as? String, let c = NSColor(fromHexString: color) {
-                    // Apply the background color to the container view.
-                    self.view.layer?.backgroundColor = c.cgColor
-                } else {
-                    self.view.layer?.backgroundColor = NSColor.clear.cgColor
+            let wrap = (settings[SettingsBase.Key.wordWrap] as? Int ?? 0) > 0
+            let useSoftWrap = !(settings[SettingsBase.Key.wordWrapHard] as? Bool ?? true)
+            var useSoftWrapOneFile = false
+            if (!wrap || !useSoftWrap), let soft = settings[SettingsBase.Key.wordWrapOneLineFiles] as? Bool, soft, let f = fopen(url.path, "r") {
+                defer {
+                    fclose(f)
                 }
-                */
+                // the smallest multiple of 16 that will fit the byte array for this line
+                var lineCap: Int = 0
+                
+                // a pointer to a null-terminated, UTF-8 encoded sequence of bytes
+                var lineByteArrayPointer: UnsafeMutablePointer<CChar>? = nil
+                var bytesRead = getline(&lineByteArrayPointer, &lineCap, f)
+                var lines = 0
+                while (bytesRead > 0) {
+                    bytesRead = getline(&lineByteArrayPointer, &lineCap, f)
+                    lines += 1
+                    if lines > 1 {
+                        break
+                    }
+                }
+                free(lineByteArrayPointer)
+                
+                if lines == 1 {
+                    useSoftWrapOneFile = true
+                }
+            }
+            DispatchQueue.main.async {
                 let previewRect: CGRect
                 if #available(macOS 11, *) {
                     previewRect = self.view.bounds
                 } else {
                     previewRect = self.view.bounds.insetBy(dx: 2, dy: 2)
                 }
-                if format == SCSHBaseSettings.Format.rtf.rawValue {
-                    let textScrollView = NSScrollView(frame: previewRect)
-                    textScrollView.autoresizingMask = [.height, .width]
-                    textScrollView.hasHorizontalScroller = true
-                    textScrollView.hasVerticalScroller = true
-                    if #available(macOS 11, *) {
-                        textScrollView.borderType = .noBorder
-                        textScrollView.backgroundColor = NSColor.clear
-                    } else {
-                        textScrollView.borderType = .lineBorder
+                if format == SettingsBase.Format.rtf.rawValue {
+                    if self.textScrollView == nil {
+                        let textScrollView = NSScrollView(frame: previewRect)
+                        textScrollView.autoresizingMask = [.height, .width]
+                        textScrollView.hasHorizontalScroller = true
+                        textScrollView.hasVerticalScroller = true
+                        if #available(macOS 11, *) {
+                            textScrollView.borderType = .noBorder
+                            textScrollView.backgroundColor = NSColor.clear
+                        } else {
+                            textScrollView.borderType = .lineBorder
+                        }
+                        self.view.addSubview(textScrollView)
+                        
+                        let textView: NSTextView
+                        if #available(macOS 11, *) {
+                            textView = NSTextView(frame: CGRect(origin: .zero, size: textScrollView.contentSize))
+                        } else {
+                            // Catalina do not automatically handle double click and drag on the ql preview window.
+                            textView = StaticTextView(frame: CGRect(origin: .zero, size: textScrollView.contentSize))
+                        }
+                        
+                        self.textScrollView = textScrollView
+                        self.textView = textView
+                        
+                        self.textView?.isVerticallyResizable = true
+                        self.textView?.isHorizontallyResizable = true
+                        self.textView?.autoresizingMask = []
+                        
+                        self.textView?.textContainerInset = CGSize(width: 6, height: 12)
+                        
+                        self.textView?.textContainer?.heightTracksTextView = false
+                        self.textView?.wantsLayer = true
+                        self.textView?.layer?.borderWidth = 0
+                        
+                        self.textView?.isEditable = false
+                        self.textView?.isSelectable = false
+                        
+                        self.textView?.isGrammarCheckingEnabled = false
+                        
+                        self.textView?.backgroundColor = .clear
+                        
+                        self.textView?.allowsDocumentBackgroundColorChange = true
+                        self.textView?.usesFontPanel = false
+                        self.textView?.usesRuler = false
+                        self.textView?.usesInspectorBar = false
+                        self.textView?.allowsImageEditing = false
+                        
+                        self.textScrollView?.documentView = self.textView
                     }
-                    self.view.addSubview(textScrollView)
-                    
-                    let textView: NSTextView
-                    if #available(macOS 11, *) {
-                        textView = NSTextView(frame: CGRect(origin: .zero, size: textScrollView.contentSize))
-                    } else {
-                        // Catalina do not automatically handle double click and drag on the ql preview window.
-                        textView = StaticTextView(frame: CGRect(origin: .zero, size: textScrollView.contentSize))
-                    }
+                    self.webView?.isHidden = true
+                    self.textScrollView?.isHidden = false
                     
                     //textView.minSize = CGSize(width: 0, height: 0)
-                    textView.maxSize = CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)
-                    textView.isVerticallyResizable = true
-                    textView.isHorizontallyResizable = true
-                    textView.autoresizingMask = []
-                    textView.textContainer?.containerSize = CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)
-                    textView.textContainerInset = CGSize(width: 6, height: 12)
-                    
-                    textView.textContainer?.widthTracksTextView = false
-                    textView.textContainer?.heightTracksTextView = false
-                    textView.wantsLayer = true
-                    textView.layer?.borderWidth = 0
-                    
-                    textView.isEditable = false
-                    textView.isSelectable = false
-                    
-                    textView.isGrammarCheckingEnabled = false
-                    
-                    textView.backgroundColor = .clear
-                    
-                    textView.allowsDocumentBackgroundColorChange = true
-                    textView.usesFontPanel = false
-                    textView.usesRuler = false
-                    textView.usesInspectorBar = false
-                    textView.allowsImageEditing = false
-                    
-                    textScrollView.documentView = textView
-                    
-                    // The rtf parser don't apply (why?) the page background color.
-                    if let c = settings[SCSHSettings.Key.backgroundColor] as? String, let color = NSColor(fromHexString: c) {
-                        textView.backgroundColor = color
-                        textView.drawsBackground = true
+                    if (wrap && !useSoftWrap) || !useSoftWrapOneFile {
+                        self.textView?.maxSize = CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)
+                        self.textView?.textContainer?.widthTracksTextView = false
+                        self.textView?.textContainer?.containerSize = CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)
                     } else {
-                        textView.backgroundColor = .clear
-                        textView.drawsBackground = false
+                        // self.textView?.maxSize = CGSize(width: textScrollView!.bounds.width, height: CGFloat.greatestFiniteMagnitude)
+                        self.textView?.textContainer?.widthTracksTextView = true
                     }
                     
-                    let text = NSAttributedString(rtf: response, documentAttributes: nil) ?? NSAttributedString(string: "Unable to convert data to rtf.")
-                    textView.textStorage?.setAttributedString(text)
+                    // The rtf parser don't apply (why?) the page background color.
+                    if let c = settings[SettingsBase.Key.backgroundColor] as? String, let color = NSColor(fromHexString: c) {
+                        self.textView?.backgroundColor = color
+                        self.textView?.drawsBackground = true
+                    } else {
+                        self.textView?.backgroundColor = .clear
+                        self.textView?.drawsBackground = false
+                    }
+                    
+                    var text: NSAttributedString
+                    if let t = NSAttributedString(rtf: response, documentAttributes: nil) {
+                        text = t
+                    } else {
+                        let t = NSMutableAttributedString(string: "Unable to convert data to rtf!\n\n", attributes: [.font: NSFont.boldSystemFont(ofSize: NSFont.systemFontSize)])
+                        if let s = String(data: response, encoding: .utf8) {
+                            t.append(NSAttributedString(string: s, attributes: [.font: NSFont.monospacedSystemFont(ofSize: NSFont.systemFontSize, weight: .regular)]))
+                        }
+                        text = t
+                        if !((wrap && !useSoftWrap) || !useSoftWrapOneFile) {
+                            self.textView?.textContainer?.widthTracksTextView = true
+                            let size = CGSize(width: self.textScrollView!.bounds.width-20, height: CGFloat.greatestFiniteMagnitude)
+                            self.textView?.maxSize = size
+                            self.textView?.textContainer?.containerSize = size
+                        }
+                    }
+                    /*
+                    let text = (NSAttributedString(rtf: response, documentAttributes: nil) ?? NSAttributedString(string: "Unable to convert data to rtf.")).mutableCopy() as! NSMutableAttributedString
+                    // Convert Windows CRLF (windows) to LF
+                    text.mutableString.replaceOccurrences(of: "\r\n", with: "\n", range:NSMakeRange(0, text.mutableString.length))
+                    // Convert Windows CR (mac os 9) to LF
+                    text.mutableString.replaceOccurrences(of: "\r", with: "\n", range:NSMakeRange(0, text.mutableString.length))
+                    */
+                    self.textView?.textStorage?.setAttributedString(text)
                     
                     handler(nil)
                 } else {
                     var lossy = false
-                    let html = response.decodeToString(lossy: &lossy).trimmingCharacters(in: CharacterSet.newlines)
+                    var html = response.decodeToString(lossy: &lossy).trimmingCharacters(in: CharacterSet.newlines)
                     
                     if lossy {
                         os_log(OSLogType.error, log: self.log, "Some bytes cannot be decoded and have been replaced!")
                     }
                     self.handler = handler
+                    if self.webView == nil {
+                        // Create a configuration for the preferences
+                        let configuration = WKWebViewConfiguration()
+                        
+                        if #available(OSX 11.0, *) {
+                            if let v = settings[SettingsBase.Key.interactive] as? Bool {
+                                configuration.defaultWebpagePreferences.allowsContentJavaScript = v
+                            } else {
+                                configuration.defaultWebpagePreferences.allowsContentJavaScript = false
+                            }
+                        } else {
+                            if let v = settings[SettingsBase.Key.interactive] as? Bool {
+                                configuration.preferences.javaScriptEnabled = v
+                            } else {
+                                configuration.preferences.javaScriptEnabled = false
+                            }
+                        }
+                        configuration.allowsAirPlayForMediaPlayback = false
+                        // configuration.userContentController.add(self, name: "jsHandler")
                     
-                    let preferences = WKPreferences()
-                    preferences.javaScriptEnabled = false
-                    if let v = settings[SCSHSettings.Key.interactive] as? Bool, v {
-                        preferences.javaScriptEnabled = true
-                    }
+                        /* MARK: FIXME
+                        On Big Sur as far as I know, QuickLook extensions don't honor com.apple.security.network.client, so WebKit process immediately crash.
+                        To temporary fix add this entitlements exception
+                        com.apple.security.temporary-exception.mach-lookup.global-name:
+                        <key>com.apple.security.temporary-exception.mach-lookup.global-name</key>
+                        <array>
+                            <string>com.apple.nsurlsessiond</string>
+                        </array>
+                        */
 
-                    // Create a configuration for the preferences
-                    let configuration = WKWebViewConfiguration()
-                    //configuration.preferences = preferences
-                    configuration.allowsAirPlayForMediaPlayback = false
-                    // configuration.userContentController.add(self, name: "jsHandler")
+                        let webView: WKWebView
+                        if let v = settings[SettingsBase.Key.interactive] as? Bool, v {
+                            webView = WKWebView(frame: previewRect, configuration: configuration)
+                        } else {
+                            webView = StaticWebView(frame: previewRect, configuration: configuration)
+                            (webView as! StaticWebView).fileUrl = self.fileUrl
+                        }
+                        webView.autoresizingMask = [.height, .width]
+                        
+                        webView.wantsLayer = true
+                        if #available(macOS 11, *) {
+                            webView.layer?.borderWidth = 0
+                        } else {
+                            // Draw a border around the web view
+                            webView.layer?.borderColor = NSColor.tertiaryLabelColor.cgColor
+                            webView.layer?.borderWidth = 1
+                        }
                     
-                    /* MARK: FIXME
-                    On Big Sur as far as I know, QuickLook extensions don't honor com.apple.security.network.client, so WebKit process immediately crash.
-                    To temporary fix add this entitlements exception
-                    com.apple.security.temporary-exception.mach-lookup.global-name:
-                    <key>com.apple.security.temporary-exception.mach-lookup.global-name</key>
-                    <array>
-                        <string>com.apple.nsurlsessiond</string>
-                    </array>
-                    */
-
-                    let webView: WKWebView
-                    if let v = settings[SCSHSettings.Key.interactive] as? Bool, v {
-                        webView = WKWebView(frame: previewRect, configuration: configuration)
+                        webView.navigationDelegate = self
+                        webView.uiDelegate = self
+                        self.view.addSubview(webView)
+                        self.webView = webView
                     } else {
-                        webView = StaticWebView(frame: previewRect, configuration: configuration)
-                        (webView as! StaticWebView).fileUrl = self.fileUrl
+                        if let v = settings[SettingsBase.Key.interactive] as? Bool {
+                            if #available(OSX 11.0, *) {
+                                self.webView?.configuration.defaultWebpagePreferences.allowsContentJavaScript = v
+                            } else {
+                                self.webView?.configuration.preferences.javaScriptEnabled = v
+                            }
+                        }
                     }
-                    webView.autoresizingMask = [.height, .width]
                     
-                    webView.wantsLayer = true
-                    if #available(macOS 11, *) {
-                        webView.layer?.borderWidth = 0
-                    } else {
-                        // Draw a border around the web view
-                        webView.layer?.borderColor = NSColor.tertiaryLabelColor.cgColor
-                        webView.layer?.borderWidth = 1
-                    }
-                
-                    webView.navigationDelegate = self
-                    webView.uiDelegate = self
-                
+                    self.textScrollView?.isHidden = true
+                    self.webView?.isHidden = false
 
-                    webView.loadHTMLString(html, baseURL: nil)
-                    self.view.addSubview(webView)
+                    if (wrap && useSoftWrap) || useSoftWrapOneFile {
+                        html = html.replacingOccurrences(of: "</head>", with: "<style>pre.hl { white-space: normal }</style>\n</head>")
+                    }
+                    self.webView?.loadHTMLString(html, baseURL: nil)
                     // handler(nil) // call the handler in the delegate method after complete rendering
                 }
             }

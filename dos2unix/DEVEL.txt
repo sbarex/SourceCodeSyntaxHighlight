@@ -1,0 +1,98 @@
+Information about dos2unix' implementation choices.
+
+1. Smart conversion
+===================
+
+  There are some dos2unix implementations that automatically convert all type of
+line breaks. For instance converting both DOS and Mac linebreaks to Unix line
+breaks at once. Or automatically detect the line break type and convert to the
+other side.
+
+  Smart conversions could lead to unexpected behaviour. For instance when a
+dos2unix is run on a file with only Unix line breaks and the line breaks are
+flipped to the other side. This dos2unix implementation does exactly what you
+tell it to do. When you run 'dos2unix' only DOS line breaks are converted to
+Unix line breaks. Unix line breaks stay in the file. Seen from a DOS or Unix
+perspective, a Mac line break is not a line break, so also Mac line breaks stay
+untouched.  The same applies for mac2unix. Mac2unix leaves Unix and DOS line
+breaks untouched.
+
+
+2. Unix filter
+==============
+
+  When a standard Unix filter, e.g. sed or tr, reads input from a file it sends
+its output by default to standard out. This implementation of dos2unix does by
+default in-place conversion (overwriting the input file), which seems not in line.
+
+  Dos2unix is not part of the Unix standard. Most Unixes have their
+own implementation of dos2unix. There is a lot of variation in command names,
+options, and behavior. The SunOS version of dos2unix, after which this version was
+modeled, does by default paired conversion.
+  This implementation of dos2unix has too much legacy to change the current behaviour.
+Changing it would have more disadvantages than advantages. Most people expect
+dos2unix to do in-place conversion. The majority of other open source implementations
+also convert by default in-place. In-place conversion has the advantage that it is
+very easy to convert multiple files by using wild cards.
+  This implementation of dos2unix does send the output to standard-out when the
+input comes from standard-in. So you can use it as filter. Note that dos2unix/
+unix2dos is also used a lot on non-Unix operating systems where the filter idea
+is less known.
+
+
+3. Recursive conversion of files
+================================
+
+  There are implementations that have builtin functionality to do recursive
+conversion of all files in a directory tree.
+
+  This functionality is not needed in dos2unix. By using an external program,
+like Unix 'find', you can do recursive conversion of directory trees. There is
+no need to duplicate this.
+
+
+4. Encoding conversion
+======================
+
+  Dos2unix can do several encoding conversions. First there are the conversions
+of several DOS code pages to and from ISO-8859-1. These conversions are also
+part of the SunOS dos2unix implementation after which this implementation has
+been modeled. Although these conversions are not much used these days they have
+been added for the sake completeness. Conversion of CP1252 was added, because
+it is used a lot in the Western world. It's almost identical to ISO-8859-1. There
+is no intention to add other conversions to and from ISO-8859-1.
+
+  Conversion from UTF-16 was added, because the world is moving towards
+Unicode.  Microsoft Windows uses by default UTF-16 format for Unicode. UTF-16
+is part of Windows' core design for historical reasons. Microsoft standardized
+on UCS-2, a predecessor of UTF-16, in a time when UTF-8 did not exist yet.
+However a lot of Windows software is able to read UTF-8 files. In Windows
+"Unicode" means usually UTF-16. For instance saving a file with Notepad in
+"Unicode" encoding means in UTF-16 encoding. When you work in PowerShell and
+echo some text to a file you get an UTF-16 encoded text file. UTF-16 is there
+to stay, although many people would like to see otherwise and are dreaming of
+an UTF-8 only world. The Unix/Linux world is moving towards UTF-8 encoding,
+because it's backwards compatible with ASCII. Unix programs typically do not
+support UTF-16.
+
+  One end of the encoding spectrum is an ASCII only world, where the only
+differences between DOS and Unix text files are line breaks. In English
+speaking regions this is a good working environment, because ASCII is in
+practice sufficient for English language. Diacritics are hardly used and can be
+omitted. The other end of the spectrum is an Unicode only world. All languages
+of the world are supported. Dos2unix aims to support these two ends of the
+spectrum: ASCII and Unicode. The Chinese GB18030 encoding is also seen as an
+Unicode transformation format. UTF-32 is not supported, because this is
+practically only used as an internal format.  Other encoding transformations
+are left to specialized programs like iconv and recode. The few conversion
+modes to and from ISO-8859-1 are only there for legacy reasons.
+
+  In the ASCII days DOS to Unix text file conversion, and vice versa, was only
+converting line breaks.  In the Unicode era it is not only line break
+conversion, but also Unicode transformation format conversion (e.g. UTF-16 to
+UTF-8), and Byte Order Mark (BOM) removal or addition.
+
+  Conversion towards UTF-16 is not supported and there is no intention to support
+it in the future. UTF-8 encoded files are well supported on Windows, so
+conversion to UTF-16 is not needed. And we keep on dreaming of an UTF-8 only
+world...

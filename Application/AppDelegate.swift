@@ -24,32 +24,53 @@ import Cocoa
 import Sparkle
 import Syntax_Highlight_XPC_Service
 
-typealias ExampleItem = (url: URL, title: String, uti: String)
+typealias ExampleItem = (url: URL, title: String, uti: String, standalone: Bool)
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
+    @IBOutlet weak var advancedSettingsMenu: NSMenuItem!
+    
     var userDriver: SPUStandardUserDriver?
     var updater: SPUUpdater?
     
-    lazy var connection: NSXPCConnection = {
-        let connection = NSXPCConnection(serviceName: "org.sbarex.SourceCodeSyntaxHighlight.XPCService")
-        connection.remoteObjectInterface = NSXPCInterface(with: SCSHXPCServiceProtocol.self)
-        connection.resume()
-        return connection
-    }()
+    var isAdvancedSettingsVisible: Bool = false {
+        didSet {
+            advancedSettingsMenu.state = isAdvancedSettingsVisible ? .on : .off
+            
+            guard oldValue != isAdvancedSettingsVisible else {
+                return
+            }
+            UserDefaults.standard.setValue(isAdvancedSettingsVisible, forKey: "advanced-settings")
+            NotificationCenter.default.post(name: .AdvancedSettings, object: isAdvancedSettingsVisible)
+        }
+    }
     
-    lazy var service: SCSHXPCServiceProtocol? = {
-        let service = self.connection.synchronousRemoteObjectProxyWithErrorHandler { error in
-            print("Received error:", error)
-        } as? SCSHXPCServiceProtocol
-        
-        return service
-    }()
+    @IBAction func handleAdvancedSettings(_ sender: Any) {
+        isAdvancedSettingsVisible = !isAdvancedSettingsVisible
+    }
+    
+    func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
+        return SCSHWrapper.shared.applicationShouldTerminate()
+    }
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
+        let utis = handledUTIs
+        DispatchQueue.global(qos: .userInitiated).async() {
+            for uti in utis {
+                uti.initLazyVars(async: false)
+                uti.fetchIcon(async: false)
+            }
+        }
+        
         // Insert code here to initialize your application
         if #available(OSX 10.12.2, *) {
             NSApplication.shared.isAutomaticCustomizeTouchBarMenuItemEnabled = true
+        }
+        
+        if let state = UserDefaults.standard.object(forKey: "advanced-settings") as? Bool {
+            isAdvancedSettingsVisible = state
+        } else {
+            isAdvancedSettingsVisible = false
         }
         
         let hostBundle = Bundle.main
@@ -86,7 +107,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
     
     func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
-        self.connection.invalidate()
+        SCSHWrapper.connection.invalidate()
     }
 
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
@@ -111,16 +132,15 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
         return nil
     }
     
-    /// Get all handled UTIs.
-    func fetchHandledUTIs() -> [UTIDesc] {
+    lazy var handledUTIs: [UTI] = {
         // Get the list of all uti supported by the quicklook extension.
         guard let url = getQLAppexUrl(), let bundle = Bundle(url: url), let extensionInfo = bundle.object(forInfoDictionaryKey: "NSExtension") as? [String: Any], let attributes = extensionInfo["NSExtensionAttributes"] as? [String: Any], let supportedTypes = attributes["QLSupportedContentTypes"] as? [String] else {
             return []
         }
         
-        var fileTypes: [UTIDesc] = []
+        var fileTypes: [UTI] = []
         for type in supportedTypes {
-            let uti = UTIDesc(UTI: type)
+            let uti = UTI(type)
             if uti.isValid {
                 fileTypes.append(uti)
             } else {
@@ -130,14 +150,18 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
         
         // Sort alphabetically.
         fileTypes.sort { (a, b) -> Bool in
-            return a.description < b.description
+            return a.description.lowercased() < b.description.lowercased()
         }
         
         return fileTypes
-    }
+    }()
     
+    fileprivate var allExamples: [ExampleItem]?
     /// Get the list of available source file example.
     func getAvailableExamples() -> [ExampleItem] {
+        if let allExamples = self.allExamples {
+            return allExamples
+        }
         // Populate the example files list.
         var examples: [ExampleItem] = []
         if let examplesDirURL = Bundle.main.url(forResource: "examples", withExtension: nil) {
@@ -147,10 +171,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
                     let title: String
                     if let uti = UTI(URL: file) {
                         title = uti.description + " (." + file.pathExtension + ")"
-                        examples.append((url: file, title: title, uti: uti.UTI))
+                        examples.append((url: file, title: title, uti: uti.UTI, standalone: true))
                     } else {
                         title = file.lastPathComponent
-                        examples.append((url: file, title: title, uti: ""))
+                        examples.append((url: file, title: title, uti: "", standalone: true))
                     }
                     
                 }
@@ -159,11 +183,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
                 }
             }
         }
+        self.allExamples = examples
         return examples
     }
     
     @IBAction func openApplicationSupportFolder(_ sender: Any) {
-        service?.getApplicationSupport(reply: { (url) in
+        SCSHWrapper.service?.getApplicationSupport(reply: { (url) in
             if let u = url, FileManager.default.fileExists(atPath: u.path) {
                 // Open the Finder to the application support folder.
                 NSWorkspace.shared.activateFileViewerSelecting([u])
@@ -172,6 +197,24 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
                 alert.window.title = "Attention"
                 alert.messageText = "Application support folder does not exist"
                 alert.informativeText = "You probably haven't created any custom themes or style sheets yet."
+                alert.addButton(withTitle: "Close")
+                alert.alertStyle = .informational
+                
+                alert.runModal()
+            }
+        })
+    }
+    
+    @IBAction func selectSettingsFile(_ sender: Any) {
+        SCSHWrapper.service?.getSettingsURL(reply: { (url) in
+            if let u = url, FileManager.default.fileExists(atPath: u.path) {
+                // Open the Finder to the settings file.
+                NSWorkspace.shared.activateFileViewerSelecting([u])
+            } else {
+                let alert = NSAlert()
+                alert.window.title = "Attention"
+                alert.messageText = "Settings not found"
+                alert.informativeText = "You probably haven't customize the standard settings."
                 alert.addButton(withTitle: "Close")
                 alert.alertStyle = .informational
                 

@@ -208,6 +208,7 @@ extension SCSHTheme {
             
             self.init(name: name, desc: desc, categories: Set<String>(categories), plain: plain, canvas: canvas, number: number, string: string, escape: escape, preProcessor: preProcessor, stringPreProc: stringPreProc, blockComment: blockComment, lineComment: lineComment, lineNum: lineNum, operatorProp: operatorProp, interpolation: interpolation, keywords: keywords)
             originalName = name
+            self.path = url.path
             self.isDirty = false
         case .error(let s):
             throw LuaError.error(message: s)

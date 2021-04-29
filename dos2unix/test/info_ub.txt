@@ -1,0 +1,4 @@
+      50       0       0  UTF-16BE  text    utf16be.txt
+      50       0       0  no_bom    text    utf16ben.txt
+       0      50       0  UTF-8     text    utf8unxb.txt
+      50       0       0  GB18030   text    gb18030.txt

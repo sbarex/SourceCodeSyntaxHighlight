@@ -4,5 +4,12 @@
 <dict>
 	<key>com.apple.security.get-task-allow</key>
 	<true/>
+	<key>com.apple.security.temporary-exception.files.home-relative-path.read-write</key>
+	<array>
+		<string>/Desktop</string>
+		<string>/Desktop/colorize.rtf</string>
+		<string>/Desktop/colorize.html</string>
+		<string>/Desktop/colorize.log</string>
+	</array>
 </dict>
 </plist>

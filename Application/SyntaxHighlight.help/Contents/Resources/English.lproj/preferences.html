@@ -13,152 +13,204 @@
 <body>
     <a name="SyntaxHighlight_PREFERENCES"></a>
 
-    <div class="header"><a href="help:anchor=SyntaxHighlight_INDEX bookID=org.sbarex.SourceCodeSyntaxHighlight.help">index</a></div>
+    <div class="header"><a href="general.html">index</a></div>
     
-    <h1>Preferences</h1>
-    <div><img src="images/settings.png" alt="Preferences Window" /></div>
-    <p>It is possible to set the preferences for all supported file type (global preferences). Then you can override single settings for customize only the output for some specific source format.</p>
-
-    <p>From the list on the left side of the preferences window you can choose the global settings or the settings for a specific source file format.</p>
-    <p>For an explanation on the behavior of file types <a href="help:anchor=SyntaxHighlight_UTI bookID=org.sbarex.SourceCodeSyntaxHighlight.help">click here</a>.</p>
-    <p>The gray-out items on the list are those currently managed by others UTI. Clicking on the exclamation mark icon you will show which UTI is used for a given file extension.<p>
-
-    <div><img src="images/settings_specific_warn.png" alt="Specific preferences warning" /></div>
+    <h1>Settings</h1>
+    <p>With the standalone application you can customize the settings.</p>
+    <p>It is possible to set the preferences for all supported file type (<i>General</i> tan). Then you can override single settings for customize only the output for some specific source format (<i>Formats</i> tab).</p>
+    <p>You can show <i>advanced settings</i> using the relative command on the view menu.</p>
 
     <p>The settings are stored in <code>~/Library/Preferences/org.sbarex.SourceCodeSyntaxHighlight.plist</code>.
         Customized themes and styles are saved in <code>~/Library/Application Support/Syntax Highlight/Themes|Styles</code> folders. </p>
-    <p>Some file formats (.class, .json, .plist, .strings, etc.) have some predefined custom settings.</p>
-    <p>Inside the folder <code>~/Library/Application Support/Syntax Highlight/defaults/</code> (you may need to create it if is missing), you can also put a custom settings for specific uti format creating a plist file named with the uti name.<br />
+
+    <h2>General settings</h2>
+    <a name="SyntaxHighlight_GLOBAL_PREFERENCES"></a>
+
+    <div><img src="images/settings.png" alt="General Settings Window" /></div>
+
+    <p>You can set the settings for all supported formats on the <i>General</i> tab. </p>
+    <table>
+        <tr>
+            <th>Settings</th>
+            <th>Description</th>
+            <th style="text-align: center;">Advanced</th>
+        </tr>
+        <tr>
+            <td>Render engine</td>
+            <td>Engine used to render the highlighted code. <b>The suggested engine is <code>RTF</code>.</b> Use the <code>HTML</code> engine only if you want to use a custom CSS to override the color schema (or you have choose a theme with some extra CSS inside it). Advanced users must use the <code>HTML</code> engine to handle the hover functionality of a Language Server or to include a <code>.lua</code> plugins that require interactive javascript code. 
+            <div class="small">(corresponds to <code>--out-format</code> highlight argument)</div></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Color schema</td>
+            <td>Chose the color schema for light and dark appearance.
+                <div class="small">(corresponds to <code>--style</code> highlight arguments)</div>
+            </td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Font</td>
+            <td>You can chose a preferred font or use the standard monospaced font.
+                <div class="small">(corresponds to <code>--font</code> and <code>--font-size</code> highlight arguments)</div>
+            </td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Word wrap</td>
+            <td>Allow to handle word wrap for long lines. <i>Hard wrap</i> break the line after a fixed length (<i>can cause some highlight glitch</i>). <i>Soft wraps</i> allow to break the line at the preview windows width. When word wraps is disabled, you can only enable it for minified files that have only one line. One line file detection is done on the source file and not on the preprocessor output.</i>
+            <div class="small">(corresponds to <code>-V</code>, <code>-W</code> and <code>--line-length</code> highlight arguments)</div></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Line numbers</td>
+            <td>Allow to show the line numbers.
+                <div class="small">(corresponds to <code>--line-numbers</code> and <code>--wrap-no-numbers</code> highlight arguments)</div>
+            </td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Tabs to spaces</td>
+            <td>Allow to translate tabs to spaces. Set to zero to use tabs.
+                <div class="small">(corresponds to <code>--replace-tabs</code> highlight argument)</div>
+            </td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Extra highlight arguments</td>
+            <td>Additional standard argument passed to <code>highlight</code>. <b>Arguments that contains a white space must be protected inside quotes.</b> See <code>man highlight</code> to a list of valid arguments and plugins.<br /> Eg: <code>--doc-title='title with space'</code></td>
+            <td><b>Yes</b></td>
+        </tr>
+        <tr>
+            <td>Custom CSS Style</td>
+            <td>If the render engine is set to <code>HTML</code> allow to define a custom CSS style to override/extend the color schema.</td>
+            <td style="text-align: center;"><b>Yes</b></td>
+        </tr>
+        <tr>
+            <td>Interactive preview</td>
+            <td>If the render engine is set to <code>HTML</code> enable the javascript interpreter inside the preview window. Use only if you use some <code>highlight</code> plugins that output javascript code. This option disable the possibility to move the Quick Look preview with click and drag inside the window and opening the file with a double click. </td>
+            <td style="text-align: center;"><b>Yes</b></td>
+        </tr>
+        <tr>
+            <td>Data limit</td>
+            <td>Maximum amount of data to format, data beyond the limit is omitted. Specify 0 to not limit. This option is ignored when using a Language Server. <br />
+                Note that if for a format is defined a preprocessor the filter is applied to the his output and not to the source file.
+            </td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Convert line ending</td>
+            <td>Allow to convert Windows (<code>CRLF</code>) and Mac Classic (<code>CR</code>) line ending to the Unix style (<code>LN</code>). This option is ignored when a <i>preprocessor</i> is set or when a <i>Language Server</i> is enabled. The line ending conversion is made my <a href="https://waterlan.home.xs4all.nl/dos2unix.html" target="_blank">Dos2unix</a>.</td>
+            <td style="text-align: center;"><b>Yes</b></td>
+        </tr>
+        <tr>
+            <td>Debug</td>
+            <td>If enabled, a <code>colorize.log</code> and <code>colorize.rtf\|html</code> file will be created on your Desktop folder with the log of last rendering.</td>
+            <td style="text-align: center;"><b>Yes</b></td>
+        </tr>
+    </table>
+
+    <h2>Format settings</h2>
+    <a name="SyntaxHighlight_FORMAT_PREFERENCES"></a>
+
+    <div><img src="images/settings_format.png" alt="Settings Window for specific format" /></div>
+
+    <p>You can override the global options for some formats on the <i>Formats</i> tab.</p>
+
+    <p>From the list on the left side you can choose the source file format.</p>
+    <p>For an explanation on the behavior of file types <a href="help:anchor=SyntaxHighlight_UTI bookID=org.sbarex.SourceCodeSyntaxHighlight.help">click here</a>.</p>
+    <p>The gray-out items on the list are those currently managed by others UTI. .<p>
+
+    <p>For every single format in addition to the global settings there are also these extra options:</p>
+    <table>
+        <tr>
+            <th>Settings</th>
+            <th>Description</th>
+            <th>Advanced</th>
+        </tr>
+        <tr>
+            <td id="extra">Append highlight arguments</td>
+            <td>Arguments <i>appended</i> to the <i>Extra highlight arguments</i>. <b>Arguments that contains a white space must be protected inside quotes.</b></td>
+            <td style="text-align: center;"><b>Yes</b></td>
+        </tr>
+        <tr>
+            <td id="preprocessor">Preprocessor</td>
+            <td>Set a program or a shell script to preprocess the source file before the formatting. The program must output to stdout the data to be passed to <code>highlight</code>. You <b>must</b> pass the name of the source file using the <code>$targetHL</code> placeholder. With the preprocessor you can handle file format not directly supported by <code>highlight</code>. This option is ignored when using a Language Server. 
+                The execution of the preprocessor is made inside the same env of the script that handle <code>highlight</code>.
+                <table>
+                    <tr><th>env</th><th>note</th></tr>
+                    <tr><td>debugHL</td><td>If it is not empty enable the output of the log to the file <code>~/Desktop/colorize.log</code>.</td></tr>
+                    <tr><td>targetHL</td><td>Path of the file to colorize.</td></tr>
+                    <tr><td>pathHL</td><td>Path of the highlight executable.</td></tr>
+                    <tr><td>cmdOptsHL</td><td>Array with the arguments passed to the highlight executable.</td></tr>
+                    <tr><td>themeHL</td><td>Highlight theme to be used.</td></tr>
+                    <tr><td>syntaxHL</td><td>If it is defined force the use of this language to recognize the target file.</td></tr>
+                    <tr><td>maxFileSizeHL</td><td>If it is defined, is the file size limit (in bytes) after apply a trim. The limit is applied to the output of the preprocessor and not to the contents of the source file.</td></tr>
+                </table>
+            </td>
+            <td><b>Yes</b></td>
+        </tr>
+        <tr>
+            <td id="syntax">Syntax</td>
+            <td>Set which language must be used to recognize the source file. If not set will be used the file name extension (corresponds to <code>--syntax</code> highlight arguments).</td>
+            <td style="text-align: center;"><b>Yes</b></td>
+        </tr>
+    </table>
+
+    <p>Advanced users can customize the single format to use an external <a href="https://langserver.org/">Language Server</a>:</p>
+    <table>
+        <tr>
+            <th>Settings</th>
+            <th>Description</th>
+            <th>Advanced</th>
+        </tr>
+        <tr>
+            <td>Executable</td>
+            <td>Full path of the Language Server executable.</td>
+            <td style="text-align: center;"><b>Yes</b></td>
+        </tr>
+        <tr>
+            <td>Delay</td>
+            <td>Server initialization delay in ms.</td>
+            <td style="text-align: center;"><b>Yes</b></td>
+        </tr>
+        <tr>
+            <td>Syntax</td>
+            <td>Syntax which is understood by the server.</td>
+            <td style="text-align: center;"><b>Yes</b></td>
+        </tr>
+        <tr>
+            <td>Hover</td>
+            <td>Execute hover requests. Require the <code>HTML</code> render engine.</td>
+            <td style="text-align: center;"><b>Yes</b></td>
+        </tr>
+        <tr>
+            <td>Semantic</td>
+            <td>Retrieve semantic token types (the Language Server must implement the protocol 3.16).</td>
+            <td style="text-align: center;"><b>Yes</b></td>
+        </tr>
+        <tr>
+            <td>Syntax Error</td>
+            <td>Retrieve syntax error information (assumes hover or semantic).</td>
+            <td style="text-align: center;"><b>Yes</b></td>
+        </tr>
+        <tr>
+            <td>Options</td>
+            <td>Custom command line options to pass to the Language Server.</td>
+            <td style="text-align: center;"><b>Yes</b></td>
+        </tr>
+    </table>
+
+    <p>When using an external Language Server the preprocessor and the data limit settings are ignored.</p>
+
+    <p>Some format have a preconfigured custom settings to handle the data (for example java compiled class file can be decompiled before render).</p>
+    <p>Inside the folder <code>~/Library/Application Support/Syntax Highlight/defaults/</code> (you may need to create it if is missing), you can also put a custom settings for specific UTI format creating a plist file named with the UTI value.<br />
     The plist can have any of this settings:</p>
+
     <table>
         <tr><th>name</th><th>type</th></tr>
         <tr><td><a href="#preprocessor">preprocessor</a></td><td>string</td></tr>
         <tr><td><a href="#syntax"></a>syntax</a></td><td>string</td></tr>
         <tr><td><a href="#extra"></a>extra</a></td><td>string</td></tr>
-    </table>
-
-    
-
-    <h2>Global preferences</h2>
-    <a name="SyntaxHighlight_GLOBAL_PREFERENCES"></a>
-
-    <p>Selecting the <i>Global</i> item on the left list you can customize the base settings for all supported file formats.</p>
-    
-    <div><img src="images/settings_global.png" alt="Global settings" /></div>
-
-    <table>
-        <tr>
-            <td>Highlight</td>
-            <td>Path of the <code>highlight</code> utils. You can choose the embedded version or select a different version (compiled by hand or installed with homebrew for example).</td></tr>
-        <tr>
-            <td>Output mode</td>
-            <td>Output mode in <i>html</i> or <i>rtf</i>. Html output is rendered inside a WKWebView. Rtf output is rendered inside a NSTextView.<br />
-                <small>(corresponds to <i>--out-format</i> highlight argument)</small>
-            </td>
-        </tr>
-        <tr>
-            <td>Data limit</td>
-            <td>Maximum amount of data to format, data beyond the limit is omitted. Specify 0 to not limit. Note that if is set a <a href="#preprocessor">preprocessor</a>, the filter is applied to the his output and not to the source file.</td>
-        </tr>
-        <tr>
-            <td>Debug</td>
-            <td>If on, create on your desktop two file with the result of last rendering:
-                    <ul>
-                        <li><i>colorize.log</i>: log of the colorize operations</li>
-                        <li><i>colorize.[html|rtf]</i> output of the syntax highlight show in the quicklook window.</li>
-                    </ul>
-            </td>
-        </tr>
-    </table>
-
-    <h2>Appearance preferences</h2>
-    <a name="SyntaxHighlight_APPEARANCE_PREFERENCES"></a>
-
-    <p>The appearance panel allow to customize the appearance of the rendered source files.</p>
-    
-    <div><img src="images/settings_appearance.png" alt="Appearance settings" /></div>
-
-    <table>
-        <tr>
-            <td>Theme</td>
-            <td>You can choose a theme for light and dark style of the MacOS. The list of theme is automatically generated querying <code>highlight</code>.<br />
-            <small>(corresponds to <i>--style</i> highlight arguments)</small>
-        </td>
-        <tr>
-            <td>Custom style</td>
-            <td>For <i>html</i> output mode you can set a custom css style to override the theme settings. <br/>
-            Custom style is saved on the application support folder.
-        </td>
-        </tr>
-        <tr>
-            <td>Font</td>
-            <td>Font family and size to use in the output. Depending on the theme chosen, italic and bold style may be applied to certain elements.<br />
-                <small>(corresponds to <i>--font</i> and <i>--font-size</i> highlight arguments)</small></td>
-        </tr>
-        <tr>
-            <td>Word wrap</td>
-            <td><small>(corresponds to <i>-V</i>, <i>-W</i> and <i>--line-length</i> highlight arguments)</small></td>
-        </tr>
-        <tr>
-            <td>Line numbers</td>
-            <td><small>(corresponds to <i>--line-numbers</i> and <i>--wrap-no-numbers</i> highlight arguments)</small></td>
-        </tr>
-
-        <tr>
-            <td>Tabs</td>
-            <td>Set if the tabs must be converted to space. Setting to zero disable tabs conversions.</br />
-                <small>(corresponds to <i>--replace-tabs</i> highlight argument)</small></td>
-        </tr>
-    </table>
-
-    <h2>Extra preferences</h2>
-    <a name="SyntaxHighlight_EXTRA_PREFERENCES"></a>
-
-    <p>This section allow to customize extra advanced settings.</p>
-    
-    <div><img src="images/settings_extra.png" alt="Extra settings" /></div>
-    <table>
-        <tr>
-            <td>Interactive preview</td>
-            <td>If enabled allow the execution of javascript code inside the quicklook preview. Enable only when in extra arguments you use a custom plugins that embed JS code inside the <code>highlight</code> output.<br />
-            When enabled you cannot drag the quicklook panel with click and drag on the window but only dragging the title bar. Also double click action to open the file is disabled.<br />
-            Is valid only <i>html</i> output mode.</td>
-        </tr>
-
-        <tr>
-            <td><a name="extra">Arguments</a></td>
-            <td>Any <code>highlight</code> additional arguments. Please don't provide arguments handled by the preferences GUI.</br />
-                <b>Each parameter value that contains spaces must be protected within single quotes. </b>Eg <code>--doc-title='title with space'</code>.<br />
-                <small>(see <code>man highlight</code> to a list of valid arguments and plugins)</small></td>
-        </tr>
-        <tr>
-            <td>Append arguments <small>(only for custom UTI settings)</small></td>
-            <td>Allow to set extra arguments to be appended to the global arguments. The note for the global arguments are also valid for this field.</td>
-        </tr>
-        <tr>
-            <td><a name="preprocessor">Pre processor</a> <small>(only for custom UTI settings)</small></td>
-            <td>Set a program to preprocess the source file before the formatting. <br />
-                The preprocessor handle the source file before it is elaborated by <code>highlight</code>. <br />
-                Preprocessor can be any cli utility or shell script that output to stdout the data to be passed to <code>highlight</code>. <br />
-                For specify the name of the source file you <b>must</b> pass the placeholder <code>$targetHL</code>. <br />
-                Preprocessor can be useful to convert a format into another (eg from binary to text), decompile, pretty printing…<br />
-                The execution of the preprocessor is made inside the same env of the script that handle <code>highlight</code>.
-                <table>
-                    <tr><th>env</th><th>note</th></tr>
-                    <tr><td>debugHL</td><td>If is not empty enable the output of the log to the file <code>~/Desktop/colorize.log</code>.</td></tr>
-                    <tr><td>targetHL</td><td>Path of the file to colorize.</td></tr>
-                    <tr><td>pathHL</td><td>Path of the <code>highlight</code> executable.</td></tr>
-                    <tr><td>cmdOptsHL</td><td>Array with the arguments passed to the <code>highlight</code> executable.</td></tr>
-                    <tr><td>themeHL</td><td>Highlight theme to be used.</td></tr>
-                    <tr><td>syntaxHL</td><td>If defined force the use of this language to recognize the target file.</td></tr>
-                    <tr><td>maxFileSizeHL</td><td>If defined, is the file size limit (in bytes) after apply a trim. The limit is applied to the output of the preprocessor and not to the contents of the source file.</td></tr>
-                </table>
-            </td>
-        </tr>
-        <tr>
-            <td><a name="syntax">Syntax</a> <small>(only for custom UTI settings)</small></td>
-            <td>Set which language must be used to recognize the source file <small>(corresponds to <i>--syntax</i> highlight arguments)</small>.</td>
-        </tr>
     </table>
 </body>
 </html>

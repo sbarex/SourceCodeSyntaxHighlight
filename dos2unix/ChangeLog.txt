@@ -1,0 +1,1520 @@
+2020-10-12 Erwin Waterlander <waterlan@xs4all.nl>
+	* Version 7.4.2
+
+2020-07-14 Fabio Tomat <f.t.public@gmail.com>
+	* New Friulian translation of the messages.
+
+2020-04-28 Roland Illig <roland.illig@gmx.de>
+	* Updated German translations of messages and manual.
+
+2019-10-27 pan93412 <pan93412@gmail.com>
+	* po/zh_TW.po: Updated Traditional Chinese translation.
+
+2019-09-24 Erwin Waterlander <waterlan@xs4all.nl>
+	* Version 7.4.1
+
+2018-12-01 Than Ngo <ngothan@users.sourceforge.net>
+	* common.c: Fixed issues reported by Coverity Scan
+	  See https://sourceforge.net/p/dos2unix/bugs/18/
+
+2018-10-09 Erwin Waterlander <waterlan@xs4all.nl>
+	* common.c: Flush printf output stream before changing Windows console
+	  cp in utf8 mode. This to prevent issues. Although I did not see any.
+
+2018-08-06 kirotawa <kirotawa@users.sourceforge.net>
+	* dos2unix.c, unix2dos.c: Fixed a minor memory leak.
+	  See https://sourceforge.net/p/dos2unix/bugs/17/
+
+2018-07-21 Erwin Waterlander <waterlan@xs4all.nl>
+	* Makefile: Fix: Add RPM_LD_FLAGS instead of RPM_OPT_FLAGS to LDFLAGS.
+
+2017-10-10 Erwin Waterlander <waterlan@xs4all.nl>
+	* Version 7.4.0
+
+2017-09-24 Sebastian Rasmussen
+	* Fixed typos in code and documentation.
+
+2017-09-11 Erwin Waterlander <waterlan@xs4all.nl>
+	* common.c: When --allow-chown is used put the same read/write
+	  permissions as in new file mode.
+	* man/man1/dos2unix.pod: Updated.
+
+2017-09-05 Erwin Waterlander <waterlan@xs4all.nl>
+	* common.c: Option -V shows if dos2unix has support for preserving
+	  the user and group ownership of files.
+	* common.c: New option --allow-chown to allow file ownership change
+	  in old file mode. Option --no-allow-chown does the opposite.
+	  Thanks to RedHat bug: 1483633 - Add option to force in-place conversion
+	  even if ownership cannot be preserved
+	  https://bugzilla.redhat.com/show_bug.cgi?id=1483633
+
+2017-08-05 Erwin Waterlander <waterlan@xs4all.nl>
+	* Makefile: Build all text and html manual files when ENABLE_NLS=1.
+	* Makefile: Removed unneeded tabs.
+
+2017-07-29 Erwin Waterlander <waterlan@xs4all.nl>
+	* common.c: Code cleanup.
+
+2017-07-08 Erwin Waterlander <waterlan@xs4all.nl>
+	* test/Makefile: Fix setting C.UTF-8 environment (when available).
+
+2017-07-04 Erwin Waterlander <waterlan@xs4all.nl>
+	* Version 7.3.5
+	* Makefile: Compile with -O0 when DEBUG=1.
+
+2017-06-20 Erwin Waterlander <waterlan@xs4all.nl>
+	* common.c: New flag 0 for option -i, --info. End information lines with
+	  a null character instead of a newline character, enabling correct file
+	  name interpretation when flag c is used.
+	* common.c: Don't print leading spaces when option -i with flag c is used.
+
+2017-05-18 Erwin Waterlander <waterlan@xs4all.nl>
+	* man/man1/dos2unix.pod: Improved example for recursive conversion.
+	  Thanks to report of Beep6581.
+	  https://sourceforge.net/p/dos2unix/bugs/14/
+
+2017-05-09 Erwin Waterlander <waterlan@xs4all.nl>
+	* Makefile: Create stubs for mac2unix.exe and unix2mac.exe
+	  with DJGPP 2.05. With DJGPP 2.03 this was done with 'ln -s',
+	  but this doesn't work with DJGPP 2.05.
+
+2016-11-15 Erwin Waterlander <waterlan@xs4all.nl>
+	* test/: Use by default C.UTF-8 locale for UTF-16 tests. Not all build
+	  environments have the en_US.UTF-8 locale. Try en_US.UTF-8 if C.UTF-8
+	  is not available, else skip the UTF-16 tests. Thanks to report of
+	  Jari Aalto.
+
+2016-11-01 Jari Aalto <jari.aalto@cante.net>
+	* Makefile: Reproducible date in man pages.
+	* test/Makefile: Disable by default colored output. To enable colored
+	  output add PROVE_OPT=--color to the make command line.
+	* test/chk_loc.sh: Check for missing argument.
+
+2016-09-20 Erwin Waterlander <waterlan@xs4all.nl>
+	* common.c: Code cleanup.
+
+2016-09-06 Erwin Waterlander <waterlan@xs4all.nl>
+	* dos2unix.c,unix2dos.c,common.c: Code cleanup.
+
+2016-05-25 Erwin Waterlander <waterlan@xs4all.nl>
+	* common.c: Fix compilation for msys2.
+
+2016-05-24 Erwin Waterlander <waterlan@xs4all.nl>
+	* Version 7.3.4
+	* djgpp.mak: Fix targets install and dist by setting SHELL variable.
+
+2016-05-03 Erwin Waterlander <waterlan@xs4all.nl>
+	* common.c: Fix malloc() check in glob_warg();
+
+2016-05-02 Erwin Waterlander <waterlan@xs4all.nl>
+	* common.c: Cleanup d2u_mktemp and MakeTempFileFrom(). 
+
+2016-04-30 Erwin Waterlander <waterlan@xs4all.nl>
+	* common.c: New function d2u_mktemp(). Wrapper for mktemp() that uses
+	  GetTempFileName() on Windows. Use of mktemp() is not safe.
+	* common.h: Use mktemp wrapper also for Watcom C on Windows. Now dos2unix
+	  built with Watcom C can also support Unicode file names on Windows.
+	* wcc*.mak, wcc.mif: Enable  Unicode file name support for Watcom C.
+	* wcc*.mak, wcc.mif, vc.mak: Allow use of DEBUGMSG.
+	* common.c, dos2unix.c, unix2dos.c: Fix compilation for Watcom C. Reducing
+	  scope of some variables (done on 2016-03-19) led to compile errors for
+	  Watcom C. Watcom C supports only declaration of variables at the
+	  beginning of a scope.
+
+2016-04-29 Erwin Waterlander <waterlan@xs4all.nl>
+	* common.c: Code cleanup. Simplify use of MakeTempFileFrom().
+
+2016-04-15 Erwin Waterlander <waterlan@xs4all.nl>
+	* djgpp.mak: Extra comment for DJGPP 2.05. Extra
+	  variable CROSS_COMP.
+	* INSTALL.txt: Extra info for DJGPP.
+
+2016-03-28 Erwin Waterlander <waterlan@xs4all.nl>
+	* INSTALL.txt: Mention that MSYS(2) is required for building
+	  with MinGW(-w64).
+
+2016-03-19 Erwin Waterlander <waterlan@xs4all.nl>
+	* *.c: Fix all cppcheck warnings.
+
+2016-02-16 Erwin Waterlander <waterlan@xs4all.nl>
+	* djgpp.mak: Support cross compilation from Cygwin.
+
+2016-02-13 Erwin Waterlander <waterlan@xs4all.nl>
+	* Version 7.3.3
+
+2016-02-10 Erwin Waterlander <waterlan@xs4all.nl>
+	* common.c: Don't print FILE column of header in stdio mode.
+
+2016-02-05 Erwin Waterlander <waterlan@xs4all.nl>
+	* common.c: Fix. Dos2unix was not quiet in all cases when
+	  option -q was used.
+
+2016-02-04 Erwin Waterlander <waterlan@xs4all.nl>
+	* common.c: Changed header for column text/binary to TXTBIN.
+
+2016-02-02 Erwin Waterlander <waterlan@xs4all.nl>
+	* common.c: New flags for options -i, --info.
+	  Flag h : print a header.
+	  Flag p : show file names without path.
+	  Thanks to Alan S. Jones.
+
+2016-01-31 Erwin Waterlander <waterlan@xs4all.nl>
+	* Makefile: Don't package international man pages
+	  when ENABLE_NLS is empty.
+
+2016-01-29 Erwin Waterlander <waterlan@xs4all.nl>
+	* Makefile: Don't install international man pages when ENABLE_NLS
+	  is empty. Thanks to anonymous.
+
+2016-01-28 Erwin Waterlander <waterlan@xs4all.nl>
+	* man/*/man1/dos2unix.po: Moved all manual .po file to directory
+	  po-man/. The .po files now have their original name.
+	* Makefile, man/man1/Makefile: Build international manuals from
+	  the .po files in folder po-man/.
+
+2016-01-20 Erwin Waterlander <waterlan@xs4all.nl>
+	* common.c: Fixed printing text in unicode UTF-16 mode on Windows,
+	  so that when it is redirected to a file, a correct UTF-16 file
+	  is created. Thanks to Hans Passant.
+	* common.c: Added display encoding methods "unicodebom" and "utf8bom". These
+	  methods add a BOM to stdout, which is required for correct redirection
+	  in PowerShell.
+	* man/man1/dos2unix.pod: Updated manual for option -D.
+	* test/testps16.ps1, test/testps8.ps1: Fixed select-string test.
+
+2016-01-16 Erwin Waterlander <waterlan@xs4all.nl>
+	* *.c: Fixed printing of East-Asian ANSI multi-byte encoded text on Windows
+	  with an East-Asian regional setting.
+	  It appears that when setlocale() sets the locale to "" in the beginning
+	  of main(), which is done for gettext translations, multi-byte ANSI is
+	  printed wrongly. On windows we need to set the locale to "C" to make East-
+	  Asian text printed correctly. On Unix setting the locale to "C" would
+	  disable the gettext translations, but on Windows it keeps working.
+	* test/setlocale.c: New test program that proves that setlocale(LC_ALL, "")
+	  breaks printf() on Windows for Chinese CP936 encoded text in a CP936
+	  regional setting, and for UTF-8 text.
+	* test/setlocale.png: Example output of the test program.
+	* common.h, *.c: Created macro D2U_FPRINTF, for correct printing of text
+	  when Unicode file names support is disabled.
+
+2016-01-13 Erwin Waterlander <waterlan@xs4all.nl>
+	* *.c: Use d2u_ansi_fprintf() for printing the help text, version
+	  information and license. It appears that printing Chinese text
+	  properly in a Windows Command Prompt in a Chinese regional setting
+	  requires the Unicode method. I would expect that standard printf()
+	  would work for ANSI CP936 encoded text. My tests show that I need to
+	  use option "-D unicode" to get proper output. When I use the ansi method
+	  I get wrong output, but when I redirect that to a text file, I get
+	  proper CP936 output in the text file.
+
+	  PS:
+	  See change of 2016-01-16 above. The cause of the problem was setlocale().
+
+2016-01-02 Erwin Waterlander <waterlan@xs4all.nl>
+	* Makefile: Compilation for mingw, mingw32-w64, and mingw64-w64
+	  works out of the box.
+	* mingw*.mak: Deleted.
+
+2015-12-27 Erwin Waterlander <waterlan@xs4all.nl>
+	* man/man1/dos2unix.pod: Manual update. Binary file detection is not
+	  foolproof.
+	* Moved Git repository:
+	  git clone git://git.code.sf.net/p/dos2unix/dos2unix
+
+2015-12-22 Erwin Waterlander <waterlan@xs4all.nl>
+	* Makefile: Split DEBUG=1 into DEBUG=1 and DEBUGMSG=1.
+	  DEBUG=1 will add option -g to CFLAGS for debugging with gdb.
+	  DEBUGMSG=1 makes dos2unix print extra messages about accessing the
+	  file system.
+	* Makefile: Use GNU standard variables INSTALL_DATA and INSTALL_PROGRAM
+	  for installation.
+
+2015-12-20 Erwin Waterlander <waterlan@xs4all.nl>
+	* Moved Subversion repository to Git repository.
+	  git clone git://git.code.sf.net/p/dos2unix/gitcode dos2unix-gitcode
+	* Removed execution permission from text and source files.
+
+2015-12-08 Erwin Waterlander <waterlan@xs4all.nl>
+	* DEVEL.txt: New text file with information about why dos2unix is made
+	  like it is.
+
+2015-11-20 Erwin Waterlander <waterlan@xs4all.nl>
+	* Version 7.3.2
+	* Makefile: Automatically detect if we are on MSYS 1 or 2.
+	  Unicode support is disabled for MSYS 1.
+
+2015-11-09 Sebastian Rasmussen <sebras@gmail.com>
+	* po/sv.po: New Swedish translation of the messages.
+	* man/sv/man1/dos2unix.po: New Swedish translation of the manual.
+
+2015-11-08 Erwin Waterlander <waterlan@xs4all.nl>
+	* Makefile, djgpp.mak, test/Makefile: Make it possible to run test
+	  suite in DJGPP environment. $SHELL must point to sh or bash.
+
+2015-11-07 Erwin Waterlander <waterlan@xs4all.nl>
+	* test: Be able to run tests when UTF-16 support is not enabled (UCS=).
+
+2015-11-05 Erwin Waterlander <waterlan@xs4all.nl>
+	* common.c: Fix option -iso. The -iso option was misinterpreted
+	  as a corrupted -i option. Thanks to report of Ulf-Dietrich Braumann.
+	* test/iso.t: Added two tests for option -iso.
+
+2015-10-09 Rafael Fontenelle <rffontenelle@gmail.com>
+	* po/pt_BR.po: Updated Brazilian Portuguese translation.
+	* man/pt_BR.po/man1/dos2unix.po: Updated Brazilian Portuguese translation.
+
+2015-10-01 Erwin Waterlander <waterlan@xs4all.nl>
+	* common.c: Fix compilation for MSYS 1.
+
+2015-09-30 Erwin Waterlander <waterlan@xs4all.nl>
+	* Version 7.3.1
+
+2015-09-23 Erwin Waterlander <waterlan@xs4all.nl>
+	* man/man1/dos2unix.pod: Added two examples for option -i, --info.
+	* po/*.po: Updated several translations. See README.txt.
+
+2015-09-05 zwpwjwtz <zwpwjwtz@126.com>
+	* man/zh_CN/man1/dos2unix.po: New simplified Chinese translation of the manual.
+
+2015-09-03 Erwin Waterlander <waterlan@xs4all.nl>
+	* common.c: Skip UTF-16 files when UTF-16 conversion is not supported.
+	  Do not even try to convert. Conversion could go wrong when the
+	  UTF-16 file has no 8-bit binary symbols.
+
+2015-09-02 Erwin Waterlander <waterlan@xs4all.nl>
+	* common.c: Fix message printed, when dos2unix without Unicode support
+	  converts an UTF-16 file with only a BOM and no text. Output format was not
+	  printed. This fixed compile warning "unused parameter 'lout'".
+	* common.h: Fixed compile warning "implicit declaration of function 'd2u_printf'"
+	  when Unicode support is disabled.
+
+2015-09-02 Baruch Siach
+	* common.c: Fix compilation error "'wchar_t' undeclared"
+	  when Unicode support is disabled.
+
+2015-08-31 zwpwjwtz <zwpwjwtz@126.com>
+	* po/zh_CN.po: New simplified Chinese translation.
+
+2015-08-26 Erwin Waterlander <waterlan@xs4all.nl>
+	* common.c, mingw.mak: Fix compilation for mingw.org.
+
+2015-08-24 Erwin Waterlander <waterlan@xs4all.nl>
+	* Version 7.3
+
+2015-08-15 Erwin Waterlander <waterlan@xs4all.nl>
+	* common.c: Fix: Options -ul and -ub caused option -i to
+	  report wrong BOM for no_bom.
+	* test: Added two new tests for combination of -ul/-ub with -i.
+
+2015-08-13 Erwin Waterlander <waterlan@xs4all.nl>
+	* man/man1/dos2unix.pod: Small update on option -D.
+
+2015-08-10 Erwin Waterlander <waterlan@xs4all.nl>
+	* common.c: Default method for printing Unicode can be changed with
+	  environment variable DOS2UNIX_DISPLAY_ENC.
+	* man/man1/dos2unix.pod: Small update on option -D.
+	* test/testu16.c: Added a small test that demonstrates that redirecting
+	  UTF-16 stdout to a file creates a corrupt UTF-16 file.
+
+2015-08-08 Erwin Waterlander <waterlan@xs4all.nl>
+	* man/man1/dos2unix.pod: Small update on option -D. Added tip for recursive
+	  conversion in a Windows Command Prompt.
+
+2015-08-06 Erwin Waterlander <waterlan@xs4all.nl>
+	* man/man1/dos2unix.pod: Updated section "Unicode file names on Windows"
+	  and described new option -D, --display-enc.
+
+2015-08-05 Erwin Waterlander <waterlan@xs4all.nl>
+	* common.c: New option -D, --display-encoding, to set the encoding used
+	  for the text messages displayed in the Windows console. Possible
+	  values are: ansi, unicode, utf8.
+
+2015-08-01 Erwin Waterlander <waterlan@xs4all.nl>
+	* common.c: Renamed d2u_printf() to d2u_fprintf().
+	* common.c: Fix d2u_fprintf() to work correctly when Native Language
+	  Support is enabled.
+	* common.c: New function d2u_ansi_fprintf() to redirect also non-Unicode
+	  messages to d2u_fprintf(), to have consistent output.
+	* *.c: Replace all fprintf() with d2u_fprintf() or d2u_ansi_fprintf().
+	* man/man1/dos2unix.pod: Added a new section "Unicode file names on Windows".
+
+2015-07-29 Erwin Waterlander <waterlan@xs4all.nl>
+	* INSTALL.txt: Updated with information about Unicode file name
+	  support on Windows.
+	* po/*.po: Included several translation updates. See README.txt.
+	* test/test.bat: Renamed to test/testcmd.bat.
+	* test/testps8.ps1: PowerShell script in UTF-8 format using Unicode file names.
+	* test/testps16.ps1: PowerShell script in UTF-16 format using Unicode file names.
+
+2015-07-23 Erwin Waterlander <waterlan@xs4all.nl>
+	* common.c: glob_warg(): Check for malloc/realloc errors.
+	* dos2unix.c, unix2dos.c: Check for malloc errors.
+
+2015-07-20 Erwin Waterlander <waterlan@xs4all.nl>
+	* common.c: print_bom(). Fix split message for translators.
+
+2015-07-18 Erwin Waterlander <waterlan@xs4all.nl>
+	* common.c: d2u_printf(). Use wprintf to print UTF-8.
+	  MinGW-w64 g++ (4.9.2) had some problems printing UTF-8. After first
+	  UTF-8 file name was printed the rest of UTF-8 was printed blank.
+	  This problem was in Windows Console. The problem was not there in
+	  ConEmu. MSVC (2013) does not have this problem. Using gcc and wprintf
+	  is OK in Windows Console and ConEmu.
+	* mingw*.mak: Switch back to use gcc always.
+	* common.c: Fix messages ending with space, for translators.
+
+2015-07-12 Erwin Waterlander <waterlan@xs4all.nl>
+	* vc.mak: Enable Unicode file names.
+	* common.c: Check output of WideCharToMultiByte and MultiByteToWideChar.
+	* common.c: Fixed a problem in glob_warg().
+	* mingw*.mak: Use g++ only when UNIFILE==1.
+	* test/test.bat: Windows batch script that demonstrates how to use Unicode
+	  file names in a script.
+
+2015-07-11 Erwin Waterlander <waterlan@xs4all.nl>
+	* mingw32.mak, mingw64.mak: Add extra required DLLs for binary
+	  package with Unicode file name support.
+
+2015-07-10 Erwin Waterlander <waterlan@xs4all.nl>
+	* common.c: Finished glob_warg().
+	* dos2unix.c, unix2dos.c: Use glob_warg() to expand arguments in
+	  the Windows Command Prompt.
+	* mingw32.mak, mingw.mak: Unicode file name support is enabled
+	  by setting UNIFILE=1.
+
+2015-07-09 Erwin Waterlander <waterlan@xs4all.nl>
+	* *.c: Renamed D2U_WINWIDE to D2U_UNIFILE
+	* mingw64.mak, Makefile: Unicode file name support is enabled
+	  by setting UNIFILE=1.
+	* common.c: Initial version of glob_warg() for wild card expansion
+	  of the wide command line arguments. Expands wide Unicode arguments,
+	  and returns them in UTF-8.
+
+2015-07-08 Erwin Waterlander <waterlan@xs4all.nl>
+	* dos2unix.c, unix2dos.c, common.c: Unicode file name support
+	  requires D2U_WINWIDE to be defined. There is still a problem
+	  with globbing Unicode file names.
+
+2015-07-07 Erwin Waterlander <waterlan@xs4all.nl>
+	* common.c: Fix d2u_printf() to print Unicode properly in the
+	  Windows Console. This required C++.
+	* mingw*.mak: Use g++ instead of gcc.
+	* vc.mk: Added library shell32.lib for wide arguments.
+
+2015-07-06 Erwin Waterlander <waterlan@xs4all.nl>
+	* dos2unix.c, unix2dos.c, common.c: Support Unicode file names
+	  on Windows.
+
+2015-07-01 Erwin Waterlander <waterlan@xs4all.nl>
+	* Version 7.2.3
+
+2015-06-27 Erwin Waterlander <waterlan@xs4all.nl>
+	* Makefile: Enable UTF-16 by default for MSYS, because MSYS2 supports it.
+	  For compilation on MSYS1 you have to disable it.
+	* common.c: Don't print "converting file ... to ..." when there was an error.
+	* common.c: Fixed false warning while reading BOM from zero byte file.
+	  Was introduced on 2015-06-24.
+
+2014-06-27 Joe Hansen <joedalton2@yahoo.dk>
+	* po/da.po: Updated Danish translation.
+
+2015-06-24 Erwin Waterlander <waterlan@xs4all.nl>
+	* common.c: Bug fix. Check for file I/O errors with every file access.
+
+2015-06-23 Erwin Waterlander <waterlan@xs4all.nl>
+	* dos2unix.c, unix2dos.c: Bug fix. Check for file I/O errors
+	  with every file access. Thanks to report of Philip Rowlands.
+	  http://sourceforge.net/p/dos2unix/bugs/12/
+	* common.c: New functions d2u_getc_error, d2u_putc_error, and
+	  d2u_putwc_error for printing error messages.
+
+2015-05-27 Erwin Waterlander <waterlan@xs4all.nl>
+	* common.c: Fix compilation for msys.
+
+2015-05-22 Erwin Waterlander <waterlan@xs4all.nl>
+	* Version 7.2.2
+	* djgpp.mak: Fixed target strip.
+
+2015-05-11 Erwin Waterlander <waterlan@xs4all.nl>
+	* test/utf16.t: Added 2 tests with invalid surrogate pair.
+	* dos2unix.c, unix2dos.c: Print line number when UTF-16 conversion
+	  error occurs.
+	* dos2unix.c, unix2dos.c: Don't print number of converted lines in
+	  verbose mode when error occurs.
+
+2015-05-10 Erwin Waterlander <waterlan@xs4all.nl>
+	* common.c: Print system error when conversion from UTF-16 fails.
+	* common.c: Check for invalid surrogate pairs in UTF-16 input.
+
+2015-05-07 Erwin Waterlander <waterlan@xs4all.nl>
+	* test/wcstombs_test.c: New test that shows that wcstombs() is broken
+	  on FreeBSD for CJK characters in a zh_CN.GB18030 locale.
+	* test/Makefile: New target 'wcstombs' that runs wcstombs_test.
+	* test/README.txt: New file.
+	* test/misc.t, test/utf16.t: new tests for unix2dos to check
+	  conversion of binary files with null characters.
+
+2015-05-03 Erwin Waterlander <waterlan@xs4all.nl>
+	* test/Makefile: Disable GB18030 tests for FreeBSD. Tests which convert
+	  UTF-16 with surrogate pairs to GB18030 fail. Seen on FreeBSD 10.1.
+	  Issue in wcstombs()?
+	* common.h: Removed define of _XOPEN_SOURCE. When _XOPEN_SOURCE is
+	  defined, the function lstat() is not found on FreeBSD 10.1.
+	* common.c: Bug fix. When conversion of an UTF-16 file with binary
+	  symbols was forced, null characters were not written in the output.
+	* test: Added new test for UTF-16 file with null characters.
+
+2015-04-01 Erwin Waterlander <waterlan@xs4all.nl>
+	* Version 7.2.1
+
+2015-02-15 Erwin Waterlander <waterlan@xs4all.nl>
+	* test/misc.t: Fix test for -f option.
+	* test/chk_loc.sh: New script to test if locale is supported.
+	* test/Makefile: Skip gb18030 test if zh_CN.gb18030 locale is not supported.
+	* man/man1/dos2unix.pod: Update section GB18030 and option -m.
+
+2015-02-11 Erwin Waterlander <waterlan@xs4all.nl>
+	* Version 7.2
+
+2015-01-15 Armin Müller
+	* common.c,dos2unix.c,unix2dos.c: Use %u in format strings for
+	  unsigned ints.
+	* common.c: Fixed typo in if condition in write_bom().
+
+2015-01-15 Erwin Waterlander <waterlan@xs4all.nl>
+	* test/gb18030.t: Added more tests.
+
+2015-01-03 Erwin Waterlander <waterlan@xs4all.nl>
+	* Makefile: Fixed wrong encoded titles in HTML manuals when Perl 5.18
+	  pod2html was used. Thanks to Tom Christiansen.
+
+2015-01-02 Erwin Waterlander <waterlan@xs4all.nl>
+	* Makefile, man/man1/Makefile: add option --no-wrap to xgettext and
+	  msgmerge. Translation Project standard is not to wrap.
+
+2015-01-02 Erwin Waterlander <waterlan@xs4all.nl>
+	* man/man1/dos2unix.pod: Point to gettext manual html nodes instead of
+	  the full gettext manual.
+
+2014-12-31 Erwin Waterlander <waterlan@xs4all.nl>
+	* man/man1/dos2unix.pod: Cleanup man page. Thanks to Benno Schulenberg.
+
+2014-12-30 Erwin Waterlander <waterlan@xs4all.nl>
+	* common.c: Changed some messages for better translations.
+
+2014-12-26 Erwin Waterlander <waterlan@xs4all.nl>
+	* common.c: Fix. On Windows when option -gb is used, option -m must
+	  add GB18030 BOM i.s.o. UTF-8 BOM.
+	* test/gb18030.t: Make tests working for Windows version.
+
+2014-12-24 Erwin Waterlander <waterlan@xs4all.nl>
+	* common.c: Fix. In a GB18030 locale, option -m must add GB18030 BOM
+	  i.s.o. UTF-8 BOM.
+	* test/gb18030.t: New tests for GB18030.
+
+2014-12-23 Erwin Waterlander <waterlan@xs4all.nl>
+	* man/man1/dos2unix.pod: Update section GB18030.
+
+2014-12-08 Erwin Waterlander <waterlan@xs4all.nl>
+	* common.c: When the input file is UTF-16, the input and output
+	  formats are printed.
+
+2014-12-06 Erwin Waterlander <waterlan@xs4all.nl>
+	* common.c: On Unix/Linux convert UTF-16 to the locale encoding. It is
+	  no longer required that the locale encoding is UTF-8. When
+	  conversion is not possible an error will occur and conversion will be
+	  skipped.
+
+2014-12-06 Erwin Waterlander <waterlan@xs4all.nl>
+	* common.c, common.h: Support conversion of UTF-16 to GB18030.
+	* man/man1/dos2unix.pod: Update with info about GB18030.
+
+2014-11-09 Yasuaki Taniguchi <yasuakit@gmail.com>
+	* po/ja.po: New Japanese translation of the UI messages.
+
+2014-10-06 Erwin Waterlander <waterlan@xs4all.nl>
+	* Version 7.1
+
+2014-09-29 Erwin Waterlander <waterlan@xs4all.nl>
+	* common.c: Fixed possible uninitialized use of variable bomtype_orig.
+	* djgpp.mak: Fix time stamps mac2unix/unix2mac after make strip.
+
+2014-09-22 Erwin Waterlander <waterlan@xs4all.nl>
+	* mingw32.mak, mingw64.mak: Fixed setting path to CRT_glob.o.
+	  Works now independent of MSYS2 install path.
+
+2014-09-22 Helmut Karlowski
+	* Makefile: Added settings for freeMiNT, and cleanup setting
+	  OS specific settings.
+	* common.c: PrintVersion() updated for freeMiNT.
+
+2014-09-18 Erwin Waterlander <waterlan@xs4all.nl>
+	* test/misc.t: Added a test for option -i, --info.
+	* *.po: Included several translation updates.
+
+2014-09-17 Erwin Waterlander <waterlan@xs4all.nl>
+	* common.c: Program terminates when wrong flag is given for option
+	  -i or --info.
+	* common.c: Option -i, flag c: don't print binary files when conversion
+	  of binaries is not forced.
+
+2014-09-16 Erwin Waterlander <waterlan@xs4all.nl>
+	* common.c: Options -i, --info can have extra flags to change the
+	  output. For instance to print only the number of Unix line breaks,
+	  or print only the files that have DOS line breaks.
+	* man/man1/dos2unix.pod: Updated.
+
+2014-09-11 Erwin Waterlander <waterlan@xs4all.nl>
+	* common.c: New option -i, --info, display file information.
+	  This new option prints number of line breaks, the byte order
+	  mark, and if the file is text or binary.
+	* man/man1/dos2unix.pod: Added option -i.
+	* test/*.t: Use Test::Simple iso Test::More.
+
+2014-09-09 Erwin Waterlander <waterlan@xs4all.nl>
+	* Version 7.0
+
+2014-09-08 Erwin Waterlander <waterlan@xs4all.nl>
+	* common.c: Option -V prints home page.
+
+2014-09-03 Erwin Waterlander <waterlan@xs4all.nl>
+	* dos2unix.c, unix2dos.c: Return an error number in stdio mode when the
+	  input is binary. In stdio mode an input stream with a binary symbol
+	  produces broken output. In file mode the binary file is skipped.
+	* test/misc.t: Added tests for above.
+	* dos2unix.c, unix2dos.c, common.c: Bug fix. System error number was not
+	  always returned. When disk is full and output can't be written,
+	  or when resolving a symlink fails.
+
+2014-09-01 Erwin Waterlander <waterlan@xs4all.nl>
+	* common.c: Bug fix. Option -u disabled -m for ASCII or UTF-8 input
+	  files without BOM. Bug was introduced on 2014-08-05.
+	* dos2unix.c, unix2dos.c, common.c: Bug fix. An Unicode input file
+	  disabled 7bit and iso mode also for next input files. Bug was
+	  introduced in version 6.0.1 on 2012-03-23.
+	* common.c: Cleanup. Don't write BOM when conversion will be cancelled.
+	* test/misc.t: Added tests for the two bug fixes.
+
+2014-08-28 Erwin Waterlander <waterlan@xs4all.nl>
+	* dos2unix.c, unix2dos.c, common.c: Code cleanup. Moved more code
+	  to common.c.
+	* common.c: Bug fix mac2unix help text, options -b and -r. Bug was
+	  introduced in 6.0.6.
+	* *.po: Included updated pt_BR translations.
+
+2014-08-26 Erwin Waterlander <waterlan@xs4all.nl>
+	* dos2unix.c, unix2dos.c, common.c: stdio mode does not automatically
+	  set quiet mode. stdio mode prints errors and returns error code.
+	* dos2unix.c, unix2dos.c: stdio mode does not automatically force
+	  conversion of binaries.
+
+2014-08-25 Erwin Waterlander <waterlan@xs4all.nl>
+	* test/symlink.t: New tests for options -F, -R, -S
+	* *.po: Included updated nl,nb ,vi translations.
+
+2014-08-22 Erwin Waterlander <waterlan@xs4all.nl>
+	* *.po: Included updated nl,pl,ru translations.
+
+2014-08-18 Erwin Waterlander <waterlan@xs4all.nl>
+	* unix2dos.c: Fix: Unix2dos did not count UTF-16 line break conversions.
+	* INSTALL.txt: Update for running self-tests.
+	* *.po: Included updated fr,de,uk translations.
+	* test: Added more tests.
+
+2014-08-17 Erwin Waterlander <waterlan@xs4all.nl>
+	* test: Use TAP (Test Anything Protocol) to run tests.
+	  Requires perl module perl-Test-Simple.
+
+2014-08-11 Erwin Waterlander <waterlan@xs4all.nl>
+	* test: Added automated tests.
+
+2014-08-10 Erwin Waterlander <waterlan@xs4all.nl>
+	* dos2unix.c: Bug fix: dos2unix -l created DOS line breaks
+	  from Mac line breaks. This bug was introduced in version 3.2,
+	  by safeconv patch.
+	* INSTALL.txt: Update for DJGPP. Use gcc <= 4.5.3.
+
+2014-08-08 Erwin Waterlander <waterlan@xs4all.nl>
+	* man/man1/dos2unix.pod: Update manual wrt Unicode.
+	* common.c: Update help message for option -m.
+
+2014-08-06 Erwin Waterlander <waterlan@xs4all.nl>
+	* New option -v, --verbose: Print extra information about
+	  number of converted line breaks and BOMs.
+
+2014-08-05 Erwin Waterlander <waterlan@xs4all.nl>
+	* New option -u, --keep_utf16: Keep UTF-16 encoding of the
+	  input file. This prevents transformation to UTF-8.
+
+2014-08-03 Erwin Waterlander <waterlan@xs4all.nl>
+	* Version 6.0.6
+
+2014-08-03 Enrique Lazcorreta Puigmartí <enrique.lazcorreta@gmail.com>
+	* po/es.po : Updated Spanish translation of messages.
+	* man/es/man1/dos2unix.po : Updated Spanish translation of manual.
+
+2014-07-12 Various authors
+	* po/*.po, man/*/man1/*.po: Update translations.
+	  See README.txt for details.
+
+2014-07-12 Yuri Kozlov <yuray@komyakino.ru>
+	* po/ru.po: Update Russian translation of messages.
+
+2014-07-09 Erwin Waterlander <waterlan@xs4all.nl>
+	* dos2unix.c, unix2dos.c: Option -r also disables option
+	  -m (add BOM).
+
+2014-07-07 Erwin Waterlander <waterlan@xs4all.nl>
+	* dos2unix.c, unix2dos.c, common.c: New options -b (keep BOM)
+	  and -r (remove BOM).
+
+2014-07-06 Erwin Waterlander <waterlan@xs4all.nl>
+	* dos2unix.c: Bug fix mac2unix conversion of UTF-16 files.
+	  Mac to Unix conversion produced corrupted output.
+	  Thanks to report of Alan S. Jones.
+	  This bug was introduced in version 6.0.
+
+2014-05-24  Åka Sikrom <a4@hush.com>
+	* po/nb.po: New Norwegian Bokmaal translation.
+
+2014-05-17 Mario Blättermann <mario.blaettermann@gmail.com>
+	* po/de.po: Update German messages.
+
+2014-05-12 Erwin Waterlander <waterlan@xs4all.nl>
+	* INSTALL.txt: Updated for building 64-bit applications
+	  with Microsoft Visual C++ Express.
+
+2014-05-12 Frédéric Marchal <fmarchal@perso.be>
+	* man/fr/man1/dos2unix.po: Fixed minor translation error.
+
+2014-04-23 Erwin Waterlander <waterlan@xs4all.nl>
+	* man/man1/Makefile: Removed dependency on GNU sed.
+	  Thanks to Daniel Macks.
+	* BUGS.txt: Update URL to bug tracker.
+
+2014-04-17 Erwin Waterlander <waterlan@xs4all.nl>
+	* Version 6.0.5
+
+2014-04-09 Erwin Waterlander <waterlan@xs4all.nl>
+	* common.c: Fix symbolic_link(), don't print error when file
+	  does not exist (problem was introduced on 2014-03-21).
+
+2014-04-08 Erwin Waterlander <waterlan@xs4all.nl>
+	* Makefile: Fix for GNU make < 3.82. For rules with multiple
+	  patterns, put rule with shortest stem first.
+
+2014-04-04 Erwin Waterlander <waterlan@xs4all.nl>
+	* vc.mak, wcc.mif: Only generate English manuals. Target clean
+	  does not delete the manuals, new target maintainer-clean does.
+
+2014-03-23 Jakub Bogusz <qboosh@pld-linux.org>
+	* man/pl/dos2unix.po: New Polish translation of the manual.
+
+2014-03-23 Benno Schulenberg <benno@vertaalt.nl>
+	* man/nl/dos2unix.po: Update Dutch manual.
+
+2014-03-22 Balázs Úr <urbalazs@gmail.com>
+	* po/hu.po: New Hungarian translation of UI messages.
+
+2014-03-21 Erwin Waterlander <waterlan@xs4all.nl>
+	* common.c: Windows version of function symbolic_link().
+	  Now Windows version also skips symbolic links by default.
+	* man/man1/dos2unix.pod: Update wrt Windows symbolic links,
+	  and some minor updates.
+	* Makefile: Fix some dependencies for man page creation.
+
+2014-03-18 Rafael Ferreira <rafael.f.f1@gmail.com>
+	* man/pt_BR/man1/dos2unix.po: New Brazilian Portuguese
+	  translation of the manual.
+
+2014-03-18 Frédéric Marchal <fmarchal@perso.be>
+	* man/fr/man1/dos2unix.po: New French translation of the manual.
+
+2014-03-16 Yuri Chornoivan <yurchor@ukr.net>
+	* man/uk/man1/dos2unix.po: New Ukrainian translation of the manual.
+
+2014-03-16 Erwin Waterlander <waterlan@xs4all.nl>
+	* Makefile: New target 'getpoman' to get .po files for the manuals
+	  from the Translation Project.
+
+2014-03-15 Mario Blättermann <mario.blaettermann@gmail.com>
+	* man/de/man1/dos2unix.po: New German translation of the
+	  manual.
+
+2014-03-14 Erwin Waterlander <waterlan@xs4all.nl>
+	* man/man1/Makefile: Generate pod files from gettext
+	  po files with po4a, for easier translation. Thanks to
+	  Mario Blätterman.
+	  See also http://po4a.alioth.debian.org/
+	* man/nl/man1/dos2unix.po, man/es/man/dos2unix.po:
+	  New po files, created from original pod.
+	  Thanks to Mario Blätterman.
+	* man/nl/man1/dos2unix.pod, man/es/man/dos2unix.pod:
+	  Deleted. These are generated now.
+	* Makefile: Update for manual generation from .po files.
+	* Makefile, man/man1/Makefile: All man pages are now in
+	  UTF-8 format.
+	* Makefile: Esperanto x notation no longer supported.
+	  Conversion from UTF-8 is troublesome and gettext will
+	  automatically translate to caret (^) notation when UTF-8
+	  is not supported by the system.
+	* po/eo-x.po: Deleted.
+
+2014-03-14 mail6543210 <mail6543210@yahoo.com.tw>
+	* po/zh_TW.po: New Chinese (traditional) translation.
+
+2014-03-06 Thomas Pryds <thomas@pryds.eu>
+	* po/da.po: New Danish translation.
+
+2014-03-06 Мирослав Николић <miroslavnikolic@rocketmail.com>
+	* po/sr.po: New Serbian translation.
+
+2014-02-24 Frédéric Marchal <fmarchal@perso.be>
+	* po/fr.po: New French translation.
+
+2014-02-05 Erwin Waterlander <waterlan@xs4all.nl>
+	* README.txt: List all the new translators.
+	* Makefile: New target 'getpo' to get .po file from the
+	  Translation Project. New target po/eo-x.po to generate
+	  eo-x.po from eo.po.
+
+2014-02-05 Enrico Nicoletto <liverig@gmail.com>
+	* po/pt_BR.po: New Brazilian Portuguese translation
+
+2014-02-05 Jakub Bogusz <qboosh@pld-linux.org>
+	* po/pl.po: New Polish translation
+
+2014-02-05 Yuri Chornoivan <yurchor@ukr.net>
+	* po/uk.po: New Ukrainian translation
+
+2014-02-05 Trần Ngọc Quân <vnwildman@gmail.com>
+	* po/vi.po: New Vietnamese translation
+
+2014-02-05 Benno Schulenberg <benno@vertaalt.nl>
+	* po/nl.po: Updated Dutch translation
+	* po/eo.po: Updated Esperanto translation
+
+2014-02-02 Erwin Waterlander <waterlan@xs4all.nl>
+	* *.c: Print help and version info to stdout iso stderr.
+	  Thanks to Benno Schulenberg.
+
+2014-01-31 Erwin Waterlander <waterlan@xs4all.nl>
+	* *.c,po/*.po: cleanup messages. Thanks to Benno Schulenberg.
+
+2014-01-29 Erwin Waterlander <waterlan@xs4all.nl>
+	* common.c, po/*.po: Split large help text in smaller pieces.
+	  This is easier for the translators. Thanks to Benno Schulenberg.
+
+2014-01-18 Erwin Waterlander <waterlan@xs4all.nl>
+	* Makefile, *.mak: Removed MAN_NONLATIN variable.
+	* INSTALL.txt: Update section INTERNATIONAL MAN PAGES.
+
+2014-01-10 Erwin Waterlander <waterlan@xs4all.nl>
+	* mingw32.mak, mingw64.mak: Update for easier use in MSYS2. Added
+	  extra include path to find libintl.h.
+
+2014-01-04 Erwin Waterlander <waterlan@xs4all.nl>
+	* Makefile: Also include English manuals in source the package.
+	  Adding man files to the source package, which have been generated with
+	  a high version of perl/pod2man, is a favour to users, because newer
+	  perl/pod2man versions produce better output (also for old systems).
+	  Tip from pod2man maintainer Russ Allbery.
+	  When you want to generate man pages yourself just run first 'make
+	  maintainer-clean'.
+
+2014-01-03 Erwin Waterlander <waterlan@xs4all.nl>
+	* man/nl/man1/dos2unix.pod, man/es/man1/dos2unix.pod: Add =encoding
+	  latin1 command. Perl 5.18 requires =encoding for all non-ASCII pod
+	  files.
+	  See also https://rt.cpan.org/Public/Bug/Display.html?id=91805
+	  Minimal perl version is now 5.10.1.
+	* Makefile: Target clean keeps generated non-English manual files to
+	  avoid problems with old perl version. Target maintainer-clean will
+	  erase the generated non-English manual files.
+	* INSTALL.txt: Update for new required perl version.
+
+2013-12-30 Erwin Waterlander <waterlan@xs4all.nl>
+	* Version 6.0.4
+	* man/nonlatin/man1/ru/dos2unix.pod: Removed. Russian
+	  translation of manual moved to later release.
+
+2013-11-26 Erwin Waterlander <waterlan@xs4all.nl>
+	* Makefile, common.c: When MinGW-w64 is used for 32 bit, option
+	  -V prints (MinGW-w64) for used compiler name.
+
+2013-11-24 Erwin Waterlander <waterlan@xs4all.nl>
+	* mingw32.mak: New makefile for MinGW-w64 targeting win32.
+	  MinGW-w64 supports Large File Support (LFS) with
+	  -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 while mingw.org
+	  doesn't. Dos2unix failed when concurrent dos2unix processes
+	  processed huge files on Windows network share drives.
+	  Using MinGW-w64 with LFS support fixed the problem.
+	  Thanks to report by F.J. Brandelik.
+
+
+2013-10-07 Erwin Waterlander <waterlan@xs4all.nl>
+	* Makefile: Set MAN_NONLATIN back to 1. Include non-Latin
+	  manuals in source package to prevent compilation troubles.
+	  Target 'clean' keeps non-Latin manuals. Use 'maintainer-clean'
+	  to erase them.
+
+2013-10-05 Erwin Waterlander <waterlan@xs4all.nl>
+	* Makefile: By default don't build non-Latin1 manuals. There are
+	  still too many old perl/pod2man versions around (perl < 5.10.1).
+	  Add MAN_NONLATIN=1 to enable non-Latin1 manuals.
+
+2013-10-01 Erwin Waterlander <waterlan@xs4all.nl>
+	* man/man1/Makefile: Support non-Latin1 man pages.
+	* Makefile: Support non-Latin1 man pages.
+	* man/nonlatin/man1/ru/dos2unix.pod: Placeholder for Russian manual.
+
+2013-09-13 Андрей Углик (Andrei Uhlik) <uglika@gmail.com>
+	* po/ru.po: New Russian translation of the messages.
+
+2013-08-05 Erwin Waterlander <waterlan@xs4all.nl>
+	* po/de.po: Update German translations. Thanks to Lars Wendler.
+
+2013-06-14 Erwin Waterlander <waterlan@xs4all.nl>
+	* dos2unix.c/unix2dos.c: New options -ul and -ub to convert
+	  UTF-16 files without BOM.
+
+2013-06-11 Erwin Waterlander <waterlan@xs4all.nl>
+	* dos2unix.c/unix2dos.c: Print value of binary symbol
+	  when found.
+
+2013-03-12 Erwin Waterlander <waterlan@xs4all.nl>
+	* Makefile: Set CC to gcc for MSYS target. Otherwise
+	  /mingw/bin/cc is used.
+
+2013-01-27 Erwin Waterlander <waterlan@xs4all.nl>
+	* Makefile:
+	  - CC and CPP can be overridden by environment.
+	  - CFLAGS optimization flags can be overridden by environment.
+	  - Separate LIBS from LDFLAGS.
+	  Thanks to Justin Lecher <jlec@gentoo.org>
+
+2013-01-25 Erwin Waterlander <waterlan@xs4all.nl>
+	* Version 6.0.3
+
+2013-01-18 Erwin Waterlander <waterlan@xs4all.nl>
+	* dos2unix.c/unix2dos.c: Print system error when writing to
+	  temporary output file fails.
+
+2013-01-16 Erwin Waterlander <waterlan@xs4all.nl>
+	* dos2unix.c/unix2dos.c: Print system error when closing of
+	  temporary output file fails. E.g. "No space left on device".
+
+2012-12-25 Erwin Waterlander <waterlan@xs4all.nl>
+	* querycp.c/h: Added public domain phrase for Debian
+	  license check.
+
+2012-12-12 Erwin Waterlander <waterlan@xs4all.nl>
+	* test: New directory with some test files.
+
+2012-09-20 Erwin Waterlander <waterlan@xs4all.nl>
+	* man/man1/Makefile: Removed dependency on 'sed' program.
+
+2012-09-19 Erwin Waterlander <waterlan@xs4all.nl>
+	* vc.mak: Visual C++ version supports wildcard expansion.
+	  Added targets 'install', 'uninstall', 'doc', 'dist',
+	  'txt', 'html', and 'mostlyclean'.
+	* INSTALL.txt: Update for Visual C++.
+
+2012-09-16 Erwin Waterlander <waterlan@xs4all.nl>
+	* *.c/*.h: Dos2unix compiles with Microsoft Visual C++.
+	* vc.mak: New makefile for Microsoft Visual C++.
+	* INSTALL.txt: Update for Visual C++.
+
+2012-09-15 Erwin Waterlander <waterlan@xs4all.nl>
+	* Makefile: Better check for DJGPP. DJGPP 2.04 uname returns "FreeDOS"
+	  on Freedos, 2.03 uname returns always "MS-DOS". Thanks to Rugxulo.
+	* man/man1/dos2unix.pod: Fixed a typo. Thanks to Jari Aalto.
+
+2012-09-06 Erwin Waterlander <waterlan@xs4all.nl>
+	* Version 6.0.2
+
+2012-08-29 Erwin Waterlander <waterlan@xs4all.nl>
+	* wcc*: Fix target 'dist' in Watcom makefiles.
+	* djgpp.mak: Use 8.3 filename for dos32 binary package.
+
+2012-08-26 Erwin Waterlander <waterlan@xs4all.nl>
+	* os2.mak: Renamed to emx.mak.
+	* wccos2.mak: New Watcom C makefile for OS/2 target.
+	* wcc.mif: Watcom C makefile with generic parts. This new
+	  makefile containts new targets 'install', 'uninstall',
+	  'doc', 'dist', and 'mostlyclean'.
+	* djgpp.mak: Default prefix is now c:\dos32
+	* dos16_gnu.mak: Removed. Installation of dos16 version is
+	  now done with Watcom makefiles.
+
+2012-08-13 Erwin Waterlander <waterlan@xs4all.nl>
+	* po/de.po: Update German translations. Thanks to Philipp.
+	* po/es.po: Update Spanish translations. Thanks to Julio.
+
+2012-08-12 Erwin Waterlander <waterlan@xs4all.nl>
+	* Makefile: Don't use pod2text option --utf8. There are too many
+	  old pod2text versions around that don't support this option.
+	* Makefile: Install PDF and PostScript files of all languages when
+	  they have been created.
+	* po/eo*.po: Update Esperanto translations. Thanks to Rugxulo.
+	* dos2unix/unix2dos: Don't use __MSDOS__ macro for Windows.
+
+2012-08-10 Erwin Waterlander <waterlan@xs4all.nl>
+	* Makefile: Change variable OS to D2U_OS. OS is used by Windows.
+	* Makefile: By default install only English text and html manuals.
+	  This saves a dependency on iconv. Non-English text and html manuals
+	  will be installed when they have been explicitly generated with
+	  targets 'txt' and 'html'.
+
+2012-08-09 Erwin Waterlander <waterlan@xs4all.nl>
+	* dos2unix/unix2dos: Use only C99 compliant predefined macros.
+
+2012-08-07 Erwin Waterlander <waterlan@xs4all.nl>
+	* dos2unix/unix2dos: Print line number when a binary symbol is found.
+	  Thanks to Somsak Pattanaprateep.
+	* Makefile: By default install text and html manuals of all languages.
+
+2012-08-06 Erwin Waterlander <waterlan@xs4all.nl>
+	* dos2unix/unix2dos: Fix. Locale encoding was not detected when NLS
+	  was disabled.
+	* common.c: Update comments. Surrogate halves in UTF-8 are invalid.
+
+2012-07-25 Erwin Waterlander <waterlan@xs4all.nl>
+	* Version 6.0.1
+
+2012-07-20 Erwin Waterlander <waterlan@xs4all.nl>
+	* Makefile: Target 'html' makes also Dutch and Spanish HTML manuals.
+
+2012-07-18 Erwin Waterlander <waterlan@xs4all.nl>
+	* manual: Update for options -n and -o. Describe the new permissions of
+	  the output file in new-file and old-file mode.
+	* README.txt: Added references for the findutils package for Windows
+	  and DOS to enable recursive conversions on those platforms.
+
+2012-05-20 Erwin Waterlander <waterlan@xs4all.nl>
+	* common.h: Fix compiler warnings "implicit declaration of function
+	  'strcasecmp'". Thanks to Michael Schindler
+	  <k-m_schindler@sourceforge.net>.
+
+2012-05-11 Julio A. Freyre-Gonzalez <jfreyreg@gmail.com>
+	* Update Spanish messages and manual.
+
+2012-05-06 Erwin Waterlander <waterlan@xs4all.nl>
+	* Version 6.0
+	* man/*/man1/*.pod: Removed =encoding. It is not supported
+	  by perl 5.8.8, which is shipped with MinGW and DJGPP.
+
+2012-04-20 Erwin Waterlander <waterlan@xs4all.nl>
+	* man/*/man1/*.pod: Set encoding explicitly to Latin-1.
+	* Makefile: Target 'doc' makes all man pages.
+
+2012-04-12 Erwin Waterlander <waterlan@xs4all.nl>
+	* po/de.po: Update German translations. Thanks to Philipp Thomas.
+
+2012-04-09 Erwin Waterlander <waterlan@xs4all.nl>
+	* INSTALL.txt: List the prerequisites.
+	* Makefile: Friendlier for DJGPP/MinGW/MSYS.
+
+2012-04-04 Erwin Waterlander <waterlan@xs4all.nl>
+	* po/eo.po: Update Esperanto translations. Thanks to Rugxulo.
+
+2012-03-30 Erwin Waterlander <waterlan@xs4all.nl>
+	* Skip UTF-16 file when conversion to UTF-8 goes wrong.
+	* Update English and Dutch manual.
+
+2012-03-28 Erwin Waterlander <waterlan@xs4all.nl>
+	* common.c: Support UTF-16 surrogate pairs.
+	* dos2unix.c, unix2dos.c: Check wchar_t size.
+
+2012-03-26 Erwin Waterlander <waterlan@xs4all.nl>
+	* *.c: Use fgetc/fputc instead of getc/putc.
+
+2012-03-25 Erwin Waterlander <waterlan@xs4all.nl>
+	* po, man: Update Dutch translations.
+
+2012-03-24 Erwin Waterlander <waterlan@xs4all.nl>
+	* On Unix, convert UTF-16 files only when the locale encoding
+	  is UTF-8 to prevent accidental loss of text.
+
+2012-03-23 Erwin Waterlander <waterlan@xs4all.nl>
+	* Turn off ISO and 7-bit mode if an Unicode text file is detected,
+	  to prevent corruption of UTF-8 files.
+	* Update English manual.
+	* Fix compilation for WatcomC, DJGPP, MSYS, OS/2.
+	* Makefile: Support CFLAGS_USER, LDFLAGS_USER, and DEFS_USER for
+	  Debian Linux. Thanks to Jari Aalto.
+
+2012-03-21 Erwin Waterlander <waterlan@xs4all.nl>
+	* Support conversion of Unicode UTF-16 from stdin.
+	* Update English manual.
+
+2012-03-20 Erwin Waterlander <waterlan@xs4all.nl>
+	* Support conversion of Unicode UTF-16 encoded files.
+
+2012-03-16 Erwin Waterlander <waterlan@xs4all.nl>
+	* common.c: Make it compile on Cygwin 1.5.
+
+2012-03-10 Erwin Waterlander <waterlan@xs4all.nl>
+	* Version 5.3.3
+	* Makefile: Binary packages with native language support
+	  get "-nls" suffix.
+
+2012-03-08 Erwin Waterlander <waterlan@xs4all.nl>
+	* common.c: Option -V prints target OS on DOS/Windows/OS2.
+
+2012-03-07 Erwin Waterlander <waterlan@xs4all.nl>
+	* dos2unix.c, unix2dos.c, mingw64.mak: Enabled wildcard
+	  expansion for Win64 (MinGW-w64). Thanks to Steve Hay.
+	* wccdos16.mak: Enabled wildcard expansion.
+	* wccdos32.mak: Enabled wildcard expansion.
+	* wccwin32.mak: Enabled wildcard expansion.
+	* bcc.mak: Enabled wildcard expansion.
+
+2012-03-02 Erwin Waterlander <waterlan@xs4all.nl>
+	* Makefile: New target 'mostlyclean' that preserves the manual
+	  files. Target 'clean' removes all built files, it restores the
+	  Unix source package to its original state.
+	* Makefile: New variable HTMLEXT to override the default 'htm'
+	  extension for the manual in HTML format.
+
+2012-02-01 Erwin Waterlander <waterlan@xs4all.nl>
+	* Makefile, version.mk: Fix a compile error when debug
+	  is enabled. Thanks to Maurizio Camisaschi and Lars Wendler.
+	  See https://bugs.gentoo.org/400769
+	* Makefile: Enable debugging info for gdb when DEBUG=1
+	* man page: Small update in section RETURN VALUE.
+
+2012-01-27 Erwin Waterlander <waterlan@xs4all.nl>
+	* Version 5.3.2
+
+2012-01-02 Erwin Waterlander <waterlan@xs4all.nl>
+	* os2.mak: Enable support for wild cards (-Zargs-wild).
+	  Thanks to Steven H. Levine and Elbert Pol.
+
+2011-12-20 Erwin Waterlander <waterlan@xs4all.nl>
+	* querycp.c: Extra comment from Rugxulo.
+	* querycp.c: Undid change of 2011-11-12. MSYS version
+	  behaves as Cygwin version.
+
+2011-12-15 Erwin Waterlander <waterlan@xs4all.nl>
+	* wccdos32.mak: New makefile for Open Watcom for DOS32.
+
+2011-12-06 Erwin Waterlander <waterlan@xs4all.nl>
+	* Makefile: Undo previous change for Darwin. Not restoring group and
+	  owner may be destructive or a security risk.
+	* Makefile, common.[ch]: Dos2unix builds on MSYS now.
+
+2011-12-02 Erwin Waterlander <waterlan@xs4all.nl>
+	* Makefile: For MacOS the option -DNO_CHOWN has been be added to the compile time flags.
+	  This is necessary because Darwin will create files with the
+	  file-owner-group set to the file-owner-group of the directory - EVEN if
+	  the caller is not a member of the group! Chowning *from* the group is ok,
+	  chowning *to* the group is not - and this will make unix2dos fail when it
+	  tries to restore the permissions.
+	  Thanks to Wolf Geldmacher.
+	  See bug report 3444337, https://sourceforge.net/tracker/?func=detail&atid=1234808&aid=3444337&group_id=292083
+
+2011-11-16 Erwin Waterlander <waterlan@xs4all.nl>
+	* README.txt, man/man1/dos2unix.pod: Freshmeat changed name to Freecode.
+
+2011-11-12 Erwin Waterlander <waterlan@xs4all.nl>
+	* querycp.c: Fix for MSYS.
+
+2011-10-20 Erwin Waterlander <waterlan@xs4all.nl>
+	* querycp.c: Support OS/2, and Watcom C for Win32.
+	* wccwin32.mak: New makefile for Open Watcom for Win32.
+
+2011-08-22 Erwin Waterlander <waterlan@xs4all.nl>
+	* Makefile: Added RPM_OPT_FLAGS to LDFLAGS. Required for
+	  cross-platform RPM package building.
+
+2011-08-20 Erwin Waterlander <waterlan@xs4all.nl>
+	* Home page URL: change to http://waterlan.home.xs4all.nl/dos2unix.html
+
+2011-08-09 Erwin Waterlander <waterlan@xs4all.nl>
+	* Version 5.3.1
+
+2011-08-08 Julio A. Freyre-Gonzalez <jfreyreg@gmail.com>
+	* Spanish translation of messages and manual.
+
+2011-06-26 Erwin Waterlander <waterlan@xs4all.nl>
+	* bugfix: dos2unix changes ownership and permissions on file.
+	  When an other user (e.g. root) than the owner has write permission
+	  on the input file, dos2unix changes owner, group and umask in old
+	  file mode to the other user's owner, group and umask who runs
+	  dos2unix. Fixed only for Unix. Thanks to Christopher Williams.
+	  See http://sourceforge.net/tracker/?func=detail&aid=3327171&group_id=292083&atid=1234808
+	* Keep permissions also on Windows. Use chmod() i.s.o. fchmod().
+
+2011-06-16 Erwin Waterlander <waterlan@xs4all.nl>
+	* Identical functions from dos2unix.c and unix2dos.c
+	  are moved to common.c.
+
+2011-06-15 Erwin Waterlander <waterlan@xs4all.nl>
+	* Dos2unix and Unix2dos share the same language files.
+
+2011-05-04 Erwin Waterlander <waterlan@xs4all.nl>
+	* dos2unix.c: Removed redundant ConvertDosToUnixOldFile().
+	* unix2dos.c: Removed redundant ConvertUnixToDosOldFile().
+
+2011-04-26 Erwin Waterlander <waterlan@xs4all.nl>
+	* Version 5.3
+
+2011-04-23 Erwin Waterlander <waterlan@xs4all.nl>
+	* Don't report an error when unlink() fails because a file
+	  doesn't exist.
+
+2011-04-13 Erwin Waterlander <waterlan@xs4all.nl>
+	* Print system error when input file can't be openened.
+	  For instance "Permission denied"
+	* Update manuals.
+	* Update translations.
+
+2011-04-04 Erwin Waterlander <waterlan@xs4all.nl>
+	* Always print and return an error when wrong command-line
+	  options are used. Also in quiet mode.
+	* New option '--': Treat all following options as file names.
+
+2011-04-03 Erwin Waterlander <waterlan@xs4all.nl>
+	* Improved error reporting. Return system error when an error occurs.
+	* Don't quit after first error (like rm, ls, grep, tar).
+	* In quiet mode the return value is always zero.
+
+2011-03-27 Erwin Waterlander <waterlan@xs4all.nl>
+	* dos2unix.c/unix2dos.c: Check if symbolic links point to
+	  regular files.
+	* dos2unix.c/unix2dos.c: Added short options -F, -R, -S.
+	* po: update translations.
+
+2011-03-24 Erwin Waterlander <waterlan@xs4all.nl>
+	* dos2unix.c/unix2dos.c: Changed options --follow, --no-follow,
+	  to  --follow-symlink,  --replace-symlink,  --skip-symlink.
+	* dos2unix.c/unix2dos.c: Options --force and --safe are only to
+	  covert binary files or skip them.
+	* dos2unix.c/unix2dos.c: Non-regular files that are not symbolic
+	  links are never converted.
+
+2011-03-23 Charles Wilson <cygwin@cwilson.fastmail.fm>
+	* dos2unix.c/unix2dos.c: New options --follow and --no-follow.
+	  In follow mode dos2unix writes to the symlink target, instead
+	  of replacing the symbolic link with an output file.
+
+2011-03-22 Charles Wilson <cygwin@cwilson.fastmail.fm>
+	* querycp.c: Behave on Cygwin same as on Linux. Default
+	  code page in ISO mode is CP437.
+
+2011-03-21 Charles Wilson <cygwin@cwilson.fastmail.fm>
+	* dos2unix.c/unix2dos.c:
+	  - Cygwin may define WIN32 (via include files).
+	  - bugfix: Cygwin: set mode to binary in stdio mode conversion.
+	    Needed in case non-Cygwin program launches dos2unix.
+	  - bugfix: set failure mode if rename fails in quiet mode.
+	  - New option: -s, --safe. Opposite of -f, --force.
+	* Makefile: Cleanup for Cygwin.
+
+2011-03-19 Erwin Waterlander <waterlan@xs4all.nl>
+	* Makefile: Install links instead of binary/manpage copies on Cygwin.
+
+2011-03-05 Erwin Waterlander <waterlan@xs4all.nl>
+	* man/man1/dos2unix.pod: Replace GPL with FreeBSD license.
+	* man/nl/man1/dos2unix.pod: Replace GPL with FreeBSD license.
+
+2011-03-04 Erwin Waterlander <waterlan@xs4all.nl>
+	* Version 5.2.1
+
+2011-03-03 Erwin Waterlander <waterlan@xs4all.nl>
+	* Don't print used code page in quiet mode.
+
+2011-03-02 Erwin Waterlander <waterlan@xs4all.nl>
+	* Esperanto x-notation format is optional. Default is Unicode.
+	  There is no installation of an 'eo-x' locale any more.
+	  Add EO_XNOTATION=1 to make command-line to select x-notation.
+	  It will change the format of the normal 'eo' locale from Unicode
+	  to ASCII x-notation.
+
+2011-02-28 Erwin Waterlander <waterlan@xs4all.nl>
+	* Makefile: Make LFS optional with variable LFS (default on).
+	* dos2unix.c/unix2dos.c: Print file name with stat() system error.
+
+2011-02-26 Erwin Waterlander <waterlan@xs4all.nl>
+	* dos2unix.c/unix2dos.c: Report system error when stat() fails.
+	* Makefile: Enable 64 bit file system interface (_FILE_OFFSET_BITS=64).
+	  This enables opening files larger than 2GB on 32 bit systems, provided
+	  the system has Large File Support (LFS). See also section 1.3.4
+	  "Feature Test Macros" of The GNU C Library manual.
+	  http://www.gnu.org/s/libc/manual/html_node/Feature-Test-Macros.html
+
+2011-02-22 Erwin Waterlander <waterlan@xs4all.nl>
+	* In debug mode file mode is printed (compile with DEBUG=1).
+
+2011-02-19 Erwin Waterlander <waterlan@xs4all.nl>
+	* Makefile: Generation of PostScript and PDF is optional.
+	  This removes dependency on Groff and GhostScript (thanks to Philipp Thomas).
+
+2011-02-04 Erwin Waterlander <waterlan@xs4all.nl>
+	* Makefile: Replace GPL (accidently patched in) with FreeBSD license.
+	* man/man1/Makefile: Fix perl command for for DOS alike file systems
+	  (Can't do inplace edit without backup.). (thanks to Elbert Pol)
+
+2011-01-31 Erwin Waterlander <waterlan@xs4all.nl>
+	* Version 5.2
+
+2011-01-19 Erwin Waterlander <waterlan@xs4all.nl>
+	* Update manual.
+
+2011-01-13 Rugxulo <rugxulo@gmail.com>
+	* querycp.c: Active code page detection. DOS 16 bit, OpenWatcom.
+
+2011-01-12 Erwin Waterlander <waterlan@xs4all.nl>
+	* querycp.c: Detect active code page for ISO mode on Windows.
+
+2011-01-12 Rugxulo <rugxulo@gmail.com>
+	* querycp.c: Detect active code page for ISO mode. DOS 32 bit, DJGPP.
+
+2011-01-11 Erwin Waterlander <waterlan@xs4all.nl>
+	* New ISO conversion modes DOS CP860 (Portuguese)
+	  and CP863 (French Canadian).
+
+2011-01-10 Erwin Waterlander <waterlan@xs4all.nl>
+	* New ISO conversion mode DOS CP865 (Nordic).
+
+2011-01-07 Erwin Waterlander <waterlan@xs4all.nl>
+	* ISO mode CP437: fix conversion of non-breaking space (NBSP)
+	* New ISO conversion modes: DOS CP850 (Western European) and Windows
+	  CP1252 (Western European).
+	* SunOS compatible command-line options -ascii, -iso, -7, -437, -850.
+
+2011-01-04 Erwin Waterlander <waterlan@xs4all.nl>
+	* 7bit and iso mode can be used in Mac mode.
+
+2010-11-22 Jari Aalto <jari.aalto@cante.net>
+	* Small updates man page and Makefile.
+
+2010-11-21 Ben Pfaff <blp@cs.stanford.edu>
+	* Don't indicate text files with ASCII Form Feed control
+	  characters (^L) as binary.
+	  Form feed characters are fairly common in GNU software text files,
+	  because the GNU coding standards advice to use form feeds to
+	  divide text into pages.
+
+2010-11-15 Erwin Waterlander <waterlan@xs4all.nl>
+	* Put full copyright text in *.h source files (FSF's recommendation).
+	  Thanks to Jari Aalto <jari.aalto@cante.net>.
+	* Don't include generated documentation files in Unix source package.
+	* Create a source package in DOS text format.
+
+2010-08-18 Erwin Waterlander <waterlan@xs4all.nl>
+	* version 5.1.1
+
+2010-07-23 Erwin Waterlander <waterlan@xs4all.nl>
+	* Added Dutch translation of the manual.
+
+2010-07-19 Erwin Waterlander <waterlan@xs4all.nl>
+	* MinGW-w64 Makefile added for Windows 64 bit port.
+
+2010-06-20 Erwin Waterlander <waterlan@xs4all.nl>
+	* Don't ship po/*.mo files in source package.
+	* Win32 binary package uses patched MinGW's libintl, with builtin
+	  relocation support. See http://www.xs4all.nl/~waterlan/libintl.html
+
+2010-04-22 Erwin Waterlander <waterlan@xs4all.nl>
+	* Support compilation in DOSBox (8.3 file names where needed).
+
+2010-04-14 Erwin Waterlander <waterlan@xs4all.nl>
+	* Fixed compilation on Darwin OS. Thanks to Marc Gianzero.
+
+2010-04-03 Erwin Waterlander <waterlan@xs4all.nl>
+	* version 5.1
+
+2010-03-22 Erwin Waterlander <waterlan@xs4all.nl>
+	* Man page generation from Perl POD file.
+	  Thanks to Jari Aalto <jari.aalto@cante.net>
+	* Merge dos2unix and unix2dos man pages.
+
+2010-03-17 Erwin Waterlander <waterlan@xs4all.nl>
+	* Add localization information to manual.
+
+2010-03-16 Rugxulo <rugxulo@gmail.com>
+	* Added Esperanto translation.
+
+2010-03-13 Erwin Waterlander <waterlan@xs4all.nl>
+	* DJGPP, dos32bit: Create 'stubs' for mac2unix and unix2mac.
+	  See also http://www.delorie.com/djgpp/v2faq/faq22_5.html
+	  Thanks to Rugxulo <rugxulo@gmail.com>
+
+2010-03-11 Erwin Waterlander <waterlan@xs4all.nl>
+	* Allow to set options in stdio mode.
+	* dos2unix: bugfix MAC mode: Don't change DOS line endings.
+	* Display help if a wrong option was used.
+
+2010-03-04 Erwin Waterlander <waterlan@xs4all.nl>
+	* Port to 16 bit DOS, using OpenWatcom.
+
+2010-03-03 Erwin Waterlander <waterlan@xs4all.nl>
+	* Port to 16 bit DOS, using Borland C.
+
+2010-02-16 Erwin Waterlander <waterlan@xs4all.nl>
+	* version 5.0
+
+2010-02-15 Erwin Waterlander <waterlan@xs4all.nl>
+	* unix2dos: Fix problem of reading Mac files.
+	* unix2dos: Added command 'unix2mac'.
+	* unix2dos: Can use DOS2UNIX_LOCALEDIR i.s.o. UNIX2DOS_LOCALEDIR.
+	* dos2unix: 'mac2unix' command can have a prefix.
+	* Makefile: mac2unix and unix2mac are installed as soft links.
+
+2010-02-13 Erwin Waterlander <waterlan@xs4all.nl>
+	* Bundled dos2unix and unix2dos in one package.
+	* dos2unix/unix2dos : Cleanup messages and manual.
+	* dos2unix: Option -l --newline also works in MAC mode.
+	* unix2dos: Added option -l, --newline.
+	* unix2dos: Added MAC mode. Convert Unix line endings
+	  to Mac line endings.
+
+2010-02-10 Erwin Waterlander <waterlan@xs4all.nl>
+	* unix2dos: Makefile :
+	  - Use GNU standard directory variables everywhere.
+	  - New target 'dist-tbz' creates bzip2 compressed archive.
+
+2010-02-10 Philipp Thomas <psmt@opensuse.org>
+	* unix2dos: po/de.po : Added German translation.
+	* unix2dos: Makefile :
+	  - Added $(RPM_OPT_FLAGS) to CFLAGS.
+	  - Use DESTDIR only in install and uninstall targets (not in variables,
+	    this is more common practice).
+
+2010-02-03 Erwin Waterlander <waterlan@xs4all.nl>
+	* dos2unix: Makefile :
+	  - Use GNU standard directory variables everywhere.
+
+2010-02-03 Philipp Thomas <psmt@opensuse.org>
+	* dos2unix: po/de.po : Added German translation.
+	* dos2unix: Makefile :
+	  - Use GNU standard directory variable 'datadir' i.s.o. 'sharedir'.
+	  - Added $(RPM_OPT_FLAGS) to CFLAGS.
+	  - New target 'dist-tbz' creates bzip2 compressed archive.
+	  - Use DESTDIR only in install and uninstall targets (not in variables,
+	    this is more common practice).
+
+2010-02-02 Erwin Waterlander <waterlan@xs4all.nl>
+	* dos2unix/unix2dos: Update Dutch translation.
+
+2010-01-24 Erwin Waterlander <waterlan@xs4all.nl>
+	* dos2unix/unix2dos: version 4.1.2
+
+2010-01-22 Tim Waugh <twaugh@redhat.com>
+	* dos2unix/unix2dos: Preserve file mode in 'new file mode'.
+	* dos2unix/unix2dos: Makefile: Allow CFLAGS to be set externally.
+
+2010-01-21 Erwin Waterlander <waterlan@xs4all.nl>
+	* dos2unix/unix2dos: version 4.1.1
+	* dos2unix/unix2dos: Fix compilation on FreeBSD.
+	* dos2unix/unix2dos: Changed home page URL to http://www.xs4all.nl/~waterlan/dos2unix.html
+
+2009-12-28 Erwin Waterlander <waterlan@xs4all.nl>
+	* dos2unix/unix2dos: version 4.1
+	* dos2unix/unix2dos: Automatically skip binary files.
+	* dos2unix/unix2dos: Automatically skip non-regular files.
+	* dos2unix/unix2dos: New option: -f --force: Force conversion of all files.
+	* dos2unix/unix2dos: Option -h: Print options in alphabetical order.
+	* dos2unix/unix2dos: Update manual.
+	* dos2unix/unix2dos: ISO mode:
+	  - Non-convertable characters are converted to a dot.
+	    Old conversion risked conversion to unwanted ISO C1
+	    control characters from ISO 6429.
+	  - Fixed wrong conversion of Interpunct.
+	  - Don't convert ASCII control characters
+	    DC4 (Pilcrow, 0x14) and NAK (Section-sign, 0x15).
+
+2009-12-21 Erwin Waterlander <waterlan@xs4all.nl>
+	* dos2unix/unix2dos: version 4.0.1
+	* dos2unix/unix2dos: man page improvements: Thanks to Jari Aalto <jari.aalto@cante.net>.
+	  - Replace hyphens with minus signs (look like dashes) where needed.
+	  - Options in alphabetical order.
+	* dos2unix/unix2dos: man page: Update ISO mode information.
+	* dos2unix/unix2dos: Option -V prints localedir used.
+	* dos2unix: Localedir can be overruled with environment variable
+	  DOS2UNIX_LOCALEDIR.
+	* unix2dos: Localedir can be overruled with environment variable
+	  UNIX2DOS_LOCALEDIR.
+	* dos2unix/unix2dos: Fixed two wrong conversions in ISO mode:
+	  - Greek mu.
+	  - Closing guillemet (angle quotation mark, >>).
+	* dos2unix/unix2dos: Port to OS/2 Warp: Thanks to Elbert Pol <elbertdotpol@gmail.com>.
+	* dos2unix/unix2dos: Makefiles: Added target 'strip'.
+
+2009-12-15 Erwin Waterlander <waterlan@xs4all.nl>
+	* dos2unix/unix2dos: version 4.0
+	* dos2unix/unix2dos: Added internationalisation using gettext.
+	* dos2unix/unix2dos: Added Dutch translation.
+	* dos2unix/unix2dos: Ported to Win32 using Mingw32 <http://www.mingw.org/>
+	* dos2unix/unix2dos: Ported to DOS using DJGPP <http://www.delorie.com/djgpp/>
+	* dos2unix/unix2dos: Fixed problem in DOS/Windows stdio mode.
+	* dos2unix/unix2dos: New option -L/--license that prints software license.
+	* dos2unix/unix2dos: Code cleanup
+	* dos2unix/unix2dos: Update manual
+
+2009-12-04 Erwin Waterlander <waterlan@xs4all.nl>
+	* dos2unix: version 3.2
+	* unix2dos: version 2.3
+	* dos2unix/unix2dos: version.mk: New file.
+	* dos2unix/unix2dos: README: New file.
+	* dos2unix/unix2dos: ChangeLog : New file.
+	* dos2unix: INSTALL: Updated.
+	* dos2unix/unix2dos: Makefile: Makefile according GNU standards.
+	* unix2dos: INSTALL: New file.
+	* dos2unix: Applied all patches from RedHat:
+	  - use mkstemp i.s.o. mktemp: Nov 17 2000 Tim Powers <timp@redhat.com>
+	  - segfault: Jan 17 2002 Bernhard Rosenkraenzer <bero@redhat.com>
+	  - safeconv: Oct 20 2004 Miloslav Trmac <mitr@redhat.com>
+	  - manpage-update: Oct  6 2004 Mike A. Harris <mharris@redhat.com>
+	  - preserve-file-modes: Feb  6 2007 Tim Waugh <twaugh@redhat.com>
+	  - tmppath: Apr 13 2005 Tim Waugh <twaugh@redhat.com>
+	  - c-missing-arg: Jan 18 2008 Tim Waugh <twaugh@redhat.com>
+	  - Remove trailing white space.
+	* unix2dos: Applied all patches from RedHat:
+	  - use mkstemp i.s.o. mktemp: Nov 17 2000 Tim Powers <timp@redhat.com>
+	  - segfault: Jan 17 2002 Bernhard Rosenkraenzer <bero@redhat.com>
+	  - manpage-update: Oct  6 2004 Mike A. Harris <mharris@redhat.com>
+	  - preserve-file-modes: Oct 11 2004 Tim Waugh <twaugh@redhat.com>
+	  - tmppath: Apr 13 2005 Tim Waugh <twaugh@redhat.com>
+	  - Remove trailing white space.
+
+1998-11-19 Christian Wurll <wurll@ira.uka.de>
+	* dos2unix: version 3.1
+	* dos2unix: Added extra newline if ^M occurs
+
+1998-02-04 Bernd Johannes Wuebben <wuebben@kde.org>
+	* dos2unix: version 3.0
+	* dos2unix: Added Mac text file translation, i.e. \r to \n conversion
+
+1995-03-30 Benjamin Lin <blin@socs.uts.edu.au>
+	* dos2unix/unix2dos: version 2.2
+	* dos2unix: Fixed a bug in 2.1 where in new file mode, if outfile already exists
+	* dos2unix: conversion can not be completed properly.
+	* unix2dos: Conversion from SunOS charset implemented.
+
+1995-03-29 Benjamin Lin <blin@socs.uts.edu.au>
+	* dos2unix: version 2.1
+	* dos2unix: Conversion to SunOS charset implemented.
+
+1995-03-19 Benjamin Lin <blin@socs.uts.edu.au>
+	* dos2unix/unix2dos: version 2.0
+	* dos2unix/unix2dos: Rewritten from scratch.
+
+1995-03-16 Benjamin Lin <blin@socs.uts.edu.au>
+	* dos2unix: version 1.2
+	* unix2dos: version 1.3
+	* dos2unix/unix2dos: Modified to more conform to UNIX style.
+
+1995-03-09 Benjamin Lin <blin@socs.uts.edu.au>
+	* unix2dos: version 1.2
+	* unix2dos: Fixed minor typo error
+
+1994-12-20 Benjamin Lin <blin@socs.uts.edu.au>
+	* dos2unix/unix2dos: version 1.1
+	* dos2unix/unix2dos: Cleaned up for Borland C/C++ 4.02
+
+1989-10-04 John Birchfield <jb@koko.csustan.edu>
+	* dos2unix/unix2dos: version 1.0
+

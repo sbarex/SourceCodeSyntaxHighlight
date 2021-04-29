@@ -1,0 +1,780 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>dos2unix 7.4.2 - DOS/Mac - Unix&#x6587;&#x4ef6;&#x683c;&#x5f0f;&#x8f6c;&#x6362;&#x5668;</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:root@localhost" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#">&#x540D;&#x79F0;</a></li>
+  <li><a href="#1">&#x6982;&#x8981;</a></li>
+  <li><a href="#2">&#x8BF4;&#x660E;</a></li>
+  <li><a href="#3">&#x9009;&#x9879;</a></li>
+  <li><a href="#Mac">Mac&#x6A21;&#x5F0F;</a></li>
+  <li><a href="#4">&#x8F6C;&#x6362;&#x6A21;&#x5F0F;</a></li>
+  <li><a href="#UNICODE">UNICODE</a>
+    <ul>
+      <li><a href="#5">&#x7F16;&#x7801;</a></li>
+      <li><a href="#6">&#x8F6C;&#x6362;</a></li>
+      <li><a href="#7">&#x5B57;&#x8282;&#x5E8F;&#x6807;&#x8BB0;</a></li>
+      <li><a href="#WindowsUnicode">Windows&#x4E2D;Unicode&#x6587;&#x4EF6;&#x7684;&#x6587;&#x4EF6;&#x540D;</a></li>
+      <li><a href="#Unicode">Unicode&#x793A;&#x4F8B;</a></li>
+    </ul>
+  </li>
+  <li><a href="#GB18030">GB18030</a></li>
+  <li><a href="#8">&#x793A;&#x4F8B;</a></li>
+  <li><a href="#9">&#x9012;&#x5F52;&#x8F6C;&#x6362;</a></li>
+  <li><a href="#10">&#x533A;&#x57DF;</a></li>
+  <li><a href="#11">&#x8FD4;&#x56DE;&#x503C;</a></li>
+  <li><a href="#12">&#x9075;&#x5FAA;&#x89C4;&#x8303;</a></li>
+  <li><a href="#13">&#x4F5C;&#x8005;</a></li>
+  <li><a href="#14">&#x53C2;&#x89C1;</a></li>
+</ul>
+
+<h1 id="">&#x540D;&#x79F0;</h1>
+
+<p>dos2unix - DOS/Mac - Unix&#x6587;&#x4EF6;&#x683C;&#x5F0F;&#x8F6C;&#x6362;&#x5668;</p>
+
+<h1 id="1">&#x6982;&#x8981;</h1>
+
+<pre><code>    dos2unix [&#x9009;&#x9879;] [&#x6587;&#x4EF6; &hellip;] [-n &#x8F93;&#x5165;&#x6587;&#x4EF6; &#x8F93;&#x51FA;&#x6587;&#x4EF6; ...]
+    unix2dos [&#x9009;&#x9879;] [&#x6587;&#x4EF6; &hellip;] [-n &#x8F93;&#x5165;&#x6587;&#x4EF6; &#x8F93;&#x51FA;&#x6587;&#x4EF6; ...]</code></pre>
+
+<h1 id="2">&#x8BF4;&#x660E;</h1>
+
+<p>Dos2unix&#x8F6F;&#x4EF6;&#x5305;&#x5305;&#x62EC;&#x5DE5;&#x5177;<code>dos2unix</code> &#x548C; <code>unix2dos</code>&#xFF0C;&#x7528;&#x4E8E;&#x5C06;&#x7EAF;&#x6587;&#x672C;&#x6587;&#x4EF6;&#x5728;DOS&#x6216;Mac&#x683C;&#x5F0F;&#x4E0E;Unix&#x683C;&#x5F0F;&#x4E4B;&#x95F4;&#x76F8;&#x4E92;&#x8F6C;&#x6362;&#x3002;</p>
+
+<p>DOS/Windows&#x7684;&#x6587;&#x672C;&#x6587;&#x4EF6;&#x4E2D;&#xFF0C;&#x65AD;&#x884C;&#x7B26;&#x662F;&#x7531;&#x4E24;&#x4E2A;&#x5B57;&#x7B26;&#x5171;&#x540C;&#x8868;&#x793A;&#x7684;&#xFF1A;&#x56DE;&#x8F66;&#x7B26;&#xFF08;CR&#xFF09;&#x548C;&#x6362;&#x884C;&#x7B26;&#xFF08;LF&#xFF09;&#x3002;Unix&#x7684;&#x6587;&#x672C;&#x6587;&#x4EF6;&#x4E2D;&#xFF0C;&#x6362;&#x884C;&#x7B26;&#x5219;&#x7531;&#x5355;&#x4E2A;&#x6362;&#x884C;&#x7B26;&#xFF08;LF&#xFF09;&#x8868;&#x793A;&#x3002;&#x800C;Mac&#x7684;&#x6587;&#x672C;&#x6587;&#x4EF6;&#x5219;&#x7531;&#x5355;&#x4E2A;&#x56DE;&#x8F66;&#x7B26;&#xFF08;CR&#xFF0C;&#x7528;&#x4E8E;Mac OS X&#x4E4B;&#x524D;&#x7684;&#x7CFB;&#x7EDF;&#xFF09;&#x6216;&#x5355;&#x4E2A;&#x6362;&#x884C;&#x7B26;&#xFF08;LF&#xFF0C;&#x7528;&#x4E8E;&#x5F53;&#x4E0B;&#x7684;&#x65B0;Mac OS&#xFF09;&#x8868;&#x793A;&#x3002;</p>
+
+<p>&#x9664;&#x4E86;&#x65AD;&#x884C;&#x7B26;&#xFF0C;Dos2unix&#x8FD8;&#x53EF;&#x4EE5;&#x8F6C;&#x6362;&#x6587;&#x4EF6;&#x7F16;&#x7801;&#x3002;&#x4E00;&#x4E9B;DOS&#x7F16;&#x7801;&#x9875;&#x53EF;&#x4EE5;&#x88AB;&#x8F6C;&#x6362;&#x4E3A;Unix Latin-1&#xFF0C;Windows Unicode&#xFF08;UTF-16&#xFF09;&#x6587;&#x4EF6;&#x4E5F;&#x53EF;&#x4EE5;&#x88AB;&#x8F6C;&#x6362;&#x4E3A;Unix Unicode&#xFF08;UTF-8&#xFF09;&#x6587;&#x4EF6;&#x3002;</p>
+
+<p>&#x4E8C;&#x8FDB;&#x5236;&#x6587;&#x4EF6;&#x5219;&#x4F1A;&#x88AB;&#x81EA;&#x52A8;&#x8DF3;&#x8FC7;&#xFF0C;&#x9664;&#x975E;&#x6307;&#x5B9A;&#x4E86;&#x5F3A;&#x5236;&#x8F6C;&#x6362;&#x9009;&#x9879;&#x3002;</p>
+
+<p>&#x7279;&#x6B8A;&#x6587;&#x4EF6;&#xFF0C;&#x5982;&#x76EE;&#x5F55;&#x548C;&#x961F;&#x5217;&#xFF0C;&#x4F1A;&#x88AB;&#x81EA;&#x52A8;&#x8DF3;&#x8FC7;&#x3002;</p>
+
+<p>&#x7B26;&#x53F7;&#x94FE;&#x63A5;&#x548C;&#x5176;&#x6240;&#x6307;&#x5411;&#x7684;&#x76EE;&#x6807;&#x9ED8;&#x8BA4;&#x4E0D;&#x4F1A;&#x88AB;&#x8F6C;&#x6362;&#x3002;&#x53EF;&#x4EE5;&#x7528;&#x9009;&#x9879;&#x6765;&#x6307;&#x5B9A;&#x66FF;&#x6362;&#x7B26;&#x53F7;&#x94FE;&#x63A5;&#xFF0C;&#x6216;&#x8005;&#x5C06;&#x8F93;&#x51FA;&#x5199;&#x5165;&#x5230;&#x94FE;&#x63A5;&#x76EE;&#x6807;&#x3002;Windows&#x4E0B;&#x4E0D;&#x652F;&#x6301;&#x5199;&#x5165;&#x5230;&#x7B26;&#x53F7;&#x94FE;&#x63A5;&#x7684;&#x76EE;&#x6807;&#x3002;</p>
+
+<p>Dos2unix&#x7531;SunOS/Solaris&#x4E0B;&#x7684;&#x7248;&#x672C;&#x6539;&#x5199;&#x800C;&#x6210;&#x3002;&#x8FD9;&#x4E24;&#x4E2A;&#x7248;&#x672C;&#x95F4;&#x6709;&#x4E00;&#x4E2A;&#x91CD;&#x5927;&#x5DEE;&#x5F02;&#xFF1A;&#x672C;&#x7248;&#x672C;&#x9ED8;&#x8BA4;&#x8FDB;&#x884C;&#x539F;&#x4F4D;&#x8F6C;&#x6362;&#xFF08;&#x65E7;&#x6587;&#x4EF6;&#x6A21;&#x5F0F;&#xFF09;&#xFF0C;&#x800C;&#x539F;&#x6765;SunOS/Solaris&#x4E0B;&#x7684;&#x7248;&#x672C;&#x53EA;&#x652F;&#x6301;&#x914D;&#x5BF9;&#x8F6C;&#x6362;&#xFF08;&#x65B0;&#x6587;&#x4EF6;&#x6A21;&#x5F0F;&#xFF09;&#xFF0C;&#x53C2;&#x89C1;&#x9009;&#x9879; <code>-o</code> &#x548C; <code>-n</code>&#x3002;&#x8FD8;&#x6709;&#x4E00;&#x4E2A;&#x533A;&#x522B;&#x662F;SunOS/Solaris&#x4E0B;&#x7684;&#x7248;&#x672C;&#x9ED8;&#x8BA4;&#x4F7F;&#x7528; <i>iso</i> &#x6A21;&#x5F0F;&#xFF0C;&#x800C;&#x672C;&#x7248;&#x672C;&#x9ED8;&#x8BA4;&#x4F7F;&#x7528; <i>ascii</i> &#x6A21;&#x5F0F;&#x3002;</p>
+
+<h1 id="3">&#x9009;&#x9879;</h1>
+
+<dl>
+
+<dt id="pod"><b>--</b></dt>
+<dd>
+
+<p>&#x5C06;&#x540E;&#x9762;&#x6240;&#x6709;&#x7684;&#x9009;&#x9879;&#x5F53;&#x4F5C;&#x6587;&#x4EF6;&#x540D;&#x3002;&#x5982;&#x679C;&#x4F60;&#x5E0C;&#x671B;&#x8F6C;&#x6362;&#x4E00;&#x4E2A;&#x6587;&#x4EF6;&#x540D;&#x4EE5;&#x7834;&#x6298;&#x53F7;&#x5F00;&#x5934;&#x7684;&#x6587;&#x4EF6;&#xFF0C;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x8FD9;&#x4E2A;&#x9009;&#x9879;&#x3002;&#x4F8B;&#x5982;&#xFF0C;&#x8981;&#x8F6C;&#x6362;&#x4E00;&#x4E2A;&#x540D;&#x4E3A;&ldquo;-foo&rdquo;&#x7684;&#x6587;&#x4EF6;&#xFF0C;&#x4F60;&#x53EF;&#x4EE5;&#x7528;&#x8FD9;&#x4E2A;&#x547D;&#x4EE4;&#xFF1A;</p>
+
+<pre><code>    dos2unix -- -foo</code></pre>
+
+<p>&#x6216;&#x8005;&#x5728;&#x65B0;&#x6587;&#x4EF6;&#x6A21;&#x5F0F;&#x4E0B;&#xFF1A;</p>
+
+<pre><code>    dos2unix -n -- -foo out.txt</code></pre>
+
+</dd>
+<dt id="allow-chown"><b>--allow-chown</b></dt>
+<dd>
+
+<p>&#x5728;&#x65E7;&#x6587;&#x4EF6;&#x6A21;&#x5F0F;&#x4E0B;&#xFF0C;&#x5141;&#x8BB8;&#x4FEE;&#x6539;&#x6587;&#x4EF6;&#x7684;&#x6240;&#x6709;&#x8005;&#x3002;</p>
+
+<p>&#x82E5;&#x4F7F;&#x7528;&#x6B64;&#x9009;&#x9879;&#xFF0C;&#x5C06;&#x5141;&#x8BB8;&#x5728;&#x8F6C;&#x6362;&#x6587;&#x4EF6;&#x65F6;&#x539F;&#x59CB;&#x6587;&#x4EF6;&#x7684;&#x5C5E;&#x4E3B;&#x6216;&#x5C5E;&#x7EC4;&#x53D1;&#x751F;&#x53D8;&#x66F4;&#xFF0C;&#x7C7B;&#x4F3C;&#x4E8E;&#x4F7F;&#x7528;&#x65B0;&#x6587;&#x4EF6;&#x6A21;&#x5F0F;&#x8FDB;&#x884C;&#x8F6C;&#x6362;&#x3002;&#x53E6;&#x8BF7;&#x53C2;&#x89C1;&#x9009;&#x9879;<code>-o</code> &#x548C; <code>-n</code>&#x3002;&#x4EC5;&#x5F53; dos2unix &#x652F;&#x6301;&#x4FDD;&#x62A4;&#x6587;&#x4EF6;&#x7684;&#x5C5E;&#x4E3B;/&#x5C5E;&#x7EC4;&#x65F6;&#x624D;&#x80FD;&#x4F7F;&#x7528;&#x8BE5;&#x9009;&#x9879;&#x3002;</p>
+
+</dd>
+<dt id="ascii"><b>-ascii</b></dt>
+<dd>
+
+<p>&#x53EA;&#x8F6C;&#x6362;&#x65AD;&#x884C;&#x7B26;&#x3002;&#x8FD9;&#x662F;&#x9ED8;&#x8BA4;&#x7684;&#x8F6C;&#x6362;&#x6A21;&#x5F0F;&#x3002;</p>
+
+</dd>
+<dt id="iso"><b>-iso</b></dt>
+<dd>
+
+<p>&#x5728;DOS&#x548C;ISO-8859-1&#x5B57;&#x7B26;&#x96C6;&#x4E4B;&#x95F4;&#x8F6C;&#x6362;&#x3002;&#x53C2;&#x89C1; CONVERSION MODES &#x4E00;&#x8282;&#x3002;</p>
+
+</dd>
+<dt id="pod-1252"><b>-1252</b></dt>
+<dd>
+
+<p>&#x4F7F;&#x7528;Windows 1252 &#x7F16;&#x7801;&#x9875;&#xFF08;&#x897F;&#x6B27;&#xFF09;&#x3002;</p>
+
+</dd>
+<dt id="pod-437"><b>-437</b></dt>
+<dd>
+
+<p>&#x4F7F;&#x7528;DOS 437 &#x7F16;&#x7801;&#x9875;&#xFF08;&#x7F8E;&#x56FD;&#xFF09;&#x3002;&#x8FD9;&#x662F;ISO&#x8F6C;&#x6362;&#x65F6;&#x7684;&#x9ED8;&#x8BA4;&#x7F16;&#x7801;&#x9875;&#x3002;</p>
+
+</dd>
+<dt id="pod-850"><b>-850</b></dt>
+<dd>
+
+<p>&#x4F7F;&#x7528;DOS 850 &#x7F16;&#x7801;&#x9875;&#xFF08;&#x897F;&#x6B27;&#xFF09;&#x3002;</p>
+
+</dd>
+<dt id="pod-860"><b>-860</b></dt>
+<dd>
+
+<p>&#x4F7F;&#x7528;DOS 860 &#x7F16;&#x7801;&#x9875;&#xFF08;&#x8461;&#x8404;&#x7259;&#xFF09;&#x3002;</p>
+
+</dd>
+<dt id="pod-863"><b>-863</b></dt>
+<dd>
+
+<p>&#x4F7F;&#x7528;DOS 863 &#x7F16;&#x7801;&#x9875;&#xFF08;&#x52A0;&#x62FF;&#x5927;&#x6CD5;&#x8BED;&#xFF09;&#x3002;</p>
+
+</dd>
+<dt id="pod-865"><b>-865</b></dt>
+<dd>
+
+<pre><code> &#x4F7F;&#x7528;DOS 865 &#x7F16;&#x7801;&#x9875;&#xFF08;&#x5317;&#x6B27;&#xFF09;&#x3002;</code></pre>
+
+</dd>
+<dt id="pod-7"><b>-7</b></dt>
+<dd>
+
+<p>&#x5C06;8&#x4F4D;&#x5B57;&#x7B26;&#x8F6C;&#x6362;&#x5230;7&#x4F4D;&#x7A7A;&#x95F4;&#x3002;</p>
+
+</dd>
+<dt id="b---keep-bom"><b>-b, --keep-bom</b></dt>
+<dd>
+
+<p>&#x4FDD;&#x7559;&#x5B57;&#x8282;&#x5E8F;&#x6807;&#x8BB0;&#xFF08;BOM&#xFF09;&#x3002;&#x5F53;&#x8F93;&#x5165;&#x6587;&#x4EF6;&#x542B;&#x6709;BOM&#x5934;&#x65F6;&#xFF0C;&#x4E5F;&#x5411;&#x8F93;&#x51FA;&#x6587;&#x4EF6;&#x5199;&#x5165;BOM&#x3002;&#x8FD9;&#x662F;&#x8F6C;&#x6362;&#x5230;DOS&#x65AD;&#x884C;&#x7B26;&#x65F6;&#x7684;&#x9ED8;&#x8BA4;&#x884C;&#x4E3A;&#x3002;&#x53C2;&#x89C1;&#x9009;&#x9879; <code>-r</code>&#x3002;</p>
+
+</dd>
+<dt id="c---convmode"><b>-c, --convmode &#x8F6C;&#x6362;&#x6A21;&#x5F0F;</b></dt>
+<dd>
+
+<p>&#x6539;&#x53D8;&#x8F6C;&#x6362;&#x6A21;&#x5F0F;&#x3002;&#x8F6C;&#x6362;&#x6A21;&#x5F0F;&#x53EF;&#x4EE5;&#x4E3A;&#xFF1A;<i>ascii</i>&#x3001;<i>7bit</i>&#x3001;<i>iso</i>&#x6216;<i>mac</i>&#xFF0C;&#x9ED8;&#x8BA4;&#x4E3A;ascii&#x3002;</p>
+
+</dd>
+<dt id="D---display-enc-ENCODAGE"><b>-D, --display-enc ENCODAGE</b></dt>
+<dd>
+
+<p>&#x8BBE;&#x7F6E;&#x663E;&#x793A;&#x6587;&#x672C;&#x7684;&#x7F16;&#x7801;&#x3002;&#x7F16;&#x7801;&#x53EF;&#x4EE5;&#x4E3A;&#xFF1A;<i>ansi</i>&#x3001;<i>unicode</i>&#x3001;<i>unicodebom</i>&#x3001;<i>utf8</i>&#x3001;<i>utf8bom</i>&#xFF0C;&#x9ED8;&#x8BA4;&#x4E3A; ansi&#x3002;</p>
+
+<p>&#x8FD9;&#x4E00;&#x9009;&#x9879;&#x53EA;&#x5BF9;&#x652F;&#x6301;Unicode&#x6587;&#x4EF6;&#x540D;&#x7684;Windows&#x7248;dos2unix&#x6709;&#x6548;&#x3002;&#x5B83;&#x5BF9;&#x6587;&#x4EF6;&#x540D;&#x7684;&#x8BFB;&#x5199;&#x65E0;&#x6548;&#xFF0C;&#x53EA;&#x5F71;&#x54CD;&#x5B83;&#x4EEC;&#x7684;&#x663E;&#x793A;&#x7ED3;&#x679C;&#x3002;</p>
+
+<p>&#x5728;Windows&#x63A7;&#x5236;&#x53F0;&#x4E2D;&#xFF0C;&#x6709;&#x51E0;&#x79CD;&#x53EF;&#x4EE5;&#x6839;&#x636E;&#x6587;&#x672C;&#x7F16;&#x7801;&#x6765;&#x663E;&#x793A;&#x6587;&#x672C;&#x7684;&#x65B9;&#x6CD5;&#x3002;&#x5B83;&#x4EEC;&#x5404;&#x6709;&#x5229;&#x5F0A;&#x3002;</p>
+
+<dl>
+
+<dt id="ansi"><b>ansi</b></dt>
+<dd>
+
+<p>dos2unix&#x9ED8;&#x8BA4;&#x4F7F;&#x7528;ANSI&#x7F16;&#x7801;&#x6587;&#x672C;&#x3002;&#x4F18;&#x70B9;&#x662F;&#x5B83;&#x80FD;&#x63D0;&#x4F9B;&#x5411;&#x540E;&#x517C;&#x5BB9;&#x6027;&#xFF0C;&#x5E76;&#x80FD;&#x7528;&#x4E8E;raster&#x548C;TrueType&#x5B57;&#x4F53;&#x3002;&#x5728;&#x4E00;&#x4E9B;&#x5730;&#x65B9;&#xFF0C;&#x4F60;&#x53EF;&#x80FD;&#x9700;&#x8981;&#x4F7F;&#x7528; <code>chcp</code> &#x547D;&#x4EE4;&#x5C06;&#x6D3B;&#x52A8;DOS OEM&#x7F16;&#x7801;&#x9875;&#x8BBE;&#x7F6E;&#x4E3A;Windows&#x7CFB;&#x7EDF;ANSI&#x7F16;&#x7801;&#x9875;&#xFF0C;&#x56E0;&#x4E3A;dos2unix&#x4F7F;&#x7528;Windows&#x7CFB;&#x7EDF;&#x7F16;&#x7801;&#x9875;&#x3002;</p>
+
+<p>ansi&#x7684;&#x7F3A;&#x70B9;&#x662F;&#x542B;&#x6709;&#x975E;&#x7CFB;&#x7EDF;&#x9ED8;&#x8BA4;&#x7F16;&#x7801;&#x9875;&#x4E2D;&#x5B57;&#x7B26;&#x7684;&#x56FD;&#x9645;&#x5316;&#x6587;&#x4EF6;&#x540D;&#x5C06;&#x65E0;&#x6CD5;&#x88AB;&#x6B63;&#x786E;&#x663E;&#x793A;&#x3002;&#x4F60;&#x4F1A;&#x770B;&#x5230;&#x4E00;&#x4E9B;&#x95EE;&#x53F7;&#x6216;&#x5176;&#x4ED6;&#x9519;&#x8BEF;&#x7684;&#x5B57;&#x7B26;&#x3002;&#x5982;&#x679C;&#x4F60;&#x4E0D;&#x9700;&#x8981;&#x5904;&#x7406;&#x5916;&#x6587;&#x6587;&#x4EF6;&#x540D;&#xFF0C;&#x8FD9;&#x4E00;&#x65B9;&#x6CD5;&#x662F;&#x4E0D;&#x9519;&#x7684;&#x9009;&#x62E9;&#x3002;</p>
+
+</dd>
+<dt id="unicodeunicodebom"><b>unicode&#xFF0C;unicodebom</b></dt>
+<dd>
+
+<p>Unicode&#x7F16;&#x7801;&#xFF08;Windows&#x4E2D;&#x5BF9;UTF-16&#x7684;&#x79F0;&#x547C;&#xFF09;&#x7684;&#x4F18;&#x70B9;&#x662F;&#x6587;&#x672C;&#x53EF;&#x4EE5;&#x88AB;&#x6B63;&#x786E;&#x663E;&#x793A;&#xFF0C;&#x4E5F;&#x65E0;&#x9700;&#x6539;&#x53D8;&#x6D3B;&#x52A8;&#x7F16;&#x7801;&#x9875;&#x3002;&#x4F60;&#x53EF;&#x80FD;&#x9700;&#x8981;&#x8BBE;&#x7F6E;&#x7EC8;&#x7AEF;&#x5B57;&#x4F53;&#x4E3A;TrueType&#x4EE5;&#x4FBF;&#x6B63;&#x786E;&#x663E;&#x793A;&#x56FD;&#x9645;&#x5316;&#x5B57;&#x7B26;&#x3002;&#x5982;&#x679C;TrueType&#x5B57;&#x4F53;&#x4E2D;&#x4E0D;&#x5305;&#x542B;&#x67D0;&#x4E2A;&#x5B57;&#x7B26;&#xFF0C;&#x4F60;&#x4F1A;&#x770B;&#x5230;&#x4E00;&#x4E2A;&#x5C0F;&#x65B9;&#x5757;&#xFF0C;&#x6709;&#x65F6;&#x65B9;&#x5757;&#x4E2D;&#x8FD8;&#x4F1A;&#x6709;&#x4E00;&#x4E2A;&#x95EE;&#x53F7;&#x3002;</p>
+
+<p>&#x5F53;&#x4F60;&#x4F7F;&#x7528;ConEmu&#x7EC8;&#x7AEF;&#x65F6;&#xFF0C;&#x6240;&#x4EE5;&#x7684;&#x6587;&#x672C;&#x5C06;&#x4F1A;&#x88AB;&#x6B63;&#x786E;&#x663E;&#x793A;&#xFF0C;&#x56E0;&#x4E3A;ConEmu&#x4F1A;&#x81EA;&#x52A8;&#x9009;&#x62E9;&#x5408;&#x9002;&#x7684;&#x5B57;&#x4F53;&#x3002;</p>
+
+<p>Unicode&#x7684;&#x7F3A;&#x70B9;&#x5728;&#x4E8E;&#x5B83;&#x4E0E;ASCII&#x4E0D;&#x517C;&#x5BB9;&#x3002;&#x5F53;&#x4F60;&#x5C06;&#x8F93;&#x51FA;&#x91CD;&#x5B9A;&#x5411;&#x5230;&#x5176;&#x4ED6;&#x7A0B;&#x5E8F;&#x6216;&#x6587;&#x4EF6;&#x65F6;&#xFF0C;&#x5B83;&#x53EF;&#x80FD;&#x4E0D;&#x90A3;&#x4E48;&#x5BB9;&#x6613;&#x63A7;&#x5236;</p>
+
+<p>&#x5F53;&#x4F7F;&#x7528; <code>unicodebom</code> &#x65B9;&#x6CD5;&#x65F6;&#xFF0C;&#x5C06;&#x4F1A;&#x5728;Unicode&#x6587;&#x672C;&#x524D;&#x6DFB;&#x52A0;&#x4E00;&#x4E2A;BOM&#xFF08;&#x5B57;&#x8282;&#x5E8F;&#x6807;&#x8BB0;&#xFF09;&#x3002;&#x5728;PowerShell&#x4E2D;&#xFF0C;&#x9700;&#x8981;&#x6839;&#x636E;BOM&#x6765;&#x8FDB;&#x884C;&#x6B63;&#x786E;&#x7684;&#x91CD;&#x5B9A;&#x5411;&#x6216;&#x7BA1;&#x9053;&#x8F93;&#x51FA;&#x3002;</p>
+
+</dd>
+<dt id="utf8utf8bom"><b>utf8&#xFF0C;utf8bom</b></dt>
+<dd>
+
+<p>utf8&#x7684;&#x4F18;&#x70B9;&#x5728;&#x4E8E;&#x5B83;&#x4E0E;ASCII&#x517C;&#x5BB9;&#x3002;&#x4F60;&#x9700;&#x8981;&#x8BBE;&#x7F6E;&#x7EC8;&#x7AEF;&#x7684;&#x5B57;&#x4F53;&#x4E3A;TrueType&#x5B57;&#x4F53;&#x3002;&#x4F7F;&#x7528;TrueType&#x5B57;&#x4F53;&#x53EF;&#x4EE5;&#x4F7F;&#x5F97;&#x6587;&#x672C;&#x5F97;&#x4EE5;&#x6B63;&#x786E;&#x663E;&#x793A;&#xFF0C;&#x5C31;&#x50CF;&#x4F7F;&#x7528; <code>unicode</code> &#x7F16;&#x7801;&#x65F6;&#x90A3;&#x6837;&#x3002;</p>
+
+<p>&#x7F3A;&#x70B9;&#x662F;&#x5F53;&#x4F60;&#x4F7F;&#x7528;&#x9ED8;&#x8BA4;&#x7684;raster&#x5B57;&#x4F53;&#x65F6;&#xFF0C;&#x6240;&#x6709;&#x7684;&#x975E;ASCII&#x5B57;&#x7B26;&#x5C06;&#x65E0;&#x6CD5;&#x88AB;&#x6B63;&#x786E;&#x663E;&#x793A;&#x3002;&#x4E0D;&#x4EC5;&#x662F;unicode&#x6587;&#x4EF6;&#x540D;&#xFF0C;&#x8FDE;&#x7FFB;&#x8BD1;&#x7684;&#x6D88;&#x606F;&#x4E5F;&#x65E0;&#x6CD5;&#x88AB;&#x8BFB;&#x53D6;&#x3002;&#x5728;&#x914D;&#x7F6E;&#x4E3A;&#x4E1C;&#x4E9A;&#x5730;&#x533A;&#x7684;Windows&#x4E2D;&#xFF0C;&#x5F53;&#x7EC8;&#x7AEF;&#x4E2D;&#x663E;&#x793A;&#x8FD9;&#x4E9B;&#x6D88;&#x606F;&#x65F6;&#x4F60;&#x53EF;&#x80FD;&#x4F1A;&#x770B;&#x5230;&#x95EA;&#x70C1;&#x73B0;&#x8C61;&#x3002;</p>
+
+<p>&#x5728;ConEmu&#x7EC8;&#x7AEF;&#x4E2D;&#xFF0C;utf&#x7F16;&#x7801;&#x65B9;&#x5F0F;&#x53EF;&#x4EE5;&#x6B63;&#x5E38;&#x5DE5;&#x4F5C;&#x3002;</p>
+
+<p>&#x5F53;&#x4F7F;&#x7528; <code>utf8bom</code> &#x65B9;&#x6CD5;&#x65F6;&#xFF0C;&#x5C06;&#x4F1A;&#x5728;Unicode&#x6587;&#x672C;&#x524D;&#x6DFB;&#x52A0;&#x4E00;&#x4E2A;BOM&#xFF08;&#x5B57;&#x8282;&#x5E8F;&#x6807;&#x8BB0;&#xFF09;&#x3002;&#x5728;PowerShell&#x4E2D;&#xFF0C;&#x9700;&#x8981;&#x6839;&#x636E;BOM&#x6765;&#x8FDB;&#x884C;&#x6B63;&#x786E;&#x7684;&#x91CD;&#x5B9A;&#x5411;&#x6216;&#x7BA1;&#x9053;&#x8F93;&#x51FA;&#x3002;</p>
+
+</dd>
+</dl>
+
+<p>&#x9ED8;&#x8BA4;&#x7684;&#x7F16;&#x7801;&#x65B9;&#x5F0F;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x8BBE;&#x7F6E; DOS2UNIX_DISPLAY_ENC &#x73AF;&#x5883;&#x53D8;&#x91CF;&#x4E3A; <code>unicode</code> &#x3001;<code>unicodebom</code>&#x3001;<code>utf8</code> &#x6216; <code>utf8bom</code> &#x6765;&#x6539;&#x53D8;&#x3002;</p>
+
+</dd>
+<dt id="f---force"><b>-f, --force</b></dt>
+<dd>
+
+<p>&#x5F3A;&#x5236;&#x8F6C;&#x6362;&#x4E8C;&#x8FDB;&#x5236;&#x6587;&#x4EF6;&#x3002;</p>
+
+</dd>
+<dt id="gb---gb18030"><b>-gb, --gb18030</b></dt>
+<dd>
+
+<p>&#x5728;Windows&#x4E2D;&#xFF0C;UTF-16&#x9ED8;&#x8BA4;&#x88AB;&#x8F6C;&#x6362;&#x4E3A;UTF-8&#x683C;&#x5F0F;&#xFF0C;&#x65E0;&#x8BBA;&#x533A;&#x57DF;&#x8BBE;&#x7F6E;&#x4E3A;&#x4F55;&#x3002;&#x8BF7;&#x4F7F;&#x7528;&#x8FD9;&#x4E00;&#x9009;&#x9879;&#x5C06;UTF-16&#x6587;&#x4EF6;&#x8F6C;&#x6362;&#x4E3A;GB18030&#x683C;&#x5F0F;&#x3002;&#x6B64;&#x9009;&#x9879;&#x53EA;&#x5728;Windows&#x4E0B;&#x6709;&#x6548;&#x3002;&#x53C2;&#x52A0; GB18030 &#x4E00;&#x8282;&#x3002;</p>
+
+</dd>
+<dt id="h---help"><b>-h, --help</b></dt>
+<dd>
+
+<p>&#x663E;&#x793A;&#x5E2E;&#x52A9;&#xFF0C;&#x7136;&#x540E;&#x9000;&#x51FA;&#x3002;</p>
+
+</dd>
+<dt id="i---info"><b>-i[&#x6807;&#x5FD7;], --info[=&#x6807;&#x5FD7;] &#x6587;&#x4EF6; &hellip;</b></dt>
+<dd>
+
+<p>&#x663E;&#x793A;&#x6587;&#x4EF6;&#x4FE1;&#x606F;&#x3002;&#x4E0D;&#x8FDB;&#x884C;&#x8F6C;&#x6362;&#x3002;</p>
+
+<p>&#x5C06;&#x4F1A;&#x663E;&#x793A;&#x4E0B;&#x5217;&#x4FE1;&#x606F;&#xFF08;&#x6309;&#x987A;&#x5E8F;&#xFF09;&#xFF1A;DOS&#x65AD;&#x884C;&#x7B26;&#x7684;&#x6570;&#x91CF;&#x3001;Unix&#x65AD;&#x884C;&#x7B26;&#x7684;&#x6570;&#x91CF;&#x3001;Mac&#x65AD;&#x884C;&#x7B26;&#x7684;&#x6570;&#x91CF;&#x3001;&#x662F;&#x5426;&#x6709;BOM&#x3001;&#x6587;&#x672C;/&#x4E8C;&#x8FDB;&#x5236;&#x3001;&#x6587;&#x4EF6;&#x540D;&#x3002;</p>
+
+<p>&#x8F93;&#x51FA;&#x793A;&#x4F8B;&#xFF1A;</p>
+
+<pre><code>     6       0       0  no_bom    text    dos.txt
+     0       6       0  no_bom    text    unix.txt
+     0       0       6  no_bom    text    mac.txt
+     6       6       6  no_bom    text    mixed.txt
+    50       0       0  UTF-16LE  text    utf16le.txt
+     0      50       0  no_bom    text    utf8unix.txt
+    50       0       0  UTF-8     text    utf8dos.txt
+     2     418     219  no_bom    binary  dos2unix.exe</code></pre>
+
+<p>&#x6CE8;&#x610F;&#xFF0C;&#x4E8C;&#x8FDB;&#x5236;&#x6587;&#x4EF6;&#x6709;&#x65F6;&#x4F1A;&#x88AB;&#x8BEF;&#x5224;&#x4E3A;&#x6587;&#x672C;&#x6587;&#x4EF6;&#x3002;&#x53C2;&#x89C1;&#x9009;&#x9879; <code>-s</code>&#x3002;</p>
+
+<p>&#x53EF;&#x4EE5;&#x4E3A;&#x8F93;&#x51FA;&#x8BBE;&#x7F6E;&#x989D;&#x5916;&#x7684;&#x6807;&#x5FD7;&#xFF08;&#x4E00;&#x4E2A;&#x6216;&#x591A;&#x4E2A;&#xFF09;&#x3002;</p>
+
+<dl>
+
+<dt id="pod0"><b>0</b></dt>
+<dd>
+
+<p>&#x4F7F;&#x7528;&#x96F6;&#x5B57;&#x7B26;&#xFF08;&quot;\0&quot;&#xFF09;&#x800C;&#x975E;&#x6362;&#x884C;&#x7B26;&#x6765;&#x5206;&#x5272;&#x6587;&#x4EF6;&#x4FE1;&#x606F;&#x884C;&#x3002;&#x7528;&#x4E8E;&#x5728;&#x6307;&#x5B9A;&#x4E86; c &#x9009;&#x9879;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x6B63;&#x786E;&#x89E3;&#x6790;&#x542B;&#x6709;&#x7A7A;&#x683C;&#x6216;&#x5F15;&#x53F7;&#x7684;&#x6587;&#x4EF6;&#x540D;&#x3002;&#x8BF7;&#x7ED3;&#x5408; xargs(1) &#x7684;&#x9009;&#x9879; <code>-0</code> &#x6216; <code>--null</code> &#x6765;&#x4F7F;&#x7528;&#x3002;</p>
+
+</dd>
+<dt id="d"><b>d</b></dt>
+<dd>
+
+<p>&#x663E;&#x793A;DOS&#x65AD;&#x884C;&#x7B26;&#x7684;&#x6570;&#x91CF;&#x3002;</p>
+
+</dd>
+<dt id="u"><b>u</b></dt>
+<dd>
+
+<p>&#x663E;&#x793A;Unix&#x65AD;&#x884C;&#x7B26;&#x7684;&#x6570;&#x91CF;&#x3002;</p>
+
+</dd>
+<dt id="m"><b>m</b></dt>
+<dd>
+
+<p>&#x663E;&#x793A;Mac&#x65AD;&#x884C;&#x7B26;&#x7684;&#x6570;&#x91CF;&#x3002;</p>
+
+</dd>
+<dt id="b"><b>b</b></dt>
+<dd>
+
+<p>&#x663E;&#x793A;BOM&#x72B6;&#x51B5;&#x3002;</p>
+
+</dd>
+<dt id="t"><b>t</b></dt>
+<dd>
+
+<p>&#x663E;&#x793A;&#x6587;&#x4EF6;&#x4E3A;&#x6587;&#x672C;&#x6216;&#x4E8C;&#x8FDB;&#x5236;&#x3002;</p>
+
+</dd>
+<dt id="c"><b>c</b></dt>
+<dd>
+
+<p>&#x53EA;&#x663E;&#x793A;&#x5C06;&#x4F1A;&#x88AB;&#x8F6C;&#x6362;&#x7684;&#x6587;&#x4EF6;&#x3002;</p>
+
+<p>&#x82E5;&#x8BBE;&#x7F6E;&#x4E86; <code>c</code>&#x6807;&#x5FD7;&#xFF0C;dos2unix&#x5C06;&#x53EA;&#x663E;&#x793A;&#x542B;&#x6709;DOS&#x65AD;&#x884C;&#x7B26;&#x7684;&#x6587;&#x4EF6;&#xFF0C;unix2dos&#x5C06;&#x53EA;&#x663E;&#x793A;&#x542B;&#x6709;Unix&#x65AD;&#x884C;&#x7B26;&#x7684;&#x6587;&#x4EF6;&#x3002;</p>
+
+</dd>
+<dt id="h"><b>h</b></dt>
+<dd>
+
+<p>&#x663E;&#x793A;&#x5934;&#x90E8;&#x3002;</p>
+
+</dd>
+<dt id="p"><b>p</b></dt>
+<dd>
+
+<p>&#x663E;&#x793A;&#x4E0D;&#x542B;&#x8DEF;&#x5F84;&#x7684;&#x6587;&#x4EF6;&#x540D;&#x3002;</p>
+
+</dd>
+</dl>
+
+<p>&#x793A;&#x4F8B;&#xFF1A;</p>
+
+<p>&#x663E;&#x793A;&#x6240;&#x6709; *.txt &#x6587;&#x4EF6;&#x7684;&#x4FE1;&#x606F;&#xFF1A;</p>
+
+<pre><code>    dos2unix -i *.txt</code></pre>
+
+<p>&#x53EA;&#x663E;&#x793A;DOS&#x65AD;&#x884C;&#x7B26;&#x548C;Unix&#x65AD;&#x884C;&#x7B26;&#x7684;&#x6570;&#x91CF;&#xFF1A;</p>
+
+<pre><code>    dos2unix -idu *.txt</code></pre>
+
+<p>&#x53EA;&#x663E;&#x793A;BOM&#x72B6;&#x51B5;&#xFF1A;</p>
+
+<pre><code>    dos2unix --info=b *.txt</code></pre>
+
+<p>&#x5217;&#x51FA;&#x542B;&#x6709;DOS&#x65AD;&#x884C;&#x7B26;&#x7684;&#x6587;&#x4EF6;&#xFF1A;</p>
+
+<pre><code>    dos2unix -ic *.txt</code></pre>
+
+<p>&#x5217;&#x51FA;&#x542B;&#x6709;Unix&#x65AD;&#x884C;&#x7B26;&#x7684;&#x6587;&#x4EF6;&#xFF1A;</p>
+
+<pre><code>    unix2dos -ic *.txt</code></pre>
+
+<p>&#x53EA;&#x8F6C;&#x6362;&#x542B;&#x6709;DOS&#x65AD;&#x884C;&#x7B26;&#x7684;&#x6587;&#x4EF6;&#xFF0C;&#x4FDD;&#x6301;&#x5176;&#x4ED6;&#x6587;&#x4EF6;&#x4E0D;&#x53D8;&#xFF1A;</p>
+
+<pre><code>    dos2unix -ic0 *.txt | xargs -0 dos2unix</code></pre>
+
+<p>&#x67E5;&#x627E;&#x542B;&#x6709;DOS&#x65AD;&#x884C;&#x7B26;&#x7684;&#x6587;&#x672C;&#x6587;&#x4EF6;&#xFF1A;</p>
+
+<pre><code>    find -name &#39;*.txt&#39; -print0 | xargs -0 dos2unix -ic</code></pre>
+
+</dd>
+<dt id="k---keepdate"><b>-k, --keepdate</b></dt>
+<dd>
+
+<p>&#x5C06;&#x8F93;&#x5165;&#x6587;&#x4EF6;&#x7684;&#x65F6;&#x95F4;&#x6233;&#x5E94;&#x7528;&#x5230;&#x8F93;&#x51FA;&#x6587;&#x4EF6;&#x3002;</p>
+
+</dd>
+<dt id="L---license"><b>-L, --license</b></dt>
+<dd>
+
+<p>&#x663E;&#x793A;&#x7A0B;&#x5E8F;&#x8BB8;&#x53EF;&#x8BC1;&#x3002;</p>
+
+</dd>
+<dt id="l---newline"><b>-l, --newline</b></dt>
+<dd>
+
+<p>&#x6DFB;&#x52A0;&#x989D;&#x5916;&#x7684;&#x65B0;&#x884C;&#x3002;</p>
+
+<p><b>dos2unix</b>&#xFF1A;&#x53EA;&#x6709;DOS&#x65AD;&#x884C;&#x7B26;&#x4F1A;&#x88AB;&#x8F6C;&#x6362;&#x4E3A;&#x4E24;&#x4E2A;Unix&#x65AD;&#x884C;&#x7B26;&#x3002;&#x5728;Mac&#x6A21;&#x5F0F;&#x4E0B;&#xFF0C;&#x53EA;&#x6709;Mac&#x65AD;&#x884C;&#x7B26;&#x4F1A;&#x88AB;&#x8F6C;&#x6362;&#x4E3A;Unix&#x65AD;&#x884C;&#x7B26;&#x3002;</p>
+
+<p><b>unix2dos</b>&#xFF1A;&#x53EA;&#x6709;Unix&#x65AD;&#x884C;&#x7B26;&#x4F1A;&#x88AB;&#x8F6C;&#x6362;&#x4E3A;&#x4E24;&#x4E2A;DOS&#x65AD;&#x884C;&#x7B26;&#x3002;&#x5728;Mac&#x6A21;&#x5F0F;&#x4E0B;&#xFF0C;Unix&#x65AD;&#x884C;&#x7B26;&#x4F1A;&#x88AB;&#x8F6C;&#x6362;&#x4E3A;&#x4E24;&#x4E2A;Mac&#x65AD;&#x884C;&#x7B26;&#x3002;</p>
+
+</dd>
+<dt id="m---add-bom"><b>-m, --add-bom</b></dt>
+<dd>
+
+<p>&#x5C06;&#x5B57;&#x8282;&#x5E8F;&#x6807;&#x8BB0;&#xFF08;BOM&#xFF09;&#x5199;&#x5165;&#x5230;&#x8F93;&#x51FA;&#x6587;&#x4EF6;&#x3002;&#x9ED8;&#x8BA4;&#x60C5;&#x51B5;&#x4E0B;&#x5C06;&#x5199;&#x5165;UTF-8 BOM&#x3002;</p>
+
+<p>&#x5F53;&#x8F93;&#x5165;&#x6587;&#x4EF6;&#x4E3A;UTF-16&#x683C;&#x5F0F;&#xFF0C;&#x5E76;&#x4E14;&#x4F7F;&#x7528;&#x4E86; <code>-u</code>&#x9009;&#x9879;&#xFF0C;&#x5C06;&#x5199;&#x5165;UTF-16 BOM&#x3002;</p>
+
+<p>&#x5F53;&#x8F93;&#x51FA;&#x6587;&#x4EF6;&#x4E0D;&#x662F;UTF-8&#x3001;UTF-16&#x6216;GB18030&#x683C;&#x5F0F;&#x65F6;&#xFF0C;&#x8BF7;&#x4E0D;&#x8981;&#x4F7F;&#x7528;&#x6B64;&#x9009;&#x9879;&#x3002;&#x53C2;&#x52A0; UNICODE &#x4E00;&#x8282;&#x3002;</p>
+
+</dd>
+<dt id="n---newline"><b>-n, --newline &#x8F93;&#x5165;&#x6587;&#x4EF6; &#x8F93;&#x51FA;&#x6587;&#x4EF6; ...</b></dt>
+<dd>
+
+<p>&#x65B0;&#x6587;&#x4EF6;&#x6A21;&#x5F0F;&#x3002;&#x8F6C;&#x6362;&#x8F93;&#x5165;&#x6587;&#x4EF6;&#x5E76;&#x5199;&#x5165;&#x5230;&#x8F93;&#x51FA;&#x6587;&#x4EF6;&#x3002;&#x6587;&#x4EF6;&#x540D;&#x5FC5;&#x987B;&#x6210;&#x5BF9;&#x7ED9;&#x51FA;&#xFF0C;&#x5E76;&#x4E14; <i>&#x4E0D;&#x80FD;</i> &#x4F7F;&#x7528;&#x901A;&#x914D;&#x7B26;&#xFF0C;&#x5426;&#x5219;&#x4F60; <i>&#x5C06;&#x4F1A;</i>&#x4E22;&#x5931;&#x6587;&#x4EF6;&#x3002;</p>
+
+<p>&#x4F7F;&#x7528;&#x65B0;&#x6587;&#x4EF6;&#xFF08;&#x914D;&#x5BF9;&#xFF09;&#x6A21;&#x5F0F;&#x8F6C;&#x6362;&#x65F6;&#xFF0C;&#x547D;&#x4EE4;&#x6267;&#x884C;&#x8005;&#x5FC5;&#x987B;&#x4E3A;&#x6587;&#x4EF6;&#x7684;&#x6240;&#x6709;&#x8005;&#x3002;&#x65B0;&#x6587;&#x4EF6;&#x7684;&#x8BFB;/&#x5199;&#x6743;&#x9650;&#x5C06;&#x7531;&#x6E90;&#x6587;&#x4EF6;&#x7684;&#x6743;&#x9650;&#x51CF;&#x53BB;&#x547D;&#x4EE4;&#x6267;&#x884C;&#x8005;&#x7684; umask(1) &#x5F97;&#x5230;&#x3002;</p>
+
+</dd>
+<dt id="no-allow-chown"><b>--no-allow-chown</b></dt>
+<dd>
+
+<p>&#x5728;&#x65E7;&#x6587;&#x4EF6;&#x6A21;&#x5F0F;&#x4E0B;&#xFF0C;&#x4E0D;&#x5141;&#x8BB8;&#x4FEE;&#x6539;&#x6587;&#x4EF6;&#x7684;&#x6240;&#x6709;&#x8005;&#xFF08;&#x9ED8;&#x8BA4;&#x9009;&#x9879;&#xFF09;&#x3002;</p>
+
+<p>&#x5F53;&#x539F;&#x59CB;&#x6587;&#x4EF6;&#x7684;&#x5C5E;&#x4E3B;/&#x5C5E;&#x7EC4;&#x65E0;&#x6CD5;&#x4FDD;&#x6301;&#x4E0D;&#x53D8;&#x65F6;&#xFF0C;&#x505C;&#x6B62;&#x683C;&#x5F0F;&#x8F6C;&#x6362;&#x3002;&#x53E6;&#x8BF7;&#x53C2;&#x89C1;<code>-o</code> &#x548C; <code>-n</code>&#x9009;&#x9879;&#x3002;&#x4EC5;&#x5F53; dos2unix &#x652F;&#x6301;&#x4FDD;&#x62A4;&#x6587;&#x4EF6;&#x7684;&#x5C5E;&#x4E3B;/&#x5C5E;&#x7EC4;&#x65F6;&#x624D;&#x80FD;&#x4F7F;&#x7528;&#x8BE5;&#x9009;&#x9879;&#x3002;</p>
+
+</dd>
+<dt id="o---oldfile"><b>-o, --oldfile &#x6587;&#x4EF6; ...</b></dt>
+<dd>
+
+<p>&#x65E7;&#x6587;&#x4EF6;&#x6A21;&#x5F0F;&#x3002;&#x8F6C;&#x6362;&#x5E76;&#x5C06;&#x8F93;&#x51FA;&#x8986;&#x76D6;&#x5230;&#x6E90;&#x6587;&#x4EF6;&#x3002;&#x7A0B;&#x5E8F;&#x9ED8;&#x8BA4;&#x4F7F;&#x7528;&#x6B64;&#x6A21;&#x5F0F;&#xFF0C;&#x5141;&#x8BB8;&#x4F7F;&#x7528;&#x901A;&#x914D;&#x7B26;&#x3002;</p>
+
+<p>&#x5728;&#x65E7;&#x6587;&#x4EF6;&#xFF08;&#x66FF;&#x6362;&#xFF09;&#x6A21;&#x5F0F;&#x4E0B;&#xFF0C;&#x88AB;&#x8F6C;&#x6362;&#x7684;&#x6587;&#x4EF6;&#x7684;&#x6240;&#x6709;&#x8005;&#x3001;&#x7EC4;&#x548C;&#x8BFB;/&#x5199;&#x6743;&#x9650;&#x4FDD;&#x6301;&#x4E0D;&#x53D8;&#x3002;&#x5F53;&#x6587;&#x4EF6;&#x88AB;&#x5176;&#x4ED6;&#x5177;&#x6709;&#x5199;&#x6743;&#x9650;&#x7684;&#x7528;&#x6237;&#xFF08;&#x5982;root&#xFF09;&#x8F6C;&#x6362;&#x65F6;&#xFF0C;&#x60C5;&#x51B5;&#x4E5F;&#x662F;&#x5982;&#x6B64;&#x3002;&#x5982;&#x679C;&#x65E0;&#x6CD5;&#x4FDD;&#x6301;&#x8FD9;&#x4E9B;&#x503C;&#x4E0D;&#x53D8;&#xFF0C;&#x8F6C;&#x6362;&#x5C06;&#x4F1A;&#x7EC8;&#x6B62;&#x3002;&#x6539;&#x53D8;&#x6E90;&#x6587;&#x4EF6;&#x7684;&#x6240;&#x6709;&#x8005;&#x53EF;&#x80FD;&#x9020;&#x6210;&#x5176;&#x65E0;&#x6CD5;&#x8BFB;&#x53D6;&#x8BE5;&#x6587;&#x4EF6;&#xFF0C;&#x800C;&#x6539;&#x53D8;&#x7EC4;&#x5219;&#x53EF;&#x80FD;&#x5E26;&#x6765;&#x5B89;&#x5168;&#x9690;&#x60A3;&#xFF0C;&#x4F7F;&#x6587;&#x4EF6;&#x88AB;&#x4E0D;&#x6CD5;&#x5206;&#x5B50;&#x8BFB;&#x53D6;&#x3002;&#x53EA;&#x6709;Unix&#x624D;&#x652F;&#x6301;&#x8F6C;&#x6362;&#x65F6;&#x4FDD;&#x7559;&#x6240;&#x6709;&#x8005;&#x3001;&#x7EC4;&#x548C;&#x8BFB;/&#x5199;&#x6743;&#x9650;&#x3002;</p>
+
+<p>&#x82E5;&#x8981;&#x67E5;&#x770B; dos2unix &#x662F;&#x5426;&#x652F;&#x6301;&#x4FDD;&#x62A4;&#x6587;&#x4EF6;&#x7684;&#x6240;&#x6709;&#x8005;&#xFF0C;&#x8BF7;&#x8F93;&#x5165;<code>dos2unix -V</code>&#x3002;</p>
+
+<p>dos2unix &#x5728;&#x8F6C;&#x6362;&#x683C;&#x5F0F;&#x65F6;&#x4F1A;&#x751F;&#x6210;&#x4E00;&#x4E2A;&#x4E34;&#x65F6;&#x6587;&#x4EF6;&#x3002;&#x5982;&#x679C;&#x5728;&#x8F6C;&#x6362;&#x65F6;&#x51FA;&#x9519;&#xFF0C;&#x5B83;&#x4F1A;&#x5220;&#x9664;&#x4E34;&#x65F6;&#x6587;&#x4EF6;&#xFF0C;&#x4ECE;&#x800C;&#x4FDD;&#x8BC1;&#x539F;&#x59CB;&#x6587;&#x4EF6;&#x4E0D;&#x88AB;&#x66F4;&#x6539;&#xFF1B;&#x5982;&#x679C;&#x8F6C;&#x6362;&#x6210;&#x529F;&#xFF0C;&#x5C06;&#x7528;&#x4E34;&#x65F6;&#x6587;&#x4EF6;&#x66FF;&#x6362;&#x539F;&#x59CB;&#x6587;&#x4EF6;&#x3002;&#x5728;&#x8FD9;&#x4E00;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;&#x5982;&#x679C; dos2unix &#x65E0;&#x6CD5;&#x5C06;&#x4E34;&#x65F6;&#x6587;&#x4EF6;&#x7684;&#x6240;&#x6709;&#x8005;&#x8BBE;&#x7F6E;&#x4E3A;&#x539F;&#x59CB;&#x6587;&#x4EF6;&#x7684;&#x6240;&#x6709;&#x8005;&#xFF0C;&#x90A3;&#x4E48;&#x65B0;&#x751F;&#x6210;&#x7684;&#x6587;&#x4EF6;&#x4E5F;&#x65E0;&#x6CD5;&#x4FDD;&#x7559;&#x539F;&#x59CB;&#x6587;&#x4EF6;&#x7684;&#x5C5E;&#x4E3B;/&#x5C5E;&#x7EC4;&#x5C5E;&#x6027;&#xFF08;&#x5373;&#x4FBF;&#x60A8;&#x5BF9;&#x539F;&#x59CB;&#x6587;&#x4EF6;&#x6709;&#x5199;&#x5165;&#x6743;&#x9650;&#xFF09;&#x3002;&#x5728;&#x8FD9;&#x79CD;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;<code>--allow-chown</code>&#x9009;&#x9879;&#x6765;&#x7EE7;&#x7EED;&#x8FDB;&#x884C;&#x8F6C;&#x6362;&#xFF1A;</p>
+
+<pre><code>    dos2unix --allow-chown foo.txt</code></pre>
+
+<p>&#x6216;&#x8005;&#x5728;&#x65B0;&#x6587;&#x4EF6;&#x6A21;&#x5F0F;&#x4E0B;&#xFF1A;</p>
+
+<pre><code>    dos2unix -n foo.txt foo.txt</code></pre>
+
+<p>&#x4F7F;&#x7528;<code>--allow-chown</code>&#x9009;&#x9879;&#x7684;&#x597D;&#x5904;&#x5728;&#x4E8E;&#xFF1A;&#x60A8;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x901A;&#x914D;&#x7B26;&#x6765;&#x64CD;&#x4F5C;&#x6587;&#x4EF6;&#xFF0C;&#x540C;&#x65F6;&#x5C3D;&#x53EF;&#x80FD;&#x4FDD;&#x6301;&#x6587;&#x4EF6;&#x7684;&#x6240;&#x6709;&#x8005;&#x4E0D;&#x53D8;&#x3002;</p>
+
+</dd>
+<dt id="q---quiet"><b>-q, --quiet</b></dt>
+<dd>
+
+<p>&#x5B89;&#x9759;&#x6A21;&#x5F0F;&#x3002;&#x4E0D;&#x663E;&#x793A;&#x4EFB;&#x4F55;&#x8B66;&#x544A;&#x6216;&#x4FE1;&#x606F;&#x3002;&#x8FD4;&#x56DE;&#x503C;&#x4E3A;0&#xFF0C;&#x9664;&#x975E;&#x547D;&#x4EE4;&#x884C;&#x9009;&#x9879;&#x6709;&#x8BEF;&#x3002;</p>
+
+</dd>
+<dt id="r---remove-bom"><b>-r, --remove-bom</b></dt>
+<dd>
+
+<p>&#x79FB;&#x9664;&#x5B57;&#x8282;&#x5E8F;&#x6807;&#x8BB0;&#xFF08;BOM&#xFF09;&#xFF0C;&#x4E0D;&#x5199;&#x5165;BOM&#x5230;&#x8F93;&#x51FA;&#x6587;&#x4EF6;&#x3002;&#x8FD9;&#x662F;&#x8F6C;&#x6362;&#x5230;Unix&#x65AD;&#x884C;&#x7B26;&#x65F6;&#x7684;&#x9ED8;&#x8BA4;&#x884C;&#x4E3A;&#x3002;&#x53C2;&#x89C1;&#x9009;&#x9879; <code>-b</code>&#x3002;</p>
+
+</dd>
+<dt id="s---safe"><b>-s, --safe</b></dt>
+<dd>
+
+<p>&#x8DF3;&#x8FC7;&#x4E8C;&#x8FDB;&#x5236;&#x6587;&#x4EF6;&#xFF08;&#x9ED8;&#x8BA4;&#xFF09;&#x3002;</p>
+
+<p>&#x8DF3;&#x8FC7;&#x4E8C;&#x8FDB;&#x5236;&#x6587;&#x4EF6;&#x662F;&#x4E3A;&#x4E86;&#x907F;&#x514D;&#x53EF;&#x80FD;&#x7684;&#x9519;&#x8BEF;&#x3002;&#x8BF7;&#x6CE8;&#x610F;&#xFF0C;&#x5BF9;&#x4E8C;&#x8FDB;&#x5236;&#x6587;&#x4EF6;&#x7684;&#x63A2;&#x6D4B;&#x5E76;&#x4E0D;&#x80FD;&#x505A;&#x5230;100%&#x51C6;&#x786E;&#x3002;&#x7A0B;&#x5E8F;&#x901A;&#x8FC7;&#x626B;&#x63CF;&#x4E8C;&#x8FDB;&#x5236;&#x6587;&#x4EF6;&#x6240;&#x7279;&#x6709;&#x7684;&#x6807;&#x8BB0;&#x6765;&#x5C06;&#x5176;&#x4E0E;&#x6587;&#x672C;&#x6587;&#x4EF6;&#x533A;&#x5206;&#x5F00;&#x6765;&#xFF0C;&#x4F46;&#x6709;&#x7684;&#x4E8C;&#x8FDB;&#x5236;&#x6587;&#x4EF6;&#x53EF;&#x80FD;&#x53EA;&#x5305;&#x542B;&#x666E;&#x901A;&#x7684;&#x6587;&#x672C;&#x5B57;&#x7B26;&#xFF0C;&#x8FD9;&#x6837;&#x7684;&#x6587;&#x4EF6;&#x5C31;&#x4F1A;&#x88AB;&#x8BEF;&#x5224;&#x4E3A;&#x6587;&#x672C;&#x6587;&#x4EF6;&#x3002;</p>
+
+</dd>
+<dt id="u---keep-utf16"><b>-u, --keep-utf16</b></dt>
+<dd>
+
+<p>&#x4FDD;&#x7559;&#x8F93;&#x5165;&#x6587;&#x4EF6;&#x7684;UTF-16&#x7F16;&#x7801;&#x3002;&#x8F93;&#x51FA;&#x6587;&#x4EF6;&#x4E5F;&#x4F7F;&#x7528;UTF-16&#x7F16;&#x7801;&#x548C;&#x76F8;&#x540C;&#x7684;&#x5C3E;&#x5E8F;&#x3002;&#x8FD9;&#x5C06;&#x963B;&#x6B62;&#x8F6C;&#x6362;&#x5230;UTF-8&#x3002;&#x76F8;&#x5E94;&#x4E5F;&#x4F1A;&#x5199;&#x5165;UTF-16 BOM&#x3002;&#x53EF;&#x4EE5;&#x7528; <code>-ascii</code>&#x9009;&#x9879;&#x6765;&#x7981;&#x6B62;&#x3002;</p>
+
+</dd>
+<dt id="ul---assume-utf16le"><b>-ul, --assume-utf16le</b></dt>
+<dd>
+
+<p>&#x5047;&#x5B9A;&#x8F93;&#x5165;&#x6587;&#x4EF6;&#x683C;&#x5F0F;&#x4E3A;UTF-16LE&#x3002;</p>
+
+<p>&#x8F93;&#x5165;&#x6587;&#x4EF6;&#x4E2D;&#x6709;BOM&#x65F6;&#xFF0C;&#x5C06;&#x4F1A;&#x8986;&#x76D6;&#x6B64;&#x9009;&#x9879;&#x3002;</p>
+
+<p>&#x5982;&#x679C;&#x4F60;&#x505A;&#x4E86;&#x9519;&#x8BEF;&#x7684;&#x5047;&#x8BBE;&#xFF08;&#x8F93;&#x5165;&#x6587;&#x4EF6;&#x4E0D;&#x4E3A;UTF-16LE&#x683C;&#x5F0F;&#xFF09;&#xFF0C;&#x5E76;&#x4E14;&#x8F6C;&#x6362;&#x6210;&#x529F;&#xFF0C;&#x4F60;&#x5C06;&#x4F1A;&#x5F97;&#x5230;&#x4E00;&#x4E2A;&#x9519;&#x8BEF;&#x7684;UTF-8&#x683C;&#x5F0F;&#x7684;&#x6587;&#x4EF6;&#x3002;&#x4F60;&#x53EF;&#x4EE5;&#x7528; iconv(1) &#x6765;&#x64A4;&#x9500;&#x8F6C;&#x6362;&#xFF0C;&#x5C06;&#x5176;&#x4ECE;UTF-8&#x8F6C;&#x6362;&#x56DE;UTF-16LE&#x3002;&#x8FD9;&#x6837;&#x505A;&#x53EF;&#x4EE5;&#x6062;&#x590D;&#x6E90;&#x6587;&#x4EF6;&#x3002;</p>
+
+<p>&#x5BF9;UTF-16LE&#x7684;&#x5047;&#x5B9A;&#x5C06;&#x6839;&#x636E; l&lt;&#x8F6C;&#x6362;&#x6A21;&#x5F0F;&gt; &#x6765;&#x5DE5;&#x4F5C;&#x3002;&#x82E5;&#x6539;&#x53D8;&#x4E86;&#x9ED8;&#x8BA4;&#x7684; l&lt;ascii&gt; &#x6A21;&#x5F0F;&#xFF0C;&#x5219;&#x8FD9;&#x4E00;&#x5047;&#x5B9A;&#x5C06;&#x4F1A;&#x88AB;&#x5173;&#x95ED;&#x3002;</p>
+
+</dd>
+<dt id="ub---assume-utf16be"><b>-ub, --assume-utf16be</b></dt>
+<dd>
+
+<p>&#x5047;&#x5B9A;&#x8F93;&#x5165;&#x6587;&#x4EF6;&#x683C;&#x5F0F;&#x4E3A;UTF-16BE&#x3002;</p>
+
+<p>&#x8FD9;&#x4E00;&#x9009;&#x9879;&#x4E0E; <code>-ul</code> &#x7C7B;&#x4F3C;&#x3002;</p>
+
+</dd>
+<dt id="v---verbose"><b>-v, --verbose</b></dt>
+<dd>
+
+<p>&#x663E;&#x793A;&#x66F4;&#x591A;&#x4FE1;&#x606F;&#x3002;&#x5C06;&#x4F1A;&#x663E;&#x793A;&#x6709;&#x5173;BOM&#x548C;&#x8F6C;&#x6362;&#x7EDF;&#x8BA1;&#x7684;&#x989D;&#x5916;&#x4FE1;&#x606F;&#x3002;</p>
+
+</dd>
+<dt id="F---follow-symlink"><b>-F, --follow-symlink</b></dt>
+<dd>
+
+<p>&#x8FFD;&#x8E2A;&#x7B26;&#x53F7;&#x94FE;&#x63A5;&#x5E76;&#x8F6C;&#x6362;&#x5176;&#x76EE;&#x6807;&#x3002;</p>
+
+</dd>
+<dt id="R---replace-symlink"><b>-R, --replace-symlink</b></dt>
+<dd>
+
+<p>&#x5C06;&#x7B26;&#x53F7;&#x94FE;&#x63A5;&#x7684;&#x76EE;&#x6807;&#x66FF;&#x6362;&#x4E3A;&#x8F6C;&#x6362;&#x540E;&#x7684;&#x6587;&#x4EF6;&#xFF08;&#x539F;&#x6765;&#x7684;&#x76EE;&#x6807;&#x6587;&#x4EF6;&#x4FDD;&#x6301;&#x4E0D;&#x53D8;&#xFF09;&#x3002;</p>
+
+</dd>
+<dt id="S---skip-symlink"><b>-S, --skip-symlink</b></dt>
+<dd>
+
+<p>&#x4FDD;&#x6301;&#x7B26;&#x53F7;&#x94FE;&#x63A5;&#x548C;&#x5176;&#x76EE;&#x6807;&#x6587;&#x4EF6;&#x4E0D;&#x53D8;&#xFF08;&#x9ED8;&#x8BA4;&#xFF09;&#x3002;</p>
+
+</dd>
+<dt id="V---version"><b>-V, --version</b></dt>
+<dd>
+
+<p>&#x663E;&#x793A;&#x7248;&#x672C;&#x4FE1;&#x606F;&#xFF0C;&#x7136;&#x540E;&#x9000;&#x51FA;&#x3002;</p>
+
+</dd>
+</dl>
+
+<h1 id="Mac">Mac&#x6A21;&#x5F0F;</h1>
+
+<p>&#x666E;&#x901A;&#x6A21;&#x5F0F;&#x4E0B;&#xFF0C;&#x65AD;&#x884C;&#x7B26;&#x5C06;&#x88AB;&#x8F6C;&#x6362;&#x4E3A;DOS&#x683C;&#x5F0F;&#xFF0C;&#x6216;&#x76F8;&#x53CD;&#x3002;Mac&#x683C;&#x5F0F;&#x7684;&#x65AD;&#x884C;&#x7B26;&#x5C06;&#x4E0D;&#x4F1A;&#x88AB;&#x8F6C;&#x6362;&#x3002;</p>
+
+<p>Mac&#x6A21;&#x5F0F;&#x4E0B;&#xFF0C;Mac&#x65AD;&#x884C;&#x7B26;&#x5C06;&#x88AB;&#x8F6C;&#x6362;&#x4E3A;Unix&#x683C;&#x5F0F;&#xFF0C;&#x6216;&#x76F8;&#x53CD;&#x3002;DOS&#x65AD;&#x884C;&#x7B26;&#x5C06;&#x4E0D;&#x4F1A;&#x88AB;&#x8F6C;&#x6362;&#x3002;</p>
+
+<p>&#x82E5;&#x8981;&#x4EE5;Mac&#x6A21;&#x5F0F;&#x8FD0;&#x884C;&#xFF0C;&#x8BF7;&#x4F7F;&#x7528;&#x547D;&#x4EE4;&#x884C;&#x9009;&#x9879; <code>-c mac</code>&#xFF0C;&#x6216;&#x4F7F;&#x7528;&#x547D;&#x4EE4; <code>mac2unix</code> &#x6216; <code>unix2mac</code>&#x3002;</p>
+
+<h1 id="4">&#x8F6C;&#x6362;&#x6A21;&#x5F0F;</h1>
+
+<dl>
+
+<dt id="ascii1"><b>ascii</b></dt>
+<dd>
+
+<p>&#x5728; <code>ascii</code> &#x6A21;&#x5F0F;&#x4E0B;&#xFF0C;&#x53EA;&#x8F6C;&#x6362;&#x65AD;&#x884C;&#x7B26;&#x3002; &#x8FD9;&#x662F;&#x9ED8;&#x8BA4;&#x7684;&#x8F6C;&#x6362;&#x6A21;&#x5F0F;&#x3002;</p>
+
+<p>&#x5C3D;&#x7BA1;&#x6B64;&#x6A21;&#x5F0F;&#x540D;&#x53EB;&ldquo;ASCII&rdquo;&#xFF08;7&#x4F4D;&#x7F16;&#x7801;&#x6807;&#x51C6;&#xFF09;&#xFF0C;&#x5B9E;&#x9645;&#x4E0A;&#x8F6C;&#x6362;&#x6309;&#x7167;8&#x4F4D;&#x7F16;&#x7801;&#x8FDB;&#x884C;&#x3002;&#x8F6C;&#x6362;UTF-8&#x7F16;&#x7801;&#x6587;&#x4EF6;&#x65F6;&#x8BF7;&#x52A1;&#x5FC5;&#x4F7F;&#x7528;&#x6B64;&#x6A21;&#x5F0F;&#x3002;</p>
+
+</dd>
+<dt id="bit"><b>7bit</b></dt>
+<dd>
+
+<p>&#x5728;&#x6B64;&#x6A21;&#x5F0F;&#x4E0B;&#xFF0C;&#x6240;&#x4EE5;&#x7684;8&#x4F4D;&#x975E;ASCII&#x5B57;&#x7B26;&#xFF08;&#x53D6;&#x503C;&#x8303;&#x56F4;128-255&#xFF09;&#x5C06;&#x88AB;&#x8F6C;&#x6362;&#x5230;7&#x4F4D;&#x7F16;&#x7801;&#x7A7A;&#x95F4;&#x3002;</p>
+
+</dd>
+<dt id="iso1"><b>iso</b></dt>
+<dd>
+
+<p>Unix&#x4E0B;&#xFF0C;&#x5C06;&#x5728;DOS&#x5B57;&#x7B26;&#x96C6;&#xFF08;&#x7F16;&#x7801;&#x9875;&#xFF09;&#x548C;ISO&#x5B57;&#x7B26;&#x96C6; ISO-8859-1&#xFF08;Latin-1&#xFF09;&#x4E4B;&#x95F4;&#x8FDB;&#x884C;&#x8F6C;&#x6362;&#x3002;&#x4E0D;&#x5177;&#x6709; ISO-8859-1 &#x4E2D;&#x5BF9;&#x7B49;&#x5B57;&#x7B26;&#x7684;DOS&#x5B57;&#x7B26;&#x5C06;&#x4F1A;&#x88AB;&#x8F6C;&#x6362;&#x4E3A;&#x70B9;&#x53F7;&#xFF08;&ldquo;.&rdquo;&#xFF09;&#x3002;&#x5F53; ISO-8859-1 &#x5B57;&#x7B26;&#x96C6;&#x4E2D;&#x6CA1;&#x6709;DOS&#x4E2D;&#x7684;&#x5BF9;&#x7B49;&#x5B57;&#x7B26;&#x65F6;&#x4E5F;&#x662F;&#x5982;&#x6B64;&#x3002;</p>
+
+<p>&#x5F53;&#x53EA;&#x6307;&#x5B9A;&#x4E86; <code>-iso</code> &#x9009;&#x9879;&#x65F6;&#xFF0C;dos2unix&#x5C06;&#x5C1D;&#x8BD5;&#x786E;&#x5B9A;&#x5F53;&#x524D;&#x6D3B;&#x52A8;&#x4EE3;&#x7801;&#x9875;&#x3002;&#x82E5;&#x65E0;&#x6CD5;&#x786E;&#x5B9A;&#xFF0C;&#x5219;&#x4F7F;&#x7528;&#x9ED8;&#x8BA4;&#x4EE3;&#x7801;&#x9875; CP437&#xFF08;&#x666E;&#x904D;&#x7528;&#x4E8E;&#x7F8E;&#x56FD;&#xFF09;&#x3002;&#x82E5;&#x8981;&#x5F3A;&#x5236;&#x6307;&#x5B9A;&#x4EE3;&#x7801;&#x9875;&#xFF0C;&#x8BF7;&#x4F7F;&#x7528;&#x9009;&#x9879; <code>-437</code>&#xFF08;&#x7F8E;&#x56FD;&#xFF09;&#x3001;<code>-850</code>&#xFF08;&#x897F;&#x6B27;&#xFF09;&#x3001;<code>-860</code>&#xFF08;&#x8461;&#x8404;&#x7259;&#xFF09;&#x3001;<code>-863</code>&#xFF08;&#x6CD5;&#x56FD;&#x3001;&#x52A0;&#x62FF;&#x5927;&#xFF09;&#x6216;<code>-865</code>&#xFF08;&#x5317;&#x6B27;&#xFF09;&#x3002; Windows CP1252&#x4EE3;&#x7801;&#x9875;&#xFF08;&#x897F;&#x6B27;&#xFF09;&#x4E5F;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x9009;&#x9879; <code>-1252</code> &#x83B7;&#x5F97;&#x652F;&#x6301;&#x3002;&#x82E5;&#x8981;&#x4F7F;&#x7528;&#x5176;&#x4ED6;&#x4EE3;&#x7801;&#x9875;&#xFF0C;&#x53EF;&#x4EE5;&#x7ED3;&#x5408; iconv(1) &#x4F7F;&#x7528;dos2unix&#x3002;iconv&#x53EF;&#x4EE5;&#x5728;&#x5F88;&#x591A;&#x5B57;&#x7B26;&#x7F16;&#x7801;&#x95F4;&#x8FDB;&#x884C;&#x8F6C;&#x6362;&#x3002;</p>
+
+<p>&#x4E0D;&#x5BF9;Unicode&#x7F16;&#x7801;&#x6587;&#x672C;&#x4F7F;&#x7528;ISO&#x8F6C;&#x6362;&#x3002;&#x56E0;&#x8FD9;&#x4E00;&#x8F6C;&#x6362;&#x4F1A;&#x5BFC;&#x81F4;UTF-8&#x7F16;&#x7801;&#x6587;&#x4EF6;&#x635F;&#x574F;&#x3002;</p>
+
+<p>&#x4E00;&#x4E9B;&#x793A;&#x4F8B;&#xFF1A;</p>
+
+<p>&#x4ECE;DOS&#x9ED8;&#x8BA4;&#x7F16;&#x7801;&#x9875;&#x8F6C;&#x6362;&#x5230;Unix Latin-1&#xFF1A;</p>
+
+<pre><code>    dos2unix -iso -n in.txt out.txt</code></pre>
+
+<p>&#x4ECE;DOS CP850&#x8F6C;&#x6362;&#x5230;Unix Latin-1&#xFF1A;</p>
+
+<pre><code>    dos2unix -850 -n in.txt out.txt</code></pre>
+
+<p>&#x4ECE;Windows CP1252&#x8F6C;&#x6362;&#x5230;Unix Latin-1&#xFF1A;</p>
+
+<pre><code>    dos2unix -1252 -n in.txt out.txt</code></pre>
+
+<p>&#x4ECE;WIndows CP1252&#x8F6C;&#x6362;&#x5230;Unix UTF-8&#xFF08;Unicode&#xFF09;&#xFF1A;</p>
+
+<pre><code>    iconv -f CP1252 -t UTF-8 in.txt | dos2unix &gt; out.txt</code></pre>
+
+<p>&#x4ECE;Unix Latin-1&#x8F6C;&#x6362;&#x5230;DOS&#x9ED8;&#x8BA4;&#x7F16;&#x7801;&#x9875;&#xFF1A;</p>
+
+<pre><code>    unix2dos -iso -n in.txt out.txt</code></pre>
+
+<p>&#x4ECE;Unix Latin-1&#x8F6C;&#x6362;&#x5230;DOS CP850&#xFF1A;</p>
+
+<pre><code>    unix2dos -850 -n in.txt out.txt</code></pre>
+
+<p>&#x4ECE;Unix Latin-1&#x8F6C;&#x6362;&#x5230;Windows CP1252&#xFF1A;</p>
+
+<pre><code>    unix2dos -1252 -n in.txt out.txt</code></pre>
+
+<p>&#x4ECE;Unix UTF-8&#xFF08;Unicode&#xFF09;&#x8F6C;&#x6362;&#x5230;Windows CP1252&#xFF1A;</p>
+
+<pre><code>    unix2dos &lt; in.txt | iconv -f UTF-8 -t CP1252 &gt; out.txt</code></pre>
+
+<p>&#x53C2;&#x89C1; <a href="http://czyborra.com/charsets/codepages.html">http://czyborra.com/charsets/codepages.html</a> et <a href="http://czyborra.com/charsets/iso8859.html">http://czyborra.com/charsets/iso8859.html</a>&#x3002;</p>
+
+</dd>
+</dl>
+
+<h1 id="UNICODE">UNICODE</h1>
+
+<h2 id="5">&#x7F16;&#x7801;</h2>
+
+<p>&#x6709;&#x51E0;&#x79CD;&#x4E0D;&#x540C;&#x7684;Unicode&#x7F16;&#x7801;&#x3002;&#x5BF9;&#x4E8E;Unix&#x548C;Linux&#x4E2D;&#x7684;Unicode&#x6587;&#x4EF6;&#xFF0C;&#x901A;&#x5E38;&#x4E3A;UTF-8&#x7F16;&#x7801;&#x3002;Windows&#x4E2D;&#x7684;&#x6587;&#x672C;&#x6587;&#x4EF6;&#x53EF;&#x4EE5;&#x662F;UTF-8&#x3001;UTF-16&#x6216;UTF-16BE&#x7F16;&#x7801;&#xFF0C;&#x4F46;&#x5927;&#x591A;&#x91C7;&#x7528;UTF-16&#x683C;&#x5F0F;&#x3002;</p>
+
+<h2 id="6">&#x8F6C;&#x6362;</h2>
+
+<p>Unicode&#x6587;&#x672C;&#x6587;&#x4EF6;&#x53EF;&#x4EE5;&#x542B;&#x6709;DOS&#x3001;Unix&#x6216;Mac&#x65AD;&#x884C;&#x7B26;&#xFF0C;&#x5C31;&#x50CF;&#x666E;&#x901A;&#x6587;&#x672C;&#x6587;&#x4EF6;&#x4E00;&#x6837;&#x3002;</p>
+
+<p>&#x6240;&#x6709;&#x7248;&#x672C;&#x7684;dos2unix&#x548C;unix2dos&#x90FD;&#x53EF;&#x4EE5;&#x8F6C;&#x6362;UTF-8&#x6587;&#x4EF6;&#xFF0C;&#x56E0;&#x4E3A;UTF-8&#x5411;&#x540E;&#x517C;&#x5BB9;ASCII&#x3002;</p>
+
+<p>&#x542B;&#x6709;Unicode UTF-16&#x652F;&#x6301;&#x7684;dos2unix&#x548C;unix2dos&#x53EF;&#x4EE5;&#x8BFB;&#x53D6;&#x5C0F;&#x5C3E;&#x5E8F;&#x6216;&#x5927;&#x5C3E;&#x5E8F;&#x7684;UTF-16&#x7F16;&#x7801;&#x6587;&#x672C;&#x3002;&#x8F93;&#x5165; <code>dos2unix -V</code> &#x6765;&#x786E;&#x5B9A;dos2unix&#x5728;&#x7F16;&#x8BD1;&#x662F;&#x662F;&#x5426;&#x542F;&#x7528;&#x4E86;UTF-16&#x652F;&#x6301;&#x3002;</p>
+
+<p>&#x5728;Unix/Linux&#x4E2D;&#xFF0C;UTF-16&#x7F16;&#x7801;&#x6587;&#x4EF6;&#x5C06;&#x88AB;&#x8F6C;&#x6362;&#x4E3A;&#x533A;&#x57DF;&#x5B57;&#x7B26;&#x7F16;&#x7801;&#x6240;&#x6307;&#x5B9A;&#x7684;&#x7F16;&#x7801;&#x3002;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; locale(1) &#x547D;&#x4EE4;&#x6765;&#x67E5;&#x770B;&#x5F53;&#x524D;&#x7684;&#x533A;&#x57DF;&#x5B57;&#x7B26;&#x7F16;&#x7801;&#x3002;&#x82E5;&#x65E0;&#x6CD5;&#x8F6C;&#x6362;&#xFF0C;&#x7A0B;&#x5E8F;&#x5C06;&#x62A5;&#x544A;&#x8F6C;&#x6362;&#x9519;&#x8BEF;&#x5E76;&#x8DF3;&#x8FC7;&#x6B64;&#x6587;&#x4EF6;&#x3002;</p>
+
+<p>&#x5728;Windows&#x4E2D;&#xFF0C;UTF-16&#x6587;&#x4EF6;&#x88AB;&#x9ED8;&#x8BA4;&#x8F6C;&#x6362;&#x4E3A;UTF-8&#x683C;&#x5F0F;&#x3002;Windows&#x548C;Unix/Linux&#x5747;&#x652F;&#x6301;UTF-8&#x683C;&#x5F0F;&#x7684;&#x6587;&#x672C;&#x6587;&#x4EF6;&#x3002;</p>
+
+<p>UTF-16&#x548C;UTF-8&#x7F16;&#x7801;&#x76F8;&#x4E92;&#x517C;&#x5BB9;&#xFF0C;&#x6240;&#x4EE5;&#x5F7C;&#x6B64;&#x8F6C;&#x6362;&#x65F6;&#x4E0D;&#x4F1A;&#x4E22;&#x5931;&#x6587;&#x672C;&#x3002;&#x5018;&#x82E5;&#x8F6C;&#x6362;&#x4E2D;&#x51FA;&#x9519;&#xFF0C;&#x6BD4;&#x5982;UTF-16&#x683C;&#x5F0F;&#x7684;&#x8F93;&#x5165;&#x6587;&#x4EF6;&#x542B;&#x6709;&#x9519;&#x8BEF;&#xFF0C;&#x90A3;&#x4E48;&#x8BE5;&#x6587;&#x4EF6;&#x5C06;&#x88AB;&#x8DF3;&#x8FC7;&#x3002;</p>
+
+<p>&#x82E5;&#x4F7F;&#x7528;&#x4E86; <code>-u</code> &#x9009;&#x9879;&#xFF0C;&#x8F93;&#x51FA;&#x6587;&#x4EF6;&#x5C06;&#x4F1A;&#x4F7F;&#x7528;&#x548C;&#x8F93;&#x5165;&#x6587;&#x4EF6;&#x76F8;&#x540C;&#x7684;UTF-16&#x7F16;&#x7801;&#x3002;<code>-u</code>&#x9009;&#x9879;&#x5C06;&#x963B;&#x6B62;&#x7A0B;&#x5E8F;&#x8F6C;&#x6362;&#x5230;UTF-8&#x3002;</p>
+
+<p>dos2unix&#x548C;unix2dos&#x6CA1;&#x6709;&#x7528;&#x4E8E;&#x8F6C;&#x6362;UTF-8&#x5230;UTF-16&#x7684;&#x9009;&#x9879;&#x3002;</p>
+
+<p>ISO&#x548C;7&#x4F4D;&#x7F16;&#x7801;&#x6A21;&#x5F0F;&#x7684;&#x8F6C;&#x6362;&#x65E0;&#x6CD5;&#x7528;&#x4E8E;UTF-16&#x6587;&#x4EF6;&#x3002;</p>
+
+<h2 id="7">&#x5B57;&#x8282;&#x5E8F;&#x6807;&#x8BB0;</h2>
+
+<p>&#x5728;Windows&#x4E2D;&#xFF0C;&#x6587;&#x672C;&#x6587;&#x4EF6;&#x4E00;&#x822C;&#x542B;&#x6709;&#x5B57;&#x8282;&#x5E8F;&#x6807;&#x8BB0;&#xFF08;BOM&#xFF09;&#xFF0C;&#x56E0;&#x4E3A;&#x5F88;&#x591A;Windows&#x7A0B;&#x5E8F;&#xFF08;&#x5305;&#x62EC;&#x8BB0;&#x4E8B;&#x672C;&#xFF09;&#x9ED8;&#x8BA4;&#x6DFB;&#x52A0;BOM&#x3002;&#x53C2;&#x89C1; <a href="http://en.wikipedia.org/wiki/Byte_order_mark">http://en.wikipedia.org/wiki/Byte_order_mark</a>&#x3002;</p>
+
+<p>&#x5728;Unix&#x4E2D;&#xFF0C;Unicode&#x6587;&#x4EF6;&#x4E00;&#x822C;&#x4E0D;&#x542B;BOM&#x3002;&#x5047;&#x5B9A;&#x6587;&#x672C;&#x6587;&#x4EF6;&#x4F7F;&#x7528;&#x533A;&#x57DF;&#x5B57;&#x7B26;&#x7F16;&#x7801;&#x8BBE;&#x7F6E;&#x6240;&#x6307;&#x5B9A;&#x7684;&#x7F16;&#x7801;&#x3002;</p>
+
+<p>dos2unix&#x53EA;&#x80FD;&#x68C0;&#x6D4B;&#x542B;&#x6709;BOM&#x6587;&#x4EF6;&#x7684;UTF-16&#x683C;&#x5F0F;&#x3002;&#x82E5;UTF-16&#x6587;&#x4EF6;&#x4E0D;&#x542B;BOM&#xFF0C;dos2unix&#x4F1A;&#x5C06;&#x5176;&#x89C6;&#x4F5C;&#x4E8C;&#x8FDB;&#x5236;&#x6587;&#x4EF6;&#x3002;</p>
+
+<p>&#x8BF7;&#x4F7F;&#x7528;&#x9009;&#x9879; <code>-ul</code> &#x6216; <code>-ub</code> &#x6765;&#x8F6C;&#x6362;&#x4E0D;&#x542B;BOM&#x7684;UTF-16&#x6587;&#x4EF6;&#x3002;</p>
+
+<p>dos2unix&#x9ED8;&#x8BA4;&#x4E0D;&#x8F93;&#x51FA;BOM&#x3002;&#x4F7F;&#x7528; <code>-b</code> &#x9009;&#x9879;&#x53EF;&#x4EE5;&#x8BA9;dos2unix&#x5C06;BOM&#x6DFB;&#x52A0;&#x5230;&#x8F93;&#x51FA;&#x6587;&#x4EF6;&#xFF0C;&#x5982;&#x679C;&#x8F93;&#x5165;&#x6587;&#x4EF6;&#x4E5F;&#x542B;&#x6709;BOM&#x7684;&#x8BDD;&#x3002;</p>
+
+<p>unix2dos&#x9ED8;&#x8BA4;&#x8F93;&#x51FA;BOM&#xFF0C;&#x5982;&#x679C;&#x8F93;&#x5165;&#x6587;&#x4EF6;&#x4E5F;&#x542B;&#x6709;BOM&#x7684;&#x8BDD;&#x3002;&#x4F7F;&#x7528; <code>-r</code> &#x53EF;&#x4EE5;&#x79FB;&#x9664;BOM&#x3002;</p>
+
+<p>&#x82E5;&#x4F7F;&#x7528;&#x4E86; <code>-m</code> &#x9009;&#x9879;&#xFF0C;dos2unix&#x548C;unix2dos&#x5C06;&#x603B;&#x662F;&#x8F93;&#x51FA;BOM&#x3002;</p>
+
+<h2 id="WindowsUnicode">Windows&#x4E2D;Unicode&#x6587;&#x4EF6;&#x7684;&#x6587;&#x4EF6;&#x540D;</h2>
+
+<p>dos2unix&#x5BF9;&#x4E8E;Windows&#x547D;&#x4EE4;&#x63D0;&#x793A;&#x7B26;&#x4E2D;&#x8BFB;&#x53D6;&#x548C;&#x5199;&#x5165;Unicode&#x6587;&#x4EF6;&#x540D;&#x6709;&#x989D;&#x5916;&#x7684;&#x652F;&#x6301;&#x3002;&#x8FD9;&#x610F;&#x5473;&#x7740;dos2unix&#x53EF;&#x4EE5;&#x6253;&#x5F00;&#x90A3;&#x4E9B;&#x5305;&#x542B;&#x975E;&#x9ED8;&#x8BA4;&#x7CFB;&#x7EDF;ANSI&#x7F16;&#x7801;&#x9875;&#x5B57;&#x7B26;&#x7684;&#x6587;&#x4EF6;&#x3002;&#x82E5;&#x8981;&#x67E5;&#x770B;Windows&#x7248;dos2unix&#x5728;&#x7F16;&#x8BD1;&#x65F6;&#x662F;&#x5426;&#x52A0;&#x5165;&#x4E86;Unicode&#x6587;&#x4EF6;&#x540D;&#x652F;&#x6301;&#xFF0C;&#x8BF7;&#x8F93;&#x5165; <code>dos2unix -V</code>&#x3002;</p>
+
+<p>&#x5728;Windows&#x7EC8;&#x7AEF;&#x4E2D;&#x663E;&#x793A;Unicode&#x6587;&#x4EF6;&#x540D;&#x6709;&#x4E00;&#x4E9B;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x95EE;&#x9898;&#x3002;&#x8BF7;&#x53C2;&#x89C1; <code>-D</code> &#x548C; <code>--display-enc</code> &#x9009;&#x9879;&#x3002;&#x6587;&#x4EF6;&#x540D;&#x5728;&#x7EC8;&#x7AEF;&#x4E2D;&#x53EF;&#x80FD;&#x65E0;&#x6CD5;&#x88AB;&#x6B63;&#x786E;&#x663E;&#x793A;&#xFF0C;&#x4F46;&#x5199;&#x5165;&#x6587;&#x4EF6;&#x65F6;&#x6587;&#x4EF6;&#x540D;&#x4ECD;&#x7136;&#x662F;&#x6B63;&#x786E;&#x7684;&#x3002;</p>
+
+<h2 id="Unicode">Unicode&#x793A;&#x4F8B;</h2>
+
+<p>&#x8F6C;&#x6362;Windows UTF-16&#x5230;Unix UTF-8&#xFF1A;</p>
+
+<pre><code>    dos2unix -n in.txt out.txt</code></pre>
+
+<p>&#x8F6C;&#x6362;Windows UTF-16LE&#xFF08;&#x4E0D;&#x542B;BOM&#xFF09;&#x5230;Unix UTF-8&#xFF1A;</p>
+
+<pre><code>    dos2unix -ul -n in.txt out.txt</code></pre>
+
+<p>&#x8F6C;&#x6362;Unix UTF-8&#x5230;Windows UTF-8&#xFF08;&#x5E76;&#x6DFB;&#x52A0;BOM&#xFF09;&#xFF1A;</p>
+
+<pre><code>    unix2dos -m -n in.txt out.txt</code></pre>
+
+<p>&#x8F6C;&#x6362;Unix UTF-8&#x5230;Windows UTF-16&#xFF1A;</p>
+
+<pre><code>    unix2dos &lt; in.txt | iconv -f UTF-8 -t UTF-16 &gt; out.txt</code></pre>
+
+<h1 id="GB18030">GB18030</h1>
+
+<p>GB18030&#x662F;&#x4E2D;&#x56FD;&#x56FD;&#x5BB6;&#x6807;&#x51C6;&#x3002;GB18030&#x6807;&#x51C6;&#x7684;&#x4E00;&#x7CFB;&#x5217;&#x5B50;&#x96C6;&#x88AB;&#x5F3A;&#x5236;&#x5E94;&#x7528;&#x4E8E;&#x4E2D;&#x56FD;&#x9500;&#x552E;&#x7684;&#x8F6F;&#x4EF6;&#x4EA7;&#x54C1;&#x3002;&#x53C2;&#x89C1; <a href="http://en.wikipedia.org/wiki/GB_18030">http://en.wikipedia.org/wiki/GB_18030</a>&#x3002;</p>
+
+<p>GB18030&#x4E0E;Unicode&#x5B8C;&#x5168;&#x517C;&#x5BB9;&#xFF0C;&#x5E76;&#x4E14;&#x53EF;&#x4EE5;&#x88AB;&#x8BA4;&#x4E3A;&#x662F;Unicode&#x683C;&#x5F0F;&#x7684;&#x53D8;&#x4F53;&#x3002;&#x548C;UTF-8&#x4E00;&#x6837;&#xFF0C;GB18030&#x4E5F;&#x517C;&#x5BB9;ASCII&#x3002;GB18030&#x4E5F;&#x517C;&#x5BB9;Windows 936&#x4EE3;&#x7801;&#x9875;&#xFF08;GBK&#xFF09;&#x3002;</p>
+
+<p>&#x5728;Unix/Linux&#x4E2D;&#xFF0C;&#x82E5;&#x533A;&#x57DF;&#x7F16;&#x7801;&#x88AB;&#x8BBE;&#x7F6E;&#x4E3A;GB18030&#xFF0C;UTF-16&#x6587;&#x4EF6;&#x5C06;&#x88AB;&#x8F6C;&#x6362;&#x4E3A;GB18030&#x683C;&#x5F0F;&#x3002;&#x6CE8;&#x610F;&#x53EA;&#x6709;&#x5F53;&#x7CFB;&#x7EDF;&#x652F;&#x6301;&#x533A;&#x57DF;&#x8BBE;&#x7F6E;&#x65F6;&#x8FD9;&#x4E00;&#x624D;&#x4F1A;&#x8FDB;&#x884C;&#x8FD9;&#x4E00;&#x8F6C;&#x6362;&#x3002;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; <code>locale -a</code> &#x547D;&#x4EE4;&#x6765;&#x83B7;&#x53D6;&#x53D7;&#x652F;&#x6301;&#x7684;&#x533A;&#x57DF;&#x3002;</p>
+
+<p>&#x5728;Windows&#x4E2D;&#xFF0C;&#x4F60;&#x9700;&#x8981;&#x4F7F;&#x7528; <code>-gb</code> &#x9009;&#x9879;&#x6765;&#x8F6C;&#x6362;UTF-16&#x6587;&#x4EF6;&#x5230;GB18030&#x7F16;&#x7801;&#x3002;</p>
+
+<p>GB18030&#x7F16;&#x7801;&#x7684;&#x6587;&#x4EF6;&#x548C;Unicode&#x6587;&#x4EF6;&#x4E00;&#x6837;&#x53EF;&#x4EE5;&#x542B;&#x6709;BOM&#x3002;</p>
+
+<h1 id="8">&#x793A;&#x4F8B;</h1>
+
+<p>&#x4ECE;&#x6807;&#x51C6;&#x8F93;&#x5165;&#x8BFB;&#x53D6;&#xFF0C;&#x5E76;&#x8F93;&#x51FA;&#x5230;&#x6807;&#x51C6;&#x8F93;&#x51FA;&#xFF1A;</p>
+
+<pre><code>    dos2unix &lt; a.txt
+    cat a.txt | dos2unix</code></pre>
+
+<p>&#x8F6C;&#x6362;&#x5E76;&#x8986;&#x76D6;a.txt&#x548C;b.txt&#xFF1A;</p>
+
+<pre><code>    dos2unix a.txt b.txt
+    dos2unix -o a.txt b.txt</code></pre>
+
+<p>&#x8F6C;&#x6362;&#x5E76;&#x8986;&#x76D6;a.txt&#xFF0C;&#x4F7F;&#x7528;ascii&#x6A21;&#x5F0F;&#xFF1A;</p>
+
+<pre><code>    dos2unix a.txt</code></pre>
+
+<p>&#x8F6C;&#x6362;&#x5E76;&#x8986;&#x76D6;a.txt&#xFF0C;&#x4F7F;&#x7528;ascii&#x6A21;&#x5F0F;&#xFF1B;&#x8F6C;&#x6362;&#x5E76;&#x8986;&#x76D6;b.txt&#xFF0C;&#x4F7F;&#x7528;7&#x4F4D;&#x7F16;&#x7801;&#x6A21;&#x5F0F;&#xFF1A;</p>
+
+<pre><code>    dos2unix a.txt -c 7bit b.txt
+    dos2unix -c ascii a.txt -c 7bit b.txt
+    dos2unix -ascii a.txt -7 b.txt</code></pre>
+
+<p>&#x5C06;a.txt&#x4ECE;Mac&#x683C;&#x5F0F;&#x8F6C;&#x6362;&#x5230;Unix&#x683C;&#x5F0F;&#xFF1A;</p>
+
+<pre><code>    dos2unix -c mac a.txt
+    mac2unix a.txt</code></pre>
+
+<p>&#x5C06;a.txt&#x4ECE;Unix&#x683C;&#x5F0F;&#x8F6C;&#x6362;&#x5230;Mac&#x683C;&#x5F0F;&#xFF1A;</p>
+
+<pre><code>    unix2dos -c mac a.txt
+    unix2mac a.txt</code></pre>
+
+<p>&#x8F6C;&#x6362;&#x5E76;&#x8986;&#x76D6;a.txt&#xFF0C;&#x4FDD;&#x7559;&#x539F;&#x59CB;&#x65F6;&#x95F4;&#x6233;&#xFF1A;</p>
+
+<pre><code>    dos2unix -k a.txt
+    dos2unix -k -o a.txt</code></pre>
+
+<p>&#x8F6C;&#x6362;a.txt&#xFF0C;&#x5E76;&#x8F93;&#x51FA;&#x5230;e.txt&#xFF1A;</p>
+
+<pre><code>    dos2unix -n a.txt e.txt</code></pre>
+
+<p>&#x8F6C;&#x6362;a.txt&#xFF0C;&#x5E76;&#x8F93;&#x51FA;&#x5230;e.txt&#xFF0C;&#x540C;&#x65F6;&#x4F7F;e.txt&#x7684;&#x65F6;&#x95F4;&#x6233;&#x548C;a.txt&#x4E00;&#x81F4;&#xFF1A;</p>
+
+<pre><code>    dos2unix -k -n a.txt e.txt</code></pre>
+
+<p>&#x8F6C;&#x6362;&#x5E76;&#x8986;&#x76D6;a.txt&#xFF1B;&#x8F6C;&#x6362;b.txt&#x5E76;&#x8F93;&#x51FA;&#x5230;e.txt&#xFF1A;</p>
+
+<pre><code>    dos2unix a.txt -n b.txt e.txt
+    dos2unix -o a.txt -n b.txt e.txt</code></pre>
+
+<p>&#x8F6C;&#x6362;c.txt&#x5E76;&#x8F93;&#x51FA;&#x5230;e.txt&#xFF1B;&#x8F6C;&#x6362;&#x5E76;&#x8986;&#x76D6;a.txt&#x548C;b.txt&#xFF1B;&#x8F6C;&#x6362;d.txt&#x5E76;&#x8F93;&#x51FA;&#x5230;f.txt&#xFF1A;</p>
+
+<pre><code>    dos2unix -n c.txt e.txt -o a.txt b.txt -n d.txt f.txt</code></pre>
+
+<h1 id="9">&#x9012;&#x5F52;&#x8F6C;&#x6362;</h1>
+
+<p>&#x7ED3;&#x5408; find(1) &#x548C; xargs(1) &#x4F7F;&#x7528; dos2unix &#x53EF;&#x4EE5;&#x9012;&#x5F52;&#x5730;&#x8F6C;&#x6362;&#x76EE;&#x5F55;&#x6811;&#x4E2D;&#x7684;&#x6587;&#x672C;&#x6587;&#x4EF6;&#x3002;&#x4F8B;&#x5982;&#xFF0C;&#x8F6C;&#x6362;&#x5F53;&#x524D;&#x76EE;&#x5F55;&#x7684;&#x76EE;&#x5F55;&#x6811;&#x4E2D;&#x6240;&#x6709;&#x7684; .txt &#x6587;&#x4EF6;&#xFF1A;</p>
+
+<pre><code>    dos2unix &lt; a.txt
+    cat a.txt | dos2unix</code></pre>
+
+<p>&#x82E5;&#x6587;&#x4EF6;&#x540D;&#x4E2D;&#x6709;&#x7A7A;&#x683C;&#x6216;&#x5F15;&#x53F7;&#xFF0C;&#x5219;&#x9700;&#x8981;&#x4F7F;&#x7528; find(1) &#x9009;&#x9879; <code>-print0</code> &#x53CA;&#x76F8;&#x5E94;&#x7684; xargs(1) &#x9009;&#x9879; <code>-0</code>&#xFF1B;&#x5176;&#x4ED6;&#x60C5;&#x51B5;&#x4E0B;&#x5219;&#x53EF;&#x4EE5;&#x7701;&#x7565;&#x5B83;&#x4EEC;&#x3002;&#x4E5F;&#x53EF;&#x4EE5;&#x7ED3;&#x5408; <code>-exec</code> &#x9009;&#x9879;&#x6765;&#x4F7F;&#x7528; find(1)&#xFF1A;</p>
+
+<pre><code>    find . -name &#39;*.txt&#39; -exec dos2unix {} \;</code></pre>
+
+<p>&#x5728;Windows&#x547D;&#x4EE4;&#x63D0;&#x793A;&#x7B26;&#x4E2D;&#xFF0C;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x4E0B;&#x5217;&#x547D;&#x4EE4;&#xFF1A;</p>
+
+<pre><code>    for /R %G in (*.txt) do dos2unix &quot;%G&quot;</code></pre>
+
+<p>PowerShell&#x7528;&#x6237;&#x53EF;&#x4EE5;&#x5728;Windows PowerShell&#x4E2D;&#x4F7F;&#x7528;&#x5982;&#x4E0B;&#x547D;&#x4EE4;&#xFF1A;</p>
+
+<pre><code>    get-childitem -path . -filter &#39;*.txt&#39; -recurse | foreach-object {dos2unix $_.Fullname}</code></pre>
+
+<h1 id="10">&#x533A;&#x57DF;</h1>
+
+<dl>
+
+<dt id="LANG"><b>LANG</b></dt>
+<dd>
+
+<p>LANG&#x73AF;&#x5883;&#x53D8;&#x91CF;&#x6307;&#x5B9A;&#x4E86;&#x7A0B;&#x5E8F;&#x6240;&#x4F7F;&#x7528;&#x7684;&#x9996;&#x9009;&#x8BED;&#x8A00;&#x3002;&#x5B83;&#x5305;&#x62EC;&#x51E0;&#x4E2A;&#x90E8;&#x5206;&#xFF1A;&#x7B2C;&#x4E00;&#x90E8;&#x5206;&#x662F;&#x5C0F;&#x5199;&#x7684;&#x8BED;&#x8A00;&#x7F16;&#x7801;&#xFF0C;&#x7B2C;&#x4E8C;&#x90E8;&#x5206;&#x662F;&#xFF08;&#x53EF;&#x9009;&#x7684;&#xFF09;&#x5927;&#x5199;&#x7684;&#x56FD;&#x5BB6;/&#x5730;&#x533A;&#x4EE3;&#x7801;&#xFF0C;&#x524D;&#x9762;&#x7528;&#x4E0B;&#x5212;&#x7EBF;&#x8FDE;&#x63A5;&#xFF1B;&#x7B2C;&#x4E09;&#x90E8;&#x5206;&#x4E5F;&#x662F;&#x53EF;&#x9009;&#x7684;&#xFF0C;&#x5373;&#x5B57;&#x7B26;&#x7F16;&#x7801;&#xFF0C;&#x524D;&#x9762;&#x7528;&#x70B9;&#x8FDE;&#x63A5;&#x3002;&#x4E00;&#x4E9B;POSIX&#x89C4;&#x8303;&#x7684;&#x793A;&#x4F8B;&#x5982;&#x4E0B;&#xFF1A;</p>
+
+<pre><code>    export LANG=zh               &#x4E2D;&#x6587;
+    export LANG=zh_CN            &#x4E2D;&#x6587;&#xFF0C;&#x4E2D;&#x56FD;
+    export LANG=zh_TW            &#x4E2D;&#x6587;&#xFF0C;&#x53F0;&#x6E7E;
+    export LANG=es_ES            &#x897F;&#x73ED;&#x7259;&#x8BED;&#xFF0C;&#x897F;&#x73ED;&#x7259;
+    export LANG=es_MX            &#x897F;&#x73ED;&#x7259;&#x8BED;&#xFF0C;&#x58A8;&#x897F;&#x54E5;
+    export LANG=en_US.iso88591   &#x82F1;&#x8BED;&#xFF0C;&#x7F8E;&#x56FD;&#xFF0C;Latin-1&#x7F16;&#x7801;
+    export LANG=en_GB.UTF-8      &#x82F1;&#x8BED;&#xFF0C;&#x82F1;&#x56FD;&#xFF0C;UTF-8&#x7F16;&#x7801;</code></pre>
+
+<p>&#x5B8C;&#x6574;&#x7684;&#x8BED;&#x8A00;&#x548C;&#x56FD;&#x5BB6;/&#x5730;&#x533A;&#x7F16;&#x7801;&#x53EF;&#x4EE5;&#x5728;gettext&#x624B;&#x518C;&#x4E2D;&#x627E;&#x5230;&#xFF1A;<a href="http://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html">http://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html</a></p>
+
+<p>&#x5728;Unix&#x7CFB;&#x7EDF;&#x4E2D;&#xFF0C;&#x4F60;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; locale(1) &#x547D;&#x4EE4;&#x83B7;&#x53D6;&#x7279;&#x5B9A;&#x533A;&#x57DF;&#x7684;&#x4FE1;&#x606F;&#x3002;</p>
+
+</dd>
+<dt id="LANGUAGE"><b>LANGUAGE</b></dt>
+<dd>
+
+<p>&#x53EF;&#x4EE5;&#x4F7F;&#x7528;LANGUAGE&#x53D8;&#x91CF;&#x6307;&#x5B9A;&#x4E00;&#x7CFB;&#x5217;&#x8BED;&#x8A00;&#x7684;&#x4F18;&#x5148;&#x7EA7;&#xFF0C;&#x5404;&#x9879;&#x4E4B;&#x95F4;&#x7531;&#x5192;&#x53F7;&#x5206;&#x5272;&#x3002;dos2unix&#x9996;&#x5148;&#x4F7F;&#x7528;LANGUAGE&#x53D8;&#x91CF;&#xFF0C;&#x5176;&#x6B21;&#x624D;&#x662F;LANG&#x3002;&#x4F8B;&#x5982;&#xFF0C;&#x9996;&#x9009;&#x4E2D;&#x6587;&#x3001;&#x5176;&#x6B21;&#x82F1;&#x6587;&#xFF1A;<code>LANGUAGE=&lt;zh:en</code>&#x3002;&#x5728;&#x4F7F;&#x7528;&#x8BED;&#x8A00;&#x4F18;&#x5148;&#x7EA7;&#x4E4B;&#x524D;&#xFF0C;&#x5FC5;&#x987B;&#x5148;&#x542F;&#x7528;&#x533A;&#x57DF;&#x5316;&#x529F;&#x80FD;&#xFF0C;&#x5373;&#x5C06;LANG&#xFF08;&#x6216;LC_ALL&#xFF09;&#x53D8;&#x91CF;&#x8BBE;&#x7F6E;&#x4E3A;&#x9664;&#x4E86;&ldquo;C&rdquo;&#x4EE5;&#x5916;&#x7684;&#x5176;&#x4ED6;&#x503C;&#x3002;&#x53C2;&#x89C1;gettext&#x624B;&#x518C;&#xFF1A;<a href="http://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-variable.html">http://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-variable.html</a></p>
+
+<p>&#x5982;&#x679C;&#x4F60;&#x9009;&#x62E9;&#x4E86;&#x4E00;&#x4E2A;&#x4E0D;&#x53EF;&#x7528;&#x7684;&#x8BED;&#x8A00;&#xFF0C;&#x7A0B;&#x5E8F;&#x5C06;&#x4F1A;&#x8F93;&#x51FA;&#x6807;&#x51C6;&#x7684;&#x82F1;&#x8BED;&#x4FE1;&#x606F;&#x3002;</p>
+
+</dd>
+<dt id="DOS2UNIX_LOCALEDIR"><b>DOS2UNIX_LOCALEDIR</b></dt>
+<dd>
+
+<p>DOS2UNIX_LOCALEDIR&#x73AF;&#x5883;&#x53D8;&#x91CF;&#x5C06;&#x8986;&#x76D6;&#x7F16;&#x8BD1;&#x65F6;&#x8BBE;&#x7F6E;&#x7684;LOCALEDIR&#x53D8;&#x91CF;&#x3002;LOCALEDIR&#x88AB;&#x7528;&#x4E8E;&#x67E5;&#x627E;&#x8BED;&#x8A00;&#x6587;&#x4EF6;&#x3002;GNU&#x7A0B;&#x5E8F;&#x7684;&#x9ED8;&#x8BA4;&#x503C;&#x4E3A; <code>/usr/local/share/locale</code>&#x3002;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; <b>--version</b> &#x67E5;&#x770B;&#x5F53;&#x524D;&#x7684;LOCALEDIR&#x3002;</p>
+
+<p>&#x793A;&#x4F8B;&#xFF08;POSIX shell&#xFF09;&#xFF1A;</p>
+
+<pre><code>    export DOS2UNIX_LOCALEDIR=$HOME/share/locale</code></pre>
+
+</dd>
+</dl>
+
+<h1 id="11">&#x8FD4;&#x56DE;&#x503C;</h1>
+
+<p>&#x82E5;&#x6210;&#x529F;&#xFF0C;&#x8FD4;&#x56DE;0&#x3002;&#x82E5;&#x51FA;&#x73B0;&#x7CFB;&#x7EDF;&#x9519;&#x8BEF;&#xFF0C;&#x5219;&#x8FD4;&#x56DE;&#x6700;&#x8FD1;&#x4E00;&#x6B21;&#x7CFB;&#x7EDF;&#x9519;&#x8BEF;&#x53F7;&#x3002;&#x82E5;&#x53D1;&#x751F;&#x5176;&#x4ED6;&#x9519;&#x8BEF;&#xFF0C;&#x8FD4;&#x56DE;1&#x3002;</p>
+
+<p>&#x5728;&#x5B89;&#x9759;&#x6A21;&#x5F0F;&#x4E0B;&#xFF0C;&#x8FD4;&#x56DE;&#x503C;&#x603B;&#x662F;&#x4E3A;0&#xFF0C;&#x9664;&#x975E;&#x547D;&#x4EE4;&#x884C;&#x9009;&#x9879;&#x6709;&#x8BEF;&#x3002;</p>
+
+<h1 id="12">&#x9075;&#x5FAA;&#x89C4;&#x8303;</h1>
+
+<p><a href="http://en.wikipedia.org/wiki/Text_file">http://en.wikipedia.org/wiki/Text_file</a></p>
+
+<p><a href="http://en.wikipedia.org/wiki/Carriage_return">http://en.wikipedia.org/wiki/Carriage_return</a></p>
+
+<p><a href="http://en.wikipedia.org/wiki/Newline">http://en.wikipedia.org/wiki/Newline</a></p>
+
+<p><a href="http://en.wikipedia.org/wiki/Unicode">http://en.wikipedia.org/wiki/Unicode</a></p>
+
+<h1 id="13">&#x4F5C;&#x8005;</h1>
+
+<p>Benjamin Lin - &lt;blin@socs.uts.edu.au&gt; Bernd Johannes Wuebben&#xFF08;mac2unix&#x6A21;&#x5F0F;&#xFF09; - &lt;wuebben@kde.org&gt;&#xFF0C;Christian Wurll&#xFF08;&#x6DFB;&#x52A0;&#x989D;&#x5916;&#x65B0;&#x884C;&#xFF09; - &lt;wurll@ira.uka.de&gt;&#xFF0C;Erwin Waterlander - &lt;waterlan@xs4all.nl&gt;&#xFF08;&#x7EF4;&#x62A4;&#x8005;&#xFF09;</p>
+
+<p>&#x9879;&#x76EE;&#x4E3B;&#x9875;&#xFF1A;<a href="http://waterlan.home.xs4all.nl/dos2unix.html">http://waterlan.home.xs4all.nl/dos2unix.html</a></p>
+
+<p>SourceForge&#x4E3B;&#x9875;&#xFF1A;<a href="http://sourceforge.net/projects/dos2unix/">http://sourceforge.net/projects/dos2unix/</a></p>
+
+<h1 id="14">&#x53C2;&#x89C1;</h1>
+
+<p>file(1) find(1) iconv(1) locale(1) xargs(1)</p>
+
+
+</body>
+
+</html>
+
+

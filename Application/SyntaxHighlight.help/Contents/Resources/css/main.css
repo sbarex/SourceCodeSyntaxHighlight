@@ -134,6 +134,14 @@ tr {
   border-bottom: 1px solid var(--border-color); 
 }
 
+table td {
+  vertical-align: top;
+}
+
 .header {
+  font-size: 80%;
+}
+
+.small {
   font-size: 80%;
 }

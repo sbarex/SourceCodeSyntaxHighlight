@@ -1,0 +1,20 @@
+
+TO DO
+=====
+
+* Translations.
+
+  All translations are going via the Translation Project.
+
+  User interface messages:
+  See http://translationproject.org/domain/dos2unix.html
+
+  Manual:
+  See http://translationproject.org/domain/dos2unix-man.html
+
+
+* Support writing to symbolic link targets of Windows native
+  symbolic links (Windows Vista and up).
+
+* Keep original owner in old file mode, on Windows.
+

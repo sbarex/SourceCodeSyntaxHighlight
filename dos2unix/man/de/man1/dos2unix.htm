@@ -1,0 +1,779 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>dos2unix 7.4.2 - Formatumwandlung f&#xfc;r Textdateien von DOS/Mac nach Unix und umgekehrt</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:root@localhost" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#BEZEICHNUNG">BEZEICHNUNG</a></li>
+  <li><a href="#BERSICHT">&Uuml;BERSICHT</a></li>
+  <li><a href="#BESCHREIBUNG">BESCHREIBUNG</a></li>
+  <li><a href="#OPTIONEN">OPTIONEN</a></li>
+  <li><a href="#MAC-MODUS">MAC-MODUS</a></li>
+  <li><a href="#UMWANDLUNGSMODI">UMWANDLUNGSMODI</a></li>
+  <li><a href="#UNICODE">UNICODE</a>
+    <ul>
+      <li><a href="#Zeichenkodierungen">Zeichenkodierungen</a></li>
+      <li><a href="#Umwandlung">Umwandlung</a></li>
+      <li><a href="#Markierung-der-Bytereihenfolge">Markierung der Bytereihenfolge</a></li>
+      <li><a href="#Unicode-Dateinamen-unter-Windows">Unicode-Dateinamen unter Windows</a></li>
+      <li><a href="#Unicode-Beispiele">Unicode-Beispiele</a></li>
+    </ul>
+  </li>
+  <li><a href="#GB18030">GB18030</a></li>
+  <li><a href="#BEISPIELE">BEISPIELE</a></li>
+  <li><a href="#REKURSIVE-UMWANDLUNG">REKURSIVE UMWANDLUNG</a></li>
+  <li><a href="#LOKALISIERUNG">LOKALISIERUNG</a></li>
+  <li><a href="#RCKGABEWERT">R&Uuml;CKGABEWERT</a></li>
+  <li><a href="#STANDARDS">STANDARDS</a></li>
+  <li><a href="#AUTOREN">AUTOREN</a></li>
+  <li><a href="#SIEHE-AUCH">SIEHE AUCH</a></li>
+</ul>
+
+<h1 id="BEZEICHNUNG">BEZEICHNUNG</h1>
+
+<p>dos2unix - Formatumwandlung f&uuml;r Textdateien von DOS/Mac nach Unix und umgekehrt</p>
+
+<h1 id="BERSICHT">&Uuml;BERSICHT</h1>
+
+<pre><code>    dos2unix [Optionen] [DATEI &hellip;] [-n EINGABEDATEI AUSGABEDATEI &hellip;]
+    unix2dos [Optionen] [DATEI &hellip;] [-n EINGABEDATEI AUSGABEDATEI &hellip;]</code></pre>
+
+<h1 id="BESCHREIBUNG">BESCHREIBUNG</h1>
+
+<p>Das Paket Dos2unix enth&auml;lt die Werkzeuge <code>dos2unix</code> und <code>unix2dos</code> zum Umwandeln einfacher Textdateien aus dem DOS- oder Mac-Format in das Unix-Format und umgekehrt.</p>
+
+<p>In Textdateien unter DOS/Windows sind Zeilenumbr&uuml;che, auch als neue Zeile (NL) bekannt, eine Kombination aus zwei Zeichen: einem Wagenr&uuml;cklauf (Carriage Return, CR) gefolgt von einem Zeilenvorschub (Line Feed, LF). In Unix-Textdateien bestehen Zeilenumbr&uuml;che nur aus einem Zeichen, dem Zeilenvorschub (LF). In Mac-Textdateien aus der Zeit vor MacOS X bestand ein Zeilenumbruch aus einem einzelnen CR-Zeichen. Heute verwendet macOS Zeilenumbr&uuml;che im Unix-Stil (LF).</p>
+
+<p>Neben Zeilenumbr&uuml;chen kann Dos2unix auch die Zeichenkodierung von Dateien umwandeln. Einige DOS-Codepages k&ouml;nnen in Unix Latin-1 umgewandelt werden, und Windows-Unicode-Dateien (UTF-16) k&ouml;nnen in Unix-Unicode-Dateien (UTF-8) umgewandelt werden.</p>
+
+<p>Bin&auml;rdateien werden automatisch &uuml;bersprungen, sofern die Umwandlung nicht erzwungen wird.</p>
+
+<p>Nicht-regul&auml;re Dateien, wie Verzeichnisse und FIFOS (Weiterleitungen) werden automatisch &uuml;bersprungen.</p>
+
+<p>Symbolische Links und deren Ziele werden per Vorgabe unver&auml;ndert belassen. Symbolische Links k&ouml;nnen optional ersetzt werden, oder die Ausgabe wird in das Ziel des symbolischen Links geschrieben. Unter Windows wird das Schreiben in das Ziel eines symbolischen Links nicht unterst&uuml;tzt.</p>
+
+<p>Dos2unix wurde nach dem Vorbild der dos2unix-Version unter SunOS/Solaris entwickelt, doch es gibt einen wesentlichen Unterschied zum Original: Diese Version ersetzt per Vorgabe Dateien bei der Umwandlung (Alte-Datei-Modus), w&auml;hrend unter SunOS/Solaris nur die paarweise Umwandlung (Neue-Datei-Modus) unterst&uuml;tzt wird. Siehe dazu die Optionen <code>-o</code> und <code>-n</code>. Ein weiterer Unterschied ist, dass die SunOS/Solaris-Version in der Voreinstellung die Umwandlung im <i>iso</i>-Modus vornimmt, w&auml;hrend diese Version den <i>ascii</i>-Modus verwendet.</p>
+
+<h1 id="OPTIONEN">OPTIONEN</h1>
+
+<dl>
+
+<dt id="pod"><b>--</b></dt>
+<dd>
+
+<p>nimmt an, dass alle folgenden Optionen Dateinamen sind. Verwenden Sie diese Option, wenn Sie Dateien umwandeln wollen, deren Namen mit einem Minuszeichen beginnen. Um beispielsweise eine Datei namens &raquo;-bla&laquo; umzuwandeln, k&ouml;nnen Sie folgenden Befehl verwenden:</p>
+
+<pre><code>    dos2unix -- -bla</code></pre>
+
+<p>oder im Neue-Datei-Modus:</p>
+
+<pre><code>    dos2unix -n -- -bla ausgabe.txt</code></pre>
+
+</dd>
+<dt id="allow-chown"><b>--allow-chown</b></dt>
+<dd>
+
+<p>erlaubt die &Auml;nderung des Eigent&uuml;mers der Datei im Alte-Datei-Modus.</p>
+
+<p>When this option is used, the conversion will not be aborted when the user and/or group ownership of the original file can&#39;t be preserved in old file mode. Conversion will continue and the converted file will get the same new ownership as if it was converted in new file mode. See also options <code>-o</code> and <code>-n</code>. This option is only available if dos2unix has support for preserving the user and group ownership of files.</p>
+
+</dd>
+<dt id="ascii"><b>-ascii</b></dt>
+<dd>
+
+<p>wandelt nur Zeilenumbr&uuml;che um. Dies ist der vorgegebene Umwandlungsmodus.</p>
+
+</dd>
+<dt id="iso"><b>-iso</b></dt>
+<dd>
+
+<p>wandelt aus dem DOS- in den ISO-8859-1-Zeichensatz um. Weitere Informationen hierzu finden Sie im Abschnitt UMWANDLUNGSMODI.</p>
+
+</dd>
+<dt id="pod-1252"><b>-1252</b></dt>
+<dd>
+
+<p>verwendet die Windows-Codepage 1252 (Westeurop&auml;isch).</p>
+
+</dd>
+<dt id="pod-437"><b>-437</b></dt>
+<dd>
+
+<p>verwendet die DOS-Codepage 437 (US). Dies ist die vorgegebene Codepage f&uuml;r die ISO-Umwandlung.</p>
+
+</dd>
+<dt id="pod-850"><b>-850</b></dt>
+<dd>
+
+<p>verwendet die DOS-Codepage 850 (Westeurop&auml;isch).</p>
+
+</dd>
+<dt id="pod-860"><b>-860</b></dt>
+<dd>
+
+<p>verwendet die DOS-Codepage 860 (Portugiesisch).</p>
+
+</dd>
+<dt id="pod-863"><b>-863</b></dt>
+<dd>
+
+<p>verwendet die DOS-Codepage 863 (Kanadisches Franz&ouml;sisch).</p>
+
+</dd>
+<dt id="pod-865"><b>-865</b></dt>
+<dd>
+
+<p>verwendet die DOS-Codepage 865 (Skandinavisch).</p>
+
+</dd>
+<dt id="pod-7"><b>-7</b></dt>
+<dd>
+
+<p>wandelt 8-Bit-Zeichen in ein 7-Bit-Bitmuster um.</p>
+
+</dd>
+<dt id="b---keep-bom"><b>-b, --keep-bom</b></dt>
+<dd>
+
+<p>erh&auml;lt die Markierung der Bytereihenfolge (BOM). Wenn die Eingabedatei eine BOM enth&auml;lt, wird ebenfalls eine BOM in die Ausgabedatei geschrieben. Dies ist das Standardverhalten beim Umwandeln von DOS-Zeilenumbr&uuml;chen. Siehe auch die Option <code>-r</code>.</p>
+
+</dd>
+<dt id="c---convmode-UMWANDLUNGSMODUS"><b>-c, --convmode UMWANDLUNGSMODUS</b></dt>
+<dd>
+
+<p>legt den Umwandlungsmodus fest. UMWANDLUNGSMODUS kann <i>ascii</i>, <i>7bit</i>, <i>iso</i> oder <i>mac</i> sein, wobei <i>ascii</i> die Vorgabe ist.</p>
+
+</dd>
+<dt id="D---display-enc-KODIERUNG"><b>-D, --display-enc KODIERUNG</b></dt>
+<dd>
+
+<p>legt die Kodierung des angezeigten Texts fest. KODIERUNG kann <i>ansi</i>, <i>unicode</i>, <i>unicodebom</i>, <i>utf8</i> oder &lt;utf8bom&gt; sein, wobei <i>ansi</i> die Vorgabe ist.</p>
+
+<p>Diese Option ist nur in dos2unix f&uuml;r Windows mit Unterst&uuml;tzung f&uuml;r Unicode-Dateinamen verf&uuml;gbar. Sie bleibt wirkungslos, wenn die tats&auml;chlichen Dateinamen gelesen und geschrieben werden, lediglich bei der Darstellung wird sie ber&uuml;cksichtigt.</p>
+
+<p>Es gibt verschiedene M&ouml;glichkeiten, Text in einer Windows-Konsole basierend auf dessen Kodierung darzustellen. Alle haben verschiedene Vor- und Nachteile.</p>
+
+<dl>
+
+<dt id="ansi"><b>ansi</b></dt>
+<dd>
+
+<p>Die Standardmethode von dos2unix ist die Verwendung von ANSI-kodiertem Text, der Vorteil ist deren Abw&auml;rtskompatibilit&auml;t. Dies funktioniert mit Raster- und TrueType-Schriften. In manchen Gebieten m&uuml;ssen Sie mit dem Befehl <code>chcp</code> die aktive DOS-OEM-Codepage in die -System-ANSI-Codepage des Systems &auml;ndern, da dos2unix Letztere verwendet.</p>
+
+<p>Der Nachteil von ANSI ist, dass internationale Dateinamen nicht korrekt dargestellt werden, wenn darin Zeichen enthalten sind, die nicht in der im System voreingestellten Codepage enthalten sind. Stattdessen wird entweder ein Fragezeichen oder ein falsches Zeichen angezeigt. Sofern Sie nicht mit fremden Dateinamen arbeiten, ist diese Methode in Ordnung.</p>
+
+</dd>
+<dt id="unicode-unicodebom"><b>unicode, unicodebom</b></dt>
+<dd>
+
+<p>Der Vorteil von Unicode (dem Windows-Namen f&uuml;r UTF-16) ist die &uuml;blicherweise korrekte Textdarstellung. Eine &Auml;nderung der aktiven Codepage ist nicht erforderlich. Sie m&uuml;ssen die Schriftart der Konsole auf eine TrueType-Schrift einstellen, damit internationale Zeichen richtig angezeigt werden k&ouml;nnen. Sollte ein Zeichen in einer TrueType-Schrift nicht enthalten sein, wird ein kleines Quadrat angezeigt, das gelegentlich noch ein Fragezeichen enth&auml;lt.</p>
+
+<p>Wenn Sie die ConEmu-Konsole nutzen, wird der gesamte Text korrekt dargestellt, da ConEmu automatisch eine passende Schrift w&auml;hlt.</p>
+
+<p>Nachteilig f&uuml;r Unicode ist, dass es nicht zu ASCII kompatibel ist. Die Ausgabe ist schwer zu verarbeiten, wenn sie in ein anderes Programm oder eine Datei weitergeleitet wird.</p>
+
+<p>Wenn die Methode <code>unicodebom</code> verwendet wird, dann wird dem Unicode-Text eine BOM (Markierung der Bytereihenfolge) vorangestellt. Eine BOM ist f&uuml;r korrekte Um- oder Weiterleitung in der PowerShell notwendig.</p>
+
+</dd>
+<dt id="utf8-utf8bom"><b>utf8, utf8bom</b></dt>
+<dd>
+
+<p>Der Vorteil von UTF-8 ist die ASCII-Kompatibilit&auml;t. Sie m&uuml;ssen die Schriftart der Konsole auf eine TrueType-Schrift setzen. Dadurch wird der Text &auml;hnlich wie in der <code>unicode</code>-Kodierung dargestellt.</p>
+
+<p>Der Nachteil ist die falsche Darstellung aller Nicht-ASCII-Zeichen, wenn Sie die Standard-Rasterschrift verwenden. Nicht nur Unicode-Dateinamen, sondern auch &uuml;bersetzte Meldungen werden unlesbar. Auf einem Windows-System, das f&uuml;r eine ostasiatische Region eingerichtet wurde, wird die Konsole bei der Anzeige von Meldungen deutlich flackern.</p>
+
+<p>In einer ConEmu-Konsole funktioniert die UTF-8-Kodierung gut.</p>
+
+<p>Wenn die Methode <code>utf8bom</code> verwendet wird, dann wird dem UTF-8-Text eine BOM (Markierung der Bytereihenfolge) vorangestellt. Eine BOM ist f&uuml;r korrekte Um- oder Weiterleitung in der PowerShell notwendig.</p>
+
+</dd>
+</dl>
+
+<p>Die Standardkodierung kann durch Setzen der Umgebungsvariable DOS2UNIX_DISPLAY_ENC auf <code>unicode</code>, <code>unicodebom</code>, <code>utf8</code> oder <code>utf8</code> ge&auml;ndert werden.</p>
+
+</dd>
+<dt id="f---force"><b>-f, --force</b></dt>
+<dd>
+
+<p>erzwingt die Umwandlung von Bin&auml;rdateien.</p>
+
+</dd>
+<dt id="gb---gb18030"><b>-gb, --gb18030</b></dt>
+<dd>
+
+<p>wandelt unter Windows UTF-16-Dateien standardm&auml;&szlig;ig in UTF-8 um, ungeachtet der Einstellung der Locale. Verwenden Sie diese Option zum umwandeln von UTF-16-Dateien in GB18030. Diese Option ist nur unter Windows verf&uuml;gbar. Siehe auch Abschnitt GB18030.</p>
+
+</dd>
+<dt id="h---help"><b>-h, --help</b></dt>
+<dd>
+
+<p>zeigt eine Hilfe an und beendet das Programm.</p>
+
+</dd>
+<dt id="i-SCHALTER---info-SCHALTER-DATEI"><b>-i[SCHALTER], --info[=SCHALTER] DATEI &hellip;</b></dt>
+<dd>
+
+<p>zeigt Dateiinformationen an. Es wird keine Umwandlung vorgenommen.</p>
+
+<p>Die Ausgabe der Informationen geschieht in der folgenden Reihenfolge: Anzahl der DOS-Zeilenumbr&uuml;che, Anzahl der Unix-Zeilenumbr&uuml;che, Anzahl der Mac-Zeilenumbr&uuml;che, Markierung der Bytereihenfolge, Text- oder Bin&auml;rformat, Dateiname.</p>
+
+<p>Beispielausgabe:</p>
+
+<pre><code>     6       0       0  no_bom    text    dos.txt
+     0       6       0  no_bom    text    unix.txt
+     0       0       6  no_bom    text    mac.txt
+     6       6       6  no_bom    text    mixed.txt
+    50       0       0  UTF-16LE  text    utf16le.txt
+     0      50       0  no_bom    text    utf8unix.txt
+    50       0       0  UTF-8     text    utf8dos.txt
+     2     418     219  no_bom    binary  dos2unix.exe</code></pre>
+
+<p>Beachten sie, dass manchmal eine Bin&auml;rdatei f&auml;lschlicherweise als Textdatei erkannt wird. Siehe auch Option <code>-s</code>.</p>
+
+<p>Optionale zus&auml;tzliche Schalter k&ouml;nnen gesetzt werden, um die Ausgabe anzupassen. Einer oder mehrere Schalter k&ouml;nnen hinzugef&uuml;gt werden.</p>
+
+<dl>
+
+<dt id="pod0"><b>0</b></dt>
+<dd>
+
+<p>gibt die Zeilen zur Dateiinformation mit einem Null-Zeichen am Ende anstelle eines Zeilenvorschub-Zeichens aus. Dies erm&ouml;glicht die korrekte Interpretation von Leer- und Anf&uuml;hrungszeichen in Dateinamen, wenn der Schalter c verwendet wird. Verwenden Sie diesen Schalter in Kombination mit der xargs(1)-Option <code>-0</code> oder <code>--null</code>.</p>
+
+</dd>
+<dt id="d"><b>d</b></dt>
+<dd>
+
+<p>gibt die Anzahl der DOS-Zeilenumbr&uuml;che aus.</p>
+
+</dd>
+<dt id="u"><b>u</b></dt>
+<dd>
+
+<p>gibt die Anzahl der Unix-Zeilenumbr&uuml;che aus.</p>
+
+</dd>
+<dt id="m"><b>m</b></dt>
+<dd>
+
+<p>gibt die Anzahl der Mac-Zeilenumbr&uuml;che aus.</p>
+
+</dd>
+<dt id="b"><b>b</b></dt>
+<dd>
+
+<p>gibt die Markierung der Bytereihenfolge aus.</p>
+
+</dd>
+<dt id="t"><b>t</b></dt>
+<dd>
+
+<p>zeigt an, ob es sich um eine Text- oder eine Bin&auml;rdatei handelt.</p>
+
+</dd>
+<dt id="c"><b>c</b></dt>
+<dd>
+
+<p>gibt nur die Dateien aus, die umgewandelt werden w&uuml;rden.</p>
+
+<p>Mit dem Schalter <code>c</code> gibt dos2unix nur die Dateien aus, die DOS-Zeilenumbr&uuml;che enthalten, unix2dos nur die Dateien mit Unix-Zeilenumbr&uuml;chen.</p>
+
+</dd>
+<dt id="h"><b>h</b></dt>
+<dd>
+
+<p>gibt eine Kopfzeile aus.</p>
+
+</dd>
+<dt id="p"><b>p</b></dt>
+<dd>
+
+<p>zeigt Dateinamen ohne Pfade an.</p>
+
+</dd>
+</dl>
+
+<p>Beispiele:</p>
+
+<p>Informationen zu allen *.txt-Dateien anzeigen:</p>
+
+<pre><code>    dos2unix -i *.txt</code></pre>
+
+<p>Nur die Anzahl der DOS-Zeilenumbr&uuml;che und Unix-Zeilenumbr&uuml;che anzeigen:</p>
+
+<pre><code>    dos2unix -idu *.txt</code></pre>
+
+<p>Nur die Markierung der Bytereihenfolge anzeigen:</p>
+
+<pre><code>    dos2unix --info=b *.txt</code></pre>
+
+<p>Die Dateien auflisten, die DOS-Zeilenumbr&uuml;che enthalten:</p>
+
+<pre><code>    dos2unix -ic *.txt</code></pre>
+
+<p>Die Dateien auflisten, die Unix-Zeilenumbr&uuml;che enthalten:</p>
+
+<pre><code>    unix2dos -ic *.txt</code></pre>
+
+<p>Nur Dateien umwandeln, die DOS-Zeilenumbr&uuml;che enthalten und die anderen Dateien unver&auml;ndert belassen:</p>
+
+<pre><code>    dos2unix -ic0 *.txt | xargs -0 dos2unix</code></pre>
+
+<p>Nach Textdateien suchen, die DOS-Zeilenumbr&uuml;che enthalten:</p>
+
+<pre><code>    find -name &#39;*.txt&#39; -print0 | xargs -0 dos2unix -ic</code></pre>
+
+</dd>
+<dt id="k---keepdate"><b>-k, --keepdate</b></dt>
+<dd>
+
+<p>&uuml;bernimmt den Zeitstempel der Eingabedatei in die Ausgabedatei.</p>
+
+</dd>
+<dt id="L---license"><b>-L, --license</b></dt>
+<dd>
+
+<p>zeigt die Lizenz des Programms an.</p>
+
+</dd>
+<dt id="l---newline"><b>-l, --newline</b></dt>
+<dd>
+
+<p>f&uuml;gt eine zus&auml;tzliche neue Zeile hinzu.</p>
+
+<p><b>dos2unix</b>: Nur DOS-Zeilenumbr&uuml;che werden in Unix-Zeilenumbr&uuml;che umgewandelt. Im Mac-Modus werden nur Mac-Zeilenumbr&uuml;che in Unix-Zeilenumbr&uuml;che umgewandelt.</p>
+
+<p><b>unix2dos</b>: Nur Unix-Zeilenumbr&uuml;che werden in DOS-Zeilenumbr&uuml;che umgewandelt. Im Mac-Modus werden nur Unix-Zeilenumbr&uuml;che in Mac-Zeilenumbr&uuml;che umgewandelt.</p>
+
+</dd>
+<dt id="m---add-bom"><b>-m, --add-bom</b></dt>
+<dd>
+
+<p>schreibt eine Markierung der Bytereihenfolge (BOM) in die Ausgabedatei. In der Voreinstellung wird eine UTF-8-BOM geschrieben.</p>
+
+<p>Wenn die Eingabedatei in UTF-16 kodiert ist und die Option <code>-u</code> verwendet wird, wird eine UTF-16-BOM geschrieben.</p>
+
+<p>Verwenden Sie diese Option niemals, wenn die Kodierung der Ausgabedatei nicht UTF-8, UTF-16 oder GB 18030 ist. Weitere Informationen finden Sie im Abschnitt UNICODE.</p>
+
+</dd>
+<dt id="n---newfile-EINGABEDATEI-AUSGABEDATEI"><b>-n, --newfile EINGABEDATEI AUSGABEDATEI &hellip;</b></dt>
+<dd>
+
+<p>Neue-Datei-Modus. Die EINGABEDATEI wird umgewandelt und in die AUSGABEDATEI geschrieben. Die Dateinamen m&uuml;ssen paarweise angegeben werden. Platzhalter sollten <i>nicht</i> verwendet werden, sonst werden Sie Ihre Dateien <i>verlieren</i>.</p>
+
+<p>Der Benutzer, der die Umwandlung im Neue-Datei-Modus startet, wird Besitzer der umgewandelten Datei. Die Lese- und Schreibrechte werden aus den Zugriffsrechten der Originaldatei minus der umask(1) der Person ermittelt, die die Umwandlung ausgef&uuml;hrt hat.</p>
+
+</dd>
+<dt id="no-allow-chown"><b>--no-allow-chown</b></dt>
+<dd>
+
+<p>verhindert die &Auml;nderung des Eigent&uuml;mers der Datei im Alte-Datei-Modus (Voreinstellung).</p>
+
+<p>Abort conversion when the user and/or group ownership of the original file can&#39;t be preserved in old file mode. See also options <code>-o</code> and <code>-n</code>. This option is only available if dos2unix has support for preserving the user and group ownership of files.</p>
+
+</dd>
+<dt id="o---oldfile-DATEI"><b>-o, --oldfile DATEI &hellip;</b></dt>
+<dd>
+
+<p>Alte-Datei-Modus. Die DATEI wird umgewandelt und durch die Ausgabedatei &uuml;berschrieben. Per Vorgabe werden Umwandlungen in diesem Modus ausgef&uuml;hrt. Platzhalter sind verwendbar.</p>
+
+<p>Im Alte-Datei-Modus (Ersetzungsmodus) erhalten die umgewandelten Dateien den gleichen Eigent&uuml;mer, die gleiche Gruppe und die gleichen Lese- und Schreibberechtigungen wie die Originaldatei, auch wenn die Datei von einem anderen Benutzer umgewandelt wird, der Schreibrechte f&uuml;r die Datei hat (zum Beispiel der Systemadministrator). Die Umwandlung wird abgebrochen, wenn es nicht m&ouml;glich ist, die originalen Werte beizubehalten. Die &Auml;nderung des Eigent&uuml;mers k&ouml;nnte zum Beispiel bewirken, dass der urspr&uuml;ngliche Eigent&uuml;mer die Datei nicht mehr lesen kann. Die &Auml;nderung der Gruppe k&ouml;nnte ein Sicherheitsrisiko sein, da die Datei vielleicht f&uuml;r Benutzer lesbar wird, f&uuml;r die sie nicht bestimmt ist. Die Beibehaltung von Eigent&uuml;mer, Gruppe und Schreib- und Leserechten wird nur unter Unix unterst&uuml;tzt.</p>
+
+<p>Um herauszufinden, ob dos2unix &uuml;ber Unterst&uuml;tzung f&uuml;r die Erhaltung von Eigent&uuml;mer und Gruppe von Dateien verf&uuml;gt, rufen Sie <code>dos2unix -V</code> auf.</p>
+
+<p>Die Umwandlung f&uuml;hrt stets &uuml;ber eine tempor&auml;re Datei. Tritt im Laufe der Umwandlung ein Fehler auf, wird die tempor&auml;re Datei gel&ouml;scht und die Originaldatei bleibt intakt. War die Umwandlung erfolgreich, wird die Originaldatei durch die tempor&auml;re Datei ersetzt. Sie k&ouml;nnen Schreibrechte f&uuml;r die Originaldatei haben, aber keine Rechte, um die gleichen Eigentumsverh&auml;ltnisse wie die der Originaldatei f&uuml;r die tempor&auml;re Datei festzulegen. Das bedeutet, dass Sie Eigent&uuml;mer und Gruppe der Originaldatei nicht bewahren k&ouml;nnen. In diesem Fall k&ouml;nnen Sie die Option <code>--allow-chown</code> verwenden, um die Umwandlung fortzusetzen:</p>
+
+<pre><code>    dos2unix --allow-chown foo.txt</code></pre>
+
+<p>Eine weitere Option ist der Neue-Datei-Modus:</p>
+
+<pre><code>    dos2unix -n foo.txt foo.txt</code></pre>
+
+<p>Der Vorteil der Option <code>--allow-chown</code> ist, dass Sie Platzhalter verwenden k&ouml;nnen und die Eigentumsverh&auml;ltnisse bewahrt bleiben, sofern m&ouml;glich.</p>
+
+</dd>
+<dt id="q---quiet"><b>-q, --quiet</b></dt>
+<dd>
+
+<p>Stiller Modus, in dem alle Warnungen und sonstige Meldungen unterdr&uuml;ckt werden. Der R&uuml;ckgabewert ist 0, au&szlig;er wenn fehlerhafte Befehlszeilenoptionen angegeben werden.</p>
+
+</dd>
+<dt id="r---remove-bom"><b>-r, --remove-bom</b></dt>
+<dd>
+
+<p>entfernt die Markierung der Bytereihenfolge (BOM). Es wird keine BOM in die Ausgabedatei geschrieben. Dies ist das Standardverhalten beim Umwandeln von Unix-Zeilenumbr&uuml;chen. Siehe auch die Option <code>-b</code>.</p>
+
+</dd>
+<dt id="s---safe"><b>-s, --safe</b></dt>
+<dd>
+
+<p>&uuml;berspringt Bin&auml;rdateien (Vorgabe).</p>
+
+<p>Bin&auml;rdateien werden &uuml;bersprungen, damit unerw&uuml;nschtes Fehlverhalten vermieden wird. Denken Sie daran, dass die Erkennung nicht 100% sicher funktioniert. Die &uuml;bergebenen Dateien werden auf Bin&auml;rsymbole &uuml;berpr&uuml;ft, die typischerweise in Textdateien nicht vorkommen. Es ist jedoch m&ouml;glich, dass eine Bin&auml;rdatei ausschlie&szlig;lich gew&ouml;hnliche Textzeichen enth&auml;lt. Eine solche Bin&auml;rdatei wird dann f&auml;lschlicherweise als Textdatei angesehen.</p>
+
+</dd>
+<dt id="u---keep-utf16"><b>-u, --keep-utf16</b></dt>
+<dd>
+
+<p>erh&auml;lt die originale UTF-16-Kodierung der Eingabedatei. Die Ausgabedatei wird in der gleichen UTF-16-Kodierung geschrieben (Little-Endian- oder Big-Endian-Bytereihenfolge) wie die Eingabedatei. Dies verhindert die Umwandlung in UTF-8. Eine UTF-16-BOM wird dementsprechend geschrieben. Diese Option kann durch Angabe der Option <code>-ascii</code> deaktiviert werden.</p>
+
+</dd>
+<dt id="ul---assume-utf16le"><b>-ul, --assume-utf16le</b></dt>
+<dd>
+
+<p>nimmt an, dass die Eingabedatei das Format UTF-16LE hat.</p>
+
+<p>Wenn die Eingabedatei eine Markierung der Bytereihenfolge enth&auml;lt (BOM), dann hat die BOM Vorrang vor dieser Option.</p>
+
+<p>Durch eine falsche Annahme (die Eingabedatei war nicht in UTF-16LE kodiert) mit erfolgreicher Umwandlung erhalten Sie eine UTF-8-Ausgabedatei mit fehlerhaftem Text. Sie k&ouml;nnen die fehlgeschlagene Umwandlung mit iconv(1) r&uuml;ckg&auml;ngig machen, indem Sie die R&uuml;ckumwandlung von UTF-8 nach UTF-16LE vornehmen. Dadurch gewinnen Sie die Originaldatei zur&uuml;ck.</p>
+
+<p>Die Annahme von UTF-16LE wirkt wie ein <i>Umwandlungsmodus</i>. Beim Wechsel zum vorgegebenen <i>ascii</i>-Modus wird die UTF16LE-Annahme deaktiviert.</p>
+
+</dd>
+<dt id="ub---assume-utf16be"><b>-ub, --assume-utf16be</b></dt>
+<dd>
+
+<p>nimmt an, dass die Eingabedatei das Format UTF-16BE hat.</p>
+
+<p>Diese Option ist gleichbedeutend mit <code>-ul</code>.</p>
+
+</dd>
+<dt id="v---verbose"><b>-v, --verbose</b></dt>
+<dd>
+
+<p>zeigt ausf&uuml;hrliche Meldungen an. Zus&auml;tzliche Informationen werden zu den Markierungen der Bytereihenfolge (BOM) und zur Anzahl der umgewandelten Zeilenumbr&uuml;che angezeigt.</p>
+
+</dd>
+<dt id="F---follow-symlink"><b>-F, --follow-symlink</b></dt>
+<dd>
+
+<p>folgt symbolischen Links und wandelt die Zieldateien um.</p>
+
+</dd>
+<dt id="R---replace-symlink"><b>-R, --replace-symlink</b></dt>
+<dd>
+
+<p>ersetzt symbolische Links durch die umgewandelten Dateien (die originalen Zieldateien bleiben unver&auml;ndert).</p>
+
+</dd>
+<dt id="S---skip-symlink"><b>-S, --skip-symlink</b></dt>
+<dd>
+
+<p>erh&auml;lt symbolische Links als solche und l&auml;sst die Ziele unver&auml;ndert (Vorgabe).</p>
+
+</dd>
+<dt id="V---version"><b>-V, --version</b></dt>
+<dd>
+
+<p>zeigt Versionsinformationen an und beendet das Programm.</p>
+
+</dd>
+</dl>
+
+<h1 id="MAC-MODUS">MAC-MODUS</h1>
+
+<p>Im Normalmodus werden Zeilenumbr&uuml;che von DOS nach Unix und umgekehrt umgewandelt. Mac-Zeilenumbr&uuml;che werden nicht ver&auml;ndert.</p>
+
+<p>Im Mac-Modus werden Zeilenumbr&uuml;che von Mac nach Unix und umgekehrt umgewandelt. DOS-Zeilenumbr&uuml;che werden nicht ver&auml;ndert.</p>
+
+<p>Um das Programm im Mac-Modus auszuf&uuml;hren, verwenden Sie die Befehlszeilenoption <code>-c mac</code> oder die Befehle <code>mac2unix</code> oder <code>unix2mac</code>.</p>
+
+<h1 id="UMWANDLUNGSMODI">UMWANDLUNGSMODI</h1>
+
+<dl>
+
+<dt id="ascii1"><b>ascii</b></dt>
+<dd>
+
+<p>Im <code>ascii</code>-Modus werden nur Zeilenumbr&uuml;che umgewandelt. Dies ist der vorgegebene Umwandlungsmodus.</p>
+
+<p>Obwohl der Name dieses Modus auf ASCII hinweist, welches ein 7-bit-Standard ist, bezieht sich der eigentliche Modus auf 8 Bit. Verwenden Sie diesen Modus immer dann, wenn Sie Unicode-Dateien in UTF-8-Kodierung umwandeln.</p>
+
+</dd>
+<dt id="bit"><b>7bit</b></dt>
+<dd>
+
+<p>In diesem Modus werden alle Nicht-ASCII-Zeichen aus 8 Bit in das 7-Bit-Bitmuster umgewandelt.</p>
+
+</dd>
+<dt id="iso1"><b>iso</b></dt>
+<dd>
+
+<p>Die Zeichen werden aus dem DOS-Zeichensatz (der Codepage) in den ISO-Zeichensatz ISO-8859-1 (Latin-1) in Unix umgewandelt. DOS-Zeichen ohne &Auml;quivalent in ISO-8859-1, f&uuml;r die die Umwandlung nicht m&ouml;glich ist, werden durch einen Punkt ersetzt. Gleiches gilt f&uuml;r ISO-8859-1-Zeichen ohne DOS-Gegenst&uuml;ck.</p>
+
+<p>Wenn nur die Option <code>-iso</code> angegeben ist, versucht dos2unix die aktive Codepage selbst zu ermitteln. Sollte dies nicht m&ouml;glich sein, wird die Standard-Codepage CP437 verwendet, welche haupts&auml;chlich in den USA eingesetzt wird. Um eine bestimmte Codepage zu erzwingen, verwenden Sie die Optionen <code>-437</code> (US), <code>-850</code> (Westeurop&auml;isch), <code>-860</code> (Portugiesisch), <code>-863</code> (Kanadisches Franz&ouml;sisch) oder <code>-865</code> (Skandinavisch). Die Windows-Codepage CP1252 (Westeurop&auml;isch) wird durch die Option <code>-1252</code> unterst&uuml;tzt.</p>
+
+<p>Wenden Sie niemals die ISO-Umwandlung auf Unicode-Textdateien an. In UTF-8 kodierte Dateien werden dadurch besch&auml;digt.</p>
+
+<p>Einige Beispiele:</p>
+
+<p>Umwandlung aus der vorgegebenen DOS-Codepage nach Unix Latin-1:</p>
+
+<pre><code>    dos2unix -iso -n in.txt ausgabe.txt</code></pre>
+
+<p>Umwandlung von DOS CP850 nach Unix Latin-1:</p>
+
+<pre><code>    dos2unix -850 -n eingabe.txt ausgabe.txt</code></pre>
+
+<p>Umwandlung von Windows CP1252 nach Unix Latin-1:</p>
+
+<pre><code>    dos2unix -1252 -n eingabe.txt ausgabe.txt</code></pre>
+
+<p>Umwandlung von Windows CP1252 nach Unix UTF-8 (Unicode):</p>
+
+<pre><code>    iconv -f CP1252 -t UTF-8 eingabe.txt | dos2unix &gt; ausgabe.txt</code></pre>
+
+<p>Umwandlung von Unix Latin-1 in die vorgegebene DOS-Codepage:</p>
+
+<pre><code>    unix2dos -iso -n eingabe.txt ausgabe.txt</code></pre>
+
+<p>Umwandlung von Unix Latin-1 nach DOS CP850:</p>
+
+<pre><code>    unix2dos -850 -n eingabe.txt ausgabe.txt</code></pre>
+
+<p>Umwandlung von Unix Latin-1 nach Windows CP1252:</p>
+
+<pre><code>    unix2dos -1252 -n eingabe.txt ausgabe.txt</code></pre>
+
+<p>Umwandlung von Unix UTF-8 (Unicode) nach Windows CP1252:</p>
+
+<pre><code>    unix2dos &lt; eingabe.txt | iconv -f UTF-8 -t CP1252 &gt; ausgabe.txt</code></pre>
+
+<p>Siehe auch <a href="http://czyborra.com/charsets/codepages.html">http://czyborra.com/charsets/codepages.html</a> und <a href="http://czyborra.com/charsets/iso8859.html">http://czyborra.com/charsets/iso8859.html</a>.</p>
+
+</dd>
+</dl>
+
+<h1 id="UNICODE">UNICODE</h1>
+
+<h2 id="Zeichenkodierungen">Zeichenkodierungen</h2>
+
+<p>Es gibt verschiedene Unicode-Zeichenkodierungen. Unter Unix und Linux sind Unicode-Dateien typischerweise in UTF-8 kodiert. Unter Windows k&ouml;nnen Textdateien in UTF-8, UTF-16 oder UTF-16 in Big-Endian-Bytereihenfolge kodiert sein, liegen aber meist im Format UTF-16 vor.</p>
+
+<h2 id="Umwandlung">Umwandlung</h2>
+
+<p>Unicode-Textdateien k&ouml;nnen DOS-, Unix- oder Mac-Zeilenumbr&uuml;che enthalten, so wie regul&auml;re Textdateien.</p>
+
+<p>Alle Versionen von dos2unix und unix2dos k&ouml;nnen UTF-8-kodierte Dateien umwandeln, weil UTF-8 im Hinblick auf Abw&auml;rtskompatibilit&auml;t mit ASCII entwickelt wurde.</p>
+
+<p>Dos2unix und unix2dos mit Unterst&uuml;tzung f&uuml;r UTF-16 k&ouml;nnen in UTF-16 kodierte Dateien in Little-Endian- und Big-Endian-Bytereihenfolge lesen. Um festzustellen, ob dos2unix mit UTF-16-Unterst&uuml;tzung kompiliert wurde, geben Sie <code>dos2unix -V</code> ein.</p>
+
+<p>Unter Unix/Linux werden UTF-16 kodierte Dateien standardm&auml;&szlig;ig in die Zeichenkodierung entsprechend der Locale umgewandelt. Mit dem Befehl locale(1) k&ouml;nnen Sie herausfinden, wie die Zeichenkodierung der Locale eingestellt ist. Wenn eine Umwandlung nicht m&ouml;glich ist, verursacht dies einen Umwandlungsfehler, wodurch die Datei &uuml;bersprungen wird.</p>
+
+<p>Unter Windows werden UTF-16-Dateien standardm&auml;&szlig;ig in UTF-8 umgewandelt. In UTF-8 formatierte Textdateien werden von Windows und Unix/Linux gleicherma&szlig;en unterst&uuml;tzt.</p>
+
+<p>Die Kodierungen UTF-16 und UTF-8 sind vollst&auml;ndig kompatibel, daher wird bei der Umwandlung keinerlei Text verlorengehen. Sollte bei der Umwandlung von UTF-16 in UTF-8 ein Problem auftreten, beispielsweise wenn die UTF-16-kodierte Eingabedatei einen Fehler enth&auml;lt, dann wird diese Datei &uuml;bersprungen.</p>
+
+<p>Wenn die Option <code>-u</code> verwendet wird, wird die Ausgabedatei in der gleichen UTF-16-Kodierung wie die Eingabedatei geschrieben. Die Option <code>-u</code> verhindert die Umwandlung in UTF-8.</p>
+
+<p>Dos2unix und unix2dos bieten keine Option zur Umwandlung von UTF-8-Dateien in UTF-16.</p>
+
+<p>Umwandlungen im ISO- und 7bit-Modus funktionieren mit UTF-16-Dateien nicht.</p>
+
+<h2 id="Markierung-der-Bytereihenfolge">Markierung der Bytereihenfolge</h2>
+
+<p>Unicode-Textdateien unter Windows haben typischerweise eine Markierung der Bytereihenfolge (BOM), da viele Windows-Programme (zum Beispiel Notepad) solche BOMs standardm&auml;&szlig;ig hinzuf&uuml;gen. Weitere Informationen hierzu finden Sie auf <a href="http://de.wikipedia.org/wiki/Byte-Reihenfolge">http://de.wikipedia.org/wiki/Byte-Reihenfolge</a>.</p>
+
+<p>Unter Unix haben Textdateien &uuml;blicherweise keine BOM. Es wird stattdessen angenommen, dass Textdateien in der Zeichenkodierung entsprechend der Spracheinstellung vorliegen.</p>
+
+<p>Dos2unix kann nur dann erkennen, ob eine Datei UTF-16-kodiert ist, wenn die Datei eine BOM enth&auml;lt. Ist dies nicht der Fall, nimmt dos2unix an, dass es sich um eine Bin&auml;rdatei handelt.</p>
+
+<p>Verwenden Sie die Optionen <code>-ul</code> oder <code>-ub</code>, um eine UTF-16-Datei ohne BOM umzuwandeln.</p>
+
+<p>Dos2unix schreibt in der Voreinstellung keine BOM in die Ausgabedatei. Mit der Option <code>-b</code> schreibt Dos2unix eine BOM, wenn die Eingabedatei ebenfalls eine BOM hat.</p>
+
+<p>Unix2dos schreibt in der Voreinstellung eine BOM in die Ausgabedatei, wenn die Eingabedatei ebenfalls eine solche Markierung hat. Verwenden Sie die Option <code>-r</code>, um die BOM zu entfernen.</p>
+
+<p>Dos2unix und unix2dos schreiben immer eine BOM, wenn die Option <code>-m</code> angegeben ist.</p>
+
+<h2 id="Unicode-Dateinamen-unter-Windows">Unicode-Dateinamen unter Windows</h2>
+
+<p>Dos2unix verf&uuml;gt &uuml;ber optionale Unterst&uuml;tzung f&uuml;r das Lesen und Schreiben von Unicode-Dateinamen in der Windows-Eingabeaufforderung. Dadurch kann dos2unix Dateien &ouml;ffnen, deren Namen Zeichen enthalten, die nicht zur Standard-ANSI-Codepage des Systems geh&ouml;ren. Geben Sie <code>dos2unix -V</code> ein, um zu sehen, ob dos2unix f&uuml;r Windows mit Unterst&uuml;tzung f&uuml;r Unicode-Dateinamen erstellt wurde.</p>
+
+<p>Die Anzeige von Unicode-Dateinamen in einer Windows-Konsole ist gelegentlich nicht fehlerfrei, siehe die Option <code>-D</code>, <code>--display-enc</code>. Die Dateinamen k&ouml;nnen falsch dargestellt werden, allerdings werden die Dateien mit deren korrekten Namen gespeichert.</p>
+
+<h2 id="Unicode-Beispiele">Unicode-Beispiele</h2>
+
+<p>Umwandlung von Windows UTF-16 (mit BOM) nach Unix UTF-8:</p>
+
+<pre><code>    dos2unix -n eingabe.txt ausgabe.txt</code></pre>
+
+<p>Umwandlung von Windows UTF-16LE (ohne BOM) nach Unix UTF-8:</p>
+
+<pre><code>    dos2unix -ul -n eingabe.txt ausgabe.txt</code></pre>
+
+<p>Umwandlung von Unix UTF-8 nach Windows UTF-8 mit BOM:</p>
+
+<pre><code>    unix2dos -m -n eingabe.txt ausgabe.txt</code></pre>
+
+<p>Umwandlung von Unix UTF-8 nach Windows UTF-16:</p>
+
+<pre><code>    unix2dos &lt; eingabe.txt | iconv -f UTF-8 -t UTF-16 &gt; ausgabe.txt</code></pre>
+
+<h1 id="GB18030">GB18030</h1>
+
+<p>GB18030 ist ein Standard der chinesischen Regierung. Eine Teilmenge des in GB18030 definierten Standards ist offiziell f&uuml;r alle in China verkauften Softwareprodukte vorgeschrieben. Siehe auch <a href="http://de.wikipedia.org/wiki/GB_18030">http://de.wikipedia.org/wiki/GB_18030</a>.</p>
+
+<p>GB18030 ist vollst&auml;ndig zu Unicode kompatibel und kann als Unicode-Umwandlungsformat betrachtet werden. Wie auch UTF-8 ist GB18030 kompatibel zu ASCII. Ebenfalls kompatibel ist es zur Codepage 936 von Windows, auch als GBK bekannt.</p>
+
+<p>Unter Unix/Linux werden UTF-16-Dateien in GB18030 umgewandelt, wenn die Einstellung der Locale auf GB18030 gesetzt ist. Beachten Sie, dass dies nur funktioniert, wenn die Locale vom System unterst&uuml;tzt wird. Mit dem Befehl <code>locale -a</code> erhalten Sie eine Liste der unterst&uuml;tzten Locales.</p>
+
+<p>Unter Windows ben&ouml;tigen Sie die Option <code>-gb</code>, um UTF-16-Dateien in GB18030 umwandeln zu k&ouml;nnen.</p>
+
+<p>In GB 18030 kodierte Dateien haben wie Unicode-Dateien eine Markierung der Bytereihenfolge (BOM).</p>
+
+<h1 id="BEISPIELE">BEISPIELE</h1>
+
+<p>Aus der Standardeingabe lesen und in die Standardausgabe schreiben:</p>
+
+<pre><code>    dos2unix &lt; a.txt
+    cat a.txt | dos2unix</code></pre>
+
+<p>a.txt umwandeln und ersetzen, b.txt umwandeln und ersetzen:</p>
+
+<pre><code>    dos2unix a.txt b.txt
+    dos2unix -o a.txt b.txt</code></pre>
+
+<p>a.txt im ascii-Modus umwandeln und ersetzen:</p>
+
+<pre><code>    dos2unix a.txt</code></pre>
+
+<p>a.txt im ascii-Modus umwandeln und ersetzen, b.txt im 7bit-Modus umwandeln und ersetzen:</p>
+
+<pre><code>    dos2unix a.txt -c 7bit b.txt
+    dos2unix -c ascii a.txt -c 7bit b.txt
+    dos2unix -ascii a.txt -7 b.txt</code></pre>
+
+<p>a.txt aus dem Mac- in das Unix-Format umwandeln:</p>
+
+<pre><code>    dos2unix -c mac a.txt
+    mac2unix a.txt</code></pre>
+
+<p>a.txt aus dem Unix- in das Mac-Format umwandeln:</p>
+
+<pre><code>    unix2dos -c mac a.txt
+    unix2mac a.txt</code></pre>
+
+<p>a.txt unter Beibehaltung des urspr&uuml;nglichen Zeitstempels umwandeln:</p>
+
+<pre><code>    dos2unix -k a.txt
+    dos2unix -k -o a.txt</code></pre>
+
+<p>a.txt umwandeln und das Ergebnis nach e.txt schreiben:</p>
+
+<pre><code>    dos2unix -n a.txt e.txt</code></pre>
+
+<p>a.txt umwandeln und das Ergebnis nach e.txt schreiben, wobei e.txt den gleichen Zeitstempel erh&auml;lt wie a.txt:</p>
+
+<pre><code>    dos2unix -k -n a.txt e.txt</code></pre>
+
+<p>a.txt umwandeln und ersetzen, b.txt umwandeln und das Ergebnis nach e.txt schreiben:</p>
+
+<pre><code>    dos2unix a.txt -n b.txt e.txt
+    dos2unix -o a.txt -n b.txt e.txt</code></pre>
+
+<p>c.txt umwandeln und das Ergebnis nach e.txt schreiben, a.txt umwandeln und ersetzen, b.txt umwandeln und ersetzen, d.txt umwandeln und das Ergebnis nach f.txt schreiben:</p>
+
+<pre><code>    dos2unix -n c.txt e.txt -o a.txt b.txt -n d.txt f.txt</code></pre>
+
+<h1 id="REKURSIVE-UMWANDLUNG">REKURSIVE UMWANDLUNG</h1>
+
+<p>In einer Unix-Shell k&ouml;nnen Sie dos2unix zusammen mit den Befehlen find(1) und xargs(1) verwenden, um Textdateien in einem Verzeichnisbaum rekursiv umzuwandeln. Um beispielsweise alle *.txt-Dateien im aktuellen Verzeichnis und dessen Unterverzeichnissen umzuwandeln, geben Sie Folgendes ein:</p>
+
+<pre><code>    find . -name &#39;*.txt&#39; -print0 |xargs -0 dos2unix</code></pre>
+
+<p>Die find(1)-Option <code>-print0</code> und die korrespondierende xargs(1)-Option <code>-0</code> werden f&uuml;r Dateien ben&ouml;tigt, deren Namen Leerzeichen oder Anf&uuml;hrungszeichen enthalten. Ansonsten k&ouml;nnen diese Optionen weggelassen werden. Eine weitere M&ouml;glichkeit ist, find(1) zusammen mit der Option <code>-exec</code> zu verwenden:</p>
+
+<pre><code>    find . -name &#39;*.txt&#39; -exec dos2unix {} \;</code></pre>
+
+<p>In einer Windows-Eingabeaufforderung kann der folgende Befehl verwendet werden:</p>
+
+<pre><code>    for /R %G in (*.txt) do dos2unix &quot;%G&quot;</code></pre>
+
+<p>In der Windows PowerShell k&ouml;nnen Sie folgenden Befehl verwenden:</p>
+
+<pre><code>    get-childitem -path . -filter &#39;*.txt&#39; -recurse | foreach-object {dos2unix $_.Fullname}</code></pre>
+
+<h1 id="LOKALISIERUNG">LOKALISIERUNG</h1>
+
+<dl>
+
+<dt id="LANG"><b>LANG</b></dt>
+<dd>
+
+<p>Die prim&auml;re Sprache wird durch die Umgebungsvariable LANG festgelegt. Diese Variable besteht aus mehreren Teilen: Der erste Teil besteht aus zwei Kleinbuchstaben, die den Sprachcode angeben. Der zweite Teil ist optional und bezeichnet den L&auml;ndercode in Gro&szlig;buchstaben, vom davor stehenden Sprachcode durch einen Unterstrich getrennt. Der dritte Teil ist ebenfalls optional und gibt die Zeichenkodierung an, vom L&auml;ndercode durch einen Punkt getrennt. Einige Beispiele f&uuml;r Standard-POSIX-Shells:</p>
+
+<pre><code>    export LANG=de               Deutsch
+    export LANG=de_DE            Deutsch, Deutschland
+    export LANG=de_AT            Deutsch, &Ouml;sterreich
+    export LANG=es_ES            Spanisch, Spanien
+    export LANG=es_MX            Spanisch, Mexiko
+    export LANG=en_US.iso88591   Englisch, USA, Latin-1-Zeichenkodierung
+    export LANG=en_GB.UTF-8      Englisch, GB, UTF-8-Zeichenkodierung</code></pre>
+
+<p>Eine vollst&auml;ndige Liste der Sprachen und L&auml;ndercodes finden Sie im Gettext-Handbuch: <a href="http://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html">http://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html</a></p>
+
+<p>Auf Unix-Systemen erhalten Sie mit dem Befehl locale(1) spezifische Informationen zu den Spracheinstellungen.</p>
+
+</dd>
+<dt id="LANGUAGE"><b>LANGUAGE</b></dt>
+<dd>
+
+<p>Mit der Umgebungsvariable LANGUAGE k&ouml;nnen Sie eine Priorit&auml;tenliste f&uuml;r Sprachen &uuml;bergeben, die Sie durch Doppelpunkte voneinander trennen. Dos2unix gibt LANGUAGE vor LANG den Vorzug, zum Beispiel bei Deutsch vor Niederl&auml;ndisch: <code>LANGUAGE=de:nl</code>. Sie m&uuml;ssen zun&auml;chst die Lokalisierung aktivieren, indem Sie die Variable LANG (oder LC_ALL) auf einen anderen Wert als &raquo;C&laquo; setzen, bevor Sie die Liste der Sprachpriorit&auml;ten mit der Variable LANGUAGE nutzen k&ouml;nnen. Weitere Informationen finden Sie im Gettext-Handbuch: <a href="https://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-variable.html">https://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-variable.html</a></p>
+
+<p>Falls Sie eine Sprache ausw&auml;hlen, die nicht verf&uuml;gbar ist, erhalten Sie die Standardmeldungen in englischer Sprache.</p>
+
+</dd>
+<dt id="DOS2UNIX_LOCALEDIR"><b>DOS2UNIX_LOCALEDIR</b></dt>
+<dd>
+
+<p>Durch die Umgebungsvariable DOS2UNIX_LOCALEDIR wird LOCALEDIR w&auml;hrend der Kompilierung &uuml;bergangen. LOCALEDIR wird verwendet, um Sprachdateien zu finden. Der GNU-Standardwert ist <code>/usr/local/share/locale</code>. Die Option <b>--version</b> zeigt das verwendete LOCALEDIR an.</p>
+
+<p>Beispiel (POSIX-Shell):</p>
+
+<pre><code>    export DOS2UNIX_LOCALEDIR=$HOME/share/locale</code></pre>
+
+</dd>
+</dl>
+
+<h1 id="RCKGABEWERT">R&Uuml;CKGABEWERT</h1>
+
+<p>Bei Erfolg wird 0 zur&uuml;ckgegeben. Bei aufgetretenen Systemfehlern wird der letzte Systemfehler zur&uuml;ckgegeben. F&uuml;r alle anderen Fehler wird 1 zur&uuml;ckgegeben.</p>
+
+<p>Der R&uuml;ckgabewert ist im stillen Modus stets 0, au&szlig;er wenn fehlerhafte Befehlszeilenoptionen verwendet werden.</p>
+
+<h1 id="STANDARDS">STANDARDS</h1>
+
+<p><a href="https://de.wikipedia.org/wiki/Textdatei">https://de.wikipedia.org/wiki/Textdatei</a></p>
+
+<p><a href="https://de.wikipedia.org/wiki/Wagenr%C3%BCcklauf">https://de.wikipedia.org/wiki/Wagenr%C3%BCcklauf</a></p>
+
+<p><a href="https://de.wikipedia.org/wiki/Zeilenumbruch">https://de.wikipedia.org/wiki/Zeilenumbruch</a></p>
+
+<p><a href="https://de.wikipedia.org/wiki/Unicode">https://de.wikipedia.org/wiki/Unicode</a></p>
+
+<h1 id="AUTOREN">AUTOREN</h1>
+
+<p>Benjamin Lin - &lt;blin@socs.uts.edu.au&gt;, Bernd Johannes Wuebben (Mac2unix-Modus) - &lt;wuebben@kde.org&gt;, Christian Wurll (Extra Zeilenumbruch) - &lt;wurll@ira.uka.de&gt;, Erwin Waterlander - &lt;waterlan@xs4all.nl&gt; (Betreuer)</p>
+
+<p>Projektseite: <a href="https://waterlan.home.xs4all.nl/dos2unix.html">https://waterlan.home.xs4all.nl/dos2unix.html</a></p>
+
+<p>SourceForge-Seite: <a href="https://sourceforge.net/projects/dos2unix/">https://sourceforge.net/projects/dos2unix/</a></p>
+
+<h1 id="SIEHE-AUCH">SIEHE AUCH</h1>
+
+<p>file(1) find(1) iconv(1) locale(1) xargs(1)</p>
+
+
+</body>
+
+</html>
+
+

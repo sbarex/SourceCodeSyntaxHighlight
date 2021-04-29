@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="SaveAsFormatView" customModule="Syntax_Highlight">
+            <connections>
+                <outlet property="contentView" destination="c22-O7-iKe" id="CmS-eB-nQS"/>
+                <outlet property="popupButton" destination="8nT-3f-CDn" id="27R-Iw-9xv"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="c22-O7-iKe">
+            <rect key="frame" x="0.0" y="0.0" width="480" height="28"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="TED-OR-Fn0">
+                    <rect key="frame" x="18" y="7" width="47" height="16"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" title="Format" id="cHZ-Si-qLS">
+                        <font key="font" usesAppearanceFont="YES"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8nT-3f-CDn">
+                    <rect key="frame" x="86" y="0.0" width="378" height="25"/>
+                    <popUpButtonCell key="cell" type="push" title="Highlight theme" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="yPr-jP-u5s" id="HpT-UP-4lM">
+                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="menu"/>
+                        <menu key="menu" id="5D6-pF-Hwe">
+                            <items>
+                                <menuItem title="Highlight theme" state="on" id="yPr-jP-u5s"/>
+                                <menuItem title="CSS style" id="Lmi-6w-SwN"/>
+                            </items>
+                        </menu>
+                    </popUpButtonCell>
+                    <connections>
+                        <action selector="formatChange:" target="-2" id="UAE-Jf-crs"/>
+                    </connections>
+                </popUpButton>
+            </subviews>
+            <constraints>
+                <constraint firstItem="TED-OR-Fn0" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="20" symbolic="YES" id="4aj-Go-ydg"/>
+                <constraint firstItem="TED-OR-Fn0" firstAttribute="firstBaseline" secondItem="8nT-3f-CDn" secondAttribute="firstBaseline" id="JV6-gZ-e5M"/>
+                <constraint firstAttribute="trailing" secondItem="8nT-3f-CDn" secondAttribute="trailing" constant="20" symbolic="YES" id="fEz-J7-avN"/>
+                <constraint firstItem="8nT-3f-CDn" firstAttribute="leading" secondItem="TED-OR-Fn0" secondAttribute="trailing" constant="26" id="ivq-dK-V0a"/>
+                <constraint firstAttribute="bottom" secondItem="8nT-3f-CDn" secondAttribute="bottom" constant="4" id="qqp-yo-ari"/>
+                <constraint firstItem="8nT-3f-CDn" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="4" id="x9W-gq-DLE"/>
+            </constraints>
+            <point key="canvasLocation" x="-147" y="25"/>
+        </customView>
+    </objects>
+</document>

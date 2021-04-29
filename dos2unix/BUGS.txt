@@ -1,0 +1,19 @@
+KNOWN BUGS
+
+    querycp.c: query_con_codepage()
+    The DOS 16 and 32 bit versions compiled with OpenWatcom report
+    a wrong active code page under Windows 98.
+    A correct code page is reported under FreeDOS.
+
+
+REPORTING BUGS
+
+    Report bugs at the dos2unix SourceForge page
+    http://sourceforge.net/projects/dos2unix/
+
+    Bugs tracker: http://sourceforge.net/p/dos2unix/bugs/
+
+    Also patches and feature requests can be entered under the
+    "Tickets" tab.
+
+    or send an email to Erwin Waterlander <waterlan@xs4all.nl>

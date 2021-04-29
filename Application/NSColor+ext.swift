@@ -47,10 +47,10 @@ extension NSColor {
         }
     }
     
-    func toHexString() -> String {
+    func toHexString(_ space: NSColorSpace = .sRGB) -> String? {
         // Force the conversion su device RGB color.
         // For NSColor created by named color you cannot test .colorSpace property (cause an uncatchable exception!)
-        return self.usingColorSpace(.deviceRGB)?._toHexString() ?? "#000000"
+        return self.usingColorSpace(space)?._toHexString()
     }
     
     fileprivate func _toHexString() -> String {

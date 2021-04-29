@@ -79,6 +79,8 @@
 				<string>org.asm.source</string>
 				<string>org.bash.source</string>
 				<string>org.clojure</string>
+				<string>org.cmake.makefile</string>
+				<string>org.cmake.cmake</string>
 				<string>org.cocoapods.podspec</string>
 				<string>org.codehaus.groovy-source</string>
 				<string>org.coffee.source</string>
@@ -86,6 +88,7 @@
 				<string>org.cson.source</string>
 				<string>org.erlang.erlang</string>
 				<string>org.erlang.erlang-source</string>
+				<string>org.elixir-lang.source</string>
 				<string>org.fish.source</string>
 				<string>org.gcc.files</string>
 				<string>org.go.source</string>
@@ -123,9 +126,9 @@
 				<string>org.ocaml.ocaml-interface</string>
 				<string>org.ocaml.ocaml-source</string>
 				<string>org.omg.ecore</string>
+				<string>org.python.compiled-script</string>
 				<string>org.rdf.source</string>
 				<string>org.rust-lang.source</string>
-				<string>org.sbarex.compiled-python-script</string>
 				<string>org.sbarex.conf</string>
 				<string>org.sbarex.dart</string>
 				<string>org.sbarex.ms-powershell</string>
@@ -139,6 +142,7 @@
 				<string>org.vuejs.vue</string>
 				<string>org.w3.xsl</string>
 				<string>org.xml-tools.source</string>
+				<string>org.xsd.schema</string>
 				<string>org.xul.source</string>
 				<string>public.bash-script</string>
 				<string>public.csh-script</string>
@@ -146,7 +150,9 @@
 				<string>public.c-header</string>
 				<string>public.c-plus-plus-header</string>
 				<string>public.c-plus-plus-source</string>
+				<string>public.c-sharp-source</string>
 				<string>public.c-source</string>
+				<string>public.conf</string>
 				<string>public.fortran-source</string>
 				<string>public.fortran-90-source</string>
 				<string>public.ini</string>
@@ -199,6 +205,6 @@
 		<string>$(PRODUCT_MODULE_NAME).PreviewViewController</string>
 	</dict>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2019-2021 SBAREX. All rights reserved.</string>
+	<string>Developed by SBAREX (2019-2021).</string>
 </dict>
 </plist>

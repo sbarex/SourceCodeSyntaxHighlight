@@ -26,13 +26,26 @@ import OSLog
 // This object implements the protocol which we have defined. It provides the actual behavior for the service. It is 'exported' by the service to make it available to the process hosting the service over an NSXPCConnection.
 
 class XPCLightRenderService: SCSHBaseXPCService, XPCLightRenderServiceProtocol {
+    func reloadSettings() {
+        self.settings = type(of: self).initSettings()
+    }
+    
     func colorize(url: URL, withReply reply: @escaping (Data, NSDictionary, Error?) -> Void) {
-        let custom_settings: SCSHGlobalBaseSettings
+        let custom_settings: SettingsRendering
         
         if let uti = (try? url.resourceValues(forKeys: [.typeIdentifierKey]))?.typeIdentifier {
-            custom_settings = settings.getGlobalSettings(forUTI: uti)
+            let utiSettings = self.settings.utiSettings[uti] ?? self.settings.createSettings(forUTI: uti)
+            
+            if !utiSettings.isSpecialSettingsPopulated {
+                utiSettings.populateSpecialSettings(supportFolder: type(of: self).applicationSupportUrl, serviceBundle: type(of: self).serviceBundle)
+            }
+            if !utiSettings.isCSSPopulated, let dir = type(of: self).getCustomStylesUrl(createIfMissing: false) {
+                utiSettings.populateCSS(fromFolder: dir)
+            }
+            
+            custom_settings = SettingsRendering(globalSettings: self.settings, format: utiSettings)
         } else {
-            custom_settings = SCSHGlobalBaseSettings(settings: self.settings)
+            custom_settings = SettingsRendering(globalSettings: self.settings, format: nil)
         }
         
         do {

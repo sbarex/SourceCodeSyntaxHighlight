@@ -1,0 +1,265 @@
+2020-10-12: Version 7.4.2
+
+  * New Friulian translation of the messages.
+  * Updated Dutch, German, Serbian, Traditional Chinese, and Ukrainian
+    translations.
+
+2019-09-24: Version 7.4.1
+
+  * Updated Danish, German, Hungarian, Japanese and Ukranian translations.
+  * Code cleanup.
+
+2017-10-10: Version 7.4.0
+
+  * New option --allow-chown to allow file ownership change
+    in old file mode. Option --no-allow-chown does the opposite.
+  * Code cleanup.
+
+2017-07-04: Version 7.3.5
+
+  * New flag 0 for option -i, --info. End information lines with a null
+    character instead of a newline character, enabling correct file name
+    interpretation when flag c is used.
+  * Don't print leading spaces when option -i with flag c is used.
+  * Code cleanup.
+  * Manual update.
+  * Translation updates.
+
+2016-05-24: Version 7.3.4 
+
+  * Safer temporary file creation on Windows.
+  * Code cleanup.
+  * Updated translations.
+
+2016-02-13: Version 7.3.3
+  * Fixed printing of East-Asian text on Windows with an East-Asian regional
+    setting.
+  * Fixed printing text in unicode UTF-16 mode on Windows, so that when
+    it is redirected to a file, a correct UTF-16 file is created.
+  * New flags h (print header) and p (show file names without path) for
+    option -i, --info
+
+2015-11-20: Version 7.3.2
+
+  * New: Swedish translation of messages and manual.
+  * Updated: Danish and Brazilian Portuguese translations.
+  * Fix: The -iso option was misinterpreted as a corrupted -i option.
+  * Fix: Compilation for MSYS 1.
+
+2015-09-30: Version 7.3.1
+
+  * New: Simplified Chinese translation of messages and manual.
+  * Fix: Compilation error "'wchar_t' undeclared" when Unicode support is disabled.
+  * Fix: Compilation errors when MinGW compiler was used (MinGW-w64 was OK). 
+
+2015-08-24: Version 7.3
+
+  * New: Unicode file name support on Windows.
+  * Fix: Options -ul and -ub caused option -i to report wrong BOM for no_bom.
+
+2015-07-01: Version 7.2.3
+
+  * Fix: Check for file I/O errors while reading input files, and added
+    a few missing checks while writing output files.
+  * Fix: Compilation for msys.
+
+2015-05-22: Version 7.2.2
+
+  * Fix: Fixed symlink support on FreeBSD.
+  * Fix: Skip GB18030 test on FreeBSD.
+  * Fix: When conversion of an UTF-16 file with binary symbols was forced,
+    null characters were not written in the output.
+  * Fix: Check UTF-16 input for invalid surrogate pairs.
+
+2015-04-01: Version 7.2.1
+
+  * Fix: Skip the GB18030 tests when the system does not support the
+    Chinese locale with GB18030 character encoding.
+  * Fix: Small corrections in the manual in section GB18030 and OPTIONS -m.
+
+2015-02-11: Version 7.2
+
+  * New: Japanese translation of the UI messages.
+  * New: Support Chinese GB18030 locale.
+  * Change: On Unix/Linux convert UTF-16 to the locale encoding. It is
+    no longer required that the locale encoding is UTF-8.
+
+2014-10-06: Version 7.1
+
+  * New: Option -i, --info to print file information.
+    This new option prints number of DOS, Unix, and Mac line breaks, the byte
+    order mark, and if the file is text or binary. And it can print the names
+    of files that would be converted.
+
+2014-09-09: Version 7.0
+
+  * New: automated self-tests.
+  * New: option -u to keep UTF-16 encoding.
+  * New: option -v to print information about BOMs and converted line breaks.
+  * Change: stdio mode does not automatically set quiet mode.
+  * Change: stdio mode does not automatically force conversion of binaries.
+    An error is returned when the stdin stream contains a binary symbol.
+  * Bugfix: dos2unix -l created DOS line breaks from Mac line breaks.
+  * Bugfix: system error number was not always returned.
+  * Bugfix: an Unicode input file disabled 7bit and iso mode for next input files.
+  * Bugfix: mac2unix help text, options -b and -r.
+  * The code has been cleaned up.
+
+2014-08-03: Version 6.0.6
+
+  * Bugfix: mac2unix conversion produced corrupted output from UTF-16 input file.
+  * New options -b (keep BOM) and -r (remove BOM).
+  * New translation of the UI messages: Norwegian Bokmaal.
+
+2014-04-17: Version 6.0.5
+
+  * Dos2unix is part of the Translation Project (TP).
+    All translations go via the Translation Project.
+    See http://translationproject.org/
+  * New translations of UI messages: Brazilian Portuguese, Chinese (traditional),
+    Danish, French, Hungarian, Polish, Serbian, Ukrainian, Vietnamese.
+  * New translations of the manual: Brazilian Portuguese, French, German,
+    Polish, Ukrainian.
+  * Generated man pages are included in the source package to prevent
+    compilation problems with very old or very new perl/pod2man versions.
+  * Manuals are now generated from gettext PO files with po4a for easier
+    translation.
+  * All manuals are now in UTF-8 encoding.
+  * Skip symbolic links on Windows by default (same as on Unix).
+
+2013-12-30: Version 6.0.4
+
+  * New options -ul and -ub to convert UTF-16 files without BOM.
+  * New Russian translation of the messages.
+  * Build 32 bit Windows binaries with Large File Support (LFS)
+    by using mingw-w64 for 32 bit Windows.
+  * When a binary symbol is encountered the value is printed.
+
+2013-01-25: Version 6.0.3
+
+  * Source code compiles with Microsoft Visual C.
+  * Print system error when writing output fails.
+
+2012-09-06: Version 6.0.2
+
+  * The locale encoding detection has been fixed when NLS was disabled.
+  * Print line number when a binary symbol is found.
+  * Updated makefiles for Watcom C, and added a new one for OS/2.
+
+2012-07-25: Version 6.0.1
+
+  * Update Spanish translations.
+  * Update manual.
+
+2012-05-06: Version 6.0
+
+  * Conversion of Windows UTF-16 files to Unix UTF-8 files.
+  * Conversion of Unix UTF-8 files to Windows UTF-8 files with byte
+    order mark.
+
+2012-03-10: Version 5.3.3
+
+  * Enabled wildcard expansion for all versions.
+  * Fixed a compilation error when debug was enabled.
+
+2012-01-27: Version 5.3.2
+
+  * New homepage URL: http://waterlan.home.xs4all.nl/dos2unix.html
+  * Compiles for native MSYS.
+  * Compile with OpenWatcom for DOS32 and Win32.
+  * Detect code page on OS/2.
+  * Support wild cards on OS/2.
+
+2011-08-09: Version 5.3.1
+
+  * Spanish translation of messages and manual.
+  * File ownership is maintained in old file mode (Unix only).
+  * Dos2unix and Unix2dos share the same language files.
+  * Code cleanup.
+
+2011-04-26: Version 5.3
+
+  * Improved handling of symbolic links. New options -F, -R, -S.
+  * Improved handling and reporting of errors.
+  * Source code improvements for Cygwin. Behave exactly as on Linux.
+  * New option --. Treat all following options as file names.
+
+2011-03-04: Version 5.2.1
+
+  * PDF and PostScript generation is optional. No default dependency on
+    GhostScript and Groff.
+  * Enable optional Large File Support (LFS).
+  * Esperanto x-notation is optional. No longer installation of non-standard
+    locale 'eo-x'.
+  * Improved error messages.
+
+2011-01-31: Version 5.2
+
+  * ISO conversion mode supports same DOS code pages as SunOS dos2unix does:
+      CP437 (US), CP850 (Western European), CP860 (Portuguese),
+      CP863 (French Canadian), and CP865 (Nordic).
+  * ISO conversion mode supports Windows code page CP1252 (Western).
+  * SunOS compatible options -ascii, -iso, -7, -437, -850, -860, -863, and -865.
+  * Active code page detection for ISO mode.
+  * Fixed ISO conversion of non-breaking space (NBSP).
+  * ISO and 7bit mode can be used in Mac mode.
+  * Treat ASCII Form Feed control characters as valid text.
+  * Update manual pages.
+  * Don't include generated documentation files in Unix source package.
+  * Create a source package in DOS text format.
+
+2010-08-18: Version 5.1.1
+
+  * Added Dutch translation of the manual.
+  * Win64 port.
+  * Win32 binary package uses patched MinGW's libintl, with builtin
+  * relocation support.
+  * Support compilation in DOSBox (8.3 file names where needed).
+  * Fixed compilation on Darwin OS.
+
+2010-04-03: Version 5.1
+
+  * Esperanto translations have been added.
+  * Ports to 16 bit DOS have been made.
+  * Command-line options can be set in stdio mode.
+  * Bugfix dos2unix MAC mode: Don't change DOS line endings.
+  * Create stubs for DOS32 versions of mac2unix and unix2mac.
+  * Localization information has been added to the manual.
+  * Man pages have been merged.
+  * Man page generation from Perl POD file.
+
+
+2010-02-16: Version 5.0
+
+  * Dos2unix and Unix2dos have been bundled in a single package.
+  * German translations have been added.
+  * Dos2unix -l --newline also works in MAC mode.
+  * Unix2dos also got option -l, --newline.
+  * Added MAC mode to Unix2dos: Convert Unix line endings to Mac line endings.
+  * Cleanup of messages and manual.
+
+2010-01-24: Version 4.1.2
+
+  * Preserves file modes in new file mode.
+
+2010-01-21: Version 4.1.1
+
+  * Fixes a compilation problem on FreeBSD.
+
+2009-12-28: Version 4.1
+
+    Automatically skips binary and non-regular files,
+    and the ISO mode has been cleaned up (see ChangeLog).
+
+2009-12-21: Version 4.0.1
+
+    Adds a port to OS/2 Warp. Two wrong conversions in ISO mode
+    have been fixed. The manual page has been updated.
+
+2009-12-15: Version 4.0
+
+    Adds internationalisation (Native Language Support, NLS). A Dutch
+    translation has been added. Ports to Windows and DOS have been made.
+    The problem in DOS/Windows stdio mode has been fixed. The manual has
+    been updated.
+

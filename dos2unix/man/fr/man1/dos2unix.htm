@@ -1,0 +1,780 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>dos2unix 7.4.2 - Convertit les fichiers textes du format DOS/Mac vers Unix et inversement</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:root@localhost" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NOM">NOM</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#OPTIONS">OPTIONS</a></li>
+  <li><a href="#MODE-MAC">MODE MAC</a></li>
+  <li><a href="#MODES-DE-CONVERSION">MODES DE CONVERSION</a></li>
+  <li><a href="#UNICODE">UNICODE</a>
+    <ul>
+      <li><a href="#Codages">Codages</a></li>
+      <li><a href="#Conversion">Conversion</a></li>
+      <li><a href="#Marque-dordre-des-octets">Marque d&#39;ordre des octets</a></li>
+      <li><a href="#Noms-de-fichiers-unicode-sous-Windows">Noms de fichiers unicode sous Windows</a></li>
+      <li><a href="#Exemples-Unicode">Exemples Unicode</a></li>
+    </ul>
+  </li>
+  <li><a href="#GB18030">GB18030</a></li>
+  <li><a href="#EXEMPLES">EXEMPLES</a></li>
+  <li><a href="#CONVERSIONS-RCURSIVES">CONVERSIONS R&Eacute;CURSIVES</a></li>
+  <li><a href="#PARAMTRES-LINGUISTIQUES">PARAM&Egrave;TRES LINGUISTIQUES</a></li>
+  <li><a href="#VALEUR-DE-RETOUR">VALEUR DE RETOUR</a></li>
+  <li><a href="#STANDARDS">STANDARDS</a></li>
+  <li><a href="#AUTEURS">AUTEURS</a></li>
+  <li><a href="#VOIR-AUSSI">VOIR AUSSI</a></li>
+</ul>
+
+<h1 id="NOM">NOM</h1>
+
+<p>dos2unix - Convertit les fichiers textes du format DOS/Mac vers Unix et inversement</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>    dos2unix [options] [FICHIER &hellip;] [-n FICHIER_ENTR&Eacute;E FICHIER_SORTIE &hellip;]
+    unix2dos [options] [FICHIER &hellip;] [-n FICHIER_ENTR&Eacute;E FICHIER_SORTIE &hellip;]</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p>Le package Dos2unix inclut les utilitaires <code>dos2unix</code> et <code>unix2dos</code> pour convertir des fichiers textes au format DOS ou Mac vers le format Unix et inversement.</p>
+
+<p>Dans les fichiers textes DOS/Windows, un saut de ligne est une combinaison de deux caract&egrave;res: un retour de chariot (CR) suivi d&#39;un saut de ligne (LF). Dans les fichiers textes Unix, le saut de ligne est un seul caract&egrave;re: le saut de ligne (LF). Les fichiers textes Mac, avant Mac OS X, utilisaient le retour chariot (CR) comme seul caract&egrave;re. De nos jours, Mac OS utilise le m&ecirc;me style de saut de ligne que Unix (LF).</p>
+
+<p>Outre les sauts de lignes, Dos2unix convertit aussi le codage des fichiers. Quelques codes page DOS peuvent &ecirc;tre convertis en Latin-1 sous Unix. L&#39;Unicode des fichiers Windows (UTF-16) peut &ecirc;tre converti en Unicode Unix (UTF-8).</p>
+
+<p>Les fichiers binaires sont automatiquement ignor&eacute;s &agrave; moins que la conversion soit forc&eacute;e.</p>
+
+<p>Les fichiers non r&eacute;guliers tels que les r&eacute;pertoires et les FIFOs sont automatiquement ignor&eacute;s.</p>
+
+<p>Les liens symboliques et leur cible sont, par d&eacute;faut, inchang&eacute;s. En option, les liens symboliques peuvent &ecirc;tre remplac&eacute;s ou, au choix, la sortie peut &ecirc;tre &eacute;crite dans la cible du lien symbolique. &Eacute;crire dans la cible d&#39;un lien symbolique n&#39;est pas support&eacute; sous Windows.</p>
+
+<p>Dos2unix a &eacute;t&eacute; con&ccedil;u comme dos2unix sous SunOS/Solaris. Il y a une diff&eacute;rence importante avec la version originale de SunOS/Solaris. Cette version effectue les conversions en place (ancien mode de fichier) tandis que la version originale de SunOS/Solaris ne supporte que la conversion par paire (nouveau mode de fichier). Voyez aussi les options <code>-o</code> et <code>-n</code>. Une autre diff&eacute;rence est que SunOS/Solaris utilise par d&eacute;faut le mode de conversion <i>iso</i> tandis que cette version utilise par d&eacute;faut le mode de conversion <i>ascii</i>.</p>
+
+<h1 id="OPTIONS">OPTIONS</h1>
+
+<dl>
+
+<dt id="pod"><b>--</b></dt>
+<dd>
+
+<p>Traites toutes les options &agrave; sa suite comme &eacute;tant des noms de fichiers. Utilisez cette option si vous voulez convertir des fichiers dont le nom commence par un tiret. Par exemple, pour convertir un fichier nomm&eacute; <span style="white-space: nowrap;">&laquo; -foo &raquo;,</span> vous pouvez utiliser cette commande:</p>
+
+<pre><code>    dos2unix -- -foo</code></pre>
+
+<p>Ou dans le style des nouveaux fichiers:</p>
+
+<pre><code>    dos2unix -n -- -foo sortie.txt</code></pre>
+
+</dd>
+<dt id="allow-chown"><b>--allow-chown</b></dt>
+<dd>
+
+<p>Autoriser le changement de propri&eacute;taire dans l&#39;ancien mode de fichier.</p>
+
+<p>Quand cette option est utilis&eacute;e, la conversion n&#39;est pas interrompue si l&#39;utilisateur ou le groupe propri&eacute;taire du fichier original ne peut pas &ecirc;tre pr&eacute;serv&eacute; dans l&#39;ancien mode de fichier. La conversion continuera et le fichier converti aura le m&ecirc;me nouveau propri&eacute;taire que si il avait &eacute;t&eacute; converti par le nouveau mode de fichier. Voyez aussi les options <code>-o</code> et <code>-n</code>. Cette option est uniquement disponible si dos2unix dispose des fonctionnalit&eacute;s pour pr&eacute;server l&#39;utilisateur ou le groupe propri&eacute;taire des fichiers.</p>
+
+</dd>
+<dt id="ascii"><b>-ascii</b></dt>
+<dd>
+
+<p>Convertit uniquement les sauts de lignes. C&#39;est le mode de conversion par d&eacute;faut.</p>
+
+</dd>
+<dt id="iso"><b>-iso</b></dt>
+<dd>
+
+<p>Convertit le jeu de caract&egrave;res du DOS vers ISO-8859-1. Voyez aussi la section des MODES DE CONVERSION.</p>
+
+</dd>
+<dt id="pod-1252"><b>-1252</b></dt>
+<dd>
+
+<p>Utilise le code page 1252 de Windows (Europe de l&#39;ouest).</p>
+
+</dd>
+<dt id="pod-437"><b>-437</b></dt>
+<dd>
+
+<p>Utilise le code page 437 du DOS (US). C&#39;est le code page par d&eacute;faut pour les conversions ISO.</p>
+
+</dd>
+<dt id="pod-850"><b>-850</b></dt>
+<dd>
+
+<p>Utilise le code page 850 du DOS (Europe de l&#39;ouest).</p>
+
+</dd>
+<dt id="pod-860"><b>-860</b></dt>
+<dd>
+
+<p>Utilise le code page 860 du DOS (portugais).</p>
+
+</dd>
+<dt id="pod-863"><b>-863</b></dt>
+<dd>
+
+<p>Utilise le code page 863 du DOS (fran&ccedil;ais canadien).</p>
+
+</dd>
+<dt id="pod-865"><b>-865</b></dt>
+<dd>
+
+<p>Utilise le code page 865 du DOS (nordique).</p>
+
+</dd>
+<dt id="pod-7"><b>-7</b></dt>
+<dd>
+
+<p>Convertit les caract&egrave;res 8 bits vers l&#39;espace 7 bits.</p>
+
+</dd>
+<dt id="b---keep-bom"><b>-b, --keep-bom</b></dt>
+<dd>
+
+<p>Conserve la marque d&#39;ordre des octets (BOM). Si le fichier d&#39;entr&eacute;e a une BOM, elle est &eacute;crite dans le fichier de sortie. C&#39;est le comportement par d&eacute;faut quand les sauts de lignes sont convertis au format DOS. Consultez aussi l&#39;option <code>-r</code>.</p>
+
+</dd>
+<dt id="c---convmode-MODE_CONV"><b>-c, --convmode MODE_CONV</b></dt>
+<dd>
+
+<p>Change le mode de conversion. MODE_CONV prend l&#39;une des valeurs: <i>ascii</i>, <i>7bit</i>, <i>iso</i>, <i>mac</i>. Ascii est la valeur par d&eacute;faut.</p>
+
+</dd>
+<dt id="D---display-enc-ENCODAGE"><b>-D, --display-enc ENCODAGE</b></dt>
+<dd>
+
+<p>Choisi l&#39;encodage des textes affich&eacute;s. L&#39;ENCODAGE peut &ecirc;tre : <i>ansi</i>, <i>unicode</i>, <i>unicodebom</i>, <i>utf8</i>, <i>utf8bom</i>. La valeur par d&eacute;faut est ansi.</p>
+
+<p>Cette option est uniquement disponible dans dos2unix pour Windows avec support pour les noms de fichiers Unicode. Cette option n&#39;a aucun effet sur les noms de fichiers lus et &eacute;crits. Son effet se limite &agrave; leur affichage.</p>
+
+<p>Il existe plusieurs m&eacute;thodes pour afficher du texte dans une console Windows selon l&#39;encodage du texte. Elles ont toutes leurs propres avantages et d&eacute;savantages.</p>
+
+<dl>
+
+<dt id="ansi"><b>ansi</b></dt>
+<dd>
+
+<p>La m&eacute;thode par d&eacute;faut de dos2unix est d&#39;utiliser du texte encod&eacute; en ANSI. Elle a l&#39;avantage d&#39;&ecirc;tre r&eacute;tro compatible. Elle fonctionne avec des polices raster ou TrueType. Dans certaines r&eacute;gions, vous pouvez avoir besoin d&#39;utiliser la commande <code>chcp</code> pour remplacer le code page DOS OEM actif par le code ANSI syst&egrave;me de Windows car dos2unix utilise le code page syst&egrave;me de Windows.</p>
+
+<p>Le d&eacute;savantage de ansi est que les noms de fichiers internationaux avec des caract&egrave;res en dehors du code page syst&egrave;me par d&eacute;faut ne sont pas affich&eacute;s correctement. Vous verrez un point d&#39;interrogation ou un mauvais symbole &agrave; leur place. Cette m&eacute;thode est acceptable si vous ne travaillez pas avec des noms de fichiers &eacute;trangers.</p>
+
+</dd>
+<dt id="unicode-unicodebom"><b>unicode, unicodebom</b></dt>
+<dd>
+
+<p>L&#39;avantage de l&#39;encodage unicode (le nom de Windows pour UTF-16) est que le texte est habituellement affich&eacute; correctement. Il n&#39;est pas n&eacute;cessaire de changer le code page actif. Vous pouvez avoir besoin de remplacer la police de la console par une police TrueType pour afficher les caract&egrave;res internationaux correctement. Lorsqu&#39;un caract&egrave;re n&#39;est pas inclus dans la police TrueType, il sera g&eacute;n&eacute;ralement remplac&eacute; par un petit carr&eacute;, parfois avec un point d&#39;interrogation &agrave; l&#39;int&eacute;rieur.</p>
+
+<p>Lorsque vous utilisez la console ConEmu, les textes sont affich&eacute;s correctement car ConEmu s&eacute;lectionne automatiquement une bonne police.</p>
+
+<p>Le d&eacute;savantage de unicode est qu&#39;il n&#39;est pas compatible avec ASCII. La sortie n&#39;est pas facile &agrave; g&eacute;rer quand vous la redirigez vers un autre programme.</p>
+
+<p>Quand la m&eacute;thode <code>unicodebom</code> est utilis&eacute;e, le texte Unicode est pr&eacute;c&eacute;d&eacute; d&#39;une BOM (Byte Order Mark=marque d&#39;ordre des octets). Une BOM est n&eacute;cessaire pour la redirection correcte ou le pipelining dans PowerShell.</p>
+
+</dd>
+<dt id="utf8-utf8bom"><b>utf8, utf8bom</b></dt>
+<dd>
+
+<p>L&#39;avantage de utf8 est qu&#39;il est compatible avec ASCII. Vous devez utiliser une police TrueType dans la console. Avec une police TrueType, le texte est affich&eacute; comme avec un encodage <code>unicode</code>.</p>
+
+<p>Le d&eacute;savantage est que, si vous utilisez la police raster par d&eacute;faut, tous les caract&egrave;res non ASCII sont mal affich&eacute;s. Pas uniquement les noms de fichiers <span style="white-space: nowrap;">unicode !</span> Les messages traduits deviennent inintelligibles. Sous Windows configur&eacute; pour une r&eacute;gion de l&#39;est de l&#39;Asie, vous pouvez observer &eacute;norm&eacute;ment de scintillements dans la console quand des messages sont affich&eacute;s.</p>
+
+<p>Dans une console ConEmu, l&#39;encodage utf8 fonctionne bien.</p>
+
+<p>Quand la m&eacute;thode <code>utf8bom</code> est utilis&eacute;e, le texte UTF-8 est pr&eacute;c&eacute;d&eacute; d&#39;une BOM (Byte Order Mark=marque d&#39;ordre des octets). Une BOM est n&eacute;cessaire pour la redirection correcte ou le pipelining dans PowerShell.</p>
+
+</dd>
+</dl>
+
+<p>L&#39;encodage par d&eacute;faut peut &ecirc;tre chang&eacute; en assignant la valeur <code>unicode</code>, <code>unicodebom</code>, <code>utf8</code> ou <code>utf8bom</code> &agrave; la variable d&#39;environnement DOS2UNIX_DISPLAY_ENC.</p>
+
+</dd>
+<dt id="f---force"><b>-f, --force</b></dt>
+<dd>
+
+<p>Force la conversion de fichiers binaires.</p>
+
+</dd>
+<dt id="gb---gb18030"><b>-gb, --gb18030</b></dt>
+<dd>
+
+<p>Sous Windows, les fichiers UTF-16 sont convertis en UTF-8 par d&eacute;faut sans consid&eacute;ration pour les param&egrave;tres de la localisation. Utilisez cette option pour convertir UTF-16 en GB18030. Cette option n&#39;est disponible que sous Windows. Consultez aussi la section GB18030.</p>
+
+</dd>
+<dt id="h---help"><b>-h, --help</b></dt>
+<dd>
+
+<p>Affiche l&#39;aide et s&#39;arr&ecirc;te.</p>
+
+</dd>
+<dt id="i-FANIONS---info-FANIONS-FICHIER"><b>-i[FANIONS], --info[=FANIONS] FICHIER &hellip;</b></dt>
+<dd>
+
+<p>Affiche les informations du fichier. Aucune conversion n&#39;est r&eacute;alis&eacute;e.</p>
+
+<p>Les informations suivantes sont affich&eacute;es dans cet ordre: le nombre de sauts de ligne DOS, le nombre de sauts de ligne Unix, le nombre de sauts de ligne Mac, la marque d&#39;ordre des octets, texte ou binaire, nom du fichier.</p>
+
+<p>Exemple de <span style="white-space: nowrap;">sortie :</span></p>
+
+<pre><code>     6       0       0  no_bom    text    dos.txt
+     0       6       0  no_bom    text    unix.txt
+     0       0       6  no_bom    text    mac.txt
+     6       6       6  no_bom    text    mixed.txt
+    50       0       0  UTF-16LE  text    utf16le.txt
+     0      50       0  no_bom    text    utf8unix.txt
+    50       0       0  UTF-8     text    utf8dos.txt
+     2     418     219  no_bom    binary  dos2unix.exe</code></pre>
+
+<p>Notez qu&#39;un fichier binaire peut parfois &ecirc;tre consid&eacute;r&eacute; &agrave; tord comme un fichier texte. Voyez aussi l&#39;option <code>-s</code>.</p>
+
+<p>Des fanions facultatifs peuvent &ecirc;tre ajout&eacute;s pour changer la sortie. Un ou plusieurs fanions peuvent &ecirc;tre ajout&eacute;s.</p>
+
+<dl>
+
+<dt id="pod0"><b>0</b></dt>
+<dd>
+
+<p>Afficher les lignes d&#39;information du fichier suivies d&#39;un caract&egrave;re nul au lieu d&#39;un saut de ligne. Cela permet d&#39;interpr&eacute;ter correctement les noms de fichiers avec des espaces ou des guillemets quand le fanion c est utilis&eacute;. Utilisez ce fanion avec les options <code>-0</code> ou <code>--null</code> de xargs(1).</p>
+
+</dd>
+<dt id="d"><b>d</b></dt>
+<dd>
+
+<p>Affiche le nombre de sauts de ligne DOS.</p>
+
+</dd>
+<dt id="u"><b>u</b></dt>
+<dd>
+
+<p>Affiche le nombre de sauts de ligne Unix.</p>
+
+</dd>
+<dt id="m"><b>m</b></dt>
+<dd>
+
+<p>Affiche le nombre de sauts de ligne Mac.</p>
+
+</dd>
+<dt id="b"><b>b</b></dt>
+<dd>
+
+<p>Afficher la marque d&#39;ordre des octets.</p>
+
+</dd>
+<dt id="t"><b>t</b></dt>
+<dd>
+
+<p>Affiche si le fichier est texte ou binaire.</p>
+
+</dd>
+<dt id="c"><b>c</b></dt>
+<dd>
+
+<p>Affiche uniquement les fichiers qui seraient convertis.</p>
+
+<p>Avec le fanion <code>c</code>, dos2unix n&#39;affichera que les fichiers contenant des sauts de ligne DOS alors que unix2dos n&#39;affichera que les noms des fichiers aillant des sauts de ligne Unix.</p>
+
+</dd>
+<dt id="h"><b>h</b></dt>
+<dd>
+
+<p>Afficher un en-t&ecirc;te.</p>
+
+</dd>
+<dt id="p"><b>p</b></dt>
+<dd>
+
+<p>Montrer les noms des fichiers sans le chemin.</p>
+
+</dd>
+</dl>
+
+<p>Exemples:</p>
+
+<p>Afficher les informations pour tous les fichier <span style="white-space: nowrap;">*.txt :</span></p>
+
+<pre><code>    dos2unix -i *.txt</code></pre>
+
+<p>Afficher uniquement le nombre de sauts de ligne DOS et <span style="white-space: nowrap;">Unix :</span></p>
+
+<pre><code>    dos2unix -idu *.txt</code></pre>
+
+<p>Montrer uniquement la marque d&#39;ordre des <span style="white-space: nowrap;">octets :</span></p>
+
+<pre><code>    dos2unix --info=b *.txt</code></pre>
+
+<p>Liste les fichiers qui ont des sauts de ligne DOS :</p>
+
+<pre><code>    dos2unix -ic *.txt</code></pre>
+
+<p>Liste les fichiers qui ont des sauts de ligne Unix :</p>
+
+<pre><code>    unix2dos -ic *.txt</code></pre>
+
+<p>Ne converti que les fichiers qui ont des sauts de lignes DOS et laisse les autres fichiers inchang&eacute;s:</p>
+
+<pre><code>    dos2unix -ic0 *.txt | xargs -0 dos2unix</code></pre>
+
+<p>Trouve les fichiers texte qui ont des sauts de ligne DOS :</p>
+
+<pre><code>    find -name &#39;*.txt&#39; -print0 | xargs -0 dos2unix -ic</code></pre>
+
+</dd>
+<dt id="k---keepdate"><b>-k, --keepdate</b></dt>
+<dd>
+
+<p>La date du fichier de sortie est la m&ecirc;me que celle du fichier d&#39;entr&eacute;e.</p>
+
+</dd>
+<dt id="L---license"><b>-L, --license</b></dt>
+<dd>
+
+<p>Affiche la licence du programme.</p>
+
+</dd>
+<dt id="l---newline"><b>-l, --newline</b></dt>
+<dd>
+
+<p>Ajoute des sauts de lignes additionnels.</p>
+
+<p><b>dos2unix</b>: Seuls les sauts de lignes du DOS sont chang&eacute;s en deux sauts de lignes de Unix. En mode Mac, seuls les sauts de lignes Mac sont chang&eacute;s en deux sauts de lignes Unix.</p>
+
+<p><b>unix2dos</b>: Seuls les sauts de lignes Unix sont chang&eacute;s en deux sauts de lignes du DOS. En mode Mac, les sauts de lignes Unix sont remplac&eacute;s par deux sauts de lignes Mac.</p>
+
+</dd>
+<dt id="m---add-bom"><b>-m, --add-bom</b></dt>
+<dd>
+
+<p>&Eacute;crit une marque d&#39;ordre des octets (BOM) dans le fichier de sortie. Par d&eacute;faut une BOM UTF-8 est &eacute;crite.</p>
+
+<p>Lorsque le fichier d&#39;entr&eacute;e est en UTF-16 et que l&#39;option <code>-u</code> est utilis&eacute;e, une BOM UTF-16 est &eacute;crite.</p>
+
+<p>N&#39;utilisez jamais cette option quand l&#39;encodage du fichier de sortie n&#39;est ni UTF-8 ni UTF-16 ni GB18030. Consultez &eacute;galement la section UNICODE.</p>
+
+</dd>
+<dt id="n---newfile-FICHIER_ENTRE-FICHIER_SORTIE"><b>-n, --newfile FICHIER_ENTR&Eacute;E FICHIER_SORTIE &hellip;</b></dt>
+<dd>
+
+<p>Nouveau mode de fichiers. Convertit le fichier FICHER_ENTR&Eacute;E et &eacute;crit la sortie dans le fichier FICHIER_SORTIE. Les noms des fichiers doivent &ecirc;tre indiqu&eacute;s par paires. Les caract&egrave;res de remplacement <i>ne</i> doivent <i>pas</i> &ecirc;tre utilis&eacute;s ou vous <i>perdrez</i> vos fichiers.</p>
+
+<p>La personne qui d&eacute;marre la conversion dans le nouveau mode (pair&eacute;) des fichiers sera le propri&eacute;taire du fichier converti. Les permissions de lecture/&eacute;criture du nouveau fichier seront les permissions du fichier original moins le umask(1) de la personne qui ex&eacute;cute la conversion.</p>
+
+</dd>
+<dt id="no-allow-chown"><b>--no-allow-chown</b></dt>
+<dd>
+
+<p>Ne pas autoriser le changement du propri&eacute;taire du fichier dans l&#39;ancien mode de fichier (par d&eacute;faut).</p>
+
+<p>Interrompt la conversion si l&#39;utilisateur ou le groupe propri&eacute;taire du fichier original ne peuvent pas &ecirc;tre pr&eacute;serv&eacute;s dans l&#39;ancien mode de fichier. Voyez aussi les options <code>-o</code> et <code>-n</code>. Cette option est uniquement pr&eacute;sente si dos2unix dispose des fonctionnalit&eacute;s pour pr&eacute;server l&#39;utilisateur ou le groupe propri&eacute;taire des fichiers.</p>
+
+</dd>
+<dt id="o---oldfile-FICHIER"><b>-o, --oldfile FICHIER &hellip;</b></dt>
+<dd>
+
+<p>Ancien mode de fichiers. Convertit le fichier FICHIER et &eacute;crit la sortie dedans. Le programme fonctionne dans ce mode par d&eacute;faut. Les noms avec des caract&egrave;res de remplacement peuvent &ecirc;tre utilis&eacute;s.</p>
+
+<p>Dans l&#39;ancien mode (en place) des fichiers, les fichiers convertis ont le m&ecirc;me propri&eacute;taire, groupe et permissions lecture/&eacute;criture que le fichier original. Idem quand le fichier est converti par un utilisateur qui a la permission d&#39;&eacute;crire dans le fichier (par exemple, root). La conversion est interrompue si il n&#39;est pas possible de conserver les valeurs d&#39;origine. Le changement de propri&eacute;taire pourrait signifier que le propri&eacute;taire original n&#39;est plus en mesure de lire le fichier. Le changement de groupe pourrait &ecirc;tre un risque pour la s&eacute;curit&eacute;. Le fichier pourrait &ecirc;tre rendu accessible en lecture par des personnes &agrave; qui il n&#39;est pas destin&eacute;. La conservation du propri&eacute;taire, du groupe et des permissions de lecture/&eacute;criture n&#39;est support&eacute;e que sous Unix.</p>
+
+<p>Pour v&eacute;rifier si dos2unix dispose des fonctions pour pr&eacute;server l&#39;utilisateur et le groupe propri&eacute;taire du fichier, tapez <code>dos2unix -V</code>.</p>
+
+<p>La conversion est toujours r&eacute;alis&eacute;e via un fichier temporaire. Quand une erreur survient au milieu de la conversion, le fichier temporaire est effac&eacute; et le fichier original reste inchang&eacute;. Quand la conversion r&eacute;ussi, le fichier original est remplac&eacute; par le fichier temporaire. Vous pourriez avoir la permission d&#39;&eacute;crire dans le fichier original mais ne pas avoir la permission de remplacer les propri&eacute;t&eacute;s de l&#39;utilisateur et du groupe propri&eacute;taires sur le fichier temporaire telles qu&#39;elles sont d&eacute;finies sur le fichier original. Cela signifie que vous n&#39;&ecirc;tes pas en mesure de pr&eacute;server l&#39;utilisateur ou le groupe propri&eacute;taire du fichier original. Dans ce cas, vous pouvez utiliser l&#39;option <code>--allow-chown</code> pour continuer la conversion.</p>
+
+<pre><code>    dos2unix --allow-chown toto.txt</code></pre>
+
+<p>Une autre option consiste &agrave; utiliser le nouveau mode de fichier:</p>
+
+<pre><code>    dos2unix -n toto.txt toto.txt</code></pre>
+
+<p>L&#39;avantage de l&#39;option <code>--allow-chown</code> est que vous pouvez utiliser des caract&egrave;res de remplacement et les propri&eacute;taires seront pr&eacute;serv&eacute;s dans la mesure du possible.</p>
+
+</dd>
+<dt id="q---quiet"><b>-q, --quiet</b></dt>
+<dd>
+
+<p>Mode silencieux. Supprime les avertissements et les messages. La valeur de sortie est z&eacute;ro sauf quand de mauvaises options sont utilis&eacute;es sur la ligne de commande.</p>
+
+</dd>
+<dt id="r---remove-bom"><b>-r, --remove-bom</b></dt>
+<dd>
+
+<p>Supprime la marque d&#39;ordre des octets (BOM). N&#39;&eacute;crit pas la BOM dans le fichier de sortie. Ceci est le comportement par d&eacute;faut lorsque les sauts de lignes sont convertis au format Unix. Consultez aussi l&#39;option <code>-b</code>.</p>
+
+</dd>
+<dt id="s---safe"><b>-s, --safe</b></dt>
+<dd>
+
+<p>Ignore les fichiers binaires (par d&eacute;faut).</p>
+
+<p>Ignorer les fichiers binaires sert &agrave; &eacute;viter les erreurs accidentelles. Attention que la d&eacute;tection de fichiers binaires n&#39;est pas fiable &agrave; 100%. Les fichiers en entr&eacute;e sont analys&eacute;s pour y trouver des symboles binaires qui ne sont habituellement pas rencontr&eacute;s dans des fichiers textes. Il est cependant possible qu&#39;un fichier binaire ne contienne que des caract&egrave;res textes normaux. Un tel fichier serait erron&eacute;ment trait&eacute; comme un fichier texte.</p>
+
+</dd>
+<dt id="u---keep-utf16"><b>-u, --keep-utf16</b></dt>
+<dd>
+
+<p>Conserve l&#39;encodage UTF-16 original du fichier d&#39;entr&eacute;e. Le fichier de sortie sera &eacute;crit dans le m&ecirc;me encodage UTF-16 (petit ou grand boutien) que le fichier d&#39;entr&eacute;e. Ceci &eacute;vite la transformation en UTF-8. Une BOM UTF-16 sera &eacute;crite en cons&eacute;quent. Cette option peut &ecirc;tre d&eacute;sactiv&eacute;e avec l&#39;option <code>-ascii</code>.</p>
+
+</dd>
+<dt id="ul---assume-utf16le"><b>-ul, --assume-utf16le</b></dt>
+<dd>
+
+<p>Suppose que le fichier d&#39;entr&eacute;e est au format UTF-16LE.</p>
+
+<p>Quand il y a un indicateur d&#39;ordre des octets dans le fichier d&#39;entr&eacute;e, l&#39;indicateur a priorit&eacute; sur cette option.</p>
+
+<p>Si vous vous &ecirc;tes tromp&eacute; sur le format du fichier d&#39;entr&eacute;e (par exemple, ce n&#39;&eacute;tait pas un fichier UTF16-LE) et que la conversion r&eacute;ussi, vous obtiendrez un fichier UTF-8 contenant le mauvais texte. Vous pouvez r&eacute;cup&eacute;rer le fichier original avec iconv(1) en convertissant le fichier de sortie UTF-8 vers du UTF-16LE.</p>
+
+<p>La pr&eacute;supposition de l&#39;UTF-16LE fonctionne comme un <i>mode de conversion</i>. En utilisant le mode <i>ascii</i> par d&eacute;faut, UTF-16LE n&#39;est plus pr&eacute;suppos&eacute;.</p>
+
+</dd>
+<dt id="ub---assume-utf16be"><b>-ub, --assume-utf16be</b></dt>
+<dd>
+
+<p>Suppose que le fichier d&#39;entr&eacute;e est au format UTF-16BE.</p>
+
+<p>Cette option fonctionne comme l&#39;option <code>-ul</code>.</p>
+
+</dd>
+<dt id="v---verbose"><b>-v, --verbose</b></dt>
+<dd>
+
+<p>Affiche des messages verbeux. Des informations suppl&eacute;mentaires sont affich&eacute;es &agrave; propos des marques d&#39;ordre des octets et du nombre de sauts de lignes convertis.</p>
+
+</dd>
+<dt id="F---follow-symlink"><b>-F, --follow-symlink</b></dt>
+<dd>
+
+<p>Suit les liens symboliques et convertit les cibles.</p>
+
+</dd>
+<dt id="R---replace-symlink"><b>-R, --replace-symlink</b></dt>
+<dd>
+
+<p>Remplace les liens symboliques par les fichiers convertis (les fichiers cibles originaux restent inchang&eacute;s).</p>
+
+</dd>
+<dt id="S---skip-symlink"><b>-S, --skip-symlink</b></dt>
+<dd>
+
+<p>Ne change pas les liens symboliques ni les cibles (par d&eacute;faut).</p>
+
+</dd>
+<dt id="V---version"><b>-V, --version</b></dt>
+<dd>
+
+<p>Affiche les informations de version puis arr&ecirc;te.</p>
+
+</dd>
+</dl>
+
+<h1 id="MODE-MAC">MODE MAC</h1>
+
+<p>En mode normal, les sauts de lignes sont convertis du DOS vers Unix et inversement. Les sauts de lignes Mac ne sont pas convertis.</p>
+
+<p>En mode Mac, les sauts de lignes sont convertis du format Mac au format Unix et inversement. Les sauts de lignes DOS ne sont pas chang&eacute;s.</p>
+
+<p>Pour fonctionner en mode Mac, utilisez l&#39;option en ligne de commande <code>-c mac</code> ou utilisez les commandes <code>mac2unix</code> ou <code>unix2mac</code>.</p>
+
+<h1 id="MODES-DE-CONVERSION">MODES DE CONVERSION</h1>
+
+<dl>
+
+<dt id="ascii1"><b>ascii</b></dt>
+<dd>
+
+<p>En mode <code>ascii</code>, seuls les sauts de lignes sont convertis. Ceci est le mode de conversion par d&eacute;faut.</p>
+
+<p>Bien que le nom de ce mode soit ASCII, qui est un standard 7 bits, ce mode travail en r&eacute;alit&eacute; sur 8 bits. Utilisez toujours ce mode lorsque vous convertissez des fichiers Unicode UTF-8.</p>
+
+</dd>
+<dt id="bit"><b>7bit</b></dt>
+<dd>
+
+<p>Dans ce mode, tous les caract&egrave;res 8 bits non ASCII (avec des valeurs entre 128 et 255) sont remplac&eacute;s par une espace 7 bits.</p>
+
+</dd>
+<dt id="iso1"><b>iso</b></dt>
+<dd>
+
+<p>Les caract&egrave;res sont convertis entre un jeu de caract&egrave;res DOS (code page) et le jeu de caract&egrave;res ISO-8859-1 (Latin-1) de Unix. Les caract&egrave;res DOS sans &eacute;quivalent ISO-8859-1, pour lesquels la conversion n&#39;est pas possible, sont remplac&eacute;s par un point. La m&ecirc;me chose est valable pour les caract&egrave;res ISO-8859-1 sans &eacute;quivalent DOS.</p>
+
+<p>Quand seule l&#39;option <code>-iso</code> est utilis&eacute;e, dos2unix essaie de d&eacute;terminer le code page actif. Quand ce n&#39;est pas possible, dos2unix utilise le code page CP437 par d&eacute;faut qui est surtout utilis&eacute; aux USA. Pour forcer l&#39;utilisation d&#39;un code page sp&eacute;cifique, utilisez les options <code>-437</code> (US), <code>-850</code> (Europe de l&#39;ouest), <code>-860</code> (portugais), <code>-863</code> (fran&ccedil;ais canadien) ou <code>-865</code> (nordique). Le code page CP1252 de Windows (Europe de l&#39;ouest) est &eacute;galement support&eacute; avec l&#39;option <code>-1252</code>. Pour d&#39;autres codes pages, utilisez dos2unix avec iconv(1). Iconv supporte une longue liste de codages de caract&egrave;res.</p>
+
+<p>N&#39;utilisez jamais la conversion ISO sur des fichiers textes Unicode. Cela va corrompre les fichiers encod&eacute;s en UTF-8.</p>
+
+<p>Quelques exemples:</p>
+
+<p>Convertir du code page par d&eacute;faut du DOS au Latin-1 Unix :</p>
+
+<pre><code>    dos2unix -iso -n entr&eacute;e.txt sortie.txt</code></pre>
+
+<p>Convertir du CP850 du DOS au Latin-1 Unix :</p>
+
+<pre><code>    dos2unix -850 -n entr&eacute;e.txt sortie.txt</code></pre>
+
+<p>Convertir du CP1252 de Windows au Latin-1 de Unix :</p>
+
+<pre><code>    dos2unix -1252 -n entr&eacute;e.txt sortie.txt</code></pre>
+
+<p>Convertir le CP1252 de Windows en UTF-8 de Unix (Unicode) :</p>
+
+<pre><code>    iconv -f CP1252 -t UTF-8 entr&eacute;e.txt | dos2unix &gt; sortie.txt</code></pre>
+
+<p>Convertir du Latin-1 de Unix au code page par d&eacute;faut de DOS :</p>
+
+<pre><code>    unix2dos -iso -n entr&eacute;e.txt sortie.txt</code></pre>
+
+<p>Convertir le Latin-1 de Unix en CP850 du DOS :</p>
+
+<pre><code>    unix2dos -850 -n entr&eacute;e.txt sortie.txt</code></pre>
+
+<p>Convertir le Latin-1 de Unix en CP1252 de Windows :</p>
+
+<pre><code>    unix2dos -1252 -n entr&eacute;e.txt sortie.txt</code></pre>
+
+<p>Convertir le UTF-8 de Unix (Unicode) en CP1252 de Windows :</p>
+
+<pre><code>    unix2dos &lt; entr&eacute;e.txt | iconv -f UTF-8 -t CP1252 &gt; sortie.txt</code></pre>
+
+<p>Consultez aussi <a href="http://czyborra.com/charsets/codepages.html">http://czyborra.com/charsets/codepages.html</a> et <a href="http://czyborra.com/charsets/iso8859.html">http://czyborra.com/charsets/iso8859.html</a>.</p>
+
+</dd>
+</dl>
+
+<h1 id="UNICODE">UNICODE</h1>
+
+<h2 id="Codages">Codages</h2>
+
+<p>Il existe plusieurs codages Unicode. Sous Unix et Linux, les fichiers sont g&eacute;n&eacute;ralement cod&eacute;s en UTF-8. Sous Windows, les fichiers textes Unicode peuvent &ecirc;tre cod&eacute;s en UTF-8, UTF-16 ou UTF-16 gros boutien mais ils sont majoritairement cod&eacute;s au format UTF-16.</p>
+
+<h2 id="Conversion">Conversion</h2>
+
+<p>Les fichiers textes Unicode peuvent avoir des sauts de lignes DOS, Unix ou Mac, tout comme les fichiers textes normaux.</p>
+
+<p>Toutes les versions de dos2unix et unix2dos peuvent convertir des fichiers cod&eacute;s en UTF-8 car UTF-8 a &eacute;t&eacute; con&ccedil;u pour &ecirc;tre r&eacute;tro-compatible avec l&#39;ASCII.</p>
+
+<p>Dos2unix et unix2dos, avec le support pour l&#39;Unicode UTF-16, peuvent lire les fichiers textes cod&eacute;s sous forme petit boutien ou gros boutien. Pour savoir si dos2unix a &eacute;t&eacute; compil&eacute; avec le support UTF-16 tapez <code>dos2unix -V</code>.</p>
+
+<p>Sous Unix/Linux, les fichiers encod&eacute;s en UTF-16 sont convertis vers l&#39;encodage des caract&egrave;res de la localisation. Utilisez locale(1) pour d&eacute;couvrir quel encodage de caract&egrave;res est utilis&eacute;. Lorsque la conversion n&#39;est pas possible, une erreur de conversion est produite et le fichier est abandonn&eacute;.</p>
+
+<p>Sous Windows, les fichiers UTF-16 sont convertis par d&eacute;faut en UTF-8. Les fichiers textes format&eacute;s en UTF-8 sont bien support&eacute;s sous Windows et Unix/Linux.</p>
+
+<p>Les codages UTF-16 et UTF-8 sont parfaitement compatibles. Il n&#39;y a pas de pertes lors de la conversion. Lorsqu&#39;une erreur de conversion UTF-16 vers UTF-8 survient, par exemple, quand le fichier d&#39;entr&eacute;e UTF-16 contient une erreur, le fichier est ignor&eacute;.</p>
+
+<p>Quand l&#39;option <code>-u</code> est utilis&eacute;e, le fichier de sortie est &eacute;crit dans le m&ecirc;me encodage UTF-16 que le fichier d&#39;entr&eacute;e. L&#39;option <code>-u</code> emp&ecirc;che la conversion en UTF-8.</p>
+
+<p>Dos2unix et unix2dos n&#39;ont pas d&#39;option pour convertir des fichiers UTF-8 en UTF-16.</p>
+
+<p>Les modes de conversion ISO et 7 bits ne fonctionnent pas sur des fichiers UTF-16.</p>
+
+<h2 id="Marque-dordre-des-octets">Marque d&#39;ordre des octets</h2>
+
+<p>Les fichiers textes Unicode sous Windows on g&eacute;n&eacute;ralement un indicateur d&#39;ordre des octets (BOM) car de nombreux programmes Windows (y compris Notepad) ajoutent cet indicateur par d&eacute;faut. Consultez aussi <a href="http://fr.wikipedia.org/wiki/Indicateur_d%27ordre_des_octets">http://fr.wikipedia.org/wiki/Indicateur_d%27ordre_des_octets</a>.</p>
+
+<p>Sous Unix, les fichiers Unicodes n&#39;ont habituellement pas de BOM. Il est suppos&eacute; que les fichiers textes sont cod&eacute;s selon le codage de l&#39;environnement linguistique.</p>
+
+<p>Dos2unix ne peut d&eacute;tecter que le fichier est au format UTF-16 si le fichier n&#39;a pas de BOM. Quand le fichier UTF-16 n&#39;a pas cet indicateur, dos2unix voit le fichier comme un fichier binaire.</p>
+
+<p>Utilisez l&#39;option <code>-ul</code> ou <code>-ub</code> pour convertir un fichier UTF-16 sans BOM.</p>
+
+<p>Dos2unix, par d&eacute;faut, n&#39;&eacute;crit pas de BOM dans le fichier de sortie. Avec l&#39;option <code>-b</code>, Dos2unix &eacute;crit une BOM quand le fichier d&#39;entr&eacute;e a une BOM.</p>
+
+<p>Unix2dos &eacute;crit par d&eacute;faut une BOM dans le fichier de sortie quand le fichier d&#39;entr&eacute;e a une BOM. Utilisez l&#39;option <code>-r</code> pour supprimer la BOM.</p>
+
+<p>Dos2unix et unix2dos &eacute;crivent toujours une BOM quand l&#39;option <code>-m</code> est utilis&eacute;e.</p>
+
+<h2 id="Noms-de-fichiers-unicode-sous-Windows">Noms de fichiers unicode sous Windows</h2>
+
+<p>Dos2unix supporte, en option, la lecture et l&#39;&eacute;criture de noms de fichiers Unicode dans la ligne de commande de Windows. Cela signifie que dos2unix peut ouvrir des fichiers qui ont, dans leur nom, des caract&egrave;res n&#39;appartenant pas au code page syst&egrave;me ANSI par d&eacute;faut. Pour voir si dos2unix pour Windows a &eacute;t&eacute; compil&eacute; avec le support des noms de fichiers Unicode, tapez <code>dos2unix -V</code>.</p>
+
+<p>Il y a quelques soucis avec l&#39;affichage de noms de fichiers Unicode dans une console Windows. Voyez l&#39;option <code>-D</code>, <code>--display-enc</code>. Les noms de fichiers peuvent &ecirc;tre mal affich&eacute;s dans la console mais les fichiers seront &eacute;crits avec les bons noms.</p>
+
+<h2 id="Exemples-Unicode">Exemples Unicode</h2>
+
+<p>Convertir de l&#39;UTF-16 Windows (avec BOM) vers l&#39;UTF-8 de Unix :</p>
+
+<pre><code>    dos2unix -n entr&eacute;e.txt sortie.txt</code></pre>
+
+<p>Convertir de l&#39;UTF-16LE de Windows (sans BOM) vers l&#39;UTF-8 de Unix :</p>
+
+<pre><code>    dos2unix -ul -n entr&eacute;e.txt sortie.txt</code></pre>
+
+<p>Convertir de l&#39;UTF-8 de Unix vers l&#39;UTF-8 de Windows avec BOM :</p>
+
+<pre><code>    unix2dos -m -n entr&eacute;e.txt sortie.txt</code></pre>
+
+<p>Convertir de l&#39;UTF-8 de Unix vers l&#39;UTF-16 de Windows :</p>
+
+<pre><code>    unix2dos &lt; entr&eacute;e.txt | iconv -f UTF-8 -t UTF-16 &gt; sortie.txt</code></pre>
+
+<h1 id="GB18030">GB18030</h1>
+
+<p>GB18030 est un standard du gouvernement chinois. Tout logiciel vendu en Chine doit officiellement supporter un sous ensemble obligatoire du standard GB18030. Consultez <a href="http://fr.wikipedia.org/wiki/GB_18030">http://fr.wikipedia.org/wiki/GB_18030</a>.</p>
+
+<p>GB18030 est enti&egrave;rement compatible avec Unicode et peut &ecirc;tre consid&eacute;r&eacute; comme &eacute;tant un format de transformation unicode. Comme UTF-8, GB18030 est compatible avec ASCII. GB18030 est aussi compatible avec le code page 936 de Windows aussi connu comme GBK.</p>
+
+<p>Sous Unix/Linux, les fichiers UTF-16 sont convertis en GB18030 quand l&#39;encodage de l&#39;environnement linguistique est GB18030. Notez que cela ne fonctionnera que si l&#39;environnement linguistique est support&eacute; par le syst&egrave;me. Utilisez la commande <code>locale -a</code> pour obtenir la liste des environnements linguistiques support&eacute;s.</p>
+
+<p>Sous Windows, vous avez besoin de l&#39;option <code>-gb</code> pour convertir UTF-16 en GB18030.</p>
+
+<p>Les fichiers encod&eacute;s en GB18030 peuvent avoir une marque d&#39;ordre des octets, comme les fichiers Unicode.</p>
+
+<h1 id="EXEMPLES">EXEMPLES</h1>
+
+<p>Lire l&#39;entr&eacute;e depuis <span style="white-space: nowrap;">&laquo; stdin &raquo;</span> et &eacute;crire la sortie vers <span style="white-space: nowrap;">&laquo; stdout &raquo; :</span></p>
+
+<pre><code>    dos2unix &lt; a.txt
+    cat a.txt | dos2unix</code></pre>
+
+<p>Convertir et remplacer a.txt. Convertir et remplace b.txt :</p>
+
+<pre><code>    dos2unix a.txt b.txt
+    dos2unix -o a.txt b.txt</code></pre>
+
+<p>Convertir et remplacer a.txt en mode de conversion ascii :</p>
+
+<pre><code>    dos2unix a.txt</code></pre>
+
+<p>Convertir et remplacer a.txt en mode de conversion ascii. Convertir et remplacer b.txt en mode de conversion 7 bits :</p>
+
+<pre><code>    dos2unix a.txt -c 7bit b.txt
+    dos2unix -c ascii a.txt -c 7bit b.txt
+    dos2unix -ascii a.txt -7 b.txt</code></pre>
+
+<p>Convertir a.txt depuis le format Mac vers le format Unix :</p>
+
+<pre><code>    dos2unix -c mac a.txt
+    mac2unix a.txt</code></pre>
+
+<p>Convertir a.txt du format Unix au format Mac :</p>
+
+<pre><code>    unix2dos -c mac a.txt
+    unix2mac a.txt</code></pre>
+
+<p>Convertir et remplacer a.txt tout en conservant la date originale :</p>
+
+<pre><code>    dos2unix -k a.txt
+    dos2unix -k -o a.txt</code></pre>
+
+<p>Convertir a.txt et &eacute;crire dans e.txt :</p>
+
+<pre><code>    dos2unix -n a.txt e.txt</code></pre>
+
+<p>Convertir a.txt et &eacute;crire dans e.txt. La date de e.txt est la m&ecirc;me que celle de a.txt :</p>
+
+<pre><code>    dos2unix -k -n a.txt e.txt</code></pre>
+
+<p>Convertir et remplacer a.txt. Convertir b.txt et &eacute;crire dans e.txt :</p>
+
+<pre><code>    dos2unix a.txt -n b.txt e.txt
+    dos2unix -o a.txt -n b.txt e.txt</code></pre>
+
+<p>Convertir c.txt et &eacute;crire dans e.txt. Convertir et remplacer a.txt. Convertir et remplacer b.txt. Convertir d.txt et &eacute;crire dans f.txt :</p>
+
+<pre><code>    dos2unix -n c.txt e.txt -o a.txt b.txt -n d.txt f.txt</code></pre>
+
+<h1 id="CONVERSIONS-RCURSIVES">CONVERSIONS R&Eacute;CURSIVES</h1>
+
+<p>Dans un shell Unix, les commandes find(1) et xargs(1) peuvent &ecirc;tre utilis&eacute;es pour ex&eacute;cuter dos2unix r&eacute;cursivement sur tous les fichiers textes dans une arborescence de r&eacute;pertoires. Par exemple, pour convertir tous les fichiers .txt dans les r&eacute;pertoires sous le r&eacute;pertoire courant, tapez:</p>
+
+<pre><code>    find . -name &#39;*.txt&#39; -print0 |xargs -0 dos2unix</code></pre>
+
+<p>L&#39;option <code>-print0</code> de find(1) et l&#39;option correspondante <code>-0</code> de xargs(1) sont n&eacute;cessaires quand il y a des fichiers avec des espaces ou des guillemets dans leur nom. Sinon, ces options peuvent &ecirc;tre omises. Une autre possibilit&eacute; est d&#39;utiliser find(1) avec l&#39;option <code>-exec</code>:</p>
+
+<pre><code>    find . -name &#39;*.txt&#39; -exec dos2unix {} \;</code></pre>
+
+<p>En ligne de commande sous Windows, la commande suivante peut &ecirc;tre utilis&eacute;e :</p>
+
+<pre><code>    for /R %G in (*.txt) do dos2unix &quot;%G&quot;
+    find /R %G in </code></pre>
+
+<p>Les utilisateurs de PowerShell peuvent utiliser la commande suivante dans le PowerShell de Windows :</p>
+
+<pre><code>    get-childitem -path . -filter &#39;*.txt&#39; -recurse | foreach-object {dos2unix $_.Fullname}</code></pre>
+
+<h1 id="PARAMTRES-LINGUISTIQUES">PARAM&Egrave;TRES LINGUISTIQUES</h1>
+
+<dl>
+
+<dt id="LANG"><b>LANG</b></dt>
+<dd>
+
+<p>La langue principale est s&eacute;lectionn&eacute;e par la variable d&#39;environnement LANG. La variable LANG est compos&eacute;e de plusieurs parties. La premi&egrave;re partie est le code de la langue en minuscules. La deuxi&egrave;me partie est le code du pays en majuscules pr&eacute;c&eacute;d&eacute; d&#39;un soulign&eacute;. Elle est facultative. Il y a aussi une troisi&egrave;me partie facultative qui est le codage des caract&egrave;res pr&eacute;c&eacute;d&eacute; par un point. Voici quelques exemples pour un shell au standard POSIX:</p>
+
+<pre><code>    export LANG=fr               Fran&ccedil;ais
+    export LANG=fr_CA            Fran&ccedil;ais, Canada
+    export LANG=fr_BE            Fran&ccedil;ais, Belgique
+    export LANG=es_ES            Espagnol, Espagne
+    export LANG=es_MX            Espagnol, Mexique
+    export LANG=en_US.iso88591   Anglais, USA, codage Latin-1
+    export LANG=en_GB.UTF-8      Anglais, UK, codage UTF-8</code></pre>
+
+<p>La liste compl&egrave;te des codes de langues et de pays est dans le manuel de gettext: <a href="http://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html">http://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html</a></p>
+
+<p>Sur les syst&egrave;mes Unix, vous pouvez utiliser la commande locale(1) pour obtenir des informations sur l&#39;environnement linguistique.</p>
+
+</dd>
+<dt id="LANGUE"><b>LANGUE</b></dt>
+<dd>
+
+<p>Avec la variable d&#39;environnement LANGUAGE, vous pouvez sp&eacute;cifier une liste de langues prioritaires s&eacute;par&eacute;es par des deux-points. Dos2unix fait passer LANGUAGE avant LANG. Par exemple, pour utiliser le fran&ccedil;ais avant l&#39;anglais: <code>LANGUAGE=fr:en</code>. Vous devez d&#39;abord activer l&#39;environnement linguistique en assignant une valeur autre que <span style="white-space: nowrap;">&laquo; C &raquo;</span> &agrave; LANG (ou LC_ALL). Ensuite, vous pourrez utiliser la liste de priorit&eacute; avec la variable LANGUAGE. Voyez &eacute;galement le manuel de gettext: <a href="http://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-variable.html">http://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-variable.html</a></p>
+
+<p>Si vous s&eacute;lectionnez une langue qui n&#39;est pas disponible, vous obtiendrez des messages en anglais standard.</p>
+
+</dd>
+<dt id="DOS2UNIX_LOCALEDIR"><b>DOS2UNIX_LOCALEDIR</b></dt>
+<dd>
+
+<p>Gr&acirc;ce &agrave; la variable d&#39;environnement DOS2UNIX_LOCALEDIR, la variable LOCALEDIR compil&eacute;e dans l&#39;application peut &ecirc;tre remplac&eacute;e. LOCALEDIR est utilis&eacute;e pour trouver les fichiers de langue. La valeur par d&eacute;faut de GNU est <code>/usr/local/share/locale</code>. L&#39;option <b>--version</b> affiche la valeur de LOCALEDIR utilis&eacute;e.</p>
+
+<p>Exemple (shell POSIX):</p>
+
+<pre><code>    export DOS2UNIX_LOCALEDIR=$HOME/share/locale</code></pre>
+
+</dd>
+</dl>
+
+<h1 id="VALEUR-DE-RETOUR">VALEUR DE RETOUR</h1>
+
+<p>Z&eacute;ro est retourn&eacute; en cas de succ&egrave;s. Si une erreur syst&egrave;me se produit, la derni&egrave;re erreur syst&egrave;me est retourn&eacute;e. Pour les autres erreurs, 1 est renvoy&eacute;.</p>
+
+<p>La valeur de sortie est toujours z&eacute;ro en mode silencieux sauf quand de mauvaises options sont utilis&eacute;es sur la ligne de commande.</p>
+
+<h1 id="STANDARDS">STANDARDS</h1>
+
+<p><a href="http://fr.wikipedia.org/wiki/Fichier_texte">http://fr.wikipedia.org/wiki/Fichier_texte</a></p>
+
+<p><a href="http://fr.wikipedia.org/wiki/Retour_chariot">http://fr.wikipedia.org/wiki/Retour_chariot</a></p>
+
+<p><a href="http://fr.wikipedia.org/wiki/Fin_de_ligne">http://fr.wikipedia.org/wiki/Fin_de_ligne</a></p>
+
+<p><a href="http://fr.wikipedia.org/wiki/Unicode">http://fr.wikipedia.org/wiki/Unicode</a></p>
+
+<h1 id="AUTEURS">AUTEURS</h1>
+
+<p>Benjamin Lin - &lt;blin@socs.uts.edu.au&gt;, Bernd Johannes Wuebben (mode mac2unix) - &lt;wuebben@kde.org&gt;, Christian Wurll (ajout de saut de ligne suppl&eacute;mentaire) - &lt;wurll@ira.uka.de&gt;, Erwin Waterlander - &lt;waterlan@xs4all.nl&gt; (Mainteneur)</p>
+
+<p>Page du projet: <a href="http://waterlan.home.xs4all.nl/dos2unix.html">http://waterlan.home.xs4all.nl/dos2unix.html</a></p>
+
+<p>Page SourceForge: <a href="http://sourceforge.net/projects/dos2unix/">http://sourceforge.net/projects/dos2unix/</a></p>
+
+<h1 id="VOIR-AUSSI">VOIR AUSSI</h1>
+
+<p>file(1) find(1) iconv(1) locale(1) xargs(1)</p>
+
+
+</body>
+
+</html>
+
+

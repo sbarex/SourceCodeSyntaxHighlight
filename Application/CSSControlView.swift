@@ -1,5 +1,5 @@
 //
-//  CSSControlView.swift
+//  CSSControlViewController.swift
 //  SyntaxHighlight
 //
 //  Created by Sbarex on 16/11/2019.
@@ -22,39 +22,98 @@
 
 import Cocoa
 
-class CSSControlView: NSViewController {
+class CSSControlViewController: NSViewController {
+    enum Mode {
+        case global
+        case format
+        case themeProperty
+    }
+    
+    var mode: Mode = .global {
+        didSet {
+            afterModeChanged()
+        }
+    }
+    
     var cssCode: String = "" {
         didSet {
             textView?.string = cssCode
         }
     }
-    var isUTIWarningHidden: Bool = true {
+    
+    var isStandardPropertiesOverridden: Bool = false {
         didSet {
-            warningMessage?.isHidden = isUTIWarningHidden
+            overrideButton?.state = isStandardPropertiesOverridden ? .on : .off
         }
     }
-    var handler: ((String)->Void)?
     
+    var isEditable = true {
+        didSet {
+            if isEditable != oldValue {
+                updateIsEditable()
+            }
+        }
+    }
+    
+    var handler: ((String, Bool, Bool)->Void)?
+    
+    @IBOutlet weak var infoLabel: NSTextField!
     @IBOutlet weak var textView: NSTextView!
     @IBOutlet weak var warningMessage: NSTextField!
+    @IBOutlet weak var overrideButton: NSButton!
+    @IBOutlet weak var saveButton: NSButton!
+    @IBOutlet weak var cancelButton: NSButton!
     
     @IBAction func showHelp(_ sender: Any) {
         if let locBookName = Bundle.main.object(forInfoDictionaryKey: "CFBundleHelpBookName") as? String {
-            NSHelpManager.shared.openHelpAnchor("SyntaxHighlight_CUSTOMCSS", inBook: locBookName)
+            NSHelpManager.shared.openHelpAnchor(mode == .global ? "SyntaxHighlight_CUSTOMCSS" : "SyntaxHighlight_CUSTOMCSS_THEME", inBook: locBookName)
         }
     }
     
     @IBAction func doSave(_ sender: Any) {
-        handler?(textView.string)
+        handler?(textView.string, isStandardPropertiesOverridden, true)
+        dismiss(sender)
+    }
+    
+    @IBAction func doClose(_ sender: Any) {
+        handler?(textView.string, isStandardPropertiesOverridden, false)
         dismiss(sender)
     }
     
     override func viewDidLoad() {
-        warningMessage.isHidden = isUTIWarningHidden
+        afterModeChanged()
+        
         textView?.string = cssCode
         
         textView.font = NSFont.monospacedSystemFont(ofSize: 11, weight: NSFont.Weight.regular)
         textView.textColor = NSColor.textColor
         textView.backgroundColor = NSColor.textBackgroundColor
+        textView.isEditable = isEditable
+        
+        overrideButton.state = isStandardPropertiesOverridden ? .on : .off
+        
+        updateIsEditable()
+    }
+    
+    internal func afterModeChanged() {
+        switch mode {
+        case .global, .format:
+            infoLabel?.stringValue = "Custom CSS style sheet:"
+        case .themeProperty:
+            infoLabel?.stringValue = "Inline CSS style:"
+        }
+        warningMessage?.isHidden = mode != .format
+        overrideButton?.isHidden = mode != .themeProperty
+    }
+    
+    internal func updateIsEditable() {
+        textView?.isEditable = isEditable
+        cancelButton?.isHidden = !isEditable
+        saveButton?.title = isEditable ? "OK" : "Close"
+        overrideButton?.isEnabled = isEditable
+    }
+    
+    @IBAction internal func handleOverrideButton(_ sender: NSButton) {
+        isStandardPropertiesOverridden = sender.state == .on
     }
 }

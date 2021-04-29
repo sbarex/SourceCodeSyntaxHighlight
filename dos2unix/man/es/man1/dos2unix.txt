@@ -1,0 +1,784 @@
+NOMBRE
+    dos2unix - Convertidor de archivos de texto de formato DOS/Mac a Unix y
+    viceversa
+
+SINOPSIS
+        dos2unix [parámetros] [ARCHIVO ...] [-n ARCHIVO_DE_ENTRADA ARCHIVO_DE_SALIDA ...]
+        unix2dos [parámetros] [ARCHIVO ...] [-n ARCHIVO_DE_ENTRADA ARCHIVO_DE_SALIDA ...]
+
+DESCRIPCIÓN
+    El paquete Dos2unix incluye las herramientas "dos2unix" y "unix2dos"
+    para convertir archivos de texto plano en formato DOS o Mac a formato
+    Unix y viceversa.
+
+    En archivos de texto DOS/Windows, un salto de línea, también conocido
+    como nueva línea, es una combinación de dos caracteres: un retorno de
+    carro (CR) seguido por un salto de línea (LF). En archivos de texto
+    Unix, un salto de línea es solamente un carácter: el salto de línea
+    (LF). En archivos de texto Mac, antes de Mac OS X, un salto de línea era
+    sólo un carácter retorno de carro (CR). Actualmente, Mac OS usa el
+    estilo Unix de saltos de línea (LF).
+
+    Además de saltos de línea, Dos2unix puede también convertir la
+    codificación de archivos. Unas cuantas páginas de códigos DOS pueden ser
+    convertidas a Unix Latin-1. Y archivos Unicode de Windows (UTF-16)
+    pueden ser convertidos a archivos Unicode de Unix (UTF-8).
+
+    Los archivos binarios son ignorados automáticamente, a menos que se
+    fuerce su conversión.
+
+    Los archivos no regulares, tales como directorios y FIFO, son ignorados
+    automáticamente.
+
+    Los enlaces simbólicos y sus destinos no son modificados por defecto.
+    Los enlaces simbólicos pueden opcionalmente ser reemplazados, o la
+    salida puede ser escrita al destino simbólico del enlace. En Windows no
+    está soportada la escritura a enlaces simbólicos.
+
+    Dos2unix was modelled after dos2unix under SunOS/Solaris. There is one
+    important difference with the original SunOS/Solaris version. This
+    version does by default in-place conversion (old file mode), while the
+    original SunOS/Solaris version only supports paired conversion (new file
+    mode). See also options "-o" and "-n". Another difference is that the
+    SunOS/Solaris version uses by default *iso* mode conversion while this
+    version uses by default *ascii* mode conversion.
+
+PARÁMETROS
+    --  Todos los parámetros siguientes son tratados como nombres de
+        archivo. Use este parámetro si desea convertir archivos cuyos
+        nombres inician con un guión. Por ejemplo para convertir un archivoo
+        llamado "-foo", use este comando:
+
+            dos2unix -- -foo
+
+        O en modo de archivo nuevo:
+
+            dos2unix -n -- -foo out.txt
+
+    --allow-chown
+        Allow file ownership change in old file mode.
+
+        When this option is used, the conversion will not be aborted when
+        the user and/or group ownership of the original file can't be
+        preserved in old file mode. Conversion will continue and the
+        converted file will get the same new ownership as if it was
+        converted in new file mode. See also options "-o" and "-n". This
+        option is only available if dos2unix has support for preserving the
+        user and group ownership of files.
+
+    -ascii
+        Sólo convierte los salto de línea. Éste es el modo de conversión por
+        defecto.
+
+    -iso
+        Conversión entre el conjunto de caracteres DOS e ISO-8859-1. Véase
+        también la sección MODOS DE CONVERSIÓN.
+
+    -1252
+        Usa la página de códigos Windows 1252 (Europa Occidental).
+
+    -437
+        Usa la página de códigos DOS 437 (EE. UU.). Está es la página de
+        códigos usada por defecto para conversión ISO.
+
+    -850
+        Usa la página de códigos DOS 850 (Europa Occidental).
+
+    -860
+        Usa la página de códigos DOS 860 (Portugués).
+
+    -863
+        Usa la página de códigos DOS 863 (Francocanadiense).
+
+    -865
+        Usa la página de códigos DOS 865 (Nórdico).
+
+    -7  Convierte caracteres de 8 bits al espacio de 7 bits.
+
+    -b, --keep-bom
+        Mantiene la Marca de Orden de Byte (BOM). Cuando el archivo de
+        entrada tiene BOM, escribe BOM en el archivo de salida. Este es el
+        comportamiento por defecto en la conversión a saltos de línea DOS.
+        Vea también la opción "-r".
+
+    -c, --convmode CONVMODE
+        Establece el modo de conversión, Donde CONVMODE puede ser: *ascii*,
+        *7bit*, *iso*, *mac* siendo ascii el valor por defecto.
+
+    -D, --display-enc ENCODING
+        Set encoding of displayed text. Where ENCODING is one of: *ansi*,
+        *unicode*, *unicodebom*, *utf8*, *utf8bom* with ansi being the
+        default.
+
+        This option is only available in dos2unix for Windows with Unicode
+        file name support. This option has no effect on the actual file
+        names read and written, only on how they are displayed.
+
+        There are several methods for displaying text in a Windows console
+        based on the encoding of the text. They all have their own
+        advantages and disadvantages.
+
+        ansi
+            Dos2unix's default method is to use ANSI encoded text. The
+            advantage is that it is backwards compatible. It works with
+            raster and TrueType fonts. In some regions you may need to
+            change the active DOS OEM code page to the Windows system ANSI
+            code page using the "chcp" command, because dos2unix uses the
+            Windows system code page.
+
+            The disadvantage of ansi is that international file names with
+            characters not inside the system default code page are not
+            displayed properly. You will see a question mark, or a wrong
+            symbol instead. When you don't work with foreign file names this
+            method is OK.
+
+        unicode, unicodebom
+            The advantage of unicode (the Windows name for UTF-16) encoding
+            is that text is usually properly displayed. There is no need to
+            change the active code page. You may need to set the console's
+            font to a TrueType font to have international characters
+            displayed properly. When a character is not included in the
+            TrueType font you usually see a small square, sometimes with a
+            question mark in it.
+
+            When you use the ConEmu console all text is displayed properly,
+            because ConEmu automatically selects a good font.
+
+            The disadvantage of unicode is that it is not compatible with
+            ASCII. The output is not easy to handle when you redirect it to
+            another program.
+
+            When method "unicodebom" is used the Unicode text will be
+            preceded with a BOM (Byte Order Mark). A BOM is required for
+            correct redirection or piping in PowerShell.
+
+        utf8, utf8bom
+            The advantage of utf8 is that it is compatible with ASCII. You
+            need to set the console's font to a TrueType font. With a
+            TrueType font the text is displayed similar as with the
+            "unicode" encoding.
+
+            The disadvantage is that when you use the default raster font
+            all non-ASCII characters are displayed wrong. Not only unicode
+            file names, but also translated messages become unreadable. On
+            Windows configured for an East-Asian region you may see a lot of
+            flickering of the console when the messages are displayed.
+
+            In a ConEmu console the utf8 encoding method works well.
+
+            When method "utf8bom" is used the UTF-8 text will be preceded
+            with a BOM (Byte Order Mark). A BOM is required for correct
+            redirection or piping in PowerShell.
+
+        The default encoding can be changed with environment variable
+        DOS2UNIX_DISPLAY_ENC by setting it to "unicode", "unicodebom",
+        "utf8", or "utf8bom".
+
+    -f, --force
+        Fuerza la conversión de archivos binarios.
+
+    -gb, --gb18030
+        En Windows los archivos UTF-16 se convierten por defecto a UTF-8,
+        sin tener en cuenta la configuración local. Use esta opción para
+        convertir archivos UTF-16 a GB18030. Esta opción sólo está
+        disponible en Windows.l Véase también la sección GB18030.
+
+    -h, --help
+        Despiega la ayuda y termina el programa.
+
+    -i[MARCAS], --info[= MARCAS] ARCHIVO ...
+        Muestra la información del archivo. No se realiza ninguna
+        conversión.
+
+        Se muestra la siguiente información, en este orden: número de saltos
+        de línea DOS, número de saltos de línea Unix, número de saltos de
+        línea Mac, Marca de Orden de Byte, de texto o binario, nombre del
+        archivo.
+
+        Ejemplo de salida:
+
+             6       0       0  no_bom    text    dos.txt
+             0       6       0  no_bom    text    unix.txt
+             0       0       6  no_bom    text    mac.txt
+             6       6       6  no_bom    text    mixed.txt
+            50       0       0  UTF-16LE  text    utf16le.txt
+             0      50       0  no_bom    text    utf8unix.txt
+            50       0       0  UTF-8     text    utf8dos.txt
+             2     418     219  no_bom    binary  dos2unix.exe
+
+        Note that sometimes a binary file can be mistaken for a text file.
+        See also option "-s".
+
+        Se pueden utilizar marcas extras opcionales para modificar la
+        salida. Se pueden añadir una o más marcas.
+
+        0   Print the file information lines followed by a null character
+            instead of a newline character. This enables correct
+            interpretation of file names with spaces or quotes when flag c
+            is used. Use this flag in combination with xargs(1) option -0 or
+            "--null".
+
+        d   Muestra el número de saltos de línea DOS.
+
+        u   Muestra el número de saltos de línea Unix.
+
+        m   Muestra el número de saltos de línea Mac.
+
+        b   Muestra la Marca de Orden de Byte.
+
+        t   Muestra si el archivo es de texto o binario.
+
+        c   Muestra sólo los archivos que pueden ser convertidos.
+
+            Con la marca "c" dos2unix sólo mostrará los archivos que
+            contengan saltos de línea DOS, unix2dos sólo mostrará los
+            nombres de archivo que tengan saltos de línea Unix.
+
+        h   Print a header.
+
+        p   Show file names without path.
+
+        Ejemplos:
+
+        Muestra información para todos los archivos *.txt:
+
+            dos2unix -i *.txt
+
+        Muestra sólo el número de saltos de línea de DOS y de Unix:
+
+            dos2unix -idu *.txt
+
+        Muestra sólo la Marca de Orden de Byte.
+
+            dos2unix --info=b *.txt
+
+        Muestra los archivos que tienen saltos de línea DOS:
+
+            dos2unix -ic *.txt
+
+        Muestra los archivos que tienen saltos de línea Unix:
+
+            unix2dos -ic *.txt
+
+        Convert only files that have DOS line breaks and leave the other
+        files untouched:
+
+            dos2unix -ic0 *.txt | xargs -0 dos2unix
+
+        Find text files that have DOS line breaks:
+
+            find -name '*.txt' -print0 | xargs -0 dos2unix -ic
+
+    -k, --keepdate
+        Mantiene la fecha del archivo de salida igual a la del archivo de
+        entrada.
+
+    -L, --license
+        Muestra la licencia del programa.
+
+    -l, --newline
+        Añade salto de línea adicional.
+
+        dos2unix: Sólo los saltos de línea DOS son cambiados por dos saltos
+        de línea Unix. En modo Mac sólo los saltos de línea Mac son
+        cambiados por dos saltos de línea Unix.
+
+        unix2dos: Sólo los saltos de línea Unix son cambiados por dos saltos
+        de línea DOS. En modo Mac los saltos de línea Unix son cambiados por
+        dos saltos de línea Mac.
+
+    -m, --add-bom
+        Escribe una Marca de Orden de Bytes (BOM) en el archivo de salida.
+        Por defecto se escribe una BOM UTF-8.
+
+        Cuando el archivo de entrada es UTF-16 y se usa la opción "-u", se
+        escribirá un BOM UTF-16.
+
+        No utilice esta opción cuando la codificación de salida sea distinta
+        de UTF-8, UTF-16 o GB18030. Véase también la sección UNICODE.
+
+    -n, --newfile ARCHIVO_DE_ENTRADA ARCHIVO_DE_SALIDA ...
+        Modo de archivo nuevo. Convierte el archivo ARCHIVO_DE_ENTRADA y
+        escribe la salida al archivo ARCHIVO_DE_SALIDA. Los nombres de
+        archivo deben ser dados en pares y los comodines *no* deben ser
+        usados o *perderá* sus archivos.
+
+        La persona que inicia la conversión en el modo de archivo nuevo
+        (emparejado) será el propietario del archivo convertido. Los
+        permisos de lectura/escritura del archivo nuevo serán los permisos
+        del archivo original menos la umask(1) de la persona que ejecute la
+        conversión.
+
+    --no-allow-chown
+        Don't allow file ownership change in old file mode (default).
+
+        Abort conversion when the user and/or group ownership of the
+        original file can't be preserved in old file mode. See also options
+        "-o" and "-n". This option is only available if dos2unix has support
+        for preserving the user and group ownership of files.
+
+    -o, --oldfile ARCHIVO ...
+        Modo de archivo antiguo. Convierte el archivo ARCHIVO y lo
+        sobrescribe con la salida. El programa por defecto se ejecuta en
+        este modo. Se pueden emplear comodines.
+
+        En modo de archivo antiguo (in situ), el archivo convertido tiene el
+        mismo propietario, grupo y permisos de lectura/escritura que el
+        archivo original. Lo mismo aplica cuando el archivo es convertido
+        por otro usuario que tiene permiso de lectura en el archivo (p.e.
+        usuario root). La conversión será abortada cuando no sea posible
+        preservar los valores originales. Cambiar el propietario implicaría
+        que el propietario original ya no podrá leer el archivo. Cambiar el
+        grupo podría ser un riesgo de seguridad, ya que el archivo podría
+        ser accesible a personas inadecuadas. La preservación del
+        propietario, grupo, y permisos de lectura/escritura sólo está
+        soportada bajo Unix.
+
+        To check if dos2unix has support for preserving the user and group
+        ownership of files type "dos2unix -V".
+
+        Conversion is always done via a temporary file. When an error occurs
+        halfway the conversion, the temporary file is deleted and the
+        original file stays intact. When the conversion is successful, the
+        original file is replaced with the temporary file. You may have
+        write permission on the original file, but no permission to put the
+        same user and/or group ownership properties on the temporary file as
+        the original file has. This means you are not able to preserve the
+        user and/or group ownership of the original file. In this case you
+        can use option "--allow-chown" to continue with the conversion:
+
+            dos2unix --allow-chown foo.txt
+
+        Another option is to use new file mode:
+
+            dos2unix -n foo.txt foo.txt
+
+        The advantage of the "--allow-chown" option is that you can use
+        wildcards, and the ownership properties will be preserved when
+        possible.
+
+    -q, --quiet
+        Modo silencioso. Suprime todas las advertencias y mensajes. El valor
+        retornado es cero. Excepto cuando se emplean parámetros incorrectos.
+
+    -r, --remove-bom
+        Elimina la Marca de Orden de Byte (BOM). No escribe el BOM en el
+        archivo de salida. Este es el comportamiento por defecto al
+        convertir a saltos de línea Unix. Vea también la opción "-b".
+
+    -s, --safe
+        Ignora los archivos binarios (por defecto).
+
+        The skipping of binary files is done to avoid accidental mistakes.
+        Be aware that the detection of binary files is not 100% foolproof.
+        Input files are scanned for binary symbols which are typically not
+        found in text files. It is possible that a binary file contains only
+        normal text characters. Such a binary file will mistakenly be seen
+        as a text file.
+
+    -u, --keep-utf16
+        Mantiene la codificación original UTF-16 en el archivo de entrada.
+        El archivo de salida se escribirá con la misma codificación UTF-16,
+        little o big endian, como el archivo de entrada. Esto impide la
+        transformación a UTF-8. En consecuencia se escribirá un BOM UTF-16.
+        Esta opción se puede desactivar con la opción "-ascii".
+
+    -ul, --assume-utf16le
+        Se asume que el formato de archivo de entrada es UTF-16LE.
+
+        Cuando existe una Marca de Orden de Bytes (BOM) en el archivo de
+        entrada, la BOM tiene prioridad sobre esta opción.
+
+        Cuando se hace una suposición incorrecta (el archivo de entrada no
+        estaba en formato UTF-16LE) y la conversión tiene éxito, obtendrá un
+        archivo UTF-8 de salida con el texto erróneo. La conversión errónea
+        puede deshacerse con iconv(1) convirtiendo el archivo UTF-8 de
+        salida de vuelta a UTF-16LE. Esto restaurará el archivo original.
+
+        El supuesto de UTF-16LE funciona como un *modo de conversión*. Al
+        cambiar al modo por defecto *ascii* el supuesto UTF-16LE es
+        deshabilitado.
+
+    -ub, --assume-utf16be
+        Se asume que el formato del archivo de entrada es UTF-16BE.
+
+        Esta opción funciona igual que la opción "-ul".
+
+    -v, --verbose
+        Mostrar mensajes detallados. Se muestra información extra acerca de
+        Marcas de Orden de Bytes (BOM) y el número de saltos de línea
+        convertidos.
+
+    -F, --follow-symlink
+        Sigue los enlaces simbólicos y convierte los destinos.
+
+    -R, --replace-symlink
+        Reemplaza los enlaces simbólicos con los archivos convertidos (los
+        archivos destino originales no se alteran).
+
+    -S, --skip-symlink
+        No altera los enlaces simbólicos ni sus destinos (por defecto).
+
+    -V, --version
+        Despiega la información de la versión y termina el programa.
+
+MODO MAC
+    En modo normal los saltos de línea son convertidos de DOS a Unix y
+    viceversa. Los saltos de línea Mac no son convertidos.
+
+    En modo Mac los saltos de línea son convertidos de Mac a Unix y
+    viceversa. Los saltos de línea DOS no son modificados.
+
+    Para ejecutar en modo Mac use el modificador "-c mac" o use los comandos
+    "mac2unix" o "unix2mac".
+
+MODOS DE CONVERSIÓN
+    ascii
+        En modo "ascii" sólo los saltos de línea son convertidos. Éste es el
+        modo de conversión por defecto.
+
+        Aunque el nombre de este modo es ASCII, que es un estándar de 7
+        bits, éste emplea 8 bits. Siempre use este modo cuando convierta
+        archivos Unicode UTF-8.
+
+    7bit
+        En este modo todos los caracteres no ASCII de 8 bits (con valores de
+        128 a 255) son convertidos al espacio de 7 bits.
+
+    iso Los caracteres son convertidos entre un conjunto de caracteres DOS
+        (página de códigos) y el conjunto de caracteres ISO-8859-1 (Latín-1)
+        de Unix. Los caracteres DOS sin equivalente ISO-8859-1, para los
+        cuales la conversión es imposible, son convertidos en un punto. Lo
+        mismo se aplica para caracteres ISO-8859-1 sin contraparte DOS.
+
+        Cuando sólo se emplea el parámetro "-iso", dos2unix intentará
+        determinar la página de códigos activa. Cuando esto no sea posible,
+        dos2unix utilizará la página de códigos 437 por defecto, la cual es
+        empleada principalmente en EE. UU. Para forzar una página de códigos
+        específica emplee los parámetros -437 (EE. UU.), -850 (Europa
+        Occidental), -860 (Portugués), -863 (Francocanadiense), o -865
+        (Nórdico). La página de códigos Windows 1252 (Europa Occidental)
+        también está soportada con el parámetro -1252. Para acceder a otras
+        páginas de códigos use dos2unix en combinación con iconv(1). Iconv
+        puede convertir entre una larga lista de codificaciones de
+        caracteres.
+
+        No use la conversión ISO en archivos de texto Unicode. Esto
+        corrompería los archivos codificados como UTF-8.
+
+        Algunos ejemplos:
+
+        Convierte de la página de códigos por defecto de DOS a Latín-1 de
+        Unix:
+
+            dos2unix -iso -n in.txt out.txt
+
+        Convierte de DOS CP850 a Unix Latín-1:
+
+            dos2unix -850 -n in.txt out.txt
+
+        Convierte de Windows CP1252 a Unix Latin-1:
+
+            dos2unix -1252 -n in.txt out.txt
+
+        Convierte de Windows CP1252 a Unix UTF-8 (Unicode).
+
+            iconv -f CP1252 -t UTF-8 in.txt | dos2unix > out.txt
+
+        Convierte de Unix Latin-1 a la página de códigos por defecto de DOS:
+
+            unix2dos -iso -n in.txt out.txt
+
+        Convierte de Unix Latin-1 a DOS CP850:
+
+            unix2dos -850 -n in.txt out.txt
+
+        Convierte de Unix Latin-1 a Windows CP1252.
+
+            unix2dos -1252 -n in.txt out.txt
+
+        Convierte de Unix UTF-8 (Unicode) a Windows CP1252:
+
+            unix2dos < in.txt | iconv -f UTF-8 -t CP1252 > out.txt
+
+        Véase también <http://czyborra.com/charsets/codepages.html> y
+        <http://czyborra.com/charsets/iso8859.html>.
+
+UNICODE
+  Codificaciones
+    Existen diferentes codificaciones Unicode. En Unix y Linux los archivos
+    Unicode son codificados comúnmente en UTF-8. En Windows los archivos de
+    texto Unicode pueden estar codificados en UTF-8, UTF-16, o UTF-16 big
+    endian, pero en general son codificados en formato UTF-16.
+
+  Conversion
+    Los archivos de texto Unicode pueden tener saltos de línea DOS, Unix o
+    Mac, como cualquier archivo de texto.
+
+    Todas las versiones de dos2unix y unix2dos pueden convertir archivos
+    codificados como UTF-8, debido a que UTF-8 fue diseñado para
+    retro-compatibilidad con ASCII.
+
+    Dos2unix y unix2dos con soporte Unicode UTF-16, pueden leer archivos de
+    texto codificados como UTF-16 little y big endian. Para ver si dos2unix
+    fue compilado con soporte UTF-16 escriba "dos2unix -V".
+
+    En Unix/Linux los archivos codificados con UTF-16 se convierten a la
+    codificación de caracteres local. Use el comando locale(1) para
+    averiguar la codificación de caracteres local. Cuando no se puede hacer
+    la conversión se obtendrá un error de conversión y se omitirá el
+    archivo.
+
+    En Windows los archivos UTF-16 se convierten por defecto a UTF-8. Los
+    archivos de texto forrajeados con UTF-8 están soportados tanto en
+    Windows como en Unix/Linux.
+
+    Las codificaciones UTF-16 y UTF-8 son totalmente compatibles, no se
+    perderá ningún texto en la conversión. Cuando ocurre un error de
+    conversión de UTF-16 a UTF-8, por ejemplo cuando el archivo de entrada
+    UTF-16 contiene un error, se omitirá el archivo.
+
+    Cuando se usa la opción "-u", el archivo de salida se escribirá en la
+    misma codificación UTF-16 que el archivo de entrada. La opción "-u"
+    previene la conversión a UTF-8.
+
+    Dos2unix y unix2dos no tienen la opción de convertir archivos UTF-8 a
+    UTF-16.
+
+    La conversión en modos ISO y 7-bit no funciona en archivos UTF-16.
+
+  Marca de orden de bytes
+    En Windows los archivos de texto Unicode típicamente tienen una Marca de
+    Orden de Bytes (BOM), debido a que muchos programas de Windows
+    (incluyendo el Bloc de Notas) añaden una BOM por defecto. Véase también
+    <http://es.wikipedia.org/wiki/Marca_de_orden_de_bytes_%28BOM%29>.
+
+    En Unix los archivos Unicode no suelen tener BOM. Se supone que los
+    archivos de texto son codificados en la codificación local de
+    caracteres.
+
+    Dos2unix sólo puede detectar si un archivo está en formato UTF-16 si el
+    archivo tiene una BOM. Cuando un archivo UTF-16 no tiene una BOM,
+    dos2unix tratará el archivo como un archivo binario.
+
+    Use la opción "-ul" o "-ub" para convertir un archivo UTF-16 sin BOM.
+
+    Dos2Unix, por defecto, no escribe BOM en el archivo de salida. Con la
+    opción "-b" Dos2unix escribe el BOM cuando el archivo de entrada tiene
+    BOM.
+
+    Unix2dos escribe BOM en el archivo de salida cuando el archivo de
+    entrada tiene BOM. Use la opción "-r" para eliminar la BOM.
+
+    Dos2unix y unix2dos escriben siempre BOM cuando se usa la opción "-m".
+
+  Unicode file names on Windows
+    Dos2unix has optional support for reading and writing Unicode file names
+    in the Windows Command Prompt. That means that dos2unix can open files
+    that have characters in the name that are not part of the default system
+    ANSI code page. To see if dos2unix for Windows was built with Unicode
+    file name support type "dos2unix -V".
+
+    There are some issues with displaying Unicode file names in a Windows
+    console. See option "-D", "--display-enc". The file names may be
+    displayed wrongly in the console, but the files will be written with the
+    correct name.
+
+  Ejemplos Unicode
+    Convertir de Windows UTF-16 (con una BOM) a Unix UTF-8:
+
+        dos2unix -n in.txt out.txt
+
+    Convertir de Windows UTF-16LE (sin una BOM) a Unix UTF-8:
+
+        dos2unix -ul -n in.txt out.txt
+
+    Convertir de Unix UTF-8 a Windows UTF-8 sin una BOM:
+
+        unix2dos -m -n in.txt out.txt
+
+    Convertir de Unix UTF-8 a Windows UTF-16:
+
+        unix2dos < in.txt | iconv -f UTF-8 -t UTF-16 > out.txt
+
+GB18030
+    GB18030 es un estándar del gobierno chino. Todo producto software
+    vendido en China está obligado por ley a contener un subconjunto del
+    GB18030 estándar. Véase <http://en.wikipedia.org/wiki/GB_18030>.
+
+    GB18030 es totalmente compatible con Unicode y puede considerarse como
+    formato de transformación Unicode. Como ocurre con UTF-8, GB18030 es
+    compatible con ASCII. GB18030 también es compatible con la página de
+    códigos de Windows 936, también conocida como GBK.
+
+    En Unix/Linux los archivos UTF-16 se convierten a GB18030 cuando la
+    codificación local se establece en GB18030. Tenga en cuenta que esto
+    sólo funcionará si la configuración local es soportada por el sistema.
+    Utilice "locale -a" para obtener el listado de configuraciones
+    regionales admitidas.
+
+    Use la opción "-ul" o "-ub" para convertir un archivo UTF-16 sin BOM.
+
+    Los archivos codificados como GB18030 pueden tener una Marca de Orden de
+    Bytes, como ocurre con los archivos Unicode.
+
+EJEMPLOS
+    Lee la entrada desde 'stdin' y escribe la salida a 'stdout':
+
+        dos2unix < a.txt
+        cat a.txt | dos2unix
+
+    Convierte y reemplaza a.txt. Convierte y reemplaza b.txt:
+
+        dos2unix a.txt b.txt
+        dos2unix -o a.txt b.txt
+
+    Convierte y reemplaza a.txt empleando modo de conversión ascii:
+
+        dos2unix a.txt
+
+    Convierte y reemplaza a.txt empleando modo de conversión ascii,
+    convierte y reemplaza b.txt empleando modo de conversión de 7bits:
+
+        dos2unix a.txt -c 7bit b.txt
+        dos2unix -c ascii a.txt -c 7bit b.txt
+        dos2unix -ascii a.txt -7 b.txt
+
+    Convierte a.txt del formato de Mac a Unix:
+
+        dos2unix -c mac a.txt
+        mac2unix a.txt
+
+    Convierte a.txt del formato de Unix a Mac:
+
+        unix2dos -c mac a.txt
+        unix2mac a.txt
+
+    Convierte y reemplaza a.txt manteniendo la fecha del archivo original:
+
+        dos2unix -k a.txt
+        dos2unix -k -o a.txt
+
+    Convierte a.txt y escribe la salida en e.txt:
+
+        dos2unix -n a.txt e.txt
+
+    Convierte a.txt y escribe la salida en e.txt, manteniendo la fecha de
+    e.txt igual a la de a.txt:
+
+        dos2unix -k -n a.txt e.txt
+
+    Convierte y reemplaza a.txt, convierte b.txt y escribe en e.txt:
+
+        dos2unix a.txt -n b.txt e.txt
+        dos2unix -o a.txt -n b.txt e.txt
+
+    Convierte c.txt y escribe en e.txt, convierte y reemplaza a.txt,
+    convierte y reemplaza b.txt, convierte d.txt y escribe en f.txt:
+
+        dos2unix -n c.txt e.txt -o a.txt b.txt -n d.txt f.txt
+
+CONVERSIÓN RECURSIVA
+    In a Unix shell the find(1) and xargs(1) commands can be used to run
+    dos2unix recursively over all text files in a directory tree. For
+    instance to convert all .txt files in the directory tree under the
+    current directory type:
+
+        find . -name '*.txt' -print0 |xargs -0 dos2unix
+
+    The find(1) option "-print0" and corresponding xargs(1) option -0 are
+    needed when there are files with spaces or quotes in the name. Otherwise
+    these options can be omitted. Another option is to use find(1) with the
+    "-exec" option:
+
+        find . -name '*.txt' -exec dos2unix {} \;
+
+    In a Windows Command Prompt the following command can be used:
+
+        for /R %G in (*.txt) do dos2unix "%G"
+
+    PowerShell users can use the following command in Windows PowerShell:
+
+        get-childitem -path . -filter '*.txt' -recurse | foreach-object {dos2unix $_.Fullname}
+
+INTERNACIONALIZACIÓN
+    LANG
+        El idioma principal se selecciona con la variable de entorno LANG.
+        La variable LANG consiste de varias partes. La primer parte es el
+        código del idioma en minúsculas. La segunda es opcional y es el
+        código del país en mayúsculas, precedido por un guión bajo. Existe
+        también una tercera parte opcional: la codificación de caracteres,
+        precedida por un punto. Unos cuantos ejemplos para intérpretes de
+        comandos tipo POSIX estándar:
+
+            export LANG=nl               Neerlandés
+            export LANG=nl_NL            Neerlandés, Países Bajos
+            export LANG=nl_BE            Neerlandés, Bélgica
+            export LANG=es_ES            Español, España
+            export LANG=es_MX            Español, México
+            export LANG=en_US.iso88591   Ingles, EE. UU., codificación Latín-1
+            export LANG=en_GB.UTF-8      Ingles, Reino Unido, codificación UTF-8
+
+        Para obtener una lista completa de códigos de idioma y país véase el
+        manual de gettext:
+        <http://www.gnu.org/software/gettext/manual/html_node/Usual-Language
+        -Codes.html>
+
+        En sistemas Unix puede emplear el comando locale(1) para obtener
+        información específica de locale.
+
+    LANGUAGE
+        Con la variable de entorno LANGUAGE puede especificar una lista de
+        prioridad de los idiomas, separados por dos puntos. Dos2unix da
+        preferencia a LANGUAGE sobre LANG. Por ejemplo, primero neerlandés y
+        entonces alemán: "LANGUAGE=nl:de". Para usar una lista de prioridad
+        de idiomas a través de la variable LANGUAGE tiene que habilitar
+        antes la internacionalización, asignando un valor distinto de "C" a
+        LANG (o LC_ALL). Véase también el manual de gettext:
+        <http://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-v
+        ariable.html>
+
+        Si selecciona un idioma que no está disponible el programa
+        funcionará en ingles.
+
+    DOS2UNIX_LOCALEDIR
+        Con la variable de entorno DOS2UNIX_LOCALEDIR el LOCALEDIR asignado
+        durante la compilación puede ser modificado. LOCALEDIR es usado para
+        encontrar los archivos de idioma. El valor por defecto de GNU es
+        "/usr/local/share/locale". El parámetro --version mostrará el
+        LOCALEDIR en uso.
+
+        Ejemplo (intérprete de comandos POSIX):
+
+            export DOS2UNIX_LOCALEDIR=$HOME/share/locale
+
+VALOR DE RETORNO
+    Se regresa cero cuando el programa termina exitosamente. Cuando ocurre
+    un error del sistema se regresará el último número de error del sistema.
+    Para otros errores se regresa 1.
+
+    El valor de retorno es siempre cero en modo silencioso, excepto cuando
+    se emplean parámetros incorrectos.
+
+ESTÁNDARES
+    <http://es.wikipedia.org/wiki/Documento_de_texto>
+
+    <http://es.wikipedia.org/wiki/Retorno_de_carro>
+
+    <http://es.wikipedia.org/wiki/Nueva_l%C3%ADnea>
+
+    <http://es.wikipedia.org/wiki/Unicode>
+
+AUTORES
+    Benjamin Lin - <blin@socs.uts.edu.au>, Bernd Johannes Wuebben (mac2unix
+    mode) - <wuebben@kde.org>, Christian Wurll (add extra newline) -
+    <wurll@ira.uka.de>, Erwin Waterlander - <waterlan@xs4all.nl>
+    (maintainer)
+
+    Página del proyecto: <http://waterlan.home.xs4all.nl/dos2unix.html>
+
+    Página de SourceForge: <http://sourceforge.net/projects/dos2unix/>
+
+VÉASE TAMBIÉN
+    file(1) find(1) iconv(1) locale(1) xargs(1)
+

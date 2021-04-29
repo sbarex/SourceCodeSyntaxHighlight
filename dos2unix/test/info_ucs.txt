@@ -1,0 +1,10 @@
+       6       0       0  no_bom    text    dos.txt
+       0       6       0  no_bom    text    unix.txt
+       0       0       6  no_bom    text    mac.txt
+       6       6       6  no_bom    text    mixed.txt
+      50       0       0  UTF-16LE  text    utf16le.txt
+      50       0       0  UTF-16BE  text    utf16be.txt
+       0      51      52  no_bom    binary  utf16len.txt
+       0      50       0  no_bom    text    utf8unix.txt
+      50       0       0  UTF-8     text    utf8dos.txt
+      50       0       0  GB18030   text    gb18030.txt

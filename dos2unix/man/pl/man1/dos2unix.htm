@@ -1,0 +1,779 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>dos2unix 7.4.2 - konwerter formatu plik&#xf3;w tekstowych mi&#x119;dzy systemami DOS/Mac a Uniksem</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:root@localhost" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAZWA">NAZWA</a></li>
+  <li><a href="#SKADNIA">SK&#x141;ADNIA</a></li>
+  <li><a href="#OPIS">OPIS</a></li>
+  <li><a href="#OPCJE">OPCJE</a></li>
+  <li><a href="#TRYB-MAC">TRYB MAC</a></li>
+  <li><a href="#TRYBY-KONWERSJI">TRYBY KONWERSJI</a></li>
+  <li><a href="#UNICODE">UNICODE</a>
+    <ul>
+      <li><a href="#Kodowania">Kodowania</a></li>
+      <li><a href="#Konwersje">Konwersje</a></li>
+      <li><a href="#Znacznik-BOM">Znacznik BOM</a></li>
+      <li><a href="#Unikodowe-nazwy-plikw-w-Windows">Unikodowe nazwy plik&oacute;w w Windows</a></li>
+      <li><a href="#Przykady-Unicode">Przyk&#x142;ady Unicode</a></li>
+    </ul>
+  </li>
+  <li><a href="#GB18030">GB18030</a></li>
+  <li><a href="#PRZYKADY">PRZYK&#x141;ADY</a></li>
+  <li><a href="#KONWERSJA-REKURENCYJNA">KONWERSJA REKURENCYJNA</a></li>
+  <li><a href="#LOKALIZACJA">LOKALIZACJA</a></li>
+  <li><a href="#WARTO-ZWRACANA">WARTO&#x15A;&#x106; ZWRACANA</a></li>
+  <li><a href="#STANDARDY">STANDARDY</a></li>
+  <li><a href="#AUTORZY">AUTORZY</a></li>
+  <li><a href="#ZOBACZ-TAKE">ZOBACZ TAK&#x17B;E</a></li>
+</ul>
+
+<h1 id="NAZWA">NAZWA</h1>
+
+<p>dos2unix - konwerter formatu plik&oacute;w tekstowych mi&#x119;dzy systemami DOS/Mac a Uniksem</p>
+
+<h1 id="SKADNIA">SK&#x141;ADNIA</h1>
+
+<pre><code>    dos2unix [opcje] [PLIK ...] [-n PLIK_WEJ PLIK_WYJ ...]
+    unix2dos [opcje] [PLIK ...] [-n PLIK_WEJ PLIK_WYJ ...]</code></pre>
+
+<h1 id="OPIS">OPIS</h1>
+
+<p>Pakiet Dos2unix zawiera narz&#x119;dzia <code>dos2unix</code> oraz <code>unix2dos</code> do konwersji zwyk&#x142;ych plik&oacute;w tekstowych mi&#x119;dzy formatami u&#x17C;ywanymi w systemach DOS lub Mac a formatem uniksowym.</p>
+
+<p>W plikach tekstowych systemu DOS/Windows oznaczenie ko&#x144;ca linii to po&#x142;&#x105;czenie dw&oacute;ch znak&oacute;w: powrotu karetki (CR) i przesuni&#x119;cia linii (LF). W uniksowych plikach tekstowych koniec linii to pojedynczy znak LF. W plikach tekstowych systemu Mac sprzed Mac OS X koniec linii by&#x142; pojedynczym znakiem CR. Obecnie Mac OS wykorzystuje uniksowe ko&#x144;ce linii (LF).</p>
+
+<p>Opr&oacute;cz oznacze&#x144; ko&#x144;c&oacute;w linii Dos2unix potrafi konwertowa&#x107; tak&#x17C;e kodowanie plik&oacute;w. Kilko stron kodowych DOS-a mo&#x17C;e by&#x107; przekonwertowanych do uniksowego Latin-1, a windowsowy Unicode (UTF-16) do powszechniejszego pod Uniksem kodowania Unicode UTF-8.</p>
+
+<p>Pliki binarne s&#x105; pomijane automatycznie, chyba &#x17C;e konwersja zostanie wymuszona.</p>
+
+<p>Pliki inne ni&#x17C; zwyk&#x142;e, np. katalogi lub FIFO, s&#x105; pomijane automatycznie.</p>
+
+<p>Dowi&#x105;zania symboliczne i ich cele s&#x105; domy&#x15B;lnie pozostawiane bez zmian. Dowi&#x105;zania symboliczne mog&#x105; by&#x107; opcjonalnie zast&#x119;powane, albo wyj&#x15B;cie mo&#x17C;e by&#x107; zapisywane do celu dowi&#x105;zania. Zapis do celu dowi&#x105;zania symbolicznego nie jest obs&#x142;ugiwane pod Windows.</p>
+
+<p>Dos2unix powsta&#x142; na podstawie narz&#x119;dzia dos2unix z systemu SunOS/Solaris. Jest jedna istotna r&oacute;&#x17C;nica w stosunku do oryginalnej wersji z SunOS-a/Solarisa: ta wersja domy&#x15B;lnie wykonuje konwersj&#x119; w miejscu (tryb starego pliku), podczas gdy oryginalna obs&#x142;ugiwa&#x142;a tylko konwersj&#x119; parami (tryb nowego pliku) - p. tak&#x17C;e opcje <code>-o</code> i <code>-n</code>. Ponadto wersja z SunOS-a/Solarisa domy&#x15B;lnie wykonuje konwersj&#x119; w trybie <i>iso</i>, podczas gdy ta wersja domy&#x15B;lnie wykonuje konwersj&#x119; w trybie <i>ascii</i>.</p>
+
+<h1 id="OPCJE">OPCJE</h1>
+
+<dl>
+
+<dt id="pod"><b>--</b></dt>
+<dd>
+
+<p>Potraktowanie wszystkich kolejnych opcji jako nazw plik&oacute;w. Tej opcji nale&#x17C;y u&#x17C;y&#x107;, aby przekonwertowa&#x107; pliki, kt&oacute;rych nazwy zaczynaj&#x105; si&#x119; od minusa. Przyk&#x142;adowo, aby przekonwertowa&#x107; plik o nazwie &quot;-foo&quot;, mo&#x17C;na u&#x17C;y&#x107; polecenia:</p>
+
+<pre><code>    dos2unix -- -foo</code></pre>
+
+<p>Lub w trybie nowego pliku:</p>
+
+<pre><code>    dos2unix -n -- -foo out.txt</code></pre>
+
+</dd>
+<dt id="allow-chown"><b>--allow-chown</b></dt>
+<dd>
+
+<p>Zezwolenie na zmian&#x119; w&#x142;a&#x15B;ciciela w trybie starego pliku.</p>
+
+<p>W przypadku u&#x17C;ycia tej opcji, konwersja nie zostanie przerwana, je&#x15B;li nie ma mo&#x17C;liwo&#x15B;ci zachowania w&#x142;a&#x15B;ciciela i/lub grupy oryginalnego pliku w trybie starego pliku. Konwersja b&#x119;dzie kontynuowana, a przekonwertowany plik b&#x119;dzie mia&#x142; tego samego w&#x142;a&#x15B;ciciela, jakiego by mia&#x142; w trybie nowego pliku. P. tak&#x17C;e opcje <code>-o</code> i <code>-n</code>. Opcja jest dost&#x119;pna tylko wtedy, gdy dos2unix ma obs&#x142;ug&#x119; zachowywania u&#x17C;ytkownika i grupy plik&oacute;w.</p>
+
+</dd>
+<dt id="ascii"><b>-ascii</b></dt>
+<dd>
+
+<p>Konwersja tylko znak&oacute;w ko&#x144;ca linii. Jest to domy&#x15B;lny tryb konwersji.</p>
+
+</dd>
+<dt id="iso"><b>-iso</b></dt>
+<dd>
+
+<p>Konwersja mi&#x119;dzy zestawami znak&oacute;w DOS i ISO-8859-1. Wi&#x119;cej w sekcji TRYBY KONWERSJI.</p>
+
+</dd>
+<dt id="pod-1252"><b>-1252</b></dt>
+<dd>
+
+<p>U&#x17C;ycie strony kodowej Windows 1252 (zachodnioeuropejskiej).</p>
+
+</dd>
+<dt id="pod-437"><b>-437</b></dt>
+<dd>
+
+<p>U&#x17C;ycie strony kodowej DOS 437 (US). Jest to domy&#x15B;lna strona kodowa u&#x17C;ywana przy konwersji ISO.</p>
+
+</dd>
+<dt id="pod-850"><b>-850</b></dt>
+<dd>
+
+<p>U&#x17C;ycie strony kodowej DOS 850 (zachodnioeuropejskiej).</p>
+
+</dd>
+<dt id="pod-860"><b>-860</b></dt>
+<dd>
+
+<p>U&#x17C;ycie strony kodowej DOS 860 (portugalskiej).</p>
+
+</dd>
+<dt id="pod-863"><b>-863</b></dt>
+<dd>
+
+<p>U&#x17C;ycie strony kodowej DOS 863 (kanadyjskiej francuskiej).</p>
+
+</dd>
+<dt id="pod-865"><b>-865</b></dt>
+<dd>
+
+<p>U&#x17C;ycie strony kodowej DOS 865 (nordyckiej).</p>
+
+</dd>
+<dt id="pod-7"><b>-7</b></dt>
+<dd>
+
+<p>Konwersja znak&oacute;w 8-bitowych do przestrzeni 7-bitowej.</p>
+
+</dd>
+<dt id="b---keep-bom"><b>-b, --keep-bom</b></dt>
+<dd>
+
+<p>Zachowanie znaku BOM (Byte Order Makr). Je&#x17C;eli plik wej&#x15B;ciowy zawiera BOM, powoduje zapisanie go w pliku wyj&#x15B;ciowym. Jest to domy&#x15B;lne zachowanie przy konwersji na DOS-owe ko&#x144;ce linii. P. tak&#x17C;e opcja <code>-r</code>.</p>
+
+</dd>
+<dt id="c---convmode-TRYB_KONW"><b>-c, --convmode TRYB_KONW</b></dt>
+<dd>
+
+<p>Ustawienie trybu konwersji. TRYB_KONW to jeden z: <i>ascii</i>, <i>7bit</i>, <i>iso</i>, <i>mac</i>, przy czym domy&#x15B;lny jest ascii.</p>
+
+</dd>
+<dt id="D---display-enc-KODOWANIE"><b>-D, --display-enc KODOWANIE</b></dt>
+<dd>
+
+<p>Ustawienie kodowania wy&#x15B;wietlanego tekstu. KODOWANIE to jedno z: <i>ansi</i>, <i>unicode</i>, <i>unicodebom</i>, <i>utf8</i>, <i>utf8bom</i>, przy czym domy&#x15B;lne to ansi.</p>
+
+<p>Ta opcja jest dost&#x119;pna wy&#x142;&#x105;czenie w programie dos2unix dla Windows z obs&#x142;ug&#x105; nazw plik&oacute;w Unicode. Nie ma wp&#x142;ywu na same nawy odczytywanych i zapisywanych plik&oacute;w, a jedynie na spos&oacute;b ich wy&#x15B;wietlania.</p>
+
+<p>Istnieje kilka sposob&oacute;w wy&#x15B;wietlania tekstu w konsoli Windows w zale&#x17C;no&#x15B;ci od kodowania tekstu. Wszystkie maj&#x105; swoje zalety i wady.</p>
+
+<dl>
+
+<dt id="ansi"><b>ansi</b></dt>
+<dd>
+
+<p>Domy&#x15B;lna metoda programu dos2unix to stosowanie tekstu kodowanego w ANSI. Zalet&#x105; jest wsteczna zgodno&#x15B;&#x107;. Dzia&#x142;a z fontami rastrowymi, jak i TrueType. W niekt&oacute;rych rejonach mo&#x17C;e by&#x107; potrzeba zmiany aktywnej strony kodowej DOS OEM na systemow&#x105; stron&#x119; kodow&#x105; Windows ANSI przy u&#x17C;yciu polecenia <code>chcp</code>, poniewa&#x17C; dos2unix wykorzystuje systemow&#x105; stron&#x119; kodow&#x105; Windows.</p>
+
+<p>Wad&#x105; kodowania ansi jest fakt, &#x17C;e mi&#x119;dzynarodowe nazwy plik&oacute;w ze znakami spoza domy&#x15B;lnej systemowej strony kodowej nie s&#x105; wy&#x15B;wietlane w&#x142;a&#x15B;ciwie. Mo&#x17C;na zamiast tego zobaczy&#x107; znak zapytania albo niew&#x142;a&#x15B;ciwy symbol. Je&#x17C;eli nie pracujemy z obcymi nazwami plik&oacute;w, ta metoda jest poprawna.</p>
+
+</dd>
+<dt id="unicode-unicodebom"><b>unicode, unicodebom</b></dt>
+<dd>
+
+<p>Zalet&#x105; kodowania unicode (windowsow&#x105; nazw&#x105; dla UTF-16) jest (zwykle) w&#x142;a&#x15B;ciwe wy&#x15B;wietlanie tekstu. Nie ma potrzeby zmiany aktywnej strony kodowej. Mo&#x17C;e by&#x107; potrzeba zmiany fontu konsoli na font TrueType, aby znaki mi&#x119;dzynarodowe by&#x142;y wy&#x15B;wietlane poprawnie. Je&#x15B;li znak nie jest obecny w foncie TrueType, zwykle wida&#x107; ma&#x142;y kwadrat, czasami ze znakiem zapytania w &#x15B;rodku.</p>
+
+<p>W przypadku u&#x17C;ywania konsoli ConEmu ca&#x142;y tekst jest wy&#x15B;wietlany poprawnie, poniewa&#x17C; ConEmu automatycznie wybiera dobry font.</p>
+
+<p>Wad&#x105; kodowania unicode jest niezgodno&#x15B;&#x107; z ASCII. Wyj&#x15B;cie nie jest &#x142;atwe do obs&#x142;u&#x17C;enia w przypadku przekierowania do innego programu lub pliku.</p>
+
+<p>W przypadku u&#x17C;ycia metody <code>unicodebom</code>, tekst w unikodzie jest poprzedzony znakiem BOM (Byte Order Mark). BOM jest wymagany do poprawnego przekierowania lub przekazywania przez potok w pow&#x142;oce PowerShell.</p>
+
+</dd>
+<dt id="utf8-utf8bom"><b>utf8, utf8bom</b></dt>
+<dd>
+
+<p>Zalet&#x105; kodowania utf8 jest zgodno&#x15B;&#x107; z ASCII. Trzeba ustawi&#x107; font konsoli na font TrueType. Przy u&#x17C;yciu fontu TrueType tekst jest wy&#x15B;wietlany podobnie do kodowania <code>unicode</code>.</p>
+
+<p>Wad&#x105; jest fakt, &#x17C;e w przypadku u&#x17C;ywania domy&#x15B;lnego fontu rastrowego, wszystkie znaki spoza ASCII s&#x105; wy&#x15B;wietlane niepoprawnie. Nie tylko unikodowe nazwy plik&oacute;w, ale tak&#x17C;e przet&#x142;umaczone komunikaty staj&#x105; si&#x119; nieczytelne. W Windows skonfigurowanym dla rejonu Azji Wschodniej wida&#x107; du&#x17C;o migotania konsoli w trakcie wy&#x15B;wietlania komunikat&oacute;w.</p>
+
+<p>W konsoli ConEmu metoda kodowania utf8 dzia&#x142;a dobrze.</p>
+
+<p>W przypadku u&#x17C;ycia metody <code>utf8bom</code>, tekst w UTF-8 jest poprzedzony znakiem BOM (Byte Order Mark). BOM jest wymagany do poprawnego przekierowania lub przekazywania przez potok w pow&#x142;oce PowerShell.</p>
+
+</dd>
+</dl>
+
+<p>Domy&#x15B;lne kodowanie mo&#x17C;na zmieni&#x107; przy u&#x17C;yciu zmiennej &#x15B;rodowiskowej DOS2UNIX_DISPLAY_ENC, ustawiaj&#x105;c j&#x105; na <code>unicode</code>, <code>unicodebom</code>, <code>utf8</code> lub <code>utf8bom</code>.</p>
+
+</dd>
+<dt id="f---force"><b>-f, --force</b></dt>
+<dd>
+
+<p>Wymuszenie konwersji plik&oacute;w binarnych.</p>
+
+</dd>
+<dt id="gb---gb18030"><b>-gb, --gb18030</b></dt>
+<dd>
+
+<p>Pod Windows pliki w UTF-16 s&#x105; domy&#x15B;lnie konwertowane do UTF-8, niezale&#x17C;nie od ustawienia lokalizacji. Ta opcja pozwala przekonwertowa&#x107; pliki w UTF-16 do GB18030. Opcja jest dost&#x119;pna tylko pod Windows, wi&#x119;cej w sekcji dotycz&#x105;cej GB18030.</p>
+
+</dd>
+<dt id="h---help"><b>-h, --help</b></dt>
+<dd>
+
+<p>Wy&#x15B;wietlenie opisu i zako&#x144;czenie.</p>
+
+</dd>
+<dt id="i-FLAGI---info-FLAGI-PLIK"><b>-i[FLAGI], --info[=FLAGI] PLIK ...</b></dt>
+<dd>
+
+<p>Wy&#x15B;wietlenie informacji o pliku. Konwersja nie jest wykonywana.</p>
+
+<p>Wypisywane s&#x105; nast&#x119;puj&#x105;ce informacje, w tej kolejno&#x15B;ci: liczba DOS-owych ko&#x144;c&oacute;w linii, liczba uniksowych ko&#x144;c&oacute;w linii, liczba macowych ko&#x144;c&oacute;w linii, znacznik BOM, tekstowy lub binarny, nazwa pliku.</p>
+
+<p>Przyk&#x142;adowe wyj&#x15B;cie:</p>
+
+<pre><code>     6       0       0  no_bom    text    dos.txt
+     0       6       0  no_bom    text    unix.txt
+     0       0       6  no_bom    text    mac.txt
+     6       6       6  no_bom    text    mixed.txt
+    50       0       0  UTF-16LE  text    utf16le.txt
+     0      50       0  no_bom    text    utf8unix.txt
+    50       0       0  UTF-8     text    utf8dos.txt
+     2     418     219  no_bom    binary  dos2unix.exe</code></pre>
+
+<p>Uwaga: czasami plik binarny mo&#x17C;e by&#x107; b&#x142;&#x119;dnie rozpoznany jako tekstowy. P. tak&#x17C;e opcja <code>-s</code>.</p>
+
+<p>Opcjonalnie mo&#x17C;na ustawi&#x107; dodatkowe flagi, aby zmieni&#x107; wyj&#x15B;cie. Mo&#x17C;na doda&#x107; jedn&#x105; lub wi&#x119;cej flag.</p>
+
+<dl>
+
+<dt id="pod0"><b>0</b></dt>
+<dd>
+
+<p>Wypisanie wierszy informacji o pliku zako&#x144;czonych znakiem NUL zamiast znaku nowej linii. Pozwala to na poprawn&#x105; interpretacj&#x119; nazw plik&oacute;w zawieraj&#x105;cych spacje lub cudzys&#x142;owy w przypadku u&#x17C;ycia flagi c. Flagi nale&#x17C;y u&#x17C;ywa&#x107; w po&#x142;&#x105;czeniu z opcj&#x105; <code>-0</code> lub <code>--null</code> programu xargs(1).</p>
+
+</dd>
+<dt id="d"><b>d</b></dt>
+<dd>
+
+<p>Wypisanie liczby DOS-owych ko&#x144;c&oacute;w linii.</p>
+
+</dd>
+<dt id="u"><b>u</b></dt>
+<dd>
+
+<p>Wypisanie liczby uniksowych ko&#x144;c&oacute;w linii.</p>
+
+</dd>
+<dt id="m"><b>m</b></dt>
+<dd>
+
+<p>Wypisanie liczby macowych ko&#x144;c&oacute;w linii.</p>
+
+</dd>
+<dt id="b"><b>b</b></dt>
+<dd>
+
+<p>Wypisanie znacznika BOM.</p>
+
+</dd>
+<dt id="t"><b>t</b></dt>
+<dd>
+
+<p>Wypisanie, czy plik jest tekstowy, czy binarny.</p>
+
+</dd>
+<dt id="c"><b>c</b></dt>
+<dd>
+
+<p>Wypisanie tylko plik&oacute;w, kt&oacute;re zosta&#x142;yby przekonwertowane.</p>
+
+<p>Z flag&#x105; <code>c</code> dos2unix wypisze tylko pliki zawieraj&#x105;ce DOS-owe ko&#x144;ce linii, a unix2dos wypisze tylko nazwy plik&oacute;w zawieraj&#x105;cych uniksowe ko&#x144;ce linii.</p>
+
+</dd>
+<dt id="h"><b>h</b></dt>
+<dd>
+
+<p>Wypisanie nag&#x142;&oacute;wka.</p>
+
+</dd>
+<dt id="p"><b>p</b></dt>
+<dd>
+
+<p>Wy&#x15B;wietlanie nazw plik&oacute;w bez &#x15B;cie&#x17C;ki.</p>
+
+</dd>
+</dl>
+
+<p>Przyk&#x142;ady:</p>
+
+<p>Pokazanie informacji o wszystkich plikach *.txt:</p>
+
+<pre><code>    dos2unix -i *.txt</code></pre>
+
+<p>Pokazanie tylko liczby DOS-owych i uniksowych ko&#x144;c&oacute;w linii:</p>
+
+<pre><code>    dos2unix -idu *.txt</code></pre>
+
+<p>Pokazanie tylko znacznika BOM:</p>
+
+<pre><code>    dos2unix --info=b *.txt</code></pre>
+
+<p>Wypisanie listy plik&oacute;w zawieraj&#x105;cych DOS-owe ko&#x144;ce linii:</p>
+
+<pre><code>    dos2unix -ic *.txt</code></pre>
+
+<p>Wypisanie listy plik&oacute;w zawieraj&#x105;cych uniksowe ko&#x144;ce linii:</p>
+
+<pre><code>    unix2dos -ic *.txt</code></pre>
+
+<p>Konwersja tylko plik&oacute;w maj&#x105;cych DOS-owe ko&#x144;ce linii, pozostawienie pozosta&#x142;ych bez zmian:</p>
+
+<pre><code>    dos2unix -ic0 *.txt | xargs -0 dos2unix</code></pre>
+
+<p>Wyszukanie plik&oacute;w tekstowych zawieraj&#x105;cych DOS-owe ko&#x144;ce linii:</p>
+
+<pre><code>    find -name &#39;*.txt&#39; -print0 | xargs -0 dos2unix -ic</code></pre>
+
+</dd>
+<dt id="k---keepdate"><b>-k, --keepdate</b></dt>
+<dd>
+
+<p>Zachowanie znacznika czasu pliku wyj&#x15B;ciowego takiego samego, jak pliku wej&#x15B;ciowego.</p>
+
+</dd>
+<dt id="L---license"><b>-L, --license</b></dt>
+<dd>
+
+<p>Wy&#x15B;wietlenie licencji programu.</p>
+
+</dd>
+<dt id="l---newline"><b>-l, --newline</b></dt>
+<dd>
+
+<p>Dodanie dodatkowego znaku ko&#x144;ca linii.</p>
+
+<p><b>dos2unix</b>: tylko DOS-owe znaki ko&#x144;ca linii s&#x105; zamieniane na dwa uniksowe. W trybie Mac tylko macowe znaki ko&#x144;ca linii s&#x105; zamieniane na dwa uniksowe.</p>
+
+<p><b>unix2dos</b>: tylko uniksowe znaki ko&#x144;ca linii s&#x105; zamieniane na dwa DOS-owe. W trybie Mac uniksowe znaki ko&#x144;ca linii s&#x105; zamieniane na dwa macowe.</p>
+
+</dd>
+<dt id="m---add-bom"><b>-m, --add-bom</b></dt>
+<dd>
+
+<p>Zapisanie znacznika BOM (Byte Order Mark) w pliku wyj&#x15B;ciowym. Domy&#x15B;lnie zapisywany jest BOM UTF-8.</p>
+
+<p>Je&#x15B;li plik wej&#x15B;ciowy jest w kodowaniu UTF-16 i u&#x17C;yto opcji <code>-u</code>, zostanie zapisany BOM UTF-16.</p>
+
+<p>Nigdy nie nale&#x17C;y u&#x17C;ywa&#x107; tej opcji, je&#x15B;li kodowanie wyj&#x15B;ciowe jest inne ni&#x17C; UTF-8, UTF-16 lub GB18030. Wi&#x119;cej w sekcji UNICODE.</p>
+
+</dd>
+<dt id="n---newfile-PLIK_WEJ-PLIK_WYJ"><b>-n, --newfile PLIK_WEJ PLIK_WYJ ...</b></dt>
+<dd>
+
+<p>Tryb nowego pliku. Konwersja PLIKU_WEJ z zapisem wyj&#x15B;cia do PLIKU_WYJ. Nazwy plik&oacute;w musz&#x105; by&#x107; podane parami, a masek <i>nie</i> nale&#x17C;y u&#x17C;ywa&#x107;, gdy&#x17C; <i>spowoduje</i> to utrat&#x119; plik&oacute;w.</p>
+
+<p>Osoba uruchamiaj&#x105;ca konwersj&#x119; w trybie nowego pliku (par) b&#x119;dzie w&#x142;a&#x15B;cicielem przekonwertowanego pliku. Prawa odczytu/zapisu nowego pliku b&#x119;d&#x105; pochodzi&#x142;y z praw pliku oryginalnego po odj&#x119;ciu umask(1) osoby uruchamiaj&#x105;cej konwersj&#x119;.</p>
+
+</dd>
+<dt id="no-allow-chown"><b>--no-allow-chown</b></dt>
+<dd>
+
+<p>Bez zezwolenia na zmian&#x119; w&#x142;a&#x15B;ciciela pliku w trybie starego pliku (domy&#x15B;lne).</p>
+
+<p>Przerwanie konwersji, je&#x17C;eli u&#x17C;ytkownik lub grupa oryginalnego pliku nie mo&#x17C;e by&#x107; zachowana w trybie starego pliku. P. tak&#x17C;e opcje <code>-o</code> oraz <code>-n</code>. Ta opcja jest dost&#x119;pna tylko je&#x15B;li dos2unix ma obs&#x142;ug&#x119; zachowywania u&#x17C;ytkownika i grupy plik&oacute;w.</p>
+
+</dd>
+<dt id="o---oldfile-PLIK"><b>-o, --oldfile PLIK ...</b></dt>
+<dd>
+
+<p>Tryb starego pliku. Konwersja PLIKU i nadpisanie go wyj&#x15B;ciem. Program dzia&#x142;a domy&#x15B;lnie w tym trybie. Mo&#x17C;na u&#x17C;ywa&#x107; masek.</p>
+
+<p>W trybie starego pliku (w miejscu) przekonwertowany plik otrzymuje tego samego w&#x142;a&#x15B;ciciela, grup&#x119; oraz prawa odczytu/zapisu, jak plik oryginalny - tak&#x17C;e wtedy, gdy plik jest konwertowany przez innego u&#x17C;ytkownika, maj&#x105;cego prawo zapisu do pliku (np. przez u&#x17C;ytkownika root). Konwersja zostanie przerwana, je&#x15B;li nie b&#x119;dzie mo&#x17C;liwe zachowanie oryginalnych warto&#x15B;ci. Zmiana w&#x142;a&#x15B;ciciela mog&#x142;aby oznacza&#x107;, &#x17C;e pierwotny w&#x142;a&#x15B;ciciel nie mo&#x17C;e ju&#x17C; odczyta&#x107; pliku. Zmiana grupy mog&#x142;aby by&#x107; zagro&#x17C;eniem bezpiecze&#x144;stwa, plik m&oacute;g&#x142;by by&#x107; czytelny dla nie zamierzonych os&oacute;b. Zachowanie w&#x142;a&#x15B;ciciela, grupy i praw odczytu/zapisu jest obs&#x142;ugiwane tylko na Uniksie.</p>
+
+<p>Aby sprawdzi&#x107;, czy doswunix ma obs&#x142;ug&#x119; zachowywania u&#x17C;ytkownika i grupy plik&oacute;w, mo&#x17C;na napisa&#x107; <code>dos2unix -V</code>.</p>
+
+<p>Konwersja jest wykonywana zawsze przy u&#x17C;yciu pliku tymczasowego. Je&#x15B;li w trakcie konwersji wyst&#x105;pi b&#x142;&#x105;d, plik tymczasowy jest usuwany, a plik oryginalny pozostaje nietkni&#x119;ty. Je&#x15B;li konwersja si&#x119; powiedzie, plik oryginalny jest zast&#x119;powany plikiem tymczasowym. Mo&#x17C;na mie&#x107; prawa zapisu do pliku oryginalnego, ale brak uprawnie&#x144;, aby nada&#x107; tego samego w&#x142;a&#x15B;ciciela i/lub grup&#x119;, co plik oryginalny, plikowi tymczasowemu. Oznacza to, &#x17C;e nie mo&#x17C;na zachowa&#x107; u&#x17C;ytkownika i/lub grupy oryginalnego pliku. W takim przypadku mo&#x17C;na u&#x17C;y&#x107; opcji <code>--allow-chown</code>, aby kontynuowa&#x107; konwersj&#x119;:</p>
+
+<pre><code>    dos2unix --allow-chown foo.txt</code></pre>
+
+<p>Inny spos&oacute;b to u&#x17C;ycie trybu nowego pliku:</p>
+
+<pre><code>    dos2unix -n foo.txt foo.txt</code></pre>
+
+<p>Zalet&#x105; opcji <code>--allow-chown</code> jest mo&#x17C;liwo&#x15B;&#x107; u&#x17C;ycia masek oraz zachowanie w&#x142;a&#x15B;ciciela w miar&#x119; mo&#x17C;liwo&#x15B;ci.</p>
+
+</dd>
+<dt id="q---quiet"><b>-q, --quiet</b></dt>
+<dd>
+
+<p>Tryb cichy. Pomini&#x119;cie wszystkich ostrze&#x17C;e&#x144; i komunikat&oacute;w. Zwracanym kodem jest zero, chyba &#x17C;e podano b&#x142;&#x119;dne opcje linii polece&#x144;.</p>
+
+</dd>
+<dt id="r---remove-bom"><b>-r, --remove-bom</b></dt>
+<dd>
+
+<p>Usuni&#x119;cie znak&oacute;w BOM (Byte Order Mark). Bez zapisywania BOM do pliku wyj&#x15B;ciowego. Jest to domy&#x15B;lne zachowanie przy konwersji na uniksowe ko&#x144;ce linii. P. tak&#x17C;e opcja <code>-b</code>.</p>
+
+</dd>
+<dt id="s---safe"><b>-s, --safe</b></dt>
+<dd>
+
+<p>Pomini&#x119;cie plik&oacute;w binarnych (domy&#x15B;lne).</p>
+
+<p>Pomijanie plik&oacute;w binarnych ma na celu zapobie&#x17C;enie przypadkowym b&#x142;&#x119;dom. Uwaga: wykrywanie plik&oacute;w binarnych nie jest w 100% odporne na b&#x142;&#x119;dy. Pliki wej&#x15B;ciowe s&#x105; przeszukiwane pod k&#x105;tem symboli binarnych, kt&oacute;re zwykle nie wyst&#x119;puj&#x105; w plikach tekstowych. Mo&#x17C;e si&#x119; zdarzy&#x107;, &#x17C;e plik binarny zawiera tylko zwyk&#x142;e znaki tekstowe. Taki plik binarny b&#x119;dzie b&#x142;&#x119;dnie widziany jako plik tekstowy.</p>
+
+</dd>
+<dt id="u---keep-utf16"><b>-u, --keep-utf16</b></dt>
+<dd>
+
+<p>Zachowanie oryginalnego kodowania pliku wej&#x15B;ciowego UTF-16. Plik wyj&#x15B;ciowy zostanie zapisany w tym samym kodowaniu UTF-16 (little lub big endian), co plik wej&#x15B;ciowy. Zapobiega to przekszta&#x142;ceniu do UTF-8. Do pliku zostanie zapisany odpowiedni znacznik BOM UTF-16. T&#x119; opcj&#x119; mo&#x17C;na wy&#x142;&#x105;czy&#x107; opcj&#x105; <code>-ascii</code>.</p>
+
+</dd>
+<dt id="ul---assume-utf16le"><b>-ul, --assume-utf16le</b></dt>
+<dd>
+
+<p>Przyj&#x119;cie, &#x17C;e format pliku wej&#x15B;ciowego to UTF-16LE.</p>
+
+<p>Je&#x15B;li w pliku wej&#x15B;ciowym jest znacznik BOM (Byte Order Mark), ma on priorytet nad t&#x105; opcj&#x105;.</p>
+
+<p>Je&#x15B;li przyj&#x119;to b&#x142;&#x119;dne za&#x142;o&#x17C;enie (plik wej&#x15B;ciowy nie jest w formacie UTF-16LE), a konwersja si&#x119; uda, wynikiem b&#x119;dzie plik wyj&#x15B;ciowy UTF-8 ze z&#x142;ym tekstem. Konwersj&#x119; t&#x119; mo&#x17C;na odwr&oacute;ci&#x107; przy u&#x17C;yciu polecenia iconv(1) do konwersji wyj&#x15B;cia UTF-8 z powrotem do UTF-16LE. Przywr&oacute;ci to plik oryginalny.</p>
+
+<p>Przyj&#x119;cie UTF-16LE dzia&#x142;a jako <i>tryb konwersji</i>. Przy prze&#x142;&#x105;czeniu na domy&#x15B;lny tryb <i>ascii</i> przyj&#x119;cie UTF-16LE jest wy&#x142;&#x105;czane.</p>
+
+</dd>
+<dt id="ub---assume-utf16be"><b>-ub, --assume-utf16be</b></dt>
+<dd>
+
+<p>Przyj&#x119;cie, &#x17C;e format pliku wej&#x15B;ciowego to UTF-16BE.</p>
+
+<p>Ta opcja dzia&#x142;a analogicznie do <code>-ul</code>.</p>
+
+</dd>
+<dt id="v---verbose"><b>-v, --verbose</b></dt>
+<dd>
+
+<p>Wy&#x15B;wietlanie szczeg&oacute;&#x142;owych komunikat&oacute;w. Wy&#x15B;wietlane &#x15B;a dodatkowe informacje o znacznikach BOM (Byte Order Mark) oraz liczbie przekonwertowanych ko&#x144;c&oacute;w linii.</p>
+
+</dd>
+<dt id="F---follow-symlink"><b>-F, --follow-symlink</b></dt>
+<dd>
+
+<p>Pod&#x105;&#x17C;anie za dowi&#x105;zaniami symbolicznymi i konwertowanie ich cel&oacute;w</p>
+
+</dd>
+<dt id="R---replace-symlink"><b>-R, --replace-symlink</b></dt>
+<dd>
+
+<p>Zast&#x119;powanie dowi&#x105;za&#x144; symbolicznych przekonwertowanymi plikami (oryginalne pliki docelowe pozostaj&#x105; bez zmian).</p>
+
+</dd>
+<dt id="S---skip-symlink"><b>-S, --skip-symlink</b></dt>
+<dd>
+
+<p>Pozostawienie dowi&#x105;za&#x144; symbolicznych i cel&oacute;w bez zmian (domy&#x15B;lne).</p>
+
+</dd>
+<dt id="V---version"><b>-V, --version</b></dt>
+<dd>
+
+<p>Wy&#x15B;wietlenie informacji o wersji i zako&#x144;czenie.</p>
+
+</dd>
+</dl>
+
+<h1 id="TRYB-MAC">TRYB MAC</h1>
+
+<p>W zwyk&#x142;ym trybie znaki ko&#x144;ca linii s&#x105; konwertowane z DOS-a do Uniksa i odwrotnie. Znaki ko&#x144;ca linii systemu Mac nie s&#x105; konwertowane.</p>
+
+<p>W trybie Mac znaki ko&#x144;ca linii s&#x105; konwertowane z formatu Maca do Uniksa i odwrotnie. Znaki ko&#x144;ca linii systemu DOS nie s&#x105; zmieniane.</p>
+
+<p>Aby uruchomi&#x107; program w trybie Mac, nale&#x17C;y u&#x17C;y&#x107; opcji linii polece&#x144; <code>-c mac</code> albo u&#x17C;y&#x107; polece&#x144; <code>mac2unix</code> lub <code>unix2mac</code>.</p>
+
+<h1 id="TRYBY-KONWERSJI">TRYBY KONWERSJI</h1>
+
+<dl>
+
+<dt id="ascii1"><b>ascii</b></dt>
+<dd>
+
+<p>W trybie <code>ascii</code> konwertowane s&#x105; tylko ko&#x144;ce linii. Jest to domy&#x15B;lny tryb konwersji.</p>
+
+<p>Mimo &#x17C;e nazwa tego trybu to ASCII, kt&oacute;re jest standardem 7-bitowym, jest to tryb 8-bitowy. Nale&#x17C;y zawsze u&#x17C;ywa&#x107; tego trybu przy konwersji plik&oacute;w Unicode UTF-8.</p>
+
+</dd>
+<dt id="bit"><b>7bit</b></dt>
+<dd>
+
+<p>W tym trybie wszystkie znaki 8-bitowe spoza ASCII (o warto&#x15B;ciach od 128 do 255) s&#x105; konwertowane do przestrzeni 7-bitowej.</p>
+
+</dd>
+<dt id="iso1"><b>iso</b></dt>
+<dd>
+
+<p>W tym trybie znaki s&#x105; konwertowane mi&#x119;dzy zestawem znak&oacute;w DOS (stron&#x105; kodow&#x105;) a zestawem znak&oacute;w ISO-8859-1 (Latin-1) u&#x17C;ywanym na Uniksie. Znaki DOS-owe nie maj&#x105;ce odpowiednika w ISO-8859-1, kt&oacute;rych nie da si&#x119; przekonwertowa&#x107;, s&#x105; zamieniane na kropk&#x119;. To samo dotyczy znak&oacute;w ISO-8859-1 bez odpowiednika w DOS-ie.</p>
+
+<p>Je&#x15B;li u&#x17C;ywana jest tylko opcja <code>-iso</code>, dos2unix pr&oacute;buje wykry&#x107; aktywn&#x105; stron&#x119; kodow&#x105;. Je&#x15B;li nie jest to mo&#x17C;liwe, dos2unix u&#x17C;ywa domy&#x15B;lnej strony kodowej CP437, stosowanej g&#x142;&oacute;wnie w USA. Aby wymusi&#x107; okre&#x15B;lon&#x105; stron&#x119; kodow&#x105;, nale&#x17C;y u&#x17C;y&#x107; opcji <code>-437</code> (US), <code>-850</code> (zachodnioeuropejska), <code>-860</code> (portugalska), <code>-863</code> (kanadyjska francuska) lub <code>-865</code> (nordycka). Ponadto obs&#x142;ugiwana jest strona kodowa Windows CP1252 (zachodnioeuropejska) przy u&#x17C;yciu opcji <code>-1252</code>. W przypadku innych stron kodowych mo&#x17C;na u&#x17C;y&#x107; narz&#x119;dzia dos2unix wraz z iconv(1). Iconv potrafi konwertowa&#x107; mi&#x119;dzy wieloma kodowaniami znak&oacute;w.</p>
+
+<p>Nigdy nie nale&#x17C;y u&#x17C;ywa&#x107; konwersji ISO na plikach tekstowych w Unicode. Uszkodzi&#x142;aby pliki kodowane UTF-8.</p>
+
+<p>Kilka przyk&#x142;ad&oacute;w:</p>
+
+<p>Konwersja z domy&#x15B;lnej strony kodowej DOS do uniksowego Latin-1:</p>
+
+<pre><code>    dos2unix -iso -n in.txt out.txt</code></pre>
+
+<p>Konwersja ze strony kodowej DOS CP850 do uniksowego Latin-1:</p>
+
+<pre><code>    dos2unix -850 -n in.txt out.txt</code></pre>
+
+<p>Konwersja ze strony kodowej Windows CP1252 do uniksowego Latin-1:</p>
+
+<pre><code>    dos2unix -1252 -n in.txt out.txt</code></pre>
+
+<p>Konwersja ze strony kodowej Windows CP1252 do uniksowego UTF-8 (Unicode):</p>
+
+<pre><code>    iconv -f CP1252 -t UTF-8 in.txt | dos2unix &gt; out.txt</code></pre>
+
+<p>Konwersa z uniksowego Latin-1 do domy&#x15B;lnej strony kodowej DOS:</p>
+
+<pre><code>    unix2dos -iso -n in.txt out.txt</code></pre>
+
+<p>Konwersja z uniksowego Latin-1 do strony kodowej DOS CP850:</p>
+
+<pre><code>    unix2dos -850 -n in.txt out.txt</code></pre>
+
+<p>Konwersja z uniksowego Latin-1 do strony kodowej Windows CP1252:</p>
+
+<pre><code>    unix2dos -1252 -n in.txt out.txt</code></pre>
+
+<p>Konwersja z uniksowego UTF-8 (Unicode) do strony kodowej Windows CP1252:</p>
+
+<pre><code>    unix2dos &lt; in.txt | iconv -f UTF-8 -t CP1252 &gt; out.txt</code></pre>
+
+<p>Wi&#x119;cej pod adresem <a href="http://czyborra.com/charsets/codepages.html">http://czyborra.com/charsets/codepages.html</a> oraz <a href="http://czyborra.com/charsets/iso8859.html">http://czyborra.com/charsets/iso8859.html</a>.</p>
+
+</dd>
+</dl>
+
+<h1 id="UNICODE">UNICODE</h1>
+
+<h2 id="Kodowania">Kodowania</h2>
+
+<p>Istniej&#x105; r&oacute;&#x17C;ne kodowania Unicode. Pod Uniksem i Linuksem pliki Unicode s&#x105; zwykle kodowane z u&#x17C;yciem UTF-8. Pod Windows pliki tekstowe Unicode mog&#x105; by&#x107; kodowane w UTF-8, UTF-16, UTF-16 big-endian, ale przewa&#x17C;nie s&#x105; kodowane w UTF-16.</p>
+
+<h2 id="Konwersje">Konwersje</h2>
+
+<p>Pliki tekstowe Unicode mog&#x105; mie&#x107; znaki ko&#x144;ca linii systemu DOS, Unix lub Mac, podobnie jak zwyk&#x142;e pliki tekstowe.</p>
+
+<p>Wszystkie wersje dos2unix i unix2dos potrafi&#x105; konwertowa&#x107; pliki kodowane UTF-8, poniewa&#x17C; UTF-8 jest wstecznie zgodne z ASCII.</p>
+
+<p>Dos2unix i unix2dos z obs&#x142;ug&#x105; Unicode UTF-16 potrafi&#x105; odczytywa&#x107; pliki tekstowe kodowane UTF-16 little- oraz big-endian. Aby sprawdzi&#x107;, czy dos2unix zosta&#x142; zbudowany z obs&#x142;ug&#x105; UTF-16, nale&#x17C;y napisa&#x107; <code>dos2unix -V</code>.</p>
+
+<p>Pod Uniksem/Linuksem pliki w kodowaniu UTF-16 s&#x105; konwertowane do kodowania znak&oacute;w ustawionej lokalizacji. Kodowanie znak&oacute;w dla lokalizacji mo&#x17C;na sprawdzi&#x107; poleceniem locale(1). Je&#x15B;li konwersja nie jest mo&#x17C;liwa, wyst&#x105;pi b&#x142;&#x105;d, a plik zostanie pomini&#x119;ty.</p>
+
+<p>Pod Windows pliki UTF-16 s&#x105; domy&#x15B;lnie konwertowane do UTF-8. Pliki tekstkowe w kodowaniu UTF-8 s&#x105; dobrze obs&#x142;ugiwane zar&oacute;wno pod Windows, jak i Uniksem/Linuksem.</p>
+
+<p>Kodowania UTF-16 i UTF-8 s&#x105; w pe&#x142;ni zgodne, konwersja nie spowoduje utraty &#x17C;adnej cz&#x119;&#x15B;ci tekstu. W przypadku wyst&#x105;pienia b&#x142;&#x119;du konwersji, na przyk&#x142;ad w przypadku b&#x142;&#x119;du w pliku wej&#x15B;ciowym UTF-16, plik zostanie pomini&#x119;ty.</p>
+
+<p>W przypadku u&#x17C;ycia opcji <code>-u</code>, plik wej&#x15B;ciowy zostanie zapisany w tym samym kodowaniu UTF-16, co plik wej&#x15B;ciowy. Opcja <code>-u</code> zapobiega konwersji do UTF-8.</p>
+
+<p>Dos2unix oraz unix2dos nie maj&#x105; opcji pozwalaj&#x105;cej na konwersj&#x119; plik&oacute;w UTF-8 do UTF-16.</p>
+
+<p>Tryby konwersji ISO i 7-bit nie dzia&#x142;aj&#x105; na plikach UTF-16.</p>
+
+<h2 id="Znacznik-BOM">Znacznik BOM</h2>
+
+<p>W systemie Windows pliki tekstowe zwykle zawieraj&#x105; znacznik BOM (Byte Order Mark), poniewa&#x17C; wiele program&oacute;w dla Windows (w tym Notepad) dodaje domy&#x15B;lnie znaczniki BOM. Wi&#x119;cej informacji mo&#x17C;na znale&#x17A;&#x107; pod adresem <a href="http://pl.wikipedia.org/wiki/BOM_(informatyka)">http://pl.wikipedia.org/wiki/BOM_(informatyka)</a>.</p>
+
+<p>Pod Uniksem pliki Unicode zwykle nie maj&#x105; znacznika BOM. Pliki tekstowe s&#x105; traktowane jako kodowane zgodnie z kodowaniem znak&oacute;w ustawionej lokalizacji.</p>
+
+<p>Dos2unix potrafi wykry&#x107; tylko, czy plik jest w formacie UTF-16, je&#x15B;li zawiera znacznik BOM. Je&#x15B;li plik UTF-16 nie ma tego znacznika, dos2unix potraktuje plik jako binarny.</p>
+
+<p>Do konwersji pliku UTF-16 bez znacznika BOM mo&#x17C;na u&#x17C;y&#x107; opcji <code>-ul</code> lub <code>-ub</code>.</p>
+
+<p>Dos2unix nie zapisuje domy&#x15B;lnie znaku BOM w pliku wyj&#x15B;ciowym. Z opcj&#x105; <code>-b</code> Dos2unix zapisuje BOM, je&#x15B;li plik wej&#x15B;ciowy zawiera BOM.</p>
+
+<p>Unix2dos domy&#x15B;lnie zapisuje znaczniki BOM w pliku wyj&#x15B;ciowym, je&#x15B;li plik wej&#x15B;ciowy ma BOM. Aby usun&#x105;&#x107; BOM, mo&#x17C;na u&#x17C;y&#x107; opcji <code>-r</code>.</p>
+
+<p>Dos2unix oraz unix2dos zawsze zapisuj&#x105; znaczniki BOM, je&#x15B;li u&#x17C;yta zostanie opcja <code>-m</code>.</p>
+
+<h2 id="Unikodowe-nazwy-plikw-w-Windows">Unikodowe nazwy plik&oacute;w w Windows</h2>
+
+<p>Dos2unix ma opcjonaln&#x105; obs&#x142;ug&#x119; odczytu i zapisu nazw plik&oacute;w Unicode w linii polece&#x144; Windows. Oznacza to, &#x17C;e dos2unix potrafi otwiera&#x107; pliki zawieraj&#x105;ce w nazwie znaki spoza domy&#x15B;lnej systemowej strony kodowej ANSI. Aby sprawdzi&#x107;, czy dos2unix dla Windows zosta&#x142; zbudowany z obs&#x142;ug&#x105; nazw plik&oacute;w Unicode, mo&#x17C;na wpisa&#x107; <code>dos2unix -V</code>.</p>
+
+<p>Przy wy&#x15B;wietlaniu nazw plik&oacute;w Unicode w konsoli Windows wyst&#x119;puje kilka problem&oacute;w. Wi&#x119;cej informacji w opisie opcji <code>-D</code>, <code>--display-enc</code>. Nazwy plik&oacute;w mog&#x105; by&#x107; wy&#x15B;wietlane b&#x142;&#x119;dnie na konsoli, ale pliki b&#x119;d&#x105; zapisywane z poprawn&#x105; nazw&#x105;.</p>
+
+<h2 id="Przykady-Unicode">Przyk&#x142;ady Unicode</h2>
+
+<p>Konwersja pliku UTF-16 (z BOM) z formatu Windows do uniksowego UTF-8:</p>
+
+<pre><code>    dos2unix -n in.txt out.txt</code></pre>
+
+<p>Konwersja pliku UTF-16LE (bez BOM) z formatu Windows do uniksowego UTF-8:</p>
+
+<pre><code>    dos2unix -ul -n in.txt out.txt</code></pre>
+
+<p>Konwersja z uniksowego UTF-8 do UTF-8 z BOM dla Windows:</p>
+
+<pre><code>    unix2dos -m -n in.txt out.txt</code></pre>
+
+<p>Konwersja z uniksowego UTF-8 do UTF-16 dla Windows:</p>
+
+<pre><code>    unix2dos &lt; in.txt | iconv -f UTF-8 -t UTF-16 &gt; out.txt</code></pre>
+
+<h1 id="GB18030">GB18030</h1>
+
+<p>GB18030 to standard urz&#x119;dowy w Chinach. Obowi&#x105;zkowy podzbi&oacute;r standardu GB18030 jest oficjalnym wymaganiem ka&#x17C;dego oprogramowania sprzedawanego w Chinach. Wi&#x119;cej pod adresem <a href="http://en.wikipedia.org/wiki/GB_18030">http://en.wikipedia.org/wiki/GB_18030</a>.</p>
+
+<p>GB18030 jest w pe&#x142;ni zgodny z Unicode i mo&#x17C;e by&#x107; uwa&#x17C;any za format transformacji unikodu. Podobnie jak UTF-8, GB18030 jest zgodny z ASCII. Jest tak&#x17C;e zgodny ze stron&#x105; kodow&#x105; Windows 936, znan&#x105; te&#x17C; jako GBK.</p>
+
+<p>Pod Uniksem/Linuksem pliki UTF-16 s&#x105; konwertowane do GB18030, je&#x15B;li kodowanie dla lokalizacji jest ustawione na GB18030. Uwaga: b&#x119;dzie to dzia&#x142;a&#x107; tylko, je&#x15B;li lokalizacja jest obs&#x142;ugiwana przez system. List&#x119; obs&#x142;ugiwanych lokalizacji mo&#x17C;na sprawdzi&#x107; poleceniem <code>locale -a</code>.</p>
+
+<p>Pod Windows w celu konwersji plik&oacute;w UTF-16 do GB18030 nale&#x17C;y u&#x17C;y&#x107; opcji <code>-gb</code>.</p>
+
+<p>Pliki w kodowaniu GB18030 mog&#x105; mie&#x107; znacznik BOM, podobnie jak pliki w Unicode.</p>
+
+<h1 id="PRZYKADY">PRZYK&#x141;ADY</h1>
+
+<p>Odczyt ze standardowego wej&#x15B;cia i zapis na standardowe wyj&#x15B;cie:</p>
+
+<pre><code>    dos2unix &lt; a.txt
+    cat a.txt | dos2unix</code></pre>
+
+<p>Konwersja i zast&#x105;pienie a.txt; konwersja i zast&#x105;pienie b.txt:</p>
+
+<pre><code>    dos2unix a.txt b.txt
+    dos2unix -o a.txt b.txt</code></pre>
+
+<p>Konwersja i zast&#x105;pienie a.txt w trybie ascii:</p>
+
+<pre><code>    dos2unix a.txt</code></pre>
+
+<p>Konwersja i zast&#x105;pienie a.txt w trybie ascii; konwersja i zast&#x105;pienie b.txt w trybie 7-bitowym:</p>
+
+<pre><code>    dos2unix a.txt -c 7bit b.txt
+    dos2unix -c ascii a.txt -c 7bit b.txt
+    dos2unix -ascii a.txt -7 b.txt</code></pre>
+
+<p>Konwersja a.txt z formatu Mac do formatu uniksowego:</p>
+
+<pre><code>    dos2unix -c mac a.txt
+    mac2unix a.txt</code></pre>
+
+<p>Konwersja a.txt z formatu uniksowego do formatu Mac:</p>
+
+<pre><code>    unix2dos -c mac a.txt
+    unix2mac a.txt</code></pre>
+
+<p>Konwersja i zast&#x105;pienie a.txt z zachowaniem oryginalnego znacznika czasu:</p>
+
+<pre><code>    dos2unix -k a.txt
+    dos2unix -k -o a.txt</code></pre>
+
+<p>Konwersja a.txt i zapis do e.txt:</p>
+
+<pre><code>    dos2unix -n a.txt e.txt</code></pre>
+
+<p>Konwersja a.txt i zapis do e.txt z zachowaniem znacznika czasu e.txt takiego, jak a.txt:</p>
+
+<pre><code>    dos2unix -k -n a.txt e.txt</code></pre>
+
+<p>Konwersja i zast&#x105;pienie a.txt; konwersja b.txt i zapis do e.txt:</p>
+
+<pre><code>    dos2unix a.txt -n b.txt e.txt
+    dos2unix -o a.txt -n b.txt e.txt</code></pre>
+
+<p>Konwersja c.txt i zapis do e.txt; konwersja i zast&#x105;pienie a.txt; konwersja i zast&#x105;pienie b.txt; konwersja d.txt i zapis do f.txt:</p>
+
+<pre><code>    dos2unix -n c.txt e.txt -o a.txt b.txt -n d.txt f.txt</code></pre>
+
+<h1 id="KONWERSJA-REKURENCYJNA">KONWERSJA REKURENCYJNA</h1>
+
+<p>W pow&#x142;oce uniksowej mo&#x17C;na u&#x17C;y&#x107; polece&#x144; find(1) i xargs(1) do rekurencyjnego uruchomienia dos2unix na wszystkich plikach tekstowych w strukturze drzewa katalog&oacute;w. Na przyk&#x142;ad, aby przekonwertowa&#x107; wszystkie pliki .txt w drzewie katalog&oacute;w poni&#x17C;ej katalogu bie&#x17C;&#x105;cego, nale&#x17C;y napisa&#x107;:</p>
+
+<pre><code>    find . -name &#39;*.txt&#39; -print0 |xargs -0 dos2unix</code></pre>
+
+<p>Opcja <code>-print0</code> polecenia find(1) i odpowiadaj&#x105;ca jej opcja <code>-0</code> polecenia xargs(1) s&#x105; potrzebne, je&#x15B;li istniej&#x105; pliki ze spacjami lub cudzys&#x142;owami w nazwie. W przeciwnym wypadku opcje te mo&#x17C;na pomin&#x105;&#x107;. Inny spos&oacute;b to u&#x17C;ycie find(1) z opcj&#x105; <code>-exec</code>:</p>
+
+<pre><code>    find . -name &#39;*.txt&#39; -exec dos2unix {} \;</code></pre>
+
+<p>Z poziomu linii polece&#x144; Windows mo&#x17C;na u&#x17C;y&#x107; nast&#x119;puj&#x105;cego polecenia:</p>
+
+<pre><code>    for /R %G in (*.txt) do dos2unix &quot;%G&quot;</code></pre>
+
+<p>U&#x17C;ytkownicy pow&#x142;oki PowerShell mog&#x105; u&#x17C;y&#x107; nast&#x119;puj&#x105;cego polecenia w Windows PowerShell:</p>
+
+<pre><code>    get-childitem -path . -filter &#39;*.txt&#39; -recurse | foreach-object {dos2unix $_.Fullname}</code></pre>
+
+<h1 id="LOKALIZACJA">LOKALIZACJA</h1>
+
+<dl>
+
+<dt id="LANG"><b>LANG</b></dt>
+<dd>
+
+<p>G&#x142;&oacute;wny j&#x119;zyk wybiera si&#x119; zmienn&#x105; &#x15B;rodowiskow&#x105; LANG. Zmienna LANG sk&#x142;ada si&#x119; z kilku cz&#x119;&#x15B;ci. Pierwsza cz&#x119;&#x15B;&#x107; to ma&#x142;e litery oznaczaj&#x105;ce kod j&#x119;zyka. Druga cz&#x119;&#x15B;&#x107; jest opcjonalna i zawiera kod kraju pisany wielkimi literami, poprzedzony podkre&#x15B;leniem. Jest tak&#x17C;e opcjonalna trzecia cz&#x119;&#x15B;&#x107;: kodowanie znak&oacute;w, poprzedzone kropk&#x105;. Kilka przyk&#x142;ad&oacute;w dla pow&#x142;ok zgodnych ze standardem POSIX:</p>
+
+<pre><code>    export LANG=nl               holenderski
+    export LANG=nl_NL            holenderski, Holandia
+    export LANG=nl_BE            holenderski, Belgia
+    export LANG=es_ES            hiszpa&#x144;ski, Hiszpania
+    export LANG=es_MX            hiszpa&#x144;ski, Meksyk
+    export LANG=en_US.iso88591   angielski, USA, kodowanie Latin-1
+    export LANG=en_GB.UTF-8      angielski, Wlk. Brytania, kodowanie UTF-8</code></pre>
+
+<p>Pe&#x142;n&#x105; list&#x119; kod&oacute;w j&#x119;zyk&oacute;w i kraj&oacute;w mo&#x17C;na znale&#x17A;&#x107; w podr&#x119;czniku do gettexta: <a href="http://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html">http://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html</a></p>
+
+<p>W systemach uniksowych do uzyskania informacji dotycz&#x105;cych lokalizacji mo&#x17C;na u&#x17C;y&#x107; polecenia locale(1).</p>
+
+</dd>
+<dt id="LANGUAGE"><b>LANGUAGE</b></dt>
+<dd>
+
+<p>Przy u&#x17C;yciu zmiennej &#x15B;rodowiskowej LANGUAGE mo&#x17C;na okre&#x15B;li&#x107; list&#x119; j&#x119;zyk&oacute;w wg priorytetu, oddzielonych dwukropkami. Dos2unix przyjmuje pierwsze&#x144;stwo zmiennej LANGUAGE nad LANG. Na przyk&#x142;ad, najpierw holenderski, nast&#x119;pnie niemiecki: <code>LANGUAGE=nl:de</code>. Aby skorzysta&#x107; z listy wg priorytet&oacute;w ze zmiennej LANGUAGE, trzeba najpierw w&#x142;&#x105;czy&#x107; lokalizacj&#x119; przez ustawienie zmiennej LANG (lub LC_ALL) na warto&#x15B;&#x107; inn&#x105; ni&#x17C; &quot;C&quot;. Wi&#x119;cej informacji znajduje si&#x119; w podr&#x119;czniku do gettexta: <a href="http://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-variable.html">http://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-variable.html</a></p>
+
+<p>W przypadku wybrania niedost&#x119;pnego j&#x119;zyka, otrzymamy standardowe, angielskie komunikaty.</p>
+
+</dd>
+<dt id="DOS2UNIX_LOCALEDIR"><b>DOS2UNIX_LOCALEDIR</b></dt>
+<dd>
+
+<p>Przy u&#x17C;yciu zmiennej &#x15B;rodowiskowej DOS2UNIX_LOCALEDIR, mo&#x17C;na nadpisa&#x107; ustawienie LOCALEDIR z czasu kompilacji. LOCALEDIR to katalog u&#x17C;ywany do znalezienia plik&oacute;w lokalizacji. Domy&#x15B;ln&#x105; warto&#x15B;ci&#x105; dla GNU jest <code>/usr/local/share/locale</code>. Opcja <b>--version</b> wy&#x15B;wietla u&#x17C;ywan&#x105; warto&#x15B;&#x107; LOCALEDIR.</p>
+
+<p>Przyk&#x142;ad (dla pow&#x142;oki POSIX):</p>
+
+<pre><code>    export DOS2UNIX_LOCALEDIR=$HOME/share/locale</code></pre>
+
+</dd>
+</dl>
+
+<h1 id="WARTO-ZWRACANA">WARTO&#x15A;&#x106; ZWRACANA</h1>
+
+<p>W przypadku powodzenia zwracane jest zero. Je&#x15B;li wyst&#x105;pi b&#x142;&#x105;d systemowy, zwracany jest ostatni b&#x142;&#x105;d systemowy. W przypadku innych b&#x142;&#x119;d&oacute;w zwracane jest 1.</p>
+
+<p>Warto&#x15B;&#x107; zwracana w trybie cichym to zawsze zero, z wyj&#x105;tkiem sytuacji podania b&#x142;&#x119;dnych opcji linii polece&#x144;.</p>
+
+<h1 id="STANDARDY">STANDARDY</h1>
+
+<p><a href="http://pl.wikipedia.org/wiki/Plik_tekstowy">http://pl.wikipedia.org/wiki/Plik_tekstowy</a></p>
+
+<p><a href="http://en.wikipedia.org/wiki/Carriage_return">http://en.wikipedia.org/wiki/Carriage_return</a></p>
+
+<p><a href="http://pl.wikipedia.org/wiki/End-of-line">http://pl.wikipedia.org/wiki/End-of-line</a></p>
+
+<p><a href="http://pl.wikipedia.org/wiki/Unicode">http://pl.wikipedia.org/wiki/Unicode</a></p>
+
+<h1 id="AUTORZY">AUTORZY</h1>
+
+<p>Benjamin Lin &lt;blin@socs.uts.edu.au&gt;; Bernd Johannes Wuebben (tryb mac2unix) &lt;wuebben@kde.org&gt;; Christian Wurll (dodawanie dodatkowej nowej linii) &lt;wurll@ira.uka.de&gt;; Erwin Waterlander &lt;waterlan@xs4all.nl&gt; (prowadz&#x105;cy)</p>
+
+<p>Strona projektu: <a href="http://waterlan.home.xs4all.nl/dos2unix.html">http://waterlan.home.xs4all.nl/dos2unix.html</a></p>
+
+<p>Strona SourceForge: <a href="http://sourceforge.net/projects/dos2unix/">http://sourceforge.net/projects/dos2unix/</a></p>
+
+<h1 id="ZOBACZ-TAKE">ZOBACZ TAK&#x17B;E</h1>
+
+<p>file(1) find(1) iconv(1) locale(1) xargs(1)</p>
+
+
+</body>
+
+</html>
+
+

@@ -1,0 +1,36 @@
+.DEFAULT_GOAL := all
+
+bold := $(shell tput bold 2> /dev/null)
+normal := $(shell tput sgr0 2> /dev/null)
+
+all: help_indexes
+
+help_indexes: ${SRCROOT}/Application/SyntaxHighlight.help/Contents/Resources/English.lproj/search.cshelpindex ${SRCROOT}/Application/SyntaxHighlight.help/Contents/Resources/English.lproj/search.helpindex
+
+${SRCROOT}/Application/SyntaxHighlight.help/Contents/Resources/English.lproj/search.cshelpindex: $(wildcard ${SRCROOT}/Application/SyntaxHighlight.help/Contents/Resources/English.lproj/*.html)
+	@echo "${bold}Indexing corespotlight help ${SRCROOT}/Application/SyntaxHighlight.help/Contents/Resources/English.lproj …${normal}"
+	@cd "${SRCROOT}/Application/SyntaxHighlight.help/Contents/Resources/English.lproj"
+	hiutil -Cf "${SRCROOT}/Application/SyntaxHighlight.help/Contents/Resources/English.lproj/search.cshelpindex" --stopwords=en -v --anchors -I corespotlight "${SRCROOT}/Application/SyntaxHighlight.help/Contents/Resources/English.lproj"
+	@echo "${bold}Terms indexed:${normal}"
+	@hiutil -I corespotlight -Tvf "${SRCROOT}/Application/SyntaxHighlight.help/Contents/Resources/English.lproj/search.cshelpindex"
+	@echo "${bold}Anchors:${normal}"
+	@hiutil -I corespotlight --list-anchors -v -f "${SRCROOT}/Application/SyntaxHighlight.help/Contents/Resources/English.lproj/search.cshelpindex"
+	@# hiutil -I corespotlight --list-anchor-dictionary -v -f "${SRCROOT}/Application/SyntaxHighlight.help/Contents/Resources/English.lproj/search.cshelpindex"
+
+${SRCROOT}/Application/SyntaxHighlight.help/Contents/Resources/English.lproj/search.helpindex: $(wildcard ${SRCROOT}/Application/SyntaxHighlight.help/Contents/Resources/English.lproj/*.html)
+	@echo "${bold}Indexing lsm help…${normal}"
+	@cd "${SRCROOT}/Application/SyntaxHighlight.help/Contents/Resources/English.lproj"
+	hiutil -Cf "${SRCROOT}/Application/SyntaxHighlight.help/Contents/Resources/English.lproj/search.helpindex" --stopwords=en -v --anchors -I lsm "${SRCROOT}/Application/SyntaxHighlight.help/Contents/Resources/English.lproj"
+	@echo "${bold}Terms indexed:${normal}"
+	@hiutil -I corespotlight -Tvf "${SRCROOT}/Application/SyntaxHighlight.help/Contents/Resources/English.lproj/search.cshelpindex"
+	@echo "${bold}Anchors:${normal}"
+	@hiutil -I corespotlight --list-anchors -v -f "${SRCROOT}/Application/SyntaxHighlight.help/Contents/Resources/English.lproj/search.cshelpindex"
+
+prune:
+	@echo "${bold}Purge helpd cache…${normal}"
+	hiutil --purge-caches
+	@# exit 0 # hiutil --purge-caches return a non zero exit code.
+
+clean:
+	@rm -f ${SRCROOT}/Application/SyntaxHighlight.help/Contents/Resources/English.lproj/search.helpindex
+	@rm -f ${SRCROOT}/Application/SyntaxHighlight.help/Contents/Resources/English.lproj/search.cshelpindex

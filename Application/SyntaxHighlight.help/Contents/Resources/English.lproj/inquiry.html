@@ -1,0 +1,31 @@
+<html lang="en">
+<head>
+    <title>Syntax Highlight Help</title>
+
+    <meta charset="UTF-8">
+    <meta name="AppleTitle" content="Syntax Highlight Help"/>
+    <meta name="description" content="Syntax Highlight Inquiry file">
+    <meta name="robots" content="index, anchors" /> 
+    <link rel="stylesheet" type="text/css" href="../css/main.css" />
+</head>
+<body>
+    <div class="header"><a href="general.html">index</a></div>
+    
+    <a name="SyntaxHighlight_INQUIRY"></a>
+    <h1>Inquiry file</h1>
+
+    <p>With the <i>Inquiry window</i> you can see if a specific file type is handled by the Quick Look Extension and also if it is supported by <code>highlight</code>.
+
+    <div><img src="images/inquiry.png" alt="Inquiry window"></div>
+
+    <p>Alternatively you can see the UTI of a file with this Terminal command: </p>
+    <pre><code>$ mdls -name kMDItemContentType -name kMDItemContentTypeTree filename.ext</code></pre>
+
+    <p>It's likely that I didn't associate all the possible extensions managed by <code>highlight</code>.
+    If you found an unhandled format please send me the output of above command.</p>
+
+    <p><b>Only the formats supported by `highlight` can be managed by this application.</b></p>
+
+    <br />
+</body>
+</html>

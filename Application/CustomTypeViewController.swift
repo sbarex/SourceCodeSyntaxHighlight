@@ -34,14 +34,17 @@ class UTIStatus {
     let UTI: UTI
     var supported: UTISupported = .unknown
     let standard: Bool
+    var recognized: String?
+    
     init(UTI: UTI, standard: Bool) {
         self.UTI = UTI
         self.standard = standard
+        self.recognized = nil
     }
 }
 
-class DropView: NSView {
-    weak var dropDelegate: DropViewDelegate?
+class DropSensor: NSView {
+    weak var dropDelegate: DropSensorDelegate?
     
     var acceptableTypes: [NSPasteboard.PasteboardType] { return [.fileURL] }
     
@@ -57,57 +60,64 @@ class DropView: NSView {
     
     func setup() {
         registerForDraggedTypes(acceptableTypes)
-        self.wantsLayer = true
-        self.layer?.cornerRadius = 12
-        self.layer?.borderColor = NSColor.tertiaryLabelColor.cgColor
-        self.layer?.borderWidth = 4
     }
     
     override func draggingEntered(_ sender: NSDraggingInfo) -> NSDragOperation {
-        self.layer?.borderColor = NSColor.selectedControlColor.cgColor
         self.dropDelegate?.enterDrag(sender)
         return .every
     }
     
     override func draggingExited(_ sender: NSDraggingInfo?) {
-        self.layer?.borderColor = NSColor.gridColor.cgColor
         self.dropDelegate?.exitDrag(sender)
     }
     
     override func draggingEnded(_ sender: NSDraggingInfo) {
         self.dropDelegate?.endDrag(sender)
-        self.layer?.borderColor = NSColor.gridColor.cgColor
     }
 }
 
-class ActionTableCellView: NSTableCellView {
-    @IBOutlet weak var popupButton: NSPopUpButton!
-}
-
-protocol DropViewDelegate: class {
+protocol DropSensorDelegate: AnyObject {
     func enterDrag(_ sender: NSDraggingInfo)
     func exitDrag(_ sender: NSDraggingInfo?)
     func endDrag(_ sender: NSDraggingInfo)
 }
 
-class CustomTypeViewController: NSViewController, DropViewDelegate, NSTableViewDelegate, NSTableViewDataSource {
-    @IBOutlet weak var dropView: DropView!
-    @IBOutlet weak var labelView: NSTextField!
+class CustomTypeViewController: NSViewController, DropSensorDelegate, NSTableViewDelegate, NSTableViewDataSource {
+    @IBOutlet weak var dropSensor: DropSensor!
+    
+    @IBOutlet weak var tabView: NSTabView!
+    @IBOutlet weak var dropView: NSView!
     
     @IBOutlet weak var tableView: NSTableView!
     @IBOutlet weak var scrollView: NSScrollView!
     
-    @IBOutlet weak var handledLegend: NSStackView!
-    @IBOutlet weak var notHandledLegend: NSStackView!
-    @IBOutlet weak var supportedLegend: NSStackView!
+    @IBOutlet weak var handledLegend: NSView!
+    @IBOutlet weak var notHandledLegend: NSView!
+    @IBOutlet weak var supportedLegend: NSView!
+    @IBOutlet weak var resetButton: NSButton!
     
     private var firstDrop = true
     
-    var service: SCSHXPCServiceProtocol? {
-        return (NSApplication.shared.delegate as? AppDelegate)?.service
+    enum Mode {
+        case drop
+        case info
     }
     
-    var handledUTIs: [UTIDesc] = []
+    var mode: Mode = .drop {
+        didSet {
+            guard oldValue != mode else { return }
+            switch mode {
+            case .drop:
+                tabView.selectTabViewItem(at: 1)
+                resetButton.isHidden = true
+            case .info:
+                tabView.selectTabViewItem(at: 0)
+                resetButton.isHidden = false
+            }
+        }
+    }
+    
+    var handledUTIs: [UTI] = []
     
     var UTIs: [UTIStatus] = [] {
         didSet {
@@ -116,18 +126,24 @@ class CustomTypeViewController: NSViewController, DropViewDelegate, NSTableViewD
             self.supportedLegend.isHidden = true
             if (self.UTIs.count > 0) {
                 for (i, uti) in self.UTIs.enumerated() {
-                    if let _ = handledUTIs.first(where: { $0.uti == uti.UTI }) {
+                    let syntax = HighlightWrapper.shared.areSomeSyntaxSupported(extensions: uti.UTI.extensions)
+                    
+                    if let _ = handledUTIs.first(where: { $0.UTI == uti.UTI.UTI }) {
                         uti.supported = .yes
                         self.handledLegend.isHidden = false
                     } else {
-                        service?.areSomeSyntaxSupported(uti.UTI.extensions, overrideSettings: nil, reply: { (state) in
-                            self.notHandledLegend.isHidden = state
-                            self.supportedLegend.isHidden = !state
-                            uti.supported = state ? .highlight : .no
-                            let c = self.tableView.column(withIdentifier: NSUserInterfaceItemIdentifier("status"))
-                            self.tableView.reloadData(forRowIndexes: IndexSet(integer: i), columnIndexes: IndexSet(integer: c))
-                        })
+                        self.supportedLegend.isHidden = syntax == nil
+                        uti.supported = syntax != nil ? .highlight : .no
                     }
+                    
+                    self.notHandledLegend.isHidden = syntax != nil
+                    uti.recognized = syntax
+                    
+                    var c = self.tableView.column(withIdentifier: NSUserInterfaceItemIdentifier("status"))
+                    self.tableView.reloadData(forRowIndexes: IndexSet(integer: i), columnIndexes: IndexSet(integer: c))
+                    
+                    c = self.tableView.column(withIdentifier: NSUserInterfaceItemIdentifier("highlight"))
+                    self.tableView.reloadData(forRowIndexes: IndexSet(integer: i), columnIndexes: IndexSet(integer: c))
                 }
             }
             
@@ -136,194 +152,199 @@ class CustomTypeViewController: NSViewController, DropViewDelegate, NSTableViewD
     }
         
     override func viewDidLoad() {
-        self.dropView.dropDelegate = self
+        self.dropSensor.dropDelegate = self
         
-        handledUTIs = (NSApplication.shared.delegate as? AppDelegate)?.fetchHandledUTIs() ?? []
+        resetUTI(self)
         
-        self.handledLegend.isHidden = true
-        self.notHandledLegend.isHidden = true
-        self.supportedLegend.isHidden = true
+        handledUTIs = (NSApplication.shared.delegate as? AppDelegate)?.handledUTIs ?? []
+        
+        self.dropView.wantsLayer = true
+        self.dropView.layer?.cornerRadius = 12
+        self.dropView.layer?.borderColor = NSColor.tertiaryLabelColor.cgColor
+        self.dropView.layer?.borderWidth = 4
+    }
+    
+    override func viewWillAppear() {
+        super.viewWillAppear()
+        view.window?.standardWindowButton(.zoomButton)?.isHidden = true
+        view.window?.standardWindowButton(.miniaturizeButton)?.isHidden = true
     }
     
     func enterDrag(_ sender: NSDraggingInfo) {
-        self.scrollView.isHidden = true
+        mode = .drop
+        self.dropView.layer?.borderColor = NSColor.selectedControlColor.cgColor
     }
     func exitDrag(_ sender: NSDraggingInfo?) {
-        self.scrollView.isHidden = firstDrop
+        mode = firstDrop ? .drop : .info
+        self.dropView.layer?.borderColor = NSColor.tertiaryLabelColor.cgColor
     }
+    
     func endDrag(_ sender: NSDraggingInfo) {
+        self.dropView.layer?.borderColor = NSColor.tertiaryLabelColor.cgColor
+        
         if let fileUrl = sender.draggingPasteboard.pasteboardItems?.first?.propertyList(forType: .fileURL) as? String, let url = URL(string: fileUrl) {
             
-            var UTIs: [UTIStatus] = []
-            
-            do {
-                let v = try url.resourceValues(forKeys: [URLResourceKey.typeIdentifierKey])
-                if let uti = v.typeIdentifier {
-                    UTIs.append(UTIStatus(UTI: UTI(uti), standard: true))
-                }
-            } catch {
-            }
-            
-            let ext = url.pathExtension
-            if !ext.isEmpty {
-                let tags = UTTypeCreateAllIdentifiersForTag(kUTTagClassFilenameExtension, ext as CFString, nil)
-                if let t = tags?.takeRetainedValue() as? [String] {
-                    for u in t {
-                        if UTIs.first(where: { $0.UTI.UTI == u }) == nil {
-                            UTIs.append(UTIStatus(UTI: UTI(u), standard: false))
-                        }
-                    }
-                }
-            }
-            self.UTIs = UTIs
-            self.scrollView.isHidden = false
-            firstDrop = false
+            setUTIs(for: url)
         } else {
             self.UTIs = []
-            self.scrollView.isHidden = true
+            mode = .drop
         }
     }
     
-    @IBAction func addSupportForUTI(_ sender: NSPopUpButton) {
-        guard UTIs[sender.tag].supported != .yes  else {
-            return
-        }
+    internal func setUTIs(for url: URL) {
+        var UTIs: [UTIStatus] = []
         
-        let alert = NSAlert()
-        alert.messageText = "Sorry but this action is not supported because strip the code signature and make the extension unusable!"
-        alert.addButton(withTitle: "OK")
-        
-        alert.alertStyle = .warning
-        
-        alert.runModal()
-        /*
-        
-        
-        let uti = UTIs[sender.tag]
-        
-        let alert = NSAlert()
-        alert.window.title = "Warning"
-        alert.messageText = "Adding a custom format WILL REMOVE the code signature and may make it IMPOSSIBLE TO RUN THE APPLICATION. This operation cannot be undone. Please take a backup of the app."
-        alert.informativeText = "Do you want to continue?"
-        var b = alert.addButton(withTitle: "Continue")
-        b.keyEquivalent = ""
-        b = alert.addButton(withTitle: "Cancel")
-        b.keyEquivalent = "\u{1b}" // ESC
-        
-        alert.alertStyle = .critical    
-        
-        guard alert.runModal() == .alertFirstButtonReturn else {
-            return
-        }
-        
-        service?.registerUTI(uti.UTI.UTI, result: { result in
-            print("registration: \(result ? "OK" : "KO")")
-            DispatchQueue.main.async {
-                let alert = NSAlert()
-                alert.messageText = result ? "Custom UTI registered" : "Warning"
-                alert.informativeText = result ? "Restart the app to see the customized UTI.\nIf the app don't start you must reset the code signature with this terminal command: /usr/bin/codesign --remove-signature PATH_OF_THE_APP" : "Unable to add the requested UTI format."
-                alert.addButton(withTitle: "OK")
-                alert.alertStyle = result ? .informational : .warning
-                alert.runModal()
+        do {
+            let v = try url.resourceValues(forKeys: [URLResourceKey.typeIdentifierKey])
+            if let uti = v.typeIdentifier {
+                UTIs.append(UTIStatus(UTI: UTI(uti), standard: true))
             }
-        })
-        /*
-        let task = Process()
-        
-        // helper tool path
-        task.launchPath = Bundle.main.path(forResource: "relaunch", ofType: nil)!
-        // self PID as a argument
-        task.arguments = [String(ProcessInfo.processInfo.processIdentifier)]
-        task.launch()
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            NSApp.terminate(self)
+        } catch {
         }
- */
- */
-    }
-    
-    /*
-    @IBAction func doSave(_ sender: Any) {
-        if isUTIValid, let url = (NSApplication.shared.delegate as? AppDelegate)?.getQLAppexUrl(), let bundle = Bundle(url: url) {
-            
-            let alert = NSAlert()
-            alert.messageText = "Warning"
-            alert.informativeText = "Modify the supported format break code signature!\nDo you want to continue?"
-            alert.addButton(withTitle: "Continue")
-            alert.addButton(withTitle: "Cancel")
-            alert.alertStyle = .critical
-            
-            guard alert.runModal() == .alertFirstButtonReturn else {
-                return
-            }
-            
-            let u = bundle.bundleURL.appendingPathComponent("Contents/info.plist")
-            if let d = NSMutableDictionary(contentsOf: u) {
-                if let NSExtension = d["NSExtension"] as? NSMutableDictionary, let NSExtensionAttributes = NSExtension["NSExtensionAttributes"] as? NSMutableDictionary, let QLSupportedContentTypes = NSExtensionAttributes["QLSupportedContentTypes"] as? NSMutableArray, let UTI = self.UTI?.UTI {
-                    QLSupportedContentTypes.add(UTI)
-                    print(QLSupportedContentTypes)
-                    
-                    do {
-                        try d.write(to: u)
-                    } catch {
-                        let alert = NSAlert()
-                        alert.messageText = "Unable to apply the changes!"
-                        alert.informativeText = error.localizedDescription
-                        alert.addButton(withTitle: "Close")
-                        alert.alertStyle = .critical
-                        alert.runModal()
+        
+        let ext = url.pathExtension
+        if !ext.isEmpty {
+            let tags = UTTypeCreateAllIdentifiersForTag(kUTTagClassFilenameExtension, ext as CFString, nil)
+            if let t = tags?.takeRetainedValue() as? [String] {
+                for u in t {
+                    if UTIs.first(where: { $0.UTI.UTI == u }) == nil {
+                        UTIs.append(UTIStatus(UTI: UTI(u), standard: false))
                     }
                 }
             }
-            print(u)
         }
-        dismiss(sender)
+        self.UTIs = UTIs
+        mode = .info
+        firstDrop = false
     }
-     */
+    
+    @IBAction func resetUTI(_ sender: Any) {
+        self.firstDrop = true
+        self.UTIs = []
+        mode = .drop
+    }
+    
+    @IBAction func browseForFile(_ sender: Any) {
+        let openPanel = NSOpenPanel()
+        openPanel.canCreateDirectories = false
+        openPanel.showsTagField = false
+        openPanel.isExtensionHidden = false
+        openPanel.level = NSWindow.Level(rawValue: Int(CGWindowLevelForKey(.modalPanelWindow)))
+        
+        let result = openPanel.runModal()
+        
+        guard result == .OK, let url = openPanel.url else {
+            return
+        }
+        setUTIs(for: url)
+    }
     
     func numberOfRows(in tableView: NSTableView) -> Int {
         return self.UTIs.count
     }
     
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
+        guard let tableColumn = tableColumn else {
+            return NSTableCellView()
+        }
+        
         let uti = self.UTIs[row]
+        
+        let labelFont = NSFont.labelFont(ofSize: NSFont.systemFontSize)
         let font: NSFont
         if uti.standard {
             font = NSFont.boldSystemFont(ofSize: NSFont.systemFontSize)
         } else {
-            font = NSFont.labelFont(ofSize: NSFont.systemFontSize)
+            font = labelFont
         }
         
-        guard let tableColumn = tableColumn else {
-            return NSTableCellView()
-        }
         let view = tableView.makeView(withIdentifier: tableColumn.identifier, owner: self) as! NSTableCellView
         
         if tableColumn.identifier == NSUserInterfaceItemIdentifier("description") {
-            view.textField?.attributedStringValue = NSAttributedString(string: uti.UTI.description, attributes: [NSAttributedString.Key.font: font])
+            view.textField?.stringValue = uti.UTI.description //NSAttributedString(string: uti.UTI.description, attributes: [NSAttributedString.Key.font: font])
+            view.textField?.font = font
         } else if tableColumn.identifier == NSUserInterfaceItemIdentifier("UTI") {
-            view.textField?.attributedStringValue = NSAttributedString(string: uti.UTI.UTI, attributes: [NSAttributedString.Key.font: font])
+            view.textField?.stringValue = uti.UTI.UTI // NSAttributedString(string: uti.UTI.UTI, attributes: [NSAttributedString.Key.font: font])
+            view.textField?.font = font
         } else if tableColumn.identifier == NSUserInterfaceItemIdentifier("status") {
             switch (uti.supported) {
             case .yes:
                 view.imageView?.image = NSImage(named: NSImage.statusAvailableName)
+                view.imageView?.toolTip = "Supported and handled."
             case .no:
                 view.imageView?.image = NSImage(named: NSImage.statusUnavailableName)
+                view.imageView?.toolTip = "Not supported."
             case .highlight:
                 view.imageView?.image = NSImage(named: NSImage.statusPartiallyAvailableName)
+                view.imageView?.toolTip = "Supported but not handled."
             case .unknown:
                 view.imageView?.image = NSImage(named: NSImage.statusNoneName)
+                view.imageView?.toolTip = "Unknown status."
             }
         } else if tableColumn.identifier == NSUserInterfaceItemIdentifier("ext") {
             view.textField?.stringValue = uti.UTI.extensions.joined(separator: ", ")
-        } else if tableColumn.identifier == NSUserInterfaceItemIdentifier("action")/*, let cell = view as? ActionTableCellView */ {
-            return nil
-            
-            /*cell.popupButton.tag = row
-            cell.popupButton.isEnabled = UTIs[row].supported != .yes*/
+            view.textField?.font = labelFont
+        } else if tableColumn.identifier == NSUserInterfaceItemIdentifier("highlight") {
+            view.textField?.stringValue = uti.recognized ?? (uti.supported == .yes ? "" : "-")
+            view.textField?.font = labelFont
         }
         
         return view
+    }
+
+    func tableView(_ tableView: NSTableView, sizeToFitWidthOfColumn column: Int) -> CGFloat {
+        let tableColumn = tableView.tableColumns[column]
+        
+        guard tableColumn.identifier != NSUserInterfaceItemIdentifier("status") else {
+            return 20
+        }
+        
+        var size: CGFloat = 0
+        
+        let labelFont = NSFont.labelFont(ofSize: NSFont.systemFontSize)
+        let boldFont = NSFont.boldSystemFont(ofSize: NSFont.systemFontSize)
+        
+        for uti in UTIs {
+            let font: NSFont
+            let s: String
+            if tableColumn.identifier == NSUserInterfaceItemIdentifier("description") {
+                s = uti.UTI.description
+                font = uti.standard ? boldFont : labelFont
+            } else if tableColumn.identifier == NSUserInterfaceItemIdentifier("ext") {
+                s = uti.UTI.extensions.joined(separator: ", ")
+                font = labelFont
+            } else if tableColumn.identifier == NSUserInterfaceItemIdentifier("UTI") {
+                s = uti.UTI.UTI
+                font = uti.standard ? boldFont : labelFont
+            } else if tableColumn.identifier == NSUserInterfaceItemIdentifier("highlight") {
+                s = uti.recognized ?? (uti.supported == .yes ? "" : "-")
+                font = labelFont
+            } else {
+                continue
+            }
+            size = max(size, (s as NSString).size(withAttributes: [.font: font]).width)
+        }
+        return size + 8
+    }
+    
+    @IBAction func tableViewDoubleClick(_ sender: NSTableView) {
+        guard tableView.clickedRow >= 0 else {
+            return
+        }
+        let uti = UTIs[tableView.clickedRow]
+        if uti.supported == .yes {
+            for w in NSApplication.shared.windows {
+                if let vc = w.contentViewController as? SettingsSplitViewController {
+                    vc.selectUTI(uti.UTI)
+                    break
+                }
+            }
+        }
+    }
+    
+    @IBAction func showHelp(_ sender: Any) {
+        if let locBookName = Bundle.main.object(forInfoDictionaryKey: "CFBundleHelpBookName") as? String {
+            NSHelpManager.shared.openHelpAnchor("SyntaxHighlight_INQUIRY", inBook: locBookName)
+        }
     }
 }

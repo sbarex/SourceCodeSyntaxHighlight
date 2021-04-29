@@ -1,0 +1,372 @@
+PREREQUISITES
+
+    Using GCC:
+        Required
+            * gcc          : GNU C compiler
+            * GNU binutils : A collection of binary tools
+            * GNU make     : make
+            * sh           : POSIX type shell
+            * GNU coreutils: Core utilities package (chmod, install, mkdir,
+                             mv, rm, uname)
+
+        Optional (depending on build targets):
+            * perl         : Practical Extraction and Report Language
+                             perl >= 5.10.1 is required for rebuilding the
+                             manual pages with pod2man.
+                             perl >= 5.18 is required for rebuilding the
+                             international manual pages correctly in HTML with pod2html.
+                             Self-tests require module perl-Test-Simple.
+            * gettext      : Framework to help GNU packages produce multi-
+                             lingual messages.
+            * po4a         : PO for anything, for rebuilding manuals.
+            * groff        : GNU troff text formatting system, for
+                             international messages and manuals.
+            * ghostscript  : An interpreter for the PostScript language and
+                             for PDF (ps2pdf)
+
+
+    Using LLVM CLANG:
+        Clang can be used as a drop-in replacement for gcc. Just add CC=clang to the make
+        command line.
+
+
+    Using Watcom C:
+        Required
+            * Open Watcom     : http://www.openwatcom.org/
+            * Open Watcom V2  : http://open-watcom.github.io/open-watcom/    (git repo)
+                                http://sourceforge.net/projects/openwatcom/  (binaries download)
+
+
+    Using Microsoft Visual C++:
+        Required
+            * Visual C++   : You can get a free community version via this web page:
+                             https://www.visualstudio.com/vs/community/
+                             Download Visual Studio for Windows Desktop. Visual C++ is part
+                             of Visual Studio. Out of the box compilation for 64-bit
+                             applications is supported since version 2012.
+
+
+
+BASIC INSTALLATION
+
+    To build the program type:
+
+        make
+
+
+    To run the self-tests type:
+
+        make check
+
+
+    To strip the executables:
+
+        make strip
+
+
+    To install:
+
+        make install
+
+
+    Clean:
+
+        make clean
+
+
+SELF-TESTS
+
+    To run the self-tests you need a Perl installation including
+    modules perl-Test-Harness and perl-Test-Simple.
+
+    To check the native Windows ports you need to run the tests in
+    the MSYS2 shell.
+
+    To run the tests in a DJGPP environment you need to make sure
+    that the bash shell is available (sh.exe). And you need to be
+    in an environment that supports long file names (LFN), e.g. on
+    32 bit Windows.
+
+
+    To run the tests:
+
+        make test
+
+
+    Via the make variable PROVE_OPT extra arguments can be given to
+    the prove command. E.g.:
+
+        make test PROVE_OPT=--color
+
+
+INSTALLATION NAMES
+
+    By default the 'install' target will install the program in
+    /usr/bin, the language files in /usr/share/locale
+    and the man page in /usr/share/man. You can specify an
+    installation prefix other than /usr by modifying the
+    'prefix' variable. An Example:
+
+        make prefix=$HOME clean all
+        make prefix=$HOME install
+
+
+DEBUG
+
+    A debug enabled build can be made by adding DEBUG=1
+    to the make command. Example:
+
+        make clean install DEBUG=1
+
+    With debug enabled you can debug the source code in gdb.
+
+
+DEBUG MESSAGES
+
+    Extra debug messages can be enabled by adding DEBUGMSG=1
+    to the make command. Example:
+
+        make clean install DEBUGMSG=1
+
+    With debug messages enabled dos2unix will print extra information
+    about accessing the file system.
+
+
+NATIVE LANGUAGE SUPPORT
+
+    Native Language Support (NLS) is by default enabled.
+    To disable NLS add ENABLE_NLS=. Example:
+
+        make clean install ENABLE_NLS=
+
+
+INTERNATIONAL MAN PAGES
+
+    Since dos2unix 6.0.5 all man pages are encoded in UTF-8, because even
+    Western-European man pages may contain Unicode characters not supported by
+    the Latin-1 (ISO-8859-1) character set.
+
+    Originally the Unix man system supported only man pages in Latin1 format.
+    Although the world is moving to Unicode format (UTF-8) there is still a lot
+    of Latin1 legacy around.
+
+    The English man page is a pure ASCII file and is readable on all platforms.
+
+    Non-English man pages are encoded in UTF-8. These do not show properly on
+    old systems.  Man pages in UTF-8 format are shown properly on Linux. Not
+    all roff implementations support UTF-8.
+
+    In order to show UTF-8 man pages properly on Cygwin with traditional man
+    you need to do the following:
+
+    In /etc/man.conf, change the NROFF definition to use 'preconv'.
+
+        NROFF        /usr/bin/preconv | /usr/bin/nroff -c -mandoc 2>/dev/null
+
+    To view the man page set the correct locale. E.g. for Ukrainian:
+
+        export LANG=uk_UA.UTF-8
+        man dos2unix
+
+    With man-db the manpages show correctly out of the box. Cygwin changed to
+    use man-db in June 2014.
+    Man-db is the default man system on the major Linux distributions.
+
+
+LARGE FILE SUPPORT
+
+    Large File Support (LFS) is by default enabled. This enables
+    the use of 64 bit file system interface on 32 bit systems.
+    This makes it possible to open files larger than 2GB on 32 bit
+    systems, provided the OS has LFS support builtin.
+    To disable LFS make the LFS variable empty. Example:
+
+        Disable LFS:
+        make clean install LFS=
+
+    The gcc compiler from the mingw.org project does not support LFS.
+    It is advised to use the mingw-w64 compiler tool chain for LFS on
+    32 bit Windows.
+
+
+UNICODE SUPPORT
+
+    Unicode UTF-16 support is by default enabled for Windows and Unix.  To
+    disable make the UCS variable (Universal Character Set) empty.
+
+        Disable Unicode:
+        make clean install UCS=
+
+    Unicode UTF-16 is not supported by the DOS and OS/2 versions.
+
+
+UNICODE FILE NAME SUPPORT ON WINDOWS
+
+    Since version 7.3 dos2unix can read and write on Windows file names
+    with Unicode characters. Prior to version 7.3 dos2unix could only open
+    files with characters in the system ANSI code page.
+
+    To see if dos2unix on Windows has unicode file name support type dos2unix -V.
+
+    Unicode file name support on Windows is enabled by setting UNIFILE=1 in
+    the makefile or on the make command line.
+
+    To disable Unicode file name support, make UNIFILE empty:
+
+        make UNIFILE=
+
+    Unicode file name support is by default enabled.
+
+    Dos2unix built with Watcom C is not able to display foreign characters
+    correctly, even when option -D unicode is used. The correct file names
+    are written though.
+
+
+DOCUMENTATION
+
+    Manual pages are generated from Perl POD files.
+    To rebuild the man pages from POD type:
+
+        make maintainer-clean
+        make man
+
+    Manuals in PDF format are by default not created.
+    To create manuals in PDF format type:
+
+        make pdf
+
+    PDF generation requires GhostScript to be installed.
+
+
+WINDOWS 32 BIT PORT
+
+    Using Mingw <http://www.mingw.org>, or MinGW-w64
+    <http://mingw-w64.sourceforge.net>.
+
+    I  advise to use mingw-w64, because mingw-w64 has support for
+    Large File Support (LFS), and mingw doesn't. LFS is the ability to
+    read/write files larger than 2GB or 4GB on a 32 bit operation system.
+    LFS also makes processing files on network drives more reliable. I have
+    had a problem report that output files were not always written when files
+    on a network drive were concurrently processed. By switching from
+    mingw to mingw-w64 the problem was solved.
+    Earlier I got a problem report of accessing small files on a Windows
+    network drive from Debian Linux. Here also the solution was LFS.
+    Since dos2unix 6.0.4 (2013-12-30) I build the binary win32 packages
+    with mingw-w64.
+
+    I am using the MSYS2 project <http://sourceforge.net/projects/msys2/>
+    which includes the MinGW-w64 compiler.
+
+    The MSYS(2) environment is required for building dos2unix with MinGW(-w64).
+
+
+    Type these commands to build with mingw(-w64):
+
+        make clean
+        make
+        make strip
+        make install
+
+    Using Open Watcom:
+
+        wmake -f wccwin32.mak clean
+        wmake -f wccwin32.mak
+        wmake -f wccwin32.mak install
+
+    Using Microsoft Visual C++:
+
+        nmake /f vc.mak clean
+        nmake /f vc.mak
+        nmake /f vc.mak install
+
+
+    The win32 binaries built with MinGW32 are packed with a patched version of
+    MinGW's libintl-8.dll that has builtin support for relocation. See also
+    http://waterlan.home.xs4all.nl/libintl.html and
+    http://sourceforge.net/p/mingw/bugs/1808/
+    The MSYS2 project has the relocation patch already included.
+
+
+WINDOWS 64 BIT PORT
+
+    To compile a version for 64 bit Windows, get the Mingw-w64 compiler
+    <http://mingw-w64.sourceforge.net>.
+    I am using the MSYS2 project <http://sourceforge.net/projects/msys2/>
+    which includes the MinGW-w64 compiler.
+
+    The MSYS2 environment is required for building dos2unix with MinGW-w64.
+
+        make clean
+        make
+        make strip
+        make install
+
+    Or use Microsoft Visual C++. Visual Studio Express supports
+    out of the box C/C++ compilation for 64-bit applications since
+    version 2012. Start an "x64 Cross Tools Command Prompt" and
+    type:
+
+        nmake /f vc.mak clean
+        nmake /f vc.mak
+        nmake /f vc.mak install
+
+
+DOS PORT, 32 BIT
+
+    To compile a version for DOS, get the DJGPP compiler
+    <http://www.delorie.com/djgpp/>, and use makefile djgpp.mak.
+    DJGPP 2.03 gcc >= 4.6 seems to cause problems. Crashes of gcc itself,
+    or crashing dos2unix binaries (seen in DOSBox and DOSEMU).
+    Use DJGPP 2.03 gcc <= 4.5.3.
+
+    DJGPP 2.05 seems to produce correct binaries (I tried gcc 5.3.0).
+
+
+        make -f djgpp.mak clean
+        make -f djgpp.mak
+        make -f djgpp.mak strip
+        make -f djgpp.mak install
+
+    Cross compilation with djgpp.mak works out-of-the-box in Cygwin if
+    you have djgpp-gcc-core installed. On Linux you can add CROSS_COMP=1
+    to the command line.
+
+
+    Or use Open Watcom
+    Cross compiling from Windows 32 bit. This works.
+
+        wmake -f wccdos32.mak clean
+        wmake -f wccdos32.mak
+        wmake -f wccdos32.mak install
+
+
+DOS PORT, 16 BIT
+
+    To compile a version for DOS, use the Borland C compiler 3.1 or 4.0,
+    and use makefile bcc.mak:
+
+        make -f bcc.mak clean
+        make -f bcc.mak
+
+    Or use Open Watcom
+
+        wmake -f wccdos16.mak clean
+        wmake -f wccdos16.mak
+        wmake -f wccdos16.mak install
+
+
+OS/2 PORT
+
+    Using EMX
+
+        make -f emx.mak clean
+        make -f emx.mak
+        make -f emx.mak strip
+        make -f emx.mak install
+
+    Open Watcom
+
+        wmake -f wccos2.mak clean
+        wmake -f wccos2.mak
+        wmake -f wccos2.mak install

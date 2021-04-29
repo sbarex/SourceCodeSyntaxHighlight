@@ -24,5 +24,7 @@
 import Foundation
 
 @objc public protocol XPCLightRenderServiceProtocol {
+    func reloadSettings()
+    
     func colorize(url: URL, withReply reply: @escaping (Data, NSDictionary, Error?) -> Void)
 }

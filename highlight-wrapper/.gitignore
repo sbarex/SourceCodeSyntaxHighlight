@@ -1,0 +1,17 @@
+*.o
+*.a
+*.lo
+*.la
+
+build/*
+**/.libs/*
+**/.deps/*
+
+lua/src/lua
+lua/src/luac
+
+highlight/src/build-intel-*
+highlight/src/build-arm-*
+highlight/src/build-*
+
+.idea

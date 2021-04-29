@@ -4,10 +4,6 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
-	<key>CFBundleDocumentTypes</key>
-	<array>
-		<dict/>
-	</array>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleHelpBookFolder</key>
@@ -37,15 +33,15 @@
 	<key>LSMinimumSystemVersion</key>
 	<string>$(MACOSX_DEPLOYMENT_TARGET)</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2019-2021 SBAREX. All rights reserved.</string>
+	<string>Developed by SBAREX (2019-2021).</string>
 	<key>NSMainStoryboardFile</key>
-	<string>Main</string>
+	<string>Storyboard</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 	<key>NSSupportsAutomaticTermination</key>
 	<true/>
 	<key>NSSupportsSuddenTermination</key>
-	<true/>
+	<false/>
 	<key>SUFeedURL</key>
 	<string>https://sbarex.github.io/SourceCodeSyntaxHighlight/appcast.xml</string>
 	<key>SUPublicEDKey</key>
@@ -440,6 +436,25 @@
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.item</string>
+				<string>dyn.ah62d4rv4ge80g5pbrrwu</string>
+				<string>public.data</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>CMake document</string>
+			<key>UTTypeIdentifier</key>
+			<string>org.cmake.cmake</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>cmake</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.item</string>
 				<string>public.data</string>
 			</array>
 			<key>UTTypeDescription</key>
@@ -520,6 +535,25 @@
 				<array>
 					<string>erl</string>
 					<string>hrl</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.item</string>
+				<string>public.data</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Elixir source code</string>
+			<key>UTTypeIdentifier</key>
+			<string>org.elixir-lang.source</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>ex</string>
+					<string>exs</string>
 				</array>
 			</dict>
 		</dict>
@@ -1082,6 +1116,8 @@
 			</dict>
 		</dict>
 		<dict>
+			<key>UTTypeDescription</key>
+			<string>OCaml File</string>
 			<key>UTTypeIdentifier</key>
 			<string>org.ocaml.ocaml-source</string>
 			<key>UTTypeReferenceURL</key>
@@ -1110,6 +1146,23 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>ecore</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.item</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Compiled python script</string>
+			<key>UTTypeIdentifier</key>
+			<string>org.python.compiled-script</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>pyc</string>
 				</array>
 			</dict>
 		</dict>
@@ -1145,23 +1198,6 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>rs</string>
-				</array>
-			</dict>
-		</dict>
-		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.item</string>
-			</array>
-			<key>UTTypeDescription</key>
-			<string>Compiled python script</string>
-			<key>UTTypeIdentifier</key>
-			<string>org.sbarex.compiled-python-script</string>
-			<key>UTTypeTagSpecification</key>
-			<dict>
-				<key>public.filename-extension</key>
-				<array>
-					<string>pyc</string>
 				</array>
 			</dict>
 		</dict>
@@ -1344,6 +1380,24 @@
 				<array>
 					<string>xsd</string>
 					<string>xquery</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.item</string>
+				<string>dyn.ah62d4rv4ge81u65e</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>XSD Schema</string>
+			<key>UTTypeIdentifier</key>
+			<string>org.xsd.schema</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>xsd</string>
 				</array>
 			</dict>
 		</dict>

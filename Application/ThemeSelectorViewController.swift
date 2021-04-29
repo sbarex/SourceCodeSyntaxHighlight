@@ -22,17 +22,29 @@
 
 import Cocoa
 
-class SCSHThemePreview: Equatable {
-    static func == (lhs: SCSHThemePreview, rhs: SCSHThemePreview) -> Bool {
-        return lhs.theme == rhs.theme
+class SCSHThemePreview: SCSHTheme {
+    fileprivate var _image_is_set = false
+    fileprivate var _image: NSImage? = nil
+    
+    override internal func doRefresh() {
+        invalidateImage()
+        
+        super.doRefresh()
     }
     
-    let theme: SCSHTheme
-    var image: NSImage?
+    @objc dynamic var image: NSImage? {
+        if !_image_is_set {
+            self._image = self.getImage(size: CGSize(width: 100, height: 100), fontSize: 8)
+            _image_is_set = true
+        }
+        return _image
+    }
     
-    init(theme: SCSHTheme) {
-        self.theme = theme
-        self.image = nil
+    func invalidateImage() {
+        self.willChangeValue(forKey: #keyPath(image))
+        _image = nil
+        _image_is_set = false
+        self.didChangeValue(forKey: #keyPath(image))
     }
 }
 
@@ -50,16 +62,17 @@ enum ThemeOriginFilterEnum: Int {
 
 class ThemeSelectorViewController: NSViewController {
     @IBOutlet weak var collectionView: NSCollectionView!
-    @IBOutlet weak var themeSegmentedControl: NSSegmentedControl!
     @IBOutlet weak var searchField: NSSearchField!
-    @IBOutlet weak var originFilterControl: NSSegmentedControl!
+    @IBOutlet weak var lightMenuItem: NSMenuItem?
+    @IBOutlet weak var darkMenuItem: NSMenuItem?
+    @IBOutlet weak var standaloneMenuItem: NSMenuItem?
+    @IBOutlet weak var customizedMenuItem: NSMenuItem?
+    @IBOutlet weak var filterPopupButton: NSPopUpButton?
     
     var handler: ((SCSHTheme)->Void)?
     
-    var allThemes: [SCSHThemePreview] = [] {
-        didSet {
-            refreshThemes()
-        }
+    var allThemes: [SCSHThemePreview] {
+        return HighlightWrapper.shared.themes
     }
     
     internal var themes: [SCSHThemePreview] = [] {
@@ -81,6 +94,17 @@ class ThemeSelectorViewController: NSViewController {
             guard oldValue != style else {
                 return
             }
+            switch style {
+            case .all:
+                lightMenuItem?.state = .off
+                darkMenuItem?.state = .off
+            case .light:
+                lightMenuItem?.state = .on
+                darkMenuItem?.state = .off
+            case .dark:
+                lightMenuItem?.state = .off
+                darkMenuItem?.state = .on
+            }
             refreshThemes()
         }
     }
@@ -89,7 +113,47 @@ class ThemeSelectorViewController: NSViewController {
             guard oldValue != origin else {
                 return
             }
+            switch origin {
+            case .all:
+                standaloneMenuItem?.state = .off
+                customizedMenuItem?.state = .off
+            case .customized:
+                standaloneMenuItem?.state = .off
+                customizedMenuItem?.state = .on
+            case .standalone:
+                standaloneMenuItem?.state = .on
+                customizedMenuItem?.state = .off
+            }
             refreshThemes()
+        }
+    }
+    
+    @IBAction func handleLightMenuItem(_ sender: NSMenuItem) {
+        if style == .light {
+            style = .all
+        } else {
+            style = .light
+        }
+    }
+    @IBAction func handleDarkMenuItem(_ sender: NSMenuItem) {
+        if style == .dark {
+            style = .all
+        } else {
+            style = .dark
+        }
+    }
+    @IBAction func handleCustomMenuItem(_ sender: NSMenuItem) {
+        if origin == .customized {
+            origin = .all
+        } else {
+            origin = .customized
+        }
+    }
+    @IBAction func handleStandaloneMenuItem(_ sender: NSMenuItem) {
+        if origin == .standalone {
+            origin = .all
+        } else {
+            origin = .standalone
         }
     }
     
@@ -106,12 +170,13 @@ class ThemeSelectorViewController: NSViewController {
     }
     
     func refreshThemes() {
+        filterPopupButton?.contentTintColor = (style != .all || origin != .all) ? .controlAccentColor : nil
         themes = allThemes.filter({ theme in
             guard filter != "" || style != .all || origin != .all else {
                 return true
             }
             if filter != "" {
-                guard let _ = theme.theme.desc.range(of: filter, options: String.CompareOptions.caseInsensitive) else {
+                guard let _ = theme.desc.range(of: filter, options: String.CompareOptions.caseInsensitive) else {
                     return false
                 }
             }
@@ -120,22 +185,22 @@ class ThemeSelectorViewController: NSViewController {
             case .all:
                 break
             case .standalone:
-                if !theme.theme.isStandalone {
+                if !theme.isStandalone {
                     return false
                 }
             case .customized:
-                if theme.theme.isStandalone {
+                if theme.isStandalone {
                     return false
                 }
             }
             
             switch style {
             case .light:
-                if !theme.theme.categories.contains("light") {
+                if !theme.isLight {
                     return false
                 }
             case .dark:
-                if !theme.theme.categories.contains("dark") {
+                if !theme.isDark {
                     return false
                 }
             default:
@@ -147,10 +212,29 @@ class ThemeSelectorViewController: NSViewController {
     }
     
     override func viewDidLoad() {
-        searchField.stringValue = filter
-        themeSegmentedControl.setSelected(true, forSegment: style.rawValue)
+        self.searchField.stringValue = filter
+        self.lightMenuItem?.state = style == .light ? .on : .off
+        self.darkMenuItem?.state = style == .dark ? .on : .off
+        self.standaloneMenuItem?.state = origin == .standalone ? .on : .off
+        self.customizedMenuItem?.state = origin == .customized ? .on : .off
         
-        // collectionView.register(NSNib(nibNamed: "ThemeCollectionViewItem", bundle: nil), forItemWithIdentifier: NSUserInterfaceItemIdentifier(rawValue: "ThemeCollectionViewItem"))
+        DistributedNotificationCenter.default.addObserver(self, selector: #selector(interfaceModeChanged(_:)), name: NSNotification.Name(rawValue: "AppleInterfaceThemeChangedNotification"), object: nil)
+        
+        refreshThemes()
+    }
+    
+    deinit {
+        DistributedNotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "AppleInterfaceThemeChangedNotification"), object: nil)
+    }
+    
+    @objc internal func interfaceModeChanged(_ notification: NSNotification) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
+            self.collectionView.reloadData()
+        })
+    }
+    
+    @IBAction func performFindPanelAction(_ sender: Any) {
+        searchField.window?.makeFirstResponder(searchField)
     }
 }
 
@@ -171,7 +255,7 @@ extension ThemeSelectorViewController: NSCollectionViewDelegate {
     func collectionView(_ collectionView: NSCollectionView, didSelectItemsAt indexPaths: Set<IndexPath>) {
         if let i = indexPaths.first?.item {
             let theme = self.themes[i]
-            handler?(theme.theme)
+            handler?(theme)
             dismiss(self)
         }
     }
@@ -190,10 +274,7 @@ extension ThemeSelectorViewController: NSCollectionViewDataSource {
         }
         a.theme = themes[indexPath.item]
         return a
-        // return themes[indexPath.item]
     }
-    
-    
 }
 
 

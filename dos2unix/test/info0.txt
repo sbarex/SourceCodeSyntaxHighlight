@@ -1,0 +1,5 @@
+dos 'txt.txt
+dos.txt
+dos_bom.txt
+dos_dbl.txt
+dos_gb.txt

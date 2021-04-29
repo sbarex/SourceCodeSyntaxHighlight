@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16096" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16096"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -15,19 +16,19 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <view id="lQb-Wa-IJH">
-            <rect key="frame" x="0.0" y="0.0" width="90" height="116"/>
+            <rect key="frame" x="0.0" y="0.0" width="100" height="126"/>
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
                 <imageView translatesAutoresizingMaskIntoConstraints="NO" id="mZv-j4-rQ5">
-                    <rect key="frame" x="0.0" y="26" width="90" height="90"/>
+                    <rect key="frame" x="0.0" y="26" width="100" height="100"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="90" id="lXQ-2b-36D"/>
-                        <constraint firstAttribute="width" constant="90" id="trl-dU-azC"/>
+                        <constraint firstAttribute="height" constant="100" id="lXQ-2b-36D"/>
+                        <constraint firstAttribute="width" constant="100" id="trl-dU-azC"/>
                     </constraints>
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" id="EdP-Qy-28B"/>
                 </imageView>
                 <textField allowsExpansionToolTips="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tkO-ff-Wmy">
-                    <rect key="frame" x="-2" y="0.0" width="94" height="24"/>
+                    <rect key="frame" x="-2" y="0.0" width="104" height="24"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="24" id="xlj-ps-iGe"/>
                     </constraints>

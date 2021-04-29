@@ -6,25 +6,33 @@
     <title>Syntax Highlight Help</title>
     <meta charset="UTF-8">
     <meta name="AppleTitle" content="Syntax Highlight Help"/>
-    <meta name="description" content="Syntax Highlight theme editor">
+    <meta name="description" content="Syntax Highlight color schema editor">
     <meta name="robots" content="index, anchors" /> 
     <link rel="stylesheet" type="text/css" href="../css/main.css" />
 </head>
 <body>
     <a name="SyntaxHighlight_THEMES"></a>
 
-    <div class="header"><a href="help:anchor=SyntaxHighlight_INDEX bookID=org.sbarex.SourceCodeSyntaxHighlight.help">index</a></div>
+    <div class="header"><a href="general.html">index</a></div>
     
-    <h1>Themes editor</h1>
+    <h1>Color schema editor</h1>
 
-    <p>The application has a theme editor compatible with the <code>highlight</code> theme format accessible from menu <i>View/Themes editor</i>.</p>
-    <p>The list shows the standard themes provided by <code>highlight</code> and those created by the user.</p>
-    <p>Standard themes provided by <code>highlight</code> cannot be edited but can be duplicated and then customized.</p>
-    <p>Clicking on an element of the preview blinks the corresponding item in the editor and vice versa.</p>
+    <p>The Application has a GUI to customize the color schemas. </p>
 
-    <div><img src="images/theme_editor.png" alt="Themes editor" /></div>
+    <div><img src="images/theme_editor.png" alt="Color Schema editor" /></div>
+
+    <p>Standard schemas provided by <code>highlight</code> cannot be edited but can be duplicated and then customized.</p>
+
+    <p>For every tokens of a color schema you can also set a custom inline CSS style. Some basic CSS style can be handled also by the <code>RTF</code> engine, but for a best view you must choose the <code>HTML</code> render engine. For this reason the preview of the Color Schema always uses the <code>HTML</code> engine. </p>
+
+    <p>Please note that the inline CSS style is not put inside the html <code>style</code> attribute but embedded on the global <code>&lt;style&gt;</style></code> tag inside the class style definition of the token. So you can define a custom CSS style sheet that override the inline settings.</p>
+
+    <p>Color schemas that uses inline CSS style are highlighted by an icon. </p>
+
+    <p>With the advanced settings enabled you can also customize the appearance of the Language Server Protocol tokens.</p>
 
     <p>Customized themes are saved in <code>~/Library/Application Support/Syntax Highlight/Themes</code>.</p>
+
     <br />
 </body>
 </html>

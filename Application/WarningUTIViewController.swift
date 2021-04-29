@@ -26,7 +26,7 @@ class WarningUTIViewController: NSViewController {
     @IBOutlet weak var warningLabelView: NSTextField!
     @IBOutlet weak var warningImageView: NSImageView!
     
-    var data: [(suppress: SuppressedExtension, handled: Bool)] = [] {
+    var data: [(suppress: UTI.SuppressedExtension, handled: Bool)] = [] {
         didSet {
             tableView?.reloadData()
             let unhandled = data.firstIndex(where: { !$0.handled }) != nil
@@ -44,12 +44,14 @@ class WarningUTIViewController: NSViewController {
     }
     
     @objc func handleDoubleClick(_ sender: Any) {
-        guard sender as? NSTableView == tableView, tableView.selectedRow >= 0, let vc = presentingViewController as? PreferencesViewController else {
+        guard sender as? NSTableView == tableView, tableView.selectedRow >= 0, data[tableView.selectedRow].handled else {
             return
         }
-        if data[tableView.selectedRow].handled {
-            _ = vc.selectUTI(data[tableView.selectedRow].suppress.uti)
+        
+        if let vc = self.presentingViewController as? SettingsSplitElement {
+            vc.settingsController?.selectUTI(UTI(data[tableView.selectedRow].suppress.uti))
         }
+        self.dismiss(self)
     }
 }
 
@@ -93,7 +95,7 @@ extension WarningUTIViewController: NSTableViewDelegate {
         }
         
         if tableColumn?.identifier.rawValue == "Desc" && !data[row].handled {
-            return "This file type is not currently supported by this quicklook extension."
+            return "This file type is not currently supported."
         } else {
             return ""
         }

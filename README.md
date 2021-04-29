@@ -1,152 +1,128 @@
-#  Quicklook extension for source files
+#  Syntax Highlight
 
-This application offers a quicklook extension for MacOS 10.15 Catalina or later for previewing source files.
+The application offers a Quick Look Extension for MacOS 10.15 Catalina and later for previewing source files.
 Inside it uses [Highlight](http://www.andre-simon.de/doku/highlight/en/highlight.php) to render source code with syntax highlighting.
-The application is distributed with a version of the `highlight`. If you want you can use a different version customizing the preferences.
 
-**Warning: if you have problems with the preview please try to set in the settings the output mode to .rtf**
-
-Starting from MacOS 10.15.0 Catalina the qlgenerator APIs are deprecated. Moreover a .qlgenerator package inside Library/QuickLook must be notarized on 10.15.0 to work. In version 10.15.1 it seems that notarization is no longer required.  
-
-This project consists of these components:
-
-- a standalone app that can view source files and provide the interface for the preferences;
-- a quicklook system extension to preview the source files;
-- an XPC service that generate the preview of source file and pass the formatted data to the app or the quicklook extension.
-
-MacOS 10.15 Catalina require sandboxed extension that prevent the execution of external processes (like shell script). 
-To work around this problem, it is possible to use an XPC service that may have different security policies than the application / extension that invokes it. In this case the XPC service is not sandboxed.
-
-The XPC service is executed automatically when requested by the application or the quicklook extension. After closing the quicklook preview the process is automatically closed after some seconds releasing the resources.
-
-The app and quicklook extension can preview files showing the formatted code as html, inside a WKWebView, or as rtf inside a NSTextView. **The suggested mode is `rtf`.**
-
-To use the quicklook preview you must launch the application at least once. In this way the quicklook extension will be discovered by the system. 
-After the first execution, the quicklook extension will be available among those present in the System preferences/Extensions.
+To use the Quick Look preview you must launch the Application at least once. In this way the Quick Look Extension will be discovered by the System and will be available in the System preferences/Extensions/Quick look.
 
 ![System preferences/Extensions](extensions.png)
 
-This extension don't provide a thumbnail service for the Finder icon. 
+This Application only generate the Quick Look Preview and do not provide a thumbnail service for the Finder icon. 
 
-SyntaxHighlight is distributed in the hope that it will be useful but WITHOUT ANY WARRANTY.
+> **Syntax Highlight is distributed in the hope that it will be useful but WITHOUT ANY WARRANTY.**
 
 
 ## File format management
 
-The quicklook extension uses the [Uniform Type Identifier (UTI)](https://developer.apple.com/library/archive/documentation/FileManagement/Conceptual/understanding_utis/understand_utis_intro/understand_utis_intro.html) to handle the supported formats (and not simply the file name extension). 
+The Quick Look Extension uses the [Uniform Type Identifier (UTI)](https://developer.apple.com/library/archive/documentation/FileManagement/Conceptual/understanding_utis/understand_utis_intro/understand_utis_intro.html) to handle the supported formats (and not simply the file name extension). 
 Inside the definition on an UTI there are the list of extensions and mime type associated with it.
 
-Some file types are directly associated to an UTI by the system. Other formats are registered by the owner application. In this way some extensions can be associated to multiple UTIs based on the applications currently installed. 
+Some file types are directly associated to an UTI by the System. Other formats are registered by the owner application. In this way some extensions can be associated to multiple UTIs based on the applications currently installed. For this reason, this application supports many UTIs even if they are apparently redundant. 
 
-For this reason, this application supports many UTIs even if they are apparently redundant. 
+_**MacOS 10.15 Catalina does not** allow to manage some file formats including (but not limited to):_  `.xml`, `.plist`, `.html`, `.ts`, `.dart`, common images (`.jpg`, `.gif`, `.png`), …
 
-_**MacOS 10.15 Catalina does not** allow to manage some file formats including (but not limited to):_
-- .xml
-- .plist
-- .html
-- .ts 
-- .dart
-- common images (.jpg, .gif, .png)
-- ...
-On _**MacOS 11 Big Sur**, the system finally allows you to manage these previously unauthorized extensions_:
-- .plist
+On _**MacOS 11 Big Sur**, the system allows you to manage these previously unauthorized extensions:_ `.plist`.
 
-It's likely that I didn't associate all the possible extensions managed by `highlight`.
+## Application settings
 
-With the inquiry window you can see if a specific file type is handled by the quicklook extension and also if it is recognized by `highlight`.
+With the standalone application you can customize the settings.
+
+![Settings window](settings.png)
+
+You can show _advanced settings_ using the relative command on the view menu.
+
+![Settings window with advanced settings](settings_advanced.png)
+
+
+### Settings
+
+You can set the settings for all supported formats on the _General_ tab. 
+
+|Settings|Description|Advanced|
+|:---------|:-------------| :----: |
+|Render engine|Engine used to render the highlighted code. **The suggested engine is `RTF`.** Use the `HTML` engine only if you want to use a custom CSS to override the color schema (or you have choose a theme with some extra CSS inside it). Advanced users must use the `HTML` engine to handle the hover functionality of a Language Server or to include a `.lua` plugins that require interactive javascript code. ||
+|Color schema|Chose the color schema for light and dark appearance.||
+|Font|You can chose a preferred font or use the standard monospaced font.||
+|Word wrap|Allow to handle word wrap for long lines. _Hard wrap_ break the line after a fixed length (_can cause some highlight glitch_). _Soft wraps_ allow to break the line at the preview windows width. When word wraps is disabled, you can only enable it for minified files that have only one line. One line file detection is done on the source file and not on the preprocessor output. ||
+|Line numbers|Allow to show the line numbers.||
+|Tabs to spaces|Allow to translate tabs to spaces. Set to zero to use tabs. ||
+|Extra highlight arguments|Additional standard argument passed to `highlight`. **Arguments that contains a white space must be protected inside quotes.** See `man highlight` to a list of valid arguments and plugins. Eg: `--doc-title='title with space'` |**Yes**|
+|Custom CSS Style| If the render engine is set to _HTML_ allow to define a custom CSS style to override/extend the color schema.|**Yes**| 
+|Interactive preview| If the render engine is set to _HTML_ enable the javascript interpreter inside the preview window. Use only if you use some `highlight` plugins that output javascript code. This option disable the possibility to move the Quick Look preview with click and drag inside the window and opening the file with a double click. |**Yes**|
+|Data limit| Maximum amount of data to format, data beyond the limit is omitted. Specify 0 to not limit. This option is ignored when using a Language Server. ||
+|Convert line ending| Allow to convert Windows (`CRLF`) and Mac Classic (`CR`) line ending to the Unix style (`LN`). This option is ignored when a _preprocessor_ is set or when a _Language Server_ is enabled. The line ending conversion is made my [`Dos2unix`](https://waterlan.home.xs4all.nl/dos2unix.html). |**Yes**|
+|Debug | If enabled, a `colorize.log` and `colorize.rtf\|html` file will be created on your Desktop folder with the log of last rendering.|**Yes**|
+
+You can also override the global options for some formats on the _Formats_ tab.
+
+![Settings window for specific format](settings_format.png)
+
+When customizing the settings for a specific format, these options will be available:
+
+|Settings|Description|Advanced|
+|:---------|:-------------| :----: |
+|Append highlight arguments|Arguments _appended_ to the _Extra highlight arguments_. Arguments that contains a white space must be protected inside quotes. |**Yes**|
+|Preprocessor|Set a program or a shell script to preprocess the source file before the formatting. The program must output to stdout the data to be passed to `highlight`. You **must** pass the name of the source file using the `$targetHL` placeholder. With the preprocessor you can handle file format not directly supported by `highlight`. This option is ignored when using a Language Server. The execution of the preprocessor is made inside the same env of the script that handle `highlight`. |**Yes**|
+|Syntax| Set which language must be used to recognize the source file. If not set will be used the file name extension. |**Yes**|
+
+Advanced users can customize the single format to use an external [Language Server](https://langserver.org/):
+
+![Settings window for specific format](settings_ls.png)
+
+|Settings|Description|Advanced|
+|:---------|:-------------| :----: |
+|Executable|Full path of the Language Server executable. |**Yes**|
+|Delay|Server initialization delay in ms.|**Yes**|
+|Syntax| Syntax which is understood by the server.|**Yes**|
+|Hover| Execute hover requests. Require the `HTML` render engine.|**Yes**|
+|Semantic| Retrieve semantic token types (the Language Server must implement the protocol 3.16).|**Yes**|
+|Syntax Error| Retrieve syntax error information (assumes hover or semantic).|**Yes**|
+|Options| Custom command line options to pass to the Language Server.|**Yes**|
+
+When using an external Language Server the preprocessor and the data limit settings are ignored.
+
+Some format have a preconfigured custom settings to handle the data (for example java compiled class file can be decompiled before render).
+
+### Colors
+The Application has a GUI to customize the color schemas. 
+
+![Color schema editor](theme_editor.png)
+
+Standard schemas provided by `highlight` cannot be edited but can be duplicated and then customized.
+
+For every tokens of a color schema you can also set a custom inline CSS style. Some basic CSS style can be handled also by the `RTF` engine, but for a best view you must choose the `HTML` render engine. For this reason the preview of the Color Schema always uses the `HTML` engine. 
+
+Please note that the inline CSS style is not put inside the HTML `style` attribute but embedded on the global `<style>` tag inside the class style definition of the token. So you can define a custom CSS style sheet that override the inline settings.
+
+When inserting the style of a theme token it is possible to indicate whether this should override the default values for color and font style. If you want to use the custom theme with the `RTF` rendering engine *it is required not to override the standard values*.  
+
+Color schemas that uses inline CSS style are highlighted by an icon. 
+
+With the advanced settings enabled you can also customize the appearance of the Language Server Protocol tokens.
+
+
+### Inquiry file
+With the _Inquiry window_ you can see if a specific file type is handled by the Quick Look Extension and also if it is supported by `highlight`.
 
 ![Inquiry window](inquiry.png)
 
-On Terminal you can see the UTI of a file with this command: 
+Alternatively you can see the UTI of a file with this Terminal command: 
 
 ```
 $ mdls -name kMDItemContentType -name kMDItemContentTypeTree filename.ext
 ```
+
+It's likely that I didn't associate all the possible extensions managed by `highlight`.
 If you found an unhandled format please send me the output of above command.
+
 **Only the formats supported by `highlight` can be managed by this application.**
-
-To view the info about `highlight` with the supported file formats and extensions go to the menu `Syntax Highlight/About highlight…`, or in the Preferences window click the *i* info button near the highlight popup button.
-
-![IAbout highlight info panel.](about_highlight.png)
-
-
-## Application preferences
-
-In the standalone app, with the preferences window you can customize the preview settings used by the plugin extension.
-
-![Preferences window](settings.png)
-
-The preferences windows has three zones:
-- on the left side the list of the supported UTI file format;
-- on the center the panel to edit the settings;
-- on the right side the preview of current settings.
-
-You can set the settings for all file selecting the _Global_ item on the left list or customize for a specific UTI format.
-When you customize the settings of a specific format the global preferences are inherited and you can override only the requested options.
-
-In the list of supported file type the grayout items are those currently managed by others UTI. Clicking on the exclamation mark icon you will show which UTI is used for a given file extension.
-
-![File type settings window](settings_specific_warn.png)
-
-The settings are stored in `~/Library/Preferences/org.sbarex.SourceCodeSyntaxHighlight.plist`.
-Custom themes and styles are saved in `~/Library/Application Support/Syntax Highlight`.
-
-
-### General settings
-![Global settings window](settings_global.png)
-
-Selecting the _Global_ item on the left list you can set the general settings of the engine:
-- *Highlight*: path of the `highlight` utils. You can choose the embedded version or select a different version (compiled by hand or installed with homebrew for example).
-- *Output mode*: set the rendering output. Can be _html_ that use the WebKit or _rtf_ that use a NSTextView.
-- *Data limit*: maximum amount of data to format, data beyond the limit is omitted. Specify 0 to not limit.
-- *Debug*: enable the generation of the _colorize.log_ and _colorize.html|rtf_ on your desktop for debug purpose.
-
-### Appearance settings
-![Appearance settings window](settings_appearance.png)
-
-This section allow to customize the appearance of the rendered source files:
-- *Themes*: You can choose a theme for light and dark style of the MacOS.
-- *Custom style*: for _html_ output mode you can set a custom css style to override the theme settings. 
-- *Font*: font family and size to use in the output. Depending on the theme chosen, italic and bold style may be applied to certain elements. 
-- *Word wrap*: handle the style of the work wrap.
-- *Line number*: you can set the visibility of the line numbers.
-- *Tabs*: set if the tabs must be converted to space. Setting to zero disable tabs conversions.
-
-### Extra settings
-![Appearance settings window](settings_extra.png)
-
-This section allow to customize extra advanced settings:
-- *Interactive preview*: if the global output option is set to _html_ enable javascript inside the preview windows. Use only if you use some `highlight` plugins that embed js code inside the output.
-- *Arguments*: extra arguments for the `highlight` executable. Arguments that contains a white space must be protected inside quote.
-- *Append arguments* (only for custom UTI settings): allow to set extra arguments to be appended to the global arguments.
-- *Pre processor* (only for custom UTI settings): set a program or a shell script to preprocess the source file before the formatting. The program must output to stdout the data to be passed to `highlight`. You **must** pass the name of the source file using the `$targetHL` placeholder. With the preprocessor you can handle file format not directly supported by `highlight`.
-- *Syntax* (only for custom UTI settings): set which language must be used to recognize the source file. If not set will be used the file name extension to recognize the format. 
-
-Some file format have a preconfigured custom settings to handle the data (for example java compiled class file can be decompiled before render).
-
-### Preview
-The preview panel show an example of the output with the current settings.
-You can show the single theme color items or test the output with some example source files.
-You can also browse for a custom file to test the preview.
-
-
-## Theme editor
-The application has a gui theme editor accessible form menu `View/Themes editor`. 
-With this interface you can create a custom theme to use with `highlight`.
-
-![Theme editor](theme_editor.png)
-
-Standard themes provided by `highlight` cannot be edited but can be duplicated and then customized.
-
-Clicking on an element of the preview blinks the corresponding item in the editor and vice versa.
-
-Customized themes are saved in `~/Library/Application Support/Syntax Highlight/Themes`.
-
 
 ## Note for download precompiled release
 The [precompiled app](https://github.com/sbarex/SourceCodeSyntaxHighlight/releases) is not notarized or signed.
 When you download the precompiled app you must strip quarantine flag.
-You can launch the app with right click (or ctrl click) on the app icon anche choosing the open action.
+
+You can launch the app with right click (or ctrl click) on the app icon and choosing the open action.
+
 Also you can execute this command from the terminal:
 
 ```
@@ -155,7 +131,71 @@ $ xattr -r -d com.apple.quarantine "FULL PATH OF THE Syntax Highlight.app (you c
 
 This must resolve the error of damage application when launch the app.
 
+## FAQ
+
+### The Quick Look preview doesn't work
+> The problem may be due to several causes:
+> 1. The application is not registered under system extensions.
+> 2. Another application is handling the preview instead of Syntax Highlight.
+> 3. You are trying to view unsupported formats. 
+> 4. You are trying to view a format reserved by the system. 
+>
+> If the problem affects all file formats it must related to points 1. and 2., so try one or more of these action:
+> - Try the `RTF` render engine.
+> - Drag the application on the trash and back to the Applications folder and then relaunch.
+> - Check in the System Preferences / Extensions / Quick Look if the _Syntax Highlight_ extension is present and checked. 
+> - In the System Preferences / Extensions / Quick Look, drag the _Syntax Highlight_ extension on the top.
+> - In the System Preferences / Extensions / Quick Look disable other extensions one at a time until you find the one that conflicts.
+>
+> If the problem affects only a specific format it is possible that this was registered by some application with a non-standard UTI. Check the UTI with the _Inquiry window_ and send me the value. The support for each format must be defined at compile time. 
+
+### Is it possible to enable / disable support for individual formats? 
+> No, Apple does not allow this functionality.
+
+### Is it possible to add support for _xyz_ format?
+> It depends... first the format must be handled by `highlight`. Check in the _Inquiry window_ if the file is supported.
+> If is supported please send me the UTI associated to the file. You can also view the UTI with this terminal command:
+>
+> `$ mdls -name kMDItemContentType -name kMDItemContentTypeTree filename.ext`
+>
+> Some common files cannot be handled by third party extension because are reserved by the system (for example, `.xml`, `.ts`, …).
+
+### Why the Application or the Quick Look Preview require access to the Desktop folder?
+> When the _Debug option_ is enabled (on the advanced settings) on your Desktop folder will be created two files for the last preview action: 
+> - _colorize.log_ with the log of the highlight process.
+> - _colorize.hml|rtf_ the output of the last rendering process.
+
+## Known bugs
+- On Big Sur you cannot scroll dragging the scrollbars with the mouse. This is a Big Sur bug. You can scroll only with a mouse/trackpad gesture.
+- Soft word wrap with RTF engine reacts when the window is enlarged but not when it is reduced.
+- Files with Windows or Mac Classic line endings  (CR/LF and CR) in recognized as a one line file.
+- Icons of the custom file format are disabled on Catalina (cause an application freeze).
+
 ## Note for developers
+Starting from MacOS 10.15.0 Catalina the qlgenerator APIs are deprecated. 
+
+This project consists of these components:
+
+- A Standalone Application to set the preferences.
+- A Quick Look Extension to preview the source files.
+- An XPC service that generate the preview and pass the formatted data to the application or the Quick Look Preview.
+
+MacOS 10.15 Catalina require sandboxed extension that prevent the execution of external processes (like shell script). 
+To work around this problem, it is possible to use an XPC service that may have different security policies than the application / extension that invokes it. In this case the XPC service is not sandboxed.
+
+The XPC service is executed automatically when requested by the application or the Quick Look Extension. After closing the Quick Look preview the process is automatically closed after some seconds releasing the resources.
+
+The Application and the Quick Look Extension can preview files showing the formatted code as HTML, inside a WKWebView, or as RTF inside a NSTextView. Especially in Big Sur, the use of WebKit within the Quick Look Preview has numerous bugs, so **the suggested rendering engine is `RTF`**.
+
+The settings are stored in `~/Library/Preferences/org.sbarex.SourceCodeSyntaxHighlight.plist`.
+Custom themes and styles are saved in `~/Library/Application Support/Syntax Highlight`.
+
+The application embed the [`Highlight`](http://www.andre-simon.de/doku/highlight/en/highlight.php) engine that can be build inside the Xcode project. 
+
+![highlight info](about_highlight.png)
+
+The release application is compiled as universal binary (Intel and Apple Silicon processor).
+
 After cloning remember to fetch submodules:
 
 ```
@@ -163,7 +203,7 @@ $ git submodule init
 $ git submodule update
 ```
 
-Info about deconding dynamic uti identifiers:
+### Info about decoding dynamic uti identifiers:
 
 - https://gist.github.com/jtbandes/19646e7457208ae9b1ad
 - https://alastairs-place.net/blog/2012/06/06/utis-are-better-than-you-think-and-heres-why/
@@ -218,7 +258,13 @@ Info about deconding dynamic uti identifiers:
 > </array>
 > ```
 
+- https://stackoverflow.com/questions/16943819/where-do-uti-come-from/18014903#18014903
 
 ## Credits
+Developed by [sbarex](https://github.com/sbarex) with :heart:.
 
-This application has originated from the [anthonygelibert/QLColorCode](https://github.com/anthonygelibert/QLColorCode).
+Highlight is developed by [Andre Simon](http://www.andre-simon.de/).
+
+Dos2unix is developed by [Erwin Waterlander](https://waterlan.home.xs4all.nl/dos2unix.html).
+
+This application was inspired by [anthonygelibert/QLColorCode](https://github.com/anthonygelibert/QLColorCode).
