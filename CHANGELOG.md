@@ -1,6 +1,10 @@
 # Changelog
 =======
 
+### 2.0.2
+Bugfix:
+- Word wrap settings not saved.
+
 ### 2.0.1
 New features:
 - Added support for `Clojure` files (`.clj`, `.cljc`, `.cljs`,  `.edn`).

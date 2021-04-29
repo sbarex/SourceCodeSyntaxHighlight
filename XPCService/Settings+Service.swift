@@ -225,8 +225,12 @@ extension Settings: SettingsCSS {
         updateDomains(SettingsBase.Key.lineNumbersFillToZeroes, self.isLineNumbersFillToZeroes)
         
         updateDomains(SettingsBase.Key.wordWrap, self.isWordWrapped ? (self.isWordWrappedIndented ? 2 : 1) : 0)
+        updateDomains(SettingsBase.Key.wordWrapHard, self.isWordWrappedHard)
+        updateDomains(SettingsBase.Key.wordWrapOneLineFiles, self.isWordWrappedSoftForOnleLineFiles)
         updateDomains(SettingsBase.Key.lineLength, lineLength)
+        
         updateDomains(SettingsBase.Key.tabSpaces, tabSpaces)
+        
         updateDomains(SettingsBase.Key.extraArguments, arguments)
         
         updateDomains(SettingsBase.Key.fontFamily, fontName)

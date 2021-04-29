@@ -247,7 +247,7 @@ class SettingsView: NSView, SettingsSplitViewElement {
     func initSettings() -> Bool {
         defer {
             onAppearanceChanged(appearancePopupButton!)
-            onWordWrapChanged(wordWrapPopupButton!)
+            updateWordWrapPopup()
             updateLineNumberPopup()
         }
         
