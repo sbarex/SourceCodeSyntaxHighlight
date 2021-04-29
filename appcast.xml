@@ -103,5 +103,18 @@
             ]]>
             </description>
         </item>
+        <item>
+            <title>2.0.2</title>
+            <pubDate>gio, 29 apr 2021 17:59:08 +0100</pubDate>
+            <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/sbarex/SourceCodeSyntaxHighlight/releases/download/2.0.2/Syntax.Highlight.zip" sparkle:version="34" sparkle:shortVersionString="2.0.2" type="application/octet-stream" sparkle:edSignature="TQd1G98ih+G/NdoX/KILczmNyRPJMQzH/Pw5Lmx0LL7AugAsw56zbr+qYBA6mCnMtHjcQ1c5UCjrcH8ueRwrCg==" length="11476361"/>
+            <description><![CDATA[
+                <h2>Bugfix</h2>
+                <ul>
+                    <li>Word wrap settings not saved.</li>
+                </ul>
+            ]]>
+            </description>
+        </item>
     </channel>
 </rss>
