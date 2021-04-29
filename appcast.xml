@@ -59,5 +59,36 @@
             ]]>
             </description>
         </item>
+        <item>
+            <title>2.0.0</title>
+            <pubDate>gio, 29 apr 2021 10:04:08 +0100</pubDate>
+            <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/sbarex/SourceCodeSyntaxHighlight/releases/download/2.0.0/Syntax.Highlight.zip" sparkle:version="32" sparkle:shortVersionString="2.0.0" type="application/octet-stream" sparkle:edSignature="1q0tcLBWTFeM+pfiXsPPDTFknTvJrAk41qy2YXmiuWbFPOtp9L/RWkPRmsJj4TBnU9uodBFhdL65Pvr8fpI/BA==" length="11475297"/>
+            <description><![CDATA[
+                <h2>New Features</h2>
+                <ul>
+                    <li>Completely redesigned interface.</li>
+                    <li><code>highlight</code> upgraded to version 4.1, compiled inside the Xcode project, with support for external program parser compatible with the <i>Language Server Protocol</i>.</li>
+                    <li>Option to convert Windows and old Mac Classic line ending to Unix style.</li>
+                    <li>Color schema import (from <code>highlight</code> <code>.theme</code> files) and export (as <code>.css</code> or <code>.theme</code> file).</li>
+                    <li>Allow to define a custom CSS style attribute for each color schema tokens.</li>
+                    <li>Support for Google <code>.xsd</code>, <code>.cmake</code> and Elixir <code>.ex</code>,  <code>.exs</code> files.</li>
+                    <li>Removed support for external <code>highlight</code> engine.</li>
+                    <li><code>lua</code> library upgraded to 5.4.3.</li>
+                    <li>README reorganized.</li>
+                </ul>
+                <h2>Bugfix</h2>
+                <ul>
+                    <li>Fixed Inquiry window disappear after loosing focus.</li>
+                    <li>Fixed inquiry file detection.</li>
+                    <li>Padding coherence between HTML and RTF output mode.</li>
+                    <li>Fixed indexing help files.</li>
+                    <li>Rationalization of embedded libraries.</li>
+                    <li>Smaller application size.</li>
+                    <li>Word wrap optimization.</li>
+                </ul>
+            ]]>
+            </description>
+        </item>
     </channel>
 </rss>
