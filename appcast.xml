@@ -90,5 +90,18 @@
             ]]>
             </description>
         </item>
+        <item>
+            <title>2.0.1</title>
+            <pubDate>gio, 29 apr 2021 12:11:08 +0100</pubDate>
+            <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/sbarex/SourceCodeSyntaxHighlight/releases/download/2.0.1/Syntax.Highlight.zip" sparkle:version="33" sparkle:shortVersionString="2.0.1" type="application/octet-stream" sparkle:edSignature="J2tpLfTXQU4HjkaOLUliy9terDES80nMZXn/5XWVEN/LTVfajnkC2cV8HXYbqIGkRhloreWMeB/OikxTMVZOAA==" length="11475921"/>
+            <description><![CDATA[
+                <h2>New Features</h2>
+                <ul>
+                    <li>Support for <code>Clojure</code> files (<code>.clj</code>, <code>.cljc</code>, <code>.cljs</code>,  <code>.edn</code>) files.</li>
+                </ul>
+            ]]>
+            </description>
+        </item>
     </channel>
 </rss>
