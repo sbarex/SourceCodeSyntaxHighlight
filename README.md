@@ -3,21 +3,54 @@
 The application offers a Quick Look Extension for MacOS 10.15 Catalina and later for previewing source files.
 Inside it uses [Highlight](http://www.andre-simon.de/doku/highlight/en/highlight.php) to render source code with syntax highlighting.
 
+This Application only generate the Quick Look Preview and does not provide a thumbnail service for the Finder icon.
+
+> **Syntax Highlight is distributed in the hope that it will be useful but WITHOUT ANY WARRANTY.**
+
+## Installation
 To use the Quick Look preview you must launch the Application at least once. In this way the Quick Look Extension will be discovered by the System and will be available in the System preferences/Extensions/Quick look.
 
 ![System preferences/Extensions](extensions.png)
 
-This Application only generate the Quick Look Preview and do not provide a thumbnail service for the Finder icon. 
+[Note for downloads.](https://github.com/sbarex/SourceCodeSyntaxHighlight#note-for-download-precompiled-release)
+### Download the App
+Head over to the [releases](https://github.com/sbarex/SourceCodeSyntaxHighlight/releases) page to view the latest version. Move the `Syntax Highlight.app` into the `Applications` folder.
+### Homebrew Cask
+Syntax Highlight can also be installed via [Homebrew Cask](https://github.com/Homebrew/homebrew-cask). If you have not installed Homebrew, follow the simple instructions [here](https://brew.sh/). After that, run `brew install --cask syntax-highlight` to install the current version of Syntax Highlight.
 
-> **Syntax Highlight is distributed in the hope that it will be useful but WITHOUT ANY WARRANTY.**
+### Note for downloading the precompiled release
+The [precompiled app](https://github.com/sbarex/SourceCodeSyntaxHighlight/releases) is not notarized or signed.
 
+When you download the precompiled app directly or via homebrew you must strip quarantine flag.
+
+You can launch the app with right click (or ctrl click) on the app icon and choosing the open action.
+
+Also you can execute this command from the terminal:
+
+```
+$ xattr -r -d com.apple.quarantine "FULL PATH OF THE Syntax Highlight.app (you can drag the file to get the pull path)"
+```
+
+Alternatively you can open System Preferences > Security & Privacy > General (tab) then clicking the `Open Anyway` button.
+
+This will resolve the error of an unsigned application when launching the app.
+### Build from source
+
+The release application is compiled as universal binary (Intel and Apple Silicon processor).
+
+After cloning remember to fetch submodules:
+
+```
+$ git submodule init
+$ git submodule update
+```
 
 ## File format management
 
-The Quick Look Extension uses the [Uniform Type Identifier (UTI)](https://developer.apple.com/library/archive/documentation/FileManagement/Conceptual/understanding_utis/understand_utis_intro/understand_utis_intro.html) to handle the supported formats (and not simply the file name extension). 
+The Quick Look Extension uses the [Uniform Type Identifier (UTI)](https://developer.apple.com/library/archive/documentation/FileManagement/Conceptual/understanding_utis/understand_utis_intro/understand_utis_intro.html) to handle the supported formats (and not simply the file name extension).
 Inside the definition on an UTI there are the list of extensions and mime type associated with it.
 
-Some file types are directly associated to an UTI by the System. Other formats are registered by the owner application. In this way some extensions can be associated to multiple UTIs based on the applications currently installed. For this reason, this application supports many UTIs even if they are apparently redundant. 
+Some file types are directly associated to an UTI by the System. Other formats are registered by the owner application. In this way some extensions can be associated to multiple UTIs based on the applications currently installed. For this reason, this application supports many UTIs even if they are apparently redundant.
 
 _**MacOS 10.15 Catalina does not** allow to manage some file formats including (but not limited to):_  `.xml`, `.plist`, `.html`, `.ts`, `.dart`, common images (`.jpg`, `.gif`, `.png`), …
 
@@ -36,7 +69,7 @@ You can show _advanced settings_ using the relative command on the view menu.
 
 ### Settings
 
-You can set the settings for all supported formats on the _General_ tab. 
+You can set the settings for all supported formats on the _General_ tab.
 
 |Settings|Description|Advanced|
 |:---------|:-------------| :----: |
@@ -47,7 +80,7 @@ You can set the settings for all supported formats on the _General_ tab.
 |Line numbers|Allow to show the line numbers.||
 |Tabs to spaces|Allow to translate tabs to spaces. Set to zero to use tabs. ||
 |Extra highlight arguments|Additional standard argument passed to `highlight`. **Arguments that contains a white space must be protected inside quotes.** See `man highlight` to a list of valid arguments and plugins. Eg: `--doc-title='title with space'` |**Yes**|
-|Custom CSS Style| If the render engine is set to _HTML_ allow to define a custom CSS style to override/extend the color schema.|**Yes**| 
+|Custom CSS Style| If the render engine is set to _HTML_ allow to define a custom CSS style to override/extend the color schema.|**Yes**|
 |Interactive preview| If the render engine is set to _HTML_ enable the javascript interpreter inside the preview window. Use only if you use some `highlight` plugins that output javascript code. This option disable the possibility to move the Quick Look preview with click and drag inside the window and opening the file with a double click. |**Yes**|
 |Data limit| Maximum amount of data to format, data beyond the limit is omitted. Specify 0 to not limit. This option is ignored when using a Language Server. ||
 |Convert line ending| Allow to convert Windows (`CRLF`) and Mac Classic (`CR`) line ending to the Unix style (`LN`). This option is ignored when a _preprocessor_ is set or when a _Language Server_ is enabled. The line ending conversion is made my [`Dos2unix`](https://waterlan.home.xs4all.nl/dos2unix.html). |**Yes**|
@@ -84,19 +117,19 @@ When using an external Language Server the preprocessor and the data limit setti
 Some format have a preconfigured custom settings to handle the data (for example java compiled class file can be decompiled before render).
 
 ### Colors
-The Application has a GUI to customize the color schemas. 
+The Application has a GUI to customize the color schemas.
 
 ![Color schema editor](theme_editor.png)
 
 Standard schemas provided by `highlight` cannot be edited but can be duplicated and then customized.
 
-For every tokens of a color schema you can also set a custom inline CSS style. Some basic CSS style can be handled also by the `RTF` engine, but for a best view you must choose the `HTML` render engine. For this reason the preview of the Color Schema always uses the `HTML` engine. 
+For every tokens of a color schema you can also set a custom inline CSS style. Some basic CSS style can be handled also by the `RTF` engine, but for a best view you must choose the `HTML` render engine. For this reason the preview of the Color Schema always uses the `HTML` engine.
 
 Please note that the inline CSS style is not put inside the HTML `style` attribute but embedded on the global `<style>` tag inside the class style definition of the token. So you can define a custom CSS style sheet that override the inline settings.
 
-When inserting the style of a theme token it is possible to indicate whether this should override the default values for color and font style. If you want to use the custom theme with the `RTF` rendering engine *it is required not to override the standard values*.  
+When inserting the style of a theme token it is possible to indicate whether this should override the default values for color and font style. If you want to use the custom theme with the `RTF` rendering engine *it is required not to override the standard values*.
 
-Color schemas that uses inline CSS style are highlighted by an icon. 
+Color schemas that uses inline CSS style are highlighted by an icon.
 
 With the advanced settings enabled you can also customize the appearance of the Language Server Protocol tokens.
 
@@ -106,7 +139,7 @@ With the _Inquiry window_ you can see if a specific file type is handled by the 
 
 ![Inquiry window](inquiry.png)
 
-Alternatively you can see the UTI of a file with this Terminal command: 
+Alternatively you can see the UTI of a file with this Terminal command:
 
 ```
 $ mdls -name kMDItemContentType -name kMDItemContentTypeTree filename.ext
@@ -117,39 +150,25 @@ If you found an unhandled format please send me the output of above command.
 
 **Only the formats supported by `highlight` can be managed by this application.**
 
-## Note for download precompiled release
-The [precompiled app](https://github.com/sbarex/SourceCodeSyntaxHighlight/releases) is not notarized or signed.
-When you download the precompiled app you must strip quarantine flag.
-
-You can launch the app with right click (or ctrl click) on the app icon and choosing the open action.
-
-Also you can execute this command from the terminal:
-
-```
-$ xattr -r -d com.apple.quarantine "FULL PATH OF THE Syntax Highlight.app (you can drag the file to get the pull path)" 
-```
-
-This must resolve the error of damage application when launch the app.
-
 ## FAQ
 
 ### The Quick Look preview doesn't work
 > The problem may be due to several causes:
 > 1. The application is not registered under system extensions.
 > 2. Another application is handling the preview instead of Syntax Highlight.
-> 3. You are trying to view unsupported formats. 
-> 4. You are trying to view a format reserved by the system. 
+> 3. You are trying to view unsupported formats.
+> 4. You are trying to view a format reserved by the system.
 >
 > If the problem affects all file formats it must related to points 1. and 2., so try one or more of these action:
 > - Try the `RTF` render engine.
 > - Drag the application on the trash and back to the Applications folder and then relaunch.
-> - Check in the System Preferences / Extensions / Quick Look if the _Syntax Highlight_ extension is present and checked. 
+> - Check in the System Preferences / Extensions / Quick Look if the _Syntax Highlight_ extension is present and checked.
 > - In the System Preferences / Extensions / Quick Look, drag the _Syntax Highlight_ extension on the top.
 > - In the System Preferences / Extensions / Quick Look disable other extensions one at a time until you find the one that conflicts.
 >
-> If the problem affects only a specific format it is possible that this was registered by some application with a non-standard UTI. Check the UTI with the _Inquiry window_ and send me the value. The support for each format must be defined at compile time. 
+> If the problem affects only a specific format it is possible that this was registered by some application with a non-standard UTI. Check the UTI with the _Inquiry window_ and send me the value. The support for each format must be defined at compile time.
 
-### Is it possible to enable / disable support for individual formats? 
+### Is it possible to enable / disable support for individual formats?
 > No, Apple does not allow this functionality.
 
 ### Is it possible to add support for _xyz_ format?
@@ -161,18 +180,17 @@ This must resolve the error of damage application when launch the app.
 > Some common files cannot be handled by third party extension because are reserved by the system (for example, `.xml`, `.ts`, …).
 
 ### Why the Application or the Quick Look Preview require access to the Desktop folder?
-> When the _Debug option_ is enabled (on the advanced settings) on your Desktop folder will be created two files for the last preview action: 
+> When the _Debug option_ is enabled (on the advanced settings) on your Desktop folder will be created two files for the last preview action:
 > - _colorize.log_ with the log of the highlight process.
 > - _colorize.hml|rtf_ the output of the last rendering process.
 
 ## Known bugs
-- On Big Sur you cannot scroll dragging the scrollbars with the mouse. This is a Big Sur bug. You can scroll only with a mouse/trackpad gesture.
+- On Big Sur you cannot scroll the preview inside a Quick Look window dragging the scrollbars with the mouse. This is a Big Sur bug. You can scroll only with a mouse/trackpad gesture.
 - Soft word wrap with RTF engine reacts when the window is enlarged but not when it is reduced.
-- Files with Windows or Mac Classic line endings  (CR/LF and CR) in recognized as a one line file.
 - Icons of the custom file format are disabled on Catalina (cause an application freeze).
 
 ## Note for developers
-Starting from MacOS 10.15.0 Catalina the qlgenerator APIs are deprecated. 
+Starting from MacOS 10.15.0 Catalina the qlgenerator APIs are deprecated.
 
 This project consists of these components:
 
@@ -180,7 +198,7 @@ This project consists of these components:
 - A Quick Look Extension to preview the source files.
 - An XPC service that generate the preview and pass the formatted data to the application or the Quick Look Preview.
 
-MacOS 10.15 Catalina require sandboxed extension that prevent the execution of external processes (like shell script). 
+MacOS 10.15 Catalina require sandboxed extension that prevent the execution of external processes (like shell script).
 To work around this problem, it is possible to use an XPC service that may have different security policies than the application / extension that invokes it. In this case the XPC service is not sandboxed.
 
 The XPC service is executed automatically when requested by the application or the Quick Look Extension. After closing the Quick Look preview the process is automatically closed after some seconds releasing the resources.
@@ -190,18 +208,10 @@ The Application and the Quick Look Extension can preview files showing the forma
 The settings are stored in `~/Library/Preferences/org.sbarex.SourceCodeSyntaxHighlight.plist`.
 Custom themes and styles are saved in `~/Library/Application Support/Syntax Highlight`.
 
-The application embed the [`Highlight`](http://www.andre-simon.de/doku/highlight/en/highlight.php) engine that can be build inside the Xcode project. 
+The application embed the [`Highlight`](http://www.andre-simon.de/doku/highlight/en/highlight.php) engine that can be build inside the Xcode project.
 
 ![highlight info](about_highlight.png)
 
-The release application is compiled as universal binary (Intel and Apple Silicon processor).
-
-After cloning remember to fetch submodules:
-
-```
-$ git submodule init 
-$ git submodule update
-```
 
 ### Info about decoding dynamic uti identifiers:
 
@@ -211,11 +221,11 @@ $ git submodule update
 - https://www.cocoanetics.com/2012/09/fun-with-uti/
 - **https://github.com/whomwah/qlstephen/issues/87#issuecomment-694528728**:
 > Ok, so according to the [source](https://alastairs-place.net/blog/2012/06/06/utis-are-better-than-you-think-and-heres-why/) I references above, I would do the following:
-> 
+>
 >     1. Generate the dyn content, in this case I guess its `?0=6:1=sql`.
 >        Though I am not sure if the `6` is correct or if it should be `7`. Where numbers are substituted as follows:
-> 
-> 
+>
+>
 > ```
 > 0: UTTypeConformsTo
 > 1: public.filename-extension
@@ -234,20 +244,20 @@ $ git submodule update
 > E: public.directory
 > F: public.folder
 > ```
-> 
+>
 >     1. Next you put this string into a custom base32 converter. E.g. [this website](https://cryptii.com/pipes/base32)
 >        Input: `?0=6:1=sql`
 >        Variant: `Custom`
 >        Alphabet: `abcdefghkmnpqrstuvwxyz0123456789`
 >        Padding: – Delete if there is any –
-> 
+>
 >     2. The output should be `h62d4rv4ge81g6pq`. If you have any trailing `=` delete it, thats the padding.
-> 
+>
 >     3. Prepend `dyn.a` and that is your final string.
-> 
+>
 >     4. What you should insert in the Info.plist is `dyn.ah62d4rv4ge81g6pq`
-> 
-> 
+>
+>
 > ```
 > <key>LSItemContentTypes</key>
 > <array>
