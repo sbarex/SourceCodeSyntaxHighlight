@@ -12,9 +12,9 @@ To use the Quick Look preview you must launch the Application at least once. In 
 
 ![System preferences/Extensions](extensions.png)
 
-[Note for downloads.](https://github.com/sbarex/SourceCodeSyntaxHighlight#note-for-download-precompiled-release)
 ### Download the App
 Head over to the [releases](https://github.com/sbarex/SourceCodeSyntaxHighlight/releases) page to view the latest version. Move the `Syntax Highlight.app` into the `Applications` folder.
+
 ### Homebrew Cask
 Syntax Highlight can also be installed via [Homebrew Cask](https://github.com/Homebrew/homebrew-cask). If you have not installed Homebrew, follow the simple instructions [here](https://brew.sh/). After that, run `brew install --cask syntax-highlight` to install the current version of Syntax Highlight.
 
