@@ -166,9 +166,8 @@ This must resolve the error of damage application when launch the app.
 > - _colorize.hml|rtf_ the output of the last rendering process.
 
 ## Known bugs
-- On Big Sur you cannot scroll dragging the scrollbars with the mouse. This is a Big Sur bug. You can scroll only with a mouse/trackpad gesture.
+- On Big Sur you cannot scroll the preview inside a Quick Look window dragging the scrollbars with the mouse. This is a Big Sur bug. You can scroll only with a mouse/trackpad gesture.
 - Soft word wrap with RTF engine reacts when the window is enlarged but not when it is reduced.
-- Files with Windows or Mac Classic line endings  (CR/LF and CR) in recognized as a one line file.
 - Icons of the custom file format are disabled on Catalina (cause an application freeze).
 
 ## Note for developers
