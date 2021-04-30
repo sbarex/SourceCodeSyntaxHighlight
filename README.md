@@ -34,6 +34,7 @@ $ xattr -r -d com.apple.quarantine "FULL PATH OF THE Syntax Highlight.app (you c
 Alternatively you can open System Preferences > Security & Privacy > General (tab) then clicking the `Open Anyway` button.
 
 This will resolve the error of an unsigned application when launching the app.
+
 ### Build from source
 
 The release application is compiled as universal binary (Intel and Apple Silicon processor).
@@ -55,6 +56,115 @@ Some file types are directly associated to an UTI by the System. Other formats a
 _**MacOS 10.15 Catalina does not** allow to manage some file formats including (but not limited to):_  `.xml`, `.plist`, `.html`, `.ts`, `.dart`, common images (`.jpg`, `.gif`, `.png`), …
 
 On _**MacOS 11 Big Sur**, the system allows you to manage these previously unauthorized extensions:_ `.plist`.
+
+### Supported formats
+
+- (G)AWK files (`.awk`)
+- Adobe Acrobat Sequence files (`.sequ`) _as `XML`_
+- Adobe Flash ActionScript source files (`.as`)
+- Adobe JSX script files (`.jsx`)
+- AppleScript (`.scpt`, `.applescript`, `.ascr`) _automatically decompiled with `osadecompile`_
+- Assembler source files (`.s79`)
+- ATL files (`.atl`)
+- Bash Script files (`.bash`)
+- C Shell script files (`.csh`)
+- C Source files (`.c`, `.h`)
+- C# Souce files (`.cs`)
+- C++ Source files (`.cpp`, `.cp`, `.c++`, `.cc`, `.cxx`, `.hpp`, `.hh`, `.hxx`, `.ipp` )
+- Clojure Script (`.cli`, `.cljs`, `.cljc`, `.edn`)
+- CMake files (`.cmake`)
+- CocoaPod files (`.podspec`) _as `Ruby`_
+- Coffee source files (`.coffee`)
+- Coldfusion files (`.cfc`, `.cfm`, `.cfml`)
+- Configuration files (`.conf`)
+- CSON source files (`.cson`)
+- CSS files (`.css`)
+- Dart source files (`.dart`) **`.dart` is reserved by the System and cannot be handled.**
+- Diff files (`.diff`, `.patch`)
+- DOS Bat files (`.bat`, `.cmd`)
+- ECore files (`.ecore`)
+- Eiffel project files (`.ecf`) _as `XML`_
+- Eiffel source files (`.e`, `.ex`, `.exs`)
+- Erlang source files (`.erl`, `.hri`)
+- F# source files (`.fsx`, `.fs`)
+- Fish source files (`.fish`)
+- Fortran source files (`.f`, `.for`, `.f90`)
+- GCC Linked files (`.ld`, `.map`, `.d`)
+- GoLang source files (`.go`)
+- Google Earth KML Document files (`.kml`) _as `XML`_
+- Gradle source files (`.gradle`)
+- Groovy source files (`.groovy`)
+- Haskell source files (`.hs`, `.lhs`)
+- IDL source files (`.pro`)
+- INF files (`.inf`)
+- INI configuration files (`.ini`, `.cfg`)
+- Inno source files (`.iss`)
+- INO source files (`.ino`)
+- Interface Builder Storyboard (`.storybard`) _as `XML`_
+- Interface Builder XIB (`.xib`) _as `XML`_
+- Java Compiled Class (`.class`) _require `javap` to decompile_
+- Java Properties files (`.properties`) _as `INI`_
+- Java Server Page files (`.jsp`)
+- Java source code (`.java`, `.jav`)
+- Java Web Start (`.jnlp`)
+- JavaFX ML (`.fxml`)
+- Javascript files (`.js`, `.jscript`, `.javascript`, `.mjs`)
+- Jetbrains Project file (`.iml`)
+- JSON files (`.json`) (beautify with `python3`)
+- Julia source files  (`.jl`)
+- Kermeta source files (`.kmt`)
+- Korn Shell script files (`.ksh`)
+- Kotlin source files (`.kt`, `.kts`)
+- Lisp source files (`.lisp`, `.lsp`, `.asd`, `.el`)
+- Logos source files (`.xm`)
+- Lua source files (`.lua`)
+- Makefile files (`.mk`, `.mak`)
+- MF source files (`.mf`)
+- Microsoft Active Server Page files (`.asp`)
+- Microsoft PowerShell files (`.psm1`, `.psd1`, `.ps1`)
+- Nim source files (`.nim`)
+- Objective-C source files (`.m`)
+- Objective-C++ source files (`.mm`)
+- OCaml source files (`.ml`, `.mll`, `.mly`)
+- Paradox files (`.sc`)
+- Pascal source files (`.pas`)
+- Patch files (`.patch`, `.diff`)
+- PDE source files (`.pde`, `.ino`)
+- Perl script files (`.pl`, `.pm`)
+- PHP source files (`.php`, `.php3`, `.php4`, `.ph3`, `.ph4`, `.phtml`)
+- Property List files (`.plist`) _dinamically decompiled with `plutil`_ **On Catalina `.plist` is reserved by the System and cannot be handled.**
+- Python source files (`.py`)
+- RDF files (`.rdf`)
+- Rez files (`.r`)
+- Ruby on Rails files (`.rhtml`, `.erb`, `.rjs`)
+- Ruby script (`.rb`, `.rbw`)
+- Rust source files (`.rs`)
+- SASS/SCSS files (`.scss`)
+- Scala source files (`.sc`, `.sbt`, `.scala`)
+- Scheme source files (`.scm`)
+- Shell script files (`.bashrc`, `.zshrc`, `.sh`, )
+- SQL files (`.sql`)
+- Standard ML source files (`.ml`)
+- Swift source files (`.swift`)
+- Symfony Twig files (`.twig`)
+- TCL source files (`.tcl`)
+- Tenex C Shell script files (`.tcsh`)
+- TeX and LaTeX files (`.tex`, `.sty`, `.cls`, `.latex`, `.ltx`, `.texi`, `.ctx`, `.sty`)
+- Text files (`.txt`, `.text`)
+- Toml files (`.toml`)
+- Typescript files (`.ts`, `.txs`) **`.ts` is reserved by the System and cannot be handled.**
+- Verilog HDL files (`.v`, `.vl`)
+- VHDL source files (`.vhd`, `.vhdl`)
+- VIM script files (`.vim`)
+- Visual Basic source files (`.vb`, `.bas`, `.basic`, `.vbs`)
+- Vue source files (`.vue`)
+- Xcode localizable strings files (`.strings`, `.stringsdict`) (dinamically decompiled with `plutil`)
+- XHTML files (`.xhtml`)
+- XML files (`.xml`) **`.xml` is reserved by the System and cannot be handled.**
+- XSD Schema files (`.xsd`, `.xquery`)
+- XUL files (`.xul`)
+- YAML files (`.yaml`)
+- Z Shell script files (`.zsh`)
 
 ## Application settings
 
