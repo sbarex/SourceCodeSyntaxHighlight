@@ -69,7 +69,25 @@ public class SCSHWrapper: NSObject {
     private override init() {
         super.init()
         
-        self.reloadSettings(handler: nil)
+        guard let _ = SCSHWrapper.service else {
+            let alert = NSAlert()
+            alert.messageText = "Unable to connect to the XPC Service!"
+            alert.informativeText = "Try to restart the system and/or reinstall the app."
+            alert.alertStyle = .critical
+            
+            return
+        }
+        
+        self.reloadSettings { (_, success) in
+            if !success {
+                let alert = NSAlert()
+                alert.messageText = "Unable to fetch settings!"
+                alert.informativeText = "Settings are reset to the factory default."
+                alert.alertStyle = .critical
+                
+                self.initSettings(from: [:])
+            }
+        }
         
         NotificationCenter.default.addObserver(self, selector: #selector(afterThemeDeleted(_:)), name: .CustomThemeRemoved, object: nil)
     }

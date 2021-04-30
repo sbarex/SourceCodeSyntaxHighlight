@@ -1,5 +1,9 @@
-# Changelog
+Changelog
 =======
+
+### 2.0.3
+Bugfix:
+- Better error handler when fetching the settings.
 
 ### 2.0.2
 Bugfix:
