@@ -27,3 +27,5 @@ DerivedData/
 /*.gcno
 
 .idea/
+
+._DS_STORE
