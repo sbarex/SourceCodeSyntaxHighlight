@@ -199,7 +199,7 @@ go4it () {
                 algol | alg | ampl | dat | run | amtrix | s4 | s4t | s4h | hnd | t4 | awk | bms | boo | cmake | conf | anacrontab | crk | crystal | cr | cs_block_regex | docker | dockerfile | dts | dtsi | elixir | exs | fish | fstab | gdb | gdscript | gd | hcl | httpd | icon | icn | informix | 4gl | julia | jl | ldif | limbo | b | make | mak | mk | makefile | meson | n3 | ttl | nt | nasal | nas | nginx | nim | octave | perl | pl | cgi | pm | plx | plex | po | ps1 | psl | pyrex | pyx | python | py | q | qmake | pro | qu | r | rnc | ruby | rb | rjs | gemfile | rakefile | s | sh | bash | zsh | ebuild | eclass | spec | tcl | wish | itcl | tcsh | terraform | toml | yaml | yml | csh | ksh )
                     comment1="#"
                     ;;
-                arc | aspect | was | wud | assembler | asm | a51 | 29k | 68s | 68x | x86 | autohotkey | ahk | autoit | au3 | blitzbasic | bb | clojure | clj | clp | exapunks | exa | fasm | inc | felix | flx | idlang | ini | doxyfile | desktop | kdev3 | jasmin | j | lisp | cl | clisp | el | lsp | sbcl | scom | fas | scm | msl | nbs | nsis | nsi | nsh | paradox | sc | purebasic | pb | pbi | pbf | rebol )
+                arc | aspect | was | wud | assembler | asm | a51 | 29k | 68s | 68x | x86 | autohotkey | ahk | autoit | au3 | blitzbasic | bb | clojure | clj | clp | edn | exapunks | exa | fasm | inc | felix | flx | idlang | ini | doxyfile | desktop | kdev3 | jasmin | j | lisp | cl | clisp | el | lsp | sbcl | scom | fas | scm | msl | nbs | nsis | nsi | nsh | paradox | sc | purebasic | pb | pbi | pbf | rebol )
                     comment1=";"
                     ;;
                 arm | bat | cmd | vb | bas | basic | bi | vbs )

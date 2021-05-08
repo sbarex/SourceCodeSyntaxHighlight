@@ -1,5 +1,11 @@
 Changelog
 =======
+### 2.0.4
+New features:
+- Added support for `.xaml` files (rendered as `XML`).
+
+Bugfix:
+- Better clojure `.edn` support.
 
 ### 2.0.3
 Bugfix:

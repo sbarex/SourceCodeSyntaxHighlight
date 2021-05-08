@@ -34,6 +34,7 @@
 				<string>com.adobe.actionscript</string>
 				<string>com.adobe.coldfusion</string>
 				<string>com.adobe.jsx</string>
+				<string>com.adobe.edn</string>
 				<string>com.apple.applescript.script</string>
 				<string>com.apple.applescript.text</string>
 				<string>com.apple.dt.interfacebuilder.document.storyboard</string>
@@ -62,6 +63,7 @@
 				<string>com.microsoft.typescript</string>
 				<string>com.microsoft.vb-source</string>
 				<string>com.microsoft.visual-basic</string>
+				<string>com.microsoft.xaml</string>
 				<string>com.netscape.javascript-source</string>
 				<string>com.sun.java-properties</string>
 				<string>com.sun.java-source</string>
@@ -199,6 +201,7 @@
 				<string>dyn.ah62d4rv4ge80g5dn</string>
 				<string>dyn.ah62d4rv4ge80g5dnsq</string>
 				<string>dyn.ah62d4rv4ge80g5dnqq</string>
+				<string>dyn.ah62d4rv4ge81u2prru</string>
 			</array>
 			<key>QLSupportsSearchableItems</key>
 			<false/>

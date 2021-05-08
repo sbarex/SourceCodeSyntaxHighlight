@@ -158,6 +158,7 @@ On _**MacOS 11 Big Sur**, the system allows you to manage these previously unaut
 - VIM script files (`.vim`)
 - Visual Basic source files (`.vb`, `.bas`, `.basic`, `.vbs`)
 - Vue source files (`.vue`)
+- XAML source files (`.xaml`) _as XML_
 - Xcode localizable strings files (`.strings`, `.stringsdict`) (dinamically decompiled with `plutil`)
 - XHTML files (`.xhtml`)
 - XML files (`.xml`) **`.xml` is reserved by the System and cannot be handled.**
