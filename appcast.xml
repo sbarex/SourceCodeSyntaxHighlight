@@ -129,5 +129,22 @@
             ]]>
             </description>
         </item>
+        <item>
+            <title>2.0.4</title>
+            <pubDate>sab, 8 mag 2021 19:25:08 +0100</pubDate>
+            <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/sbarex/SourceCodeSyntaxHighlight/releases/download/2.0.4/Syntax.Highlight.zip" sparkle:version="36" sparkle:shortVersionString="2.0.4" type="application/octet-stream" sparkle:edSignature="XOb9wL108/ZMbTXWIbSmlt/90Vfw58Aa+TIOBhbtXpQrsZ5PdWSQqn2Sb02GIlib8CNGcE3I5cTTf3RfCi0UBg==" length="11478570"/>
+            <description><![CDATA[
+                <h2>New features</h2>
+                <ul>
+                    <li>Added support for <code>.xaml</code> files (rendered as <code>XML</code>).</li>
+                </ul>
+                <h2>Bugfix</h2>
+                <ul>
+                    <li>Better clojure <code>.edn</code> support.</li>
+                </ul>
+            ]]>
+            </description>
+        </item>
     </channel>
 </rss>
