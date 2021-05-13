@@ -168,6 +168,7 @@
 				<string>public.perl-script</string>
 				<string>public.php-script</string>
 				<string>public.plain-text</string>
+				<string>public.properties</string>
 				<string>public.python-script</string>
 				<string>public.ruby-script</string>
 				<string>public.script</string>
@@ -202,6 +203,7 @@
 				<string>dyn.ah62d4rv4ge80g5dnsq</string>
 				<string>dyn.ah62d4rv4ge80g5dnqq</string>
 				<string>dyn.ah62d4rv4ge81u2prru</string>
+				<string>dyn.ah62d4rv4ge81a6xtsbw1e7dmqz3u</string>
 			</array>
 			<key>QLSupportsSearchableItems</key>
 			<false/>

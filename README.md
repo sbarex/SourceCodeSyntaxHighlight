@@ -132,6 +132,7 @@ On _**MacOS 11 Big Sur**, the system allows you to manage these previously unaut
 - PDE source files (`.pde`, `.ino`)
 - Perl script files (`.pl`, `.pm`)
 - PHP source files (`.php`, `.php3`, `.php4`, `.ph3`, `.ph4`, `.phtml`)
+- Properties files (`.properties`) _as `INI`_
 - Property List files (`.plist`) _dinamically decompiled with `plutil`_ **On Catalina `.plist` is reserved by the System and cannot be handled.**
 - Python source files (`.py`)
 - RDF files (`.rdf`)

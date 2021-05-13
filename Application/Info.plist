@@ -1545,6 +1545,23 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
+				<string>public.plain-text</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Property file</string>
+			<key>UTTypeIdentifier</key>
+			<string>public.properties</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>properties</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
 				<string>public.source-code</string>
 				<string>public.shell-script</string>
 			</array>

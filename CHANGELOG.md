@@ -1,5 +1,10 @@
 Changelog
 =======
+
+### 2.0.5
+New features:
+- Added support for `.properties` files (rendered as `INI`).
+
 ### 2.0.4
 New features:
 - Added support for `.xaml` files (rendered as `XML`).
