@@ -150,7 +150,7 @@
             <title>2.0.5</title>
             <pubDate>gio, 13 mag 2021 20:47:08 +0100</pubDate>
             <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
-            <enclosure url="https://github.com/sbarex/SourceCodeSyntaxHighlight/releases/download/2.0.5/Syntax.Highlight.zip" type="application/octet-stream" sparkle:version="37" sparkle:shortVersionString="2.0.5" sparkle:edSignature="+WZdklpZJDIKn6mqup6coGJJ2VcUqFW+e06necAjxfkojKq6Ybytziu4Gb89V7XA68PWLYFnoeWwqhtvyz4xDw==" length="11128336"/>
+            <enclosure url="https://github.com/sbarex/SourceCodeSyntaxHighlight/releases/download/2.0.5/Syntax.Highlight.zip" type="application/octet-stream" sparkle:version="37" sparkle:shortVersionString="2.0.5" sparkle:edSignature="PcpgS9/YctdrBpvb/acgTPLwwIYqMeU2Pn4Cce1TCiUfIPDnVtq5wuCTeI3BaZIDGwGiVFdPN9Bp5WjWi7thDw==" length="11478109"/>
             <description><![CDATA[
                 <h2>New features</h2>
                 <ul>
