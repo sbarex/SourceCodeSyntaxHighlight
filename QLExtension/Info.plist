@@ -41,6 +41,7 @@
 				<string>com.apple.interfacebuilder.document.cocoa</string>
 				<string>com.apple.property-list</string>
 				<string>com.apple.rez-source</string>
+				<string>com.apple.terminal.settings</string>
 				<string>com.apple.xcode.strings-dictionary</string>
 				<string>com.apple.xcode.strings-text</string>
 				<string>com.barebones.bbedit.ini-configuration</string>

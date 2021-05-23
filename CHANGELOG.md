@@ -1,6 +1,11 @@
 Changelog
 =======
 
+### 2.0.6
+New features:
+- Added support for `.terminal` files (Apple Teminal Setting file, rendered as `XML`).
+- Updated `highlight` to the final 4.1 release.
+
 ### 2.0.5
 New features:
 - Added support for `.properties` files (rendered as `INI`).
@@ -27,7 +32,7 @@ New features:
 ### 2.0.0
 New features:
 - Completely redesigned interface.    
-- `highlight` upgraded to version 4.1, compiled inside the Xcode project, with support for external program parser compatible with the _Language Server Protocol_.
+- `highlight` upgraded to version 4.1 (prerelease), compiled inside the Xcode project, with support for external program parser compatible with the _Language Server Protocol_.
 - Option to convert Windows and old Mac Classic line ending to Unix style.
 - Color schema import (from `highlight` `.theme` files) and export (as `.css` or `.theme` file).
 - Allow to define a custom CSS style attribute for each color schema tokens.
