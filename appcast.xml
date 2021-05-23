@@ -68,7 +68,7 @@
                 <h2>New Features</h2>
                 <ul>
                     <li>Completely redesigned interface.</li>
-                    <li><code>highlight</code> upgraded to version 4.1, compiled inside the Xcode project, with support for external program parser compatible with the <i>Language Server Protocol</i>.</li>
+                    <li><code>highlight</code> upgraded to version 4.1 (prerelease), compiled inside the Xcode project, with support for external program parser compatible with the <i>Language Server Protocol</i>.</li>
                     <li>Option to convert Windows and old Mac Classic line ending to Unix style.</li>
                     <li>Color schema import (from <code>highlight</code> <code>.theme</code> files) and export (as <code>.css</code> or <code>.theme</code> file).</li>
                     <li>Allow to define a custom CSS style attribute for each color schema tokens.</li>
@@ -155,6 +155,20 @@
                 <h2>New features</h2>
                 <ul>
                     <li>Added support for <code>.properties</code> files (rendered as <code>INI</code>).</li>
+                </ul>
+            ]]>
+            </description>
+        </item>
+        <item>
+            <title>2.0.6</title>
+            <pubDate>dom, 23 mag 2021 20:49:21 +0100</pubDate>
+            <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/sbarex/SourceCodeSyntaxHighlight/releases/download/2.0.6/Syntax.Highlight.zip" type="application/octet-stream" sparkle:version="38" sparkle:shortVersionString="2.0.6" sparkle:edSignature="UWUnFxwqAqs7CUdyo5Dy1NPNVnZnEbZ8jgCQVcvwAPueeWlxCuwQAu0QU90wDgyzpJ10GHptfMgv1gVkBX21DQ==" length="11129073"/>
+            <description><![CDATA[
+                <h2>New features</h2>
+                <ul>
+                    <li>Added support for <code>.terminal</code> files (Apple Teminal Setting file, rendered as <code>XML</code>).</li>
+                    <li><code>highlight</code> updated to the final 4.1 release.</li>
                 </ul>
             ]]>
             </description>
