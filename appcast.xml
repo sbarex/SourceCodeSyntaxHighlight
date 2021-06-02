@@ -173,5 +173,18 @@
             ]]>
             </description>
         </item>
+        <item>
+            <title>2.0.7</title>
+            <pubDate>mer, 2 giu 2021 16:21:12 +0100</pubDate>
+            <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/sbarex/SourceCodeSyntaxHighlight/releases/download/2.0.7/Syntax.Highlight.zip" type="application/octet-stream" sparkle:version="39" sparkle:shortVersionString="2.0.6" sparkle:edSignature="STUBS/wn1b8yDyAl+2lkGOH4WULTpdfNpW/mHZJwTWZ4feMHShW10MWFqGju/s5Ui4AApBJioMnVh0WSWmVLAQ==" length="11479423"/>
+            <description><![CDATA[
+                <h2>Bugfix</h2>
+                <ul>
+                    <li>Fixed <code>.iml</code> not rendered as <code>XML</code>.</li>
+                </ul>
+            ]]>
+            </description>
+        </item>
     </channel>
 </rss>
