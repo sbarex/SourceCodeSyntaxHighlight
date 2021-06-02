@@ -1,10 +1,14 @@
 Changelog
 =======
 
+### 2.0.7
+Bugfix:
+- Fixed `.iml` not rendered as `XML`.  
+
 ### 2.0.6
 New features:
 - Added support for `.terminal` files (Apple Teminal Setting file, rendered as `XML`).
-- Updated `highlight` to the final 4.1 release.
+- `highlight` updated to the final 4.1 release.
 
 ### 2.0.5
 New features:

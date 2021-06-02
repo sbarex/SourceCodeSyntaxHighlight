@@ -138,7 +138,7 @@
                                                 </textField>
                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lln-uv-9UY">
                                                     <rect key="frame" x="58" y="259" width="442" height="21"/>
-                                                    <textFieldCell key="cell" lineBreakMode="clipping" title="UTI description" id="JJx-k1-oS1">
+                                                    <textFieldCell key="cell" lineBreakMode="clipping" selectable="YES" allowsUndo="NO" title="UTI description" id="JJx-k1-oS1">
                                                         <font key="font" textStyle="title2" name=".SFNS-Regular"/>
                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1540,7 +1540,7 @@ DQ
                                                                     </connections>
                                                                 </textField>
                                                                 <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xXO-Pf-hQw">
-                                                                    <rect key="frame" x="269" y="0.0" width="15" height="22"/>
+                                                                    <rect key="frame" x="269" y="1" width="15" height="22"/>
                                                                     <stepperCell key="cell" controlSize="small" continuous="YES" alignment="left" maxValue="5000" id="FUJ-rv-Ocw"/>
                                                                     <connections>
                                                                         <action selector="handleStepper:" target="wgO-sS-ics" id="Z2t-bV-D6O"/>
@@ -1726,18 +1726,18 @@ Gw
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <tabView type="noTabsNoBorder" initialItem="XZD-Za-R2F" translatesAutoresizingMaskIntoConstraints="NO" id="yf8-26-da4">
-                                <rect key="frame" x="20" y="42" width="230" height="108"/>
+                                <rect key="frame" x="20" y="42" width="190" height="108"/>
                                 <font key="font" metaFont="system"/>
                                 <tabViewItems>
                                     <tabViewItem label="Info" identifier="1" id="BDw-pS-ctH">
                                         <view key="view" id="1Qe-rv-bvb">
-                                            <rect key="frame" x="0.0" y="0.0" width="230" height="108"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="190" height="108"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <scrollView verticalHuggingPriority="249" autohidesScrollers="YES" horizontalLineScroll="24" horizontalPageScroll="10" verticalLineScroll="24" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g6Z-24-Lb1">
-                                                    <rect key="frame" x="0.0" y="8" width="230" height="100"/>
+                                                    <rect key="frame" x="0.0" y="8" width="190" height="100"/>
                                                     <clipView key="contentView" id="iZK-GA-Mdy">
-                                                        <rect key="frame" x="1" y="1" width="228" height="98"/>
+                                                        <rect key="frame" x="1" y="1" width="188" height="98"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <subviews>
                                                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="firstColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="24" rowSizeStyle="systemDefault" headerView="8yk-fc-LyJ" viewBased="YES" floatsGroupRows="NO" id="QJA-Al-xiu">
@@ -1932,7 +1932,7 @@ Gw
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="100" id="Q50-aN-Fqg"/>
                                                     </constraints>
                                                     <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="cxD-Ri-4PX">
-                                                        <rect key="frame" x="1" y="83" width="228" height="16"/>
+                                                        <rect key="frame" x="1" y="83" width="188" height="16"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                     </scroller>
                                                     <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="YWW-1r-RSi">
@@ -1945,7 +1945,7 @@ Gw
                                                     </tableHeaderView>
                                                 </scrollView>
                                                 <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="2" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" horizontalHuggingPriority="248" verticalCompressionResistancePriority="751" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LN0-No-4rj">
-                                                    <rect key="frame" x="0.0" y="0.0" width="230" height="0.0"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="190" height="0.0"/>
                                                     <subviews>
                                                         <customView hidden="YES" horizontalHuggingPriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="NTW-ED-Wlb">
                                                             <rect key="frame" x="0.0" y="-24" width="441" height="24"/>
@@ -2113,7 +2113,7 @@ Gw
                                 </connections>
                             </button>
                             <button hidden="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="M2G-e2-cz7">
-                                <rect key="frame" x="149" y="11" width="47" height="19"/>
+                                <rect key="frame" x="109" y="11" width="47" height="19"/>
                                 <buttonCell key="cell" type="roundRect" title="Reset" bezelStyle="roundedRect" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="zNC-OM-zKs">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="cellTitle"/>
@@ -2126,7 +2126,7 @@ Gw
                                 </connections>
                             </button>
                             <button horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="3sr-Ox-rDc">
-                                <rect key="frame" x="204" y="11" width="46" height="19"/>
+                                <rect key="frame" x="164" y="11" width="46" height="19"/>
                                 <buttonCell key="cell" type="roundRect" title="Close" bezelStyle="roundedRect" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="PjX-zl-aBO">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="cellTitle"/>
@@ -2139,7 +2139,7 @@ Gw
                                 </connections>
                             </button>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="8JB-ZI-4t4" customClass="DropSensor" customModule="Syntax_Highlight" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="270" height="162"/>
+                                <rect key="frame" x="0.0" y="0.0" width="230" height="162"/>
                             </customView>
                         </subviews>
                         <constraints>
