@@ -163,7 +163,7 @@
             <title>2.0.6</title>
             <pubDate>dom, 23 mag 2021 20:49:21 +0100</pubDate>
             <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
-            <enclosure url="https://github.com/sbarex/SourceCodeSyntaxHighlight/releases/download/2.0.6/Syntax.Highlight.zip" type="application/octet-stream" sparkle:version="38" sparkle:shortVersionString="2.0.6" sparkle:edSignature="UWUnFxwqAqs7CUdyo5Dy1NPNVnZnEbZ8jgCQVcvwAPueeWlxCuwQAu0QU90wDgyzpJ10GHptfMgv1gVkBX21DQ==" length="11129073"/>
+            <enclosure url="https://github.com/sbarex/SourceCodeSyntaxHighlight/releases/download/2.0.6/Syntax.Highlight.zip" type="application/octet-stream" sparkle:version="38" sparkle:shortVersionString="2.0.6" sparkle:edSignature="LXXn3BrQL8UUWcLj8vZeWm7hrOCsBBuWCyIP+b2Hmg5pPNA5g4N6+oIeY4YgiDRzomlynPi6lHqIQ1Cwew9BAw==" length="11477546"/>
             <description><![CDATA[
                 <h2>New features</h2>
                 <ul>
