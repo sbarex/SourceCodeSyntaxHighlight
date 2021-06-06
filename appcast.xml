@@ -192,7 +192,7 @@
             <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
             <enclosure type="application/octet-stream" url="https://github.com/sbarex/SourceCodeSyntaxHighlight/releases/download/2.0.8/Syntax.Highlight.zip" sparkle:version="40" sparkle:shortVersionString="2.0.8" sparkle:edSignature="qwdGG0HIe/zramrNsc8FEsXsISpedymGRJX3AUxiMOymMi2mNof8X8XyyVsqfpZtO6rFxLibxUsrBDj2GTlHAQ==" length="11388462" />
             <description><![CDATA[
-                <h2>Bugfix</h2>
+                <h2>New features</h2>
                 <ul>
                     <li>Experimental support for for Racket files (<code>.rkt</code>) rendered as <i><code>Lisp</i></code>.</li>
                 </ul>
