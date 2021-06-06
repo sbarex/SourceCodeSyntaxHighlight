@@ -194,7 +194,7 @@
             <description><![CDATA[
                 <h2>Bugfix</h2>
                 <ul>
-                    <li>Fixed <code>.iml</code> not rendered as <code>XML</code>.</li>
+                    <li>Experimental support for for Racket files (<code>.rkt</code>) rendered as <i><code>Lisp</i></code>.</li>
                 </ul>
             ]]>
             </description>
