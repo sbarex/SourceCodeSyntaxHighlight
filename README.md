@@ -135,6 +135,7 @@ On _**MacOS 11 Big Sur**, the system allows you to manage these previously unaut
 - Properties files (`.properties`) _as `INI`_
 - Property List files (`.plist`) _dinamically decompiled with `plutil`_ **On Catalina `.plist` is reserved by the System and cannot be handled.**
 - Python source files (`.py`)
+- Racket (`.rkt`) _as `Lisp`_
 - RDF files (`.rdf`)
 - Rez files (`.r`)
 - Ruby on Rails files (`.rhtml`, `.erb`, `.rjs`)

@@ -131,6 +131,7 @@
 				<string>org.ocaml.ocaml-source</string>
 				<string>org.omg.ecore</string>
 				<string>org.python.compiled-script</string>
+				<string>org.racket-lang.source</string>
 				<string>org.rdf.source</string>
 				<string>org.rust-lang.source</string>
 				<string>org.sbarex.conf</string>

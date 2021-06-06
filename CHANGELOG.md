@@ -1,6 +1,10 @@
 Changelog
 =======
 
+### 2.0.8
+New features:
+- Experimental support for Racket files (`.rkt`) rendered as _`Lisp`_.
+
 ### 2.0.7
 Bugfix:
 - Fixed `.iml` not rendered as `XML`.  
