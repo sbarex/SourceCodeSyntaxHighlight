@@ -1205,8 +1205,6 @@
 			</dict>
 		</dict>
 		<dict>
-			<key>UTTypeDescription</key>
-			<string>Racket source file</string>
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.text</string>
@@ -1215,6 +1213,8 @@
 				<string>public.content</string>
 				<string>public.plain-text</string>
 			</array>
+			<key>UTTypeDescription</key>
+			<string>Racket source file</string>
 			<key>UTTypeIdentifier</key>
 			<string>org.racket-lang.source</string>
 			<key>UTTypeTagSpecification</key>

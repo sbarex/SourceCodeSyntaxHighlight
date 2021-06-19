@@ -4,6 +4,8 @@ Changelog
 ### 2.0.8
 New features:
 - Experimental support for Racket files (`.rkt`) rendered as _`Lisp`_.
+Bugfix:
+- Error on saving custom theme.
 
 ### 2.0.7
 Bugfix:

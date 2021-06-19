@@ -82,6 +82,7 @@ class HighlightWrapper {
         
         let raw = Unmanaged.passUnretained(themes).toOpaque()
         
+        // Get default themes.
         highlight_list_themes(raw) { (context, p_themes, n, exit_code) in
             guard exit_code == EXIT_SUCCESS, let c_themes = p_themes else {
                 return
@@ -94,6 +95,7 @@ class HighlightWrapper {
             }
         }
         
+        // Get custom themes.
         if let themesDir = self.themesDir {
             do {
                 for file in try FileManager.default.contentsOfDirectory(atPath: themesDir.path) {

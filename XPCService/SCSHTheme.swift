@@ -647,7 +647,7 @@ public class SCSHTheme: NSObject, Sequence {
             }
             
             if !customStyles.isEmpty {
-                s += (override ? ", " : "") + self.exportCustomStylesToLua()
+                s += (!override ? ", " : " ") + self.exportCustomStylesToLua()
             }
             s += " }"
             return s
