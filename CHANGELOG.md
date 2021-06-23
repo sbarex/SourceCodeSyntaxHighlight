@@ -44,8 +44,8 @@ New features:
 - Completely redesigned interface.    
 - `highlight` upgraded to version 4.1 (prerelease), compiled inside the Xcode project, with support for external program parser compatible with the _Language Server Protocol_.
 - Option to convert Windows and old Mac Classic line ending to Unix style.
-- Color schema import (from `highlight` `.theme` files) and export (as `.css` or `.theme` file).
-- Allow to define a custom CSS style attribute for each color schema tokens.
+- Color scheme import (from `highlight` `.theme` files) and export (as `.css` or `.theme` file).
+- Allow to define a custom CSS style attribute for each color scheme tokens.
 - Added support for `.xsd`, `.cmake` and Elixir `.ex`,  `.exs` files.
 - Removed support for external `highlight` engine.
 - `lua` library upgraded to 5.4.3.

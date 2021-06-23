@@ -883,9 +883,9 @@ class SettingsView: NSView, SettingsSplitViewElement {
         
         let alert = NSAlert()
         if lsp && theme {
-            alert.messageText = "For a best view some selected Color Schema or the Language Server options may require the HTML render engine."
+            alert.messageText = "For a best view some selected Color scheme or the Language Server options may require the HTML render engine."
         } else if theme {
-            alert.messageText = "For a best view a selected Color Schema may require the HTML render engine."
+            alert.messageText = "For a best view a selected Color scheme may require the HTML render engine."
         } else if lsp {
             alert.messageText = "For a best view some Language Server options may require the HTML render engine."
         } else {

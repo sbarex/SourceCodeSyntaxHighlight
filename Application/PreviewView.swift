@@ -134,7 +134,7 @@ class PreviewView: NSView, SettingsSplitViewElement {
         didSet {
             examplesPopup.removeAllItems()
             
-            examplesPopup.addItem(withTitle: "Color schema")
+            examplesPopup.addItem(withTitle: "Color scheme")
             examplesPopup.menu?.addItem(NSMenuItem.separator())
             
             var custom = false

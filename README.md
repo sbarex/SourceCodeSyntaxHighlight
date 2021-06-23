@@ -186,14 +186,14 @@ You can set the settings for all supported formats on the _General_ tab.
 
 |Settings|Description|Advanced|
 |:---------|:-------------| :----: |
-|Render engine|Engine used to render the highlighted code. **The suggested engine is `RTF`.** Use the `HTML` engine only if you want to use a custom CSS to override the color schema (or you have choose a theme with some extra CSS inside it). Advanced users must use the `HTML` engine to handle the hover functionality of a Language Server or to include a `.lua` plugins that require interactive javascript code. ||
-|Color schema|Chose the color schema for light and dark appearance.||
+|Render engine|Engine used to render the highlighted code. **The suggested engine is `RTF`.** Use the `HTML` engine only if you want to use a custom CSS to override the color scheme (or you have choose a theme with some extra CSS inside it). Advanced users must use the `HTML` engine to handle the hover functionality of a Language Server or to include a `.lua` plugins that require interactive javascript code. ||
+|Color scheme|Chose the color scheme for light and dark appearance.||
 |Font|You can chose a preferred font or use the standard monospaced font.||
 |Word wrap|Allow to handle word wrap for long lines. _Hard wrap_ break the line after a fixed length (_can cause some highlight glitch_). _Soft wraps_ allow to break the line at the preview windows width. When word wraps is disabled, you can only enable it for minified files that have only one line. One line file detection is done on the source file and not on the preprocessor output. ||
 |Line numbers|Allow to show the line numbers.||
 |Tabs to spaces|Allow to translate tabs to spaces. Set to zero to use tabs. ||
 |Extra highlight arguments|Additional standard argument passed to `highlight`. **Arguments that contains a white space must be protected inside quotes.** See `man highlight` to a list of valid arguments and plugins. Eg: `--doc-title='title with space'` |**Yes**|
-|Custom CSS Style| If the render engine is set to _HTML_ allow to define a custom CSS style to override/extend the color schema.|**Yes**|
+|Custom CSS Style| If the render engine is set to _HTML_ allow to define a custom CSS style to override/extend the color scheme.|**Yes**|
 |Interactive preview| If the render engine is set to _HTML_ enable the javascript interpreter inside the preview window. Use only if you use some `highlight` plugins that output javascript code. This option disable the possibility to move the Quick Look preview with click and drag inside the window and opening the file with a double click. |**Yes**|
 |Data limit| Maximum amount of data to format, data beyond the limit is omitted. Specify 0 to not limit. This option is ignored when using a Language Server. ||
 |Convert line ending| Allow to convert Windows (`CRLF`) and Mac Classic (`CR`) line ending to the Unix style (`LN`). This option is ignored when a _preprocessor_ is set or when a _Language Server_ is enabled. The line ending conversion is made my [`Dos2unix`](https://waterlan.home.xs4all.nl/dos2unix.html). |**Yes**|
@@ -230,19 +230,19 @@ When using an external Language Server the preprocessor and the data limit setti
 Some format have a preconfigured custom settings to handle the data (for example java compiled class file can be decompiled before render).
 
 ### Colors
-The Application has a GUI to customize the color schemas.
+The Application has a GUI to customize the color schemes.
 
-![Color schema editor](theme_editor.png)
+![Color scheme editor](theme_editor.png)
 
 Standard schemas provided by `highlight` cannot be edited but can be duplicated and then customized.
 
-For every tokens of a color schema you can also set a custom inline CSS style. Some basic CSS style can be handled also by the `RTF` engine, but for a best view you must choose the `HTML` render engine. For this reason the preview of the Color Schema always uses the `HTML` engine.
+For every tokens of a color scheme you can also set a custom inline CSS style. Some basic CSS style can be handled also by the `RTF` engine, but for a best view you must choose the `HTML` render engine. For this reason the preview of the Color Scheme always uses the `HTML` engine.
 
 Please note that the inline CSS style is not put inside the HTML `style` attribute but embedded on the global `<style>` tag inside the class style definition of the token. So you can define a custom CSS style sheet that override the inline settings.
 
 When inserting the style of a theme token it is possible to indicate whether this should override the default values for color and font style. If you want to use the custom theme with the `RTF` rendering engine *it is required not to override the standard values*.
 
-Color schemas that uses inline CSS style are highlighted by an icon.
+Color schemes that uses inline CSS style are highlighted by an icon.
 
 With the advanced settings enabled you can also customize the appearance of the Language Server Protocol tokens.
 

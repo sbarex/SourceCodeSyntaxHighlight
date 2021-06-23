@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="18122" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
-        <plugIn identifier="com.apple.WebKit2IBPlugin" version="17701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="18122"/>
+        <plugIn identifier="com.apple.WebKit2IBPlugin" version="18122"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -67,16 +67,16 @@
                         <rect key="frame" x="0.0" y="28" width="281" height="5"/>
                     </box>
                     <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="E8e-XI-nHw">
-                        <rect key="frame" x="10" y="4" width="255" height="22"/>
+                        <rect key="frame" x="10" y="4" width="251" height="22"/>
                         <subviews>
                             <popUpButton horizontalHuggingPriority="248" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="jvo-yT-uGU">
-                                <rect key="frame" x="-5" y="4" width="236" height="15"/>
-                                <popUpButtonCell key="cell" type="roundRect" title="Color schema" bezelStyle="roundedRect" alignment="left" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="6eD-E5-ltz" id="XuG-YS-bFt">
+                                <rect key="frame" x="-5" y="4" width="232" height="15"/>
+                                <popUpButtonCell key="cell" type="roundRect" title="Color scheme" bezelStyle="roundedRect" alignment="left" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="6eD-E5-ltz" id="XuG-YS-bFt">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="cellTitle"/>
                                     <menu key="menu" autoenablesItems="NO" id="tXB-ei-Vam">
                                         <items>
-                                            <menuItem title="Color schema" state="on" id="6eD-E5-ltz"/>
+                                            <menuItem title="Color scheme" state="on" id="6eD-E5-ltz"/>
                                             <menuItem isSeparatorItem="YES" id="fqh-3V-mCw"/>
                                             <menuItem title="Browse…" id="Pwi-Zh-n4C">
                                                 <modifierMask key="keyEquivalentModifierMask"/>
@@ -89,7 +89,7 @@
                                 </connections>
                             </popUpButton>
                             <button toolTip="Switch Light/Dark appearance." verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5lj-tj-8JS">
-                                <rect key="frame" x="239" y="3" width="16" height="16"/>
+                                <rect key="frame" x="235" y="3" width="16" height="16"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="16" id="7c4-EL-m4H"/>
                                     <constraint firstAttribute="width" constant="16" id="lgz-w3-dWx"/>
@@ -120,7 +120,7 @@
                     <constraint firstAttribute="trailing" secondItem="ttO-dX-T1v" secondAttribute="trailing" id="0fA-nC-WFK"/>
                     <constraint firstItem="ttO-dX-T1v" firstAttribute="top" secondItem="Ut3-5n-H5M" secondAttribute="bottom" id="8z0-Z3-yAw"/>
                     <constraint firstItem="E8e-XI-nHw" firstAttribute="top" secondItem="ttO-dX-T1v" secondAttribute="bottom" constant="4" id="9VU-hy-jPK"/>
-                    <constraint firstAttribute="trailing" secondItem="E8e-XI-nHw" secondAttribute="trailing" constant="16" symbolic="YES" id="Hli-bg-2du"/>
+                    <constraint firstAttribute="trailing" secondItem="E8e-XI-nHw" secondAttribute="trailing" constant="20" symbolic="YES" id="Hli-bg-2du"/>
                     <constraint firstItem="7yH-3r-BYa" firstAttribute="top" secondItem="Ut3-5n-H5M" secondAttribute="top" id="Nul-4w-IpM"/>
                     <constraint firstItem="Ut3-5n-H5M" firstAttribute="top" secondItem="Ztv-kP-Bj2" secondAttribute="top" id="OtB-Uu-68Y"/>
                     <constraint firstAttribute="trailing" secondItem="7yH-3r-BYa" secondAttribute="trailing" id="PKE-BN-fpu"/>
