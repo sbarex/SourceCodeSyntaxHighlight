@@ -156,7 +156,7 @@
                         <gridCell row="pU9-jO-rS3" column="K0M-TP-aZe" id="QEO-T0-Tkm">
                             <button key="contentView" horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Tar-s1-d0T">
                                 <rect key="frame" x="-2" y="560" width="204" height="18"/>
-                                <buttonCell key="cell" type="check" title="Color schama:" bezelStyle="regularSquare" imagePosition="left" alignment="right" state="on" inset="2" id="C4T-Bn-ezB">
+                                <buttonCell key="cell" type="check" title="Color schema:" bezelStyle="regularSquare" imagePosition="left" alignment="right" state="on" inset="2" id="C4T-Bn-ezB">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
