@@ -56,11 +56,11 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="c22-O7-iKe">
-            <rect key="frame" x="0.0" y="0.0" width="3915" height="850"/>
+            <rect key="frame" x="0.0" y="0.0" width="3939" height="850"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <gridView horizontalHuggingPriority="249" xPlacement="leading" yPlacement="center" rowAlignment="none" translatesAutoresizingMaskIntoConstraints="NO" id="0T1-eh-T9u">
-                    <rect key="frame" x="0.0" y="184" width="3915" height="666"/>
+                    <rect key="frame" x="0.0" y="184" width="3939" height="666"/>
                     <constraints>
                         <constraint firstItem="9lC-ZQ-SGD" firstAttribute="width" secondItem="g84-Vh-moe" secondAttribute="width" id="Fqy-kk-Dwn"/>
                         <constraint firstItem="82g-3c-DCS" firstAttribute="width" secondItem="Bul-2i-RVw" secondAttribute="width" id="GrS-Pu-23I"/>
@@ -307,13 +307,13 @@
                         </gridCell>
                         <gridCell row="7Fa-ya-moY" column="Gck-5r-ihD" id="ZDk-j6-PgP">
                             <box key="contentView" horizontalHuggingPriority="247" borderType="line" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="UX1-Xe-OEz">
-                                <rect key="frame" x="205" y="464" width="3713" height="29"/>
+                                <rect key="frame" x="205" y="464" width="3737" height="29"/>
                                 <view key="contentView" id="kwH-Hg-vPS">
-                                    <rect key="frame" x="3" y="3" width="3707" height="23"/>
+                                    <rect key="frame" x="3" y="3" width="3731" height="23"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SCg-7c-w8J">
-                                            <rect key="frame" x="3684" y="4" width="15" height="15"/>
+                                            <rect key="frame" x="3708" y="4" width="15" height="15"/>
                                             <buttonCell key="cell" type="inline" bezelStyle="inline" image="font_panel" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="idR-RX-9HI">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="smallSystemBold"/>
@@ -323,7 +323,7 @@
                                             </connections>
                                         </button>
                                         <textField horizontalHuggingPriority="248" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hvR-2L-HaF">
-                                            <rect key="frame" x="6" y="4" width="3672" height="16"/>
+                                            <rect key="frame" x="6" y="4" width="3696" height="16"/>
                                             <textFieldCell key="cell" lineBreakMode="clipping" id="qZf-V6-K5M">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -503,7 +503,7 @@
                         </gridCell>
                         <gridCell row="e7O-7U-xRn" column="Gck-5r-ihD" id="woA-gs-gjM">
                             <textField key="contentView" toolTip="Extra highlight parameters. Any arguments with space must be protect inside quotes." horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3Pp-20-3aF">
-                                <rect key="frame" x="208" y="338" width="3707" height="21"/>
+                                <rect key="frame" x="208" y="338" width="3731" height="21"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="7Jr-6I-PJB">
                                     <font key="font" usesAppearanceFont="YES"/>
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -528,7 +528,7 @@
                         </gridCell>
                         <gridCell row="Gx3-JB-Vav" column="Gck-5r-ihD" id="jFx-kA-loO">
                             <textField key="contentView" toolTip="Highlight parameters added to the global arguments. Any arguments with space must be protect inside quote." horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wny-WT-rgn">
-                                <rect key="frame" x="208" y="311" width="3707" height="21"/>
+                                <rect key="frame" x="208" y="311" width="3731" height="21"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="SBF-ib-xex">
                                     <font key="font" usesAppearanceFont="YES"/>
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -553,10 +553,10 @@
                         </gridCell>
                         <gridCell row="jUh-vB-Wi1" column="Gck-5r-ihD" id="jdS-Ur-03u">
                             <stackView key="contentView" distribution="fill" orientation="horizontal" alignment="centerY" spacing="4" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" horizontalHuggingPriority="249" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="E8R-g7-R4x">
-                                <rect key="frame" x="208" y="284" width="3707" height="21"/>
+                                <rect key="frame" x="208" y="284" width="3731" height="21"/>
                                 <subviews>
                                     <textField horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ncm-z0-FS0">
-                                        <rect key="frame" x="0.0" y="0.0" width="3687" height="21"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="3711" height="21"/>
                                         <string key="toolTip">Preprocessor is any command line program or shell script that returns to the stdout the data to be formatted.  Use the placeholder $targetHL for the target file name. </string>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="cat $targetHL" drawsBackground="YES" id="ySl-JY-XvU">
                                             <font key="font" usesAppearanceFont="YES"/>
@@ -568,7 +568,7 @@
                                         </connections>
                                     </textField>
                                     <imageView toolTip="Warning: the preprocessor do not contain the $targetHL placeholder." horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="f5n-uP-zlA">
-                                        <rect key="frame" x="3691" y="3" width="16" height="16"/>
+                                        <rect key="frame" x="3715" y="3" width="16" height="16"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="16" id="EXD-Jh-He6"/>
                                             <constraint firstAttribute="height" constant="16" id="itg-u5-YGI"/>
