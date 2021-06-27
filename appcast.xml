@@ -190,14 +190,17 @@
             <title>2.0.8</title>
             <pubDate>sab, 19 giu 2021 19:31:12 +0100</pubDate>
             <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
-            <enclosure type="application/octet-stream" url="https://github.com/sbarex/SourceCodeSyntaxHighlight/releases/download/2.0.8/Syntax.Highlight.zip" sparkle:version="41" sparkle:shortVersionString="2.0.8" sparkle:edSignature="yukBVwhR1O7G15d+gL0ZlH4I58w3b+/XTOuEm9WHaNbVWCp5pbc7ox63NbnrSnM+Qbpu0RLUu2o0iq9xsLsiDQ==" length="11480351" />
+            <enclosure type="application/octet-stream" url="https://github.com/sbarex/SourceCodeSyntaxHighlight/releases/download/2.0.8/Syntax.Highlight.zip" sparkle:version="42" sparkle:edSignature="Add3B7u1dDC0AopVJsNqDqkc1tMKNj4QZRFiESXKp3eC6gsJhzHfF4cYuNRztr5/jHZ/rUmzGba/HWuvyJyECw==" length="11479623" />
             <description><![CDATA[
                 <h2>New features</h2>
                 <ul>
                     <li>Experimental support for for Racket files (<code>.rkt</code>) rendered as <i><code>Lisp</i></code>.</li>
                 </ul>
                 <h2>Bugfix</h2>
-                <ul><li>Error on saving custom theme.</li></ul>
+                <ul>
+                    <li>Error on saving custom theme.</li>
+                    <li>Typo fix.</li>
+                </ul>
             ]]>
             </description>
         </item>
