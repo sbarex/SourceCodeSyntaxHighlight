@@ -194,12 +194,31 @@
             <description><![CDATA[
                 <h2>New features</h2>
                 <ul>
-                    <li>Experimental support for for Racket files (<code>.rkt</code>) rendered as <i><code>Lisp</i></code>.</li>
+                    <li>Experimental support for for Racket files (<code>.rkt</code>) rendered as <i><code>Lisp</code></i>.</li>
                 </ul>
                 <h2>Bugfix</h2>
                 <ul>
                     <li>Error on saving custom theme.</li>
                     <li>Typo fix.</li>
+                </ul>
+            ]]>
+            </description>
+        </item>
+        <item>
+            <title>2.0.9</title>
+            <pubDate>dom, 4 lug 2021 19:26:32 +0100</pubDate>
+            <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
+            <enclosure type="application/octet-stream" url="https://github.com/sbarex/SourceCodeSyntaxHighlight/releases/download/2.0.9/Syntax.Highlight.zip" sparkle:version="43" sparkle:edSignature="/BQkue/GjM0vB1+IzU9oJOke3f3o3p76TTgwhqk9MeHdhwu4pWmEZ8nj+YBRPbawoaBbwhMvGP5SDX8QQ5vLBQ==" length="11518163" />
+            <description><![CDATA[
+                <h2>New features</h2>
+                <ul>
+                    <li>Support for Azkaban <code>.flow</code> files rendered as <i><code>YAML</code></i>.</li>
+                    <li>Better support for dynamic UTI.</li>
+                </ul>
+                <h2>Bugfix</h2>
+                <ul>
+                    <li>Fixed Kotlin support.</li>
+                    <li>Fixed generation of settings folder.</li>
                 </ul>
             ]]>
             </description>
