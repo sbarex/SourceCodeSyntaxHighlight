@@ -177,6 +177,7 @@
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>dyn.ah62d4rv4ge80w5pq</string>
+				<string>public.xml</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>JetBrain Project File</string>
@@ -346,6 +347,24 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>mf</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.item</string>
+				<string>dyn.ah62d4rv4ge80q5dts6</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Azkaban flow file</string>
+			<key>UTTypeIdentifier</key>
+			<string>io.azkaban.flow</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>flow</string>
 				</array>
 			</dict>
 		</dict>

@@ -33,7 +33,7 @@ class XPCLightRenderService: SCSHBaseXPCService, XPCLightRenderServiceProtocol {
     func colorize(url: URL, withReply reply: @escaping (Data, NSDictionary, Error?) -> Void) {
         let custom_settings: SettingsRendering
         
-        if let uti = (try? url.resourceValues(forKeys: [.typeIdentifierKey]))?.typeIdentifier {
+        if let uti = self.settings.searchUTI(for: url) {
             let utiSettings = self.settings.utiSettings[uti] ?? self.settings.createSettings(forUTI: uti)
             
             if !utiSettings.isSpecialSettingsPopulated {

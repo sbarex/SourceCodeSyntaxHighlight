@@ -35,11 +35,13 @@ class UTIStatus {
     var supported: UTISupported = .unknown
     let standard: Bool
     var recognized: String?
+    var isMain: Bool
     
     init(UTI: UTI, standard: Bool) {
         self.UTI = UTI
         self.standard = standard
         self.recognized = nil
+        self.isMain = false
     }
 }
 
@@ -126,7 +128,13 @@ class CustomTypeViewController: NSViewController, DropSensorDelegate, NSTableVie
             self.supportedLegend.isHidden = true
             if (self.UTIs.count > 0) {
                 for (i, uti) in self.UTIs.enumerated() {
-                    let syntax = HighlightWrapper.shared.areSomeSyntaxSupported(extensions: uti.UTI.extensions)
+                    var syntax: String?
+                    if let u = SCSHWrapper.shared.settings?.searchStandaloneUTI(for: uti.UTI), let s = SCSHWrapper.shared.settings?.utiSettings[u] {
+                        syntax = s.syntax.isEmpty ? s.specialSyntax : s.syntax
+                    }
+                    if syntax == nil {
+                        syntax = HighlightWrapper.shared.areSomeSyntaxSupported(extensions: uti.UTI.extensions)
+                    }
                     
                     if let _ = handledUTIs.first(where: { $0.UTI == uti.UTI.UTI }) {
                         uti.supported = .yes
@@ -213,6 +221,17 @@ class CustomTypeViewController: NSViewController, DropSensorDelegate, NSTableVie
                 }
             }
         }
+        
+        if let u = SCSHWrapper.shared.settings?.searchUTI(for: url), UTIs.first(where: { $0.UTI.UTI == u }) == nil {
+            UTIs.append(UTIStatus(UTI: UTI(u), standard: true))
+        }
+        
+        if let uti = SCSHWrapper.shared.settings?.searchUTI(for: url) {
+            for u in UTIs {
+                u.isMain = u.UTI.UTI == uti
+            }
+        }
+        
         self.UTIs = UTIs
         mode = .info
         firstDrop = false
@@ -252,7 +271,7 @@ class CustomTypeViewController: NSViewController, DropSensorDelegate, NSTableVie
         
         let labelFont = NSFont.labelFont(ofSize: NSFont.systemFontSize)
         let font: NSFont
-        if uti.standard {
+        if uti.standard || uti.isMain {
             font = NSFont.boldSystemFont(ofSize: NSFont.systemFontSize)
         } else {
             font = labelFont
@@ -261,7 +280,7 @@ class CustomTypeViewController: NSViewController, DropSensorDelegate, NSTableVie
         let view = tableView.makeView(withIdentifier: tableColumn.identifier, owner: self) as! NSTableCellView
         
         if tableColumn.identifier == NSUserInterfaceItemIdentifier("description") {
-            view.textField?.stringValue = uti.UTI.description //NSAttributedString(string: uti.UTI.description, attributes: [NSAttributedString.Key.font: font])
+            view.textField?.stringValue = uti.UTI.description + (uti.isMain ? " [main]" : "")
             view.textField?.font = font
         } else if tableColumn.identifier == NSUserInterfaceItemIdentifier("UTI") {
             view.textField?.stringValue = uti.UTI.UTI // NSAttributedString(string: uti.UTI.UTI, attributes: [NSAttributedString.Key.font: font])

@@ -1,6 +1,15 @@
 Changelog
 =======
 
+### 2.0.9
+New features:
+- Support for Azkaban `.flow` files rendered as _`YAML`_.
+- Better support for dynamic UTI.
+Bugfix:
+- Fix Kotlin support.
+- Fix generation of settings folder.
+
+
 ### 2.0.8
 New features:
 - Experimental support for Racket files (`.rkt`) rendered as _`Lisp`_.

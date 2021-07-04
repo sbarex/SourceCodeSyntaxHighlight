@@ -3,6 +3,6 @@
 <plist version="1.0">
 <dict>
 	<key>syntax</key>
-	<string>ini</string>
+	<string>yaml</string>
 </dict>
 </plist>

@@ -48,6 +48,14 @@ class SCSHXPCService: SCSHBaseXPCService, SCSHXPCServiceProtocol {
             }
         }
         
+        if let baseDir = SCSHXPCService.applicationSupportUrl, !FileManager.default.fileExists(atPath: baseDir.path)  {
+            do {
+                try FileManager.default.createDirectory(at: baseDir, withIntermediateDirectories: true, attributes: nil)
+            } catch {
+                print(error)
+            }
+        }
+        
         super.init()
         
         migrate(settings: settings)

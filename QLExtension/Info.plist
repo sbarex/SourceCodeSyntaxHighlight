@@ -76,6 +76,7 @@
 				<string>com.unknown.lhs</string>
 				<string>com.symfony.twig</string>
 				<string>edu.uo.texshop.tex</string>
+				<string>io.azkaban.flow</string>
 				<string>org.applescript.source</string>
 				<string>org.arduino.ino-source</string>
 				<string>org.arduino.source</string>
@@ -186,6 +187,7 @@
 				<string>tk.tcl.tcl</string>
 				<string>tk.tcl.tcl-source</string>
 				<string>dyn.ah62d4rv4ge8007a</string>
+				<string>dyn.ah62d4rv4ge8007dx</string>
 				<string>dyn.ah62d4rv4ge80c75p</string>
 				<string>dyn.ah62d4rv4ge80g62</string>
 				<string>dyn.ah62d4rv4ge80s52</string>
@@ -206,6 +208,7 @@
 				<string>dyn.ah62d4rv4ge80g5dnqq</string>
 				<string>dyn.ah62d4rv4ge81u2prru</string>
 				<string>dyn.ah62d4rv4ge81a6xtsbw1e7dmqz3u</string>
+				<string>dyn.ah62d4rv4ge80q5dts6</string>
 			</array>
 			<key>QLSupportsSearchableItems</key>
 			<false/>

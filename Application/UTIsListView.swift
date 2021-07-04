@@ -123,7 +123,16 @@ class UTIsListView: NSView, SettingsSplitViewElement {
         contentView.autoresizingMask = [.width, .height]
         
         // Populate UTIs list.
-        allFileTypes = (NSApplication.shared.delegate as? AppDelegate)?.handledUTIs ?? []
+        allFileTypes = ((NSApplication.shared.delegate as? AppDelegate)?.handledUTIs ?? []).filter({ uti in
+            guard uti.isDynamic, let settings = SCSHWrapper.shared.settings else {
+                return true
+            }
+            if let _ = settings.searchStandaloneUTI(for: uti) {
+                return false
+            } else {
+                return true
+            }
+        })
         
         showCustomizedMenuItem.state = filterOnlyChanged ? .on : .off
         showInacessibileMenuItem.state = filterInacessibile ? .on : .off

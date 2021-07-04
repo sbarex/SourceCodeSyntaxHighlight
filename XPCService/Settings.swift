@@ -984,6 +984,153 @@ class Settings: SettingsBase {
         return settings.customize(withSettings: utiSettings)
     }
     
+    static let appBundle: Bundle = {
+        var url = Bundle.main.bundleURL
+        if Bundle.main.bundlePath.hasSuffix(".xpc") || Bundle.main.bundlePath.hasSuffix(".appex") {
+            // This is an xpc/appex extension.
+            while url.pathExtension != "app" {
+                let u = url.path
+                url.deleteLastPathComponent()
+                if u == url.path {
+                    return Bundle.main
+                }
+            }
+        }
+        url.appendPathComponent("Contents")
+        
+        if let appBundle = Bundle(url: url) {
+            return appBundle
+        } else {
+            return Bundle.main
+        }
+    }()
+    
+    func searchStandaloneUTI(for uti: UTI) -> String? {
+        guard uti.isDynamic else {
+            return uti.UTI
+        }
+        
+        let bundle = Self.appBundle
+        if let info = bundle.path(forResource: "Info", ofType: "plist"), let dict = NSDictionary(contentsOfFile: info) as? [String: AnyObject] {
+            
+            let search1: (String, [[String: AnyObject]]) -> String? = { identifier, utis in
+                for u in utis {
+                    if let id = u["UTTypeIdentifier"] as? String, !id.hasPrefix("dyn."),
+                       let conform = u["UTTypeConformsTo"] as? [String], conform.contains(identifier) {
+                        return id
+                    }
+                }
+                return nil
+            }
+            
+            let search2: ([String], [[String: AnyObject]]) -> String? = { extensions, utis in
+                for u in utis {
+                    if let id = u["UTTypeIdentifier"] as? String, !id.hasPrefix("dyn."),
+                       let type = u["UTTypeTagSpecification"] as? [String: AnyObject], let ext = type["public.filename-extension"] as? [String] {
+                        for file_ext in extensions {
+                            if ext.contains(file_ext) {
+                                return id
+                            }
+                        }
+                    }
+                }
+                return nil
+            }
+            
+            if let utis = dict["UTExportedTypeDeclarations"] as? [[String: AnyObject]] {
+                if let id = search1(uti.UTI, utis) {
+                    return id
+                }
+            }
+            if let utis = dict["UTImportedTypeDeclarations"] as? [[String: AnyObject]] {
+                if let id = search1(uti.UTI, utis) {
+                    return id
+                }
+            }
+            
+            if let utis = dict["UTExportedTypeDeclarations"] as? [[String: AnyObject]] {
+                if let id = search2(uti.extensions, utis) {
+                    return id
+                }
+            }
+            if let utis = dict["UTImportedTypeDeclarations"] as? [[String: AnyObject]] {
+                if let id = search2(uti.extensions, utis) {
+                    return id
+                }
+            }
+        }
+        
+        return nil
+    }
+        
+    func searchUTI(for url: URL) -> String? {
+        guard let uti = UTI(URL: url) else {
+            return nil
+        }
+              
+        guard uti.isDynamic else {
+            return uti.UTI
+        }
+        
+        let bundle = Self.appBundle
+        if uti.isDynamic, let info = bundle.path(forResource: "Info", ofType: "plist"), let dict = NSDictionary(contentsOfFile: info) as? [String: AnyObject] {
+            
+            let search1: (String, [[String: AnyObject]]) -> String? = { identifier, utis in
+                for u in utis {
+                    if let id = u["UTTypeIdentifier"] as? String, !id.hasPrefix("dyn."),
+                       let conform = u["UTTypeConformsTo"] as? [String], conform.contains(identifier) {
+                        return id
+                    }
+                }
+                return nil
+            }
+            
+            let search2: (String, [[String: AnyObject]]) -> String? = { file_ext, utis in
+                for u in utis {
+                    if let id = u["UTTypeIdentifier"] as? String, !id.hasPrefix("dyn."),
+                       let type = u["UTTypeTagSpecification"] as? [String: AnyObject], let ext = type["public.filename-extension"] as? [String] {
+                        if ext.contains(file_ext) {
+                            return id
+                        }
+                    }
+                }
+                return nil
+            }
+            
+            if let utis = dict["UTExportedTypeDeclarations"] as? [[String: AnyObject]] {
+                if let id = search1(uti.UTI, utis) {
+                    return id
+                }
+            }
+            if let utis = dict["UTImportedTypeDeclarations"] as? [[String: AnyObject]] {
+                if let id = search1(uti.UTI, utis) {
+                    return id
+                }
+            }
+            
+            if let utis = dict["UTExportedTypeDeclarations"] as? [[String: AnyObject]] {
+                if let id = search2(url.pathExtension, utis) {
+                    return id
+                }
+            }
+            if let utis = dict["UTImportedTypeDeclarations"] as? [[String: AnyObject]] {
+                if let id = search2(url.pathExtension, utis) {
+                    return id
+                }
+            }
+        }
+        
+        return nil
+    }
+    
+    func searchSettings(for url: URL) -> SettingsFormat? {
+        if let uti = searchUTI(for: url) {
+            return self.utiSettings[uti]
+        } else {
+            return nil
+        }
+    }
+    
     // MARK: - Highlight
     
     func getHighlightArguments() throws -> (theme: String, backgroundColor: String, arguments: [String]) {

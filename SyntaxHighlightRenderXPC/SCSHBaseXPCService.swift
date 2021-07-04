@@ -197,7 +197,6 @@ class SCSHBaseXPCService: NSObject {
     
     override init() {
         settings = type(of: self).initSettings()
-        
         super.init()
     }
     

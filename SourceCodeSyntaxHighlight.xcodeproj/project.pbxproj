@@ -34,6 +34,9 @@
 		831C712C2619AF420011C3F8 /* LSPViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831C712B2619AF420011C3F8 /* LSPViewController.swift */; };
 		831D5F55237F0CF1007340E7 /* CustomTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831D5F54237F0CF1007340E7 /* CustomTypeViewController.swift */; };
 		831D5F5B237F1E87007340E7 /* UTI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831D5F5A237F1E87007340E7 /* UTI.swift */; };
+		831FD81E2691FF6400C314CE /* UTI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831D5F5A237F1E87007340E7 /* UTI.swift */; };
+		831FD8202691FF6500C314CE /* UTI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831D5F5A237F1E87007340E7 /* UTI.swift */; };
+		831FD821269203EF00C314CE /* UTI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831D5F5A237F1E87007340E7 /* UTI.swift */; };
 		83408DDE23804A0700128B0C /* examples in Resources */ = {isa = PBXBuildFile; fileRef = 83408DDD23804A0600128B0C /* examples */; };
 		83408DE02380505000128B0C /* CSSControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83408DDF2380505000128B0C /* CSSControlView.swift */; };
 		8353D55226284A8D008C6AEC /* Makefile_help in Resources */ = {isa = PBXBuildFile; fileRef = 8353D55026284A8D008C6AEC /* Makefile_help */; };
@@ -1481,6 +1484,7 @@
 			files = (
 				835923F1235A6F16001506B6 /* NSColor+ext.swift in Sources */,
 				8311D9C8235DE6D7006DC138 /* Data+Ext.swift in Sources */,
+				831FD8202691FF6500C314CE /* UTI.swift in Sources */,
 				83860D71260F50AD0076AA5E /* NotificationCenter+ext.swift in Sources */,
 				836D01E22386BE9F00B85545 /* SCSHTheme.swift in Sources */,
 				831C6CD6261863B40011C3F8 /* Settings.swift in Sources */,
@@ -1499,6 +1503,7 @@
 				8359239D23570C52001506B6 /* SCSHError.swift in Sources */,
 				8359238E2356436C001506B6 /* SCSHXPCServiceProtocol.swift in Sources */,
 				8359238023563BDF001506B6 /* SCSHXPCServiceDelegate.swift in Sources */,
+				831FD81E2691FF6400C314CE /* UTI.swift in Sources */,
 				8359238F23564497001506B6 /* SCSHXPCService.swift in Sources */,
 				830D15552378419F00D5535C /* NSColor+ext.swift in Sources */,
 				83860D88260F53D00076AA5E /* Settings.swift in Sources */,
@@ -1525,6 +1530,7 @@
 				8304B0B8238FA897007A455C /* TaskResult.swift in Sources */,
 				839CA3A32460699C0048E249 /* String+GShell.swift in Sources */,
 				838F465F238D813500268B4A /* XPCLightRenderServiceDelegate.swift in Sources */,
+				831FD821269203EF00C314CE /* UTI.swift in Sources */,
 				83720A5925B9755800B49FEC /* NSColor+ext.swift in Sources */,
 				8304B0BD238FBCC4007A455C /* SCSHBaseXPCService.swift in Sources */,
 				83860D6B260F50A90076AA5E /* NotificationCenter+ext.swift in Sources */,
@@ -1712,7 +1718,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 42;
+				CURRENT_PROJECT_VERSION = 43;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1730,7 +1736,7 @@
 					"$(inherited)",
 					"\"$(BUILT_PRODUCTS_DIR)/highlight\"",
 				);
-				MARKETING_VERSION = 2.0.8;
+				MARKETING_VERSION = 2.0.9;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1748,7 +1754,7 @@
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 42;
+				CURRENT_PROJECT_VERSION = 43;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1766,7 +1772,7 @@
 					"$(inherited)",
 					"\"$(BUILT_PRODUCTS_DIR)/highlight\"",
 				);
-				MARKETING_VERSION = 2.0.8;
+				MARKETING_VERSION = 2.0.9;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1782,7 +1788,7 @@
 				CODE_SIGN_ENTITLEMENTS = QLExtension/QLExtension.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 42;
+				CURRENT_PROJECT_VERSION = 43;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1795,7 +1801,7 @@
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
-				MARKETING_VERSION = 2.0.8;
+				MARKETING_VERSION = 2.0.9;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.QuicklookExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1811,7 +1817,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 42;
+				CURRENT_PROJECT_VERSION = 43;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1824,7 +1830,7 @@
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
-				MARKETING_VERSION = 2.0.8;
+				MARKETING_VERSION = 2.0.9;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.QuicklookExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1841,12 +1847,12 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 42;
+				CURRENT_PROJECT_VERSION = 43;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = XPCService/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
-				MARKETING_VERSION = 2.0.8;
+				MARKETING_VERSION = 2.0.9;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.XPCService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1865,12 +1871,12 @@
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 42;
+				CURRENT_PROJECT_VERSION = 43;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = XPCService/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
-				MARKETING_VERSION = 2.0.8;
+				MARKETING_VERSION = 2.0.9;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.XPCService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1889,7 +1895,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 42;
+				CURRENT_PROJECT_VERSION = 43;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = SyntaxHighlightRenderXPC/Info.plist;
@@ -1897,7 +1903,7 @@
 					"@loader_path/../../../../Frameworks",
 					"$(LD_RUNPATH_SEARCH_PATHS_$(IS_MACCATALYST)_$(_BOOL_$(SKIP_INSTALL)))",
 				);
-				MARKETING_VERSION = 2.0.8;
+				MARKETING_VERSION = 2.0.9;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.XPCRender;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1913,7 +1919,7 @@
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 42;
+				CURRENT_PROJECT_VERSION = 43;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = SyntaxHighlightRenderXPC/Info.plist;
@@ -1921,7 +1927,7 @@
 					"@loader_path/../../../../Frameworks",
 					"$(LD_RUNPATH_SEARCH_PATHS_$(IS_MACCATALYST)_$(_BOOL_$(SKIP_INSTALL)))",
 				);
-				MARKETING_VERSION = 2.0.8;
+				MARKETING_VERSION = 2.0.9;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.XPCRender;
 				PRODUCT_NAME = "$(TARGET_NAME)";
