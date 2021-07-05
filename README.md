@@ -70,7 +70,7 @@ On _**MacOS 11 Big Sur**, the system allows you to manage these previously unaut
 - Bash Script files (`.bash`)
 - C Shell script files (`.csh`)
 - C Source files (`.c`, `.h`)
-- C# Souce files (`.cs`)
+- C# Source files (`.cs`)
 - C++ Source files (`.cpp`, `.cp`, `.c++`, `.cc`, `.cxx`, `.hpp`, `.hh`, `.hxx`, `.ipp` )
 - Clojure Script (`.cli`, `.cljs`, `.cljc`, `.edn`)
 - CMake files (`.cmake`)
