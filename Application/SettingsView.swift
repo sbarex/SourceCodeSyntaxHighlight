@@ -191,10 +191,12 @@ class SettingsView: NSView, SettingsSplitViewElement {
             let themeName = theme.nameForSettings
             if settings.lightThemeName == theme.nameForSettings {
                 settings.lightThemeName = themeName
+                settings.lightBackgroundColor = theme.backgroundColor
                 initTheme(name: settings.lightThemeName, label: themeLightLabel, button: themeLightButton)
                 self.updateAppearanceWarning()
             } else if settings.darkThemeName == theme.nameForSettings {
                 settings.darkThemeName = themeName
+                settings.darkBackgroundColor = theme.backgroundColor
                 initTheme(name: settings.darkThemeName, label: themeDarkLabel, button: themeDarkButton)
                 self.updateAppearanceWarning()
             }

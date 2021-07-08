@@ -385,6 +385,7 @@ class HighlightWrapper {
                 continue
             }
             try theme.save()
+            NotificationCenter.default.post(name: .ThemeNeedRefresh, object: theme)
         }
     }
     

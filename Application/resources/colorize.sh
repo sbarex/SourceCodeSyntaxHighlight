@@ -133,18 +133,12 @@ debug "Reader: ${reader}"
 debug "Highlight: $cmd"
 
 go4it () {
-    if [ "x${themeHL}" != "x" ]; then
-        theme="--style=${themeHL}"
-    else
-        theme=""
-    fi
-    
     # Split extraFlagsHL to an array of arguments using '•' as separator.
     #
     # Do not use zsh {= expansion because it split the string on all space ignoring quotes and causing error.
     cmdExtra=("${(@s/•/)extraFlagsHL}")
     
-    export cmdOptsHL=(${plugin} --syntax=${lang} --quiet --include-style ${=theme} --encoding=${textEncoding} ${cmdExtra} --validate-input)
+    export cmdOptsHL=(${plugin} --syntax=${lang} --quiet --include-style --encoding=${textEncoding} ${cmdExtra} --validate-input)
     
     if [ "x${useLSP}" != "x" ]; then
         # LSP require full path.

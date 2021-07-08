@@ -1236,6 +1236,7 @@ public class SCSHTheme: NSObject, Sequence {
         do {
             try s.write(to: url, atomically: true, encoding: .utf8)
             name = url.deletingPathExtension().lastPathComponent
+            self.path = url.path
             isDirty = false
         } catch {
             throw error

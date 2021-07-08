@@ -91,7 +91,7 @@ import Foundation
     ///   - reply:
     ///   - changed: True if the settings are changed.
     func updateSettingsAfterThemeDeleted(name: String, withReply reply: @escaping (_ changed: Bool) -> Void)
-    
+    func updateSettingsAfterThemeBGChanged(name: String, background: String, withReply reply: @escaping (_ changed: Bool) -> Void)
     /// Return the url of the application support folder that contains themes and custom css styles.
     func getApplicationSupport(reply: @escaping (URL?)->Void)
 }

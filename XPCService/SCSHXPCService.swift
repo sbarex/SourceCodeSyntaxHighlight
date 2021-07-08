@@ -365,6 +365,42 @@ class SCSHXPCService: SCSHBaseXPCService, SCSHXPCServiceProtocol {
     ///   - name: Name of the theme. Is equal to the file name.
     ///   - reply:
     ///   - changed: True if the settings are changed.
+    func updateSettingsAfterThemeBGChanged(name: String, background: String, withReply reply: @escaping (_ changed: Bool) -> Void) {
+        // Search if any settings use the deleted theme.
+        let name = "\(name)"
+        var changed = false
+        if settings.lightThemeName == name {
+            settings.lightBackgroundColor = background
+            changed = true
+        }
+        if settings.darkThemeName == name {
+            settings.darkBackgroundColor = background
+            changed = true
+        }
+        for (_, settings) in self.settings.utiSettings {
+            if settings.lightThemeName == name {
+                settings.lightBackgroundColor = background
+                changed = true
+            }
+            if settings.darkThemeName == name {
+                settings.darkBackgroundColor = background
+                changed = true
+            }
+        }
+        if changed {
+            // Save the changed settings.
+            settings.synchronize(domain: type(of: self).XPCDomain, CSSFolder: type(of: self).getCustomStylesUrl(createIfMissing: true))
+        }
+        
+        reply(changed)
+    }
+    
+    /// Delete a custom theme.
+    /// Any references of deleted theme in the settings are replaced with a default theme.
+    /// - parameters:
+    ///   - name: Name of the theme. Is equal to the file name.
+    ///   - reply:
+    ///   - changed: True if the settings are changed.
     func updateSettingsAfterThemeDeleted(name: String, withReply reply: @escaping (_ changed: Bool) -> Void) {
         // Search if any settings use the deleted theme.
         let name = "!\(name)"

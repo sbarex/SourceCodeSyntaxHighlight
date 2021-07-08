@@ -231,11 +231,17 @@ class SCSHBaseXPCService: NSObject {
             hlArguments.arguments.append("--data-dir=\(dataDir)")
         }
         
-        if hlArguments.theme.hasPrefix("!") {
-            // Custom theme.
-            hlArguments.theme.remove(at: hlArguments.theme.startIndex)
-            if let theme_url = self.getCustomThemesUrl(createIfMissing: false)?.appendingPathComponent(hlArguments.theme).appendingPathExtension("theme") {
-                hlArguments.arguments.append("--config-file=\(theme_url.path)")
+        if custom_settings.themeLua.isEmpty {
+            if hlArguments.theme.hasPrefix("!") {
+                // Custom theme.
+                hlArguments.theme.remove(at: hlArguments.theme.startIndex)
+                if let theme_url = self.getCustomThemesUrl(createIfMissing: false)?.appendingPathComponent(hlArguments.theme).appendingPathExtension("theme") {
+                    hlArguments.arguments.append("--style=\(theme_url.path)")
+                }
+            } else if let dataDir = self.dataDir {
+                hlArguments.arguments.append("--style=\(dataDir)/themes/\(hlArguments.theme).theme")
+            } else {
+                hlArguments.arguments.append("--style=\(hlArguments.theme)")
             }
         }
         
@@ -374,20 +380,16 @@ class SCSHBaseXPCService: NSObject {
             temporaryThemeFile = URL(fileURLWithPath: directory).appendingPathComponent(NSUUID().uuidString).appendingPathExtension("theme")
             do {
                 try inline_theme.write(to: temporaryThemeFile!, atomically: true, encoding: .utf8)
-                colorize.arguments.append("--config-file=\(temporaryThemeFile!.path)")
+                colorize.arguments.append("--style=\(temporaryThemeFile!.path)")
             } catch {
                 temporaryThemeFile = nil
             }
         }
         
-        
         colorize.env.merge([
             // Highlight path
             "pathHL": colorize.highlight,
             "pathDos2unix": self.bundle.path(forResource: "dos2unix", ofType: nil) ?? "dos2unix",
-            
-            // Theme to use.
-            "themeHL": colorize.theme,
             
             "extraFlagsHL": colorize.arguments.joined(separator: "•"),
         ]) { (_, new) in new }

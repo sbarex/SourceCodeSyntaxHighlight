@@ -90,10 +90,12 @@ public class SCSHWrapper: NSObject {
         }
         
         NotificationCenter.default.addObserver(self, selector: #selector(afterThemeDeleted(_:)), name: .CustomThemeRemoved, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(afterThemeChanged(_:)), name: .ThemeNeedRefresh, object: nil)
     }
     
     deinit {
         NotificationCenter.default.removeObserver(self, name: .CustomThemeRemoved, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .ThemeNeedRefresh, object: nil)
     }
     
     fileprivate (set) var isSaving = false
@@ -214,6 +216,30 @@ public class SCSHWrapper: NSObject {
             if $0.value.darkThemeName == name {
                 $0.value.isDarkThemeNameDefined = false
                 $0.value.lightThemeName = "neon"
+            }
+        })
+    }
+    
+    @objc internal func afterThemeChanged(_ notification: Notification) {
+        guard let theme = notification.object as? SCSHTheme else { return }
+        SCSHWrapper.service?.updateSettingsAfterThemeBGChanged(name: theme.name, background: theme.backgroundColor) { changed in
+            
+        }
+        
+        let name = theme.nameForSettings
+        if self.settings?.lightThemeName == name {
+            self.settings?.lightBackgroundColor = theme.backgroundColor
+        }
+        if self.settings?.darkThemeName == name {
+            self.settings?.darkBackgroundColor = theme.backgroundColor
+        }
+        
+        self.settings?.utiSettings.forEach({
+            if $0.value.lightThemeName == name {
+                $0.value.lightBackgroundColor = theme.backgroundColor
+            }
+            if $0.value.darkThemeName == name {
+                $0.value.darkBackgroundColor = theme.backgroundColor
             }
         })
     }
