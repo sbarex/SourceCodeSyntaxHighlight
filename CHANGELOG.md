@@ -1,6 +1,12 @@
 Changelog
 =======
 
+### 2.0.10 (44)
+New features:
+- Support for Apple workflow `.wflow` files rendered as _`plist`_.
+Bugfix:
+- Fix bugs on color schema (import, file name with space, background color).
+
 ### 2.0.9
 New features:
 - Support for Azkaban `.flow` files rendered as _`YAML`_.

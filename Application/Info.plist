@@ -369,6 +369,23 @@
 			</dict>
 		</dict>
 		<dict>
+			<key>UTTypeDescription</key>
+			<string>Property List</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>dyn.ah62d4rv4ge81s3xqr75u</string>
+			</array>
+			<key>UTTypeIdentifier</key>
+			<string>is.workflow.my.workflow</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>wflow</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.plain-text</string>

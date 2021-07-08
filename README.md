@@ -63,6 +63,7 @@ On _**MacOS 11 Big Sur**, the system allows you to manage these previously unaut
 - Adobe Acrobat Sequence files (`.sequ`) _as `XML`_
 - Adobe Flash ActionScript source files (`.as`)
 - Adobe JSX script files (`.jsx`)
+- Apple workflow (`.wflow`) _as `plist (XML)`_
 - AppleScript (`.scpt`, `.applescript`, `.ascr`) _automatically decompiled with `osadecompile`_
 - Assembler source files (`.s79`)
 - Azkaban flow files (`.flow`) as _`YAML`_
