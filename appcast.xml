@@ -223,5 +223,22 @@
             ]]>
             </description>
         </item>
+        <item>
+            <title>2.0.10</title>
+            <pubDate>ven, 48 lug 2021 23:04:18 +0100</pubDate>
+            <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
+            <enclosure type="application/octet-stream" url="https://github.com/sbarex/SourceCodeSyntaxHighlight/releases/download/2.0.10/Syntax.Highlight.zip" sparkle:version="44" sparkle:edSignature="Bbdk7MZWQa35TeYpjWMlummePotYedIVwmS7mLRThFCWNJb643x1SpSFbgBx1ikt9r7j5UmUfPg1+22hj1WRAg==" length="11523692" />
+            <description><![CDATA[
+                <h2>New features</h2>
+                <ul>
+                    <li>Support for Apple workflow <code>.wflow</code> files rendered as <code>plist</code>.</li>
+                </ul>
+                <h2>Bugfix</h2>
+                <ul>
+                    <li>Fix bugs on color scheme (import, file name with space, background color).</li>
+                </ul>
+            ]]>
+            </description>
+        </item>
     </channel>
 </rss>
