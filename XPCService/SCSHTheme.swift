@@ -726,21 +726,27 @@ public class SCSHTheme: NSObject, Sequence {
     @objc dynamic fileprivate(set) var needRefresh: Bool = false
     
     func lockRefresh() {
-        refreshLock += 1
+        self.refreshLock += 1
     }
     func unlockRefresh() {
-        refreshLock -= 1
-        if refreshLock == 0 {
+        self.refreshLock -= 1
+        if self.refreshLock == 0 && self.needRefresh {
             setNeedRefresh()
         }
     }
     func setNeedRefresh() {
+        self.needRefresh = true
         if refreshLock == 0 {
-            doRefresh()
+            self.doRefresh()
         }
     }
+    
+    func resetNeedRefresh() {
+        self.needRefresh = false
+    }
+    
     internal func doRefresh() {
-        needRefresh = true
+        self.needRefresh = false
         NotificationCenter.default.post(name: .ThemeNeedRefresh, object: self)
     }
     
@@ -1238,6 +1244,8 @@ public class SCSHTheme: NSObject, Sequence {
             name = url.deletingPathExtension().lastPathComponent
             self.path = url.path
             isDirty = false
+            
+            NotificationCenter.default.post(name: .CustomThemeSaved, object: self)
         } catch {
             throw error
         }

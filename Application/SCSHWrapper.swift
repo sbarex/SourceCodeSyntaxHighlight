@@ -91,6 +91,7 @@ public class SCSHWrapper: NSObject {
         
         NotificationCenter.default.addObserver(self, selector: #selector(afterThemeDeleted(_:)), name: .CustomThemeRemoved, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(afterThemeChanged(_:)), name: .ThemeNeedRefresh, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(afterThemeSaved(_:)), name: .CustomThemeSaved, object: nil)
     }
     
     deinit {
@@ -220,12 +221,14 @@ public class SCSHWrapper: NSObject {
         })
     }
     
+    @objc internal func afterThemeSaved(_ notification: Notification) {
+        guard let theme = notification.object as? SCSHTheme else { return }
+        SCSHWrapper.service?.updateBGSettingsAfterThemeSaved(name: theme.nameForSettings, background: theme.backgroundColor) { changed in
+        }
+    }
+    
     @objc internal func afterThemeChanged(_ notification: Notification) {
         guard let theme = notification.object as? SCSHTheme else { return }
-        SCSHWrapper.service?.updateSettingsAfterThemeBGChanged(name: theme.name, background: theme.backgroundColor) { changed in
-            
-        }
-        
         let name = theme.nameForSettings
         if self.settings?.lightThemeName == name {
             self.settings?.lightBackgroundColor = theme.backgroundColor
@@ -271,5 +274,21 @@ public class SCSHWrapper: NSObject {
         default:
             return .terminateCancel
         }
+    }
+    
+    func getFormatsUsedBy(theme theme_name: String) -> [SettingsBase] {
+        guard let settings = self.settings else {
+            return []
+        }
+        var result: [SettingsBase] = []
+        if settings.lightThemeName == theme_name || settings.darkThemeName == theme_name {
+            result.append(settings)
+        }
+        for (_, s) in settings.utiSettings {
+            if (s.isLightThemeNameDefined && s.lightThemeName == theme_name) || (s.isDarkThemeNameDefined && s.darkThemeName == theme_name) {
+                result.append(s)
+            }
+        }
+        return result
     }
 }

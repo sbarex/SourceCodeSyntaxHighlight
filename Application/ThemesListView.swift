@@ -23,6 +23,7 @@ class ThemesListView: NSView, SettingsSplitViewElement {
     
     @IBOutlet weak var exportMenuItem: NSMenuItem!
     @IBOutlet weak var exportMenuItem2: NSMenuItem!
+    @IBOutlet weak var settingsMenuItem: NSMenu!
     @IBOutlet weak var deleteMenuItem: NSMenuItem!
     @IBOutlet weak var deleteMenuItem2: NSMenuItem!
     @IBOutlet weak var duplicateMenuItem: NSMenuItem!
@@ -544,12 +545,44 @@ extension ThemesListView: NSOutlineViewDelegate {
 }
 
 extension ThemesListView: NSMenuDelegate {
+    var settingsController: SettingsSplitViewController? {
+        return self.window?.windowController?.contentViewController as? SettingsSplitViewController
+    }
+    
     func menuNeedsUpdate(_ menu: NSMenu) {
         let theme = outlineView.item(atRow: outlineView.clickedRow) as? SCSHThemePreview
         exportMenuItem2.isEnabled = theme != nil
         revealMenuItem2.isEnabled = theme != nil && theme!.exists
         duplicateMenuItem2.isEnabled = theme != nil
         deleteMenuItem2.isEnabled = theme != nil && !theme!.isStandalone
+        let settings = theme != nil ? SCSHWrapper.shared.getFormatsUsedBy(theme: theme!.nameForSettings) : []
+        settingsMenuItem.removeAllItems()
+        
+        let UTIs = (NSApplication.shared.delegate as? AppDelegate)?.handledUTIs ?? []
+        for s in settings {
+            if s is Settings {
+                settingsMenuItem.addItem(withTitle: "General settings", action: #selector(self.handleSettingsMenu(_:)), keyEquivalent: "")
+            } else if let s = s as? SettingsFormat {
+                for u in UTIs {
+                    if u.UTI == s.uti {
+                        settingsMenuItem.addItem(withTitle: u.description, action: #selector(self.handleSettingsMenu(_:)), keyEquivalent: "").representedObject = u
+                        break
+                    }
+                }
+            }
+        }
+        
+        if settingsMenuItem.items.isEmpty {
+            settingsMenuItem.addItem(withTitle: "None", action: nil, keyEquivalent: "")
+        }
+    }
+    
+    @objc func handleSettingsMenu(_ sender: NSMenuItem) {
+        if let u = sender.representedObject as? UTI {
+            settingsController?.selectUTI(u)
+        } else {
+            settingsController?.mode = .global
+        }
     }
 }
 
@@ -557,6 +590,7 @@ extension ThemesListView: NSMenuDelegate {
 class ThemeTableCellView: NSTableCellView {
     @IBOutlet weak var changedLabel: NSView!
     @IBOutlet weak var htmlLabel: NSView!
+    @IBOutlet weak var usedLabel: NSView!
     
     override var objectValue: Any? {
         didSet {
@@ -565,6 +599,7 @@ class ThemeTableCellView: NSTableCellView {
                 textField?.stringValue = theme.desc
                 changedLabel.isHidden = !theme.isDirty
                 htmlLabel.isHidden = !theme.isRequireHTMLEngine(ignoringLSTokens: !((NSApplication.shared.delegate as? AppDelegate)?.isAdvancedSettingsVisible ?? false))
+                usedLabel.isHidden = SCSHWrapper.shared.getFormatsUsedBy(theme: theme.nameForSettings).isEmpty
             } else {
                 imageView?.image = nil
                 textField?.stringValue = ""

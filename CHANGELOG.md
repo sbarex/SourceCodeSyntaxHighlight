@@ -1,19 +1,23 @@
 Changelog
 =======
 
+### 2.0.11 (45)
+Bugfix:
+- Fixed bugs on the color scheme code.
+
 ### 2.0.10 (44)
 New features:
 - Support for Apple workflow `.wflow` files rendered as _`plist`_.
 Bugfix:
-- Fix bugs on color schema (import, file name with space, background color).
+- Fixed bugs on the color scheme (import, file name with space, background color).
 
 ### 2.0.9
 New features:
 - Support for Azkaban `.flow` files rendered as _`YAML`_.
 - Better support for dynamic UTI.
 Bugfix:
-- Fix Kotlin support.
-- Fix generation of settings folder.
+- Fixed Kotlin support.
+- Fixed generation of settings folder.
 
 
 ### 2.0.8

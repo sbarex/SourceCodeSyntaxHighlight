@@ -12,6 +12,7 @@ extension NSNotification.Name {
     static let ThemeIsDirty = NSNotification.Name(rawValue: "ThemeDirty")
     static let ThemeNeedRefresh = NSNotification.Name(rawValue: "ThemeRefresh")
     static let CustomThemeAdded = Notification.Name("CustomThemeAdded")
+    static let CustomThemeSaved = Notification.Name("CustomThemeSaved")
     static let CustomThemeRemoved = Notification.Name("CustomThemeRemoved")
         
     static let SettingsAvailable = NSNotification.Name("Settings.init")

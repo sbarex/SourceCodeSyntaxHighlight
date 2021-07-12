@@ -192,7 +192,7 @@ extension SCSHTheme {
             keywords: keywords
         )
         
-        
+        self.lockRefresh()
         self.isStandalone = theme.standalone != 0
         self.path = String(cString: theme.path)
         
@@ -209,7 +209,8 @@ extension SCSHTheme {
         if self.lspHover.getCustomStyle(for: "html")?.style.isEmpty ?? true {
             self.lspHover.setCustomStyle(for: "html", style: (style: "cursor:help;", override: false))
         }
-        
+        self.resetNeedRefresh()
+        self.unlockRefresh()
         self.isDirty = false
     }
 }

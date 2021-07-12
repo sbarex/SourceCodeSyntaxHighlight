@@ -359,15 +359,13 @@ class SCSHXPCService: SCSHBaseXPCService, SCSHXPCServiceProtocol {
         reply(u)
     }
     
-    /// Delete a custom theme.
-    /// Any references of deleted theme in the settings are replaced with a default theme.
+    /// Update the background color after a theme is saved.
     /// - parameters:
-    ///   - name: Name of the theme. Is equal to the file name.
+    ///   - name: Name of the theme.
     ///   - reply:
     ///   - changed: True if the settings are changed.
-    func updateSettingsAfterThemeBGChanged(name: String, background: String, withReply reply: @escaping (_ changed: Bool) -> Void) {
-        // Search if any settings use the deleted theme.
-        let name = "\(name)"
+    func updateBGSettingsAfterThemeSaved(name: String, background: String, withReply reply: @escaping (_ changed: Bool) -> Void) {
+        // Search if any settings use the changed theme.
         var changed = false
         if settings.lightThemeName == name {
             settings.lightBackgroundColor = background
