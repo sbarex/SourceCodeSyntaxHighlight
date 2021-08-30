@@ -128,6 +128,7 @@ On _**MacOS 11 Big Sur**, the system allows you to manage these previously unaut
 - Objective-C source files (`.m`)
 - Objective-C++ source files (`.mm`)
 - OCaml source files (`.ml`, `.mll`, `.mly`)
+- OPML (Outline Processor Markup Language) files (`.opml`) _as `XML`_
 - Paradox files (`.sc`)
 - Pascal source files (`.pas`)
 - Patch files (`.patch`, `.diff`)

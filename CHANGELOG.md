@@ -1,6 +1,11 @@
 Changelog
 =======
 
+
+### 2.0.12 (46)
+New features:
+- Support for OPML `.opml` files rendered as _`XML`_.
+
 ### 2.0.11 (45)
 Bugfix:
 - Fixed bugs on the color scheme code.
@@ -18,7 +23,6 @@ New features:
 Bugfix:
 - Fixed Kotlin support.
 - Fixed generation of settings folder.
-
 
 ### 2.0.8
 New features:
