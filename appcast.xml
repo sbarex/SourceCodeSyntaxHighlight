@@ -190,7 +190,7 @@
             <title>2.0.8</title>
             <pubDate>sab, 19 giu 2021 19:31:12 +0100</pubDate>
             <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
-            <enclosure type="application/octet-stream" url="https://github.com/sbarex/SourceCodeSyntaxHighlight/releases/download/2.0.8/Syntax.Highlight.zip" sparkle:version="42" sparkle:edSignature="Add3B7u1dDC0AopVJsNqDqkc1tMKNj4QZRFiESXKp3eC6gsJhzHfF4cYuNRztr5/jHZ/rUmzGba/HWuvyJyECw==" length="11479623" />
+            <enclosure type="application/octet-stream" url="https://github.com/sbarex/SourceCodeSyntaxHighlight/releases/download/2.0.8/Syntax.Highlight.zip" sparkle:shortVersionString="2.0.8" sparkle:version="42" sparkle:edSignature="Add3B7u1dDC0AopVJsNqDqkc1tMKNj4QZRFiESXKp3eC6gsJhzHfF4cYuNRztr5/jHZ/rUmzGba/HWuvyJyECw==" length="11479623" />
             <description><![CDATA[
                 <h2>New features</h2>
                 <ul>
@@ -208,7 +208,7 @@
             <title>2.0.9</title>
             <pubDate>dom, 4 lug 2021 19:26:32 +0100</pubDate>
             <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
-            <enclosure type="application/octet-stream" url="https://github.com/sbarex/SourceCodeSyntaxHighlight/releases/download/2.0.9/Syntax.Highlight.zip" sparkle:version="43" sparkle:edSignature="/BQkue/GjM0vB1+IzU9oJOke3f3o3p76TTgwhqk9MeHdhwu4pWmEZ8nj+YBRPbawoaBbwhMvGP5SDX8QQ5vLBQ==" length="11518163" />
+            <enclosure type="application/octet-stream" url="https://github.com/sbarex/SourceCodeSyntaxHighlight/releases/download/2.0.9/Syntax.Highlight.zip" sparkle:shortVersionString="2.0.9" sparkle:version="43" sparkle:edSignature="/BQkue/GjM0vB1+IzU9oJOke3f3o3p76TTgwhqk9MeHdhwu4pWmEZ8nj+YBRPbawoaBbwhMvGP5SDX8QQ5vLBQ==" length="11518163" />
             <description><![CDATA[
                 <h2>New features</h2>
                 <ul>
@@ -227,7 +227,7 @@
             <title>2.0.10</title>
             <pubDate>ven, 08 lug 2021 23:04:18 +0100</pubDate>
             <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
-            <enclosure type="application/octet-stream" url="https://github.com/sbarex/SourceCodeSyntaxHighlight/releases/download/2.0.10/Syntax.Highlight.zip" sparkle:version="44" sparkle:edSignature="Bbdk7MZWQa35TeYpjWMlummePotYedIVwmS7mLRThFCWNJb643x1SpSFbgBx1ikt9r7j5UmUfPg1+22hj1WRAg==" length="11523692" />
+            <enclosure type="application/octet-stream" url="https://github.com/sbarex/SourceCodeSyntaxHighlight/releases/download/2.0.10/Syntax.Highlight.zip" sparkle:shortVersionString="2.0.10" sparkle:version="44" sparkle:edSignature="Bbdk7MZWQa35TeYpjWMlummePotYedIVwmS7mLRThFCWNJb643x1SpSFbgBx1ikt9r7j5UmUfPg1+22hj1WRAg==" length="11523692" />
             <description><![CDATA[
                 <h2>New features</h2>
                 <ul>
@@ -244,11 +244,24 @@
             <title>2.0.11</title>
             <pubDate>lun, 12 lug 2021 8:24:09 +0100</pubDate>
             <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
-            <enclosure type="application/octet-stream" url="https://github.com/sbarex/SourceCodeSyntaxHighlight/releases/download/2.0.11/Syntax.Highlight.zip" sparkle:version="45" sparkle:edSignature="deoGtofKRw67x+QPKS0unPWSLm0dYSnmNVg0WBVODpFBCEj12Yb8sbzJ75iZB+y0SDCMm4wG9/TBp4do5EEZBw==" length="11538858" />
+            <enclosure type="application/octet-stream" url="https://github.com/sbarex/SourceCodeSyntaxHighlight/releases/download/2.0.11/Syntax.Highlight.zip" sparkle:shortVersionString="2.0.11" sparkle:version="45" sparkle:edSignature="deoGtofKRw67x+QPKS0unPWSLm0dYSnmNVg0WBVODpFBCEj12Yb8sbzJ75iZB+y0SDCMm4wG9/TBp4do5EEZBw==" length="11538858" />
             <description><![CDATA[
                 <h2>Bugfix</h2>
                 <ul>
                     <li>Fixed bugs on the color scheme code.</li>
+                </ul>
+            ]]>
+            </description>
+        </item>
+        <item>
+            <title>2.0.12</title>
+            <pubDate>lun, 30 ago 2021 16:33:23 +0100</pubDate>
+            <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
+            <enclosure type="application/octet-stream" url="https://github.com/sbarex/SourceCodeSyntaxHighlight/releases/download/2.0.12/Syntax.Highlight.zip" sparkle:shortVersionString="2.0.12" sparkle:version="46" sparkle:edSignature="cwffz1eTXnNPx3Y9gJDawJ+wXBhi4kFMDeXj6wp0+Cz2qOa7Nj1+jdM0kjusdiVhxpmqEwPvxskxu8mq+etOAA==" length="11539750" />
+            <description><![CDATA[
+                <h2>New features</h2>
+                <ul>
+                    <li>Support for Outline Processor Markup Language <code>.opml</code> files rendered as <code>XML</code>.</li>
                 </ul>
             ]]>
             </description>
