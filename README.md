@@ -136,7 +136,7 @@ On _**MacOS 11 Big Sur**, the system allows you to manage these previously unaut
 - Perl script files (`.pl`, `.pm`)
 - PHP source files (`.php`, `.php3`, `.php4`, `.ph3`, `.ph4`, `.phtml`)
 - Properties files (`.properties`) _as `INI`_
-- Property List files (`.plist`) _dinamically decompiled with `plutil`_ **On Catalina `.plist` is reserved by the System and cannot be handled.**
+- Property List files (`.plist`) _dynamically decompiled with `plutil`_ **On Catalina `.plist` is reserved by the System and cannot be handled.**
 - Python source files (`.py`)
 - Racket (`.rkt`) _as `Lisp`_
 - RDF files (`.rdf`)
@@ -164,7 +164,7 @@ On _**MacOS 11 Big Sur**, the system allows you to manage these previously unaut
 - Visual Basic source files (`.vb`, `.bas`, `.basic`, `.vbs`)
 - Vue source files (`.vue`)
 - XAML source files (`.xaml`) _as XML_
-- Xcode localizable strings files (`.strings`, `.stringsdict`) (dinamically decompiled with `plutil`)
+- Xcode localizable strings files (`.strings`, `.stringsdict`) (dynamically decompiled with `plutil`)
 - XHTML files (`.xhtml`)
 - XML files (`.xml`) **`.xml` is reserved by the System and cannot be handled.**
 - XSD Schema files (`.xsd`, `.xquery`)
