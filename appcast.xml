@@ -266,5 +266,34 @@
             ]]>
             </description>
         </item>
+        <item>
+            <title>2.1.0</title>
+            <pubDate>dom, 14 nov 2021 13:21:0 +0100</pubDate>
+            <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
+            <enclosure type="application/octet-stream" url="https://github.com/sbarex/SourceCodeSyntaxHighlight/releases/download/2.1.0/Syntax.Highlight.zip" sparkle:shortVersionString="2.1.0" sparkle:version="47" sparkle:edSignature="teR7xRAdTkyqwac2BKVajDYGsPccNH3EJc4UlLD0Iq6yT91X9aI+c1Y1m1JUFMnsXGwl6FDgT9ie2F709DvhCA==" length="12862379" />
+            <description><![CDATA[
+                <h2>Release 2.1.0 (47)</h2>
+                <p>New features:</p>
+                <ul>
+                    <li>Support for macOS 12 Monterey with new lightweight API. <strong>Starting from this release, the use of the <code>HTML</code> rendering engine is no longer discouraged.</strong></li>
+                    <li>Command line interface for batch conversion.</li>
+                    <li>Preliminary support for plain files (unknown files without extension).</li>
+                    <li>Support for Version Control System (VCS) (<code>git</code> and <code>hg</code>) diff status.</li>
+                    <li>New supported formats:
+                        <ul>
+                            <li><code>.XMP</code> files rendered as <em><code>XML</code></em></li>
+                            <li>LaTeX <code>.sty</code> files</li>
+                            <li><code>.svelte</code> files rendered as <em><code>HTML</code></em>.</li>
+                        </ul>
+                    </li>
+                    <li>Better error messages.</li>
+                </ul>
+                <p>Bugfix:</p>
+                <ul>
+                    <li>Fixed support for some UTIs associated to BBEdit.</li>
+                </ul>
+            ]]>
+            </description>
+        </item>
     </channel>
 </rss>
