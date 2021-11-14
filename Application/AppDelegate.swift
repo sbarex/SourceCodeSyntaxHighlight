@@ -251,5 +251,37 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
             popupButton.menu?.addItem(m)
         }
     }
+    
+    @IBAction func installCLITool(_ sender: Any) {
+        guard let app = Bundle.main.url(forResource: "syntax_highlight_cli", withExtension: nil) else {
+            return
+        }
+        let alert = NSAlert()
+        let path = "/usr/local/bin/syntax_highlight_cli"
+        do {
+            try FileManager.default.createSymbolicLink(at: URL(fileURLWithPath: path), withDestinationURL: app)
+            alert.messageText = "Command line tool installed on `\(path)`"
+            alert.alertStyle = .informational
+        } catch {
+            alert.messageText = "Unable to link the command line tool link into `\(path)`!"
+            alert.informativeText = error.localizedDescription
+            alert.alertStyle = .critical
+        }
+        alert.runModal()
+    }
+    
+    @IBAction func revealCLITool(_ sender: Any) {
+        let u = URL(fileURLWithPath: "/usr/local/bin/syntax_highlight_cli")
+        if FileManager.default.fileExists(atPath: u.path) {
+            // Open the Finder to the settings file.
+            NSWorkspace.shared.activateFileViewerSelecting([u])
+        } else {
+            let alert = NSAlert()
+            alert.messageText = "The command line tool is not installed!"
+            alert.alertStyle = .informational
+            
+            alert.runModal()
+        }
+    }
 }
 

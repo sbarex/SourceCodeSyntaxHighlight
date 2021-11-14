@@ -351,6 +351,8 @@ A `syntax_highlight_cli` command line interface (CLI) is available to perform ba
 
 The tool is located inside the `Syntax Highlight.app/Contents/Resources` folder (and should not be moved outside). 
 
+From the Application menu you can create a symbolic link into `/usr/local/bin` folder.
+
 ```sh
 $ /Application/Syntax\ Highlight.app/Contents/Resources/syntax_highlight_cli -h
 ```

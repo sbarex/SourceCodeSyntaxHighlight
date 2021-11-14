@@ -310,7 +310,7 @@
             <objects>
                 <viewController storyboardIdentifier="PlainStyleEditor" id="5wM-kt-xwC" customClass="PlainSettingsEditorViewController" customModule="Syntax_Highlight" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="t9t-lV-wnB">
-                        <rect key="frame" x="0.0" y="0.0" width="381" height="364"/>
+                        <rect key="frame" x="0.0" y="0.0" width="382" height="364"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dYU-3Q-bem">
@@ -322,7 +322,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0vo-Zm-9B6">
-                                <rect key="frame" x="138" y="323" width="223" height="21"/>
+                                <rect key="frame" x="138" y="323" width="224" height="21"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="6gS-Cf-XfH">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -333,14 +333,14 @@
                                 </connections>
                             </textField>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yrz-Vl-IdJ">
-                                <rect key="frame" x="136" y="298" width="225" height="18"/>
+                                <rect key="frame" x="136" y="298" width="226" height="18"/>
                                 <buttonCell key="cell" type="check" title="Use regular expression" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="m8Z-YI-Slw">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kvA-zY-t9R">
-                                <rect key="frame" x="136" y="276" width="225" height="18"/>
+                                <rect key="frame" x="136" y="276" width="226" height="18"/>
                                 <buttonCell key="cell" type="check" title="Match case" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="U4r-GX-DbH">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -355,7 +355,7 @@
                                 </textFieldCell>
                             </textField>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8ow-kY-H9M">
-                                <rect key="frame" x="302" y="13" width="66" height="32"/>
+                                <rect key="frame" x="303" y="13" width="66" height="32"/>
                                 <buttonCell key="cell" type="push" title="Done" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bpx-kH-9ug">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -376,9 +376,9 @@ DQ
                                 </textFieldCell>
                             </textField>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="48" horizontalPageScroll="10" verticalLineScroll="48" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bkq-EH-gTv">
-                                <rect key="frame" x="20" y="60" width="341" height="145"/>
+                                <rect key="frame" x="20" y="60" width="342" height="145"/>
                                 <clipView key="contentView" ambiguous="YES" id="DPE-5h-nkk">
-                                    <rect key="frame" x="1" y="1" width="339" height="143"/>
+                                    <rect key="frame" x="1" y="1" width="340" height="143"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" ambiguous="YES" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="48" viewBased="YES" id="dCJ-eK-5XO">
@@ -536,7 +536,7 @@ DQ
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="340" id="ufo-UT-LHS"/>
                                 </constraints>
                                 <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="KtA-nA-DN4">
-                                    <rect key="frame" x="1" y="128" width="339" height="16"/>
+                                    <rect key="frame" x="1" y="128" width="340" height="16"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="j0k-XT-dSG">
@@ -545,7 +545,7 @@ DQ
                                 </scroller>
                             </scrollView>
                             <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tKa-D3-pz1">
-                                <rect key="frame" x="135" y="233" width="230" height="25"/>
+                                <rect key="frame" x="135" y="233" width="231" height="25"/>
                                 <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="ahy-WG-Z72" id="2PV-4O-PBy">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="menu"/>
@@ -559,7 +559,7 @@ DQ
                                 </popUpButtonCell>
                             </popUpButton>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="uzl-Mj-Zf8">
-                                <rect key="frame" x="228" y="13" width="76" height="32"/>
+                                <rect key="frame" x="229" y="13" width="76" height="32"/>
                                 <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="jp0-di-SgA">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -704,6 +704,18 @@ Gw
                                             <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
                                             <connections>
                                                 <action selector="checkForUpdates:" target="Wit-nE-Tst" id="ZbV-cF-ZL4"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Install the command line tool" id="C2g-Xj-SGx">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="installCLITool:" target="Wit-nE-Tst" id="DH4-wS-agR"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Reveal the command line tool" alternate="YES" id="mHv-p3-0iE">
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES"/>
+                                            <connections>
+                                                <action selector="revealCLITool:" target="Wit-nE-Tst" id="NeE-rS-smd"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="Xxj-dN-9KF"/>
@@ -1878,7 +1890,7 @@ DQ
                                                                     </connections>
                                                                 </textField>
                                                                 <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xXO-Pf-hQw">
-                                                                    <rect key="frame" x="269" y="1" width="15" height="22"/>
+                                                                    <rect key="frame" x="269" y="0.0" width="15" height="22"/>
                                                                     <stepperCell key="cell" controlSize="small" continuous="YES" alignment="left" maxValue="5000" id="FUJ-rv-Ocw"/>
                                                                     <connections>
                                                                         <action selector="handleStepper:" target="wgO-sS-ics" id="Z2t-bV-D6O"/>
@@ -2037,14 +2049,14 @@ Gw
         <scene sceneID="dCj-wZ-HeV">
             <objects>
                 <viewController storyboardIdentifier="VCSViewController" id="ci5-kL-7KR" customClass="VCSSettingsViewController" customModule="Syntax_Highlight" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" id="zdH-zs-ivt">
-                        <rect key="frame" x="0.0" y="0.0" width="551" height="272"/>
+                    <view key="view" misplaced="YES" id="zdH-zs-ivt">
+                        <rect key="frame" x="0.0" y="0.0" width="531" height="272"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="24" horizontalPageScroll="10" verticalLineScroll="24" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b57-sj-eJD">
-                                <rect key="frame" x="8" y="34" width="535" height="230"/>
+                                <rect key="frame" x="8" y="34" width="475" height="230"/>
                                 <clipView key="contentView" ambiguous="YES" id="u9n-Li-jwT">
-                                    <rect key="frame" x="1" y="1" width="533" height="228"/>
+                                    <rect key="frame" x="1" y="1" width="473" height="228"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" ambiguous="YES" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="24" rowSizeStyle="automatic" headerView="YhD-qh-cyh" viewBased="YES" id="qjR-Jh-xRV">
@@ -2247,8 +2259,8 @@ Gw
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="230" id="082-D9-ISI"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="400" id="A0Q-9t-qyW"/>
                                 </constraints>
-                                <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="ikY-3B-dQb">
-                                    <rect key="frame" x="1" y="213" width="533" height="16"/>
+                                <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="ikY-3B-dQb">
+                                    <rect key="frame" x="1" y="213" width="473" height="16"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="RQG-gx-6TB">
@@ -2261,7 +2273,7 @@ Gw
                                 </tableHeaderView>
                             </scrollView>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="JKy-3S-rxN">
-                                <rect key="frame" x="440" y="7" width="53" height="19"/>
+                                <rect key="frame" x="380" y="7" width="53" height="19"/>
                                 <buttonCell key="cell" type="roundRect" title="Cancel" bezelStyle="roundedRect" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="PVC-NT-gEv">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="cellTitle"/>
@@ -2274,7 +2286,7 @@ Gw
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="O4Z-Zo-WFs">
-                                <rect key="frame" x="501" y="7" width="42" height="19"/>
+                                <rect key="frame" x="441" y="7" width="42" height="19"/>
                                 <buttonCell key="cell" type="roundRect" title="Save" bezelStyle="roundedRect" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="9J5-0U-RD8">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="cellTitle"/>
@@ -2794,7 +2806,7 @@ Gw
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="hNC-h9-yHT"/>
+        <segue reference="cyD-o7-5hc"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="NSCaution" width="32" height="32"/>
