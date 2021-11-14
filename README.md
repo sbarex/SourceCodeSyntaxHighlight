@@ -188,7 +188,7 @@ The application can also handle some plain files without extension.
 - TeX and LaTeX files (`.tex`, `.sty`, `.cls`, `.latex`, `.ltx`, `.texi`, `.ctx`, `.sty`)
 - Text files (`.txt`, `.text`)
 - Toml files (`.toml`)
-- Typescript files (`.ts`, `.txs`) **`.ts` is reserved by the System and cannot be handled.**
+- Typescript files (`.ts`, `.tsx`) **`.ts` is reserved by the System and cannot be handled.**
 - Verilog HDL files (`.v`, `.vl`)
 - VHDL source files (`.vhd`, `.vhdl`)
 - VIM script files (`.vim`)
