@@ -40,7 +40,14 @@ class XPCLightRenderService: SCSHBaseXPCService, XPCLightRenderServiceProtocol {
     }
     
     func colorize(url: URL, withReply reply: @escaping (Data, NSDictionary, Error?) -> Void) {
-        let logFile = URL(fileURLWithPath: NSHomeDirectory(), isDirectory: true).appendingPathComponent("Desktop/colorize.log")
+        let logFile = self.settings.isDebug ? URL(fileURLWithPath: NSHomeDirectory(), isDirectory: true).appendingPathComponent("Desktop/colorize.log") : URL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true).appendingPathComponent("colorize.log")
+        
+        defer {
+            if !self.settings.isDebug {
+                // Remove the temporary log file.
+                try? FileManager.default.removeItem(at: logFile)
+            }
+        }
         
         do {
             let r = try type(of: self).colorize(url: url, settings: self.settings, highlightBin: self.getEmbeddedHighlight(), dataDir: self.dataDir, rsrcEsc: self.rsrcEsc, dos2unixBin: self.bundle.path(forResource: "dos2unix", ofType: nil), highlightLanguages: self.highlightLanguages, extraCss: self.getGlobalCSS(), overridingSettings: nil, logFile: logFile, logOs: self.log)

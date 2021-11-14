@@ -26,17 +26,17 @@ else
 fi
 
 function debug() {
-    if [ "x$debugHL" != "x" ]; then
-        echo "`$date +"$date_format"` $@" >> ~/Desktop/colorize.log
+    if [ "x$logHL" != "x" ]; then
+        echo "`$date +"$date_format"` $@" >> "$logHL"
     fi
 }
 
-if [ "x$debugHL" != "x" ]; then
+if [ "x$logHL" != "x" ]; then
     # Clear the log.
-    echo "" > ~/Desktop/colorize.log
+    echo "" > "$logHL"
     debug "-------------------------------------------------"
     # file to store stderr
-    err_device=~/Desktop/colorize.log
+    err_device="$logHL"
 else
     err_device=/dev/stderr
 fi

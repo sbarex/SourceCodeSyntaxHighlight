@@ -124,7 +124,7 @@ struct ColorizeArguments {
             "convertEOL": custom_settings.convertEOL ? "1" : "",
             
             // Debug
-            "debugHL": custom_settings.isDebug ? "1" : "",
+            "logHL": custom_settings.logFile?.path ?? "",
         ]) { (_, new) in new }
         
         if let _ = env["preprocessorHL"] {

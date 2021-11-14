@@ -252,7 +252,9 @@ class SCSHXPCService: SCSHBaseXPCService, SCSHXPCServiceProtocol {
             }
         }
         
-        custom_settings.logFile = URL(fileURLWithPath: NSHomeDirectory(), isDirectory: true).appendingPathComponent("Desktop/colorize.log")
+        if custom_settings.isDebug {
+            custom_settings.logFile = URL(fileURLWithPath: NSHomeDirectory(), isDirectory: true).appendingPathComponent("Desktop/colorize.log")
+        }
         
         do {
             var colorize = try ColorizeArguments(highlight: self.getEmbeddedHighlight(), dataDir: self.dataDir, url: url, custom_settings: custom_settings, extraCss: self.getGlobalCSS())
@@ -304,7 +306,9 @@ class SCSHXPCService: SCSHBaseXPCService, SCSHXPCServiceProtocol {
                 custom_settings = SettingsRendering(settings: self.settings.toDictionary())
             }
         }
-        custom_settings.logFile = URL(fileURLWithPath: NSHomeDirectory(), isDirectory: true).appendingPathComponent("Desktop/colorize.log")
+        if custom_settings.isDebug {
+            custom_settings.logFile = URL(fileURLWithPath: NSHomeDirectory(), isDirectory: true).appendingPathComponent("Desktop/colorize.log")
+        }
         
         custom_settings.format = .html
         do {
@@ -364,7 +368,9 @@ class SCSHXPCService: SCSHBaseXPCService, SCSHXPCServiceProtocol {
                 custom_settings = SettingsRendering(settings: self.settings.toDictionary())
             }
         }
-        custom_settings.logFile = URL(fileURLWithPath: NSHomeDirectory(), isDirectory: true).appendingPathComponent("Desktop/colorize.log")
+        if custom_settings.isDebug {
+            custom_settings.logFile = URL(fileURLWithPath: NSHomeDirectory(), isDirectory: true).appendingPathComponent("Desktop/colorize.log")
+        }
         
         custom_settings.format = .rtf
         do {

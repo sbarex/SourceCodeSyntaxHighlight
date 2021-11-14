@@ -194,7 +194,7 @@ func parseArgString(index i: Int) -> String {
 var overridingSettings: [String: AnyHashable] = [:]
 
 var appUrl: URL!
-var logFile: URL!
+var logFile: URL? = nil
 var verbose = false
 var test = false
 
@@ -437,6 +437,10 @@ let env = ProcessInfo.processInfo.environment
 let highlightLanguages: [String: [String]] = (try? SCSHBaseXPCService.parseHighlightLanguages(file: xpcBundleUrl.appendingPathComponent("languages.json"))) ?? [:]
 
 let dos2unix = appBundleUrl.appendingPathComponent("dos2unix").path
+
+if files.isEmpty {
+    usage(exitCode: 1)
+}
 
 for src in files {
     guard FileManager.default.isReadableFile(atPath: src.path) else {

@@ -259,7 +259,7 @@ class SCSHBaseXPCService: NSObject {
         var temporaryThemeFile: URL? = nil
         
         defer {
-            if custom_settings.isDebug, let logFile = custom_settings.logFile {
+            if let logFile = custom_settings.logFile {
                 var log = "";
                 // Log the custom theme.
                 if let theme = colorize.inlineTheme, !theme.isEmpty {

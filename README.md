@@ -414,6 +414,8 @@ The CLI interface uses the same settings as the Quick Look extension, but you ca
 
 The highlighted data is printed to the `stdout` or writed to file if you use the `-o` option. 
 
+The command line tool require macOS 10.15.4 or later.
+
 ## FAQ
 
 ### The Quick Look preview doesn't work

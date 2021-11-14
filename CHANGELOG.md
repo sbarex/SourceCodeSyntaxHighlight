@@ -1,6 +1,13 @@
 Changelog
 =======
 
+
+### 2.1.1 (48)
+New features:
+- Application menu item to install/reveal the CLI tool on `/usr/local/bin` folder.
+Bugfix:
+- Fixed creation of `colorize.log` into the Desktop without debug set.
+
 ### 2.1.0 (47)
 New features:
 - On macOS 12 Monterey adopted the new lightweight API.
