@@ -1,24 +1,44 @@
 #  Syntax Highlight
 
-The application offers a Quick Look Extension for MacOS 10.15 Catalina and later for previewing source files.
+The application offers a Quick Look Extension for macOS 10.15 Catalina and later for previewing source files.
 Inside it uses [Highlight](http://www.andre-simon.de/doku/highlight/en/highlight.php) to render source code with syntax highlighting.
-
-This Application only generate the Quick Look Preview and does not provide a thumbnail service for the Finder icon.
 
 > **Syntax Highlight is distributed in the hope that it will be useful but WITHOUT ANY WARRANTY.**
 
+  - [Installation](#installation)
+    - [Download precompiled release](#download-precompiled-release)
+    - [Install with Homebrew Cask](#install-with-homebrew-cask)
+    - [Note for the precompiled release](#note-for-the-precompiled-release)
+    - [Build from source](#build-from-source)
+  - [Enable the Quick Look extension](#enable-the-quick-look-extension)
+  - [File format management](#file-format-management)
+    - [Supported formats](#supported-formats)
+  - [Application settings](#application-settings)
+    - [Rendering settings](#rendering-settings)
+      - [External Language Server support](#external-language-server-support)
+      - [Version control support](#version-control-support)
+    - [Plain files](#plain-files)
+    - [Colors](#colors)
+    - [Inquiry file](#inquiry-file)
+  - [Command line interface](#command-line-interface)
+  - [FAQ](#faq)
+  - [Known bugs](#known-bugs)
+  - [Note for developers](#note-for-developers)
+    - [Info about decoding dynamic UTI identifiers](#info-about-decoding-dynamic-uti-identifiers)
+  - [Credits](#credits)
+
+  
 ## Installation
-To use the Quick Look preview you must launch the Application at least once. In this way the Quick Look Extension will be discovered by the System and will be available in the System preferences/Extensions/Quick look.
 
-![System preferences/Extensions](extensions.png)
+You can install the application in various ways. When the main application is launched it automatically checks for updates. 
 
-### Download the App
+### Download precompiled release
 Head over to the [releases](https://github.com/sbarex/SourceCodeSyntaxHighlight/releases) page to view the latest version. Move the `Syntax Highlight.app` into the `Applications` folder.
 
-### Homebrew Cask
+### Install with Homebrew Cask
 Syntax Highlight can also be installed via [Homebrew Cask](https://github.com/Homebrew/homebrew-cask). If you have not installed Homebrew, follow the simple instructions [here](https://brew.sh/). After that, run `brew install --cask syntax-highlight` to install the current version of Syntax Highlight.
 
-### Note for downloading the precompiled release
+### Note for the precompiled release
 The [precompiled app](https://github.com/sbarex/SourceCodeSyntaxHighlight/releases) is not notarized or signed.
 
 When you download the precompiled app directly or via homebrew you must strip quarantine flag.
@@ -46,6 +66,11 @@ $ git submodule init
 $ git submodule update
 ```
 
+## Enable the Quick Look extension
+To use the Quick Look preview you must launch the Application at least once. In this way the Quick Look Extension will be discovered by the System and will be available in the System preferences/Extensions/Quick look.
+
+![System preferences/Extensions](extensions.png)
+
 ## File format management
 
 The Quick Look Extension uses the [Uniform Type Identifier (UTI)](https://developer.apple.com/library/archive/documentation/FileManagement/Conceptual/understanding_utis/understand_utis_intro/understand_utis_intro.html) to handle the supported formats (and not simply the file name extension).
@@ -55,9 +80,14 @@ Some file types are directly associated to an UTI by the System. Other formats a
 
 _**MacOS 10.15 Catalina does not** allow to manage some file formats including (but not limited to):_  `.xml`, `.plist`, `.html`, `.ts`, `.dart`, common images (`.jpg`, `.gif`, `.png`), …
 
-On _**MacOS 11 Big Sur**, the system allows you to manage these previously unauthorized extensions:_ `.plist`.
+On _**macOS 11 Big Sur**, the system allows you to manage these previously unauthorized extensions:_ `.plist`.
+
+On _**macOS 12 Monterey**, the system allows you to manage these previously unauthorized extensions:_ `.xml`.
 
 ### Supported formats
+
+Most programming languages are supported. 
+The application can also handle some plain files without extension.
 
 - (G)AWK files (`.awk`)
 - Adobe Acrobat Sequence files (`.sequ`) _as `XML`_
@@ -112,7 +142,7 @@ On _**MacOS 11 Big Sur**, the system allows you to manage these previously unaut
 - JavaFX ML (`.fxml`)
 - Javascript files (`.js`, `.jscript`, `.javascript`, `.mjs`)
 - Jetbrains Project file (`.iml`)
-- JSON files (`.json`) (beautify with `python3`)
+- JSON files (`.json`) (_beautify with `python3`_)
 - Julia source files  (`.jl`)
 - Kermeta source files (`.kmt`)
 - Korn Shell script files (`.ksh`)
@@ -136,7 +166,7 @@ On _**MacOS 11 Big Sur**, the system allows you to manage these previously unaut
 - Perl script files (`.pl`, `.pm`)
 - PHP source files (`.php`, `.php3`, `.php4`, `.ph3`, `.ph4`, `.phtml`)
 - Properties files (`.properties`) _as `INI`_
-- Property List files (`.plist`) _dinamically decompiled with `plutil`_ **On Catalina `.plist` is reserved by the System and cannot be handled.**
+- Property List files (`.plist`) _dynamically decompiled with `plutil`_ **On macOS 10.15 Catalina `.plist` is reserved by the System and cannot be handled.**
 - Python source files (`.py`)
 - Racket (`.rkt`) _as `Lisp`_
 - RDF files (`.rdf`)
@@ -150,6 +180,7 @@ On _**MacOS 11 Big Sur**, the system allows you to manage these previously unaut
 - Shell script files (`.bashrc`, `.zshrc`, `.sh`, )
 - SQL files (`.sql`)
 - Standard ML source files (`.ml`)
+- Svelte (`.svelte`) _as `HTML`_
 - Swift source files (`.swift`)
 - Symfony Twig files (`.twig`)
 - TCL source files (`.tcl`)
@@ -164,9 +195,9 @@ On _**MacOS 11 Big Sur**, the system allows you to manage these previously unaut
 - Visual Basic source files (`.vb`, `.bas`, `.basic`, `.vbs`)
 - Vue source files (`.vue`)
 - XAML source files (`.xaml`) _as XML_
-- Xcode localizable strings files (`.strings`, `.stringsdict`) (dinamically decompiled with `plutil`)
+- Xcode localizable strings files (`.strings`, `.stringsdict`) (dynamically decompiled with `plutil`)
 - XHTML files (`.xhtml`)
-- XML files (`.xml`) **`.xml` is reserved by the System and cannot be handled.**
+- XML files (`.xml`) **Before macOS 12 Monterey `.xml` is reserved by the System and cannot be handled.**
 - XSD Schema files (`.xsd`, `.xquery`)
 - XUL files (`.xul`)
 - YAML files (`.yaml`)
@@ -174,7 +205,7 @@ On _**MacOS 11 Big Sur**, the system allows you to manage these previously unaut
 
 ## Application settings
 
-With the standalone application you can customize the settings.
+With the standalone application you can customize the rendering settings.
 
 ![Settings window](settings.png)
 
@@ -183,24 +214,25 @@ You can show _advanced settings_ using the relative command on the view menu.
 ![Settings window with advanced settings](settings_advanced.png)
 
 
-### Settings
+### Rendering settings
 
 You can set the settings for all supported formats on the _General_ tab.
 
 |Settings|Description|Advanced|
 |:---------|:-------------| :----: |
-|Render engine|Engine used to render the highlighted code. **The suggested engine is `RTF`.** Use the `HTML` engine only if you want to use a custom CSS to override the color scheme (or you have choose a theme with some extra CSS inside it). Advanced users must use the `HTML` engine to handle the hover functionality of a Language Server or to include a `.lua` plugins that require interactive javascript code. ||
+|Render engine|Engine used to render the highlighted code. _Before macOS 12 Monterey_ **the suggested engine is `RTF`.** Choose the `HTML` engine if you want to use a custom CSS to override the color scheme (or you have choose a theme with some extra CSS inside it). Advanced users must choose the `HTML` engine to handle the hover functionality of a Language Server. ||
 |Color scheme|Chose the color scheme for light and dark appearance.||
 |Font|You can chose a preferred font or use the standard monospaced font.||
-|Word wrap|Allow to handle word wrap for long lines. _Hard wrap_ break the line after a fixed length (_can cause some highlight glitch_). _Soft wraps_ allow to break the line at the preview windows width. When word wraps is disabled, you can only enable it for minified files that have only one line. One line file detection is done on the source file and not on the preprocessor output. ||
+|Word wrap|Allow to handle word wrap for long lines. _Hard wrap_ break the line after a fixed length (_can cause some highlight glitch_). _Soft wraps_ allow to break the line at the preview windows width. When word wraps is disabled, you can only enable it for minified files that have only one line. One line file detection is done on the source file and not on the preprocessor output. **Starting from macOS 12 Monterey the soft wrap is always enabled when using the `RTF` engine.** ||
 |Line numbers|Allow to show the line numbers.||
 |Tabs to spaces|Allow to translate tabs to spaces. Set to zero to use tabs. ||
-|Extra highlight arguments|Additional standard argument passed to `highlight`. **Arguments that contains a white space must be protected inside quotes.** See `man highlight` to a list of valid arguments and plugins. Eg: `--doc-title='title with space'` |**Yes**|
-|Custom CSS Style| If the render engine is set to _HTML_ allow to define a custom CSS style to override/extend the color scheme.|**Yes**|
-|Interactive preview| If the render engine is set to _HTML_ enable the javascript interpreter inside the preview window. Use only if you use some `highlight` plugins that output javascript code. This option disable the possibility to move the Quick Look preview with click and drag inside the window and opening the file with a double click. |**Yes**|
+|Extra highlight arguments|Additional standard argument passed to `highlight`. **Arguments that contains a white space must be protected inside quotes.** See `man highlight` to a list of valid arguments and plugins. Eg: `--doc-title='title with space'` |Yes|
+|Custom CSS Style| If the render engine is set to _HTML_ allow to define a custom CSS style to override/extend the color scheme. More info about `highlight` HTML output on [this page](https://gitlab.com/saalen/highlight/wikis/CSS-Themes).|Yes|
+|Interactive preview| _DEPRECATED and available only before macOS 12 Monterey._ If the render engine is set to _HTML_ enable the javascript interpreter inside the preview window. Set only if you use some `highlight` plugins that output javascript code. This option disable the possibility to move the Quick Look preview with click and drag inside the window and opening the file with a double click. |Yes|
 |Data limit| Maximum amount of data to format, data beyond the limit is omitted. Specify 0 to not limit. This option is ignored when using a Language Server. ||
-|Convert line ending| Allow to convert Windows (`CRLF`) and Mac Classic (`CR`) line ending to the Unix style (`LN`). This option is ignored when a _preprocessor_ is set or when a _Language Server_ is enabled. The line ending conversion is made my [`Dos2unix`](https://waterlan.home.xs4all.nl/dos2unix.html). |**Yes**|
-|Debug | If enabled, a `colorize.log` and `colorize.rtf\|html` file will be created on your Desktop folder with the log of last rendering.|**Yes**|
+|Convert line ending| Allow to convert Windows (`CRLF`) and Mac Classic (`CR`) line ending to the Unix style (`LN`). This option is ignored when a _preprocessor_ is set or when a _Language Server_ is enabled. The line ending conversion is made my [`dos2unix`](https://waterlan.home.xs4all.nl/dos2unix.html). |Yes|
+|VCS Support| If enabled, allow to highlight lines added/edited/removed from last commit. It can handle VCS based on `git` and `mercurial`. |Yes|
+|Debug | If enabled, a `colorize.log` and `colorize.rtf\|html` file will be created on your Desktop folder with the log of last rendering.|Yes|
 
 You can also override the global options for some formats on the _Formats_ tab.
 
@@ -210,27 +242,73 @@ When customizing the settings for a specific format, these options will be avail
 
 |Settings|Description|Advanced|
 |:---------|:-------------| :----: |
-|Append highlight arguments|Arguments _appended_ to the _Extra highlight arguments_. Arguments that contains a white space must be protected inside quotes. |**Yes**|
-|Preprocessor|Set a program or a shell script to preprocess the source file before the formatting. The program must output to stdout the data to be passed to `highlight`. You **must** pass the name of the source file using the `$targetHL` placeholder. With the preprocessor you can handle file format not directly supported by `highlight`. This option is ignored when using a Language Server. The execution of the preprocessor is made inside the same env of the script that handle `highlight`. |**Yes**|
-|Syntax| Set which language must be used to recognize the source file. If not set will be used the file name extension. |**Yes**|
+|Append highlight arguments|Arguments _appended_ to the _Extra highlight arguments_. Arguments that contains a white space must be protected inside quotes. |Yes|
+|Preprocessor|Set a program or a shell script to preprocess the source file before the formatting. The program must output to stdout the data to be passed to `highlight`. You **must** pass the name of the source file using the `$targetHL` placeholder. With the preprocessor you can handle file format not directly supported by `highlight`. This option is ignored when using a Language Server. The execution of the preprocessor is made inside the same env of the script that handle `highlight`. |Yes|
+|Syntax| Set which language must be used to recognize the source file. If not set will be used the file name extension. |Yes|
 
+
+### External Language Server support
 Advanced users can customize the single format to use an external [Language Server](https://langserver.org/):
 
 ![Settings window for specific format](settings_ls.png)
 
 |Settings|Description|Advanced|
 |:---------|:-------------| :----: |
-|Executable|Full path of the Language Server executable. |**Yes**|
-|Delay|Server initialization delay in ms.|**Yes**|
-|Syntax| Syntax which is understood by the server.|**Yes**|
-|Hover| Execute hover requests. Require the `HTML` render engine.|**Yes**|
-|Semantic| Retrieve semantic token types (the Language Server must implement the protocol 3.16).|**Yes**|
-|Syntax Error| Retrieve syntax error information (assumes hover or semantic).|**Yes**|
-|Options| Custom command line options to pass to the Language Server.|**Yes**|
+|Executable|Full path of the Language Server executable. |Yes|
+|Delay|Server initialization delay in ms.|Yes|
+|Syntax| Syntax which is understood by the server.|Yes|
+|Hover| Execute hover requests. Require the `HTML` render engine.|Yes|
+|Semantic| Retrieve semantic token types (the Language Server must implement the protocol 3.16).|Yes|
+|Syntax Error| Retrieve syntax error information (assumes hover or semantic).|Yes|
+|Options| Custom command line options to pass to the Language Server.|Yes|
 
 When using an external Language Server the preprocessor and the data limit settings are ignored.
 
 Some format have a preconfigured custom settings to handle the data (for example java compiled class file can be decompiled before render).
+
+
+### Version control support
+
+You can also enable the support of common VCS to highlight the added/edited/removed lines from last commit.
+
+![VCS Settings](settings_vcs.png)
+
+In the General settings you must enable the VCS support. Then you can customize the path of `git` and `mercurial` binary.
+The you can choose the colors used to mark the changed lines. On every format you can also customize the colors.
+
+![VCS example](vcs_preview.png)
+
+_On `RTF` mode, the VCS plugin can be disabled if the syntax language defines more keyword groups than those defined in the theme._
+
+### Plain files
+The Application can preview plain files _without an extension_ whose format is unknown. 
+
+![Unknown files](settings_plain.png)
+
+Only files recognized by the system with one of the following UTIs can be handled: 
+- `public.data`
+- `public.item`
+- `public.content`
+- `public.unix-executable`
+
+_Files with an extension or associated to a dynamic UTI will not be handled. Files that have a only one dot as the first character in their name (like `.gitignore`, `.env`, ...) are considered to have no extension._
+
+Unknown files are analyzed with the system utility `/usr/bin/file` for recognize mime type and encoding. No preprocessor is applied before analyzing the file.
+
+Files recognized as images are handled by displaying the content within a web page (even if the rendering engine set in the settings is `RTF`). To be displayed correctly, the image format must be supported by WebKit. 
+
+On macOS 12 Monterey images and even pdf, movie and audio files are previewed with the native interface.
+
+For other binary data files it is possible to show a hex dump. 
+
+For text files, syntax highlighting is tried.
+
+![Unknown file settings editor](settings_plain_editor.png)
+
+You can specify filename criteria to apply a syntax highlighting and a specific display format. The criteria are evaluated in the order in which they are set. 
+
+If not display format is set, the system will try to derive it starting from the mime type.
+
 
 ### Colors
 The Application has a GUI to customize the color schemes.
@@ -266,17 +344,45 @@ If you found an unhandled format please send me the output of above command.
 
 **Only the formats supported by `highlight` can be managed by this application.**
 
+
+## Command line interface
+
+You can highlight a file via command line interface.
+
+```sh
+$ /Application/Syntax\ Highlight.app/Contents/Resources/syntax_highlight_cli -h
+```
+```
+Usage: syntax_highlight_cli [--app <path>] [-hHR] [-o <path>] <file> [..]
+
+Arguments:
+ -h    Show this help and exit
+ -H    Force html output
+ -o    <path> Save the output to <path>. If <path> is a directory a new file is created with the name of the source. Extension will be automatically added. Destination file is always overwritten.
+ -R    Force RTF output
+ --app    <path> Set the path of "Source Highlight.app" otherwise assume that syntax_highlight_cli is called from the Contents/Resources of the app bundle.
+
+To handle multiple files at time you must pass the -o arguments with a destination folder.
+
+Please use the main app to customize the rendering settings.
+
+```
+The settings are the same used by the Quick Look extension.
+
+The highlighted data is printed to the `stdout` or writed to file if you use the `-o` option. 
+
 ## FAQ
 
 ### The Quick Look preview doesn't work
 > The problem may be due to several causes:
 > 1. The application is not registered under system extensions.
 > 2. Another application is handling the preview instead of Syntax Highlight.
-> 3. You are trying to view unsupported formats.
-> 4. You are trying to view a format reserved by the system.
+> 3. Some application has registered the format with unrecognized UTI.
+> 4. You are trying to view unsupported formats.
+> 5. You are trying to view a format reserved by the system.
 >
 > If the problem affects all file formats it must related to points 1. and 2., so try one or more of these action:
-> - Try the `RTF` render engine.
+> - Try the `RTF` render engine, especially for macOS versions earlier than 12 Monterey.
 > - Drag the application on the trash and back to the Applications folder and then relaunch.
 > - Check in the System Preferences / Extensions / Quick Look if the _Syntax Highlight_ extension is present and checked.
 > - In the System Preferences / Extensions / Quick Look, drag the _Syntax Highlight_ extension on the top.
@@ -294,6 +400,12 @@ If you found an unhandled format please send me the output of above command.
 > `$ mdls -name kMDItemContentType -name kMDItemContentTypeTree filename.ext`
 >
 > Some common files cannot be handled by third party extension because are reserved by the system (for example, `.xml`, `.ts`, …).
+>
+> You can customize the behavior for files with no extension yourself. See [Plain files](#plain-files) settings.
+
+
+### The file icon do not show the preview
+> This Application only generate the Quick Look Preview and does not provide a thumbnail service for the Finder icon.
 
 ### Why the Application or the Quick Look Preview require access to the Desktop folder?
 > When the _Debug option_ is enabled (on the advanced settings) on your Desktop folder will be created two files for the last preview action:
@@ -301,12 +413,12 @@ If you found an unhandled format please send me the output of above command.
 > - _colorize.hml|rtf_ the output of the last rendering process.
 
 ## Known bugs
-- On Big Sur you cannot scroll the preview inside a Quick Look window dragging the scrollbars with the mouse. This is a Big Sur bug. You can scroll only with a mouse/trackpad gesture.
-- Soft word wrap with RTF engine reacts when the window is enlarged but not when it is reduced.
+- ~~On Big Sur you cannot scroll the preview inside a Quick Look window dragging the scrollbars with the mouse. This is a Big Sur bug. You can scroll only with a mouse/trackpad gesture.~~ Fixed on maxOS 12 Monterey.
+- On macOS earlier than 12 Monterey, soft word wrap with RTF engine reacts when the window is enlarged but not when it is reduced.
 - Icons of the custom file format are disabled on Catalina (cause an application freeze).
 
 ## Note for developers
-Starting from MacOS 10.15.0 Catalina the qlgenerator APIs are deprecated.
+Starting from macOS 10.15.0 Catalina the `qlgenerator` APIs are deprecated.
 
 This project consists of these components:
 
@@ -329,7 +441,7 @@ The application embed the [`Highlight`](http://www.andre-simon.de/doku/highlight
 ![highlight info](about_highlight.png)
 
 
-### Info about decoding dynamic uti identifiers:
+### Info about decoding dynamic UTI identifiers:
 
 - https://gist.github.com/jtbandes/19646e7457208ae9b1ad
 - https://alastairs-place.net/blog/2012/06/06/utis-are-better-than-you-think-and-heres-why/
@@ -385,6 +497,11 @@ The application embed the [`Highlight`](http://www.andre-simon.de/doku/highlight
 > ```
 
 - https://stackoverflow.com/questions/16943819/where-do-uti-come-from/18014903#18014903
+> List all registered UTIs:
+> ```sh 
+> /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -dump
+> ```
+
 
 ## Credits
 Developed by [sbarex](https://github.com/sbarex) with :heart:.
@@ -393,4 +510,4 @@ Highlight is developed by [Andre Simon](http://www.andre-simon.de/).
 
 Dos2unix is developed by [Erwin Waterlander](https://waterlan.home.xs4all.nl/dos2unix.html).
 
-This application was inspired by [anthonygelibert/QLColorCode](https://github.com/anthonygelibert/QLColorCode).
+This application was inspired by [anthonygelibert/QLColorCode](https://github.com/anthonygelibert/QLColorCode) and [NSGod/qlstephen](https://github.com/NSGod/qlstephen).

@@ -76,6 +76,7 @@ class SettingsSplitViewController: NSSplitViewController {
         case global
         case custom
         case theme
+        case plain
     }
     
     @IBOutlet weak var listItem: NSSplitViewItem!
@@ -91,7 +92,9 @@ class SettingsSplitViewController: NSSplitViewController {
             if let mainController = mainItem.viewController as? MainViewController {
                 mainController.mode = mode
             }
-            listItem.isCollapsed = mode == .global
+            listItem.isCollapsed = mode == .global || mode == .plain
+            // previewItem.isCollapsed = mode == .plain // FIXME: cambia il colore della barra del titolo!
+            
             if let listController = listItem.viewController as? ListViewController {
                 switch mode {
                 case .global:
@@ -103,6 +106,10 @@ class SettingsSplitViewController: NSSplitViewController {
                 case .theme:
                     listController.mode = .theme
                     self.view.window?.toolbar?.selectedItemIdentifier = NSToolbarItem.Identifier(rawValue: "ColorsButton")
+                case .plain:
+                    listController.mode = .plain
+                    self.view.window?.toolbar?.selectedItemIdentifier = NSToolbarItem.Identifier(rawValue: "PlainButton")
+                    (previewItem?.viewController as? PreviewViewController)?.previewView.settings = nil
                 }
             }
         }
@@ -126,6 +133,10 @@ class SettingsSplitViewController: NSSplitViewController {
     
     @IBAction func showColorsEditor(_ sender: Any) {
         self.mode = .theme
+    }
+    
+    @IBAction func showPlainEditor(_ sender: Any) {
+        self.mode = .plain
     }
     
     @IBAction func refreshPreview(_ sender: Any) {
@@ -167,6 +178,7 @@ class SettingsSplitViewController: NSSplitViewController {
                     } else {
                         mainController.themeView.theme = nil
                     }
+                    mainController.plainSettingsView.initSettings()
                 }
                 
                 self.view.window?.isDocumentEdited = SCSHWrapper.shared.isDirty
@@ -274,7 +286,7 @@ class SettingsSplitViewController: NSSplitViewController {
     
     @IBAction func performFindPanelAction(_ sender: Any) {
         switch mode {
-        case .global:
+        case .global, .plain:
             AudioServicesPlaySystemSound(kSystemSoundID_UserPreferredAlert)
             return
         case .custom:
@@ -304,6 +316,8 @@ class MainViewController: NSViewController, SettingsDelegate, SettingsSplitEleme
     @IBOutlet weak var globalSettingsView: SettingsView!
     
     @IBOutlet weak var customSettingsView: SettingsView!
+    @IBOutlet weak var plainSettingsView: PlainSettingsView!
+    
     @IBOutlet weak var UTIIconView: NSImageView!
     @IBOutlet weak var UTIImageWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var UTIDescriptionLabel: NSTextField!
@@ -333,6 +347,10 @@ class MainViewController: NSViewController, SettingsDelegate, SettingsSplitEleme
             case .theme:
                 tabView.selectTabViewItem(at: 2)
                 themeView.requestPreviewRefresh()
+                self.resignFirstResponder()
+            
+            case .plain:
+                tabView.selectTabViewItem(at: 3)
                 self.resignFirstResponder()
             }
         }
@@ -494,6 +512,7 @@ class ListViewController: NSViewController {
     enum Mode {
         case format
         case theme
+        case plain
     }
     @IBOutlet weak var UTIsListView: UTIsListView!
     @IBOutlet weak var themesListView: ThemesListView!
@@ -503,8 +522,8 @@ class ListViewController: NSViewController {
             guard oldValue != mode else {
                 return
             }
-            UTIsListView.isHidden = mode == .theme
-            themesListView.isHidden = mode == .format
+            UTIsListView.isHidden = mode == .theme || mode == .plain
+            themesListView.isHidden = mode == .format || mode == .plain
         }
     }
 }

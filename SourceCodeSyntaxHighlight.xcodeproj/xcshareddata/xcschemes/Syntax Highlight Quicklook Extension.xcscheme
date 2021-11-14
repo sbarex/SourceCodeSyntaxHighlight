@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1250"
+   LastUpgradeVersion = "1300"
    wasCreatedForAppExtension = "YES"
    version = "2.0">
    <BuildAction
@@ -75,11 +75,6 @@
          <EnvironmentVariable
             key = "OS_ACTIVITY_MODE"
             value = "disable"
-            isEnabled = "NO">
-         </EnvironmentVariable>
-         <EnvironmentVariable
-            key = "DYLD_FRAMEWORK_PATH"
-            value = "/Users/sbaldiss/Downloads/spostare/webkit/WebKitBuild/Debug"
             isEnabled = "NO">
          </EnvironmentVariable>
          <EnvironmentVariable

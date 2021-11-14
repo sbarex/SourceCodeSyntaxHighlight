@@ -106,7 +106,7 @@ class UTI: Equatable {
     }
     
     func fetchIcon(async: Bool = true) {
-        if #available(OSX 11.0, *) {
+        if #available(macOS 11.0, *) {
             guard !_image_fetched else { return }
             if async {
                 DispatchQueue.global(qos: .userInitiated).async() {

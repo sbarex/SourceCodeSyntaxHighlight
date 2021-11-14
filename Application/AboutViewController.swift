@@ -136,11 +136,11 @@ hr {
                 NSWorkspace.shared.open(url)
                 decisionHandler(.cancel)
             } else {
-                print("Open it locally")
+                // print("Open it locally")
                 decisionHandler(.allow)
             }
         } else {
-            print("not a user click")
+            // print("not a user click")
             decisionHandler(.allow)
         }
     }
@@ -150,7 +150,7 @@ hr {
         view.window?.standardWindowButton(.zoomButton)?.isHidden = true
         view.window?.standardWindowButton(.miniaturizeButton)?.isHidden = true
         view.window?.titlebarAppearsTransparent = true
-        if #available(OSX 11.0, *) {
+        if #available(macOS 11.0, *) {
             view.window?.toolbarStyle = .unifiedCompact
             view.window?.titlebarSeparatorStyle = .none
         }

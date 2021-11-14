@@ -24,8 +24,8 @@
 import Foundation
 
 @objc public protocol SCSHXPCServiceProtocol {
-    /// Get settings.
-    func getSettings(withReply reply: @escaping (NSDictionary) -> Void)
+    /// Get the settings.
+    func getSettings(reload: Bool, withReply reply: @escaping (NSDictionary) -> Void)
     /// Set and store the settings.
     func setSettings(_ settings: NSDictionary, reply: @escaping (Bool) -> Void)
     
@@ -91,7 +91,7 @@ import Foundation
     ///   - reply:
     ///   - changed: True if the settings are changed.
     func updateSettingsAfterThemeDeleted(name: String, withReply reply: @escaping (_ changed: Bool) -> Void)
-    func updateBGSettingsAfterThemeSaved(name: String, background: String, withReply reply: @escaping (_ changed: Bool) -> Void)
+    func updateBGSettingsAfterThemeSaved(name: String, background: String, foreground: String, withReply reply: @escaping (_ changed: Bool) -> Void)
     /// Return the url of the application support folder that contains themes and custom css styles.
     func getApplicationSupport(reply: @escaping (URL?)->Void)
 }

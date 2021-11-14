@@ -28,6 +28,8 @@
 	<dict>
 		<key>NSExtensionAttributes</key>
 		<dict>
+			<key>QLIsDataBasedPreview</key>
+			<true/>
 			<key>QLSupportedContentTypes</key>
 			<array>
 				<string>com.adobe.acrobat.sequ</string>
@@ -44,9 +46,17 @@
 				<string>com.apple.terminal.settings</string>
 				<string>com.apple.xcode.strings-dictionary</string>
 				<string>com.apple.xcode.strings-text</string>
+				<string>com.barebones.bbedit.go-source</string>
 				<string>com.barebones.bbedit.ini-configuration</string>
+				<string>com.barebones.bbedit.jsp-source</string>
+				<string>com.barebones.bbedit.lua-source</string>
+				<string>com.barebones.bbedit.r-source</string>
+				<string>com.barebones.bbedit.rust-source</string>
 				<string>com.barebones.bbedit.scss-source</string>
+				<string>com.barebones.bbedit.sql-source</string>
 				<string>com.barebones.bbedit.tex-source</string>
+				<string>com.barebones.bbedit.typescript-source</string>
+				<string>com.barebones.bbedit.vbscript-source</string>
 				<string>com.barebones.bbedit.verilog-hdl-source</string>
 				<string>com.barebones.bbedit.vhdl-source</string>
 				<string>com.dhowett.logos</string>
@@ -74,7 +84,9 @@
 				<string>com.sun.java-class</string>
 				<string>com.sun.manifest</string>
 				<string>com.unknown.lhs</string>
+				<string>com.seriflabs.xmp</string>
 				<string>com.symfony.twig</string>
+				<string>dev.svelte.source</string>
 				<string>edu.uo.texshop.tex</string>
 				<string>io.azkaban.flow</string>
 				<string>is.workflow.my.workflow</string>
@@ -146,6 +158,7 @@
 				<string>org.scala.source</string>
 				<string>org.tug.lua</string>
 				<string>org.tug.tex</string>
+				<string>org.tug.sty</string>
 				<string>org.vim.vim-script</string>
 				<string>org.vuejs.vue</string>
 				<string>org.w3.xsl</string>
@@ -161,11 +174,15 @@
 				<string>public.c-sharp-source</string>
 				<string>public.c-source</string>
 				<string>public.conf</string>
+				<string>public.content</string>
+				<string>public.data</string>
 				<string>public.fortran-source</string>
 				<string>public.fortran-90-source</string>
 				<string>public.ini</string>
+				<string>public.item</string>
 				<string>public.json</string>
 				<string>public.ksh-script</string>
+				<string>public.make-source</string>
 				<string>public.objective-c-source</string>
 				<string>public.objective-c-plus-plus-source</string>
 				<string>public.pascal-source</string>
@@ -183,6 +200,7 @@
 				<string>public.tcsh-script</string>
 				<string>public.tex</string>
 				<string>public.text</string>
+				<string>public.unix-executable</string>
 				<string>public.xml</string>
 				<string>public.yaml</string>
 				<string>public.zsh-script</string>
@@ -210,8 +228,10 @@
 				<string>dyn.ah62d4rv4ge80g5dnsq</string>
 				<string>dyn.ah62d4rv4ge80q5dts6</string>
 				<string>dyn.ah62d4rv4ge81a6xtsbw1e7dmqz3u</string>
+				<string>dyn.ah62d4rv4ge81g7xfrv4gn</string>
 				<string>dyn.ah62d4rv4ge81s3xqr75u</string>
 				<string>dyn.ah62d4rv4ge81u2prru</string>
+				<string>dyn.ah62d4rv4ge81u5pu</string>
 			</array>
 			<key>QLSupportsSearchableItems</key>
 			<false/>

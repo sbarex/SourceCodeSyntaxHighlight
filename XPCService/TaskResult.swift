@@ -57,10 +57,11 @@ class ShellTask {
     ///   - command: Program to execute.
     ///   - arguments: Arguments to pass to the executable.
     ///   - env: Environment variables.
-    static func runTask(command: String, arguments: [String], env: [String: String] = [:]) throws -> TaskResult {
+    ///   - cwd: Current working directory.
+    static func runTask(command: String, arguments: [String], env: [String: String] = [:], cwd: String? = nil) throws -> TaskResult {
         let task = Process()
         
-        task.currentDirectoryPath = NSTemporaryDirectory()
+        task.currentDirectoryPath = cwd ?? NSTemporaryDirectory()
         task.environment = env
         task.executableURL = URL(fileURLWithPath: command)
         task.arguments = arguments
@@ -82,7 +83,7 @@ class ShellTask {
         let fileErr = pipeErr.fileHandleForReading
         
         defer {
-            if #available(OSX 10.15, *) {
+            if #available(macOS 10.15, *) {
                 /* The docs claim this isn't needed, but we leak descriptors otherwise */
                 try? file.close()
                 try? fileErr.close()

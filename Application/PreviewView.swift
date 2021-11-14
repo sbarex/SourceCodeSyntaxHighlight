@@ -114,12 +114,16 @@ class PreviewView: NSView, SettingsSplitViewElement {
                 render_settings = SettingsRendering(settings: [:])
             }
         
+            render_settings.vcsDiff = ["-2,0 +2 -5 +5,0 -8,2 +8,2"]
+            render_settings.isLight = isLight
             if isLight {
                 render_settings.themeName = render_settings.lightThemeName
                 render_settings.backgroundColor = render_settings.lightBackgroundColor
+                render_settings.foregroundColor = render_settings.lightForegroundColor
             } else {
                 render_settings.themeName = render_settings.darkThemeName
                 render_settings.backgroundColor = render_settings.darkBackgroundColor
+                render_settings.foregroundColor = render_settings.darkForegroundColor
             }
             if let theme = HighlightWrapper.shared.getTheme(name: render_settings.themeName), theme.isDirty || !theme.exists {
                 // Embed theme properties if it is not saved.
@@ -262,9 +266,18 @@ class PreviewView: NSView, SettingsSplitViewElement {
                 webView.loadHTMLString("<!DOCTYPE html><html style='background-color: \(render_settings.backgroundColor)'><body style='height: 100%'    ><p style='font-family:  -apple-system; font-size: 10pt'>Waiting…</p></body></html>", baseURL: nil)
                 //DispatchQueue.global(qos: .default).async {
                 SCSHWrapper.shared.render(url: url, settings: render_settings) { (data, effective_settings, error) in
+                    let settings = SettingsRendering(settings: effective_settings as! [String : AnyHashable])
                     self.isRefreshig = false
+                    
+                    let html: String
+                    if let e = error {
+                        html = String(data: data, encoding: .utf8) ?? e.localizedDescription
+                    } else if let s = String(data: data, encoding: .utf8) {
+                        html = s
+                    } else {
+                        html = "Conversion error!".toHTML(settings: settings)
+                    }
                     DispatchQueue.main.async {
-                        let html = String(data: data, encoding: .utf8)!
                         self.webView.loadHTMLString(html, baseURL: nil)
                         self.refreshIndicator.stopAnimation(self)
                     }
@@ -274,18 +287,21 @@ class PreviewView: NSView, SettingsSplitViewElement {
                 textView.string = "Waiting…"
                 //DispatchQueue.global(qos: .default).async {
                     SCSHWrapper.shared.render(url: url, settings: render_settings) { (response, effective_settings, error) in
+                        let settings = SettingsRendering(settings: effective_settings as! [String : AnyHashable])
                         let text: NSAttributedString
                         if let e = error {
-                            text = NSAttributedString(string: String(data: response, encoding: .utf8) ?? e.localizedDescription)
+                            text = NSAttributedString(rtf: response, documentAttributes: nil) ?? (String(data: response, encoding: .utf8) ?? e.localizedDescription).toRTF(settings: settings) ?? NSAttributedString(string: e.localizedDescription)
+                        } else if let s = NSAttributedString(rtf: response, documentAttributes: nil) {
+                            text = s
                         } else {
-                            text = NSAttributedString(rtf: response, documentAttributes: nil) ?? NSAttributedString(string: "Conversion error!")
+                            text = "Conversion error!".toRTF(settings: settings) ?? NSAttributedString(string: "Conversion error!")
                         }
                         self.isRefreshig = false
                         DispatchQueue.main.async {
                             self.textView.textStorage?.setAttributedString(text)
                             self.scrollView.contentView.scroll(.zero)
                             
-                            if let c = NSColor(fromHexString: render_settings.backgroundColor) {
+                            if let c = NSColor(fromHexString: settings.backgroundColor) {
                                 self.textView.backgroundColor = c
                             } else {
                                 self.textView.backgroundColor = .clear

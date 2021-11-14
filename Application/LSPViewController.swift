@@ -540,7 +540,7 @@ class BrowseCell: NSTableCellView, NSTextFieldDelegate {
         openPanel.canCreateDirectories = false
         openPanel.showsTagField = false
         openPanel.allowsOtherFileTypes = true
-        if #available(OSX 11.0, *) {
+        if #available(macOS 11.0, *) {
             openPanel.allowedContentTypes = [UTType.script, UTType.shellScript, UTType.executable, UTType.unixExecutable]
         } else {
             openPanel.allowedFileTypes = ["public.script", "public.shell-script", "public.executable", "public.unix-executable"]

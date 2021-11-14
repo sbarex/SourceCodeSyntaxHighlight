@@ -22,37 +22,48 @@
 
 import Foundation
 import OSLog
+import AppKit
 
 // This object implements the protocol which we have defined. It provides the actual behavior for the service. It is 'exported' by the service to make it available to the process hosting the service over an NSXPCConnection.
 
 class XPCLightRenderService: SCSHBaseXPCService, XPCLightRenderServiceProtocol {
+    lazy var highlightLanguages: [String: [String]] = {
+        guard let file = Bundle.main.url(forResource: "languages", withExtension: "json") else {
+            print("missing file")
+            return [:]
+        }
+        return (try? type(of: self).parseHighlightLanguages(file: file)) ?? [:]
+    }()
+    
     func reloadSettings() {
         self.settings = type(of: self).initSettings()
     }
     
     func colorize(url: URL, withReply reply: @escaping (Data, NSDictionary, Error?) -> Void) {
-        let custom_settings: SettingsRendering
-        
-        if let uti = self.settings.searchUTI(for: url) {
-            let utiSettings = self.settings.utiSettings[uti] ?? self.settings.createSettings(forUTI: uti)
-            
-            if !utiSettings.isSpecialSettingsPopulated {
-                utiSettings.populateSpecialSettings(supportFolder: type(of: self).applicationSupportUrl, serviceBundle: type(of: self).serviceBundle)
-            }
-            if !utiSettings.isCSSPopulated, let dir = type(of: self).getCustomStylesUrl(createIfMissing: false) {
-                utiSettings.populateCSS(fromFolder: dir)
-            }
-            
-            custom_settings = SettingsRendering(globalSettings: self.settings, format: utiSettings)
-        } else {
-            custom_settings = SettingsRendering(globalSettings: self.settings, format: nil)
-        }
+        let logFile = URL(fileURLWithPath: NSHomeDirectory(), isDirectory: true).appendingPathComponent("Desktop/colorize.log")
         
         do {
-            let result = try doColorize(url: url, custom_settings: custom_settings)
-            reply(result.result.data, result.settings as NSDictionary, nil)
+            let r = try type(of: self).colorize(url: url, settings: self.settings, highlightBin: self.getEmbeddedHighlight(), dataDir: self.dataDir, rsrcEsc: self.rsrcEsc, dos2unixBin: self.bundle.path(forResource: "dos2unix", ofType: nil), highlightLanguages: self.highlightLanguages, extraCss: self.getGlobalCSS(), overridingSettings: nil, logFile: logFile, logOs: self.log)
+            reply(r.data, r.settings.toDictionary() as NSDictionary, nil)
         } catch {
-            reply(error.localizedDescription.data(using: String.Encoding.utf8)!, custom_settings.toDictionary() as NSDictionary, error)
+            let custom_settings = SettingsRendering(globalSettings: self.settings, format: nil)
+            custom_settings.isError = true
+            
+            var s = ""
+            if settings.format == .html {
+                s += "<pre>" + error.localizedDescription + "</pre>\n"
+            } else {
+                s += error.localizedDescription + "\n"
+            }
+            if let log = try? String(contentsOf: logFile) {
+                if settings.format == .html {
+                    s += "<hr />log dump: \n<pre>\(log)</pre>\n"
+                } else {
+                    s += "\nlog dump: \n\(log)\n"
+                }
+            }
+            
+            reply(s.toData(settings: custom_settings), custom_settings.toDictionary() as NSDictionary, nil /* error */)
         }
     }
 }

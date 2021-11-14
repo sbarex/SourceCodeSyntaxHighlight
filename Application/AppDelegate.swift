@@ -63,7 +63,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
         }
         
         // Insert code here to initialize your application
-        if #available(OSX 10.12.2, *) {
+        if #available(macOS 10.12.2, *) {
             NSApplication.shared.isAutomaticCustomizeTouchBarMenuItemEnabled = true
         }
         
@@ -140,6 +140,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
         
         var fileTypes: [UTI] = []
         for type in supportedTypes {
+            guard !Settings.plainUTIs.contains(type) else {
+                continue
+            }
             let uti = UTI(type)
             if uti.isValid {
                 fileTypes.append(uti)
@@ -221,6 +224,32 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
                 alert.runModal()
             }
         })
+    }
+    
+    class func initSyntaxPopup(_ popupButton: NSPopUpButton?, availableSyntax: [String: HighlightWrapper.Language], extraItems extra: [String] = []) {
+        guard let popupButton = popupButton else {
+            return
+        }
+        popupButton.removeAllItems()
+        for item in extra {
+            popupButton.addItem(withTitle: item)
+        }
+        
+        guard availableSyntax.count > 0 else {
+            return
+        }
+        if !extra.isEmpty {
+            popupButton.menu?.addItem(NSMenuItem.separator())
+        }
+        let keys = availableSyntax.keys.sorted{$0.compare($1, options: .caseInsensitive) == .orderedAscending }
+        for desc in keys {
+            let m = NSMenuItem(title: desc, action: nil, keyEquivalent: "")
+            m.toolTip = desc
+            if let lang = availableSyntax[desc] {
+                m.toolTip! += " [." + lang.extensions.joined(separator: ", .") + "]"
+            }
+            popupButton.menu?.addItem(m)
+        }
     }
 }
 

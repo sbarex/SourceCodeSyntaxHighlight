@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="18122" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19455" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="18122"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19455"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -29,18 +29,18 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <customView misplaced="YES" id="c22-O7-iKe">
-            <rect key="frame" x="0.0" y="0.0" width="301" height="271"/>
+        <customView id="c22-O7-iKe">
+            <rect key="frame" x="0.0" y="0.0" width="301" height="270"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <scrollView horizontalHuggingPriority="249" verticalHuggingPriority="249" borderType="none" autohidesScrollers="YES" horizontalLineScroll="28" horizontalPageScroll="10" verticalLineScroll="28" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zxb-Qb-s57">
-                    <rect key="frame" x="0.0" y="32" width="301" height="231"/>
-                    <clipView key="contentView" drawsBackground="NO" id="MP6-wG-Jht">
-                        <rect key="frame" x="0.0" y="0.0" width="301" height="231"/>
+                    <rect key="frame" x="0.0" y="32" width="301" height="238"/>
+                    <clipView key="contentView" ambiguous="YES" drawsBackground="NO" id="MP6-wG-Jht">
+                        <rect key="frame" x="0.0" y="0.0" width="301" height="238"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="firstColumnOnly" tableStyle="sourceList" selectionHighlightStyle="sourceList" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="28" rowSizeStyle="systemDefault" viewBased="YES" indentationMarkerFollowsCell="NO" outlineTableColumn="8VT-Cg-1gI" id="kND-YS-m98">
-                                <rect key="frame" x="0.0" y="0.0" width="301" height="231"/>
+                            <outlineView verticalHuggingPriority="750" ambiguous="YES" allowsExpansionToolTips="YES" columnAutoresizingStyle="firstColumnOnly" tableStyle="sourceList" selectionHighlightStyle="sourceList" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="28" rowSizeStyle="systemDefault" viewBased="YES" indentationMarkerFollowsCell="NO" outlineTableColumn="8VT-Cg-1gI" id="kND-YS-m98">
+                                <rect key="frame" x="0.0" y="0.0" width="301" height="238"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <size key="intercellSpacing" width="3" height="0.0"/>
                                 <color key="backgroundColor" name="_sourceListBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -182,6 +182,7 @@
                     </clipView>
                     <constraints>
                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="250" id="Q2x-GF-wxg"/>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="238" id="aQc-Vi-p7z"/>
                     </constraints>
                     <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="weR-b6-oFq">
                         <rect key="frame" x="0.0" y="224" width="278" height="16"/>
@@ -266,7 +267,7 @@
                                 <font key="font" metaFont="menu"/>
                                 <menu key="menu" id="7I5-pJ-45n">
                                     <items>
-                                        <menuItem state="on" image="line.horizontal.3.decrease.circle" catalog="system" hidden="YES" id="mJu-Wn-dkf"/>
+                                        <menuItem state="on" image="line.3.horizontal.decrease.circle" catalog="system" hidden="YES" id="mJu-Wn-dkf"/>
                                         <menuItem title="Hide light style" id="JeT-F9-FlY">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
@@ -307,7 +308,7 @@
                     </customSpacing>
                 </stackView>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wjo-9Y-PCg">
-                    <rect key="frame" x="18" y="121" width="265" height="21"/>
+                    <rect key="frame" x="18" y="125" width="265" height="21"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" enabled="NO" allowsUndo="NO" alignment="center" title="No themes found" id="nAc-8a-o9m">
                         <font key="font" textStyle="title2" name=".SFNS-Regular"/>
                         <color key="textColor" name="tertiaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -380,7 +381,7 @@
     <resources>
         <image name="NSAddTemplate" width="14" height="13"/>
         <image name="checkmark.circle" catalog="system" width="15" height="15"/>
-        <image name="line.horizontal.3.decrease.circle" catalog="system" width="15" height="15"/>
+        <image name="line.3.horizontal.decrease.circle" catalog="system" width="15" height="15"/>
         <image name="safari" catalog="system" width="15" height="15"/>
         <image name="square.and.pencil" catalog="system" width="17" height="15"/>
     </resources>

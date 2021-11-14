@@ -55,7 +55,7 @@ __unused char *get_highlight_email() {
 __unused char *get_highlight_about() {
     string about =
             "highlight version " + highlight::Info::getVersion() +
-            "\n Copyright (C) 2002-2020 Andre Simon <a dot simon at mailbox.org>" +
+            "\n Copyright (C) 2002-2021 Andre Simon <a dot simon at mailbox.org>" +
             "\n\n Argparser class" +
             "\n Copyright (C) 2006-2008 Antonio Diaz Diaz <ant_diaz at teleline.es>" +
             "\n\n Artistic Style Classes (3.1 rev. 672)" +
@@ -65,7 +65,9 @@ __unused char *get_highlight_about() {
             "\n Copyright (C) 2005-2013 by Leandro Motta Barros" +
             "\n\n xterm 256 color matching functions" +
             "\n Copyright (C) 2006 Wolfgang Frisch <wf at frexx.de>" +
-
+            "\n\n PicoJSON library" +
+            "\n Copyright (C) 2009-2010 Cybozu Labs, Inc." +
+            "\n Copyright (C) 2011-2014 Kazuho Oku" +
             "\n\n This software is released under the terms of the GNU General " +
             "Public License." +
             "\n For more information about these matters, see the file named " +
@@ -281,7 +283,6 @@ int highlight_list_themes2(HThemeInfo ***theme_list, int *count, ReleaseThemeInf
     string suffix, desc;
     Diluculum::LuaValueMap categoryMap;
 
-    int matchedFileCnt=0;
     std::set<string> categoryNames;
 
     istringstream valueStream;
@@ -291,14 +292,15 @@ int highlight_list_themes2(HThemeInfo ***theme_list, int *count, ReleaseThemeInf
     int j = 0;
 
     for (const auto& filePath : filePaths) {
+        HThemeInfo *theme;
         try {
-            HThemeInfo *theme = allocate_theme_info();
-
             Diluculum::LuaState ls;
             highlight::SyntaxReader::initLuaState(ls, filePath, "");
             ls.doFile(filePath);
             desc = ls["Description"].value().asString();
 
+            theme = allocate_theme_info();
+            
             if (ls["Categories"].value() !=Diluculum::Nil) {
                 categoryMap = ls["Categories"].value().asTable();
                 for(Diluculum::LuaValueMap::const_iterator it = categoryMap.begin(); it != categoryMap.end(); ++it)
@@ -316,20 +318,19 @@ int highlight_list_themes2(HThemeInfo ***theme_list, int *count, ReleaseThemeInf
             suffix = suffix.substr ( 0, suffix.length()- wildcard.length() + 1);
 
             theme->name = strdup(suffix.c_str());
-            theme->desc = strdup(ls["Description"].value().asString().c_str());
+            theme->desc = strdup(desc.c_str());
             theme->path = strdup(filePath.c_str());
             theme->base16 = filePath.rfind(base_path16, 0) == 0 ? 1 : 0;
 
-
             themes[j] = theme;
             j++;
-
-            matchedFileCnt++;
         } catch (std::runtime_error &error) {
             os_log_error(sLog, "Failed to read '%{public}s': %{public}s", filePath.c_str(), error.what());
+            release_theme_info(theme);
         }
     }
 
+    *count = j;
     *theme_list = themes;
 
     return EXIT_SUCCESS;
@@ -963,7 +964,6 @@ int highlight_list_plugins2(HPluginInfo ***plugin_list, int *count, ReleasePlugi
     string suffix, desc;
     Diluculum::LuaValueMap categoryMap;
 
-    int matchedFileCnt=0;
     std::set<string> categoryNames;
 
     istringstream valueStream;
@@ -973,8 +973,9 @@ int highlight_list_plugins2(HPluginInfo ***plugin_list, int *count, ReleasePlugi
     int j = 0;
 
     for (const auto& filePath : filePaths) {
+        HPluginInfo *plugin;
         try {
-            HPluginInfo *plugin = allocate_plugin_info();
+            plugin = allocate_plugin_info();
 
             Diluculum::LuaState ls;
             highlight::SyntaxReader::initLuaState(ls, filePath, "");
@@ -990,13 +991,13 @@ int highlight_list_plugins2(HPluginInfo ***plugin_list, int *count, ReleasePlugi
 
             plugins[j] = plugin;
             j++;
-
-            matchedFileCnt++;
         } catch (std::runtime_error &error) {
             os_log_error(sLog, "Failed to read '%{public}s': %{public}s", filePath.c_str(), error.what());
+            release_plugin_info(plugin);
         }
     }
-
+    
+    *count = j;
     *plugin_list = plugins;
 
     return EXIT_SUCCESS;
@@ -1051,7 +1052,7 @@ __unused int highlight_get_supported_languages(void* context, LanguageCallback c
             n++;
 
         } catch (std::runtime_error &error) {
-            cout << "Failed to read '" << filePath << "': " << error.what() << endl;
+            os_log_error(sLog, "Failed to read '%{public}s': %{public}s", filePath.c_str(), error.what());
         }
     }
     return n;

@@ -12,6 +12,8 @@ protocol SettingsDelegate: AnyObject {
     func settingsIsChanged(_ settings: SettingsBase)
 }
 
+typealias ThemeBaseColor = (name: String, background: String, foreground: String)
+
 // MARK: -
 class SettingsBase: NSObject {
     /// Output format.
@@ -25,15 +27,17 @@ class SettingsBase: NSObject {
         
         static let lightTheme = "theme-light"
         static let lightBackgroundColor = "theme-light-color"
+        static let lightForegroundColor = "theme-light-fg-color"
         static let darkTheme = "theme-dark"
         static let darkBackgroundColor = "theme-dark-color"
+        static let darkForegroundColor = "theme-dark-fg-color"
         
         static let theme = "theme"
         static let backgroundColor = "theme-color"
+        static let foregroundColor = "theme-fg-color"
         static let themeLua = "theme-lua"
         
         static let lineNumbers = "line-numbers"
-        static let lineNumbersOmittedWrap = "line-numbers-omitted-wrap"
         static let lineNumbersFillToZeroes = "line-fill-zero"
         
         static let wordWrap = "word-wrap"
@@ -57,7 +61,22 @@ class SettingsBase: NSObject {
         static let version = "version"
         static let debug = "debug"
         
+        static let dumpPlain = "dump"
+        
+        static let vcs = "vcs"
+        static let vcsDiff = "vcs-diff"
+        static let vcs_add_light = "vcs_add_light"
+        static let vcs_add_dark = "vcs_add_dark"
+        static let vcs_edit_light = "vcs_edit_light"
+        static let vcs_edit_dark = "vcs_edit_dark"
+        static let vcs_del_light = "vcs_del_light"
+        static let vcs_del_dark = "vcs_del_dark"
+        static let git_path = "git_path"
+        static let hg_path = "hg_path"
+        static let svn_path = "svn_path"
+        
         static let customizedUTISettings = "uti-settings"
+        static let plainSettings = "plain-settings"
         
         static let connectedUTI = "uti"
         
@@ -123,6 +142,7 @@ class SettingsBase: NSObject {
     }
     /// Background color for the rgb view in light theme.
     var lightBackgroundColor: String
+    var lightForegroundColor: String
     
     /// Background color for the rgb view in dark theme.
     dynamic var isDarkThemeNameDefined: Bool {
@@ -137,6 +157,7 @@ class SettingsBase: NSObject {
         }
     }
     var darkBackgroundColor: String
+    var darkForegroundColor: String
     
     // MARK: Line numbers.
     dynamic var isLineNumbersDefined: Bool {
@@ -148,11 +169,6 @@ class SettingsBase: NSObject {
     dynamic var isLineNumbersVisible: Bool {
         didSet {
             requestRefreshOnChanged(oldValue: oldValue, newValue: isLineNumbersVisible)
-        }
-    }
-    dynamic var isLineNumbersOmittedForWrap: Bool {
-        didSet {
-            requestRefreshOnChanged(oldValue: oldValue, newValue: isLineNumbersOmittedForWrap)
         }
     }
     dynamic var isLineNumbersFillToZeroes: Bool {
@@ -178,9 +194,12 @@ class SettingsBase: NSObject {
             requestRefreshOnChanged(oldValue: oldValue, newValue: isWordWrappedHard)
         }
     }
-    dynamic var isWordWrappedSoftForOnleLineFiles: Bool {
+    var isWordWrappedSoft: Bool {
+        return !isWordWrappedHard
+    }
+    dynamic var isWordWrappedSoftForOneLineFiles: Bool {
         didSet {
-            requestRefreshOnChanged(oldValue: oldValue, newValue: isWordWrappedSoftForOnleLineFiles)
+            requestRefreshOnChanged(oldValue: oldValue, newValue: isWordWrappedSoftForOneLineFiles)
         }
     }
     dynamic var isWordWrappedIndented: Bool {
@@ -282,6 +301,42 @@ class SettingsBase: NSObject {
         }
     }
     
+    dynamic var isVCSDefined: Bool {
+        didSet {
+            requestRefreshOnChanged(oldValue: oldValue, newValue: isVCSDefined)
+        }
+    }
+    dynamic var vcsAddLightColor: String {
+        didSet {
+            requestRefreshOnChanged(oldValue: oldValue, newValue: vcsAddLightColor)
+        }
+    }
+    dynamic var vcsAddDarkColor: String {
+        didSet {
+            requestRefreshOnChanged(oldValue: oldValue, newValue: vcsAddDarkColor)
+        }
+    }
+    dynamic var vcsEditLightColor: String {
+        didSet {
+            requestRefreshOnChanged(oldValue: oldValue, newValue: vcsEditLightColor)
+        }
+    }
+    dynamic var vcsEditDarkColor: String {
+        didSet {
+            requestRefreshOnChanged(oldValue: oldValue, newValue: vcsEditDarkColor)
+        }
+    }
+    dynamic var vcsDelLightColor: String {
+        didSet {
+            requestRefreshOnChanged(oldValue: oldValue, newValue: vcsDelLightColor)
+        }
+    }
+    dynamic var vcsDelDarkColor: String {
+        didSet {
+            requestRefreshOnChanged(oldValue: oldValue, newValue: vcsDelDarkColor)
+        }
+    }
+    
     // MARK:
     internal var lockDirty = 0
     @objc dynamic var isDirty = false {
@@ -294,7 +349,17 @@ class SettingsBase: NSObject {
     
     var isCustomized: Bool {
         get {
-            return isFormatDefined || isLightThemeNameDefined || isDarkThemeNameDefined || isLineNumbersDefined || isWordWrapDefined || isLineLengthDefined || isTabSpacesDefined || isArgumentsDefined || isCSSDefined || isFormatDefined || isFontSizeDefined || isAllowInteractiveActionsDefined
+            let state = isFormatDefined || isLightThemeNameDefined || isDarkThemeNameDefined || isLineNumbersDefined || isWordWrapDefined || isLineLengthDefined || isTabSpacesDefined || isArgumentsDefined || isCSSDefined || isFormatDefined || isFontSizeDefined || isVCSDefined
+            
+            guard !state else {
+                return true
+            }
+            
+            if #available(macOS 12, *) {
+               return false
+            } else {
+                return isAllowInteractiveActionsDefined
+            }
         }
     }
     
@@ -315,19 +380,20 @@ class SettingsBase: NSObject {
         self.lightThemeName = "edit-xcode"
         isLightThemeNameDefined = false
         self.lightBackgroundColor = "#ffffff"
+        self.lightForegroundColor = "#000000"
         self.darkThemeName = "neon"
         isDarkThemeNameDefined = false
-        self.darkBackgroundColor = "#333333"
+        self.darkBackgroundColor = "#303030"
+        self.darkForegroundColor = "#f0f0f0"
         
         self.isLineNumbersVisible = false
         self.isLineNumbersDefined = false
-        self.isLineNumbersOmittedForWrap = true
         self.isLineNumbersFillToZeroes = false
         
         self.isWordWrapped = false
         self.isWordWrappedHard = false
         self.isWordWrappedIndented = false
-        self.isWordWrappedSoftForOnleLineFiles = true
+        self.isWordWrappedSoftForOneLineFiles = true
         self.isWordWrapDefined = false
         
         self.lineLength = 80
@@ -349,6 +415,14 @@ class SettingsBase: NSObject {
         
         self.arguments = ""
         self.isArgumentsDefined = false
+        
+        self.vcsAddLightColor = "#C9DEC1"
+        self.vcsAddDarkColor = "#009924"
+        self.vcsEditLightColor = "#C3D6E8"
+        self.vcsEditDarkColor = "#1AABFF"
+        self.vcsDelLightColor = "#edc5c5"
+        self.vcsDelDarkColor = "#fd8888"
+        self.isVCSDefined = false
         
         super.init()
         lockDirty += 1
@@ -379,6 +453,9 @@ class SettingsBase: NSObject {
         if let color = settings[SettingsBase.Key.lightBackgroundColor] as? String {
             self.lightBackgroundColor = color
         }
+        if let color = settings[SettingsBase.Key.lightForegroundColor] as? String {
+            self.lightForegroundColor = color
+        }
         
         // Dark theme.
         if let theme = settings[SettingsBase.Key.darkTheme] as? String {
@@ -389,12 +466,14 @@ class SettingsBase: NSObject {
         if let color = settings[SettingsBase.Key.darkBackgroundColor] as? String {
             self.darkBackgroundColor = color
         }
+        if let color = settings[SettingsBase.Key.darkForegroundColor] as? String {
+            self.darkForegroundColor = color
+        }
         
         // Show line numbers.
         if let ln = settings[SettingsBase.Key.lineNumbers] as? Bool {
             self.isLineNumbersVisible = ln
             self.isLineNumbersDefined = true
-            self.isLineNumbersOmittedForWrap = settings[SettingsBase.Key.lineNumbersOmittedWrap] as? Bool ?? true
             self.isLineNumbersFillToZeroes = settings[SettingsBase.Key.lineNumbersFillToZeroes] as? Bool ?? false
         }
         
@@ -407,7 +486,7 @@ class SettingsBase: NSObject {
            self.isWordWrappedHard = v
         }
         if let v = settings[SettingsBase.Key.wordWrapOneLineFiles] as? Bool {
-           self.isWordWrappedSoftForOnleLineFiles = v
+           self.isWordWrappedSoftForOneLineFiles = v
         }
         
         if let n = settings[SettingsBase.Key.lineLength] as? Int {
@@ -447,6 +526,31 @@ class SettingsBase: NSObject {
             self.arguments = args
             self.isArgumentsDefined = true
         }
+        
+        if let color = settings[SettingsBase.Key.vcs_add_light] as? String {
+            self.vcsAddLightColor = color
+            self.isVCSDefined = true
+        }
+        if let color = settings[SettingsBase.Key.vcs_add_dark] as? String {
+            self.vcsAddDarkColor = color
+            self.isVCSDefined = true
+        }
+        if let color = settings[SettingsBase.Key.vcs_edit_light] as? String {
+            self.vcsEditLightColor = color
+            self.isVCSDefined = true
+        }
+        if let color = settings[SettingsBase.Key.vcs_edit_dark] as? String {
+            self.vcsEditDarkColor = color
+            self.isVCSDefined = true
+        }
+        if let color = settings[SettingsBase.Key.vcs_del_light] as? String {
+            self.vcsDelLightColor = color
+            self.isVCSDefined = true
+        }
+        if let color = settings[SettingsBase.Key.vcs_del_dark] as? String {
+            self.vcsDelDarkColor = color
+            self.isVCSDefined = true
+        }
     }
     
     // MARK:
@@ -472,15 +576,17 @@ class SettingsBase: NSObject {
         if isLightThemeNameDefined {
             r[SettingsBase.Key.lightTheme] = lightThemeName
             r[SettingsBase.Key.lightBackgroundColor] = lightBackgroundColor
+            r[SettingsBase.Key.lightForegroundColor] = lightForegroundColor
         }
         if isDarkThemeNameDefined {
             r[SettingsBase.Key.darkTheme] = darkThemeName
             r[SettingsBase.Key.darkBackgroundColor] = darkBackgroundColor
+            r[SettingsBase.Key.darkForegroundColor] = darkForegroundColor
         }
         if isWordWrapDefined {
             r[SettingsBase.Key.wordWrap] = isWordWrapped ? (isWordWrappedIndented ? 2 : 1) : 0
             r[SettingsBase.Key.wordWrapHard] = isWordWrappedHard
-            r[SettingsBase.Key.wordWrapOneLineFiles] = isWordWrappedSoftForOnleLineFiles
+            r[SettingsBase.Key.wordWrapOneLineFiles] = isWordWrappedSoftForOneLineFiles
         }
         if isLineLengthDefined {
             r[SettingsBase.Key.lineLength] = lineLength
@@ -491,6 +597,15 @@ class SettingsBase: NSObject {
         
         if isArgumentsDefined {
             r[SettingsBase.Key.extraArguments] = arguments
+        }
+        
+        if isVCSDefined {
+            r[SettingsBase.Key.vcs_add_light] = vcsAddLightColor
+            r[SettingsBase.Key.vcs_add_dark] = vcsAddDarkColor
+            r[SettingsBase.Key.vcs_edit_light] = vcsEditLightColor
+            r[SettingsBase.Key.vcs_edit_dark] = vcsEditDarkColor
+            r[SettingsBase.Key.vcs_del_light] = vcsDelLightColor
+            r[SettingsBase.Key.vcs_del_dark] = vcsDelDarkColor
         }
         
         if isFontNameDefined {
@@ -506,7 +621,6 @@ class SettingsBase: NSObject {
         
         if isLineNumbersDefined {
             r[SettingsBase.Key.lineNumbers] = isLineNumbersVisible
-            r[SettingsBase.Key.lineNumbersOmittedWrap] = isLineNumbersOmittedForWrap
             r[SettingsBase.Key.lineNumbersFillToZeroes] = isLineNumbersFillToZeroes
         }
         
@@ -517,21 +631,27 @@ class SettingsBase: NSObject {
         return r
     }
     
+    func isOSThemeLight() -> Bool {
+        return (UserDefaults.standard.string(forKey: "AppleInterfaceStyle") ?? "Light") == "Light"
+    }
     
-    func getTheme() -> (name: String, color: String) {
-        let isOSThemeLight = (UserDefaults.standard.string(forKey: "AppleInterfaceStyle") ?? "Light") == "Light"
+    func getTheme() -> ThemeBaseColor {
+        let isOSThemeLight = self.isOSThemeLight()
         
         let theme: String
         let themeBackground: String
+        let themeForeground: String
         if isOSThemeLight {
             theme = self.isLightThemeNameDefined ? self.lightThemeName : "edit-xcode"
             themeBackground = self.isLightThemeNameDefined ? self.lightBackgroundColor : "#ffffff"
+            themeForeground = self.isLightThemeNameDefined ? self.lightForegroundColor : "#000000"
         } else {
             theme = self.isDarkThemeNameDefined ? self.darkThemeName : "neon"
-            themeBackground = self.isDarkThemeNameDefined ? self.darkBackgroundColor : "#000000"
+            themeBackground = self.isDarkThemeNameDefined ? self.darkBackgroundColor : "#303030"
+            themeForeground = self.isDarkThemeNameDefined ? self.darkForegroundColor : "#f0f0f0"
         }
         
-        return (name: theme, color: themeBackground)
+        return (name: theme, background: themeBackground, foreground: themeForeground)
     }
 }
 
@@ -832,7 +952,9 @@ class SettingsFormat: SettingsBase, SettingsFormatProtocol, SettingsLSP {
 // MARK: -
 class Settings: SettingsBase {
     /// Current settings version handled by the applications.
-    static let version: Float = 2.3
+    static let version: Float = 2.4
+    
+    static let plainUTIs = ["public.unix-executable", "public.data", "public.content", "public.item"]
     
     /// Version of the settings.
     var version: Float = 0
@@ -840,11 +962,42 @@ class Settings: SettingsBase {
     var isAllSpecialSettingsPopulated: Bool = false
     var isAllCSSPopulated: Bool = false
     
+    internal var plainSettings: [PlainSettings] = []
+    
     dynamic var isDebug: Bool = false {
         didSet {
             requestRefreshOnChanged(oldValue: oldValue, newValue: isDebug)
         }
     }
+    
+    dynamic var isDumpPlainData: Bool = true {
+        didSet {
+            requestRefreshOnChanged(oldValue: oldValue, newValue: isDumpPlainData)
+        }
+    }
+    
+    dynamic var isVCS: Bool = false {
+        didSet {
+            requestRefreshOnChanged(oldValue: oldValue, newValue: isVCS)
+        }
+    }
+    
+    dynamic var gitPath: String = "/usr/bin/git" {
+        didSet {
+            requestRefreshOnChanged(oldValue: oldValue, newValue: gitPath)
+        }
+    }
+    dynamic var hgPath: String = "/usr/bin/hg" {
+        didSet {
+            requestRefreshOnChanged(oldValue: oldValue, newValue: hgPath)
+        }
+    }
+    dynamic var svnPath: String = "/usr/bin/svn" {
+        didSet {
+            requestRefreshOnChanged(oldValue: oldValue, newValue: svnPath)
+        }
+    }
+    
     dynamic var maxData: UInt64 = 0 {
         didSet {
             requestRefreshOnChanged(oldValue: oldValue, newValue: maxData)
@@ -880,6 +1033,12 @@ class Settings: SettingsBase {
         self.version = settings[SettingsBase.Key.version] as? Float ?? Settings.version
         
         self.isDebug = false
+        
+        self.isVCS = false
+        self.gitPath = "/usr/bin/git"
+        self.hgPath = "/usr/bin/hg"
+        self.svnPath = "/usr/bin/svn"
+        
         self.maxData = 0
         self.convertEOL = false
         
@@ -890,6 +1049,15 @@ class Settings: SettingsBase {
         if let custom_formats = settings[SettingsBase.Key.customizedUTISettings] as? [String: [String: AnyHashable]] {
             for (uti, uti_settings) in custom_formats {
                 self.utiSettings[uti] = SettingsFormat(uti: uti, settings: uti_settings)
+            }
+        }
+        
+        self.plainSettings = []
+        if let plain = settings[SettingsBase.Key.plainSettings] as? [[String: AnyHashable]] {
+            for s in plain {
+                if let p = PlainSettings(settings: s) {
+                    self.plainSettings.append(p)
+                }
             }
         }
     }
@@ -907,6 +1075,23 @@ class Settings: SettingsBase {
         if let v = settings[SettingsBase.Key.debug] as? Bool {
             self.isDebug = v
         }
+        if let v = settings[SettingsBase.Key.dumpPlain] as? Bool {
+            self.isDumpPlainData = v
+        }
+        if let v = settings[SettingsBase.Key.git_path] as? String {
+            self.gitPath = v
+        }
+        if let v = settings[SettingsBase.Key.hg_path] as? String {
+            self.hgPath = v
+        }
+        if let v = settings[SettingsBase.Key.svn_path] as? String {
+            self.svnPath = v
+        }
+        
+        if let v = settings[SettingsBase.Key.vcs] as? Bool {
+            self.isVCS = v
+        }
+        
         if let v = settings[SettingsBase.Key.maxData] as? UInt64 {
             self.maxData = v
         }
@@ -925,6 +1110,20 @@ class Settings: SettingsBase {
         self.isTabSpacesDefined = true
         self.isArgumentsDefined = true
         self.isCSSDefined = true
+        self.isVCSDefined = true
+        
+        if let plain_settings = settings[SettingsBase.Key.plainSettings] as? [[String: AnyHashable]] {
+            var plainSettings: [PlainSettings] = []
+            for p_settings in plain_settings {
+                if let s = PlainSettings(settings: p_settings) {
+                    plainSettings.append(s)
+                }
+            }
+            if !self.isDirty && self.plainSettings != plainSettings {
+                self.isDirty = true
+            }
+            self.plainSettings = plainSettings
+        }
     }
     
     /// Output the settings to a dictionary.
@@ -932,6 +1131,14 @@ class Settings: SettingsBase {
         var r = super.toDictionary(forSaving: forSaving)
         
         r[SettingsBase.Key.debug] = self.isDebug
+        
+        r[SettingsBase.Key.dumpPlain] = self.isDumpPlainData
+        
+        r[SettingsBase.Key.vcs] = self.isVCS
+        r[SettingsBase.Key.git_path] = self.gitPath
+        r[SettingsBase.Key.hg_path] = self.hgPath
+        r[SettingsBase.Key.svn_path] = self.svnPath
+        
         r[SettingsBase.Key.maxData] = self.maxData
         r[SettingsBase.Key.convertEOL] = self.convertEOL
         
@@ -946,6 +1153,15 @@ class Settings: SettingsBase {
             }
         }
         r[SettingsBase.Key.customizedUTISettings] = customized
+        
+        var plain: [[String: AnyHashable]] = []
+        for s in self.plainSettings {
+            let f = s.toDictionary(forSaving: forSaving)
+            if !f.isEmpty {
+                plain.append(f)
+            }
+        }
+        r[SettingsBase.Key.plainSettings] = plain
         
         return r
     }
@@ -1067,7 +1283,10 @@ class Settings: SettingsBase {
         guard let uti = UTI(URL: url) else {
             return nil
         }
-              
+        guard !Settings.plainUTIs.contains(uti.UTI) else {
+            return nil
+        }
+        
         guard uti.isDynamic else {
             return uti.UTI
         }
@@ -1131,6 +1350,48 @@ class Settings: SettingsBase {
         }
     }
     
+    func searchPlainSettings(for url: URL) -> PlainSettings? {
+        let name = url.lastPathComponent
+        for s in self.plainSettings {
+            if s.test(filename: name) {
+                return s
+            }
+        }
+        return nil
+    }
+    
+    func getPlainSettings() -> [PlainSettings] {
+        return self.plainSettings
+    }
+    func insertPlainSettings(settings: PlainSettings, at: Int = -1) {
+        if at < 0 {
+            self.plainSettings.append(settings)
+        } else {
+            self.plainSettings.insert(settings, at: at)
+        }
+        self.isDirty = true
+    }
+    func removeAllPlainSettings() {
+        if self.plainSettings.count > 0 {
+            self.plainSettings = []
+            self.isDirty = true
+        }
+    }
+    @discardableResult
+    func removePlainSettings(at: Int) -> PlainSettings {
+        let s = self.plainSettings.remove(at: at)
+        self.isDirty = true
+        return s
+    }
+    
+    @discardableResult
+    func replacePlainSettings(_ settings: PlainSettings, at: Int) -> PlainSettings {
+        let p = self.plainSettings.remove(at: at)
+        self.plainSettings.insert(settings, at: at)
+        self.isDirty = true
+        return p
+    }
+    
     // MARK: - Highlight
     
     func getHighlightArguments() throws -> (theme: String, backgroundColor: String, arguments: [String]) {
@@ -1145,9 +1406,7 @@ class Settings: SettingsBase {
         // Show line numbers.
         if self.isLineLengthDefined && self.isLineNumbersVisible {
             extraHLFlags.append("--line-numbers")
-            if self.isLineNumbersOmittedForWrap {
-                extraHLFlags.append("--wrap-no-numbers")
-            }
+            extraHLFlags.append("--wrap-no-numbers")
             if self.isLineNumbersFillToZeroes {
                 extraHLFlags.append("--zeroes")
             }
@@ -1198,7 +1457,7 @@ class Settings: SettingsBase {
         }
         let theme = self.getTheme()
         
-        return (theme: theme.name, backgroundColor: theme.color, arguments: extraHLFlags)
+        return (theme: theme.name, backgroundColor: theme.background, arguments: extraHLFlags)
     }
 }
 
@@ -1208,7 +1467,27 @@ class SettingsRendering: Settings, SettingsFormatProtocol, SettingsLSP {
     var themeName: String
     /// Background color overriding the light/dark settings
     var backgroundColor: String
+    var foregroundColor: String
     var themeLua: String
+    var isLight: Bool?
+    var vcsDiff: [String]
+    
+    @available(macOS 12.0, *)
+    lazy var isImage: Bool = false
+    @available(macOS 12.0, *)
+    lazy var isPDF: Bool = false
+    @available(macOS 12.0, *)
+    lazy var isMovie: Bool = false
+    @available(macOS 12.0, *)
+    lazy var isAudio: Bool = false
+    
+    var isOneLineFileDetected = false
+    var logFile: URL?
+    var isError: Bool = false
+    
+    override func isOSThemeLight() -> Bool {
+        return self.isLight ?? super.isOSThemeLight()
+    }
     
     dynamic var isAppendArgumentsDefined: Bool {
         didSet {
@@ -1314,7 +1593,9 @@ class SettingsRendering: Settings, SettingsFormatProtocol, SettingsLSP {
     required init(settings: [String : AnyHashable]) {
         self.themeName = ""
         self.backgroundColor = ""
+        self.foregroundColor = ""
         self.themeLua = ""
+        self.vcsDiff = []
         
         self.appendArguments = ""
         self.isAppendArgumentsDefined = false
@@ -1332,6 +1613,10 @@ class SettingsRendering: Settings, SettingsFormatProtocol, SettingsLSP {
         self.lspSyntaxError = false
         self.lspOptions = []
         
+        self.isOneLineFileDetected = false
+        self.logFile = nil
+        self.isError = false
+        
         super.init(settings: settings)
     }
     
@@ -1347,8 +1632,42 @@ class SettingsRendering: Settings, SettingsFormatProtocol, SettingsLSP {
         if let v = settings[SettingsBase.Key.backgroundColor] as? String {
             self.backgroundColor = v
         }
+        if let v = settings[SettingsBase.Key.foregroundColor] as? String {
+            self.foregroundColor = v
+        }
         if let v = settings[SettingsBase.Key.themeLua] as? String {
             self.themeLua = v
+        }
+        if let v = settings[SettingsBase.Key.vcsDiff] as? [String] {
+            self.vcsDiff = v
+        }
+        
+        self.isLight = settings["isLight"] as? Bool
+        
+        if #available(macOS 12.0, *) {
+            if let v = settings["isImage"] as? Bool {
+                self.isImage = v
+            }
+            if let v = settings["isPDF"] as? Bool {
+                self.isPDF = v
+            }
+            if let v = settings["isMovie"] as? Bool {
+                self.isMovie = v
+            }
+            if let v = settings["isAudio"] as? Bool {
+                self.isAudio = v
+            }
+        }
+        if let v = settings["isOneLineFileDetected"] as? Bool {
+            self.isOneLineFileDetected = v
+        }
+        if let v = settings["logFile"] as? URL {
+            self.logFile = v
+        } else if let v = settings["logFile"] as? String {
+            self.logFile = v.isEmpty ? nil : URL(fileURLWithPath: v)
+        }
+        if let v = settings["isError"] as? Bool {
+            self.isError = v
         }
         
         if let args = settings[SettingsBase.Key.appendedExtraArguments] as? String {
@@ -1375,6 +1694,19 @@ class SettingsRendering: Settings, SettingsFormatProtocol, SettingsLSP {
         r[SettingsBase.Key.theme] = themeName
         r[SettingsBase.Key.themeLua] = themeLua
         r[SettingsBase.Key.backgroundColor] = backgroundColor
+        r[SettingsBase.Key.foregroundColor] = foregroundColor
+        r[SettingsBase.Key.vcsDiff] = vcsDiff
+        r["isLight"] = isLight
+        
+        if #available(macOS 12.0, *) {
+            r["isImage"] = self.isImage
+            r["isPDF"] = self.isPDF
+            r["isMovie"] = self.isMovie
+            r["isAudio"] = self.isAudio
+        }
+        r["isOneLineFileDetected"] = self.isOneLineFileDetected
+        r["logFile"] = self.logFile?.path ?? ""
+        r["isError"] = self.isError
         
         if isAppendArgumentsDefined, !appendArguments.isEmpty {
             r[SettingsBase.Key.appendedExtraArguments] = appendArguments
@@ -1391,9 +1723,9 @@ class SettingsRendering: Settings, SettingsFormatProtocol, SettingsLSP {
         return r
     }
     
-    override func getTheme() -> (name: String, color: String) {
+    override func getTheme() -> ThemeBaseColor {
         if !themeName.isEmpty {
-            return (name: self.themeName, color: self.backgroundColor)
+            return (name: self.themeName, background: self.backgroundColor, foreground: self.foregroundColor)
         }
         return super.getTheme()
     }

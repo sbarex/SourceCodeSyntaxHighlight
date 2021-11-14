@@ -302,6 +302,24 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
+				<string>dyn.ah62d4rv4ge81u5pu</string>
+				<string>public.data</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Adobe Extensible Metadata Platform file (XMP)</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.seriflabs.xmp</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>xmp</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
 				<string>public.source-code</string>
 			</array>
 			<key>UTTypeDescription</key>
@@ -347,6 +365,24 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>mf</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.item</string>
+				<string>dyn.ah62d4rv4ge81g7xfrv4gn</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Svelte source file</string>
+			<key>UTTypeIdentifier</key>
+			<string>dev.svelte.source</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>svelte</string>
 				</array>
 			</dict>
 		</dict>
@@ -672,6 +708,11 @@
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.source-code</string>
+				<string>public.plain-text</string>
+				<string>public.text</string>
+				<string>public.data</string>
+				<string>public.item</string>
+				<string>public.content</string>
 				<string>dyn.ah62d4rv4ge80s52</string>
 			</array>
 			<key>UTTypeDescription</key>
@@ -1224,13 +1265,13 @@
 			</dict>
 		</dict>
 		<dict>
-			<key>UTTypeDescription</key>
-			<string>Outline Processor Markup Language (OPML) file</string>
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.item</string>
 				<string>dyn.ah62d4rv4ge8086drru</string>
 			</array>
+			<key>UTTypeDescription</key>
+			<string>Outline Processor Markup Language (OPML) file</string>
 			<key>UTTypeIdentifier</key>
 			<string>org.opml.source</string>
 			<key>UTTypeTagSpecification</key>

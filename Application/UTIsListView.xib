@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19455" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19455"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -190,7 +190,7 @@
                                 <font key="font" metaFont="menu"/>
                                 <menu key="menu" id="Sdf-oM-6i6">
                                     <items>
-                                        <menuItem state="on" image="line.horizontal.3.decrease.circle" catalog="system" hidden="YES" id="KEW-Sc-sa2"/>
+                                        <menuItem state="on" image="line.3.horizontal.decrease.circle" catalog="system" hidden="YES" id="KEW-Sc-sa2"/>
                                         <menuItem title="Show only customized" id="tSI-Gu-RWy">
                                             <connections>
                                                 <action selector="handleShowOnlyCustomized:" target="-2" id="pg7-vy-8my"/>
@@ -251,7 +251,7 @@
         </customView>
     </objects>
     <resources>
-        <image name="line.horizontal.3.decrease.circle" catalog="system" width="15" height="15"/>
+        <image name="line.3.horizontal.decrease.circle" catalog="system" width="15" height="15"/>
         <image name="square.and.pencil" catalog="system" width="17" height="15"/>
     </resources>
 </document>

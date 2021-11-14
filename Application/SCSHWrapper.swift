@@ -129,7 +129,7 @@ public class SCSHWrapper: NSObject {
             return
         }
         
-        service.getSettings() {
+        service.getSettings(reload: true) {
             if let s = $0 as? [String: AnyHashable] {
                 self.initSettings(from: s)
                 handler?(self, true)
@@ -223,7 +223,7 @@ public class SCSHWrapper: NSObject {
     
     @objc internal func afterThemeSaved(_ notification: Notification) {
         guard let theme = notification.object as? SCSHTheme else { return }
-        SCSHWrapper.service?.updateBGSettingsAfterThemeSaved(name: theme.nameForSettings, background: theme.backgroundColor) { changed in
+        SCSHWrapper.service?.updateBGSettingsAfterThemeSaved(name: theme.nameForSettings, background: theme.backgroundColor, foreground: theme.foregroundColor) { changed in
         }
     }
     
@@ -232,17 +232,21 @@ public class SCSHWrapper: NSObject {
         let name = theme.nameForSettings
         if self.settings?.lightThemeName == name {
             self.settings?.lightBackgroundColor = theme.backgroundColor
+            self.settings?.lightForegroundColor = theme.foregroundColor
         }
         if self.settings?.darkThemeName == name {
             self.settings?.darkBackgroundColor = theme.backgroundColor
+            self.settings?.darkForegroundColor = theme.foregroundColor
         }
         
         self.settings?.utiSettings.forEach({
             if $0.value.lightThemeName == name {
                 $0.value.lightBackgroundColor = theme.backgroundColor
+                $0.value.lightForegroundColor = theme.foregroundColor
             }
             if $0.value.darkThemeName == name {
                 $0.value.darkBackgroundColor = theme.backgroundColor
+                $0.value.darkForegroundColor = theme.foregroundColor
             }
         })
     }

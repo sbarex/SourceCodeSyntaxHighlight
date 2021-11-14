@@ -10,8 +10,9 @@ build/*
 lua/src/lua
 lua/src/luac
 
-highlight/src/build-intel-*
-highlight/src/build-arm-*
-highlight/src/build-*
+highlight/build-Debug
+highlight/build-Release
+highlight/src/build_intel-*
+highlight/src/build_arm-*
 
 .idea

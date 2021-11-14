@@ -168,7 +168,7 @@ class ThemesListView: NSView, SettingsSplitViewElement {
         }
         
         self.outlineView.endUpdates()
-        if #available(OSX 11.0, *) { } else {
+        if #available(macOS 11.0, *) { } else {
             self.outlineView.indentationPerLevel = 8
         }
         

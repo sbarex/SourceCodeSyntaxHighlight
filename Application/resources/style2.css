@@ -1,0 +1,13 @@
+html, body {
+    margin: 0;
+    padding: 6px;
+}
+pre.hl {
+    margin: 0;
+    white-space: pre;
+}
+.hl.lin {
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+}

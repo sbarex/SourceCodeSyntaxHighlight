@@ -29,7 +29,11 @@ LDFLAGS=-L${BUILD_DIR}
 CFLAGS_x86_64=-mmacosx-version-min=10.15
 CFLAGS_arm64=-target arm64-apple-macos11
 
-LDFLAGS_x86_64=
+# ifneq ($(wildcard /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/.*),)
+# 	CFLAGS_x86_64+=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk
+# endif
+
+LDFLAGS_x86_64=-mmacosx-version-min=10.15
 LDFLAGS_arm64=-target arm64-apple-macos11
 
 ifeq ($(CONFIGURATION),Debug)
@@ -199,7 +203,7 @@ ${BUILD_DIR}/libhighlight-x86_64.a: | $(BUILD_DIR) lua
 	@echo "${bold}Building static highlight lib for x86_64 platform...${normal}"
 	@cp highlight_custom/makefile2.makefile highlight/makefile2.makefile
 	@cp highlight_custom/src/makefile2.makefile highlight/src/makefile2.makefile
-	${MAKE} BUILD_DIR=build_intel-$(CONFIGURATION) LUA_CFLAGS="-I$(CURRENT_DIR)/$(LUA_DIR)/src" LUA_LIBS="-L$(BUILD_DIR) -llua -lm" MYCFLAGS="${CFLAGS_x86_64} -I$(CURRENT_DIR)/" -C ${HIGHLIGHT_DIR} -f makefile2.makefile lib-static
+	${MAKE} BUILD_DIR=build_intel-$(CONFIGURATION) LUA_CFLAGS="-I$(CURRENT_DIR)/$(LUA_DIR)/src" LUA_LIBS="-L$(BUILD_DIR) -llua -lm" MYCFLAGS="${CFLAGS_x86_64} -I$(CURRENT_DIR)/" MYLDFLAGS="$(LDFLAGS_x86_64)" -C ${HIGHLIGHT_DIR} -f makefile2.makefile lib-static
 	cp ${HIGHLIGHT_DIR}/src/build_intel-$(CONFIGURATION)/libhighlight.a ${BUILD_DIR}/libhighlight-x86_64.a
 	@rm highlight/makefile2.makefile
 	@rm highlight/src/makefile2.makefile
@@ -209,7 +213,7 @@ ${BUILD_DIR}/libhighlight-x86_64.dylib: | $(BUILD_DIR) lua
 	@echo "${bold}Building shared highlight lib for x86_64 platform...${normal}"
 	@cp highlight_custom/makefile2.makefile highlight/makefile2.makefile
 	@cp highlight_custom/src/makefile2.makefile highlight/src/makefile2.makefile
-	${MAKE} BUILD_DIR=build_intel-$(CONFIGURATION) LUA_CFLAGS="-I$(CURRENT_DIR)/$(LUA_DIR)/src" LUA_LIBS="-L$(BUILD_DIR) -llua -lm" MYCFLAGS="${CFLAGS_x86_64} -I$(CURRENT_DIR)/" -C ${HIGHLIGHT_DIR} -f makefile2.makefile lib-shared
+	${MAKE} BUILD_DIR=build_intel-$(CONFIGURATION) LUA_CFLAGS="-I$(CURRENT_DIR)/$(LUA_DIR)/src" LUA_LIBS="-L$(BUILD_DIR) -llua -lm" MYCFLAGS="${CFLAGS_x86_64} -I$(CURRENT_DIR)/" MYLDFLAGS="$(LDFLAGS_x86_64)" -C ${HIGHLIGHT_DIR} -f makefile2.makefile lib-shared
 	cp ${HIGHLIGHT_DIR}/src/build_intel-$(CONFIGURATION)/libhighlight.dylib ${BUILD_DIR}/libhighlight-x86_64.dylib
 	@rm highlight/makefile2.makefile
 	@rm highlight/src/makefile2.makefile
@@ -219,7 +223,7 @@ ${BUILD_DIR}/highlight-x86_64: | $(BUILD_DIR) lua
 	@echo "${bold}Building highlight for x86_64 platform...${normal}"
 	@cp highlight_custom/makefile2.makefile highlight/makefile2.makefile
 	@cp highlight_custom/src/makefile2.makefile highlight/src/makefile2.makefile
-	${MAKE} BUILD_DIR=build_intel-$(CONFIGURATION) LUA_CFLAGS="-I$(CURRENT_DIR)/$(LUA_DIR)/src" LUA_LIBS="-L$(BUILD_DIR) -llua -lm" MYCFLAGS="${CFLAGS_x86_64} -I$(CURRENT_DIR)/" -C ${HIGHLIGHT_DIR} -f makefile2.makefile cli
+	${MAKE} BUILD_DIR=build_intel-$(CONFIGURATION) LUA_CFLAGS="-I$(CURRENT_DIR)/$(LUA_DIR)/src" LUA_LIBS="-L$(BUILD_DIR) -llua -lm" MYCFLAGS="${CFLAGS_x86_64} -I$(CURRENT_DIR)/" MYLDFLAGS="$(LDFLAGS_x86_64)" -C ${HIGHLIGHT_DIR} -f makefile2.makefile cli
 	${MAKE} PREFIX=build-$(CONFIGURATION) BUILD_DIR=build_intel-$(CONFIGURATION) LUA_CFLAGS="-I$(CURRENT_DIR)/$(LUA_DIR)/src" LUA_LIBS="-L$(BUILD_DIR) -llua -lm" MYCFLAGS="${CFLAGS_x86_64} -I$(CURRENT_DIR)/" -C ${HIGHLIGHT_DIR} -f makefile2.makefile install
 	cp ${HIGHLIGHT_DIR}/src/build_intel-$(CONFIGURATION)/highlight ${BUILD_DIR}/highlight-x86_64
 	@rm highlight/makefile2.makefile
@@ -343,7 +347,6 @@ clean: clean_intermediate
 	@rm ${BUILD_DIR}/libhighlight.a 2> /dev/null
 	@rm ${BUILD_DIR}/libhighlight-x86_64.a 2> /dev/null
 	@rm ${BUILD_DIR}/libhighlight-arm64.a 2> /dev/null
-	@rm ${BUILD_DIR}/libhighlightdylib 2> /dev/null
 	@rm ${BUILD_DIR}/libhighlight-x86_64.so 2> /dev/null
 	@rm ${BUILD_DIR}/libhighlight-arm64.so 2> /dev/null
 	@rm ${BUILD_DIR}/libhighlight.dylib 2> /dev/null

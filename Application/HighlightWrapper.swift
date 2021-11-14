@@ -89,7 +89,9 @@ class HighlightWrapper {
             }
             
             for i in 0 ..< Int(n) {
-                let t = c_themes.advanced(by: i).pointee!.pointee
+                guard let t = c_themes.advanced(by: i).pointee?.pointee else {
+                    continue
+                }
                 
                 highlight_get_theme(t.path, context, Themes.callback)
             }
@@ -409,7 +411,9 @@ class HighlightWrapper {
             let plugins = Unmanaged<Plugins>.fromOpaque(context!).takeUnretainedValue()
             
             for i in 0 ..< Int(n) {
-                let p = c_plugins.advanced(by: i).pointee!.pointee
+                guard let p = c_plugins.advanced(by: i).pointee?.pointee else {
+                    continue
+                }
                 plugins.plugins.append(Plugin(name: String(cString: p.name), desc: String(cString: p.desc), path: String(cString: p.path)))
             }
         }

@@ -1,6 +1,18 @@
 Changelog
 =======
 
+### 2.1.0 (47)
+New features:
+- On macOS 12 Monterey adopted the new lightweight API.
+- Preliminary support for plain files.
+- Experimental support for VCS (`git` and `hg`) diff status.
+- Support for `.XMP` files rendered as _`XML`_.
+- Support for LaTeX `.sty` files.
+- Preliminary support  for `.svelte` files rendered as _`HTML`_.
+- Add `public.make-source` UTI defined by macOS 12 Monterey.
+- Better error messages.
+Bugfix:
+- Fixed support for some UTIs associated to BBEdit.
 
 ### 2.0.12 (46)
 New features:

@@ -68,6 +68,9 @@ class SCSHXPCService: SCSHBaseXPCService, SCSHXPCServiceProtocol {
             return false
         }
         
+        let defaults = UserDefaults.standard
+        var defaultsDomain = defaults.persistentDomain(forName: type(of: self).XPCDomain) ?? [:]
+        
         if settings.version <= 2.1 {
             for (_, uti_settings) in settings.utiSettings {
                 guard !uti_settings.isPreprocessorDefined, !uti_settings.preprocessor.isEmpty else {
@@ -79,9 +82,14 @@ class SCSHXPCService: SCSHBaseXPCService, SCSHXPCServiceProtocol {
                 }
             }
         }
-        
-        let defaults = UserDefaults.standard
-        var defaultsDomain = defaults.persistentDomain(forName: type(of: self).XPCDomain) ?? [:]
+        if settings.version <= 2.3 && defaultsDomain[SettingsBase.Key.plainSettings] == nil {
+            settings.removeAllPlainSettings()
+            if #available(macOS 12.0, *) {
+                settings.insertPlainSettings(settings: PlainSettings(pattern: "makefile", isRegExp: false, isCaseInsensitive: true, UTI: "public.make-source", syntax: "makefile"))
+            } else {
+                settings.insertPlainSettings(settings: PlainSettings(pattern: "makefile", isRegExp: false, isCaseInsensitive: true, UTI: "org.n8gray.makefile", syntax: "makefile"))
+            }
+        }
         
         if let c = defaultsDomain["rtf-background-color-light"] as? String {
             settings.lightBackgroundColor = c
@@ -184,8 +192,7 @@ class SCSHXPCService: SCSHBaseXPCService, SCSHXPCServiceProtocol {
         defaultsDomain[SettingsBase.Key.version] = SettingsBase.version
         
         // Store the converted settings.
-        defaults.setPersistentDomain(defaultsDomain, forName: type(of: self).XPCDomain)
-        defaults.synchronize()
+        settings.synchronize(domain: type(of: self).XPCDomain, CSSFolder: type(of: self).getCustomStylesUrl(createIfMissing: true))
         
         return true
     }
@@ -245,9 +252,14 @@ class SCSHXPCService: SCSHBaseXPCService, SCSHXPCServiceProtocol {
             }
         }
         
+        custom_settings.logFile = URL(fileURLWithPath: NSHomeDirectory(), isDirectory: true).appendingPathComponent("Desktop/colorize.log")
+        
         do {
-            let result = try doColorize(url: url, custom_settings: custom_settings)
-            reply(result.result.data, result.settings as NSDictionary, nil)
+            var colorize = try ColorizeArguments(highlight: self.getEmbeddedHighlight(), dataDir: self.dataDir, url: url, custom_settings: custom_settings, extraCss: self.getGlobalCSS())
+            
+            let result = try (type(of: self)).doColorize(url: url, custom_settings: custom_settings, colorize: &colorize, rsrcEsc: self.rsrcEsc, dos2unix: self.bundle.path(forResource: "dos2unix", ofType: nil), logOs: self.log)
+            
+            reply(result.result.data, result.settings.toDictionary() as NSDictionary, nil)
         } catch {
             reply(error.localizedDescription.data(using: String.Encoding.utf8)!, custom_settings.toDictionary() as NSDictionary, error)
         }
@@ -292,13 +304,24 @@ class SCSHXPCService: SCSHBaseXPCService, SCSHXPCServiceProtocol {
                 custom_settings = SettingsRendering(settings: self.settings.toDictionary())
             }
         }
+        custom_settings.logFile = URL(fileURLWithPath: NSHomeDirectory(), isDirectory: true).appendingPathComponent("Desktop/colorize.log")
         
         custom_settings.format = .html
         do {
-            let result = try doColorize(url: url, custom_settings: custom_settings)
-            reply(result.result.output() ?? "", result.settings as NSDictionary, nil)
+            var colorize = try ColorizeArguments(highlight: self.getEmbeddedHighlight(), dataDir: self.dataDir, url: url, custom_settings: custom_settings, extraCss: self.getGlobalCSS())
+
+            let result = try type(of: self).doColorize(url: url, custom_settings: custom_settings, colorize: &colorize, rsrcEsc: self.rsrcEsc, dos2unix: self.bundle.path(forResource: "dos2unix", ofType: nil), logOs: self.log)
+            
+            reply(result.result.output() ?? "", result.settings.toDictionary() as NSDictionary, nil)
         } catch {
-            reply("<pre>" + error.localizedDescription + "</pre>", custom_settings.toDictionary() as NSDictionary, error)
+            let s: String
+            if let logFile = custom_settings.logFile, let log = try? String(contentsOf: logFile) {
+                s = "<hr />log dump: \n<pre>\(log)</pre>\n"
+            } else {
+                s = ""
+            }
+            
+            reply("<pre>\(error.localizedDescription)</pre>\(s)".toHTML(settings: custom_settings), custom_settings.toDictionary() as NSDictionary, error)
         }
     }
     
@@ -341,13 +364,24 @@ class SCSHXPCService: SCSHBaseXPCService, SCSHXPCServiceProtocol {
                 custom_settings = SettingsRendering(settings: self.settings.toDictionary())
             }
         }
+        custom_settings.logFile = URL(fileURLWithPath: NSHomeDirectory(), isDirectory: true).appendingPathComponent("Desktop/colorize.log")
         
         custom_settings.format = .rtf
         do {
-            let result = try doColorize(url: url, custom_settings: custom_settings)
-            reply(result.result.data, result.settings as NSDictionary, nil)
+            var colorize = try ColorizeArguments(highlight: self.getEmbeddedHighlight(), dataDir: self.dataDir, url: url, custom_settings: custom_settings, extraCss: self.getGlobalCSS())
+
+            let result = try (type(of: self)).doColorize(url: url, custom_settings: custom_settings, colorize: &colorize, rsrcEsc: self.rsrcEsc, dos2unix: self.bundle.path(forResource: "dos2unix", ofType: nil), logOs: self.log)
+            
+            reply(result.result.data, result.settings.toDictionary() as NSDictionary, nil)
         } catch {
-            reply(error.localizedDescription.data(using: String.Encoding.utf8)!, custom_settings.toDictionary() as NSDictionary, error)
+            let s: String
+            if let logFile = custom_settings.logFile, let log = try? String(contentsOf: logFile) {
+                s = "\n\nlog dump: \n\(log)\n"
+            } else {
+                s = ""
+            }
+            let data: Data = "\(error.localizedDescription)\(s)".toRTF(settings: custom_settings)
+            reply(data, custom_settings.toDictionary() as NSDictionary, error)
         }
     }
     
@@ -355,7 +389,7 @@ class SCSHXPCService: SCSHBaseXPCService, SCSHXPCServiceProtocol {
     // MARK: - Themes
     
     func getCustomThemesFolder(createIfMissing: Bool = true, reply: @escaping (URL?)->Void) {
-        let u = getCustomThemesUrl(createIfMissing: createIfMissing)
+        let u = type(of: self).getCustomThemesUrl(createIfMissing: createIfMissing)
         reply(u)
     }
     
@@ -364,24 +398,28 @@ class SCSHXPCService: SCSHBaseXPCService, SCSHXPCServiceProtocol {
     ///   - name: Name of the theme.
     ///   - reply:
     ///   - changed: True if the settings are changed.
-    func updateBGSettingsAfterThemeSaved(name: String, background: String, withReply reply: @escaping (_ changed: Bool) -> Void) {
+    func updateBGSettingsAfterThemeSaved(name: String, background: String, foreground: String, withReply reply: @escaping (_ changed: Bool) -> Void) {
         // Search if any settings use the changed theme.
         var changed = false
         if settings.lightThemeName == name {
             settings.lightBackgroundColor = background
+            settings.lightForegroundColor = foreground
             changed = true
         }
         if settings.darkThemeName == name {
             settings.darkBackgroundColor = background
+            settings.darkForegroundColor = foreground
             changed = true
         }
         for (_, settings) in self.settings.utiSettings {
             if settings.lightThemeName == name {
                 settings.lightBackgroundColor = background
+                settings.lightForegroundColor = foreground
                 changed = true
             }
             if settings.darkThemeName == name {
                 settings.darkBackgroundColor = background
+                settings.darkForegroundColor = foreground
                 changed = true
             }
         }
@@ -446,7 +484,10 @@ class SCSHXPCService: SCSHBaseXPCService, SCSHXPCServiceProtocol {
     }
     
     /// Get settings.
-    func getSettings(withReply reply: @escaping (NSDictionary) -> Void) {
+    func getSettings(reload: Bool, withReply reply: @escaping (NSDictionary) -> Void) {
+        if reload {
+            self.settings = type(of: self).initSettings()
+        }
         reply(self.settings.toDictionary() as NSDictionary)
     }
     

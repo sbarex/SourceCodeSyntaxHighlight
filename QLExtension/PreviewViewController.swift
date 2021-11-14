@@ -96,6 +96,8 @@ class PreviewViewController: NSViewController, QLPreviewingController, WKNavigat
     }
 
     override func loadView() {
+        // This code will not be called on macOS 12 Monterey with QLIsDataBasedPreview set.
+        
         super.loadView()
         // Do any additional setup after loading the view.
         if #available(macOS 11, *) {
@@ -111,6 +113,7 @@ class PreviewViewController: NSViewController, QLPreviewingController, WKNavigat
         DistributedNotificationCenter.default().removeObserver(self, name: .SettingsUpdated, object: nil)
     }
     
+    /// Reload settings after they have been changed in the main app.
     @objc internal func handleSettingsChanged(_ notification: Notification) {
         guard let service = connection.synchronousRemoteObjectProxyWithErrorHandler({ error in
             print("Received error:", error)
@@ -135,6 +138,8 @@ class PreviewViewController: NSViewController, QLPreviewingController, WKNavigat
     var handler: ((Error?) -> Void)? = nil
     
     func preparePreviewOfFile(at url: URL, completionHandler handler: @escaping (Error?) -> Void) {
+        // This code will not be called on macOS 12 Monterey with QLIsDataBasedPreview set.
+        
         // Add the supported content types to the QLSupportedContentTypes array in the Info.plist of the extension.
         
         // Perform any setup necessary in order to prepare the view.
@@ -151,60 +156,9 @@ class PreviewViewController: NSViewController, QLPreviewingController, WKNavigat
             url.path
         )
         
-        guard let service = connection.synchronousRemoteObjectProxyWithErrorHandler({ error in
-            print("Received error:", error)
+        do {
+            let result = try self.renderFile(at: url)
             
-            let labelView = NSTextField(frame: self.view.bounds)
-            labelView.autoresizingMask = [.height, .width]
-            self.view.addSubview(labelView)
-            labelView.stringValue = "Error: \(error.localizedDescription)"
-            
-            handler(SCSHError.xpcGenericError(error: error))
-        }) as? XPCLightRenderServiceProtocol else {
-            let labelView = NSTextField(frame: self.view.bounds)
-            labelView.autoresizingMask = [.height, .width]
-            self.view.addSubview(labelView)
-            labelView.stringValue = "Error: invalid XPC service"
-            
-            handler(SCSHError.xpcGenericError(error: nil))
-            return
-        }
-        
-        service.colorize(url: url) { (response: Data, settings: NSDictionary, error: Error?) in
-            let format = settings[SettingsBase.Key.format] as? String ?? Settings.Format.rtf.rawValue
-            os_log(
-                "Output mode: %{public}s",
-                log: self.log,
-                type: .info,
-                format
-            )
-            let wrap = (settings[SettingsBase.Key.wordWrap] as? Int ?? 0) > 0
-            let useSoftWrap = !(settings[SettingsBase.Key.wordWrapHard] as? Bool ?? true)
-            var useSoftWrapOneFile = false
-            if (!wrap || !useSoftWrap), let soft = settings[SettingsBase.Key.wordWrapOneLineFiles] as? Bool, soft, let f = fopen(url.path, "r") {
-                defer {
-                    fclose(f)
-                }
-                // the smallest multiple of 16 that will fit the byte array for this line
-                var lineCap: Int = 0
-                
-                // a pointer to a null-terminated, UTF-8 encoded sequence of bytes
-                var lineByteArrayPointer: UnsafeMutablePointer<CChar>? = nil
-                var bytesRead = getline(&lineByteArrayPointer, &lineCap, f)
-                var lines = 0
-                while (bytesRead > 0) {
-                    bytesRead = getline(&lineByteArrayPointer, &lineCap, f)
-                    lines += 1
-                    if lines > 1 {
-                        break
-                    }
-                }
-                free(lineByteArrayPointer)
-                
-                if lines == 1 {
-                    useSoftWrapOneFile = true
-                }
-            }
             DispatchQueue.main.async {
                 let previewRect: CGRect
                 if #available(macOS 11, *) {
@@ -212,7 +166,67 @@ class PreviewViewController: NSViewController, QLPreviewingController, WKNavigat
                 } else {
                     previewRect = self.view.bounds.insetBy(dx: 2, dy: 2)
                 }
-                if format == SettingsBase.Format.rtf.rawValue {
+                switch result {
+                case .html(let code, let settings):
+                    self.handler = handler
+                    if self.webView == nil {
+                        // Create a configuration for the preferences
+                        let configuration = WKWebViewConfiguration()
+                        
+                        if #available(macOS 11.0, *) {
+                            configuration.defaultWebpagePreferences.allowsContentJavaScript = settings?.allowInteractiveActions ?? false
+                        } else {
+                            configuration.preferences.javaScriptEnabled = settings?.allowInteractiveActions ?? false
+                        }
+                        configuration.allowsAirPlayForMediaPlayback = false
+                        // configuration.userContentController.add(self, name: "jsHandler")
+                    
+                        /* MARK: FIXME
+                        On Big Sur as far as I know, QuickLook extensions don't honor com.apple.security.network.client, so WebKit process immediately crash.
+                        To temporary fix add this entitlements exception
+                        com.apple.security.temporary-exception.mach-lookup.global-name:
+                        <key>com.apple.security.temporary-exception.mach-lookup.global-name</key>
+                        <array>
+                            <string>com.apple.nsurlsessiond</string>
+                        </array>
+                        */
+
+                        let webView: WKWebView
+                        if settings?.allowInteractiveActions ?? false {
+                            webView = WKWebView(frame: previewRect, configuration: configuration)
+                        } else {
+                            webView = StaticWebView(frame: previewRect, configuration: configuration)
+                            (webView as! StaticWebView).fileUrl = self.fileUrl
+                        }
+                        webView.autoresizingMask = [.height, .width]
+                        
+                        webView.wantsLayer = true
+                        if #available(macOS 11, *) {
+                            webView.layer?.borderWidth = 0
+                        } else {
+                            // Draw a border around the web view
+                            webView.layer?.borderColor = NSColor.tertiaryLabelColor.cgColor
+                            webView.layer?.borderWidth = 1
+                        }
+                    
+                        webView.navigationDelegate = self
+                        webView.uiDelegate = self
+                        self.view.addSubview(webView)
+                        self.webView = webView
+                    } else {
+                        if #available(macOS 11.0, *) {
+                            self.webView?.configuration.defaultWebpagePreferences.allowsContentJavaScript = settings?.allowInteractiveActions ?? false
+                        } else {
+                            self.webView?.configuration.preferences.javaScriptEnabled =  settings?.allowInteractiveActions ?? false
+                        }
+                    }
+                    
+                    self.textScrollView?.isHidden = true
+                    self.webView?.isHidden = false
+
+                    self.webView?.loadHTMLString(code, baseURL: nil)
+                    // handler(nil) // call the handler in the delegate method after complete rendering
+                case .rtf(let data, let settings):
                     if self.textScrollView == nil {
                         let textScrollView = NSScrollView(frame: previewRect)
                         textScrollView.autoresizingMask = [.height, .width]
@@ -265,8 +279,7 @@ class PreviewViewController: NSViewController, QLPreviewingController, WKNavigat
                     self.webView?.isHidden = true
                     self.textScrollView?.isHidden = false
                     
-                    //textView.minSize = CGSize(width: 0, height: 0)
-                    if (wrap && !useSoftWrap) || !useSoftWrapOneFile {
+                    if let settings = settings, settings.isWordWrapped, !settings.isWordWrappedSoft {
                         self.textView?.maxSize = CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)
                         self.textView?.textContainer?.widthTracksTextView = false
                         self.textView?.textContainer?.containerSize = CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)
@@ -276,7 +289,7 @@ class PreviewViewController: NSViewController, QLPreviewingController, WKNavigat
                     }
                     
                     // The rtf parser don't apply (why?) the page background color.
-                    if let c = settings[SettingsBase.Key.backgroundColor] as? String, let color = NSColor(fromHexString: c) {
+                    if let c = settings?.backgroundColor, let color = NSColor(fromHexString: c) {
                         self.textView?.backgroundColor = color
                         self.textView?.drawsBackground = true
                     } else {
@@ -285,111 +298,87 @@ class PreviewViewController: NSViewController, QLPreviewingController, WKNavigat
                     }
                     
                     var text: NSAttributedString
-                    if let t = NSAttributedString(rtf: response, documentAttributes: nil) {
+                    if let t = NSAttributedString(rtf: data, documentAttributes: nil) {
                         text = t
                     } else {
-                        let t = NSMutableAttributedString(string: "Unable to convert data to rtf!\n\n", attributes: [.font: NSFont.boldSystemFont(ofSize: NSFont.systemFontSize)])
-                        if let s = String(data: response, encoding: .utf8) {
+                        let t: NSMutableAttributedString
+                        if let settings = settings, let a: NSAttributedString = "Syntax Highlight: unable to convert data to RTF.\n\n".toRTF(settings: settings) {
+                            t = NSMutableAttributedString(attributedString: a)
+                        } else {
+                            t = NSMutableAttributedString(string: "Syntax Highlight: unable to convert data to RTF.\n\n", attributes: [.font: NSFont.boldSystemFont(ofSize: NSFont.systemFontSize)])
+                        }
+                        if let s = String(data: data, encoding: .utf8) {
                             t.append(NSAttributedString(string: s, attributes: [.font: NSFont.monospacedSystemFont(ofSize: NSFont.systemFontSize, weight: .regular)]))
                         }
                         text = t
-                        if !((wrap && !useSoftWrap) || !useSoftWrapOneFile) {
-                            self.textView?.textContainer?.widthTracksTextView = true
-                            let size = CGSize(width: self.textScrollView!.bounds.width-20, height: CGFloat.greatestFiniteMagnitude)
-                            self.textView?.maxSize = size
-                            self.textView?.textContainer?.containerSize = size
-                        }
                     }
-                    /*
-                    let text = (NSAttributedString(rtf: response, documentAttributes: nil) ?? NSAttributedString(string: "Unable to convert data to rtf.")).mutableCopy() as! NSMutableAttributedString
-                    // Convert Windows CRLF (windows) to LF
-                    text.mutableString.replaceOccurrences(of: "\r\n", with: "\n", range:NSMakeRange(0, text.mutableString.length))
-                    // Convert Windows CR (mac os 9) to LF
-                    text.mutableString.replaceOccurrences(of: "\r", with: "\n", range:NSMakeRange(0, text.mutableString.length))
-                    */
+                    
                     self.textView?.textStorage?.setAttributedString(text)
                     
                     handler(nil)
-                } else {
-                    var lossy = false
-                    var html = response.decodeToString(lossy: &lossy).trimmingCharacters(in: CharacterSet.newlines)
-                    
-                    if lossy {
-                        os_log(OSLogType.error, log: self.log, "Some bytes cannot be decoded and have been replaced!")
-                    }
-                    self.handler = handler
-                    if self.webView == nil {
-                        // Create a configuration for the preferences
-                        let configuration = WKWebViewConfiguration()
-                        
-                        if #available(OSX 11.0, *) {
-                            if let v = settings[SettingsBase.Key.interactive] as? Bool {
-                                configuration.defaultWebpagePreferences.allowsContentJavaScript = v
-                            } else {
-                                configuration.defaultWebpagePreferences.allowsContentJavaScript = false
-                            }
-                        } else {
-                            if let v = settings[SettingsBase.Key.interactive] as? Bool {
-                                configuration.preferences.javaScriptEnabled = v
-                            } else {
-                                configuration.preferences.javaScriptEnabled = false
-                            }
-                        }
-                        configuration.allowsAirPlayForMediaPlayback = false
-                        // configuration.userContentController.add(self, name: "jsHandler")
-                    
-                        /* MARK: FIXME
-                        On Big Sur as far as I know, QuickLook extensions don't honor com.apple.security.network.client, so WebKit process immediately crash.
-                        To temporary fix add this entitlements exception
-                        com.apple.security.temporary-exception.mach-lookup.global-name:
-                        <key>com.apple.security.temporary-exception.mach-lookup.global-name</key>
-                        <array>
-                            <string>com.apple.nsurlsessiond</string>
-                        </array>
-                        */
-
-                        let webView: WKWebView
-                        if let v = settings[SettingsBase.Key.interactive] as? Bool, v {
-                            webView = WKWebView(frame: previewRect, configuration: configuration)
-                        } else {
-                            webView = StaticWebView(frame: previewRect, configuration: configuration)
-                            (webView as! StaticWebView).fileUrl = self.fileUrl
-                        }
-                        webView.autoresizingMask = [.height, .width]
-                        
-                        webView.wantsLayer = true
-                        if #available(macOS 11, *) {
-                            webView.layer?.borderWidth = 0
-                        } else {
-                            // Draw a border around the web view
-                            webView.layer?.borderColor = NSColor.tertiaryLabelColor.cgColor
-                            webView.layer?.borderWidth = 1
-                        }
-                    
-                        webView.navigationDelegate = self
-                        webView.uiDelegate = self
-                        self.view.addSubview(webView)
-                        self.webView = webView
-                    } else {
-                        if let v = settings[SettingsBase.Key.interactive] as? Bool {
-                            if #available(OSX 11.0, *) {
-                                self.webView?.configuration.defaultWebpagePreferences.allowsContentJavaScript = v
-                            } else {
-                                self.webView?.configuration.preferences.javaScriptEnabled = v
-                            }
-                        }
-                    }
-                    
-                    self.textScrollView?.isHidden = true
-                    self.webView?.isHidden = false
-
-                    if (wrap && useSoftWrap) || useSoftWrapOneFile {
-                        html = html.replacingOccurrences(of: "</head>", with: "<style>pre.hl { white-space: normal }</style>\n</head>")
-                    }
-                    self.webView?.loadHTMLString(html, baseURL: nil)
-                    // handler(nil) // call the handler in the delegate method after complete rendering
                 }
             }
+        } catch {
+            handler(error)
+        }
+    }
+    
+    @available(macOSApplicationExtension 12.0, *)
+    func providePreview(for request: QLFilePreviewRequest, completionHandler handler: @escaping (QLPreviewReply?, Error?) -> Void) {
+        // This code will be called on macOS 12 Monterey with QLIsDataBasedPreview set.
+        
+        do {
+            let result = try self.renderFile(at: request.fileURL)
+            let r: QLPreviewReply
+            switch result {
+            case .html(let code, let settings):
+                if settings?.isImage ?? false {
+                    r = QLPreviewReply(dataOfContentType: UTType.image, contentSize: .zero) { _ in
+                        return (try? Data(contentsOf: request.fileURL)) ?? "Unable to load the image file!".data(using: .utf8)!
+                    }
+                } else if settings?.isPDF ?? false {
+                    r = QLPreviewReply(dataOfContentType: UTType.pdf, contentSize: .zero) { _ in
+                        return (try? Data(contentsOf: request.fileURL)) ?? "Unable to load the PDF file!".data(using: .utf8)!
+                    }
+                } else if settings?.isMovie ?? false {
+                    r = QLPreviewReply(dataOfContentType: UTType.movie, contentSize: .zero) { _ in
+                        return (try? Data(contentsOf: request.fileURL)) ?? "Unable to load the movie file!".data(using: .utf8)!
+                    }
+                } else if settings?.isAudio ?? false {
+                    r = QLPreviewReply(dataOfContentType: UTType.audio, contentSize: .zero) { _ in
+                        return (try? Data(contentsOf: request.fileURL)) ?? "Unable to load the audio file!".data(using: .utf8)!
+                    }
+                } else {
+                    r = QLPreviewReply(dataOfContentType: UTType.html, contentSize: .zero) { _ in
+                        return code.data(using: .utf8)!
+                    }
+                }
+            case .rtf(let data, let settings):
+                if settings?.isImage ?? false {
+                    r = QLPreviewReply(dataOfContentType: UTType.image, contentSize: .zero) { _ in
+                        return (try? Data(contentsOf: request.fileURL)) ?? "Unable to load the image file!".data(using: .utf8)!
+                    }
+                } else if settings?.isPDF ?? false {
+                    r = QLPreviewReply(dataOfContentType: UTType.pdf, contentSize: .zero) { _ in
+                        return (try? Data(contentsOf: request.fileURL)) ?? "Unable to load the PDF file!".data(using: .utf8)!
+                    }
+                } else if settings?.isMovie ?? false {
+                    r = QLPreviewReply(dataOfContentType: UTType.movie, contentSize: .zero) { _ in
+                        return (try? Data(contentsOf: request.fileURL)) ?? "Unable to load the movie file!".data(using: .utf8)!
+                    }
+                } else if settings?.isAudio ?? false {
+                    r = QLPreviewReply(dataOfContentType: UTType.audio, contentSize: .zero) { _ in
+                        return (try? Data(contentsOf: request.fileURL)) ?? "Unable to load the audio file!".data(using: .utf8)!
+                    }
+                }  else {
+                    r = QLPreviewReply(dataOfContentType: UTType.rtf, contentSize: .zero) { _ in
+                        return data
+                    }
+                }
+            }
+            handler(r, nil)
+        } catch {
+            handler(nil, error)
         }
     }
     
@@ -438,10 +427,65 @@ class PreviewViewController: NSViewController, QLPreviewingController, WKNavigat
             self.handler = nil
         }
     }
+    
+    enum RenderResult {
+        case html(code: String, settings: SettingsRendering?)
+        case rtf(data: Data, settings: SettingsRendering?)
+    }
+    
+    func renderFile(at url: URL) throws -> RenderResult {
+        os_log(
+            "Generating preview for file %{public}s",
+            log: self.log,
+            type: .info,
+            url.path
+        )
+        
+        var result: RenderResult?
+        
+        var connettion_error: Error?
+        guard let service = connection.synchronousRemoteObjectProxyWithErrorHandler({ error in
+            connettion_error = error
+            /*
+            print("Received error:", error)
+             */
+        }) as? XPCLightRenderServiceProtocol else {
+            return RenderResult.html(code: "Syntax Highlight: invalid XPC service.\n\(connettion_error?.localizedDescription ?? "")".toHTML(), settings: nil)
+        }
+        guard connettion_error == nil else {
+            return RenderResult.html(code: "Syntax Highlight: \(connettion_error!.localizedDescription).".toHTML(), settings: nil)
+        }
+        
+        service.colorize(url: url) { (response: Data, settings: NSDictionary, error: Error?) in
+            let settings = SettingsRendering(settings: settings as! [String: AnyHashable])
+            
+            os_log(
+                "Output mode: %{public}s",
+                log: self.log,
+                type: .info,
+                settings.format.rawValue
+            )
+                
+            if settings.format == .rtf {
+                result = RenderResult.rtf(data: response, settings: settings)
+            } else {
+                var lossy = false
+                let html = response.decodeToString(lossy: &lossy).trimmingCharacters(in: CharacterSet.newlines)
+                
+                if lossy {
+                    os_log(OSLogType.error, log: self.log, "Some bytes cannot be decoded and have been replaced!")
+                }
+                
+                result = RenderResult.html(code: html, settings: settings)
+            }
+        }
+        
+        return result ?? RenderResult.html(code: "Syntax Highlight error.".toHTML(), settings: nil)
+    }
 }
 
 /*
-// MARK: - WKScriptMessageHandler
+// MARK - WKScriptMessageHandler
 extension PreviewViewController: WKScriptMessageHandler {
     /// Handle messages from the webkit.
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {

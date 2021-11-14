@@ -58,6 +58,9 @@ class SettingsView: NSView, SettingsSplitViewElement {
     @IBOutlet weak var dataLimitPopupButton: NSPopUpButton!
     @IBOutlet weak var EOLSwitch: NSSwitch!
     @IBOutlet weak var debugSwitch: NSSwitch!
+    @IBOutlet weak var vcsCheckBox: NSButton!
+    @IBOutlet weak var vcsSwitch: NSSwitch!
+    @IBOutlet weak var vcsButton: NSButton!
     
     @IBOutlet weak var lspButton: NSButton!
     
@@ -71,11 +74,16 @@ class SettingsView: NSView, SettingsSplitViewElement {
     
     var isAdvancedSettingsVisible: Bool = false {
         didSet {
-            gridView.cell(for: interactiveSwitch)?.row?.isHidden = !isAdvancedSettingsVisible || settings?.format != .html
+            if #available(macOS 12, *) {
+                gridView.cell(for: interactiveSwitch)?.row?.isHidden = true
+            } else {
+                gridView.cell(for: interactiveSwitch)?.row?.isHidden = !isAdvancedSettingsVisible || settings?.format != .html
+            }
             gridView.cell(for: customCSSCheckBox)?.row?.isHidden = !isAdvancedSettingsVisible || settings?.format != .html
             
             gridView.cell(for: argumentsCheckBox)?.row?.isHidden = !isAdvancedSettingsVisible
             gridView.cell(for: debugSwitch)?.row?.isHidden = !isAdvancedSettingsVisible
+            gridView.cell(for: vcsSwitch)?.row?.isHidden = !isAdvancedSettingsVisible
             gridView.cell(for: EOLSwitch)?.row?.isHidden = !isAdvancedSettingsVisible
             
             if self.settings is SettingsFormat {
@@ -96,20 +104,8 @@ class SettingsView: NSView, SettingsSplitViewElement {
     
     var availableSyntax: [String: HighlightWrapper.Language] = [:] {
         didSet {
-            self.syntaxPopupButton.removeAllItems()
-            self.syntaxPopupButton.addItem(withTitle: "Auto")
-            if availableSyntax.count > 0 {
-                self.syntaxPopupButton.menu?.addItem(NSMenuItem.separator())
-                let keys = availableSyntax.keys.sorted{$0.compare($1, options: .caseInsensitive) == .orderedAscending }
-                for desc in keys {
-                    let m = NSMenuItem(title: desc, action: nil, keyEquivalent: "")
-                    m.toolTip = desc
-                    if let lang = availableSyntax[desc] {
-                        m.toolTip! += " [." + lang.extensions.joined(separator: ", .") + "]"
-                    }
-                    self.syntaxPopupButton.menu?.addItem(m)
-                }
-            }
+            AppDelegate.initSyntaxPopup(self.syntaxPopupButton, availableSyntax: availableSyntax, extraItems: ["Auto"])
+            
             self.syntaxPopupButton.isEnabled = self.syntaxCheckBox.state == .on
         }
     }
@@ -192,11 +188,13 @@ class SettingsView: NSView, SettingsSplitViewElement {
             if settings.lightThemeName == theme.nameForSettings {
                 settings.lightThemeName = themeName
                 settings.lightBackgroundColor = theme.backgroundColor
+                settings.lightForegroundColor = theme.foregroundColor
                 initTheme(name: settings.lightThemeName, label: themeLightLabel, button: themeLightButton)
                 self.updateAppearanceWarning()
             } else if settings.darkThemeName == theme.nameForSettings {
                 settings.darkThemeName = themeName
                 settings.darkBackgroundColor = theme.backgroundColor
+                settings.darkForegroundColor = theme.foregroundColor
                 initTheme(name: settings.darkThemeName, label: themeDarkLabel, button: themeDarkButton)
                 self.updateAppearanceWarning()
             }
@@ -241,6 +239,7 @@ class SettingsView: NSView, SettingsSplitViewElement {
         gridView.cell(for: lspButton)?.row?.isHidden = true
         
         gridView.cell(for: debugSwitch)?.row?.isHidden = !isAdvancedSettingsVisible
+        gridView.cell(for: vcsSwitch)?.row?.isHidden = !isAdvancedSettingsVisible
         gridView.cell(for: EOLSwitch)?.row?.isHidden = !isAdvancedSettingsVisible
         gridView.cell(for: dataLimitTextField)?.row?.isHidden = false
     }
@@ -293,6 +292,11 @@ class SettingsView: NSView, SettingsSplitViewElement {
             interactiveSwitch.isEnabled = false
             
             debugSwitch.isEnabled = false
+            
+            vcsCheckBox.isEnabled = false
+            vcsSwitch.isEnabled = false
+            vcsButton.isEnabled = false
+            
             EOLSwitch.isEnabled = false
             
             lspButton.isEnabled = false
@@ -382,10 +386,20 @@ class SettingsView: NSView, SettingsSplitViewElement {
         updateCheckbox(interactiveCheckBox, settings.isAllowInteractiveActionsDefined, [interactiveSwitch])
         interactiveSwitch.state = settings.allowInteractiveActions ? .on : .off
         
+        vcsCheckBox.isEnabled = true
+        vcsSwitch.isEnabled = true
+        
         if let settings = settings as? Settings {
             debugSwitch.isEnabled = true
             debugSwitch.state = settings.isDebug ? .on : .off
             gridView.cell(for: debugSwitch)?.row?.isHidden = !self.isAdvancedSettingsVisible
+            
+            vcsCheckBox.imagePosition = .noImage
+            vcsSwitch.isEnabled = true
+            vcsSwitch.isHidden = false
+            vcsSwitch.state = settings.isVCS ? .on : .off
+            vcsButton.isEnabled = true
+            gridView.cell(for: vcsSwitch)?.row?.isHidden = !self.isAdvancedSettingsVisible
             
             EOLSwitch.isEnabled = true
             EOLSwitch.state = settings.convertEOL ? .on : .off
@@ -405,6 +419,13 @@ class SettingsView: NSView, SettingsSplitViewElement {
             gridView.cell(for: dataLimitTextField)?.row?.isHidden = false
         } else {
             gridView.cell(for: debugSwitch)?.row?.isHidden = true
+            
+            vcsCheckBox.imagePosition = .imageLeft
+            vcsCheckBox.state = settings.isVCSDefined ? .on : .off
+            vcsSwitch.isEnabled = false
+            vcsSwitch.isHidden = true
+            vcsButton.isEnabled = settings.isVCSDefined
+            
             gridView.cell(for: EOLSwitch)?.row?.isHidden = true
             gridView.cell(for: dataLimitTextField)?.row?.isHidden = true
         }
@@ -446,10 +467,6 @@ class SettingsView: NSView, SettingsSplitViewElement {
         // on
         lineNumbersPopupButton.menu?.item(withTag: 1)?.state = settings.isLineNumbersVisible ? .on : .off
         
-        // omit
-        lineNumbersPopupButton.menu?.item(withTag: 2)?.isEnabled = settings.isLineNumbersVisible && settings.isWordWrapped && settings.isWordWrappedHard
-        lineNumbersPopupButton.menu?.item(withTag: 2)?.state = settings.isLineNumbersOmittedForWrap ? .on : .off
-        
         // zeroes
         lineNumbersPopupButton.menu?.item(withTag: 3)?.isEnabled = settings.isLineNumbersVisible
         lineNumbersPopupButton.menu?.item(withTag: 3)?.state = settings.isLineNumbersFillToZeroes ? .on : .off
@@ -458,7 +475,11 @@ class SettingsView: NSView, SettingsSplitViewElement {
     }
     
     @IBAction func onAppearanceChanged(_ sender: Any) {
-        gridView.cell(for: interactiveSwitch)?.row?.isHidden = !self.isAdvancedSettingsVisible || appearancePopupButton.indexOfSelectedItem == 0
+        if #available(macOS 12.0, *) {
+            gridView.cell(for: interactiveSwitch)?.row?.isHidden = true
+        } else {
+            gridView.cell(for: interactiveSwitch)?.row?.isHidden = !self.isAdvancedSettingsVisible || appearancePopupButton.indexOfSelectedItem == 0
+        }
         interactiveSwitch.isEnabled = appearancePopupButton.indexOfSelectedItem != 0
         
         gridView.cell(for: customCSSButton)?.row?.isHidden = !self.isAdvancedSettingsVisible || appearancePopupButton.indexOfSelectedItem == 0
@@ -496,11 +517,11 @@ class SettingsView: NSView, SettingsSplitViewElement {
         // Only one line file
         mnu = wordWrapPopupButton.menu?.item(withTag: 4)
         mnu?.isEnabled = !settings.isWordWrapped
-        mnu?.state = settings.isWordWrappedSoftForOnleLineFiles ? .on : .off
+        mnu?.state = settings.isWordWrappedSoftForOneLineFiles ? .on : .off
         
         if settings.isWordWrapped {
             wordWrapPopupButton.item(at: 0)?.title = wordWrapPopupButton.menu?.item(withTag: settings.isWordWrappedHard ? 1 : 3)?.title ?? "on"
-        } else if settings.isWordWrappedSoftForOnleLineFiles {
+        } else if settings.isWordWrappedSoftForOneLineFiles {
             wordWrapPopupButton.item(at: 0)?.title = "Enabled only for one line file"
         } else {
             wordWrapPopupButton.item(at: 0)?.title = wordWrapPopupButton.menu?.item(withTag: 0)?.title ?? "off"
@@ -522,7 +543,7 @@ class SettingsView: NSView, SettingsSplitViewElement {
         case 2: // indented
             settings?.isWordWrappedIndented = !(settings?.isWordWrappedIndented ?? true)
         case 4: // one line file
-            settings?.isWordWrappedSoftForOnleLineFiles = !(settings?.isWordWrappedSoftForOnleLineFiles ?? true)
+            settings?.isWordWrappedSoftForOneLineFiles = !(settings?.isWordWrappedSoftForOneLineFiles ?? true)
         default:
             break
         }
@@ -550,8 +571,6 @@ class SettingsView: NSView, SettingsSplitViewElement {
             settings?.isLineNumbersVisible = false
         case 1: // on
             settings?.isLineNumbersVisible = true
-        case 2: // omit
-            settings?.isLineNumbersOmittedForWrap = !(settings?.isLineNumbersOmittedForWrap ?? false)
         case 3: // zeroes
             settings?.isLineNumbersFillToZeroes = !(settings?.isLineNumbersFillToZeroes ?? true)
         default:
@@ -651,6 +670,27 @@ class SettingsView: NSView, SettingsSplitViewElement {
         if let settings = self.settings as? Settings {
             settings.isDebug = self.debugSwitch.state == .on
         }
+    }
+    
+    @IBAction func handleVCSCheckbox(_ sender: NSButton) {
+        guard let _ = self.settings as? SettingsFormat else { return }
+        settings?.isVCSDefined = sender.state == .on
+        vcsButton.isEnabled = self.settings is Settings || sender.state == .on
+    }
+    
+    @IBAction func onVCSChanged(_ sender: Any) {
+        if let settings = self.settings as? Settings {
+            settings.isVCS = self.vcsSwitch.state == .on
+        }
+    }
+    
+    @IBAction func handleVCSButton(_ sender: NSButton) {
+        guard let settings = self.settings, let vc = NSStoryboard(name: "Storyboard", bundle: nil).instantiateController(withIdentifier: "VCSViewController") as? VCSSettingsViewController else {
+            return
+        }
+        vc.settings = settings
+        
+        self.window?.contentViewController?.present(vc, asPopoverRelativeTo: sender.bounds, of: sender, preferredEdge: NSRectEdge.maxY, behavior: .semitransient)
     }
     
     /// Show panel to chose a new font.
@@ -794,15 +834,22 @@ class SettingsView: NSView, SettingsSplitViewElement {
         fontLabel.isEnabled = sender.state == .on
     }
     
+    fileprivate var themeSelecttorViewController: ThemeSelectorViewController?
     @IBAction func handleThemeButton(_ sender: Any) {
         guard let button = sender as? NSButton, button==themeLightButton || button==themeDarkButton else {
             return
+        }
+        
+        if let themeSelecttorViewController = self.themeSelecttorViewController {
+            themeSelecttorViewController.dismiss(self)
+            self.themeSelecttorViewController = nil
         }
         
         let storyboard = NSStoryboard(name: "Storyboard", bundle: nil)
         guard let vc = storyboard.instantiateController(withIdentifier: "ThemeSelector") as? ThemeSelectorViewController else {
             return
         }
+        
         if button == themeLightButton {
             vc.style = .light
             vc.handler = { [weak self] theme in
@@ -810,10 +857,12 @@ class SettingsView: NSView, SettingsSplitViewElement {
                     self.settings?.lockRefresh()
                     self.settings?.isLightThemeNameDefined = true
                     self.settings?.lightBackgroundColor = theme.backgroundColor
+                    self.settings?.lightForegroundColor = theme.foregroundColor
                     self.settings?.lightThemeName = theme.nameForSettings
                     self.settings?.unlockRefresh()
                     self.initTheme(theme, label: self.themeLightLabel, button: button)
                     self.updateAppearanceWarning()
+                    self.themeSelecttorViewController = nil
                 }
             }
         } else if button == themeDarkButton {
@@ -823,13 +872,17 @@ class SettingsView: NSView, SettingsSplitViewElement {
                     self.settings?.lockRefresh()
                     self.settings?.isDarkThemeNameDefined = true
                     self.settings?.darkBackgroundColor = theme.backgroundColor
+                    self.settings?.darkForegroundColor = theme.foregroundColor
                     self.settings?.darkThemeName = theme.nameForSettings
                     self.settings?.unlockRefresh()
                     self.initTheme(theme, label: self.themeDarkLabel, button: button)
                     self.updateAppearanceWarning()
+                    self.themeSelecttorViewController = nil
                 }
             }
         }
+        themeSelecttorViewController = vc
+        
         self.window?.contentViewController?.present(vc, asPopoverRelativeTo: button.bounds, of: button, preferredEdge: .maxY, behavior: .transient)
     }
     

@@ -12,7 +12,7 @@ extension SCSHTheme {
     var attributedDesc: NSAttributedString {
         let getImage: (()->NSImage?) = {
             let image: NSImage?
-            if #available(OSX 11.0, *) {
+            if #available(macOS 11.0, *) {
                 image = NSImage(systemSymbolName: "safari", accessibilityDescription: nil)
             } else {
                 image = NSImage(named: "safari")

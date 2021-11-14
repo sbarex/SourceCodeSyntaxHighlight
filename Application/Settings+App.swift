@@ -20,7 +20,7 @@ extension SettingsFormat {
     }
     
     var isLSPValid: Bool {
-        return isUsingLSP && FileManager.default.fileExists(atPath: self.lspExecutable)
+        return isUsingLSP && !self.lspExecutable.isEmpty && FileManager.default.isExecutableFile(atPath: self.lspExecutable)
     }
     
     var LSPImage: NSImage? {
@@ -33,6 +33,18 @@ extension SettingsFormat {
 }
 
 extension Settings {
+    var isGitValid: Bool {
+        return isVCS && !self.gitPath.isEmpty && FileManager.default.isExecutableFile(atPath: self.gitPath)
+    }
+    
+    var isHgValid: Bool {
+        return isVCS && !self.hgPath.isEmpty && FileManager.default.isExecutableFile(atPath: self.hgPath)
+    }
+    
+    var isSVNValid: Bool {
+        return isVCS && !self.svnPath.isEmpty && FileManager.default.isExecutableFile(atPath: self.svnPath)
+    }
+
     @objc override var hasAdvancedSettings: Bool {
         return super.hasAdvancedSettings || self.isDebug || self.convertEOL
     }

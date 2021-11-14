@@ -21,34 +21,8 @@
 //  along with SyntaxHighlight. If not, see <http://www.gnu.org/licenses/>.
 
 import Foundation
+import Cocoa
 import OSLog
-
-struct ColorizeArguments {
-    /// Path of the `highlight` executable.
-    var highlight: String
-    /// Env variables.
-    var env: [String: String]
-    /// Theme name.
-    var theme: String
-    /// Theme background color.
-    var backgroundColor: String
-    /// Custom CSS Style.
-    var inlineCSS: String?
-    /// Lua code of a custom theme.
-    var inlineTheme: String?
-    /// Arguments passed to the `highlight` executable.
-    var arguments: [String]
-    
-    init(highlight: String, env: [String: String], theme: String, backgroundColor: String, css: String?, inlineTheme: String?, arguments: [String]) {
-        self.highlight = highlight
-        self.env = env
-        self.theme = theme
-        self.backgroundColor = backgroundColor
-        self.inlineCSS = css
-        self.inlineTheme = inlineTheme
-        self.arguments = arguments
-    }
-}
 
 @objc
 class SCSHBaseXPCService: NSObject {
@@ -204,127 +178,80 @@ class SCSHBaseXPCService: NSObject {
     // MARK: - Highlight
     
     /// Get the path of the embedded highlight.
-    /// - returns: The path and the environment of the embedded highlight.
-    func getEmbeddedHighlight() -> (path: String, env: [String: String]) {
-        if let path = self.bundle.path(forResource: "highlight", ofType: nil, inDirectory: "highlight/bin"), let data_dir = self.dataDir {
-            return (path: path, env: ["HIGHLIGHT_DATADIR": "\(data_dir)/"])
+    /// - returns: The path of the embedded highlight.
+    func getEmbeddedHighlight() -> String {
+        if let path = self.bundle.path(forResource: "highlight", ofType: nil, inDirectory: "highlight/bin") {
+            return path
         } else {
-            return (path: "false", env: [:])
+            return ""
         }
     }
     
     
     // MARK: - Colorize
+    /// Get the global CSS file.
+    func getGlobalCSS() -> URL? {
+        if #available(macOS 12.0, *) {
+            return self.bundle.url(forResource: "style2", withExtension: "css", subdirectory: "highlight")
+        } else {
+            return self.bundle.url(forResource: "style", withExtension: "css", subdirectory: "highlight")
+        }
+    }
     
     /// Get all settings need to call colorize.sh.
     func getColorizeArguments(url: URL, custom_settings: SettingsRendering) throws -> ColorizeArguments {
-        // Set environment variables.
-        // All values on env are automatically quoted escaped.
-        var env = ProcessInfo.processInfo.environment
         
-        let p  = self.getEmbeddedHighlight()
-        let highlightPath = p.path
-        env.merge(p.env) { (_, new) in new }
+        let colorize = try ColorizeArguments(highlight: self.getEmbeddedHighlight(), dataDir: self.dataDir, url: url, custom_settings: custom_settings, extraCss: self.getGlobalCSS())
         
-        var hlArguments = try custom_settings.getHighlightArguments()
-        if let dataDir = self.dataDir {
-            hlArguments.arguments.append("--data-dir=\(dataDir)")
+        return colorize
+    }
+    
+    /// Check if a file has only one line.
+    class func checkOneLineFile(_ url: URL) -> Bool {
+        guard let f = fopen(url.path, "r") else {
+            return false
         }
+        defer {
+            fclose(f)
+        }
+        // the smallest multiple of 16 that will fit the byte array for this line
+        var lineCap: Int = 0
         
-        if custom_settings.themeLua.isEmpty {
-            if hlArguments.theme.hasPrefix("!") {
-                // Custom theme.
-                hlArguments.theme.remove(at: hlArguments.theme.startIndex)
-                if let theme_url = self.getCustomThemesUrl(createIfMissing: false)?.appendingPathComponent(hlArguments.theme).appendingPathExtension("theme") {
-                    hlArguments.arguments.append("--style=\(theme_url.path)")
-                }
-            } else if let dataDir = self.dataDir {
-                hlArguments.arguments.append("--style=\(dataDir)/themes/\(hlArguments.theme).theme")
-            } else {
-                hlArguments.arguments.append("--style=\(hlArguments.theme)")
+        // a pointer to a null-terminated, UTF-8 encoded sequence of bytes
+        var lineByteArrayPointer: UnsafeMutablePointer<CChar>? = nil
+        defer {
+            if lineByteArrayPointer != nil {
+                free(lineByteArrayPointer!)
             }
         }
         
-        var cssCode: String?
-        if custom_settings.format == .html {
-            cssCode = ""
-            if custom_settings.isCSSDefined && !custom_settings.css.isEmpty {
-                // Passing a css value in the settings prevent the embed of styles saved on disk.
-                cssCode! += "\(custom_settings.css)\n"
-            } else {
-                // Import global css style.
-                if let css_url = type(of: self).getCustomStylesUrl(createIfMissing: false)?.appendingPathComponent("global.css"), FileManager.default.fileExists(atPath: css_url.path), let s = try? String(contentsOf: css_url, encoding: .utf8) {
-                    cssCode! += "\(s)\n"
-                }
-                
-                // Import per file css style.
-                if let uti = (try? url.resourceValues(forKeys: [.typeIdentifierKey]))?.typeIdentifier, let css_url = type(of: self).getCustomStylesUrl(createIfMissing: false)?.appendingPathComponent("\(uti).css"), FileManager.default.fileExists(atPath: css_url.path), let s = try? String(contentsOf: css_url, encoding: .utf8) {
-                    cssCode! += "\(s)\n"
-                }
-            }
-            
-            // Embed the custom standard style.
-            if let style = self.bundle.path(forResource: "style", ofType: "css", inDirectory: "highlight") {
-                if !cssCode!.isEmpty {
-                    cssCode! += "\n"
-                }
-                do {
-                    cssCode! += try String(contentsOfFile: style)
-                } catch {
-                    cssCode! += "/* Error: unable to append `\(style)` CSS file! */\n";
-                }
+        var bytesRead = getline(&lineByteArrayPointer, &lineCap, f)
+        var lines = 0
+        while (bytesRead > 0) {
+            bytesRead = getline(&lineByteArrayPointer, &lineCap, f)
+            lines += 1
+            if lines > 1 {
+                break
             }
         }
         
-        let maxData: String
-        if custom_settings.maxData > 0 {
-            maxData = "\(custom_settings.maxData)"
-        } else {
-            maxData = ""
-        }
-        
-        env.merge([
-            "maxFileSizeHL": maxData,
-            "textEncoding": "UTF-8",
-            "webkitTextEncoding": "UTF-8",
-            "convertEOL": custom_settings.convertEOL ? "1" : "",
-            
-            // Debug
-            "debugHL": custom_settings.isDebug ? "1" : "",
-        ]) { (_, new) in new }
-        
-        if let _ = env["preprocessorHL"] {
-            env.removeValue(forKey: "convertEOL")
-        }
-        if custom_settings.isUsingLSP {
-            env["useLSP"] = "1"
-            env.removeValue(forKey: "maxFileSizeHL") // unsupported options for LSP
-            env.removeValue(forKey: "preprocessorHL") // unsupported options for LSP
-            env.removeValue(forKey: "convertEOL") // unsupported options for LSP
-        } else {
-            if custom_settings.isPreprocessorDefined, !custom_settings.preprocessor.isEmpty {
-                env["preprocessorHL"] = custom_settings.preprocessor.trimmingCharacters(in: CharacterSet.whitespaces)
-            } else {
-                env.removeValue(forKey: "preprocessorHL")
-            }
-        }
-        
-        if custom_settings.isSyntaxDefined && !custom_settings.syntax.isEmpty {
-            env["syntaxHL"] = custom_settings.syntax
-        }
-        
-        return ColorizeArguments(highlight: highlightPath, env: env, theme: hlArguments.theme, backgroundColor: hlArguments.backgroundColor, css: cssCode, inlineTheme: custom_settings.themeLua, arguments: hlArguments.arguments)
+        return lines == 1
     }
     
     /// Colorize a source file.
     /// - parameters:
     ///   - url: File url to colorize.
     ///   - custom_settings: Settings for the rendering.
-    internal func doColorize(url: URL, custom_settings: SettingsRendering) throws -> (result: ShellTask.TaskResult, settings: [String: Any]) {
-        os_log(OSLogType.debug, log: self.log, "colorizing %{public}@", url.path)
-        
-        var colorize = try getColorizeArguments(url: url, custom_settings: custom_settings)
-        
+    ///   - colorize: ColorizeArguments.
+    ///   - rsrcEsc: Path for the resources folder that contain the highlight dir.
+    ///   - dos2unix: Path of the dos2unix binary.
+    ///   - logOs: OSLog.
+    class func doColorize(url: URL, custom_settings: SettingsRendering, colorize: inout ColorizeArguments, rsrcEsc: String, dos2unix: String?, logOs: OSLog?) throws -> (result: ShellTask.TaskResult, settings: SettingsRendering) {
+        if let logOs = logOs {
+            os_log(.debug, log: logOs, "colorizing %{public}@", url.path)
+        }
+        try? "Start colorizing \(url.path)".append(to: custom_settings.logFile)
+                
         let directory = NSTemporaryDirectory()
         /// Temp file for the css style.
         var temporaryCSSFile: URL? = nil
@@ -332,17 +259,24 @@ class SCSHBaseXPCService: NSObject {
         var temporaryThemeFile: URL? = nil
         
         defer {
-            if custom_settings.isDebug {
-                let logFile = URL(fileURLWithPath: NSHomeDirectory(), isDirectory: true).appendingPathComponent("Desktop/colorize.log")
-                
+            if custom_settings.isDebug, let logFile = custom_settings.logFile {
+                var log = "";
                 // Log the custom theme.
                 if let theme = colorize.inlineTheme, !theme.isEmpty {
-                    try? "\n\n#######\n# Custom Theme:\n\(theme)\n\n#######".append(to: logFile)
+                    log += "\n\n#######\n# Custom Theme:\n\(theme)\n\n#######"
                 }
                 // Log the custom style.
                 if let css = colorize.inlineCSS {
-                    try? "\n\n#######\n# Custom CSS:\n\(css)\n\n#######".append(to: logFile)
+                    log += "\n\n#######\n# Custom CSS:\n\(css)\n\n#######"
                 }
+                
+                log += "\n\n#######\n# ENV:\n"
+                for (k, v) in colorize.env {
+                    log += "\(k)=\(v)\n"
+                }
+                log += "\n\n####### ENV end\n"
+                
+                try? log.append(to: logFile)
             }
             
             if let url = temporaryCSSFile {
@@ -350,8 +284,11 @@ class SCSHBaseXPCService: NSObject {
                     // Delete the temporary css.
                     try FileManager.default.removeItem(at: url)
                 } catch {
-                    os_log(OSLogType.error, log: self.log, "Unable to delete the temporary CSS file %{public}@: %{public}@", url.path, error.localizedDescription)
-                    print(error)
+                    if let logOs = logOs {
+                        os_log(.error, log: logOs, "Unable to delete the temporary CSS file %{public}@: %{public}@", url.path, error.localizedDescription)
+                    }
+                    try? "Unable to delete the temporary CSS file \(url.path): \(error.localizedDescription)".append(to: custom_settings.logFile)
+                    // print(error)
                 }
             }
             if let url = temporaryThemeFile {
@@ -359,13 +296,21 @@ class SCSHBaseXPCService: NSObject {
                     // Delete the temporary theme file.
                     try FileManager.default.removeItem(at: url)
                 } catch {
-                    os_log(OSLogType.error, log: self.log, "Unable to delete the temporary theme file %{public}@: %{public}@", url.path, error.localizedDescription)
-                    print(error)
+                    if let logOs = logOs {
+                        os_log(.error, log: logOs, "Unable to delete the temporary theme file %{public}@: %{public}@", url.path, error.localizedDescription)
+                    }
+                    try? "Unable to delete the temporary theme file \(url.path): \(error.localizedDescription)".append(to: custom_settings.logFile)
+                    // print(error)
                 }
             }
         }
         
-        if custom_settings.format == .html, let css = colorize.inlineCSS, !css.isEmpty {
+        var css = colorize.inlineCSS ?? ""
+        if custom_settings.isWordWrapped && custom_settings.isWordWrappedSoft {
+            css += "pre.hl { white-space: pre-wrap }"
+        }
+        
+        if custom_settings.format == .html, !css.isEmpty {
             temporaryCSSFile = URL(fileURLWithPath: directory).appendingPathComponent(NSUUID().uuidString).appendingPathExtension("css")
             do {
                 try css.write(to: temporaryCSSFile!, atomically: false, encoding: .utf8)
@@ -389,23 +334,28 @@ class SCSHBaseXPCService: NSObject {
         colorize.env.merge([
             // Highlight path
             "pathHL": colorize.highlight,
-            "pathDos2unix": self.bundle.path(forResource: "dos2unix", ofType: nil) ?? "dos2unix",
+            "pathDos2unix": dos2unix ?? "dos2unix",
             
             "extraFlagsHL": colorize.arguments.joined(separator: "•"),
         ]) { (_, new) in new }
         
         /// Command to execute.
-        let cmd = "\(self.rsrcEsc)/highlight/colorize.sh".g_shell_quote() + " " + url.path.g_shell_quote()
+        let cmd = "\(rsrcEsc)/highlight/colorize.sh".g_shell_quote() + " " + url.path.g_shell_quote()
         
-        os_log(OSLogType.debug, log: self.log, "cmd = %{public}@", cmd)
-        os_log(OSLogType.debug, log: self.log, "env = %@", colorize.env)
+        if let logOs = logOs {
+            os_log(.debug, log: logOs, "cmd = %{public}@", cmd)
+            os_log(.debug, log: logOs, "env = %@", colorize.env)
+        }
         
         let result = try ShellTask.runTask(script: cmd, env: colorize.env)
             
         if result.exitCode != 0 {
-            os_log(OSLogType.error, log: self.log, "QLColorCode: colorize.sh failed with exit code %d. Command was (%{public}@).", result.exitCode, cmd)
+            if let logOs = logOs {
+                os_log(.error, log: logOs, "Syntax Highlight: colorize.sh failed with exit code %d. Command was (%{public}@).", result.exitCode, cmd)
+            }
+            try? "Syntax Highlight: colorize.sh failed with exit code \(result.exitCode). Command was (\(cmd)).".append(to: custom_settings.logFile)
             
-            let e = SCSHError.shellError(cmd: cmd, exitCode: result.exitCode, stdOut: result.output() ?? "", stdErr: result.errorOutput() ?? "", message: "QLColorCode: colorize.sh failed with exit code \(result.exitCode). Command was (\(cmd)).")
+            let e = SCSHError.shellError(cmd: cmd, exitCode: result.exitCode, stdOut: result.output() ?? "", stdErr: result.errorOutput() ?? "", message: "Syntax Highlight: colorize.sh failed with exit code \(result.exitCode). Command was (\(cmd)).\n\(result.errorOutput() ?? "")\n\(result.output() ?? "")")
             
             throw e
         } else {
@@ -418,26 +368,281 @@ class SCSHBaseXPCService: NSObject {
             }
             
             if custom_settings.isDebug {
-                if final_settings.format == .html {
-                    let u = URL(fileURLWithPath: NSHomeDirectory(), isDirectory: true).appendingPathComponent("Desktop/colorize.html")
-                    do {
-                        try result.data.write(to: u)
-                    } catch {
-                        os_log(OSLogType.error, log: self.log, "Unable to create the log output file %{public}@: %{public}@", u.path, error.localizedDescription)
-                        print("\(error)")
+                let u = URL(fileURLWithPath: NSHomeDirectory(), isDirectory: true).appendingPathComponent("Desktop/colorize").appendingPathExtension(final_settings.format == .html ? "html" : "rtf")
+                do {
+                    try result.data.write(to: u)
+                } catch {
+                    if let logOs = logOs {
+                        os_log(.error, log: logOs, "Unable to create the log output file %{public}@: %{public}@", u.path, error.localizedDescription)
                     }
-                } else {
-                    let u = URL(fileURLWithPath: NSHomeDirectory(), isDirectory: true).appendingPathComponent("Desktop/colorize.rtf")
-                    do {
-                        try result.data.write(to: u)
-                    } catch {
-                        os_log(OSLogType.error, log: self.log, "Unable to create the log output file %{public}@: %{public}@", u.path, error.localizedDescription)
-                        print("\(error)")
-                    }
-               }
+                    try? "Unable to create the log output file \(u.path): \(error.localizedDescription)".append(to: custom_settings.logFile)
+                }
             }
             
-            return (result: result, settings: final_settings.toDictionary())
+            final_settings.isLight = final_settings.isOSThemeLight()
+            
+            return (result: result, settings: final_settings)
+        }
+    }
+    
+    /// Highlight a file
+    /// - parameters:
+    ///   - url: File to highlight.
+    ///   - settings: Base settings.
+    ///   - highlightBin: Path of highlight executable.
+    ///   - dataDir: Data dir for highlight resources.
+    ///   - rsrcEsc: Path for the resources folder that contain the highlight dir.
+    ///   - dos2unix: Path of the dos2unix binary.
+    ///   - highlightLanguages:
+    ///   - extraCss: Url of extra style sheet to embed in the output.
+    ///   - logFile: File to save the log.
+    ///   - logOs: OSLog.
+    class func colorize(url: URL, settings: Settings, highlightBin: String, dataDir: String?, rsrcEsc: String, dos2unixBin: String?, highlightLanguages: [String: [String]], extraCss: URL?, overridingSettings: [String: AnyHashable]?, logFile: URL?, logOs: OSLog?) throws -> (data: Data, settings: SettingsRendering) {
+        let custom_settings: SettingsRendering
+        
+        var uti = settings.searchUTI(for: url)
+        var plain: PlainSettings?
+        let attributes: MagicAttributes?
+        if uti == nil {
+            attributes = MagicAttributes(url: url)
+            plain = settings.searchPlainSettings(for: url)
+            if !(plain?.UTI.isEmpty ?? true) {
+                uti = plain!.UTI
+            }
+        
+            if uti=="auto" || uti == nil, let attributes = attributes, let utiType = UTTypeCreatePreferredIdentifierForTag(kUTTagClassMIMEType, attributes.mimeType as CFString, nil)?.takeRetainedValue() {
+                // Set the uti from the recognized mime.
+                uti = utiType as String
+            }
+            var syntax = "auto"
+            if plain == nil || plain?.syntax == "auto", let u = uti {
+                // Set the syntax from the extension associated to the UTI.
+                let uu = UTI(u)
+                let languages = highlightLanguages
+                var langs: [(langs: [String], weight: Int)] = []
+                // Assign a weight to all compatible languages
+                for l in languages {
+                    guard !l.value.isEmpty else {
+                        continue
+                    }
+                    var weight = 0
+                    if let index = uu.extensions.firstIndex(of: l.value.first!) {
+                        weight = index == 0 ? 1000 : 1000 - index * 10
+                    } else {
+                        for e in uu.extensions {
+                            if let index = l.value.firstIndex(of: e) {
+                                weight = max(weight, index == 0 ? 100 : 100 - index * 10)
+                            }
+                        }
+                    }
+                    guard weight > 0 else {
+                        continue
+                    }
+                    langs.append((langs: l.value, weight: weight))
+                }
+                langs.sort(by: { $0.weight < $1.weight })
+                syntax = langs.first?.langs.first ?? "txt"
+                
+                if syntax == "" {
+                    syntax = "txt"
+                }
+            }
+            
+            if plain == nil {
+                plain = PlainSettings(pattern: ".*", isRegExp: true, isCaseInsensitive: false, UTI: "public.data", syntax: syntax)
+            }
+        } else {
+            plain = nil
+            attributes = nil
+        }
+        
+        if let uti = uti {
+            let utiSettings = settings.utiSettings[uti] ?? settings.createSettings(forUTI: uti)
+            
+            if !utiSettings.isSpecialSettingsPopulated {
+                utiSettings.populateSpecialSettings(supportFolder: self.applicationSupportUrl, serviceBundle: self.serviceBundle)
+            }
+            if !utiSettings.isCSSPopulated, let dir = self.getCustomStylesUrl(createIfMissing: false) {
+                utiSettings.populateCSS(fromFolder: dir)
+            }
+            
+            custom_settings = SettingsRendering(globalSettings: settings, format: utiSettings)
+        } else {
+            custom_settings = SettingsRendering(globalSettings: settings, format: nil)
+        }
+        
+        custom_settings.logFile = logFile
+        
+        if let overridingSettings = overridingSettings, !overridingSettings.isEmpty {
+            custom_settings.override(fromDictionary: overridingSettings)
+        }
+        
+        if plain != nil {
+            try? "File recognized as plain data.".append(to: custom_settings.logFile)
+            var st = stat()
+            stat(url.path, &st)
+            guard st.st_size > 0 else {
+                let s = "Syntax Highlight: this file is empty."
+                try? s.append(to: custom_settings.logFile)
+                let data = s.toData(settings: custom_settings)
+                return (data: data, settings: custom_settings)
+            }
+            
+            if !plain!.syntax.isEmpty {
+                custom_settings.isSyntaxDefined = true
+                custom_settings.syntax = plain!.syntax
+            }
+            
+            guard let attributes = attributes else {
+                let s = "Syntax Highlight: could not determine attributes of the file."
+                try? s.append(to: custom_settings.logFile)
+                custom_settings.isError = true
+                let data = s.toData(settings: custom_settings)
+                return (data: data, settings: custom_settings)
+            }
+            try? "Recognized mime: \(attributes.mimeType).".append(to: custom_settings.logFile)
+            
+            if #available(macOS 12.0, *) {
+                custom_settings.isPDF = attributes.isPDF
+                if attributes.isPDF {
+                    try? "File is a pdf.".append(to: custom_settings.logFile)
+                }
+                custom_settings.isMovie = attributes.isMovie
+                if attributes.isMovie {
+                    try? "File is a movie.".append(to: custom_settings.logFile)
+                }
+                custom_settings.isAudio = attributes.isAudio
+                if attributes.isAudio {
+                    try? "File is an audio.".append(to: custom_settings.logFile)
+                }
+            }
+            
+            guard !attributes.isImage else {
+                if #available(macOS 12.0, *) {
+                    try? "File is an image.".append(to: custom_settings.logFile)
+                    let img_type = attributes.mimeType.dropFirst("image/".count)
+                    if (["jpeg", "gif", "png", "heif", "heic"].contains(img_type)) {
+                        custom_settings.isImage = true
+                    }
+                }
+                custom_settings.format = .html
+                do {
+                    let fileData = try Data.init(contentsOf: url)
+                    let fileStream = fileData.base64EncodedString()
+                    let fg_color = NSColor.labelColor.toHexString() ?? "#333"
+                    let bg_color = NSColor.controlBackgroundColor.toHexString() ?? "#fff"
+                    let s = """
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Syntax Highlight</title>
+<style>
+body {
+    height: 100%;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+    background-color: \(bg_color);
+    color: \(fg_color);
+}
+img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+}
+</style>
+</head>
+<body><img src='data:\(attributes.mimeType);base64,\(fileStream)' /></body>
+</html>
+"""
+                    let data = s.data(using: .utf8);
+                    return (data: data!, settings: custom_settings)
+                } catch {
+                    let s = "Syntax Highlight: unable to read the file."
+                    try? s.append(to: custom_settings.logFile)
+                    custom_settings.isError = true
+                    return (data: s.toData(settings: custom_settings), settings: custom_settings)
+                }
+            }
+            
+            guard attributes.isTextual else {
+                var s = ""
+                if custom_settings.isDumpPlainData {
+                    let command: String
+                    if custom_settings.maxData > 0 {
+                        command = "/usr/bin/head -c \(custom_settings.maxData) '\(url.path)' | /usr/bin/xxd"
+                    } else {
+                        command = "/usr/bin/xxd '\(url.path)'"
+                    }
+                    try? "Dumping hex data… \n\(command)".append(to: custom_settings.logFile)
+                    try? s.append(to: custom_settings.logFile)
+                    do {
+                        let r = try ShellTask.runTask(script: command)
+                        if r.isSuccess, let o = r.output() {
+                            s = o
+                        } else {
+                            s = "Syntax Highlight: unable to dump the file. \n\(r.errorOutput() ?? "")"
+                            try? s.append(to: custom_settings.logFile)
+                            custom_settings.isError = true
+                        }
+                    } catch {
+                        s = "Syntax Highlight: unable to dump the file."
+                        try? s.append(to: custom_settings.logFile)
+                        custom_settings.isError = true
+                    }
+                } else {
+                    s = "Syntax Highlight: could not process a binary file (\(attributes.mimeType))."
+                    try? s.append(to: custom_settings.logFile)
+                    custom_settings.isError = true
+                }
+                
+                let data = s.toData(settings: custom_settings)
+                return (data: data, settings: custom_settings)
+            }
+            
+            guard attributes.fileEncoding != kCFStringEncodingInvalidId else {
+                let s = "Syntax Highlight: could not determine encoding of the file."
+                try? s.append(to: custom_settings.logFile)
+                custom_settings.isError = true
+                let data = s.toData(settings: custom_settings)
+                return (data: data, settings: custom_settings)
+            }
+        } else if custom_settings.isVCS, let diff = self.getVCSDiff(url: url, settings: custom_settings) {
+            custom_settings.vcsDiff = diff
+            // print(diff)
+        }
+        
+        do {
+            let isImage: Bool
+            if #available(macOS 12.0, *) {
+                isImage = custom_settings.isImage
+            } else {
+                isImage = false
+            }
+            let isPDF: Bool
+            if #available(macOS 12.0, *) {
+                isPDF = custom_settings.isPDF
+            } else {
+                isPDF = false
+            }
+            
+            if !isImage && !isPDF && (!custom_settings.isWordWrapped || !custom_settings.isWordWrappedSoft) && custom_settings.isWordWrappedSoftForOneLineFiles && self.checkOneLineFile(url) {
+                custom_settings.isOneLineFileDetected = true
+                custom_settings.isWordWrapped = true
+                custom_settings.isWordWrappedHard = false
+                custom_settings.isWordWrapDefined = true
+            }
+            
+            var colorize = try ColorizeArguments(highlight: highlightBin, dataDir: dataDir, url: url, custom_settings: custom_settings, extraCss: extraCss)
+            
+            let result = try self.doColorize(url: url, custom_settings: custom_settings, colorize: &colorize, rsrcEsc: rsrcEsc, dos2unix: dos2unixBin, logOs: logOs)
+            return (data: result.result.data, settings: result.settings)
+        } catch {
+            throw error
+            // return (data: error.localizedDescription.data(using: String.Encoding.utf8)!, settings: custom_settings)
         }
     }
     
@@ -447,8 +652,8 @@ class SCSHBaseXPCService: NSObject {
     /// - parameters:
     ///   - create: If the folder don't exists try to create it.
     /// - returns: The url of the custom themes folder. If is requested to create if missing and the creations fail will be return nil.
-    func getCustomThemesUrl(createIfMissing create: Bool = true) -> URL? {
-        if let url = type(of: self).applicationSupportUrl?.appendingPathComponent("Themes") {
+    class func getCustomThemesUrl(createIfMissing create: Bool = true) -> URL? {
+        if let url = self.applicationSupportUrl?.appendingPathComponent("Themes") {
             if create && !FileManager.default.fileExists(atPath: url.path) {
                 do {
                     try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true, attributes: nil)
@@ -481,5 +686,89 @@ class SCSHBaseXPCService: NSObject {
         } else {
             return nil
         }
+    }
+    
+    internal static func parseUnifiedDiff(_ text: String) -> [String] {
+        var chunks: [String] = []
+        for line in text.split(separator: "\n") {
+            guard line.hasPrefix("@@ ") else {
+                continue
+            }
+            var s = line.suffix(from: line.index(line.startIndex, offsetBy: 3))
+            guard let idx = s.firstIndex(of: "@") else {
+                continue
+            }
+            s = s.prefix(upTo: idx)
+            // print(s)
+            chunks.append(String(s).trimmingCharacters(in: .whitespaces))
+        }
+        return chunks
+    }
+
+    static func getGitDiff(url: URL, git: String) -> [String]? {
+        guard !git.isEmpty else {
+            return nil
+        }
+        do {
+            let result = try ShellTask.runTask(command: git, arguments: ["diff", "-U0", "-0", url.path], cwd: url.deletingLastPathComponent().path)
+            
+            guard result.exitCode == 0, let stringOutput = result.output() else {
+                return nil
+            }
+            let chunks = parseUnifiedDiff(stringOutput)
+            return chunks
+        } catch {
+            // let e = error
+            // print(e)
+            return nil
+        }
+    }
+
+    static func getHgDiff(url: URL, hg: String) -> [String]? {
+        guard !hg.isEmpty else {
+            return nil
+        }
+        do {
+            let result = try ShellTask.runTask(command: hg, arguments: ["diff", "-U0", url.path], cwd: url.deletingLastPathComponent().path)
+            
+            guard result.exitCode == 0, let stringOutput = result.output() else {
+                return nil
+            }
+            let chunks = parseUnifiedDiff(stringOutput)
+            return chunks
+        } catch {
+            // let e = error
+            // print(e)
+            return nil
+        }
+    }
+
+    static func getSVNDiff(url: URL, svn: String) -> [String]? {
+        guard !svn.isEmpty else {
+            return nil
+        }
+        return nil
+        // TODO: implement support for SVN diff
+    }
+
+    static func getVCSDiff(url: URL, settings: Settings) -> [String]? {
+        if let diff = getGitDiff(url: url, git: settings.gitPath) {
+            return diff
+        } else if let diff = getHgDiff(url: url, hg: settings.hgPath) {
+            return diff
+        } else if let diff = getSVNDiff(url: url, svn: settings.svnPath) {
+            return diff
+        } else {
+            return nil
+        }
+    }
+    
+    static func parseHighlightLanguages(file: URL) throws -> [String: [String]] {
+        let data = try Data(contentsOf: file)
+        
+        let json = JSONDecoder()
+        let languages = try json.decode([String: [String]].self, from: data)
+        
+        return languages
     }
 }

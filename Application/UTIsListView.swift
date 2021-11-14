@@ -272,36 +272,7 @@ extension UTIsListView: NSOutlineViewDelegate {
     func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
         let view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "UTICell"), owner: nil) as! UTICellView
         if let uti = item as? UTI {
-            view.imageView?.image = uti.image
-            view.imageWidthConstraint.constant = view.imageView?.image == nil ? 0 : 24
-        
-            /*
-            if let image = uti.image, let settings = SCSHWrapper.shared.utiSettings[uti.UTI], settings.isDirty, let img = image.image(withBrightness: -0.2, contrast: 1-0.3, saturation: 1) {
-                view.imageView?.image = img
-            } else {
-                view.imageView?.image = uti.image
-            }
-            */
-            
-            view.textField?.stringValue = uti.description
-            view.textField?.textColor = uti.isSuppressed ? .disabledControlTextColor : .labelColor
-            let utiFormat = SCSHWrapper.shared.settings?.utiSettings[uti.UTI]
-            view.changedLabel.isHidden = !(utiFormat?.isDirty ?? false)
-
-            let extensions = uti.extensions.count > 0 ? "." + uti.extensions.joined(separator: ", .") : ""
-            if showUTI {
-                view.UTILabel?.stringValue = uti.UTI
-            } else {
-                view.UTILabel?.stringValue = extensions
-            }
-            view.UTILabel?.textColor = view.textField?.textColor ?? .labelColor
-            view.UTILabel?.toolTip = showUTI ? extensions : uti.UTI
-            
-            if utiFormat?.isCustomized ?? false {
-                view.textField?.font = UTICellView.customizedFont
-            } else {
-                view.textField?.font = UTICellView.standaloneFont
-            }
+            view.fillWithUTI(uti, showUTI: showUTI)
         }
         return view
     }
@@ -320,4 +291,39 @@ class UTICellView: NSTableCellView {
     static var standaloneFont: NSFont = {
         return NSFont.labelFont(ofSize: NSFont.systemFontSize)
     }()
+    
+    func fillWithUTI(_ uti: UTI, showUTI: Bool) {
+        imageView?.image = uti.image
+        imageWidthConstraint?.constant = imageView?.image == nil ? 0 : 24
+    
+        /*
+        if let image = uti.image, let settings = SCSHWrapper.shared.utiSettings[uti.UTI], settings.isDirty, let img = image.image(withBrightness: -0.2, contrast: 1-0.3, saturation: 1) {
+            imageView?.image = img
+        } else {
+            imageView?.image = uti.image
+        }
+        */
+        
+        textField?.stringValue = uti.description
+        textField?.textColor = uti.isSuppressed ? .disabledControlTextColor : .labelColor
+        
+        let utiFormat = SCSHWrapper.shared.settings?.utiSettings[uti.UTI]
+        changedLabel?.isHidden = !(utiFormat?.isDirty ?? false)
+
+        let extensions = uti.extensions.count > 0 ? "." + uti.extensions.joined(separator: ", .") : ""
+        if showUTI {
+            UTILabel?.stringValue = uti.UTI
+            UTILabel?.toolTip = extensions
+        } else {
+            UTILabel?.stringValue = extensions
+            UTILabel?.toolTip = uti.UTI
+        }
+        UTILabel?.textColor = textField?.textColor ?? .labelColor
+        
+        if utiFormat?.isCustomized ?? false {
+            textField?.font = UTICellView.customizedFont
+        } else {
+            textField?.font = UTICellView.standaloneFont
+        }
+    }
 }

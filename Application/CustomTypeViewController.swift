@@ -295,7 +295,7 @@ class CustomTypeViewController: NSViewController, DropSensorDelegate, NSTableVie
                 view.imageView?.toolTip = "Not supported."
             case .highlight:
                 view.imageView?.image = NSImage(named: NSImage.statusPartiallyAvailableName)
-                view.imageView?.toolTip = "Supported but not handled."
+                view.imageView?.toolTip = "Potentially supported but not handled."
             case .unknown:
                 view.imageView?.image = NSImage(named: NSImage.statusNoneName)
                 view.imageView?.toolTip = "Unknown status."

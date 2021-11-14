@@ -41,14 +41,14 @@ extension SettingsCSS {
 }
 
 extension SettingsFormat: SettingsCSS {
-    func populateSpecialSettings(supportFolder: URL?, serviceBundle: Bundle) {
+    func populateSpecialSettings(supportFolder: URL?, serviceBundle: Bundle?) {
         self.isSpecialSettingsPopulated = true
         
         let baseSettings: String
         if let supportFile = supportFolder?.appendingPathComponent("defaults/\(uti).plist"), FileManager.default.fileExists(atPath: supportFile.path) {
             // Customized file inside the application support folder.
             baseSettings = supportFile.path
-        } else if let file = serviceBundle.path(forResource: uti, ofType: "plist", inDirectory: "highlight/defaults") {
+        } else if let file = serviceBundle?.path(forResource: uti, ofType: "plist", inDirectory: "highlight/defaults") {
             // Customized file inside the application resources folder.
             baseSettings = file
         } else {
@@ -212,21 +212,24 @@ extension Settings: SettingsCSS {
             }
         }
         
+        updateDomains(SettingsBase.Key.version, self.version)
+        
         updateDomains(SettingsBase.Key.format, self.format.rawValue)
         
         updateDomains(SettingsBase.Key.lightTheme, lightThemeName.isEmpty ? nil : lightThemeName)
         updateDomains(SettingsBase.Key.lightBackgroundColor, lightBackgroundColor)
+        updateDomains(SettingsBase.Key.lightForegroundColor, lightForegroundColor)
         
         updateDomains(SettingsBase.Key.darkTheme, darkThemeName.isEmpty ? nil : darkThemeName)
         updateDomains(SettingsBase.Key.darkBackgroundColor, darkBackgroundColor)
+        updateDomains(SettingsBase.Key.darkForegroundColor, darkForegroundColor)
         
         updateDomains(SettingsBase.Key.lineNumbers, self.isLineNumbersVisible)
-        updateDomains(SettingsBase.Key.lineNumbersOmittedWrap, self.isLineNumbersOmittedForWrap)
         updateDomains(SettingsBase.Key.lineNumbersFillToZeroes, self.isLineNumbersFillToZeroes)
         
         updateDomains(SettingsBase.Key.wordWrap, self.isWordWrapped ? (self.isWordWrappedIndented ? 2 : 1) : 0)
         updateDomains(SettingsBase.Key.wordWrapHard, self.isWordWrappedHard)
-        updateDomains(SettingsBase.Key.wordWrapOneLineFiles, self.isWordWrappedSoftForOnleLineFiles)
+        updateDomains(SettingsBase.Key.wordWrapOneLineFiles, self.isWordWrappedSoftForOneLineFiles)
         updateDomains(SettingsBase.Key.lineLength, lineLength)
         
         updateDomains(SettingsBase.Key.tabSpaces, tabSpaces)
@@ -241,6 +244,12 @@ extension Settings: SettingsCSS {
         updateDomains(SettingsBase.Key.convertEOL, convertEOL)
         updateDomains(SettingsBase.Key.debug, isDebug)
         
+        updateDomains(SettingsBase.Key.dumpPlain, isDumpPlainData)
+        updateDomains(SettingsBase.Key.vcs, isVCS)
+        updateDomains(SettingsBase.Key.git_path, gitPath)
+        updateDomains(SettingsBase.Key.hg_path, hgPath)
+        updateDomains(SettingsBase.Key.svn_path, svnPath)
+        
         var customized_formats: [String: [String: AnyHashable]] = [:]
         for (uti, settings) in self.utiSettings {
             var d = settings.toDictionary(forSaving: true)
@@ -254,6 +263,15 @@ extension Settings: SettingsCSS {
         }
         
         updateDomains(SettingsBase.Key.customizedUTISettings, customized_formats.count > 0 ? customized_formats : nil)
+        
+        var plain_formats: [[String: AnyHashable]] = []
+        for settings in self.getPlainSettings() {
+            let d = settings.toDictionary(forSaving: true)
+            if !d.isEmpty {
+                plain_formats.append(d)
+            }
+        }
+        updateDomains(SettingsBase.Key.plainSettings, plain_formats.count > 0 ? plain_formats : nil)
         
         let userDefaults = UserDefaults()
         userDefaults.setPersistentDomain(defaultsDomain, forName: domain)

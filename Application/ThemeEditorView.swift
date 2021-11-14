@@ -504,10 +504,12 @@ class ThemeEditorView: NSView, SettingsSplitViewElement {
         settings.isLightThemeNameDefined = true
         settings.lightThemeName = theme.nameForSettings
         settings.lightBackgroundColor = theme.backgroundColor
+        settings.lightForegroundColor = theme.foregroundColor
         
         settings.isDarkThemeNameDefined = true
         settings.darkThemeName = theme.nameForSettings
         settings.darkBackgroundColor = theme.backgroundColor
+        settings.darkForegroundColor = theme.foregroundColor
         settings.isLineNumbersDefined = true
         settings.isLineNumbersVisible = true
         settings.isArgumentsDefined = true
@@ -551,13 +553,13 @@ extension ThemeEditorView: NSTableViewDelegate {
                 if style == nil {
                     cell?.imageView?.image = nil
                 } else if style!.override {
-                    if #available(OSX 11.0, *) {
+                    if #available(macOS 11.0, *) {
                         cell?.imageView?.image = NSImage(systemSymbolName: "safari.fill", accessibilityDescription: nil)
                     } else {
                         cell?.imageView?.image = NSImage(named: "safari.fill")
                     }
                 } else {
-                    if #available(OSX 11.0, *) {
+                    if #available(macOS 11.0, *) {
                         cell?.imageView?.image = NSImage(systemSymbolName: "safari", accessibilityDescription: nil)
                     } else {
                         cell?.imageView?.image = NSImage(named: "safari")
