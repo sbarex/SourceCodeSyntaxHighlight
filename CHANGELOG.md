@@ -4,6 +4,7 @@ Changelog
 ### 2.1.0 (47)
 New features:
 - On macOS 12 Monterey adopted the new lightweight API.
+- Command line interface for batch conversion.
 - Preliminary support for plain files.
 - Experimental support for VCS (`git` and `hg`) diff status.
 - Support for `.XMP` files rendered as _`XML`_.

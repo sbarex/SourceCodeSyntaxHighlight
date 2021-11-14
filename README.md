@@ -347,27 +347,68 @@ If you found an unhandled format please send me the output of above command.
 
 ## Command line interface
 
-You can highlight a file via command line interface.
+A `syntax_highlight_cli` command line interface (CLI) is available to perform batch conversion.
+
+The tool is located inside the `Syntax Highlight.app/Contents/Resources` folder (and should not be moved outside). 
 
 ```sh
 $ /Application/Syntax\ Highlight.app/Contents/Resources/syntax_highlight_cli -h
 ```
 ```
-Usage: syntax_highlight_cli [--app <path>] [-hHR] [-o <path>] <file> [..]
+Usage: syntax_highlight_cli [-o <path>] <file> [..]
 
 Arguments:
- -h    Show this help and exit
- -H    Force html output
- -o    <path> Save the output to <path>. If <path> is a directory a new file is created with the name of the source. Extension will be automatically added. Destination file is always overwritten.
- -R    Force RTF output
- --app    <path> Set the path of "Source Highlight.app" otherwise assume that syntax_highlight_cli is called from the Contents/Resources of the app bundle.
+ -h                              Show this help and exit
+ -t                              Test without save/output the result.
+ -o <path>                       Save the output to <path>.
+                                 If <path> is a directory a new file is created with the name of the source.
+                                 Extension will be automatically added.
+                                 Destination file is always overwritten.
+ -v                              Verbose mode. Valid only with the -o option.
+ --log file                      Save the log to the specified file.
 
-To handle multiple files at time you must pass the -o arguments with a destination folder.
+ --appearance light|dark         Force the requested appearance.
+ --theme-light name              Theme for light appearance.
+ --theme-dark name               Theme for dark appearance.
+ --theme name                    Theme for all appearance.
+ --format html|rtf           
+ --syntax value              
+ --preprocessor value            Protect the preprocessor code inside quotes.
+ --font family                   Font name. Use '-' to choose the system monospace.
+ --font-size value               Font size in points.
+ --wrap hard|soft|no             Word wrap.
+ --wrap-one-line                 Force word wrap for only one line files.
+ --line-length value         
+ --line-numbers on|zeros|off 
+ --tab-spaces value              Number of spaces for every tab. Set to zero to disable the tab conversion.
+ --extra arguments               Extra arguments passed to highlight. Protect the arguments inside quotes.
+ --extra-appended arguments      Extra arguments passed to highlight. Protect the arguments inside quotes.
+ --css file                      Extra css loaded from the specified file.
+ --max-data bytes                Trim source file that exceeds the size.
+ --convert-eol on|off            Convert end of line.
+ --vcs on|off                    Enable support for version control.
+ --vcs-git path                  Path of git binary.
+ --vcs-hg path                   Path of mercurial binary.
+ --vcs-color-add                 Color (in #rrggbb) for added lines.
+ --vcs-color-del                 Color (in #rrggbb) for removed lines.
+ --vcs-color-edit                Color (in #rrggbb) for changed lines.
+ --lsp on|off                    Enable Language server protocol.
+ --lsp-exe file                  Path of the LSP executable.
+ --lsp-delay ms              
+ --lsp-syntax value              Recognize data processed by LSP with the provided syntax.
+ --lsp-hover on|off          
+ --lsp-semantic on|off       
+ --lsp-errors on|off         
+ --lsp-option arg                Extra argument passed to the LSP program. Protect the value inside quotes.
+                                 You can repeat --lsp-option multiple times.
+ --debug on|off              
 
-Please use the main app to customize the rendering settings.
+To handle multiple files at time you must pass the -o argument with a destination folder.
 
+Unspecified rendering options will use the settings defined in the main application.
 ```
-The settings are the same used by the Quick Look extension.
+
+The CLI interface uses the same settings as the Quick Look extension, but you can override it if you wish. 
 
 The highlighted data is printed to the `stdout` or writed to file if you use the `-o` option. 
 
