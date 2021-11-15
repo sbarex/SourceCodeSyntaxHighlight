@@ -26,14 +26,14 @@ CFLAGS=-Wall -std=c++11 -D_FILE_OFFSET_BITS=64 \
        -I ${BUILD_DIR}
 LDFLAGS=-L${BUILD_DIR}
 
-CFLAGS_x86_64=-mmacosx-version-min=10.15
+CFLAGS_x86_64=-target x86_64-apple-macos10.15
 CFLAGS_arm64=-target arm64-apple-macos11
 
 # ifneq ($(wildcard /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/.*),)
 # 	CFLAGS_x86_64+=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk
 # endif
 
-LDFLAGS_x86_64=-mmacosx-version-min=10.15
+LDFLAGS_x86_64=-target x86_64-apple-macos10.15
 LDFLAGS_arm64=-target arm64-apple-macos11
 
 ifeq ($(CONFIGURATION),Debug)
