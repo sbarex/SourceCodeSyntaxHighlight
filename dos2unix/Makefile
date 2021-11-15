@@ -15,10 +15,10 @@ ifeq ($(ONLY_ACTIVE_ARCH),)
 	ONLY_ACTIVE_ARCH=NO
 endif
 
-CFLAGS_x86_64=-mmacosx-version-min=10.15
+CFLAGS_x86_64=-target x86_64-apple-macos10.15
 CFLAGS_arm64=-target arm64-apple-macos11
 
-LDFLAGS_x86_64=
+LDFLAGS_x86_64=-target x86_64-apple-macos10.15
 LDFLAGS_arm64=-target arm64-apple-macos11
 
 bold := $(shell tput bold 2> /dev/null)

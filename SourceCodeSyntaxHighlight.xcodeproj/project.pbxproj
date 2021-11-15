@@ -162,19 +162,19 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		1F39AA702741F97600569E96 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83B47BB725A77AEE00DE0CF4 /* highlight-wrapper.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 83B4645425A779FC00DE0CF4;
+			remoteInfo = "highlight-wrapper";
+		};
 		830DF9F127203756004429F8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 832580AF263812C800A8888F /* dos2unix.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = 83257FD82638126E00A8888F;
 			remoteInfo = dos2unix;
-		};
-		830DF9F327203756004429F8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 83B47BB725A77AEE00DE0CF4 /* highlight-wrapper.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 83B4645425A779FC00DE0CF4;
-			remoteInfo = "highlight-wrapper";
 		};
 		8319450E26394445002E5B86 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -217,13 +217,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 838F4659238D813500268B4A;
 			remoteInfo = SyntaxHighlightRenderXPC;
-		};
-		83B47BBA25A77AEE00DE0CF4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 83B47BB725A77AEE00DE0CF4 /* highlight-wrapper.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 83B4645425A779FC00DE0CF4;
-			remoteInfo = "highlight-wrapper";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -641,7 +634,7 @@
 		83B4644325A76D9700DE0CF4 /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		83B4646825A779FD00DE0CF4 /* highlight-wrapper.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = "highlight-wrapper.xcodeproj"; sourceTree = "<group>"; };
 		83B47B9C25A77A5600DE0CF4 /* wrapper_highlight.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wrapper_highlight.h; sourceTree = "<group>"; };
-		83B47BB725A77AEE00DE0CF4 /* highlight-wrapper.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "highlight-wrapper.xcodeproj"; path = "/Users/sbaldiss/Develop/OSX/QLExt/highlight-wrapper/highlight-wrapper.xcodeproj"; sourceTree = "<absolute>"; };
+		83B47BB725A77AEE00DE0CF4 /* highlight-wrapper.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "highlight-wrapper.xcodeproj"; path = "highlight-wrapper/highlight-wrapper.xcodeproj"; sourceTree = "<group>"; };
 		83B47BC225A77C1000DE0CF4 /* SourceCodeSyntaxHighlight-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SourceCodeSyntaxHighlight-Bridging-Header.h"; sourceTree = "<group>"; };
 		83B47BC825A77C6F00DE0CF4 /* libwrapper_highlight.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libwrapper_highlight.dylib; path = highlight/libwrapper_highlight.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		83BA16E725EBC5AB0054A404 /* SliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderView.swift; sourceTree = "<group>"; };
@@ -710,6 +703,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1F39AA6C2741F85500569E96 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		83194503263812E2002E5B86 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -1073,9 +1073,8 @@
 				832580C1263812C800A8888F /* DEVEL.txt */,
 				832580C2263812C800A8888F /* unix2dos.c */,
 			);
-			name = dos2unix;
-			path = /Users/sbaldiss/Develop/OSX/QLExt/dos2unix;
-			sourceTree = "<absolute>";
+			path = dos2unix;
+			sourceTree = "<group>";
 		};
 		8359233C235599F6001506B6 = {
 			isa = PBXGroup;
@@ -1285,13 +1284,6 @@
 			path = "highlight-wrapper";
 			sourceTree = "<group>";
 		};
-		83B47BB825A77AEE00DE0CF4 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		83BA16E525EBC57D0054A404 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -1348,8 +1340,8 @@
 			);
 			dependencies = (
 				836B55CE272E92D9008297D5 /* PBXTargetDependency */,
+				1F39AA712741F97600569E96 /* PBXTargetDependency */,
 				8319450F26394445002E5B86 /* PBXTargetDependency */,
-				83B47BBB25A77AEE00DE0CF4 /* PBXTargetDependency */,
 				8359236923559A2B001506B6 /* PBXTargetDependency */,
 				8359238523563BDF001506B6 /* PBXTargetDependency */,
 				838F4664238D813500268B4A /* PBXTargetDependency */,
@@ -1408,7 +1400,6 @@
 			);
 			dependencies = (
 				830DF9F227203756004429F8 /* PBXTargetDependency */,
-				830DF9F427203756004429F8 /* PBXTargetDependency */,
 			);
 			name = syntax_highlight_cli;
 			packageProductDependencies = (
@@ -1501,7 +1492,7 @@
 					ProjectRef = 832580AF263812C800A8888F /* dos2unix.xcodeproj */;
 				},
 				{
-					ProductGroup = 83B47BB825A77AEE00DE0CF4 /* Products */;
+					ProductGroup = 1F39AA6C2741F85500569E96 /* Products */;
 					ProjectRef = 83B47BB725A77AEE00DE0CF4 /* highlight-wrapper.xcodeproj */;
 				},
 				{
@@ -1741,15 +1732,15 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		1F39AA712741F97600569E96 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "highlight-wrapper";
+			targetProxy = 1F39AA702741F97600569E96 /* PBXContainerItemProxy */;
+		};
 		830DF9F227203756004429F8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = dos2unix;
 			targetProxy = 830DF9F127203756004429F8 /* PBXContainerItemProxy */;
-		};
-		830DF9F427203756004429F8 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "highlight-wrapper";
-			targetProxy = 830DF9F327203756004429F8 /* PBXContainerItemProxy */;
 		};
 		8319450F26394445002E5B86 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1780,11 +1771,6 @@
 			isa = PBXTargetDependency;
 			target = 838F4659238D813500268B4A /* Syntax Highlight XPC Render */;
 			targetProxy = 838F4663238D813500268B4A /* PBXContainerItemProxy */;
-		};
-		83B47BBB25A77AEE00DE0CF4 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "highlight-wrapper";
-			targetProxy = 83B47BBA25A77AEE00DE0CF4 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
