@@ -297,11 +297,58 @@
         </item>
         
         <item>
-            <title>2.1.0</title>
+            <title>2.1.1</title>
             <pubDate>dom, 14 nov 2021 18:27:00 +0100</pubDate>
             <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
             <enclosure type="application/octet-stream" url="https://github.com/sbarex/SourceCodeSyntaxHighlight/releases/download/2.1.1/Syntax.Highlight.zip" sparkle:shortVersionString="2.1.1" sparkle:version="48" sparkle:edSignature="6SiR5q2iIOEK0iKtu3klSslfi90WaJ+viUsZ1eZrPtZNkTtcjmAGurmm3XrIpawuXRnbMX74j3avin8y1HA/DA==" length="10960225" />
             <description><![CDATA[
+                <h2>Release 2.1.1 (48)</h2>
+                <p>New features:</p>
+                <ul>
+                    <li>Application menu item to install/reveal the CLI tool on <code>/usr/local/bin</code> folder.</li>
+                </ul>
+                <p>Bugfix:</p>
+                <ul>
+                    <li>Fixed creation of <code>colorize.log</code> into the Desktop without debug set.</li>
+                </ul>
+
+                <h2>Release 2.1.0 (47)</h2>
+                <p>New features:</p>
+                <ul>
+                    <li>Support for macOS 12 Monterey with new lightweight API. <strong>Starting from this release, the use of the <code>HTML</code> rendering engine is no longer discouraged.</strong></li>
+                    <li>Command line interface for batch conversion.</li>
+                    <li>Preliminary support for plain files (unknown files without extension).</li>
+                    <li>Support for Version Control System (VCS) (<code>git</code> and <code>hg</code>) diff status.</li>
+                    <li>New supported formats:
+                        <ul>
+                            <li><code>.XMP</code> files rendered as <em><code>XML</code></em></li>
+                            <li>LaTeX <code>.sty</code> files</li>
+                            <li><code>.svelte</code> files rendered as <em><code>HTML</code></em>.</li>
+                        </ul>
+                    </li>
+                    <li>Better error messages.</li>
+                </ul>
+                <p>Bugfix:</p>
+                <ul>
+                    <li>Fixed support for some UTIs associated to BBEdit.</li>
+                </ul>
+            ]]>
+            </description>
+        </item>
+        
+        <item>
+            <title>2.1.2</title>
+            <pubDate>ven, 19 nov 2021 18:34:00 +0100</pubDate>
+            <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
+            <enclosure type="application/octet-stream" url="https://github.com/sbarex/SourceCodeSyntaxHighlight/releases/download/2.1.2/Syntax.Highlight.zip" sparkle:shortVersionString="2.1.2" sparkle:version="49" sparkle:edSignature="H0UZhCI1DHaSPiis5qCXcwQIY70fMZjvx7HCDOvtaPwV3j71bJqg/3HGSV/5ml01n6saCwO3wcMB1Q3BhQOBBg==" length="10960225" />
+            <description><![CDATA[
+                <h2>Release 2.1.2 (49)</h2>
+                <ul>
+                    <li>Fixed dirty status do not set when change a theme property.</li>
+                    <li>Fixed binary dump word wrap and html entities.</li>
+                    <li>Better strict detection of plain image files.</li>
+                </ul>
+
                 <h2>Release 2.1.1 (48)</h2>
                 <p>New features:</p>
                 <ul>
