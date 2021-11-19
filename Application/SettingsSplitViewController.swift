@@ -220,11 +220,13 @@ class SettingsSplitViewController: NSSplitViewController {
                 alert.runModal()
                 return
             }
-            let alert = NSAlert()
-            alert.messageText = "Settings saved."
-            alert.addButton(withTitle: "Close")
-            alert.alertStyle = .informational
-            alert.runModal()
+            if SCSHWrapper.shared.settings?.isDebug ?? false {
+                let alert = NSAlert()
+                alert.messageText = "Settings saved."
+                alert.addButton(withTitle: "Close")
+                alert.alertStyle = .informational
+                alert.runModal()
+            }
         }
     }
     

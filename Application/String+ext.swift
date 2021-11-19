@@ -68,21 +68,29 @@ extension String {
     ///    - font: Font name.
     ///    - fontSize: Font size.
     /// - returns: The formatted data.
-    func toData(format: Settings.Format, fgColor: String? = nil, bgColor: String? = nil, font: String? = nil, fontSize: CGFloat? = nil) -> Data {
-        return String.stringToFormattedData(self, format: format, fgColor: fgColor, bgColor: bgColor, font: font, fontSize: fontSize)
+    func toData(format: Settings.Format, fgColor: String? = nil, bgColor: String? = nil, font: String? = nil, fontSize: CGFloat? = nil, css: String = "") -> Data {
+        return String.stringToFormattedData(self, format: format, fgColor: fgColor, bgColor: bgColor, font: font, fontSize: fontSize, css: css)
     }
-    func toData(settings: SettingsRendering) -> Data {
+    func toData(settings: SettingsRendering, cssFile: URL? = nil) -> Data {
         let colors = settings.getTheme()
-        return String.stringToFormattedData(self, format: settings.format, fgColor: colors.foreground, bgColor: colors.background, font: settings.fontName, fontSize: settings.fontSize)
+        var css = settings.css
+        if let file = cssFile, let s = try? String(contentsOf: file) {
+            css = s + css
+        }
+        return String.stringToFormattedData(self, format: settings.format, fgColor: colors.foreground, bgColor: colors.background, font: settings.fontName, fontSize: settings.fontSize, css: css)
     }
     
-    func toHTML(fgColor: String? = nil, bgColor: String? = nil, font: String? = nil, fontSize: CGFloat? = nil) -> String {
-        let data = self.toData(format: .html, fgColor: fgColor, bgColor: bgColor, font: font, fontSize: fontSize)
+    func toHTML(fgColor: String? = nil, bgColor: String? = nil, font: String? = nil, fontSize: CGFloat? = nil, css: String = "") -> String {
+        let data = self.toData(format: .html, fgColor: fgColor, bgColor: bgColor, font: font, fontSize: fontSize, css: css)
         return String(data: data, encoding: .utf8)!
     }
-    func toHTML(settings: SettingsRendering) -> String {
+    func toHTML(settings: SettingsRendering, cssFile: URL? = nil) -> String {
         let colors = settings.getTheme()
-        return toHTML(fgColor: colors.foreground, bgColor: colors.background, font: settings.fontName, fontSize: settings.fontSize)
+        var css = settings.css
+        if let file = cssFile, let s = try? String(contentsOf: file) {
+            css = s + css
+        }
+        return toHTML(fgColor: colors.foreground, bgColor: colors.background, font: settings.fontName, fontSize: settings.fontSize, css: css)
     }
     
     func toRTF(fgColor: String? = nil, bgColor: String? = nil, font: String? = nil, fontSize: CGFloat? = nil) -> Data {
@@ -103,7 +111,7 @@ extension String {
         return NSAttributedString(rtf: data, documentAttributes: nil)
     }
     
-    static func stringToFormattedData(_ string: String, format: Settings.Format, fgColor: String? = nil, bgColor: String? = nil, font: String? = nil, fontSize: CGFloat? = nil) -> Data {
+    static func stringToFormattedData(_ string: String, format: Settings.Format, fgColor: String? = nil, bgColor: String? = nil, font: String? = nil, fontSize: CGFloat? = nil, css: String = "") -> Data {
         let labelColor: NSColor?
         if let s = fgColor, let c = NSColor(fromHexString: s) {
             labelColor = c
@@ -126,15 +134,19 @@ extension String {
         } else {
             font1 = nil
         }
-        return stringToFormattedData(string, format: format, fgColor: labelColor, bgColor: backgroundColor, font: font1)
+        return stringToFormattedData(string, format: format, fgColor: labelColor, bgColor: backgroundColor, font: font1, css: css)
     }
     
-    static func stringToFormattedData(_ string: String, settings: SettingsRendering) -> Data {
+    static func stringToFormattedData(_ string: String, settings: SettingsRendering, cssFile: URL? = nil) -> Data {
         let colors = settings.getTheme()
-        return stringToFormattedData(string, format: settings.format, fgColor: colors.foreground, bgColor: colors.background, font: settings.fontName, fontSize: settings.fontSize)
+        var css = settings.css
+        if let file = cssFile, let s = try? String(contentsOf: file) {
+            css = s + css
+        }
+        return stringToFormattedData(string, format: settings.format, fgColor: colors.foreground, bgColor: colors.background, font: settings.fontName, fontSize: settings.fontSize, css: css)
     }
     
-    static func stringToFormattedData(_ string: String, format: Settings.Format, fgColor: NSColor? = nil, bgColor: NSColor? = nil, font: NSFont? = nil) -> Data {
+    static func stringToFormattedData(_ string: String, format: Settings.Format, fgColor: NSColor? = nil, bgColor: NSColor? = nil, font: NSFont? = nil, css: String = "") -> Data {
         let labelColor: NSColor
         if let c = fgColor {
             labelColor = c
@@ -176,14 +188,27 @@ body {
     color: \(fg_color);
     font: \(font1.pointSize)pt \(font1.fontName);
 }
+\(css)
 </style>
 </head>
-<body>
+<body class="hl">
+<pre class="hl">
 \(string)
+</pre>
 </body>
 </html>
 """
             return s.data(using: .utf8)!
         }
+    }
+    
+    func htmlEntitites() -> String {
+        return self
+            .replacingOccurrences(of: "&", with: "&amp;")
+            .replacingOccurrences(of: "<", with: "&lt;")
+            .replacingOccurrences(of: ">", with: "&gt;")
+            .replacingOccurrences(of: "\"", with: "&quot;")
+            .replacingOccurrences(of: "'", with: "&#039;")
+            // .replacingOccurrences(of: "\n", with: "<br />")
     }
 }

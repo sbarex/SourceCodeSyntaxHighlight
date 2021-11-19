@@ -38,6 +38,10 @@ class ThemeEditorView: NSView, SettingsSplitViewElement {
             guard oldValue != theme else {
                 return
             }
+            
+            oldValue?.delegate = nil
+            theme?.delegate = self
+            
             if let theme = self.theme {
                 scrollView.isHidden = false
                 horizontalLine1.isHidden = false
@@ -729,5 +733,14 @@ class ThemeCellView: NSTableCellView {
     
     @IBAction internal func handleDelKeyword(_ sender: Any) {
         delKeywordAction?(self.tag)
+    }
+}
+
+// MARK: -
+extension ThemeEditorView: SCSHThemeDelegate {
+    func themeDidChangeDirtyStatus(_ theme: SCSHTheme) {
+        if theme.isDirty {
+            SCSHWrapper.shared.settings?.isDirty = true
+        }
     }
 }

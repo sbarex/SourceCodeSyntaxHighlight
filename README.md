@@ -220,7 +220,7 @@ You can set the settings for all supported formats on the _General_ tab.
 
 |Settings|Description|Advanced|
 |:---------|:-------------| :----: |
-|Render engine|Engine used to render the highlighted code. _Before macOS 12 Monterey_ **the suggested engine is `RTF`.** Choose the `HTML` engine if you want to use a custom CSS to override the color scheme (or you have choose a theme with some extra CSS inside it). Advanced users must choose the `HTML` engine to handle the hover functionality of a Language Server. ||
+|Render engine|Engine used to render the highlighted code. _Before macOS 12 Monterey_ **the recommended engine is `RTF`.** Choose the `HTML` engine if you want to use a custom CSS to override the color scheme (or you have choose a theme with some extra CSS inside it). Advanced users must choose the `HTML` engine to handle the hover functionality of a Language Server. ||
 |Color scheme|Chose the color scheme for light and dark appearance.||
 |Font|You can chose a preferred font or use the standard monospaced font.||
 |Word wrap|Allow to handle word wrap for long lines. _Hard wrap_ break the line after a fixed length (_can cause some highlight glitch_). _Soft wraps_ allow to break the line at the preview windows width. When word wraps is disabled, you can only enable it for minified files that have only one line. One line file detection is done on the source file and not on the preprocessor output. **Starting from macOS 12 Monterey the soft wrap is always enabled when using the `RTF` engine.** ||

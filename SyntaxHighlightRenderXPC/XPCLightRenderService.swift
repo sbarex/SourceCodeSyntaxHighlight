@@ -70,7 +70,7 @@ class XPCLightRenderService: SCSHBaseXPCService, XPCLightRenderServiceProtocol {
                 }
             }
             
-            reply(s.toData(settings: custom_settings), custom_settings.toDictionary() as NSDictionary, nil /* error */)
+            reply(s.toData(settings: custom_settings, cssFile: self.getGlobalCSS()), custom_settings.toDictionary() as NSDictionary, nil /* error */)
         }
     }
 }

@@ -131,6 +131,7 @@ class HighlightWrapper {
         theme.isStandalone = false
         self.themes.append(theme)
         NotificationCenter.default.post(name: NSNotification.Name.CustomThemeAdded, object: theme)
+        SCSHWrapper.shared.settings?.isDirty = true
     }
     
     /// Remove a custom theme.
@@ -182,7 +183,7 @@ class HighlightWrapper {
             }
             alert.addButton(withTitle: "Yes")
             alert.addButton(withTitle: "No").keyEquivalent = "\u{1b}"
-            alert.alertStyle = .warning
+            alert.alertStyle = .critical
             
             if let win = window {
                 alert.beginSheetModal(for: win) { (response) in

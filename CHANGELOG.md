@@ -2,6 +2,12 @@ Changelog
 =======
 
 
+### 2.1.2 (49)
+Bugfix:
+- Fixed dirty status do not set when change a theme property.
+- Fixed binary dump word wrap and html entities.
+- Better strict detection of plain image files.
+
 ### 2.1.1 (48)
 New features:
 - Application menu item to install/reveal the CLI tool on `/usr/local/bin` folder.

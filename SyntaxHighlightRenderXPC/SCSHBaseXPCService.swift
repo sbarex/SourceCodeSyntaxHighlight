@@ -482,9 +482,9 @@ class SCSHBaseXPCService: NSObject {
             var st = stat()
             stat(url.path, &st)
             guard st.st_size > 0 else {
-                let s = "Syntax Highlight: this file is empty."
+                let s = "Syntax Highlight: the file is empty."
                 try? s.append(to: custom_settings.logFile)
-                let data = s.toData(settings: custom_settings)
+                let data = s.toData(settings: custom_settings, cssFile: extraCss)
                 return (data: data, settings: custom_settings)
             }
             
@@ -494,10 +494,10 @@ class SCSHBaseXPCService: NSObject {
             }
             
             guard let attributes = attributes else {
-                let s = "Syntax Highlight: could not determine attributes of the file."
+                let s = "Syntax Highlight: could not determine the file attributes."
                 try? s.append(to: custom_settings.logFile)
                 custom_settings.isError = true
-                let data = s.toData(settings: custom_settings)
+                let data = s.toData(settings: custom_settings, cssFile: extraCss)
                 return (data: data, settings: custom_settings)
             }
             try? "Recognized mime: \(attributes.mimeType).".append(to: custom_settings.logFile)
@@ -505,21 +505,21 @@ class SCSHBaseXPCService: NSObject {
             if #available(macOS 12.0, *) {
                 custom_settings.isPDF = attributes.isPDF
                 if attributes.isPDF {
-                    try? "File is a pdf.".append(to: custom_settings.logFile)
+                    try? "File is a PDF (\(attributes.mimeType)).".append(to: custom_settings.logFile)
                 }
                 custom_settings.isMovie = attributes.isMovie
                 if attributes.isMovie {
-                    try? "File is a movie.".append(to: custom_settings.logFile)
+                    try? "File is a movie (\(attributes.mimeType)).".append(to: custom_settings.logFile)
                 }
                 custom_settings.isAudio = attributes.isAudio
                 if attributes.isAudio {
-                    try? "File is an audio.".append(to: custom_settings.logFile)
+                    try? "File is an audio (\(attributes.mimeType)).".append(to: custom_settings.logFile)
                 }
             }
             
             guard !attributes.isImage else {
                 if #available(macOS 12.0, *) {
-                    try? "File is an image.".append(to: custom_settings.logFile)
+                    try? "File is an image (\(attributes.mimeType)).".append(to: custom_settings.logFile)
                     let img_type = attributes.mimeType.dropFirst("image/".count)
                     if (["jpeg", "gif", "png", "heif", "heic"].contains(img_type)) {
                         custom_settings.isImage = true
@@ -529,42 +529,24 @@ class SCSHBaseXPCService: NSObject {
                 do {
                     let fileData = try Data.init(contentsOf: url)
                     let fileStream = fileData.base64EncodedString()
-                    let fg_color = NSColor.labelColor.toHexString() ?? "#333"
-                    let bg_color = NSColor.controlBackgroundColor.toHexString() ?? "#fff"
-                    let s = """
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Syntax Highlight</title>
-<style>
-body {
-    height: 100%;
-    border: 0;
-    margin: 0;
-    padding: 0;
-    text-align: left;
-    background-color: \(bg_color);
-    color: \(fg_color);
-}
+                    
+                        custom_settings.isCSSDefined = true
+                    custom_settings.css += """
 img {
     max-width: 100%;
     max-height: 100%;
     width: auto;
     height: auto;
 }
-</style>
-</head>
-<body><img src='data:\(attributes.mimeType);base64,\(fileStream)' /></body>
-</html>
 """
+                    let s = "<img src='data:\(attributes.mimeType);base64,\(fileStream)' />".toHTML(settings: custom_settings, cssFile: extraCss)
                     let data = s.data(using: .utf8);
                     return (data: data!, settings: custom_settings)
                 } catch {
                     let s = "Syntax Highlight: unable to read the file."
                     try? s.append(to: custom_settings.logFile)
                     custom_settings.isError = true
-                    return (data: s.toData(settings: custom_settings), settings: custom_settings)
+                    return (data: s.toData(settings: custom_settings, cssFile: extraCss), settings: custom_settings)
                 }
             }
             
@@ -582,7 +564,9 @@ img {
                     do {
                         let r = try ShellTask.runTask(script: command)
                         if r.isSuccess, let o = r.output() {
-                            s = o
+                            s = attributes.mimeType + "\n\n" + (custom_settings.format == .rtf ? o :  o.htmlEntitites())
+                            custom_settings.isWordWrappedHard = true
+                            custom_settings.isWordWrapDefined = true
                         } else {
                             s = "Syntax Highlight: unable to dump the file. \n\(r.errorOutput() ?? "")"
                             try? s.append(to: custom_settings.logFile)
@@ -599,7 +583,18 @@ img {
                     custom_settings.isError = true
                 }
                 
-                let data = s.toData(settings: custom_settings)
+                let data = s.toData(settings: custom_settings, cssFile: extraCss)
+                if custom_settings.isDebug {
+                    let u = URL(fileURLWithPath: NSHomeDirectory(), isDirectory: true).appendingPathComponent("Desktop/colorize").appendingPathExtension(custom_settings.format == .html ? "html" : "rtf")
+                    do {
+                        try data.write(to: u)
+                    } catch {
+                        if let logOs = logOs {
+                            os_log(.error, log: logOs, "Unable to create the log output file %{public}@: %{public}@", u.path, error.localizedDescription)
+                        }
+                        try? "Unable to create the log output file \(u.path): \(error.localizedDescription)".append(to: custom_settings.logFile)
+                    }
+                }
                 return (data: data, settings: custom_settings)
             }
             
@@ -607,7 +602,7 @@ img {
                 let s = "Syntax Highlight: could not determine encoding of the file."
                 try? s.append(to: custom_settings.logFile)
                 custom_settings.isError = true
-                let data = s.toData(settings: custom_settings)
+                let data = s.toData(settings: custom_settings, cssFile: extraCss)
                 return (data: data, settings: custom_settings)
             }
         } else if custom_settings.isVCS, let diff = self.getVCSDiff(url: url, settings: custom_settings) {

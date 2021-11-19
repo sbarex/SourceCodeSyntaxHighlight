@@ -41,11 +41,7 @@ class MagicAttributes {
     
     /// Return if the parsed file is an image.
     lazy var isImage: Bool = {
-        if self.mimeType.hasPrefix("image/") {
-            return true
-        } else {
-            return checkMime(conformTo: kUTTypeImage)
-        }
+        return checkMime(conformTo: kUTTypeImage)
     }()
     /// Return if the parsed file is an image.
     var isPDF: Bool {

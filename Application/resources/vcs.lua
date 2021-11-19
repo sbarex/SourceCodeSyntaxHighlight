@@ -149,11 +149,11 @@ function syntaxUpdate(desc)
             end
         else
             if currentMark == '+' then
-                return '<span class="hl vcs add title="Line added.">'
+                return '<span class="hl vcs add" title="Line added.">'
             elseif currentMark == 'M' then
                 return '<span class="hl vcs changed" title="Line changed.">'
             elseif currentMark == '-' then
-                return '<hr class="hl vcs del"  title="Line deleted." />' -- '<span class="hl vcs del" ></span>'
+                return '<hr class="hl vcs del" title="Line deleted." />' -- '<span class="hl vcs del" ></span>'
             else 
                 return ''
             end
