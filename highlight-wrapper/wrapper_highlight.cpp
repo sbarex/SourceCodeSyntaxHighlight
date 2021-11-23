@@ -401,7 +401,7 @@ static void release_theme_property(HThemeProperty *property) {
     }
     free(property->color);
     property->color = nullptr;
-    free(property);
+    
     for (int i=0; i<property->numberOfCustomStyles; i++) {
         free(property->formats[i]);
         free(property->styles[i]);
@@ -413,6 +413,10 @@ static void release_theme_property(HThemeProperty *property) {
 
     free(property->override);
     property->override = nullptr;
+    
+    property->numberOfCustomStyles = 0;
+    
+    free(property);
 }
 
 /**
