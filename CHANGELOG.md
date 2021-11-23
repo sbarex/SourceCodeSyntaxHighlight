@@ -6,11 +6,11 @@ Changelog
 New features:
 - New app icon.
 - Support for `.entitlements` format.
-- Support for some UTI defined by Nova.app.
+- Support for some UTIs defined by Nova.app.
 - Better handling for unsupported plain binary files.
 - More log verbosity.
 Bugfix: 
-- Crash for pointer deallocation.
+- Fixed crash due to pointer deallocation.
 
 ### 2.1.2 (49)
 Bugfix:
