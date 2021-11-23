@@ -402,6 +402,11 @@ if logFile == nil {
 }
 */
 
+if let logFile = logFile {
+    // Reset the log file.
+    try? "".write(to: logFile, atomically: true, encoding: .utf8)
+}
+
 let appBundleUrl = appUrl.appendingPathComponent("Contents/Resources")
 let xpcBundleUrl = appBundleUrl.appendingPathComponent("../PlugIns/Syntax Highlight Quicklook Extension.appex/Contents/XPCServices/Resources")
 

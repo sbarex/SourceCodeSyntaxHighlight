@@ -66,17 +66,20 @@ class MagicAttributes {
         }
     }
     
-    init?(url: URL) {
+    init?(url: URL, logFile: URL? = nil) {
         if url.lastPathComponent == ".DS_Store" {
             // print("Ignore the .DS_Store file.")
             return nil
         }
         
-        var magicString = MagicAttributes.getMagicString(forItemAt: url, usingLcALL: "en_US.UTF-8")
+        try? "Analyze the file attributes…".appendLine(to: logFile)
+        
+        var magicString = MagicAttributes.getMagicString(forItemAt: url, usingLcALL: "en_US.UTF-8", logFile: logFile)
         if magicString == nil {
-            magicString = MagicAttributes.getMagicString(forItemAt: url, usingLcALL: "C")
+            magicString = MagicAttributes.getMagicString(forItemAt: url, usingLcALL: "C", logFile: logFile)
         }
         guard let magicString = magicString else {
+            try? "ERROR: Could not determine the file attributes.".appendLine(to: logFile)
             return nil
         }
         
@@ -92,18 +95,20 @@ class MagicAttributes {
         
         let charset = String(magicString[Range(match.range(at: 2), in: magicString)!])
         self.fileEncoding = CFStringConvertIANACharSetNameToEncoding(charset as CFString)
+        try? "Detected attributes: \n\tmime-type: \(self.mimeType)\n\tcharset: \(charset)\n\tfileEncoding: \(self.fileEncoding)".appendLine(to: logFile)
     }
     
-    internal class func getMagicString(forItemAt url: URL, usingLcALL lcALL: String) -> String? {
+    internal class func getMagicString(forItemAt url: URL, usingLcALL lcALL: String, logFile: URL? = nil) -> String? {
         let path = url.path
         guard !path.isEmpty else {
             return nil
         }
         var environment = ProcessInfo.processInfo.environment
         environment["LC_ALL"] = lcALL
-        
+        try? "\tExtracting file info with \(lcALL) locale…\n\t/usr/bin/file --mime --brief \(path)".appendLine(to: logFile)
         do {
             let result = try ShellTask.runTask(command: "/usr/bin/file", arguments: ["--mime", "--brief", path], env: environment)
+            try? "\tExit code: \(result.exitCode)".appendLine(to: logFile)
             guard result.exitCode == 0, let stringOutput = result.output() else {
                 return nil
             }

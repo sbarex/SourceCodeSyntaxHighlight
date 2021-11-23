@@ -2,6 +2,16 @@ Changelog
 =======
 
 
+### 2.1.3 (50)
+New features:
+- New app icon.
+- Support for `.entitlements` format.
+- Support for some UTI defined by Nova.app.
+- Better handling for unsupported plain binary files.
+- More log verbosity.
+Bugfix: 
+- Crash for pointer deallocation.
+
 ### 2.1.2 (49)
 Bugfix:
 - Fixed dirty status do not set when change a theme property.

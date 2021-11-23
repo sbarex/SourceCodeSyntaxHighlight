@@ -16,7 +16,8 @@ class PlainSettingsView: NSView, SettingsSplitViewElement {
     @IBOutlet weak var editButton: NSButton!
     @IBOutlet weak var upButton: NSButton!
     @IBOutlet weak var downButton: NSButton!
-    @IBOutlet weak var dumpButton: NSButton!
+    @IBOutlet weak var binaryPopupButton: NSPopUpButton!
+    @IBOutlet weak var binaryLabel: NSTextField!
     
     var settings: Settings? {
         return SCSHWrapper.shared.settings
@@ -53,6 +54,12 @@ class PlainSettingsView: NSView, SettingsSplitViewElement {
         self.tableView.doubleAction = #selector(self.handleDoublClickTable(_:))
         initSettings()
         self.tableView.reloadData()
+        
+        if #available(macOS 12.0, *) {
+            binaryLabel.stringValue = "Images, audios, movies and PDF files are always displayed."
+        } else {
+            binaryLabel.stringValue = "Images are always displayed."
+        }
     }
     
     deinit {
@@ -60,7 +67,7 @@ class PlainSettingsView: NSView, SettingsSplitViewElement {
     
     @discardableResult
     func initSettings() -> Bool {
-        self.dumpButton?.state = (settings?.isDumpPlainData ?? false) ? .on : .off
+        self.binaryPopupButton.selectItem(at: settings?.isDumpPlainData ?? true ? 1 : 0)
         self.tableView?.reloadData()
         return true
     }
@@ -165,12 +172,8 @@ class PlainSettingsView: NSView, SettingsSplitViewElement {
         updateControls()
     }
     
-    @IBAction func handleDumpButton(_ sender: NSButton) {
-        guard let settings = settings else {
-            return
-        }
-
-        settings.isDumpPlainData = !settings.isDumpPlainData
+    @IBAction func handleBinaryButton(_ sender: NSPopUpButton) {
+        settings?.isDumpPlainData = sender.indexOfSelectedItem == 1
     }
 }
 

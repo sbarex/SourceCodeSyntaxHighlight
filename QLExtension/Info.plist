@@ -39,13 +39,17 @@
 				<string>com.adobe.edn</string>
 				<string>com.apple.applescript.script</string>
 				<string>com.apple.applescript.text</string>
+				<string>com.apple.binary-property-list</string>
+				<string>com.apple.dt.document.ascii-property-list</string>
 				<string>com.apple.dt.interfacebuilder.document.storyboard</string>
 				<string>com.apple.interfacebuilder.document.cocoa</string>
 				<string>com.apple.property-list</string>
 				<string>com.apple.rez-source</string>
 				<string>com.apple.terminal.settings</string>
+				<string>com.apple.xcode.entitlements-property-list</string>
 				<string>com.apple.xcode.strings-dictionary</string>
 				<string>com.apple.xcode.strings-text</string>
+				<string>com.apple.xml-property-list</string>
 				<string>com.barebones.bbedit.go-source</string>
 				<string>com.barebones.bbedit.ini-configuration</string>
 				<string>com.barebones.bbedit.jsp-source</string>
@@ -76,6 +80,7 @@
 				<string>com.microsoft.visual-basic</string>
 				<string>com.microsoft.xaml</string>
 				<string>com.netscape.javascript-source</string>
+				<string>com.sass-lang.sass</string>
 				<string>com.sun.java-properties</string>
 				<string>com.sun.java-source</string>
 				<string>com.sun.java-server-pages</string>
@@ -88,7 +93,9 @@
 				<string>com.symfony.twig</string>
 				<string>dev.svelte.source</string>
 				<string>edu.uo.texshop.tex</string>
+				<string>info.haml.haml</string>
 				<string>io.azkaban.flow</string>
+				<string>io.github.jsx</string>
 				<string>is.workflow.my.workflow</string>
 				<string>org.applescript.source</string>
 				<string>org.arduino.ino-source</string>
@@ -104,12 +111,15 @@
 				<string>org.coffee.source</string>
 				<string>org.coffeescript.coffeescript</string>
 				<string>org.cson.source</string>
+				<string>org.dartlang.dart</string>
+				<string>org.emcascript.emcascript</string>
 				<string>org.erlang.erlang</string>
 				<string>org.erlang.erlang-source</string>
 				<string>org.elixir-lang.source</string>
 				<string>org.fish.source</string>
 				<string>org.gcc.files</string>
 				<string>org.go.source</string>
+				<string>org.golang.golang</string>
 				<string>org.gradle.source</string>
 				<string>org.haskell.haskell</string>
 				<string>org.haskell.haskell-source</string>
@@ -120,6 +130,8 @@
 				<string>org.kmt.source</string>
 				<string>org.km3</string>
 				<string>org.kotlinlang.source</string>
+				<string>org.latex-project.latex</string>
+				<string>org.lesscss.less</string>
 				<string>org.lua.lua</string>
 				<string>org.lua.lua-source</string>
 				<string>org.microsoft.inf</string>
@@ -148,6 +160,9 @@
 				<string>org.python.compiled-script</string>
 				<string>org.racket-lang.source</string>
 				<string>org.rdf.source</string>
+				<string>org.rubygems.gemspec</string>
+				<string>org.ruby-lang.erb</string>
+				<string>org.rust-lang.rust</string>
 				<string>org.rust-lang.source</string>
 				<string>org.sbarex.conf</string>
 				<string>org.sbarex.dart</string>
@@ -165,6 +180,7 @@
 				<string>org.xml-tools.source</string>
 				<string>org.xsd.schema</string>
 				<string>org.xul.source</string>
+				<string>org.yaml.yaml</string>
 				<string>public.bash-script</string>
 				<string>public.csh-script</string>
 				<string>public.css</string>
@@ -176,10 +192,12 @@
 				<string>public.conf</string>
 				<string>public.content</string>
 				<string>public.data</string>
+				<string>public.diff</string>
 				<string>public.fortran-source</string>
 				<string>public.fortran-90-source</string>
 				<string>public.ini</string>
 				<string>public.item</string>
+				<string>public.java</string>
 				<string>public.json</string>
 				<string>public.ksh-script</string>
 				<string>public.make-source</string>
@@ -200,6 +218,8 @@
 				<string>public.tcsh-script</string>
 				<string>public.tex</string>
 				<string>public.text</string>
+				<string>public.tsx</string>
+				<string>public.typescript</string>
 				<string>public.unix-executable</string>
 				<string>public.xml</string>
 				<string>public.yaml</string>

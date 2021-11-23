@@ -250,7 +250,7 @@ class SCSHBaseXPCService: NSObject {
         if let logOs = logOs {
             os_log(.debug, log: logOs, "colorizing %{public}@", url.path)
         }
-        try? "Start colorizing \(url.path)".append(to: custom_settings.logFile)
+        try? "Start colorizing \(url.path)…".appendLine(to: custom_settings.logFile)
                 
         let directory = NSTemporaryDirectory()
         /// Temp file for the css style.
@@ -276,7 +276,7 @@ class SCSHBaseXPCService: NSObject {
                 }
                 log += "\n\n####### ENV end\n"
                 
-                try? log.append(to: logFile)
+                try? log.appendLine(to: logFile)
             }
             
             if let url = temporaryCSSFile {
@@ -287,7 +287,7 @@ class SCSHBaseXPCService: NSObject {
                     if let logOs = logOs {
                         os_log(.error, log: logOs, "Unable to delete the temporary CSS file %{public}@: %{public}@", url.path, error.localizedDescription)
                     }
-                    try? "Unable to delete the temporary CSS file \(url.path): \(error.localizedDescription)".append(to: custom_settings.logFile)
+                    try? "ERROR: unable to delete the temporary CSS file \(url.path): \(error.localizedDescription)".appendLine(to: custom_settings.logFile)
                     // print(error)
                 }
             }
@@ -299,7 +299,7 @@ class SCSHBaseXPCService: NSObject {
                     if let logOs = logOs {
                         os_log(.error, log: logOs, "Unable to delete the temporary theme file %{public}@: %{public}@", url.path, error.localizedDescription)
                     }
-                    try? "Unable to delete the temporary theme file \(url.path): \(error.localizedDescription)".append(to: custom_settings.logFile)
+                    try? "ERROR: unable to delete the temporary theme file \(url.path): \(error.localizedDescription)".appendLine(to: custom_settings.logFile)
                     // print(error)
                 }
             }
@@ -342,6 +342,8 @@ class SCSHBaseXPCService: NSObject {
         /// Command to execute.
         let cmd = "\(rsrcEsc)/highlight/colorize.sh".g_shell_quote() + " " + url.path.g_shell_quote()
         
+        try? "Executing \(cmd)".appendLine(to: custom_settings.logFile)
+        
         if let logOs = logOs {
             os_log(.debug, log: logOs, "cmd = %{public}@", cmd)
             os_log(.debug, log: logOs, "env = %@", colorize.env)
@@ -353,7 +355,7 @@ class SCSHBaseXPCService: NSObject {
             if let logOs = logOs {
                 os_log(.error, log: logOs, "Syntax Highlight: colorize.sh failed with exit code %d. Command was (%{public}@).", result.exitCode, cmd)
             }
-            try? "Syntax Highlight: colorize.sh failed with exit code \(result.exitCode). Command was (\(cmd)).".append(to: custom_settings.logFile)
+            try? "ERROR: colorize.sh failed with exit code \(result.exitCode): \(result.errorOutput() ?? "")".appendLine(to: custom_settings.logFile)
             
             let e = SCSHError.shellError(cmd: cmd, exitCode: result.exitCode, stdOut: result.output() ?? "", stdErr: result.errorOutput() ?? "", message: "Syntax Highlight: colorize.sh failed with exit code \(result.exitCode). Command was (\(cmd)).\n\(result.errorOutput() ?? "")\n\(result.output() ?? "")")
             
@@ -375,7 +377,7 @@ class SCSHBaseXPCService: NSObject {
                     if let logOs = logOs {
                         os_log(.error, log: logOs, "Unable to create the log output file %{public}@: %{public}@", u.path, error.localizedDescription)
                     }
-                    try? "Unable to create the log output file \(u.path): \(error.localizedDescription)".append(to: custom_settings.logFile)
+                    try? "ERROR: unable to create the log output file \(u.path): \(error.localizedDescription)".appendLine(to: custom_settings.logFile)
                 }
             }
             
@@ -398,13 +400,17 @@ class SCSHBaseXPCService: NSObject {
     ///   - logFile: File to save the log.
     ///   - logOs: OSLog.
     class func colorize(url: URL, settings: Settings, highlightBin: String, dataDir: String?, rsrcEsc: String, dos2unixBin: String?, highlightLanguages: [String: [String]], extraCss: URL?, overridingSettings: [String: AnyHashable]?, logFile: URL?, logOs: OSLog?) throws -> (data: Data, settings: SettingsRendering) {
+        
+        try? "Start processing \(url.path) …".appendLine(to: logFile)
+        
         let custom_settings: SettingsRendering
         
         var uti = settings.searchUTI(for: url)
         var plain: PlainSettings?
         let attributes: MagicAttributes?
         if uti == nil {
-            attributes = MagicAttributes(url: url)
+            try? "No settings found for the file UTI".appendLine(to: logFile)
+            attributes = MagicAttributes(url: url, logFile: logFile)
             plain = settings.searchPlainSettings(for: url)
             if !(plain?.UTI.isEmpty ?? true) {
                 uti = plain!.UTI
@@ -457,6 +463,7 @@ class SCSHBaseXPCService: NSObject {
         }
         
         if let uti = uti {
+            try? "Detected UTI: \(uti)".appendLine(to: logFile)
             let utiSettings = settings.utiSettings[uti] ?? settings.createSettings(forUTI: uti)
             
             if !utiSettings.isSpecialSettingsPopulated {
@@ -478,48 +485,45 @@ class SCSHBaseXPCService: NSObject {
         }
         
         if plain != nil {
-            try? "File recognized as plain data.".append(to: custom_settings.logFile)
+            try? "File recognized as plain data.".appendLine(to: custom_settings.logFile)
             var st = stat()
             stat(url.path, &st)
             guard st.st_size > 0 else {
-                let s = "Syntax Highlight: the file is empty."
-                try? s.append(to: custom_settings.logFile)
-                let data = s.toData(settings: custom_settings, cssFile: extraCss)
+                try? "\tThe file is empty.".appendLine(to: custom_settings.logFile)
+                let data = "Syntax Highlight: the file is empty.".toData(settings: custom_settings, cssFile: extraCss)
                 return (data: data, settings: custom_settings)
             }
             
             if !plain!.syntax.isEmpty {
                 custom_settings.isSyntaxDefined = true
                 custom_settings.syntax = plain!.syntax
+                try? "\tAdopted syntax: \(custom_settings.syntax)".appendLine(to: logFile)
             }
             
             guard let attributes = attributes else {
-                let s = "Syntax Highlight: could not determine the file attributes."
-                try? s.append(to: custom_settings.logFile)
                 custom_settings.isError = true
-                let data = s.toData(settings: custom_settings, cssFile: extraCss)
+                let data = "Syntax Highlight: could not determine the file attributes.".toData(settings: custom_settings, cssFile: extraCss)
                 return (data: data, settings: custom_settings)
             }
-            try? "Recognized mime: \(attributes.mimeType).".append(to: custom_settings.logFile)
             
             if #available(macOS 12.0, *) {
                 custom_settings.isPDF = attributes.isPDF
                 if attributes.isPDF {
-                    try? "File is a PDF (\(attributes.mimeType)).".append(to: custom_settings.logFile)
+                    try? "\tFile is handled as PDF (\(attributes.mimeType)).".appendLine(to: custom_settings.logFile)
                 }
                 custom_settings.isMovie = attributes.isMovie
                 if attributes.isMovie {
-                    try? "File is a movie (\(attributes.mimeType)).".append(to: custom_settings.logFile)
+                    try? "\tFile is handled as movie (\(attributes.mimeType)).".appendLine(to: custom_settings.logFile)
                 }
                 custom_settings.isAudio = attributes.isAudio
                 if attributes.isAudio {
-                    try? "File is an audio (\(attributes.mimeType)).".append(to: custom_settings.logFile)
+                    try? "\tFile is handled as audio (\(attributes.mimeType)).".appendLine(to: custom_settings.logFile)
                 }
             }
             
             guard !attributes.isImage else {
                 if #available(macOS 12.0, *) {
-                    try? "File is an image (\(attributes.mimeType)).".append(to: custom_settings.logFile)
+                    try? "\tFile is handled as image (\(attributes.mimeType)).".appendLine(to: custom_settings.logFile)
                     let img_type = attributes.mimeType.dropFirst("image/".count)
                     if (["jpeg", "gif", "png", "heif", "heic"].contains(img_type)) {
                         custom_settings.isImage = true
@@ -543,10 +547,9 @@ img {
                     let data = s.data(using: .utf8);
                     return (data: data!, settings: custom_settings)
                 } catch {
-                    let s = "Syntax Highlight: unable to read the file."
-                    try? s.append(to: custom_settings.logFile)
+                    try? "ERROR: unable to read the file.".appendLine(to: custom_settings.logFile)
                     custom_settings.isError = true
-                    return (data: s.toData(settings: custom_settings, cssFile: extraCss), settings: custom_settings)
+                    return (data: "Syntax Highlight: unable to read the file.".toData(settings: custom_settings, cssFile: extraCss), settings: custom_settings)
                 }
             }
             
@@ -559,8 +562,7 @@ img {
                     } else {
                         command = "/usr/bin/xxd '\(url.path)'"
                     }
-                    try? "Dumping hex data… \n\(command)".append(to: custom_settings.logFile)
-                    try? s.append(to: custom_settings.logFile)
+                    try? "Dumping hex data… \n\t\(command)".appendLine(to: custom_settings.logFile)
                     do {
                         let r = try ShellTask.runTask(script: command)
                         if r.isSuccess, let o = r.output() {
@@ -568,19 +570,22 @@ img {
                             custom_settings.isWordWrappedHard = true
                             custom_settings.isWordWrapDefined = true
                         } else {
-                            s = "Syntax Highlight: unable to dump the file. \n\(r.errorOutput() ?? "")"
-                            try? s.append(to: custom_settings.logFile)
+                            s = "ERROR: unable to dump the file. \n\(r.errorOutput() ?? "")"
+                            try? s.appendLine(to: custom_settings.logFile)
+                            s = "Syntax Highlight: \(s)"
                             custom_settings.isError = true
                         }
                     } catch {
-                        s = "Syntax Highlight: unable to dump the file."
-                        try? s.append(to: custom_settings.logFile)
+                        s = "ERROR: unable to dump the file."
+                        try? s.appendLine(to: custom_settings.logFile)
+                        s = "Syntax Highlight: \(s)"
                         custom_settings.isError = true
                     }
                 } else {
+                    try? "WARNING: could not process a binary file (\(attributes.mimeType))".appendLine(to: custom_settings.logFile)
                     s = "Syntax Highlight: could not process a binary file (\(attributes.mimeType))."
-                    try? s.append(to: custom_settings.logFile)
                     custom_settings.isError = true
+                    custom_settings.isRenderingSupported = false
                 }
                 
                 let data = s.toData(settings: custom_settings, cssFile: extraCss)
@@ -592,17 +597,16 @@ img {
                         if let logOs = logOs {
                             os_log(.error, log: logOs, "Unable to create the log output file %{public}@: %{public}@", u.path, error.localizedDescription)
                         }
-                        try? "Unable to create the log output file \(u.path): \(error.localizedDescription)".append(to: custom_settings.logFile)
+                        try? "ERROR: unable to create the log output file \(u.path): \(error.localizedDescription)".appendLine(to: custom_settings.logFile)
                     }
                 }
                 return (data: data, settings: custom_settings)
             }
             
             guard attributes.fileEncoding != kCFStringEncodingInvalidId else {
-                let s = "Syntax Highlight: could not determine encoding of the file."
-                try? s.append(to: custom_settings.logFile)
+                try? "ERROR: could not determine encoding of the file.".appendLine(to: custom_settings.logFile)
                 custom_settings.isError = true
-                let data = s.toData(settings: custom_settings, cssFile: extraCss)
+                let data = "Syntax Highlight: could not determine encoding of the file.".toData(settings: custom_settings, cssFile: extraCss)
                 return (data: data, settings: custom_settings)
             }
         } else if custom_settings.isVCS, let diff = self.getVCSDiff(url: url, settings: custom_settings) {

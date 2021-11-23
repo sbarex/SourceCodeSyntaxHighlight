@@ -56,12 +56,6 @@
 		834DA8422737C55B00519C78 /* ColorizeArgument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834DA8412737C55B00519C78 /* ColorizeArgument.swift */; };
 		834DA8432737C55B00519C78 /* ColorizeArgument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834DA8412737C55B00519C78 /* ColorizeArgument.swift */; };
 		834DA8442737C55B00519C78 /* ColorizeArgument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834DA8412737C55B00519C78 /* ColorizeArgument.swift */; };
-		8353D5632628C91F008C6AEC /* settings.png in Copy Image help */ = {isa = PBXBuildFile; fileRef = 8311D9A6235CE0A8006DC138 /* settings.png */; };
-		8353D5682628C920008C6AEC /* settings_advanced.png in Copy Image help */ = {isa = PBXBuildFile; fileRef = 831C6CE3261877C90011C3F8 /* settings_advanced.png */; };
-		8353D56D2628C93C008C6AEC /* settings_format.png in Copy Image help */ = {isa = PBXBuildFile; fileRef = 831C6CE826187CBD0011C3F8 /* settings_format.png */; };
-		8353D5722628C960008C6AEC /* extensions.png in Copy Image help */ = {isa = PBXBuildFile; fileRef = 8311D9A8235CE6D7006DC138 /* extensions.png */; };
-		8353D5772628C97C008C6AEC /* theme_editor.png in Copy Image help */ = {isa = PBXBuildFile; fileRef = 83C981F4238B0C6100718132 /* theme_editor.png */; };
-		8353D57C2628C98E008C6AEC /* inquiry.png in Copy Image help */ = {isa = PBXBuildFile; fileRef = 838B78B0238292FD00619951 /* inquiry.png */; };
 		83550720255FCFDF00A9D695 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8359235E23559A2B001506B6 /* Quartz.framework */; };
 		83567FCC25F2BC20004A3E94 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83567FCB25F2BC20004A3E94 /* Storyboard.storyboard */; };
 		83567FD925F2C47E004A3E94 /* SCSHWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83567FD825F2C47E004A3E94 /* SCSHWrapper.swift */; };
@@ -88,6 +82,19 @@
 		835923EA235A022C001506B6 /* NSColor+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835923E9235A022C001506B6 /* NSColor+ext.swift */; };
 		835923EC235A3A85001506B6 /* SCSHTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835923EB235A3A85001506B6 /* SCSHTheme.swift */; };
 		835923F1235A6F16001506B6 /* NSColor+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835923E9235A022C001506B6 /* NSColor+ext.swift */; };
+		835A07BC274AD4770033A30A /* extensions.png in Copy Image help */ = {isa = PBXBuildFile; fileRef = 8311D9A8235CE6D7006DC138 /* extensions.png */; };
+		835A07BD274AD47A0033A30A /* settings.png in Copy Image help */ = {isa = PBXBuildFile; fileRef = 8311D9A6235CE0A8006DC138 /* settings.png */; };
+		835A07BE274AD47C0033A30A /* settings_advanced.png in Copy Image help */ = {isa = PBXBuildFile; fileRef = 831C6CE3261877C90011C3F8 /* settings_advanced.png */; };
+		835A07BF274AD4850033A30A /* settings_format.png in Copy Image help */ = {isa = PBXBuildFile; fileRef = 831C6CE826187CBD0011C3F8 /* settings_format.png */; };
+		835A07C0274AD4890033A30A /* settings_ls.png in Copy Image help */ = {isa = PBXBuildFile; fileRef = 8353D5932629A02A008C6AEC /* settings_ls.png */; };
+		835A07C1274AD48B0033A30A /* custom_css.png in Copy Image help */ = {isa = PBXBuildFile; fileRef = 83C981F2238B04BC00718132 /* custom_css.png */; };
+		835A07C2274AD48D0033A30A /* theme_editor.png in Copy Image help */ = {isa = PBXBuildFile; fileRef = 83C981F4238B0C6100718132 /* theme_editor.png */; };
+		835A07C3274AD48E0033A30A /* settings_plain.png in Copy Image help */ = {isa = PBXBuildFile; fileRef = 834B416D26F719D7001F90B0 /* settings_plain.png */; };
+		835A07C4274AD4900033A30A /* settings_plain_editor.png in Copy Image help */ = {isa = PBXBuildFile; fileRef = 834B416C26F71809001F90B0 /* settings_plain_editor.png */; };
+		835A07C5274AD4930033A30A /* settings_vcs.png in Copy Image help */ = {isa = PBXBuildFile; fileRef = 836CBCDD2712FD3A00A228AE /* settings_vcs.png */; };
+		835A07C6274AD4960033A30A /* vcs_preview.png in Copy Image help */ = {isa = PBXBuildFile; fileRef = 83EAEE842740FD2F0093B9B7 /* vcs_preview.png */; };
+		835A07C7274AD4980033A30A /* inquiry.png in Copy Image help */ = {isa = PBXBuildFile; fileRef = 838B78B0238292FD00619951 /* inquiry.png */; };
+		835A07C8274AD49B0033A30A /* about_highlight.png in Copy Image help */ = {isa = PBXBuildFile; fileRef = 8304B0B4238E8B21007A455C /* about_highlight.png */; };
 		8362579125A8B52900475069 /* SCSHTheme+C.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8362578525A8B47200475069 /* SCSHTheme+C.swift */; };
 		836257A325A8BD8E00475069 /* HighlightWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8362579725A8BD6A00475069 /* HighlightWrapper.swift */; };
 		836257B525A9D7C800475069 /* defaults in Copy Highlight share files */ = {isa = PBXBuildFile; fileRef = 83DF2E3524597EAE007DFF76 /* defaults */; };
@@ -125,9 +132,6 @@
 		83860D71260F50AD0076AA5E /* NotificationCenter+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83950DB125FD79CF002CF526 /* NotificationCenter+ext.swift */; };
 		83860D88260F53D00076AA5E /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836FE00125F22A360053B6E2 /* Settings.swift */; };
 		83860D99260F83580076AA5E /* SCSHBaseXPCService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8304B0BB238FBCC4007A455C /* SCSHBaseXPCService.swift */; };
-		838A8CA8262ADAA300B605E8 /* custom_css.png in Copy Image help */ = {isa = PBXBuildFile; fileRef = 83C981F2238B04BC00718132 /* custom_css.png */; };
-		838A8CAD262ADAB000B605E8 /* settings_ls.png in Copy Image help */ = {isa = PBXBuildFile; fileRef = 8353D5932629A02A008C6AEC /* settings_ls.png */; };
-		838A8CB2262ADAB800B605E8 /* about_highlight.png in Copy Image help */ = {isa = PBXBuildFile; fileRef = 8304B0B4238E8B21007A455C /* about_highlight.png */; };
 		838F465F238D813500268B4A /* XPCLightRenderServiceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838F465E238D813500268B4A /* XPCLightRenderServiceDelegate.swift */; };
 		838F4661238D813500268B4A /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838F4660238D813500268B4A /* main.swift */; };
 		8390B18B23815B6500EA028A /* ThemeSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8390B18A23815B6500EA028A /* ThemeSelectorViewController.swift */; };
@@ -295,15 +299,19 @@
 			dstPath = SyntaxHighlight.help/Contents/Resources/English.lproj/images;
 			dstSubfolderSpec = 7;
 			files = (
-				8353D5722628C960008C6AEC /* extensions.png in Copy Image help */,
-				8353D5632628C91F008C6AEC /* settings.png in Copy Image help */,
-				8353D5682628C920008C6AEC /* settings_advanced.png in Copy Image help */,
-				8353D56D2628C93C008C6AEC /* settings_format.png in Copy Image help */,
-				838A8CAD262ADAB000B605E8 /* settings_ls.png in Copy Image help */,
-				838A8CA8262ADAA300B605E8 /* custom_css.png in Copy Image help */,
-				8353D5772628C97C008C6AEC /* theme_editor.png in Copy Image help */,
-				8353D57C2628C98E008C6AEC /* inquiry.png in Copy Image help */,
-				838A8CB2262ADAB800B605E8 /* about_highlight.png in Copy Image help */,
+				835A07BC274AD4770033A30A /* extensions.png in Copy Image help */,
+				835A07BD274AD47A0033A30A /* settings.png in Copy Image help */,
+				835A07BE274AD47C0033A30A /* settings_advanced.png in Copy Image help */,
+				835A07BF274AD4850033A30A /* settings_format.png in Copy Image help */,
+				835A07C0274AD4890033A30A /* settings_ls.png in Copy Image help */,
+				835A07C2274AD48D0033A30A /* theme_editor.png in Copy Image help */,
+				835A07C1274AD48B0033A30A /* custom_css.png in Copy Image help */,
+				835A07C3274AD48E0033A30A /* settings_plain.png in Copy Image help */,
+				835A07C4274AD4900033A30A /* settings_plain_editor.png in Copy Image help */,
+				835A07C5274AD4930033A30A /* settings_vcs.png in Copy Image help */,
+				835A07C6274AD4960033A30A /* vcs_preview.png in Copy Image help */,
+				835A07C7274AD4980033A30A /* inquiry.png in Copy Image help */,
+				835A07C8274AD49B0033A30A /* about_highlight.png in Copy Image help */,
 			);
 			name = "Copy Image help";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -581,6 +589,7 @@
 		8359239C23570C52001506B6 /* SCSHError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCSHError.swift; sourceTree = "<group>"; };
 		835923E9235A022C001506B6 /* NSColor+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSColor+ext.swift"; sourceTree = "<group>"; };
 		835923EB235A3A85001506B6 /* SCSHTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCSHTheme.swift; sourceTree = "<group>"; };
+		835A07BA274AD3BD0033A30A /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		8361B16E263A962300B85467 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		8362578525A8B47200475069 /* SCSHTheme+C.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SCSHTheme+C.swift"; sourceTree = "<group>"; };
 		8362579725A8BD6A00475069 /* HighlightWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightWrapper.swift; sourceTree = "<group>"; };
@@ -1085,20 +1094,8 @@
 				836D01DF2385214D00B85545 /* CHANGELOG.md */,
 				8383704C25AB733E0048A737 /* TODO.md */,
 				833C295C236028B000B14757 /* LICENSE.txt */,
-				8311D9A8235CE6D7006DC138 /* extensions.png */,
-				8311D9A6235CE0A8006DC138 /* settings.png */,
-				831C6CE3261877C90011C3F8 /* settings_advanced.png */,
-				831C6CE826187CBD0011C3F8 /* settings_format.png */,
-				8353D5932629A02A008C6AEC /* settings_ls.png */,
-				83C981F2238B04BC00718132 /* custom_css.png */,
-				83C981F4238B0C6100718132 /* theme_editor.png */,
-				834B416D26F719D7001F90B0 /* settings_plain.png */,
-				834B416C26F71809001F90B0 /* settings_plain_editor.png */,
-				836CBCDD2712FD3A00A228AE /* settings_vcs.png */,
-				83EAEE842740FD2F0093B9B7 /* vcs_preview.png */,
-				838B78B0238292FD00619951 /* inquiry.png */,
-				8304B0B4238E8B21007A455C /* about_highlight.png */,
 				83088A82236CC0330092180E /* .gitignore */,
+				835A07B9274AD3610033A30A /* assets */,
 				83592347235599F6001506B6 /* Application */,
 				8359236023559A2B001506B6 /* QLExtension */,
 				8359237C23563BDF001506B6 /* XPCService */,
@@ -1197,6 +1194,27 @@
 				834DA83B2736B84200519C78 /* PlainSettings.swift */,
 			);
 			path = XPCService;
+			sourceTree = "<group>";
+		};
+		835A07B9274AD3610033A30A /* assets */ = {
+			isa = PBXGroup;
+			children = (
+				835A07BA274AD3BD0033A30A /* icon.png */,
+				8311D9A8235CE6D7006DC138 /* extensions.png */,
+				8311D9A6235CE0A8006DC138 /* settings.png */,
+				831C6CE3261877C90011C3F8 /* settings_advanced.png */,
+				831C6CE826187CBD0011C3F8 /* settings_format.png */,
+				8353D5932629A02A008C6AEC /* settings_ls.png */,
+				83C981F2238B04BC00718132 /* custom_css.png */,
+				83C981F4238B0C6100718132 /* theme_editor.png */,
+				834B416D26F719D7001F90B0 /* settings_plain.png */,
+				834B416C26F71809001F90B0 /* settings_plain_editor.png */,
+				836CBCDD2712FD3A00A228AE /* settings_vcs.png */,
+				83EAEE842740FD2F0093B9B7 /* vcs_preview.png */,
+				838B78B0238292FD00619951 /* inquiry.png */,
+				8304B0B4238E8B21007A455C /* about_highlight.png */,
+			);
+			path = assets;
 			sourceTree = "<group>";
 		};
 		8362577925A7C7BB00475069 /* Products */ = {
@@ -1912,7 +1930,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 49;
+				CURRENT_PROJECT_VERSION = 50;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1930,7 +1948,7 @@
 					"$(inherited)",
 					"\"$(BUILT_PRODUCTS_DIR)/highlight\"",
 				);
-				MARKETING_VERSION = 2.1.2;
+				MARKETING_VERSION = 2.1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1948,7 +1966,7 @@
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 49;
+				CURRENT_PROJECT_VERSION = 50;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1966,7 +1984,7 @@
 					"$(inherited)",
 					"\"$(BUILT_PRODUCTS_DIR)/highlight\"",
 				);
-				MARKETING_VERSION = 2.1.2;
+				MARKETING_VERSION = 2.1.3;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1982,7 +2000,7 @@
 				CODE_SIGN_ENTITLEMENTS = QLExtension/QLExtension.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 49;
+				CURRENT_PROJECT_VERSION = 50;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1995,7 +2013,7 @@
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
-				MARKETING_VERSION = 2.1.2;
+				MARKETING_VERSION = 2.1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.QuicklookExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2011,7 +2029,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 49;
+				CURRENT_PROJECT_VERSION = 50;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2024,7 +2042,7 @@
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
-				MARKETING_VERSION = 2.1.2;
+				MARKETING_VERSION = 2.1.3;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.QuicklookExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2041,7 +2059,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 49;
+				CURRENT_PROJECT_VERSION = 50;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = XPCService/Info.plist;
@@ -2050,7 +2068,7 @@
 					"$(LD_RUNPATH_SEARCH_PATHS_$(IS_MACCATALYST)_$(_BOOL_$(SKIP_INSTALL)))",
 				);
 				LIBRARY_SEARCH_PATHS = "\"$(BUILT_PRODUCTS_DIR)/highlight\"";
-				MARKETING_VERSION = 2.1.2;
+				MARKETING_VERSION = 2.1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.XPCService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2069,7 +2087,7 @@
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 49;
+				CURRENT_PROJECT_VERSION = 50;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = XPCService/Info.plist;
@@ -2078,7 +2096,7 @@
 					"$(LD_RUNPATH_SEARCH_PATHS_$(IS_MACCATALYST)_$(_BOOL_$(SKIP_INSTALL)))",
 				);
 				LIBRARY_SEARCH_PATHS = "\"$(BUILT_PRODUCTS_DIR)/highlight\"";
-				MARKETING_VERSION = 2.1.2;
+				MARKETING_VERSION = 2.1.3;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.XPCService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2128,7 +2146,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 49;
+				CURRENT_PROJECT_VERSION = 50;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2140,7 +2158,7 @@
 					"$(inherited)",
 					"@loader_path/../../../../Frameworks",
 				);
-				MARKETING_VERSION = 2.1.2;
+				MARKETING_VERSION = 2.1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.XPCRender;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2160,7 +2178,7 @@
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 49;
+				CURRENT_PROJECT_VERSION = 50;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2172,7 +2190,7 @@
 					"$(inherited)",
 					"@loader_path/../../../../Frameworks",
 				);
-				MARKETING_VERSION = 2.1.2;
+				MARKETING_VERSION = 2.1.3;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.XPCRender;
 				PRODUCT_NAME = "$(TARGET_NAME)";

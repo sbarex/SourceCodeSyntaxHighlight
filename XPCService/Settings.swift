@@ -1480,6 +1480,8 @@ class SettingsRendering: Settings, SettingsFormatProtocol, SettingsLSP {
     lazy var isMovie: Bool = false
     @available(macOS 12.0, *)
     lazy var isAudio: Bool = false
+
+    var isRenderingSupported: Bool = true
     
     var isOneLineFileDetected = false
     var logFile: URL?
@@ -1658,6 +1660,9 @@ class SettingsRendering: Settings, SettingsFormatProtocol, SettingsLSP {
                 self.isAudio = v
             }
         }
+        if let v = settings["isRenderingSupported"] as? Bool {
+            self.isRenderingSupported = v
+        }
         if let v = settings["isOneLineFileDetected"] as? Bool {
             self.isOneLineFileDetected = v
         }
@@ -1704,8 +1709,9 @@ class SettingsRendering: Settings, SettingsFormatProtocol, SettingsLSP {
             r["isMovie"] = self.isMovie
             r["isAudio"] = self.isAudio
         }
+        r["isRenderingSupported"] = self.isRenderingSupported
         r["isOneLineFileDetected"] = self.isOneLineFileDetected
-        r["logFile"] = self.logFile?.path ?? ""
+        r["logFile"] = self.logFile?.path
         r["isError"] = self.isError
         
         if isAppendArgumentsDefined, !appendArguments.isEmpty {

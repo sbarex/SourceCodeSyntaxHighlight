@@ -10,20 +10,36 @@
 import Foundation
 
 extension String {
+    fileprivate static let dateFormatter: ISO8601DateFormatter = {
+        let f = ISO8601DateFormatter()
+        f.formatOptions = [.withFullDate, .withFullTime, .withSpaceBetweenDateAndTime, .withDashSeparatorInDate, .withColonSeparatorInTime, .withFractionalSeconds]
+        /*
+        let f = DateFormatter()
+        f.dateFormat = "yyyy-MM-dd HH:mm:ss"
+         */
+        return f
+    }()
+    
     /// Append a string to the data of a file with a new line.
-    func appendLine(to url: URL?) throws {
+    func appendLine(to url: URL?, timeStamp: Bool = true) throws {
         guard let url = url else {
             return
         }
-        try (self + "\n").append(to: url)
+        try (self + "\n").append(to: url, timeStamp: timeStamp)
     }
 
     /// Append a string to the data of a file.
-    func append(to url: URL?) throws {
+    func append(to url: URL?, timeStamp: Bool = true) throws {
         guard let url = url else {
             return
         }
-        let data = self.data(using: String.Encoding.utf8)!
+        
+        let data: Data
+        if timeStamp {
+            data = "\(String.dateFormatter.string(from: Date())) \(self)".data(using: String.Encoding.utf8)!
+        } else {
+            data = self.data(using: String.Encoding.utf8)!
+        }
         try data.append(to: url)
     }
 }

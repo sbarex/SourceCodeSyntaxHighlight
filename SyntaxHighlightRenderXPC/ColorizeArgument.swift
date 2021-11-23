@@ -48,6 +48,7 @@ struct ColorizeArguments {
         
         var hlArguments = try custom_settings.getHighlightArguments()
         if let dataDir = dataDir {
+            try? "Highlight dataDir: \(dataDir)".appendLine(to: custom_settings.logFile)
             env["HIGHLIGHT_DATADIR"] = dataDir
             hlArguments.arguments.append("--data-dir=\(dataDir)")
         }
@@ -57,11 +58,14 @@ struct ColorizeArguments {
                 // Custom theme.
                 hlArguments.theme.remove(at: hlArguments.theme.startIndex)
                 if let theme_url = SCSHBaseXPCService.getCustomThemesUrl(createIfMissing: false)?.appendingPathComponent(hlArguments.theme).appendingPathExtension("theme") {
+                    try? "Highlight theme: \(theme_url.path)".appendLine(to: custom_settings.logFile)
                     hlArguments.arguments.append("--style=\(theme_url.path)")
                 }
             } else if let dataDir = dataDir {
+                try? "Highlight theme: \(dataDir)/themes/\(hlArguments.theme)".appendLine(to: custom_settings.logFile)
                 hlArguments.arguments.append("--style=\(dataDir)/themes/\(hlArguments.theme).theme")
             } else {
+                try? "Highlight theme: \(hlArguments.theme)".appendLine(to: custom_settings.logFile)
                 hlArguments.arguments.append("--style=\(hlArguments.theme)")
             }
         }
@@ -76,36 +80,53 @@ struct ColorizeArguments {
             env["VCS_EDIT"] = isOSThemeLight ? custom_settings.vcsEditLightColor : custom_settings.vcsEditDarkColor
             env["VCS_DEL"] = isOSThemeLight ? custom_settings.vcsDelLightColor : custom_settings.vcsDelDarkColor
             hlArguments.arguments.append("--plug-in=vcs")
+            try? "Highlight plugin: vsc.lua".appendLine(to: custom_settings.logFile)
         }
         
-        var cssCode: String?
+        var cssCode: String = ""
         if custom_settings.format == .html {
-            cssCode = ""
+            let baseCSSFolder = SCSHBaseXPCService.getCustomStylesUrl(createIfMissing: false)
+            
+            let importCSS = {(path_component: String)->String in
+                guard let css_url = baseCSSFolder?.appendingPathComponent(path_component) else {
+                    return ""
+                }
+                guard FileManager.default.fileExists(atPath: css_url.path) else {
+                    // try? "CSS: missing \(css_url.path)".appendLine(to: custom_settings.logFile)
+                    return ""
+                }
+                guard let s = try? String(contentsOf: css_url, encoding: .utf8) else {
+                    try? "ERROR: unable to read the css file \(css_url.path)".appendLine(to: custom_settings.logFile)
+                    return ""
+                }
+                try? "CSS: \(css_url.path)".appendLine(to: custom_settings.logFile)
+                return "\(s)\n"
+            }
+            
+            // Import global css style.
+            cssCode += importCSS("global.css")
+            
+            // Import per file css style.
+            if let uti = (try? url.resourceValues(forKeys: [.typeIdentifierKey]))?.typeIdentifier {
+                cssCode += importCSS("\(uti).css")
+            }
+            
             if custom_settings.isCSSDefined && !custom_settings.css.isEmpty {
                 // Passing a css value in the settings prevent the embed of styles saved on disk.
-                cssCode! += "\(custom_settings.css)\n"
-            } else {
-                // Import global css style.
-                if let css_url = SCSHBaseXPCService.getCustomStylesUrl(createIfMissing: false)?.appendingPathComponent("global.css"), FileManager.default.fileExists(atPath: css_url.path), let s = try? String(contentsOf: css_url, encoding: .utf8) {
-                    cssCode! += "\(s)\n"
-                }
-                
-                // Import per file css style.
-                if let uti = (try? url.resourceValues(forKeys: [.typeIdentifierKey]))?.typeIdentifier, let css_url = SCSHBaseXPCService.getCustomStylesUrl(createIfMissing: false)?.appendingPathComponent("\(uti).css"), FileManager.default.fileExists(atPath: css_url.path), let s = try? String(contentsOf: css_url, encoding: .utf8) {
-                    cssCode! += "\(s)\n"
-                }
+                cssCode += "\(custom_settings.css)\n"
             }
             
             // Embed the custom standard style.
             if let style = extraCss, FileManager.default.fileExists(atPath: style.path) {
-                if !cssCode!.isEmpty {
-                    cssCode! += "\n"
+                if !cssCode.isEmpty {
+                    cssCode += "\n"
                 }
                 do {
-                    cssCode! += try String(contentsOf: style)
+                    cssCode += try String(contentsOf: style)
+                    try? "CSS: \(style.path)".appendLine(to: custom_settings.logFile)
                 } catch {
-                    try? "Unable to append code to `\(style.path)` CSS file!".append(to: custom_settings.logFile)
-                    cssCode! += "/* Error: unable to append `\(style.path)` CSS file! */\n";
+                    try? "ERROR: unable to read the CSS file `\(style.path)`".appendLine(to: custom_settings.logFile)
+                    cssCode += "/* Error: unable to append `\(style.path)` CSS file! */\n";
                 }
             }
         }
@@ -136,8 +157,11 @@ struct ColorizeArguments {
             env.removeValue(forKey: "preprocessorHL") // unsupported options for LSP
             env.removeValue(forKey: "convertEOL") // unsupported options for LSP
         } else {
+            try? "Max data: \(maxData)".appendLine(to: custom_settings.logFile)
+            try? "EOL conversion: \(custom_settings.convertEOL ? "on" : "off")".appendLine(to: custom_settings.logFile)
             if custom_settings.isPreprocessorDefined, !custom_settings.preprocessor.isEmpty {
                 env["preprocessorHL"] = custom_settings.preprocessor.trimmingCharacters(in: CharacterSet.whitespaces)
+                try? "Preprocessor: \(env["preprocessorHL"]!)".appendLine(to: custom_settings.logFile)
             } else {
                 env.removeValue(forKey: "preprocessorHL")
             }
@@ -145,8 +169,9 @@ struct ColorizeArguments {
         
         if custom_settings.isSyntaxDefined && !custom_settings.syntax.isEmpty {
             env["syntaxHL"] = custom_settings.syntax
+            try? "Highlight syntax: \(custom_settings.syntax)".appendLine(to: custom_settings.logFile)
         }
         
-        self.init(highlight: highlightPath, env: env, theme: hlArguments.theme, backgroundColor: hlArguments.backgroundColor, css: cssCode, inlineTheme: custom_settings.themeLua, arguments: hlArguments.arguments)
+        self.init(highlight: highlightPath, env: env, theme: hlArguments.theme, backgroundColor: hlArguments.backgroundColor, css: custom_settings.format == .rtf ? nil : cssCode, inlineTheme: custom_settings.themeLua, arguments: hlArguments.arguments)
     }
 }

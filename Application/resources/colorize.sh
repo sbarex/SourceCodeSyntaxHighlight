@@ -33,8 +33,8 @@ function debug() {
 
 if [ "x$logHL" != "x" ]; then
     # Clear the log.
-    echo "" > "$logHL"
-    debug "-------------------------------------------------"
+    #echo "" > "$logHL"
+    #debug "-------------------------------------------------"
     # file to store stderr
     err_device="$logHL"
 else

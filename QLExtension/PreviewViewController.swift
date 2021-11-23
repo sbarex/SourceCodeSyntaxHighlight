@@ -332,48 +332,56 @@ class PreviewViewController: NSViewController, QLPreviewingController, WKNavigat
             let r: QLPreviewReply
             switch result {
             case .html(let code, let settings):
-                if settings?.isImage ?? false {
-                    r = QLPreviewReply(dataOfContentType: UTType.image, contentSize: .zero) { _ in
-                        return (try? Data(contentsOf: request.fileURL)) ?? "Unable to load the image file!".data(using: .utf8)!
-                    }
-                } else if settings?.isPDF ?? false {
-                    r = QLPreviewReply(dataOfContentType: UTType.pdf, contentSize: .zero) { _ in
-                        return (try? Data(contentsOf: request.fileURL)) ?? "Unable to load the PDF file!".data(using: .utf8)!
-                    }
-                } else if settings?.isMovie ?? false {
-                    r = QLPreviewReply(dataOfContentType: UTType.movie, contentSize: .zero) { _ in
-                        return (try? Data(contentsOf: request.fileURL)) ?? "Unable to load the movie file!".data(using: .utf8)!
-                    }
-                } else if settings?.isAudio ?? false {
-                    r = QLPreviewReply(dataOfContentType: UTType.audio, contentSize: .zero) { _ in
-                        return (try? Data(contentsOf: request.fileURL)) ?? "Unable to load the audio file!".data(using: .utf8)!
+                if settings?.isRenderingSupported ?? false {
+                    if settings?.isImage ?? false {
+                        r = QLPreviewReply(dataOfContentType: UTType.image, contentSize: .zero) { _ in
+                            return (try? Data(contentsOf: request.fileURL)) ?? "Unable to load the image file!".data(using: .utf8)!
+                        }
+                    } else if settings?.isPDF ?? false {
+                        r = QLPreviewReply(dataOfContentType: UTType.pdf, contentSize: .zero) { _ in
+                            return (try? Data(contentsOf: request.fileURL)) ?? "Unable to load the PDF file!".data(using: .utf8)!
+                        }
+                    } else if settings?.isMovie ?? false {
+                        r = QLPreviewReply(dataOfContentType: UTType.movie, contentSize: .zero) { _ in
+                            return (try? Data(contentsOf: request.fileURL)) ?? "Unable to load the movie file!".data(using: .utf8)!
+                        }
+                    } else if settings?.isAudio ?? false {
+                        r = QLPreviewReply(dataOfContentType: UTType.audio, contentSize: .zero) { _ in
+                            return (try? Data(contentsOf: request.fileURL)) ?? "Unable to load the audio file!".data(using: .utf8)!
+                        }
+                    } else {
+                        r = QLPreviewReply(dataOfContentType: UTType.html, contentSize: .zero) { _ in
+                            return code.data(using: .utf8)!
+                        }
                     }
                 } else {
-                    r = QLPreviewReply(dataOfContentType: UTType.html, contentSize: .zero) { _ in
-                        return code.data(using: .utf8)!
-                    }
+                    r = QLPreviewReply(fileURL: request.fileURL)
                 }
             case .rtf(let data, let settings):
-                if settings?.isImage ?? false {
-                    r = QLPreviewReply(dataOfContentType: UTType.image, contentSize: .zero) { _ in
-                        return (try? Data(contentsOf: request.fileURL)) ?? "Unable to load the image file!".data(using: .utf8)!
+                if settings?.isRenderingSupported ?? false {
+                    if settings?.isImage ?? false {
+                        r = QLPreviewReply(dataOfContentType: UTType.image, contentSize: .zero) { _ in
+                            return (try? Data(contentsOf: request.fileURL)) ?? "Unable to load the image file!".data(using: .utf8)!
+                        }
+                    } else if settings?.isPDF ?? false {
+                        r = QLPreviewReply(dataOfContentType: UTType.pdf, contentSize: .zero) { _ in
+                            return (try? Data(contentsOf: request.fileURL)) ?? "Unable to load the PDF file!".data(using: .utf8)!
+                        }
+                    } else if settings?.isMovie ?? false {
+                        r = QLPreviewReply(dataOfContentType: UTType.movie, contentSize: .zero) { _ in
+                            return (try? Data(contentsOf: request.fileURL)) ?? "Unable to load the movie file!".data(using: .utf8)!
+                        }
+                    } else if settings?.isAudio ?? false {
+                        r = QLPreviewReply(dataOfContentType: UTType.audio, contentSize: .zero) { _ in
+                            return (try? Data(contentsOf: request.fileURL)) ?? "Unable to load the audio file!".data(using: .utf8)!
+                        }
+                    }  else {
+                        r = QLPreviewReply(dataOfContentType: UTType.rtf, contentSize: .zero) { _ in
+                            return data
+                        }
                     }
-                } else if settings?.isPDF ?? false {
-                    r = QLPreviewReply(dataOfContentType: UTType.pdf, contentSize: .zero) { _ in
-                        return (try? Data(contentsOf: request.fileURL)) ?? "Unable to load the PDF file!".data(using: .utf8)!
-                    }
-                } else if settings?.isMovie ?? false {
-                    r = QLPreviewReply(dataOfContentType: UTType.movie, contentSize: .zero) { _ in
-                        return (try? Data(contentsOf: request.fileURL)) ?? "Unable to load the movie file!".data(using: .utf8)!
-                    }
-                } else if settings?.isAudio ?? false {
-                    r = QLPreviewReply(dataOfContentType: UTType.audio, contentSize: .zero) { _ in
-                        return (try? Data(contentsOf: request.fileURL)) ?? "Unable to load the audio file!".data(using: .utf8)!
-                    }
-                }  else {
-                    r = QLPreviewReply(dataOfContentType: UTType.rtf, contentSize: .zero) { _ in
-                        return data
-                    }
+                } else {
+                    r = QLPreviewReply(fileURL: request.fileURL)
                 }
             }
             handler(r, nil)

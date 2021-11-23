@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/icon.png" width="128" alt="logo" />
+</p>
+
 #  Syntax Highlight
 
 The application offers a Quick Look Extension for macOS 10.15 Catalina and later for previewing source files.
@@ -69,7 +73,7 @@ $ git submodule update
 ## Enable the Quick Look extension
 To use the Quick Look preview you must launch the Application at least once. In this way the Quick Look Extension will be discovered by the System and will be available in the System preferences/Extensions/Quick look.
 
-![System preferences/Extensions](extensions.png)
+![System preferences/Extensions](assets/extensions.png)
 
 ## File format management
 
@@ -87,9 +91,10 @@ On _**macOS 12 Monterey**, the system allows you to manage these previously unau
 ### Supported formats
 
 Most programming languages are supported. 
-The application can also handle some plain files without extension.
+The application can also handle some [plain files](#plain-files) without extension.
 
 - (G)AWK files (`.awk`)
+- HTML Abstraction Markup Language (`.haml`)
 - Adobe Acrobat Sequence files (`.sequ`) _as `XML`_
 - Adobe Flash ActionScript source files (`.as`)
 - Adobe JSX script files (`.jsx`)
@@ -147,6 +152,7 @@ The application can also handle some plain files without extension.
 - Kermeta source files (`.kmt`)
 - Korn Shell script files (`.ksh`)
 - Kotlin source files (`.kt`, `.kts`)
+- Less stylesheet (`.less`)
 - Lisp source files (`.lisp`, `.lsp`, `.asd`, `.el`)
 - Logos source files (`.xm`)
 - Lua source files (`.lua`)
@@ -172,6 +178,7 @@ The application can also handle some plain files without extension.
 - RDF files (`.rdf`)
 - Rez files (`.r`)
 - Ruby on Rails files (`.rhtml`, `.erb`, `.rjs`)
+- Ruby Gems file (`.gemfile`)
 - Ruby script (`.rb`, `.rbw`)
 - Rust source files (`.rs`)
 - SASS/SCSS files (`.scss`)
@@ -195,7 +202,8 @@ The application can also handle some plain files without extension.
 - Visual Basic source files (`.vb`, `.bas`, `.basic`, `.vbs`)
 - Vue source files (`.vue`)
 - XAML source files (`.xaml`) _as XML_
-- Xcode localizable strings files (`.strings`, `.stringsdict`) (dynamically decompiled with `plutil`)
+- Xcode entitlement files (`.entitlements`) (dynamically decompiled with `plutil`) _as XML_
+- Xcode localizable strings files (`.strings`, `.stringsdict`) (dynamically decompiled with `plutil`) _as XML_ 
 - XHTML files (`.xhtml`)
 - XML files (`.xml`) **Before macOS 12 Monterey `.xml` is reserved by the System and cannot be handled.**
 - XSD Schema files (`.xsd`, `.xquery`)
@@ -207,11 +215,11 @@ The application can also handle some plain files without extension.
 
 With the standalone application you can customize the rendering settings.
 
-![Settings window](settings.png)
+![Settings window](assets/settings.png)
 
 You can show _advanced settings_ using the relative command on the view menu.
 
-![Settings window with advanced settings](settings_advanced.png)
+![Settings window with advanced settings](assets/settings_advanced.png)
 
 
 ### Rendering settings
@@ -236,7 +244,7 @@ You can set the settings for all supported formats on the _General_ tab.
 
 You can also override the global options for some formats on the _Formats_ tab.
 
-![Settings window for specific format](settings_format.png)
+![Settings window for specific format](assets/settings_format.png)
 
 When customizing the settings for a specific format, these options will be available:
 
@@ -250,7 +258,7 @@ When customizing the settings for a specific format, these options will be avail
 ### External Language Server support
 Advanced users can customize the single format to use an external [Language Server](https://langserver.org/):
 
-![Settings window for specific format](settings_ls.png)
+![Settings window for specific format](assets/settings_ls.png)
 
 |Settings|Description|Advanced|
 |:---------|:-------------| :----: |
@@ -271,19 +279,19 @@ Some format have a preconfigured custom settings to handle the data (for example
 
 You can also enable the support of common VCS to highlight the added/edited/removed lines from last commit.
 
-![VCS Settings](settings_vcs.png)
+![VCS Settings](assets/settings_vcs.png)
 
 In the General settings you must enable the VCS support. Then you can customize the path of `git` and `mercurial` binary.
 The you can choose the colors used to mark the changed lines. On every format you can also customize the colors.
 
-![VCS example](vcs_preview.png)
+![VCS example](assets/vcs_preview.png)
 
 _On `RTF` mode, the VCS plugin can be disabled if the syntax language defines more keyword groups than those defined in the theme._
 
 ### Plain files
 The Application can preview plain files _without an extension_ whose format is unknown. 
 
-![Unknown files](settings_plain.png)
+![Unknown files](assets/settings_plain.png)
 
 Only files recognized by the system with one of the following UTIs can be handled: 
 - `public.data`
@@ -297,23 +305,25 @@ Unknown files are analyzed with the system utility `/usr/bin/file` for recognize
 
 Files recognized as images are handled by displaying the content within a web page (even if the rendering engine set in the settings is `RTF`). To be displayed correctly, the image format must be supported by WebKit. 
 
-On macOS 12 Monterey images and even pdf, movie and audio files are previewed with the native interface.
+On macOS 12 Monterey images and even, audios, movies and PDF files are displayed with the native Quick Look interface.
 
-For other binary data files it is possible to show a hex dump. 
+For other binary files it is possible to display a hex dump. 
 
 For text files, syntax highlighting is tried.
 
-![Unknown file settings editor](settings_plain_editor.png)
+![Unknown file settings editor](assets/settings_plain_editor.png)
 
 You can specify filename criteria to apply a syntax highlighting and a specific display format. The criteria are evaluated in the order in which they are set. 
 
 If not display format is set, the system will try to derive it starting from the mime type.
 
+Note that some files with no extension can be recognized by macOS with a UTI if they have the `com.apple.FinderInfo` extended attributed set.
+
 
 ### Colors
 The Application has a GUI to customize the color schemes.
 
-![Color scheme editor](theme_editor.png)
+![Color scheme editor](assets/theme_editor.png)
 
 Standard schemas provided by `highlight` cannot be edited but can be duplicated and then customized.
 
@@ -331,7 +341,7 @@ With the advanced settings enabled you can also customize the appearance of the 
 ### Inquiry file
 With the _Inquiry window_ you can see if a specific file type is handled by the Quick Look Extension and also if it is supported by `highlight`.
 
-![Inquiry window](inquiry.png)
+![Inquiry window](assets/inquiry.png)
 
 Alternatively you can see the UTI of a file with this Terminal command:
 
@@ -483,7 +493,7 @@ Custom themes and styles are saved in `~/Library/Application Support/Syntax High
 
 The application embed the [`Highlight`](http://www.andre-simon.de/doku/highlight/en/highlight.php) engine that can be build inside the Xcode project.
 
-![highlight info](about_highlight.png)
+![highlight info](assets/about_highlight.png)
 
 
 ### Info about decoding dynamic UTI identifiers:
