@@ -485,6 +485,7 @@ The command line tool require macOS 10.15.4 or later.
 - ~~On Big Sur you cannot scroll the preview inside a Quick Look window dragging the scrollbars with the mouse. This is a Big Sur bug. You can scroll only with a mouse/trackpad gesture.~~ Fixed on maxOS 12 Monterey.
 - On macOS earlier than 12 Monterey, soft word wrap with RTF engine reacts when the window is enlarged but not when it is reduced.
 - Icons of the custom file format are disabled on Catalina (cause an application freeze).
+- In `RTF` mode the colors may be slightly lighter than what is set (probably due to the different handling of color profile). 
 
 ## Note for developers
 Starting from macOS 10.15.0 Catalina the `qlgenerator` APIs are deprecated.
