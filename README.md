@@ -73,6 +73,14 @@ $ git submodule update
 ## Enable the Quick Look extension
 To use the Quick Look preview you must launch the Application at least once. In this way the Quick Look Extension will be discovered by the System and will be available in the System preferences/Extensions/Quick look.
 
+When opening the app for the first time: 
+
+- switch to Finder and navigate to the Applications 
+- right click Syntax Highlight.app and click 'Open' 
+- a modal appears stating:
+  > "Syntax Highlight.app" can’t be opened because Apple cannot check it for malicious software.
+- click Open
+
 ![System preferences/Extensions](assets/extensions.png)
 
 ## File format management
