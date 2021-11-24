@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/icon.png" width="128" alt="logo" />
+  <img src="assets/icon.png" width="128" height="128" alt="logo" />
 </p>
 
 #  Syntax Highlight
@@ -7,7 +7,7 @@
 The application offers a Quick Look Extension for macOS 10.15 Catalina and later for previewing source files.
 Inside it uses [Highlight](http://www.andre-simon.de/doku/highlight/en/highlight.php) to render source code with syntax highlighting.
 
-> **Syntax Highlight is distributed in the hope that it will be useful but WITHOUT ANY WARRANTY.**
+> **`Syntax Highlight` is distributed in the hope that it will be useful but WITHOUT ANY WARRANTY.**
 
   - [Installation](#installation)
     - [Download precompiled release](#download-precompiled-release)
@@ -36,6 +36,8 @@ Inside it uses [Highlight](http://www.andre-simon.de/doku/highlight/en/highlight
 
 You can install the application in various ways. When the main application is launched it automatically checks for updates. 
 
+After installation, _the application must be launched at least once to allow the system to detect the Quick Look extension_. [See below](#enable-the-quick-look-extension) for instructions on how to enable the Quick Look extension. 
+
 ### Download precompiled release
 Head over to the [releases](https://github.com/sbarex/SourceCodeSyntaxHighlight/releases) page to view the latest version. Move the `Syntax Highlight.app` into the `Applications` folder.
 
@@ -43,19 +45,17 @@ Head over to the [releases](https://github.com/sbarex/SourceCodeSyntaxHighlight/
 Syntax Highlight can also be installed via [Homebrew Cask](https://github.com/Homebrew/homebrew-cask). If you have not installed Homebrew, follow the simple instructions [here](https://brew.sh/). After that, run `brew install --cask syntax-highlight` to install the current version of Syntax Highlight.
 
 ### Note for the precompiled release
-The [precompiled app](https://github.com/sbarex/SourceCodeSyntaxHighlight/releases) is not notarized or signed.
+The [precompiled app](https://github.com/sbarex/SourceCodeSyntaxHighlight/releases) is not notarized or signed, so the first time you run the app the system may show a warning about the impossibility to check for malicious software.
 
-When you download the precompiled app directly or via homebrew you must strip quarantine flag.
+To fix, you can launch the app with right click (or ctrl click) on the app icon and choose the open action.
 
-You can launch the app with right click (or ctrl click) on the app icon and choosing the open action.
-
-Also you can execute this command from the terminal:
+You can also execute this command from the terminal:
 
 ```
 $ xattr -r -d com.apple.quarantine "FULL PATH OF THE Syntax Highlight.app (you can drag the file to get the pull path)"
 ```
 
-Alternatively you can open System Preferences > Security & Privacy > General (tab) then clicking the `Open Anyway` button.
+Alternatively, after trying to launch the app for the first time, you can open the `System Preferences > Security & Privacy > General (tab)` and click the `Open Anyway` button.
 
 This will resolve the error of an unsigned application when launching the app.
 
@@ -71,24 +71,30 @@ $ git submodule update
 ```
 
 ## Enable the Quick Look extension
-To use the Quick Look preview you must launch the Application at least once. In this way the Quick Look Extension will be discovered by the System and will be available in the System preferences/Extensions/Quick look.
-
-When opening the app for the first time: 
-
-- switch to Finder and navigate to the Applications 
-- right click Syntax Highlight.app and click 'Open' 
-- a modal appears stating:
-  > "Syntax Highlight.app" can’t be opened because Apple cannot check it for malicious software.
-- click Open
+_To use the Quick Look preview you must launch the Application at least once._ In this way the Quick Look Extension will be discovered by the system and will be available in the `System preferences > Extensions > Quick Look`.
 
 ![System preferences/Extensions](assets/extensions.png)
+
+When opening the app _for the first time_, you may see a pop-up warning about unable to check malicious software.
+
+To fix follow these steps: 
+
+- Switch to Finder and navigate to the application. 
+- Right click (or ctrl click) `Syntax Highlight.app` and choose the `Open` item from the contextual menu. 
+- A modal popup appears stating:
+  > "Syntax Highlight.app" can’t be opened because Apple cannot check it for malicious software.
+- Click `Open` to confirm.
+
+This warning is because the app is neither codesigned nor notarized.
+
+For more info see the [note for the precompiled release](#note-for-the-precompiled-release).
 
 ## File format management
 
 The Quick Look Extension uses the [Uniform Type Identifier (UTI)](https://developer.apple.com/library/archive/documentation/FileManagement/Conceptual/understanding_utis/understand_utis_intro/understand_utis_intro.html) to handle the supported formats (and not simply the file name extension).
 Inside the definition on an UTI there are the list of extensions and mime type associated with it.
 
-Some file types are directly associated to an UTI by the System. Other formats are registered by the owner application. In this way some extensions can be associated to multiple UTIs based on the applications currently installed. For this reason, this application supports many UTIs even if they are apparently redundant.
+Some file types are directly associated to an UTI by the system. Other formats are registered by the owner application. In this way some extensions can be associated to multiple UTIs based on the applications currently installed. For this reason, this application supports many UTIs even if they are apparently redundant.
 
 _**MacOS 10.15 Catalina does not** allow to manage some file formats including (but not limited to):_  `.xml`, `.plist`, `.html`, `.ts`, `.dart`, common images (`.jpg`, `.gif`, `.png`), …
 
@@ -124,7 +130,7 @@ The application can also handle some [plain files](#plain-files) without extensi
 - Configuration files (`.conf`)
 - CSON source files (`.cson`)
 - CSS files (`.css`)
-- Dart source files (`.dart`) **`.dart` is reserved by the System and cannot be handled.**
+- Dart source files (`.dart`) **`.dart` is reserved by macOS and cannot be handled.**
 - Diff files (`.diff`, `.patch`)
 - DOS Bat files (`.bat`, `.cmd`)
 - ECore files (`.ecore`)
@@ -180,7 +186,7 @@ The application can also handle some [plain files](#plain-files) without extensi
 - Perl script files (`.pl`, `.pm`)
 - PHP source files (`.php`, `.php3`, `.php4`, `.ph3`, `.ph4`, `.phtml`)
 - Properties files (`.properties`) _as `INI`_
-- Property List files (`.plist`) _dynamically decompiled with `plutil`_ **On macOS 10.15 Catalina `.plist` is reserved by the System and cannot be handled.**
+- Property List files (`.plist`) _dynamically decompiled with `plutil`_ **On macOS 10.15 Catalina `.plist` is reserved by the system and cannot be handled.**
 - Python source files (`.py`)
 - Racket (`.rkt`) _as `Lisp`_
 - RDF files (`.rdf`)
@@ -203,7 +209,7 @@ The application can also handle some [plain files](#plain-files) without extensi
 - TeX and LaTeX files (`.tex`, `.sty`, `.cls`, `.latex`, `.ltx`, `.texi`, `.ctx`, `.sty`)
 - Text files (`.txt`, `.text`)
 - Toml files (`.toml`)
-- Typescript files (`.ts`, `.tsx`) **`.ts` is reserved by the System and cannot be handled.**
+- Typescript files (`.ts`, `.tsx`) **`.ts` is reserved by macOS and cannot be handled.**
 - Verilog HDL files (`.v`, `.vl`)
 - VHDL source files (`.vhd`, `.vhdl`)
 - VIM script files (`.vim`)
@@ -213,7 +219,7 @@ The application can also handle some [plain files](#plain-files) without extensi
 - Xcode entitlement files (`.entitlements`) (dynamically decompiled with `plutil`) _as XML_
 - Xcode localizable strings files (`.strings`, `.stringsdict`) (dynamically decompiled with `plutil`) _as XML_ 
 - XHTML files (`.xhtml`)
-- XML files (`.xml`) **Before macOS 12 Monterey `.xml` is reserved by the System and cannot be handled.**
+- XML files (`.xml`) **Before macOS 12 Monterey `.xml` is reserved by the system and cannot be handled.**
 - XSD Schema files (`.xsd`, `.xquery`)
 - XUL files (`.xul`)
 - YAML files (`.yaml`)
@@ -447,9 +453,9 @@ The command line tool require macOS 10.15.4 or later.
 > If the problem affects all file formats it must related to points 1. and 2., so try one or more of these action:
 > - Try the `RTF` render engine, especially for macOS versions earlier than 12 Monterey.
 > - Drag the application on the trash and back to the Applications folder and then relaunch.
-> - Check in the System Preferences / Extensions / Quick Look if the _Syntax Highlight_ extension is present and checked.
-> - In the System Preferences / Extensions / Quick Look, drag the _Syntax Highlight_ extension on the top.
-> - In the System Preferences / Extensions / Quick Look disable other extensions one at a time until you find the one that conflicts.
+> - Check in the `System Preferences > Extensions > Quick Look` if the _Syntax Highlight_ extension is present and checked.
+> - In the `System Preferences > Extensions > Quick Look`, drag the _Syntax Highlight_ extension on the top.
+> - In the `System Preferences > Extensions > Quick Look` disable other extensions one at a time until you find the one that conflicts.
 >
 > If the problem affects only a specific format it is possible that this was registered by some application with a non-standard UTI. Check the UTI with the _Inquiry window_ and send me the value. The support for each format must be defined at compile time.
 
