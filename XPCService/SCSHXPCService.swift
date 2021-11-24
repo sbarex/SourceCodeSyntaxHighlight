@@ -200,8 +200,8 @@ class SCSHXPCService: SCSHBaseXPCService, SCSHXPCServiceProtocol {
     
     // MARK: - Colorize
     
-    override func getColorizeArguments(url: URL, custom_settings: SettingsRendering) throws -> ColorizeArguments {
-        var r = try super.getColorizeArguments(url: url, custom_settings: custom_settings)
+    override class func getColorizeArguments(url: URL, custom_settings: SettingsRendering, highlightBin: String, dataDir: String?, extraCss: URL?) throws -> ColorizeArguments {
+        var r = try super.getColorizeArguments(url: url, custom_settings: custom_settings, highlightBin: highlightBin, dataDir: dataDir, extraCss: extraCss)
         
         if !custom_settings.themeLua.isEmpty {
             r.inlineTheme = custom_settings.themeLua
@@ -252,9 +252,11 @@ class SCSHXPCService: SCSHBaseXPCService, SCSHXPCServiceProtocol {
             }
         }
         
-        if custom_settings.isDebug {
-            custom_settings.logFile = URL(fileURLWithPath: NSHomeDirectory(), isDirectory: true).appendingPathComponent("Desktop/colorize.log")
+        let logFile = Self.initLog(forSettings: self.settings)
+        defer {
+            Self.doneLog(logFile, forSettings: self.settings)
         }
+        custom_settings.logFile = logFile
         
         do {
             var colorize = try ColorizeArguments(highlight: self.getEmbeddedHighlight(), dataDir: self.dataDir, url: url, custom_settings: custom_settings, extraCss: self.getGlobalCSS())
@@ -306,26 +308,11 @@ class SCSHXPCService: SCSHBaseXPCService, SCSHXPCServiceProtocol {
                 custom_settings = SettingsRendering(settings: self.settings.toDictionary())
             }
         }
-        if custom_settings.isDebug {
-            custom_settings.logFile = URL(fileURLWithPath: NSHomeDirectory(), isDirectory: true).appendingPathComponent("Desktop/colorize.log")
-        }
         
         custom_settings.format = .html
-        do {
-            var colorize = try ColorizeArguments(highlight: self.getEmbeddedHighlight(), dataDir: self.dataDir, url: url, custom_settings: custom_settings, extraCss: self.getGlobalCSS())
-
-            let result = try type(of: self).doColorize(url: url, custom_settings: custom_settings, colorize: &colorize, rsrcEsc: self.rsrcEsc, dos2unix: self.bundle.path(forResource: "dos2unix", ofType: nil), logOs: self.log)
-            
-            reply(result.result.output() ?? "", result.settings.toDictionary() as NSDictionary, nil)
-        } catch {
-            let s: String
-            if let logFile = custom_settings.logFile, let log = try? String(contentsOf: logFile) {
-                s = "<hr />log dump: \n<pre>\(log)</pre>\n"
-            } else {
-                s = ""
-            }
-            
-            reply("<pre>\(error.localizedDescription)</pre>\(s)".toHTML(settings: custom_settings), custom_settings.toDictionary() as NSDictionary, error)
+        
+        self.colorize(url: url, settings: custom_settings.toDictionary() as NSDictionary) { data, settings, error in
+            reply(String(data: data, encoding: .utf8) ?? "ERROR", settings, error)
         }
     }
     
@@ -368,27 +355,10 @@ class SCSHXPCService: SCSHBaseXPCService, SCSHXPCServiceProtocol {
                 custom_settings = SettingsRendering(settings: self.settings.toDictionary())
             }
         }
-        if custom_settings.isDebug {
-            custom_settings.logFile = URL(fileURLWithPath: NSHomeDirectory(), isDirectory: true).appendingPathComponent("Desktop/colorize.log")
-        }
         
         custom_settings.format = .rtf
-        do {
-            var colorize = try ColorizeArguments(highlight: self.getEmbeddedHighlight(), dataDir: self.dataDir, url: url, custom_settings: custom_settings, extraCss: self.getGlobalCSS())
-
-            let result = try (type(of: self)).doColorize(url: url, custom_settings: custom_settings, colorize: &colorize, rsrcEsc: self.rsrcEsc, dos2unix: self.bundle.path(forResource: "dos2unix", ofType: nil), logOs: self.log)
-            
-            reply(result.result.data, result.settings.toDictionary() as NSDictionary, nil)
-        } catch {
-            let s: String
-            if let logFile = custom_settings.logFile, let log = try? String(contentsOf: logFile) {
-                s = "\n\nlog dump: \n\(log)\n"
-            } else {
-                s = ""
-            }
-            let data: Data = "\(error.localizedDescription)\(s)".toRTF(settings: custom_settings)
-            reply(data, custom_settings.toDictionary() as NSDictionary, error)
-        }
+        
+        self.colorize(url: url, settings: custom_settings.toDictionary() as NSDictionary, withReply: reply)
     }
     
     

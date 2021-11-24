@@ -200,8 +200,13 @@ class SCSHBaseXPCService: NSObject {
     
     /// Get all settings need to call colorize.sh.
     func getColorizeArguments(url: URL, custom_settings: SettingsRendering) throws -> ColorizeArguments {
+        let colorize = try (type(of: self)).getColorizeArguments(url: url, custom_settings: custom_settings, highlightBin: self.getEmbeddedHighlight(), dataDir: self.dataDir, extraCss: self.getGlobalCSS())
         
-        let colorize = try ColorizeArguments(highlight: self.getEmbeddedHighlight(), dataDir: self.dataDir, url: url, custom_settings: custom_settings, extraCss: self.getGlobalCSS())
+        return colorize
+    }
+    
+    class func getColorizeArguments(url: URL, custom_settings: SettingsRendering, highlightBin: String, dataDir: String?, extraCss: URL?) throws -> ColorizeArguments {
+        let colorize = try ColorizeArguments(highlight: highlightBin, dataDir: dataDir, url: url, custom_settings: custom_settings, extraCss: extraCss)
         
         return colorize
     }
@@ -250,7 +255,7 @@ class SCSHBaseXPCService: NSObject {
         if let logOs = logOs {
             os_log(.debug, log: logOs, "colorizing %{public}@", url.path)
         }
-        try? "Start colorizing \(url.path)…".appendLine(to: custom_settings.logFile)
+        try? "Start colorizing \(url.path) …".appendLine(to: custom_settings.logFile)
                 
         let directory = NSTemporaryDirectory()
         /// Temp file for the css style.
@@ -635,7 +640,7 @@ img {
                 custom_settings.isWordWrapDefined = true
             }
             
-            var colorize = try ColorizeArguments(highlight: highlightBin, dataDir: dataDir, url: url, custom_settings: custom_settings, extraCss: extraCss)
+            var colorize = try self.getColorizeArguments(url: url, custom_settings: custom_settings, highlightBin: highlightBin, dataDir: dataDir, extraCss: extraCss)
             
             let result = try self.doColorize(url: url, custom_settings: custom_settings, colorize: &colorize, rsrcEsc: rsrcEsc, dos2unix: dos2unixBin, logOs: logOs)
             return (data: result.result.data, settings: result.settings)
@@ -769,5 +774,20 @@ img {
         let languages = try json.decode([String: [String]].self, from: data)
         
         return languages
+    }
+    
+    static func initLog(forSettings settings: Settings) -> URL {
+        let logFile = settings.isDebug ? URL(fileURLWithPath: NSHomeDirectory(), isDirectory: true).appendingPathComponent("Desktop/colorize.log") : URL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true).appendingPathComponent("colorize.log")
+        
+        // Reset the log file.
+        try? "".write(to: logFile, atomically: true, encoding: .utf8)
+        return logFile
+    }
+    
+    static func doneLog(_ logFile: URL, forSettings settings: Settings) {
+        if !settings.isDebug {
+            // Remove the temporary log file.
+            try? FileManager.default.removeItem(at: logFile)
+        }
     }
 }
