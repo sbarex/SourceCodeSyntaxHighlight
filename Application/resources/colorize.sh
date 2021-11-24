@@ -22,7 +22,7 @@ if hash gdate 2>/dev/null; then
     date_format="%Y-%m-%d %T.%N"
 else
     date=date
-    date_format="%Y-%m-%d %T"
+    date_format="%Y-%m-%d %T.000"
 fi
 
 function debug() {

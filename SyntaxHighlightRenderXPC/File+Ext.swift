@@ -12,11 +12,9 @@ import Foundation
 extension String {
     fileprivate static let dateFormatter: ISO8601DateFormatter = {
         let f = ISO8601DateFormatter()
-        f.formatOptions = [.withFullDate, .withFullTime, .withSpaceBetweenDateAndTime, .withDashSeparatorInDate, .withColonSeparatorInTime, .withFractionalSeconds]
-        /*
-        let f = DateFormatter()
-        f.dateFormat = "yyyy-MM-dd HH:mm:ss"
-         */
+        f.formatOptions = [.withFullDate, .withTime, .withSpaceBetweenDateAndTime, .withDashSeparatorInDate, .withColonSeparatorInTime, .withFractionalSeconds]
+        f.timeZone = TimeZone.current
+        
         return f
     }()
     
