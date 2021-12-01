@@ -458,17 +458,19 @@ The command line tool require macOS 10.15.4 or later.
 > - In the `System Preferences > Extensions > Quick Look` disable other extensions one at a time until you find the one that conflicts.
 >
 > If the problem affects only a specific format it is possible that this was registered by some application with a non-standard UTI. Check the UTI with the _Inquiry window_ and send me the value. The support for each format must be defined at compile time.
+>
+>  Also remember that some common files cannot be handled by third party extension because are reserved by the system (for example, `.ts`, `.html`, …).
 
 ### Is it possible to enable / disable support for individual formats?
 > No, Apple does not allow this functionality.
 
 ### Is it possible to add support for _xyz_ format?
-> It depends... first the format must be handled by `highlight`. Check in the _Inquiry window_ if the file is supported.
+> It depends… first the format must be handled by `highlight`. Check in the _Inquiry window_ if the file is supported.
 > If is supported please send me the UTI associated to the file. You can also view the UTI with this terminal command:
 >
 > `$ mdls -name kMDItemContentType -name kMDItemContentTypeTree filename.ext`
 >
-> Some common files cannot be handled by third party extension because are reserved by the system (for example, `.xml`, `.ts`, …).
+> Some common files cannot be handled by third party extension because are reserved by the system (for example, ``.ts`, `.html`, …).
 >
 > You can customize the behavior for files with no extension yourself. See [Plain files](#plain-files) settings.
 
@@ -486,6 +488,8 @@ The command line tool require macOS 10.15.4 or later.
 - On macOS earlier than 12 Monterey, soft word wrap with RTF engine reacts when the window is enlarged but not when it is reduced.
 - Icons of the custom file format are disabled on Catalina (cause an application freeze).
 - In `RTF` mode the colors may be slightly lighter than what is set (probably due to the different handling of color profile). 
+- Typescript `.ts` format cannot be handled because is reserved by macOS and associated to the mpeg video stream format.
+
 
 ## Note for developers
 Starting from macOS 10.15.0 Catalina the `qlgenerator` APIs are deprecated.
@@ -501,7 +505,7 @@ To work around this problem, it is possible to use an XPC service that may have 
 
 The XPC service is executed automatically when requested by the application or the Quick Look Extension. After closing the Quick Look preview the process is automatically closed after some seconds releasing the resources.
 
-The Application and the Quick Look Extension can preview files showing the formatted code as HTML, inside a WKWebView, or as RTF inside a NSTextView. Especially in Big Sur, the use of WebKit within the Quick Look Preview has numerous bugs, so **the suggested rendering engine is `RTF`**.
+The Application and the Quick Look Extension can preview files showing the formatted code as HTML, inside a WKWebView, or as RTF inside a NSTextView. Especially in Big Sur, the use of WebKit within the Quick Look Preview has numerous bugs, so **before macOS 12 Monterey, the suggested rendering engine is `RTF`**.
 
 The settings are stored in `~/Library/Preferences/org.sbarex.SourceCodeSyntaxHighlight.plist`.
 Custom themes and styles are saved in `~/Library/Application Support/Syntax Highlight`.
@@ -517,7 +521,7 @@ The application embed the [`Highlight`](http://www.andre-simon.de/doku/highlight
 - https://alastairs-place.net/blog/2012/06/06/utis-are-better-than-you-think-and-heres-why/
 - https://github.com/whomwah/qlstephen/issues/87
 - https://www.cocoanetics.com/2012/09/fun-with-uti/
-- **https://github.com/whomwah/qlstephen/issues/87#issuecomment-694528728**:
+- ** https://github.com/whomwah/qlstephen/issues/87#issuecomment-694528728 **:
 > Ok, so according to the [source](https://alastairs-place.net/blog/2012/06/06/utis-are-better-than-you-think-and-heres-why/) I references above, I would do the following:
 >
 >     1. Generate the dyn content, in this case I guess its `?0=6:1=sql`.
