@@ -470,7 +470,7 @@ The command line tool require macOS 10.15.4 or later.
 >
 > `$ mdls -name kMDItemContentType -name kMDItemContentTypeTree filename.ext`
 >
-> Some common files cannot be handled by third party extension because are reserved by the system (for example, ``.ts`, `.html`, …).
+> Some common files cannot be handled by third party extension because are reserved by the system (for example, `.ts`, `.html`, …).
 >
 > You can customize the behavior for files with no extension yourself. See [Plain files](#plain-files) settings.
 
@@ -521,7 +521,7 @@ The application embed the [`Highlight`](http://www.andre-simon.de/doku/highlight
 - https://alastairs-place.net/blog/2012/06/06/utis-are-better-than-you-think-and-heres-why/
 - https://github.com/whomwah/qlstephen/issues/87
 - https://www.cocoanetics.com/2012/09/fun-with-uti/
-- ** https://github.com/whomwah/qlstephen/issues/87#issuecomment-694528728 **:
+- **https://github.com/whomwah/qlstephen/issues/87#issuecomment-694528728 :**
 > Ok, so according to the [source](https://alastairs-place.net/blog/2012/06/06/utis-are-better-than-you-think-and-heres-why/) I references above, I would do the following:
 >
 >     1. Generate the dyn content, in this case I guess its `?0=6:1=sql`.
