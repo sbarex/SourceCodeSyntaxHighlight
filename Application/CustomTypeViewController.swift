@@ -156,6 +156,7 @@ class CustomTypeViewController: NSViewController, DropSensorDelegate, NSTableVie
             }
             
             self.tableView.reloadData()
+            self.tableView.scrollRowToVisible(0)
         }
     }
         
@@ -170,12 +171,23 @@ class CustomTypeViewController: NSViewController, DropSensorDelegate, NSTableVie
         self.dropView.layer?.cornerRadius = 12
         self.dropView.layer?.borderColor = NSColor.tertiaryLabelColor.cgColor
         self.dropView.layer?.borderWidth = 4
+        
+        self.tableView.doubleAction = #selector(self.handleDblClik(_:))
     }
     
     override func viewWillAppear() {
         super.viewWillAppear()
         view.window?.standardWindowButton(.zoomButton)?.isHidden = true
         view.window?.standardWindowButton(.miniaturizeButton)?.isHidden = true
+    }
+    
+    @IBAction func handleDblClik(_ sender: Any) {
+        guard self.tableView.selectedRow >= 0 else {
+            return
+        }
+        let uti = self.UTIs[self.tableView.selectedRow]
+        NSPasteboard.general.clearContents()
+        NSPasteboard.general.setString(uti.UTI.UTI, forType: .string)
     }
     
     func enterDrag(_ sender: NSDraggingInfo) {
