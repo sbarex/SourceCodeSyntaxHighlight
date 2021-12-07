@@ -41,23 +41,27 @@ extension SettingsCSS {
 }
 
 extension SettingsFormat: SettingsCSS {
+    /// Get the url of a custom .plist file with some special settings fort the UTI.
+    static func getSpecialSettingsFile(uti: String, supportFolder: URL?, serviceBundle: Bundle?) -> URL? {
+        if let supportFile = supportFolder?.appendingPathComponent("defaults/\(uti).plist"), FileManager.default.fileExists(atPath: supportFile.path) {
+            // Customized file is inside the application support folder.
+            return supportFile
+        } else if let file = serviceBundle?.path(forResource: uti, ofType: "plist", inDirectory: "highlight/defaults") {
+            // Customized file is inside the application resources folder.
+            return URL(fileURLWithPath: file)
+        } else {
+            return nil
+        }
+    }
+    
+    /// Fill the settings loading a custom .plist file for the UTI (if exists).
     func populateSpecialSettings(supportFolder: URL?, serviceBundle: Bundle?) {
         self.isSpecialSettingsPopulated = true
         
-        let baseSettings: String
-        if let supportFile = supportFolder?.appendingPathComponent("defaults/\(uti).plist"), FileManager.default.fileExists(atPath: supportFile.path) {
-            // Customized file inside the application support folder.
-            baseSettings = supportFile.path
-        } else if let file = serviceBundle?.path(forResource: uti, ofType: "plist", inDirectory: "highlight/defaults") {
-            // Customized file inside the application resources folder.
-            baseSettings = file
-        } else {
-            baseSettings = ""
+        guard let baseSettings = type(of: self).getSpecialSettingsFile(uti: uti, supportFolder: supportFolder, serviceBundle: serviceBundle)?.path else {
+            return
         }
-        
-        if !baseSettings.isEmpty {
-            populateSpecialSettings(fromPlist: URL(fileURLWithPath: baseSettings))
-        }
+        populateSpecialSettings(fromPlist: URL(fileURLWithPath: baseSettings))
     }
     
     func populateSpecialSettings(fromPlist file: URL) {

@@ -1292,7 +1292,7 @@ class Settings: SettingsBase {
         }
         
         let bundle = Self.appBundle
-        if uti.isDynamic, let info = bundle.path(forResource: "Info", ofType: "plist"), let dict = NSDictionary(contentsOfFile: info) as? [String: AnyObject] {
+        if let info = bundle.path(forResource: "Info", ofType: "plist"), let dict = NSDictionary(contentsOfFile: info) as? [String: AnyObject] {
             
             let search1: (String, [[String: AnyObject]]) -> String? = { identifier, utis in
                 for u in utis {

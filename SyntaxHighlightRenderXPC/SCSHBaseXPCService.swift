@@ -414,53 +414,61 @@ class SCSHBaseXPCService: NSObject {
         var plain: PlainSettings?
         let attributes: MagicAttributes?
         if uti == nil {
-            try? "No settings found for the file UTI".appendLine(to: logFile)
-            attributes = MagicAttributes(url: url, logFile: logFile)
-            plain = settings.searchPlainSettings(for: url)
-            if !(plain?.UTI.isEmpty ?? true) {
-                uti = plain!.UTI
-            }
-        
-            if uti=="auto" || uti == nil, let attributes = attributes, let utiType = UTTypeCreatePreferredIdentifierForTag(kUTTagClassMIMEType, attributes.mimeType as CFString, nil)?.takeRetainedValue() {
-                // Set the uti from the recognized mime.
-                uti = utiType as String
-            }
-            var syntax = "auto"
-            if plain == nil || plain?.syntax == "auto", let u = uti {
-                // Set the syntax from the extension associated to the UTI.
-                let uu = UTI(u)
-                let languages = highlightLanguages
-                var langs: [(langs: [String], weight: Int)] = []
-                // Assign a weight to all compatible languages
-                for l in languages {
-                    guard !l.value.isEmpty else {
-                        continue
-                    }
-                    var weight = 0
-                    if let index = uu.extensions.firstIndex(of: l.value.first!) {
-                        weight = index == 0 ? 1000 : 1000 - index * 10
-                    } else {
-                        for e in uu.extensions {
-                            if let index = l.value.firstIndex(of: e) {
-                                weight = max(weight, index == 0 ? 100 : 100 - index * 10)
+            let u = UTI(URL: url)
+            if let u = u, let _ = SettingsFormat.getSpecialSettingsFile(uti: u.UTI, supportFolder: self.applicationSupportUrl, serviceBundle: self.serviceBundle) {
+                uti = u.UTI
+                try? "No settings found for the file UTI (\(u.UTI)) but a customized plist file exists.".appendLine(to: logFile)
+                plain = nil
+                attributes = nil
+            } else {
+                try? "No settings found for the file UTI (\(u?.UTI ?? ""))".appendLine(to: logFile)
+                attributes = MagicAttributes(url: url, logFile: logFile)
+                plain = settings.searchPlainSettings(for: url)
+                if !(plain?.UTI.isEmpty ?? true) {
+                    uti = plain!.UTI
+                }
+            
+                if uti=="auto" || uti == nil, let attributes = attributes, let utiType = UTTypeCreatePreferredIdentifierForTag(kUTTagClassMIMEType, attributes.mimeType as CFString, nil)?.takeRetainedValue() {
+                    // Set the uti from the recognized mime.
+                    uti = utiType as String
+                }
+                var syntax = "auto"
+                if plain == nil || plain?.syntax == "auto", let u = uti {
+                    // Set the syntax from the extension associated to the UTI.
+                    let uu = UTI(u)
+                    let languages = highlightLanguages
+                    var langs: [(langs: [String], weight: Int)] = []
+                    // Assign a weight to all compatible languages
+                    for l in languages {
+                        guard !l.value.isEmpty else {
+                            continue
+                        }
+                        var weight = 0
+                        if let index = uu.extensions.firstIndex(of: l.value.first!) {
+                            weight = index == 0 ? 1000 : 1000 - index * 10
+                        } else {
+                            for e in uu.extensions {
+                                if let index = l.value.firstIndex(of: e) {
+                                    weight = max(weight, index == 0 ? 100 : 100 - index * 10)
+                                }
                             }
                         }
+                        guard weight > 0 else {
+                            continue
+                        }
+                        langs.append((langs: l.value, weight: weight))
                     }
-                    guard weight > 0 else {
-                        continue
+                    langs.sort(by: { $0.weight < $1.weight })
+                    syntax = langs.first?.langs.first ?? "txt"
+                    
+                    if syntax == "" {
+                        syntax = "txt"
                     }
-                    langs.append((langs: l.value, weight: weight))
                 }
-                langs.sort(by: { $0.weight < $1.weight })
-                syntax = langs.first?.langs.first ?? "txt"
                 
-                if syntax == "" {
-                    syntax = "txt"
+                if plain == nil {
+                    plain = PlainSettings(pattern: ".*", isRegExp: true, isCaseInsensitive: false, UTI: "public.data", syntax: syntax)
                 }
-            }
-            
-            if plain == nil {
-                plain = PlainSettings(pattern: ".*", isRegExp: true, isCaseInsensitive: false, UTI: "public.data", syntax: syntax)
             }
         } else {
             plain = nil
