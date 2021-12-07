@@ -803,6 +803,10 @@
 			</dict>
 		</dict>
 		<dict>
+			<key>UTTypeDescription</key>
+			<string>Haml document</string>
+			<key>UTTypeIdentifier</key>
+			<string>info.haml.haml</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>public.filename-extension</key>
@@ -810,10 +814,6 @@
 					<string>haml</string>
 				</array>
 			</dict>
-			<key>UTTypeDescription</key>
-			<string>Haml document</string>
-			<key>UTTypeIdentifier</key>
-			<string>info.haml.haml</string>
 		</dict>
 		<dict>
 			<key>UTTypeConformsTo</key>
@@ -1330,6 +1330,25 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>opml</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>dyn.ah62d4rv4ge81a3deru</string>
+				<string>public.text</string>
+				<string>public.source-code</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Planning Domain Description Language</string>
+			<key>UTTypeIdentifier</key>
+			<string>org.pddl.pddl</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>pddl</string>
 				</array>
 			</dict>
 		</dict>

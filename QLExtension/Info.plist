@@ -156,7 +156,9 @@
 				<string>org.ocaml.ocaml-interface</string>
 				<string>org.ocaml.ocaml-source</string>
 				<string>org.omg.ecore</string>
+				<string>org.opml.opml</string>
 				<string>org.opml.source</string>
+				<string>org.pddl.pddl</string>
 				<string>org.python.compiled-script</string>
 				<string>org.racket-lang.source</string>
 				<string>org.rdf.source</string>
@@ -192,6 +194,7 @@
 				<string>public.conf</string>
 				<string>public.content</string>
 				<string>public.data</string>
+				<string>public.data.xml.opml</string>
 				<string>public.diff</string>
 				<string>public.fortran-source</string>
 				<string>public.fortran-90-source</string>
@@ -252,6 +255,7 @@
 				<string>dyn.ah62d4rv4ge81s3xqr75u</string>
 				<string>dyn.ah62d4rv4ge81u2prru</string>
 				<string>dyn.ah62d4rv4ge81u5pu</string>
+				<string>dyn.ah62d4rv4ge81a3deru</string>
 			</array>
 			<key>QLSupportsSearchableItems</key>
 			<false/>

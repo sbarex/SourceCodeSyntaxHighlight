@@ -184,6 +184,7 @@ The application can also handle some [plain files](#plain-files) without extensi
 - Patch files (`.patch`, `.diff`)
 - PDE source files (`.pde`, `.ino`)
 - Perl script files (`.pl`, `.pm`)
+- Planning Domain Description Language (`.pddl`) _as `Lisp`_
 - PHP source files (`.php`, `.php3`, `.php4`, `.ph3`, `.ph4`, `.phtml`)
 - Properties files (`.properties`) _as `INI`_
 - Property List files (`.plist`) _dynamically decompiled with `plutil`_ **On macOS 10.15 Catalina `.plist` is reserved by the system and cannot be handled.**
@@ -547,17 +548,17 @@ The application embed the [`Highlight`](http://www.andre-simon.de/doku/highlight
 > F: public.folder
 > ```
 >
->     1. Next you put this string into a custom base32 converter. E.g. [this website](https://cryptii.com/pipes/base32)
+>     2. Next you put this string into a custom base32 converter. E.g. [this website](https://cryptii.com/pipes/base32)
 >        Input: `?0=6:1=sql`
 >        Variant: `Custom`
 >        Alphabet: `abcdefghkmnpqrstuvwxyz0123456789`
 >        Padding: – Delete if there is any –
 >
->     2. The output should be `h62d4rv4ge81g6pq`. If you have any trailing `=` delete it, thats the padding.
+>     3. The output should be `h62d4rv4ge81g6pq`. If you have any trailing `=` delete it, thats the padding.
 >
->     3. Prepend `dyn.a` and that is your final string.
+>     4. Prepend `dyn.a` and that is your final string.
 >
->     4. What you should insert in the Info.plist is `dyn.ah62d4rv4ge81g6pq`
+>     5. What you should insert in the Info.plist is `dyn.ah62d4rv4ge81g6pq`
 >
 >
 > ```

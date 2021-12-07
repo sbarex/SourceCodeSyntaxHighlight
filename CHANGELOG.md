@@ -2,6 +2,12 @@ Changelog
 =======
 
 
+### 2.1.4 (51)
+New features:
+- On the inquiry windows, double click on a UTI to copy the value on the clipboard.
+- Support for additional UTIs associated with the `.opml` format.
+- Preliminary support for Planning Domain Description Language `.pddl` format rendered as _`Lisp`_.
+
 ### 2.1.3 (50)
 New features:
 - New app icon.
