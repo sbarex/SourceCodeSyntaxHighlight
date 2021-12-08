@@ -2,6 +2,10 @@ Changelog
 =======
 
 
+### 2.1.5 (52)
+New features:
+- Support for `.command` files.
+
 ### 2.1.4 (51)
 New features:
 - On the inquiry windows, double click on a UTI to copy the value on the clipboard.

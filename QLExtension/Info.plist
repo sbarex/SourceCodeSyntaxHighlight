@@ -46,6 +46,7 @@
 				<string>com.apple.property-list</string>
 				<string>com.apple.rez-source</string>
 				<string>com.apple.terminal.settings</string>
+				<string>com.apple.terminal.shell-script</string>
 				<string>com.apple.xcode.entitlements-property-list</string>
 				<string>com.apple.xcode.strings-dictionary</string>
 				<string>com.apple.xcode.strings-text</string>

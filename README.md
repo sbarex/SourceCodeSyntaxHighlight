@@ -114,6 +114,7 @@ The application can also handle some [plain files](#plain-files) without extensi
 - Adobe JSX script files (`.jsx`)
 - Apple workflow (`.wflow`) _as `plist (XML)`_
 - AppleScript (`.scpt`, `.applescript`, `.ascr`) _automatically decompiled with `osadecompile`_
+- Apple shell script files (`.command`)
 - Assembler source files (`.s79`)
 - Azkaban flow files (`.flow`) as _`YAML`_
 - ATL files (`.atl`)
