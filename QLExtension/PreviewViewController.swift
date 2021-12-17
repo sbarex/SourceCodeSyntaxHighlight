@@ -157,7 +157,7 @@ class PreviewViewController: NSViewController, QLPreviewingController, WKNavigat
         )
         
         do {
-            let result = try self.renderFile(at: url)
+            let result = try self.renderFile(at: url, refreshingSettings: false)
             
             DispatchQueue.main.async {
                 let previewRect: CGRect
@@ -328,7 +328,7 @@ class PreviewViewController: NSViewController, QLPreviewingController, WKNavigat
         // This code will be called on macOS 12 Monterey with QLIsDataBasedPreview set.
         
         do {
-            let result = try self.renderFile(at: request.fileURL)
+            let result = try self.renderFile(at: request.fileURL, refreshingSettings: true)
             let r: QLPreviewReply
             switch result {
             case .html(let code, let settings):
@@ -441,7 +441,7 @@ class PreviewViewController: NSViewController, QLPreviewingController, WKNavigat
         case rtf(data: Data, settings: SettingsRendering?)
     }
     
-    func renderFile(at url: URL) throws -> RenderResult {
+    func renderFile(at url: URL, refreshingSettings: Bool) throws -> RenderResult {
         os_log(
             "Generating preview for file %{public}s",
             log: self.log,
@@ -464,7 +464,7 @@ class PreviewViewController: NSViewController, QLPreviewingController, WKNavigat
             return RenderResult.html(code: "Syntax Highlight: \(connettion_error!.localizedDescription).".toHTML(), settings: nil)
         }
         
-        service.colorize(url: url) { (response: Data, settings: NSDictionary, error: Error?) in
+        service.colorize(url: url, refreshingSettings: refreshingSettings) { (response: Data, settings: NSDictionary, error: Error?) in
             let settings = SettingsRendering(settings: settings as! [String: AnyHashable])
             
             os_log(

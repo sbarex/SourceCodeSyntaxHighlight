@@ -39,12 +39,14 @@ class XPCLightRenderService: SCSHBaseXPCService, XPCLightRenderServiceProtocol {
         self.settings = type(of: self).initSettings()
     }
     
-    func colorize(url: URL, withReply reply: @escaping (Data, NSDictionary, Error?) -> Void) {
+    func colorize(url: URL, refreshingSettings: Bool, withReply reply: @escaping (Data, NSDictionary, Error?) -> Void) {
         let logFile = Self.initLog(forSettings: self.settings)
         defer {
             Self.doneLog(logFile, forSettings: self.settings)
         }
-        
+        if refreshingSettings {
+            self.reloadSettings()
+        }
         do {
             let r = try type(of: self).colorize(url: url, settings: self.settings, highlightBin: self.getEmbeddedHighlight(), dataDir: self.dataDir, rsrcEsc: self.rsrcEsc, dos2unixBin: self.bundle.path(forResource: "dos2unix", ofType: nil), highlightLanguages: self.highlightLanguages, extraCss: self.getGlobalCSS(), overridingSettings: nil, logFile: logFile, logOs: self.log)
             reply(r.data, r.settings.toDictionary() as NSDictionary, nil)
