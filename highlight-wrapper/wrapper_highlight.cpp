@@ -581,7 +581,13 @@ HTheme *highlight_get_theme2( const char *theme_name, int *exit_code, ReleaseThe
             full_theme_name += ".theme";
         }
 
-        themeFile = std::__fs::filesystem::canonical(dataDir.getThemePath ( full_theme_name, false ));
+        full_theme_name = dataDir.getThemePath ( full_theme_name, false );
+        if (Platform::fileExists(full_theme_name)) {
+            themeFile = std::__fs::filesystem::canonical(full_theme_name);
+        } else {
+            *exit_code = EXIT_FAILURE;
+            return nullptr;
+        }
     }
 
     //string themesDir = dataDir.getThemePath("");
