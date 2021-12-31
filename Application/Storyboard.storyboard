@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="jPU-kU-bHn">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="jPU-kU-bHn">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19455"/>
-        <plugIn identifier="com.apple.WebKit2IBPlugin" version="19455"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19529"/>
+        <plugIn identifier="com.apple.WebKit2IBPlugin" version="19529"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -322,7 +322,7 @@
                                 </textFieldCell>
                             </textField>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8ow-kY-H9M">
-                                <rect key="frame" x="452" y="13" width="66" height="32"/>
+                                <rect key="frame" x="468" y="13" width="66" height="32"/>
                                 <buttonCell key="cell" type="push" title="Done" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bpx-kH-9ug">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -343,13 +343,13 @@ DQ
                                 </textFieldCell>
                             </textField>
                             <scrollView horizontalHuggingPriority="249" horizontalCompressionResistancePriority="749" borderType="line" autohidesScrollers="YES" horizontalLineScroll="48" horizontalPageScroll="10" verticalLineScroll="48" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bkq-EH-gTv">
-                                <rect key="frame" x="138" y="60" width="373" height="145"/>
+                                <rect key="frame" x="138" y="60" width="389" height="145"/>
                                 <clipView key="contentView" id="DPE-5h-nkk">
-                                    <rect key="frame" x="1" y="1" width="371" height="143"/>
+                                    <rect key="frame" x="1" y="1" width="387" height="143"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="48" viewBased="YES" id="dCJ-eK-5XO">
-                                            <rect key="frame" x="0.0" y="0.0" width="371" height="143"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="387" height="143"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="17" height="0.0"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -432,7 +432,7 @@ DQ
                                                         </tableCellView>
                                                     </prototypeCellViews>
                                                 </tableColumn>
-                                                <tableColumn identifier="FormatColumn" width="274" minWidth="40" maxWidth="1000" id="LfT-ex-fcw">
+                                                <tableColumn identifier="FormatColumn" width="290" minWidth="40" maxWidth="1000" id="LfT-ex-fcw">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -445,11 +445,11 @@ DQ
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
                                                         <tableCellView identifier="UTICell" id="H3j-oV-Xju" customClass="UTICellView" customModule="Syntax_Highlight" customModuleProvider="target">
-                                                            <rect key="frame" x="91" y="0.0" width="273" height="48"/>
+                                                            <rect key="frame" x="91" y="0.0" width="287" height="48"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="4" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cof-Gl-tC7">
-                                                                    <rect key="frame" x="2" y="7" width="267" height="34"/>
+                                                                    <rect key="frame" x="2" y="7" width="283" height="34"/>
                                                                     <subviews>
                                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="9DK-8e-CNa">
                                                                             <rect key="frame" x="-2" y="18" width="96" height="16"/>
@@ -512,7 +512,7 @@ DQ
                                 </scroller>
                             </scrollView>
                             <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tKa-D3-pz1">
-                                <rect key="frame" x="135" y="209" width="380" height="25"/>
+                                <rect key="frame" x="135" y="209" width="396" height="25"/>
                                 <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="ahy-WG-Z72" id="2PV-4O-PBy">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="menu"/>
@@ -526,7 +526,7 @@ DQ
                                 </popUpButtonCell>
                             </popUpButton>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="uzl-Mj-Zf8">
-                                <rect key="frame" x="378" y="13" width="76" height="32"/>
+                                <rect key="frame" x="394" y="13" width="76" height="32"/>
                                 <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="jp0-di-SgA">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -547,7 +547,7 @@ Gw
                                 </textFieldCell>
                             </textField>
                             <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0vo-Zm-9B6">
-                                <rect key="frame" x="138" y="287" width="373" height="21"/>
+                                <rect key="frame" x="138" y="287" width="389" height="21"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="6gS-Cf-XfH">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -620,7 +620,7 @@ Gw
         <scene sceneID="hxM-iF-zcC">
             <objects>
                 <windowController showSeguePresentationStyle="single" id="jPU-kU-bHn" customClass="SettingsSplitWindowController" customModule="Syntax_Highlight" customModuleProvider="target" sceneMemberID="viewController">
-                    <window key="window" title="Syntax Highlight" subtitle="Settings" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" toolbarStyle="preference" id="BuK-O8-wEF">
+                    <window key="window" title="Syntax Highlight" subtitle="Settings" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" toolbarStyle="expanded" id="BuK-O8-wEF">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="245" y="350" width="480" height="400"/>
@@ -629,7 +629,7 @@ Gw
                             <rect key="frame" x="0.0" y="0.0" width="480" height="400"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </view>
-                        <toolbar key="toolbar" implicitIdentifier="17A35899-D75C-4C94-B8EF-3D080368C4DC" autosavesConfiguration="NO" allowsUserCustomization="NO" displayMode="iconAndLabel" sizeMode="regular" id="zmT-uE-8Tr">
+                        <toolbar key="toolbar" implicitIdentifier="17A35899-D75C-4C94-B8EF-3D080368C4DC" explicitIdentifier="toolbar2" autosavesConfiguration="NO" allowsUserCustomization="NO" displayMode="iconAndLabel" sizeMode="regular" id="zmT-uE-8Tr">
                             <allowedToolbarItems>
                                 <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="hd8-JM-dtn"/>
                                 <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="a0o-Az-X44"/>
@@ -643,6 +643,11 @@ Gw
                                         <action selector="showCustomSettings:" target="SDG-Bq-gXP" id="8eK-qM-35Z"/>
                                     </connections>
                                 </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="B8C30BCA-ADD8-4798-8327-2ED0BE2C8C1A" explicitItemIdentifier="PlainButton" label="Plain" paletteLabel="Plain documents" tag="-4" image="doc.plaintext" catalog="system" sizingBehavior="auto" selectable="YES" id="j7y-iS-Hs9">
+                                    <connections>
+                                        <action selector="showPlainEditor:" target="SDG-Bq-gXP" id="fLN-Vw-XFH"/>
+                                    </connections>
+                                </toolbarItem>
                                 <toolbarItem implicitItemIdentifier="9E3E445D-9F5C-4D77-9C5C-E7B21C9B38BD" explicitItemIdentifier="ColorsButton" label="Colors" paletteLabel="Colors editor" tag="-3" image="paintbrush" catalog="system" sizingBehavior="auto" selectable="YES" id="6rC-rW-VQ4">
                                     <connections>
                                         <action selector="showColorsEditor:" target="SDG-Bq-gXP" id="ttE-Wb-O2e"/>
@@ -653,10 +658,14 @@ Gw
                                         <segue destination="Ipx-8a-bSy" kind="show" id="hNC-h9-yHT"/>
                                     </connections>
                                 </toolbarItem>
-                                <toolbarItem implicitItemIdentifier="B8C30BCA-ADD8-4798-8327-2ED0BE2C8C1A" explicitItemIdentifier="PlainButton" label="Plain" paletteLabel="Plain documents" tag="-4" image="doc.plaintext" catalog="system" sizingBehavior="auto" selectable="YES" id="j7y-iS-Hs9">
-                                    <connections>
-                                        <action selector="showPlainEditor:" target="SDG-Bq-gXP" id="fLN-Vw-XFH"/>
-                                    </connections>
+                                <toolbarItem implicitItemIdentifier="17C96690-EE3C-40B5-8F50-400C8C2DFA50" explicitItemIdentifier="autosave" label="Autosave" paletteLabel="Autosave" toolTip="Autosave the settings." tag="-5" sizingBehavior="auto" id="0TU-0H-1v6">
+                                    <switch key="view" horizontalHuggingPriority="750" verticalHuggingPriority="750" tag="-5" controlSize="small" baseWritingDirection="leftToRight" alignment="left" id="fM8-QK-QYH">
+                                        <rect key="frame" x="10" y="14" width="36" height="21"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <connections>
+                                            <action selector="handleAutosaveSwitch:" target="SDG-Bq-gXP" id="RYB-ko-haB"/>
+                                        </connections>
+                                    </switch>
                                 </toolbarItem>
                             </allowedToolbarItems>
                             <defaultToolbarItems>
@@ -666,6 +675,8 @@ Gw
                                 <toolbarItem reference="6rC-rW-VQ4"/>
                                 <toolbarItem reference="hd8-JM-dtn"/>
                                 <toolbarItem reference="ClN-Sk-s3N"/>
+                                <toolbarItem reference="a0o-Az-X44"/>
+                                <toolbarItem reference="0TU-0H-1v6"/>
                             </defaultToolbarItems>
                         </toolbar>
                         <connections>
@@ -769,7 +780,7 @@ Gw
                                                 <action selector="saveAction:" target="ip2-b8-xa2" id="jnh-BT-7ZI"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Revert to Saved…" id="71E-ty-XUb">
+                                        <menuItem title="Revert to Saved…" identifier="revert" id="71E-ty-XUb">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="revertDocumentToSaved:" target="ip2-b8-xa2" id="6JM-Hz-pnP"/>
@@ -974,6 +985,9 @@ Gw
                                 </menu>
                             </menuItem>
                         </items>
+                        <connections>
+                            <outlet property="delegate" destination="Wit-nE-Tst" id="sML-gT-p5x"/>
+                        </connections>
                     </menu>
                     <connections>
                         <outlet property="delegate" destination="Wit-nE-Tst" id="lGt-n7-YmS"/>
@@ -2803,7 +2817,7 @@ Gw
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="hNC-h9-yHT"/>
+        <segue reference="cyD-o7-5hc"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="NSCaution" width="32" height="32"/>

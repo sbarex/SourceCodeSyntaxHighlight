@@ -101,7 +101,7 @@ func dump(settings: SettingsRendering) {
     if !settings.arguments.isEmpty {
         print("  - Extra highlight arguments: \(settings.arguments)")
     }
-    if !settings.appendArguments.isEmpty {
+    if !settings.isAppendArgumentsDefined {
         print("  - Extra appended highlight arguments: \(settings.appendArguments)")
     }
     if settings.isPreprocessorDefined {

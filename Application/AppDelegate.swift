@@ -100,7 +100,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
     func validateMenuItem(_ menuItem: NSMenuItem) -> Bool
     {
         if menuItem.action == #selector(self.checkForUpdates(_:)) {
-            return self.userDriver?.canCheckForUpdates ?? false
+            return self.updater?.canCheckForUpdates ?? false
+        }
+        if menuItem.identifier?.rawValue == "revert", let settings = SCSHWrapper.shared.settings {
+            return settings.isDirty
         }
         return true
     }
@@ -258,14 +261,19 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
         }
         let alert = NSAlert()
         let path = "/usr/local/bin/syntax_highlight_cli"
-        do {
-            try FileManager.default.createSymbolicLink(at: URL(fileURLWithPath: path), withDestinationURL: app)
-            alert.messageText = "Command line tool installed on `\(path)`"
+        if FileManager.default.fileExists(atPath: path) {
+            alert.messageText = "The Command line tool already exists on the `/usr/local/bin/` folder."
             alert.alertStyle = .informational
-        } catch {
-            alert.messageText = "Unable to link the command line tool link into `\(path)`!"
-            alert.informativeText = error.localizedDescription
-            alert.alertStyle = .critical
+        } else {
+            do {
+                try FileManager.default.createSymbolicLink(at: URL(fileURLWithPath: path), withDestinationURL: app)
+                alert.messageText = "Command line tool installed on `\(path)`"
+                alert.alertStyle = .informational
+            } catch {
+                alert.messageText = "Unable to link the command line tool link into `\(path)`!"
+                alert.informativeText = error.localizedDescription
+                alert.alertStyle = .critical
+            }
         }
         alert.runModal()
     }

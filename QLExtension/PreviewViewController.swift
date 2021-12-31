@@ -168,6 +168,7 @@ class PreviewViewController: NSViewController, QLPreviewingController, WKNavigat
                 }
                 switch result {
                 case .html(let code, let settings):
+                    self.preferredContentSize = settings?.qlWindowSize ?? .zero
                     self.handler = handler
                     if self.webView == nil {
                         // Create a configuration for the preferences
@@ -227,6 +228,7 @@ class PreviewViewController: NSViewController, QLPreviewingController, WKNavigat
                     self.webView?.loadHTMLString(code, baseURL: nil)
                     // handler(nil) // call the handler in the delegate method after complete rendering
                 case .rtf(let data, let settings):
+                    self.preferredContentSize = settings?.qlWindowSize ?? .zero
                     if self.textScrollView == nil {
                         let textScrollView = NSScrollView(frame: previewRect)
                         textScrollView.autoresizingMask = [.height, .width]
@@ -350,7 +352,7 @@ class PreviewViewController: NSViewController, QLPreviewingController, WKNavigat
                             return (try? Data(contentsOf: request.fileURL)) ?? "Unable to load the audio file!".data(using: .utf8)!
                         }
                     } else {
-                        r = QLPreviewReply(dataOfContentType: UTType.html, contentSize: .zero) { _ in
+                        r = QLPreviewReply(dataOfContentType: UTType.html, contentSize: settings?.qlWindowSize ?? .zero) { _ in
                             return code.data(using: .utf8)!
                         }
                     }
@@ -376,7 +378,7 @@ class PreviewViewController: NSViewController, QLPreviewingController, WKNavigat
                             return (try? Data(contentsOf: request.fileURL)) ?? "Unable to load the audio file!".data(using: .utf8)!
                         }
                     }  else {
-                        r = QLPreviewReply(dataOfContentType: UTType.rtf, contentSize: .zero) { _ in
+                        r = QLPreviewReply(dataOfContentType: UTType.rtf, contentSize: settings?.qlWindowSize ?? .zero) { _ in
                             return data
                         }
                     }

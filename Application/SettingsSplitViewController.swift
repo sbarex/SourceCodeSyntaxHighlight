@@ -79,9 +79,30 @@ class SettingsSplitViewController: NSSplitViewController {
         case plain
     }
     
+    @objc dynamic var isAutoSaving: Bool {
+        get {
+            return UserDefaults.standard.value(forKey: "auto-save") as? Bool ?? true
+        }
+        set {
+            guard newValue != isAutoSaving else { return }
+            
+            self.willChangeValue(forKey: "isAutoSaving")
+            UserDefaults.standard.setValue(newValue, forKey: "auto-save")
+            self.didChangeValue(forKey: "isAutoSaving")
+            
+            if newValue && (SCSHWrapper.shared.settings?.isDirty ?? false) {
+                saveAction(self)
+            }
+        }
+    }
+    
     @IBOutlet weak var listItem: NSSplitViewItem!
     @IBOutlet weak var mainItem: NSSplitViewItem!
     @IBOutlet weak var previewItem: NSSplitViewItem!
+    
+    @IBAction func handleAutosaveSwitch(_ sender: NSSwitch) {
+        self.isAutoSaving = sender.state == .on
+    }
     
     @IBAction func performClose(_ sender: Any) {
         NSApplication.shared.terminate(self)
@@ -220,7 +241,7 @@ class SettingsSplitViewController: NSSplitViewController {
                 alert.runModal()
                 return
             }
-            if SCSHWrapper.shared.settings?.isDebug ?? false {
+            if !self.isAutoSaving && SCSHWrapper.shared.settings?.isDebug ?? false {
                 let alert = NSAlert()
                 alert.messageText = "Settings saved."
                 alert.addButton(withTitle: "Close")
@@ -246,6 +267,13 @@ class SettingsSplitViewController: NSSplitViewController {
         }
     }
     
+    override func viewWillAppear() {
+        super.viewWillAppear()
+        if let autosaveView = self.view.window?.toolbar?.visibleItems?.first(where: {$0.itemIdentifier.rawValue == "autosave"})?.view as? NSSwitch {
+            autosaveView.state = isAutoSaving ? .on : .off
+        }
+    }
+    
     @objc internal func handleSettingsAvailable(_ notification: Notification) {
         initSettings()
     }
@@ -261,6 +289,9 @@ class SettingsSplitViewController: NSSplitViewController {
             return
         }
         self.view.window?.isDocumentEdited = true
+        if isAutoSaving && settings.isDirty {
+            saveAction(self)
+        }
     }
     
     func editTheme(name: String) {

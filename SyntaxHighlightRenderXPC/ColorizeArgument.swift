@@ -159,9 +159,14 @@ struct ColorizeArguments {
         } else {
             try? "Max data: \(maxData)".appendLine(to: custom_settings.logFile)
             try? "EOL conversion: \(custom_settings.convertEOL ? "on" : "off")".appendLine(to: custom_settings.logFile)
-            if custom_settings.isPreprocessorDefined, !custom_settings.preprocessor.isEmpty {
-                env["preprocessorHL"] = custom_settings.preprocessor.trimmingCharacters(in: CharacterSet.whitespaces)
-                try? "Preprocessor: \(env["preprocessorHL"]!)".appendLine(to: custom_settings.logFile)
+            if custom_settings.isPreprocessorDefined {
+                let preprocessor = custom_settings.preprocessor.trimmingCharacters(in: CharacterSet.whitespaces)
+                if !preprocessor.isEmpty {
+                    env["preprocessorHL"] = preprocessor
+                    try? "Preprocessor: \(preprocessor)".appendLine(to: custom_settings.logFile)
+                } else {
+                    env.removeValue(forKey: "preprocessorHL")
+                }
             } else {
                 env.removeValue(forKey: "preprocessorHL")
             }

@@ -254,6 +254,9 @@ extension Settings: SettingsCSS {
         updateDomains(SettingsBase.Key.hg_path, hgPath)
         updateDomains(SettingsBase.Key.svn_path, svnPath)
         
+        updateDomains(SettingsBase.Key.qlWidth, qlWindowWidth ?? 0)
+        updateDomains(SettingsBase.Key.qlHeight, qlWindowHeight ?? 0)
+        
         var customized_formats: [String: [String: AnyHashable]] = [:]
         for (uti, settings) in self.utiSettings {
             var d = settings.toDictionary(forSaving: true)

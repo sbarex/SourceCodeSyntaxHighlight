@@ -62,6 +62,10 @@ class SettingsView: NSView, SettingsSplitViewElement {
     @IBOutlet weak var vcsSwitch: NSSwitch!
     @IBOutlet weak var vcsButton: NSButton!
     
+    @IBOutlet weak var qlSizeSwitch: NSSwitch!
+    @IBOutlet weak var qlWidthField: NSTextField!
+    @IBOutlet weak var qlHeightField: NSTextField!
+    
     @IBOutlet weak var lspButton: NSButton!
     
     @IBOutlet weak var advancedWarning: NSTextField!
@@ -353,7 +357,7 @@ class SettingsView: NSView, SettingsSplitViewElement {
                 preprocessorTextField.isEnabled = false
             }
             preprocessorTextField.stringValue = s.isPreprocessorDefined || s.specialPreprocessor == nil ? s.preprocessor : s.specialPreprocessor ?? ""
-            preprocessorWarningImageView.isHidden = s.preprocessor.isEmpty || s.preprocessor.range(of: #"(?<=\s|^)\$targetHL(?=\s|$)"#, options: .regularExpression, range: nil, locale: nil) != nil
+            preprocessorWarningImageView.isHidden = s.preprocessor.trimmingCharacters(in: .whitespaces).isEmpty || s.preprocessor.range(of: #"(?<=\s|^)\$targetHL(?=\s|$)"#, options: .regularExpression, range: nil, locale: nil) != nil
             gridView.cell(for: preprocessorTextField)?.row?.isHidden = !self.isAdvancedSettingsVisible
             
             updateCheckbox(syntaxCheckBox, s.isSyntaxDefined, [syntaxPopupButton])
@@ -417,6 +421,12 @@ class SettingsView: NSView, SettingsSplitViewElement {
                 dataLimitPopupButton.selectItem(at: 0)
             }
             gridView.cell(for: dataLimitTextField)?.row?.isHidden = false
+            
+            gridView.cell(for: qlSizeSwitch)?.row?.isHidden = false
+            qlSizeSwitch.state = settings.qlWindowWidth ?? 0 > 0 && settings.qlWindowHeight ?? 0 > 0 ? .on : .off
+            qlWidthField.integerValue = settings.qlWindowWidth ?? 1000
+            qlHeightField.integerValue = settings.qlWindowHeight ?? 800
+            self.handleQLSizeChanged(self.qlSizeSwitch)
         } else {
             gridView.cell(for: debugSwitch)?.row?.isHidden = true
             
@@ -428,6 +438,8 @@ class SettingsView: NSView, SettingsSplitViewElement {
             
             gridView.cell(for: EOLSwitch)?.row?.isHidden = true
             gridView.cell(for: dataLimitTextField)?.row?.isHidden = true
+            
+            gridView.cell(for: qlSizeSwitch)?.row?.isHidden = true
         }
         
         gridView.cell(for: advancedWarning)?.row?.isHidden = isAdvancedSettingsVisible || !settings.hasAdvancedSettings
@@ -594,7 +606,7 @@ class SettingsView: NSView, SettingsSplitViewElement {
     @IBAction func onPreprocessorChanged(_ sender: Any) {
         if let settings = self.settings as? SettingsFormat {
             settings.preprocessor = self.preprocessorTextField.stringValue
-            self.preprocessorWarningImageView.isHidden = settings.preprocessor.isEmpty || settings.preprocessor.range(of: #"(?<=\s|^)\$targetHL(?=\s|$)"#, options: .regularExpression, range: nil, locale: nil) != nil
+            self.preprocessorWarningImageView.isHidden = settings.preprocessor.trimmingCharacters(in: .whitespaces).isEmpty || settings.preprocessor.range(of: #"(?<=\s|^)\$targetHL(?=\s|$)"#, options: .regularExpression, range: nil, locale: nil) != nil
         }
     }
     @IBAction func onSyntaxChanged(_ sender: Any) {
@@ -669,6 +681,35 @@ class SettingsView: NSView, SettingsSplitViewElement {
     @IBAction func onDebugChanged(_ sender: Any) {
         if let settings = self.settings as? Settings {
             settings.isDebug = self.debugSwitch.state == .on
+        }
+    }
+    
+    @IBAction func handleQLSizeChanged(_ sender: NSSwitch) {
+        self.qlWidthField.isEnabled = sender.state == .on
+        self.qlHeightField.isEnabled = sender.state == .on
+        
+        guard let settings = self.settings as? Settings else {
+            return
+        }
+        settings.lockDirty += 1
+        if sender.state == .on {
+            settings.qlWindowWidth = self.qlWidthField.integerValue
+            settings.qlWindowHeight = self.qlHeightField.integerValue
+        } else {
+            settings.qlWindowWidth = nil
+            settings.qlWindowHeight = nil
+        }
+        settings.lockDirty -= 1
+    }
+    
+    @IBAction func onQLSizeChanged(_ sender: NSTextField) {
+        guard let settings = self.settings as? Settings else {
+            return
+        }
+        if sender.tag == 1 {
+            settings.qlWindowWidth = sender.integerValue
+        } else if sender.tag == 2 {
+            settings.qlWindowHeight = sender.integerValue
         }
     }
     

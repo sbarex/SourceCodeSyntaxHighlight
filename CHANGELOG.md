@@ -2,9 +2,18 @@ Changelog
 =======
 
 
+### 2.1.6 (53)
+New features:
+- Support for `.readme` files.
+- Experimental support for defining the size of the Quick Look window.
+- Option for automatic saving of settings changes.
+- Sparkle updated to version 2.0.0.
+
+
 ### 2.1.5 (52)
 New features:
-- Support for `.command` files.
+- Support for Apple shell script `.command` files.
+
 
 ### 2.1.4 (51)
 New features:
@@ -19,8 +28,10 @@ New features:
 - Support for some UTIs defined by Nova.app.
 - Better handling for unsupported plain binary files.
 - More log verbosity.
+
 Bugfix: 
 - Fixed crash due to pointer deallocation.
+
 
 ### 2.1.2 (49)
 Bugfix:
@@ -28,11 +39,14 @@ Bugfix:
 - Fixed binary dump word wrap and html entities.
 - Better strict detection of plain image files.
 
+
 ### 2.1.1 (48)
 New features:
 - Application menu item to install/reveal the CLI tool on `/usr/local/bin` folder.
+
 Bugfix:
 - Fixed creation of `colorize.log` into the Desktop without debug set.
+
 
 ### 2.1.0 (47)
 New features:
@@ -45,50 +59,63 @@ New features:
 - Preliminary support  for `.svelte` files rendered as _`HTML`_.
 - Add `public.make-source` UTI defined by macOS 12 Monterey.
 - Better error messages.
+
 Bugfix:
 - Fixed support for some UTIs associated to BBEdit.
+
 
 ### 2.0.12 (46)
 New features:
 - Support for OPML `.opml` files rendered as _`XML`_.
 
+
 ### 2.0.11 (45)
 Bugfix:
 - Fixed bugs on the color scheme code.
 
+
 ### 2.0.10 (44)
 New features:
 - Support for Apple workflow `.wflow` files rendered as _`plist`_.
+
 Bugfix:
 - Fixed bugs on the color scheme (import, file name with space, background color).
+
 
 ### 2.0.9
 New features:
 - Support for Azkaban `.flow` files rendered as _`YAML`_.
 - Better support for dynamic UTI.
+
 Bugfix:
 - Fixed Kotlin support.
 - Fixed generation of settings folder.
 
+
 ### 2.0.8
 New features:
 - Experimental support for Racket files (`.rkt`) rendered as _`Lisp`_.
+
 Bugfix:
 - Error on saving custom theme.
 - Typo fix.
 
+
 ### 2.0.7
 Bugfix:
 - Fixed `.iml` not rendered as `XML`.  
+
 
 ### 2.0.6
 New features:
 - Added support for `.terminal` files (Apple Teminal Setting file, rendered as `XML`).
 - `highlight` updated to the final 4.1 release.
 
+
 ### 2.0.5
 New features:
 - Added support for `.properties` files (rendered as `INI`).
+
 
 ### 2.0.4
 New features:
@@ -97,17 +124,21 @@ New features:
 Bugfix:
 - Better clojure `.edn` support.
 
+
 ### 2.0.3
 Bugfix:
 - Better error handler when fetching the settings.
+
 
 ### 2.0.2
 Bugfix:
 - Word wrap settings not saved.
 
+
 ### 2.0.1
 New features:
 - Added support for `Clojure` files (`.clj`, `.cljc`, `.cljs`,  `.edn`).
+
 
 ### 2.0.0
 New features:
@@ -130,6 +161,7 @@ Bugfix:
 - Smaller application size.
 - Word wrap optimization.
 
+
 ### 1.0.b31
 New features:
 - Support for Google `kml` files (rendered as `xml`).
@@ -138,6 +170,7 @@ New features:
 
 Bugfix:
 - Temporary fix to the webkit bug on Big Sur.
+
 
 ### 1.0.b30
 New features:
@@ -148,13 +181,16 @@ Bugfix:
 - Regression fix about data limit.
 - Better layout for the list of the supported languages.
 
+
 ### 1.0.b29
 New features:
 - toolbar and touchbar for access to the inquiry and themes window.
+
 Bugfix:
 - Cosmetic fix for Big Sur.
 - The html output mode fail on Big Sur. It would appear that there is a bug preventing the recognition of the extension entitlements which causes webkit to fail to run. The use of the deprecated WebView temporarily bypasses the problem.
 - Closing the preferences window with unsaved settings show a confirmation popup.
+
 
 ### 1.0.b28
 New features:
@@ -167,15 +203,18 @@ Bugfix:
 - fixed a bug for the missing preview in html mode on the settings window.
 - predefined output mode set to `.rtf` (less expansive that html).
 
+
 ### 1.0.b27
 New features:
 - main application can only set the preferences and is no longer a viewer.
 - support for `.xsd`, `.xquery`, `.xsl`, `.asp` and julia (`.jl`) formats.
 - UTI info panel.
 
+
 ### 1.0.b26
 New features:
 - support for `.vue` files (highlight has a beta support for vue files).
+
 
 ### 1.0.b25
 New features:
@@ -183,21 +222,26 @@ New features:
 - support for `.podspec` files (interpreted as ruby).
 - new icon with Big Sur style.
 
+
 ### 1.0.b24
 New features:
 - support for powershell (`.ps1`, `.psm1`, `.psd1`) files.
+
 
 ### 1.0.b23
 New features:
 - support for .nim files.
 
+
 ### 1.0.b22
 New features:
 - support for fortran (`.f`, `.for`, `.f90`) files.
 
+
 ### 1.0.b21
 New features:
 - support for `.stringsdict`, `.csh`, `.tcsh`, `.ksh` files.
+
 
 ### 1.0.b20
 New features:
@@ -207,22 +251,27 @@ New features:
 - preview now can show custom source file.
 - better support for standard preprocessor for many file format (if you have previously customized the preprocessor for some formats please check if it require to add the placeholder $targetHL).
 - `highlight` updated to 3.57.
+
 Bugfix:
 - rust file extension.
 - settings migration.
+
 
 ### 1.0.b19
 New features:
 - `highlight` updated to 3.55.
 - enhanced inquiry panel.
 
+
 ### 1.0.b18
 New features:
 - added support for c++ header files.
 
+
 ### 1.0.b17
 New features:
 - added an option to limit the amount of data to format.
+
 
 ### 1.0.b16
 New features:

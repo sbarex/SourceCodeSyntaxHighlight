@@ -16,7 +16,7 @@ extension SettingsBase {
 
 extension SettingsFormat {
     @objc override var hasAdvancedSettings: Bool {
-        return super.hasAdvancedSettings || (isPreprocessorDefined && !preprocessor.isEmpty) || (isSyntaxDefined && !syntax.isEmpty) || (isAppendArgumentsDefined && !appendArguments.isEmpty) || isUsingLSP
+        return super.hasAdvancedSettings || (isPreprocessorDefined && !preprocessor.trimmingCharacters(in: .whitespaces).isEmpty) || (isSyntaxDefined && !syntax.isEmpty) || (isAppendArgumentsDefined && !appendArguments.isEmpty) || isUsingLSP
     }
     
     var isLSPValid: Bool {

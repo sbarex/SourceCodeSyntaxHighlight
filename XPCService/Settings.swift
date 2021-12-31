@@ -94,6 +94,9 @@ class SettingsBase: NSObject {
         static let lspSemantic = "LSP-semantic"
         static let lspSyntaxError = "LSP-syntax-error"
         static let lspOptions = "LSP-options"
+        
+        static let qlWidth = "ql-window-width"
+        static let qlHeight = "ql-window-height"
     }
     
     fileprivate var refreshLock = 0
@@ -338,11 +341,24 @@ class SettingsBase: NSObject {
     }
     
     // MARK:
-    internal var lockDirty = 0
+    internal var mustNotifyDirtyStatus = false
+    internal var lockDirty = 0 {
+        didSet {
+            if oldValue != lockDirty && lockDirty == 0 && mustNotifyDirtyStatus {
+                mustNotifyDirtyStatus = false
+                NotificationCenter.default.post(name: .SettingsIsDirty, object: self)
+            }
+        }
+    }
     @objc dynamic var isDirty = false {
         didSet {
-            if oldValue != isDirty && lockDirty == 0 {
-                NotificationCenter.default.post(name: .SettingsIsDirty, object: self)
+            if oldValue != isDirty {
+                if lockDirty == 0 {
+                    mustNotifyDirtyStatus = false
+                    NotificationCenter.default.post(name: .SettingsIsDirty, object: self)
+                } else {
+                    mustNotifyDirtyStatus = true
+                }
             }
         }
     }
@@ -428,6 +444,7 @@ class SettingsBase: NSObject {
         lockDirty += 1
         self.override(fromDictionary: settings)
         self.isDirty = false
+        self.mustNotifyDirtyStatus = false
         lockDirty -= 1
     }
     
@@ -833,7 +850,7 @@ class SettingsFormat: SettingsBase, SettingsFormatProtocol, SettingsLSP {
     
     override var isCustomized: Bool {
         get {
-            return super.isCustomized || (isPreprocessorDefined && !preprocessor.isEmpty) || (isAppendArgumentsDefined && !appendArguments.isEmpty) || (isSyntaxDefined || !syntax.isEmpty) || isLSPCustomized
+            return super.isCustomized || isPreprocessorDefined || isAppendArgumentsDefined || isSyntaxDefined || isLSPCustomized
         }
     }
       
@@ -880,17 +897,17 @@ class SettingsFormat: SettingsBase, SettingsFormatProtocol, SettingsLSP {
         
         if let args = settings[SettingsBase.Key.appendedExtraArguments] as? String {
             self.appendArguments = args
-            self.isAppendArgumentsDefined = !args.isEmpty
+            self.isAppendArgumentsDefined = true
         }
         
         if let syntax = settings[SettingsBase.Key.syntax] as? String {
             self.syntax = syntax
-            self.isSyntaxDefined = !syntax.isEmpty
+            self.isSyntaxDefined = true
         }
         
         if let preprocessor = settings[SettingsBase.Key.preprocessor] as? String {
             self.preprocessor = preprocessor
-            self.isPreprocessorDefined = !preprocessor.isEmpty
+            self.isPreprocessorDefined = true
         }
         
         overrideLSP(fromDictionary: dict)
@@ -911,13 +928,13 @@ class SettingsFormat: SettingsBase, SettingsFormatProtocol, SettingsLSP {
     override func toDictionary(forSaving: Bool = false) -> [String: AnyHashable] {
         var r = super.toDictionary(forSaving: forSaving)
         
-        if isAppendArgumentsDefined, !appendArguments.isEmpty {
+        if isAppendArgumentsDefined {
             r[SettingsBase.Key.appendedExtraArguments] = appendArguments
         }
-        if isSyntaxDefined, !syntax.isEmpty {
+        if isSyntaxDefined {
             r[SettingsBase.Key.syntax] = syntax
         }
-        if isPreprocessorDefined, !preprocessor.isEmpty {
+        if isPreprocessorDefined {
             r[SettingsBase.Key.preprocessor] = preprocessor
         }
         
@@ -1009,6 +1026,25 @@ class Settings: SettingsBase {
         }
     }
     
+    
+    dynamic var qlWindowWidth: Int? {
+        didSet {
+            requestRefreshOnChanged(oldValue: oldValue, newValue: qlWindowWidth)
+        }
+    }
+    dynamic var qlWindowHeight: Int? {
+        didSet {
+            requestRefreshOnChanged(oldValue: oldValue, newValue: qlWindowHeight)
+        }
+    }
+    var qlWindowSize: CGSize {
+        if let w = self.qlWindowWidth, w > 0, let h = self.qlWindowHeight, h > 0 {
+            return CGSize(width: w, height: h)
+        } else {
+            return .zero
+        }
+    }
+    
     /// Customized settings for UTIs.
     fileprivate(set) var utiSettings: [String: SettingsFormat] = [:]
 
@@ -1050,6 +1086,13 @@ class Settings: SettingsBase {
             for (uti, uti_settings) in custom_formats {
                 self.utiSettings[uti] = SettingsFormat(uti: uti, settings: uti_settings)
             }
+        }
+        
+        if let v = settings[SettingsBase.Key.qlWidth] as? Int, v > 0 {
+            self.qlWindowWidth = v
+        }
+        if let v = settings[SettingsBase.Key.qlHeight] as? Int, v > 0 {
+            self.qlWindowHeight = v
         }
         
         self.plainSettings = []
@@ -1099,6 +1142,13 @@ class Settings: SettingsBase {
             self.convertEOL = v
         }
         
+        if let v = settings[SettingsBase.Key.qlWidth] as? Int, v > 0 {
+            self.qlWindowWidth = v
+        }
+        if let v = settings[SettingsBase.Key.qlHeight] as? Int, v > 0 {
+            self.qlWindowHeight = v
+        }
+        
         self.isFormatDefined = true
         self.isLightThemeNameDefined = true
         self.isDarkThemeNameDefined = true
@@ -1141,6 +1191,9 @@ class Settings: SettingsBase {
         
         r[SettingsBase.Key.maxData] = self.maxData
         r[SettingsBase.Key.convertEOL] = self.convertEOL
+        
+        r[SettingsBase.Key.qlWidth] = self.qlWindowWidth ?? 0
+        r[SettingsBase.Key.qlHeight] = self.qlWindowHeight ?? 0
         
         var customized: [String: [String: AnyHashable]] = [:]
         for (uti, settingsFormat) in self.utiSettings {
@@ -1567,7 +1620,7 @@ class SettingsRendering: Settings, SettingsFormatProtocol, SettingsLSP {
     
     override var isCustomized: Bool {
         get {
-            return super.isCustomized || (isAppendArgumentsDefined && !appendArguments.isEmpty) || (isPreprocessorDefined && !preprocessor.isEmpty) || (isSyntaxDefined && !syntax.isEmpty) || isLSPCustomized
+            return super.isCustomized || isAppendArgumentsDefined || isPreprocessorDefined || isSyntaxDefined || isLSPCustomized
         }
     }
     
@@ -1714,13 +1767,13 @@ class SettingsRendering: Settings, SettingsFormatProtocol, SettingsLSP {
         r["logFile"] = self.logFile?.path
         r["isError"] = self.isError
         
-        if isAppendArgumentsDefined, !appendArguments.isEmpty {
+        if isAppendArgumentsDefined {
             r[SettingsBase.Key.appendedExtraArguments] = appendArguments
         }
-        if isSyntaxDefined, !syntax.isEmpty {
+        if isSyntaxDefined {
             r[SettingsBase.Key.syntax] = syntax
         }
-        if isPreprocessorDefined, !preprocessor.isEmpty {
+        if isPreprocessorDefined {
             r[SettingsBase.Key.preprocessor] = preprocessor
         }
         

@@ -162,7 +162,7 @@ The application can also handle some [plain files](#plain-files) without extensi
 - JavaFX ML (`.fxml`)
 - Javascript files (`.js`, `.jscript`, `.javascript`, `.mjs`)
 - Jetbrains Project file (`.iml`)
-- JSON files (`.json`) (_beautify with `python3`_)
+- JSON files (`.json`)
 - Julia source files  (`.jl`)
 - Kermeta source files (`.kmt`)
 - Korn Shell script files (`.ksh`)
@@ -192,6 +192,7 @@ The application can also handle some [plain files](#plain-files) without extensi
 - Python source files (`.py`)
 - Racket (`.rkt`) _as `Lisp`_
 - RDF files (`.rdf`)
+- Readme files (`.readme`) _as plain text_
 - Rez files (`.r`)
 - Ruby on Rails files (`.rhtml`, `.erb`, `.rjs`)
 - Ruby Gems file (`.gemfile`)
@@ -256,6 +257,7 @@ You can set the settings for all supported formats on the _General_ tab.
 |Data limit| Maximum amount of data to format, data beyond the limit is omitted. Specify 0 to not limit. This option is ignored when using a Language Server. ||
 |Convert line ending| Allow to convert Windows (`CRLF`) and Mac Classic (`CR`) line ending to the Unix style (`LN`). This option is ignored when a _preprocessor_ is set or when a _Language Server_ is enabled. The line ending conversion is made my [`dos2unix`](https://waterlan.home.xs4all.nl/dos2unix.html). |Yes|
 |VCS Support| If enabled, allow to highlight lines added/edited/removed from last commit. It can handle VCS based on `git` and `mercurial`. |Yes|
+|Custom Quick Look size|Allow you to choose a custom size for the content area of the Quick Look window. _Use with caution on macOS before version 12 Monterey_.||
 |Debug | If enabled, a `colorize.log` and `colorize.rtf\|html` file will be created on your Desktop folder with the log of last rendering.|Yes|
 
 You can also override the global options for some formats on the _Formats_ tab.
@@ -267,7 +269,7 @@ When customizing the settings for a specific format, these options will be avail
 |Settings|Description|Advanced|
 |:---------|:-------------| :----: |
 |Append highlight arguments|Arguments _appended_ to the _Extra highlight arguments_. Arguments that contains a white space must be protected inside quotes. |Yes|
-|Preprocessor|Set a program or a shell script to preprocess the source file before the formatting. The program must output to stdout the data to be passed to `highlight`. You **must** pass the name of the source file using the `$targetHL` placeholder. With the preprocessor you can handle file format not directly supported by `highlight`. This option is ignored when using a Language Server. The execution of the preprocessor is made inside the same env of the script that handle `highlight`. |Yes|
+|Preprocessor|Set a program or a shell script to preprocess the source file before the formatting. The program must output to stdout the data to be passed to `highlight`. You **must** pass the name of the source file using the `$targetHL` placeholder. With the preprocessor you can handle file format not directly supported by `highlight`. This option is ignored when using a Language Server. The execution of the preprocessor is made inside the same env of the script that handle `highlight`. For example you can beautify a JSON file with this preprocesso: `python3 -m json.tool $targetHL`. _When you use a preprocessor you will probably want to disable the support for version control._  |Yes|
 |Syntax| Set which language must be used to recognize the source file. If not set will be used the file name extension. |Yes|
 
 
