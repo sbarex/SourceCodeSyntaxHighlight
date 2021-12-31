@@ -2,6 +2,27 @@
 <rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
     <channel>
         <title>Syntax Highlight</title> 
+        
+        <item>
+            <title>2.1.6</title>
+            <pubDate>ven, 31 dic 2021 16:48:00 +0100</pubDate>
+            <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
+            <enclosure type="application/octet-stream" url="https://github.com/sbarex/SourceCodeSyntaxHighlight/releases/download/2.1.6/Syntax.Highlight.zip" sparkle:shortVersionString="2.1.6" sparkle:version="53" sparkle:edSignature="Vojs4N4XO+ZxF+o95Mqx2FK78chdNlb+Z0bj371YkGnWhdhOlLBGC1fMM1bzB7cwjzbLIouN9vrUIUcl5qmyBw==" length="11409222" />
+            <description><![CDATA[
+                <h2>Release 2.1.6 (53)</h2>
+                <p>New features:</p>
+                <ul>
+                    <li>Support for <code>.readme</code> files.</li>
+                    <li>Experimental support for defining the size of the Quick Look window.</li>
+                    <li>Option for automatic saving of settings changes.</li>
+                    <li>Sparkle updated to version 2.0.0.</li>
+                </ul>
+
+                <p><a href="https://github.com/sbarex/SourceCodeSyntaxHighlight/blob/master/CHANGELOG.md">See the complete changelog.</a></p>
+            ]]>
+            </description>
+        </item>
+        
         <item>
             <title>1.0</title>
             <pubDate>sab, 05 dic 2020 18:58:08 +0100</pubDate>
@@ -403,7 +424,7 @@
                     <li>Fixed crash due to pointer deallocation.</li>
                 </ul>
 
-                <p><a href="https://github.com/sbarex/SourceCodeSyntaxHighlight/blob/master/CHANGELOG.md">See the complete change log.</a></p>
+                <p><a href="https://github.com/sbarex/SourceCodeSyntaxHighlight/blob/master/CHANGELOG.md">See the complete changelog.</a></p>
             ]]>
             </description>
         </item>
@@ -423,7 +444,7 @@
                     <li>Preliminary support for Planning Domain Description Language <code>.pddl</code> format rendered as <i><code>Lisp</code></i>.</li>
                 </ul>
 
-                <p><a href="https://github.com/sbarex/SourceCodeSyntaxHighlight/blob/master/CHANGELOG.md">See the complete change log.</a></p>
+                <p><a href="https://github.com/sbarex/SourceCodeSyntaxHighlight/blob/master/CHANGELOG.md">See the complete changelog.</a></p>
             ]]>
             </description>
         </item>
@@ -440,7 +461,7 @@
                     <li>Support for Apple shell script <code>.command</code> files.</li>
                 </ul>
 
-                <p><a href="https://github.com/sbarex/SourceCodeSyntaxHighlight/blob/master/CHANGELOG.md">See the complete change log.</a></p>
+                <p><a href="https://github.com/sbarex/SourceCodeSyntaxHighlight/blob/master/CHANGELOG.md">See the complete changelog.</a></p>
             ]]>
             </description>
         </item>
