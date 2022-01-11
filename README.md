@@ -1,3 +1,5 @@
+[![counter](https://img.shields.io/github/downloads/sbarex/SourceCodeSyntaxHighlight/latest/total)](https://github.com/sbarex/SourceCodeSyntaxHighlight/releases) [![counter](https://img.shields.io/github/downloads/sbarex/SourceCodeSyntaxHighlight/total)](https://github.com/sbarex/SourceCodeSyntaxHighlight/releases)
+
 <p align="center">
   <img src="assets/icon.png" width="128" height="128" alt="logo" />
 </p>
