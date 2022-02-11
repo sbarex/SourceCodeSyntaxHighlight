@@ -479,6 +479,7 @@ class SCSHXPCService: SCSHBaseXPCService, SCSHXPCServiceProtocol {
                 for uti in self.settings.utiSettings.keys.filter({ !new_settings.utiSettings.keys.contains($0) }) {
                     try? self.settings.utiSettings[uti]?.purgeCSS(inFolder: CSSFolder)
                 }
+                try? self.settings.purgeCSS(inFolder: CSSFolder)
             }
             
             for (_, settings) in new_settings.utiSettings {

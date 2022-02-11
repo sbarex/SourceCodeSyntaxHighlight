@@ -269,6 +269,10 @@ extension Settings: SettingsCSS {
             }
         }
         
+        if let folder = CSSFolder {
+            try? self.exportCSSFile(toFolder: folder)
+        }
+        
         updateDomains(SettingsBase.Key.customizedUTISettings, customized_formats.count > 0 ? customized_formats : nil)
         
         var plain_formats: [[String: AnyHashable]] = []
