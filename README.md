@@ -115,7 +115,7 @@ The application can also handle some [plain files](#plain-files) without extensi
 - Apple workflow (`.wflow`) _as `plist (XML)`_
 - AppleScript (`.scpt`, `.applescript`, `.ascr`) _automatically decompiled with `osadecompile`_
 - Apple shell script files (`.command`)
-- Assembler source files (`.s79`)
+- Assembler source files (`.asm`, `.s79`)
 - Azkaban flow files (`.flow`) as _`YAML`_
 - ATL files (`.atl`)
 - Bash Script files (`.bash`)
@@ -223,7 +223,7 @@ The application can also handle some [plain files](#plain-files) without extensi
 - Xcode localizable strings files (`.strings`, `.stringsdict`) (dynamically decompiled with `plutil`) _as XML_ 
 - XHTML files (`.xhtml`)
 - XML files (`.xml`) **Before macOS 12 Monterey `.xml` is reserved by the system and cannot be handled.**
-- XSD Schema files (`.xsd`, `.xquery`)
+- XSD Schema files (`.xsd`, `.xquery`, `.xq`, `.xu`)
 - XUL files (`.xul`)
 - YAML files (`.yaml`)
 - Z Shell script files (`.zsh`)

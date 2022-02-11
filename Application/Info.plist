@@ -48,6 +48,8 @@
 	<string>J+ikFQXeR6eaUV0jvyfZAJKeYh+9UKGJuD/kJSIXnZk=</string>
 	<key>SUScheduledCheckInterval</key>
 	<real>86400</real>
+	<key>SUEnableInstallerLauncherService</key>
+	<true/>
 	<key>UTExportedTypeDeclarations</key>
 	<array>
 		<dict>
@@ -511,6 +513,7 @@
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.source-code</string>
+				<string>dyn.ah62d4rv4ge80c65r</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>ASM source files</string>
@@ -521,6 +524,7 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>s79</string>
+					<string>asm</string>
 				</array>
 			</dict>
 		</dict>
@@ -1632,6 +1636,9 @@
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.item</string>
+				<string>dyn.ah62d4rv4ge81u6pzqz3hw</string>
+				<string>dyn.ah62d4rv4ge81u6k</string>
+				<string>dyn.ah62d4rv4ge81u7k</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>XSD/XQuery/ProfRaw Source File</string>
@@ -1643,6 +1650,8 @@
 				<array>
 					<string>xsd</string>
 					<string>xquery</string>
+					<string>xq</string>
+					<string>xu</string>
 				</array>
 			</dict>
 		</dict>
