@@ -2,6 +2,16 @@ Changelog
 =======
 
 
+### 2.1.7 (54)
+New features:
+- Better support for xquery files (`.xquery`, `.xu`, `.xq`).
+- Better support for assembler files (`.asm`).
+ 
+Bugfix: 
+- Better procedure for install the command line tool.
+- Fixed custom css style for global settings.
+- Fixed the Sparkle integration bug. **If you have installed version 2.1.6 you may need to [re-download the updated app from the web](https://github.com/sbarex/SourceCodeSyntaxHighlight/releases/download/2.1.7/Syntax.Highlight.zip).** 
+
 ### 2.1.6 (53)
 New features:
 - Support for `.readme` files.
