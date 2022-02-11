@@ -4,24 +4,36 @@
         <title>Syntax Highlight</title> 
         
         <item>
-            <title>2.1.6</title>
-            <pubDate>ven, 31 dic 2021 16:48:00 +0100</pubDate>
+            <title>2.1.7</title>
+            <pubDate>ven, 18 feb 2021 18:35:00 +0100</pubDate>
             <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
-            <enclosure type="application/octet-stream" url="https://github.com/sbarex/SourceCodeSyntaxHighlight/releases/download/2.1.6/Syntax.Highlight.zip" sparkle:shortVersionString="2.1.6" sparkle:version="53" sparkle:edSignature="Vojs4N4XO+ZxF+o95Mqx2FK78chdNlb+Z0bj371YkGnWhdhOlLBGC1fMM1bzB7cwjzbLIouN9vrUIUcl5qmyBw==" length="11409222" />
+            <enclosure type="application/octet-stream" url="https://github.com/sbarex/SourceCodeSyntaxHighlight/releases/download/2.1.7/Syntax.Highlight.zip" sparkle:shortVersionString="2.1.7" sparkle:version="54" sparkle:edSignature="KjgtrLI7DRq3VeG4AhMEw+wIOZK+xyZ62xCWSrpm1XrcJqDkE/UtQ/kHbHcJjWdjtzA5Y4hzb2thHQELcVADCQ==" length="11412497" />
             <description><![CDATA[
-                <h2>Release 2.1.6 (53)</h2>
+                <h2>Release 2.1.7 (54)</h2>
                 <p>New features:</p>
                 <ul>
-                    <li>Support for <code>.readme</code> files.</li>
-                    <li>Experimental support for defining the size of the Quick Look window.</li>
-                    <li>Option for automatic saving of settings changes.</li>
-                    <li>Sparkle updated to version 2.0.0.</li>
+                    <li>Better support for xquery files (<code>.xquery</code>, <code>.xu</code>, <code>xq</code>).</li>
+                    <li>Better support for assembler files (<code>.asm</code>).</li>
                 </ul>
+                <p>Bugfix: </p>
+                <ul>
+                    <li>Better procedure for install the command line tool.</li>
+                    <li>Fixed custom css style for global settings.</li>
+                    <li>Fixed the Sparkle integration bug..</li>
+                </ul>
+                <p><b>If you have installed version 2.1.6 you may need to <a href="https://github.com/sbarex/SourceCodeSyntaxHighlight/releases/download/2.1.7/Syntax.Highlight.zip">re-download the updated app from the web</a>.</b></p>
+
+                <ol>
+                    <li>Unzip the archive</li>
+                    <li>Replace the app inside the <code>Applications</code> folder</li>
+                    <li>Start <code>Syntax Highlight</code> with right click (or cmd-click) and choose open from the context menu.</li>
+                </ol>
 
                 <p><a href="https://github.com/sbarex/SourceCodeSyntaxHighlight/blob/master/CHANGELOG.md">See the complete changelog.</a></p>
             ]]>
             </description>
         </item>
+        
         
         <item>
             <title>1.0</title>
