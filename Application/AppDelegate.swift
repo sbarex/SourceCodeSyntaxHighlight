@@ -256,24 +256,40 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
     }
     
     @IBAction func installCLITool(_ sender: Any) {
-        guard let app = Bundle.main.url(forResource: "syntax_highlight_cli", withExtension: nil) else {
+        guard let srcApp = Bundle.main.url(forResource: "syntax_highlight_cli", withExtension: nil) else {
             return
         }
+        let dstApp = URL(fileURLWithPath: "/usr/local/bin/syntax_highlight_cli")
+        
+        let alert1 = NSAlert()
+        alert1.messageText = "The tool will be installed in \(dstApp.path) \nDo you want to continue?"
+        alert1.informativeText = "You can call the tool directly from this path: \n\(srcApp.path) \n\nManually install from a Terminal shell with this command: \nln -sfv \(srcApp.path) \(dstApp.path)"
+        alert1.alertStyle = .informational
+        alert1.addButton(withTitle: "OK").keyEquivalent = "\r"
+        alert1.addButton(withTitle: "Cancel").keyEquivalent = "\u{1b}"
+        guard alert1.runModal() == .alertFirstButtonReturn else {
+            return
+        }
+        guard access(dstApp.deletingLastPathComponent().path, W_OK) == 0 else {
+            let alert = NSAlert()
+            alert.messageText = "Unable to install the tool: \(dstApp.deletingLastPathComponent().path) is not writable"
+            alert.informativeText = "You can directly call the tool from this path: \n\(srcApp.path) \n\nManually intall from a Terminal shell with this command: \nln -sfv \(srcApp.path) \(dstApp.path)"
+            alert.alertStyle = .warning
+            alert.addButton(withTitle: "Close").keyEquivalent = "\u{1b}"
+            alert.runModal()
+            return
+        }
+        
         let alert = NSAlert()
-        let path = "/usr/local/bin/syntax_highlight_cli"
-        if FileManager.default.fileExists(atPath: path) {
-            alert.messageText = "The Command line tool already exists on the `/usr/local/bin/` folder."
+        do {
+            try FileManager.default.createSymbolicLink(at: dstApp, withDestinationURL: srcApp)
+            alert.messageText = "Command line tool installed"
+            alert.informativeText = "You can call it from this path: \(dstApp.path)"
             alert.alertStyle = .informational
-        } else {
-            do {
-                try FileManager.default.createSymbolicLink(at: URL(fileURLWithPath: path), withDestinationURL: app)
-                alert.messageText = "Command line tool installed on `\(path)`"
-                alert.alertStyle = .informational
-            } catch {
-                alert.messageText = "Unable to link the command line tool link into `\(path)`!"
-                alert.informativeText = error.localizedDescription
-                alert.alertStyle = .critical
-            }
+        } catch {
+            alert.messageText = "Unable to install the command line tool"
+            alert.informativeText = "(\(error.localizedDescription))\n\nYou can manually install the tool from a Terminal shell with this command: \nln -sfv \(srcApp.path) \(dstApp.path)"
+            alert.alertStyle = .critical
         }
         alert.runModal()
     }
