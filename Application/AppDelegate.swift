@@ -273,7 +273,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
         guard access(dstApp.deletingLastPathComponent().path, W_OK) == 0 else {
             let alert = NSAlert()
             alert.messageText = "Unable to install the tool: \(dstApp.deletingLastPathComponent().path) is not writable"
-            alert.informativeText = "You can directly call the tool from this path: \n\(srcApp.path) \n\nManually intall from a Terminal shell with this command: \nln -sfv \(srcApp.path) \(dstApp.path)"
+            alert.informativeText = "You can directly call the tool from this path: \n\(srcApp.path) \n\nManually install from a Terminal shell with this command: \nln -sfv \(srcApp.path) \(dstApp.path)"
             alert.alertStyle = .warning
             alert.addButton(withTitle: "Close").keyEquivalent = "\u{1b}"
             alert.runModal()
