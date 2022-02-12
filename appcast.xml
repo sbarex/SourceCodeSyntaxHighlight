@@ -18,7 +18,7 @@
                 <ol>
                     <li>Unzip the archive</li>
                     <li>Replace the app inside the <code>Applications</code> folder</li>
-                    <li>Start <code>Syntax Highlight</code> with right click (or cmd-click) and choose open from the context menu.</li>
+                    <li>Start <code>Syntax Highlight</code> with right click (or ctrl-click) and choose open from the context menu.</li>
                 </ol>
 
                 <p><a href="https://github.com/sbarex/SourceCodeSyntaxHighlight/blob/master/CHANGELOG.md">See the complete changelog.</a></p>
