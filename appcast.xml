@@ -14,7 +14,7 @@
                     <li>Better support Gdscript files (Godot engine) (<code>.gd</code>).</li>
                     <li>Highlight updated to version 4.2.</li>
                 </ul>
-                <p><b>In release 2.1.6 the automatic update does not work and you have to <a href="https://github.com/sbarex/SourceCodeSyntaxHighlight/releases/download/2.1.8/Syntax.Highlight.zip">manually download the application from the web</a>.</b></p>
+                <p><b>If you use the release 2.1.6, the automatic update does not work. Tou have to <a href="https://github.com/sbarex/SourceCodeSyntaxHighlight/releases/download/2.1.8/Syntax.Highlight.zip">manually download the application from the web</a>.</b></p>
                 <ol>
                     <li>Unzip the archive</li>
                     <li>Replace the app inside the <code>Applications</code> folder</li>
