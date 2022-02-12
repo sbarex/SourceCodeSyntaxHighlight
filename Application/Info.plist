@@ -2058,6 +2058,28 @@
 			</dict>
 		</dict>
 		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.script</string>
+				<string>dyn.ah62d4rv4ge80s3a</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Godot Script</string>
+			<key>UTTypeIdentifier</key>
+			<string>public.gd</string>
+			<key>UTTypeReferenceURL</key>
+			<string></string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>gd</string>
+				</array>
+				<key>public.mime-type</key>
+				<string>text/x-gdscript</string>
+			</dict>
+		</dict>
+		<dict>
 			<key>UTTypeDescription</key>
 			<string>Python Bytecode Document</string>
 			<key>UTTypeIdentifier</key>

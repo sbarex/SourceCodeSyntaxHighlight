@@ -199,6 +199,7 @@
 				<string>public.diff</string>
 				<string>public.fortran-source</string>
 				<string>public.fortran-90-source</string>
+				<string>public.gd</string>
 				<string>public.ini</string>
 				<string>public.item</string>
 				<string>public.java</string>
@@ -263,6 +264,7 @@
 				<string>dyn.ah62d4rv4ge81u6pzqz3hw</string>
 				<string>dyn.ah62d4rv4ge81u6k</string>
 				<string>dyn.ah62d4rv4ge81u7k</string>
+				<string>dyn.ah62d4rv4ge80s3a</string>
 			</array>
 			<key>QLSupportsSearchableItems</key>
 			<false/>

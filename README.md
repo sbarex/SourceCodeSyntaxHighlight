@@ -144,6 +144,7 @@ The application can also handle some [plain files](#plain-files) without extensi
 - Fish source files (`.fish`)
 - Fortran source files (`.f`, `.for`, `.f90`)
 - GCC Linked files (`.ld`, `.map`, `.d`)
+- Gdscript (Godot engine) (`.gd`).
 - GoLang source files (`.go`)
 - Google Earth KML Document files (`.kml`) _as `XML`_
 - Gradle source files (`.gradle`)

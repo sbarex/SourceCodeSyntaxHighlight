@@ -2,6 +2,11 @@ Changelog
 =======
 
 
+### 2.1.8 (55)
+New features:
+- Support for Gdscript files (Godot engine) (`.gd`).
+- Highlight updated to version 4.2.
+
 ### 2.1.7 (54)
 New features:
 - Better support for xquery files (`.xquery`, `.xu`, `.xq`).

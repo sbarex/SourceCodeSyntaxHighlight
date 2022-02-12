@@ -243,6 +243,7 @@
     "SuperX++": ["xpp"],
     "Yaiff": ["yaiff"],
     "Ansible YAML": ["yaml", "yml"],
+    "jam": ["jam", "ham"],
     "Yang": ["yang"],
     "Zonnon": ["znn"]
 }
