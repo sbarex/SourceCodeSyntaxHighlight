@@ -2,6 +2,10 @@ Changelog
 =======
 
 
+### 2.1.8 (56)
+Bugfix:
+- Regression fix for rft background color.
+
 ### 2.1.8 (55)
 New features:
 - Support for Gdscript files (Godot engine) (`.gd`).
