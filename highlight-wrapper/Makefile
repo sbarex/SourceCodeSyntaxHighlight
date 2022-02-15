@@ -267,7 +267,7 @@ endif
 	@echo ""
 
 ${BUILD_DIR}/share: $(BUILD_DIR) ${BUILD_DIR}/highlight
-	cp -R "${HIGHLIGHT_DIR}/build-$(CONFIGURATION)/share/highlight" "${BUILD_DIR}/share"
+	cp -R "${HIGHLIGHT_DIR}/build-$(CONFIGURATION)/share/highlight/" "${BUILD_DIR}/share/"
 	cp "${HIGHLIGHT_DIR}/build-$(CONFIGURATION)/etc/highlight/filetypes.conf" "${BUILD_DIR}/share/filetypes.conf"
 
 clean_highlight:
