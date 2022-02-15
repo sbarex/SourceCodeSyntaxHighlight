@@ -43,7 +43,7 @@
 	<key>NSSupportsSuddenTermination</key>
 	<false/>
 	<key>SUEnableInstallerLauncherService</key>
-	<string></string>
+	<true/>
 	<key>SUFeedURL</key>
 	<string>https://sbarex.github.io/SourceCodeSyntaxHighlight/appcast.xml</string>
 	<key>SUPublicEDKey</key>
