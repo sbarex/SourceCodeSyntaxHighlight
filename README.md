@@ -98,7 +98,7 @@ Inside the definition on an UTI there are the list of extensions and mime type a
 
 Some file types are directly associated to an UTI by the system. Other formats are registered by the owner application. In this way some extensions can be associated to multiple UTIs based on the applications currently installed. For this reason, this application supports many UTIs even if they are apparently redundant.
 
-_**MacOS 10.15 Catalina does not** allow to manage some file formats including (but not limited to):_  `.xml`, `.plist`, `.html`, `.ts`, `.dart`, common images (`.jpg`, `.gif`, `.png`), …
+_**MacOS 10.15 Catalina does not** allow to manage some file formats including (but not limited to):_  `.xml`, `.plist`, `.html`, `.ts`, `.dart`, '.txt', common images (`.jpg`, `.gif`, `.png`), …
 
 On _**macOS 11 Big Sur**, the system allows you to manage these previously unauthorized extensions:_ `.plist`.
 
