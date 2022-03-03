@@ -539,7 +539,7 @@ class SettingsBase: NSObject {
         }
         
         // Extra arguments for _highlight_.
-        if let args = settings[SettingsBase.Key.extraArguments] as? String {
+        if let args = settings[SettingsBase.Key.extraArguments] as? String, !args.trimmingCharacters(in: .whitespaces).isEmpty {
             self.arguments = args
             self.isArgumentsDefined = true
         }
@@ -895,7 +895,7 @@ class SettingsFormat: SettingsBase, SettingsFormatProtocol, SettingsLSP {
         
         super.override(fromDictionary: dict)
         
-        if let args = settings[SettingsBase.Key.appendedExtraArguments] as? String {
+        if let args = settings[SettingsBase.Key.appendedExtraArguments] as? String, !args.trimmingCharacters(in: .whitespaces).isEmpty {
             self.appendArguments = args
             self.isAppendArgumentsDefined = true
         }
@@ -919,7 +919,7 @@ class SettingsFormat: SettingsBase, SettingsFormatProtocol, SettingsLSP {
             if let v = specials[SettingsBase.Key.syntax] {
                 self.specialSyntax = v
             }
-            if let v = specials[SettingsBase.Key.appendedExtraArguments] {
+            if let v = specials[SettingsBase.Key.appendedExtraArguments], !v.trimmingCharacters(in: .whitespaces).isEmpty {
                 self.specialAppendArguments = v
             }
         }
@@ -948,7 +948,7 @@ class SettingsFormat: SettingsBase, SettingsFormatProtocol, SettingsLSP {
             if let syntax = self.specialSyntax {
                 special[SettingsBase.Key.syntax] = syntax
             }
-            if let appendArguments = self.specialAppendArguments {
+            if let appendArguments = self.specialAppendArguments, !appendArguments.trimmingCharacters(in: .whitespaces).isEmpty {
                 special[SettingsBase.Key.appendedExtraArguments] = appendArguments
             }
             if !special.isEmpty {
@@ -1403,10 +1403,10 @@ class Settings: SettingsBase {
         }
     }
     
-    func searchPlainSettings(for url: URL) -> PlainSettings? {
+    func searchPlainSettings(for url: URL, mimeType: String?) -> PlainSettings? {
         let name = url.lastPathComponent
         for s in self.plainSettings {
-            if s.test(filename: name) {
+            if s.test(filename: name, mimeType: mimeType) {
                 return s
             }
         }
@@ -1728,7 +1728,7 @@ class SettingsRendering: Settings, SettingsFormatProtocol, SettingsLSP {
             self.isError = v
         }
         
-        if let args = settings[SettingsBase.Key.appendedExtraArguments] as? String {
+        if let args = settings[SettingsBase.Key.appendedExtraArguments] as? String, !args.trimmingCharacters(in: .whitespaces).isEmpty {
             self.appendArguments = args
             self.isAppendArgumentsDefined = true
         }

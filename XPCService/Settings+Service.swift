@@ -75,10 +75,10 @@ extension SettingsFormat: SettingsCSS {
                 if let v = plistData[SettingsBase.Key.syntax] {
                     self.specialSyntax = v
                 }
-                if let v = plistData[SettingsBase.Key.preprocessor] {
+                if let v = plistData[SettingsBase.Key.preprocessor], !v.trimmingCharacters(in: .whitespaces).isEmpty {
                     self.specialPreprocessor = v
                 }
-                if let v = plistData[SettingsBase.Key.extraArguments] {
+                if let v = plistData[SettingsBase.Key.extraArguments], !v.trimmingCharacters(in: .whitespaces).isEmpty {
                     self.specialAppendArguments = v
                 }
             }
