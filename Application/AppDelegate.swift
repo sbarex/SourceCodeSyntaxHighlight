@@ -263,7 +263,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
         
         let alert1 = NSAlert()
         alert1.messageText = "The tool will be installed in \(dstApp.path) \nDo you want to continue?"
-        alert1.informativeText = "You can call the tool directly from this path: \n\(srcApp.path) \n\nManually install from a Terminal shell with this command: \nln -sfv \(srcApp.path) \(dstApp.path)"
+        alert1.informativeText = "You can call the tool directly from this path: \n\(srcApp.path) \n\nManually install from a Terminal shell with this command: \nln -sfv \"\(srcApp.path)\" \"\(dstApp.path)\""
         alert1.alertStyle = .informational
         alert1.addButton(withTitle: "OK").keyEquivalent = "\r"
         alert1.addButton(withTitle: "Cancel").keyEquivalent = "\u{1b}"
@@ -273,7 +273,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
         guard access(dstApp.deletingLastPathComponent().path, W_OK) == 0 else {
             let alert = NSAlert()
             alert.messageText = "Unable to install the tool: \(dstApp.deletingLastPathComponent().path) is not writable"
-            alert.informativeText = "You can directly call the tool from this path: \n\(srcApp.path) \n\nManually install from a Terminal shell with this command: \nln -sfv \(srcApp.path) \(dstApp.path)"
+            alert.informativeText = "You can directly call the tool from this path: \n\(srcApp.path) \n\nManually install from a Terminal shell with this command: \nln -sfv \"\(srcApp.path)\" \"\(dstApp.path)\""
             alert.alertStyle = .warning
             alert.addButton(withTitle: "Close").keyEquivalent = "\u{1b}"
             alert.runModal()
@@ -288,7 +288,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
             alert.alertStyle = .informational
         } catch {
             alert.messageText = "Unable to install the command line tool"
-            alert.informativeText = "(\(error.localizedDescription))\n\nYou can manually install the tool from a Terminal shell with this command: \nln -sfv \(srcApp.path) \(dstApp.path)"
+            alert.informativeText = "(\(error.localizedDescription))\n\nYou can manually install the tool from a Terminal shell with this command: \nln -sfv \"\(srcApp.path)\" \"\(dstApp.path)\""
             alert.alertStyle = .critical
         }
         alert.runModal()
