@@ -4,9 +4,11 @@ Changelog
 
 ### 2.1.9 (57)
 New fatures:
-- Fixed the bug of extra arguments white space.
 - New mime type criteria for the plain files.
-- View of the supported formats form the Help menu.
+- View of the supported formats from the Help menu.
+
+Bugfix:
+- Fixed the bug of extra arguments white space.
 
 ### 2.1.8 (56)
 Bugfix:
