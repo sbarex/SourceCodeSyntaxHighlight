@@ -326,7 +326,7 @@ Unknown files are analyzed with the system utility `/usr/bin/file` for recognize
 
 Files recognized as images are handled by displaying the content within a web page (even if the rendering engine set in the settings is `RTF`). To be displayed correctly, the image format must be supported by WebKit. 
 
-On macOS 12 Monterey images and even, audios, movies and PDF files are displayed with the native Quick Look interface.
+On macOS 12 Monterey images and even, audio, movies and PDF files are displayed with the native Quick Look interface.
 
 For other binary files it is possible to display a hex dump. 
 
@@ -334,7 +334,7 @@ For text files, syntax highlighting is tried.
 
 ![Unknown file settings editor](assets/settings_plain_editor.png)
 
-You can specify filename criteria to apply a syntax highlighting and a specific display format. The criteria are evaluated in the order in which they are set. 
+You can specify a criteria for the file name and the mime type to apply a syntax highlighting and/or a specific display format. The criteria are evaluated in the order in which they are set. 
 
 If not display format is set, the system will try to derive it starting from the mime type.
 

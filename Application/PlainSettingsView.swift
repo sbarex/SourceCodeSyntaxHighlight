@@ -189,10 +189,12 @@ extension PlainSettingsView: NSTableViewDelegate {
             let s: String
             switch column {
             case 0:
-                s = setting.pattern
+                s = setting.patternFile
             case 1:
-                s = setting.UTI.isEmpty ? "General" : setting.UTI
+                s = setting.patternMime
             case 2:
+                s = setting.UTI.isEmpty ? "General" : setting.UTI
+            case 3:
                 s = setting.syntax.isEmpty ? "Plain text" : setting.syntax
             default:
                 break outerLoop
@@ -219,7 +221,9 @@ extension PlainSettingsView: NSTableViewDataSource {
     
     func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
         if tableColumn?.identifier.rawValue == "pattern" {
-            return self.plainSettings[row].pattern
+            return self.plainSettings[row].patternFile
+        } else if tableColumn?.identifier.rawValue == "mime" {
+            return self.plainSettings[row].patternMime
         } else if tableColumn?.identifier.rawValue == "uti" {
             return self.plainSettings[row].UTI.isEmpty ? "General" : self.plainSettings[row].UTI
         } else if tableColumn?.identifier.rawValue == "syntax" {
@@ -232,7 +236,13 @@ extension PlainSettingsView: NSTableViewDataSource {
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
         if tableColumn?.identifier.rawValue == "pattern" {
             let cellView = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "PatternCell"), owner: nil) as! PatternTableCellView
-            cellView.textField?.stringValue = self.plainSettings[row].pattern
+            cellView.textField?.stringValue = self.plainSettings[row].patternFile
+            cellView.caseSensitiveImageView.isHidden = !self.plainSettings[row].isCaseSensitive
+            cellView.regExpImageView.isHidden = !self.plainSettings[row].isRegExp
+            return cellView
+        } else if tableColumn?.identifier.rawValue == "mime" {
+            let cellView = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "PatternCell"), owner: nil) as! PatternTableCellView
+            cellView.textField?.stringValue = self.plainSettings[row].patternMime
             cellView.caseSensitiveImageView.isHidden = !self.plainSettings[row].isCaseSensitive
             cellView.regExpImageView.isHidden = !self.plainSettings[row].isRegExp
             return cellView

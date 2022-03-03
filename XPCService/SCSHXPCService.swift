@@ -85,9 +85,9 @@ class SCSHXPCService: SCSHBaseXPCService, SCSHXPCServiceProtocol {
         if settings.version <= 2.3 && defaultsDomain[SettingsBase.Key.plainSettings] == nil {
             settings.removeAllPlainSettings()
             if #available(macOS 12.0, *) {
-                settings.insertPlainSettings(settings: PlainSettings(pattern: "makefile", isRegExp: false, isCaseInsensitive: true, UTI: "public.make-source", syntax: "makefile"))
+                settings.insertPlainSettings(settings: PlainSettings(patternFile: "makefile", patternMime: "", isRegExp: false, isCaseInsensitive: true, UTI: "public.make-source", syntax: "makefile"))
             } else {
-                settings.insertPlainSettings(settings: PlainSettings(pattern: "makefile", isRegExp: false, isCaseInsensitive: true, UTI: "org.n8gray.makefile", syntax: "makefile"))
+                settings.insertPlainSettings(settings: PlainSettings(patternFile: "makefile", patternMime: "", isRegExp: false, isCaseInsensitive: true, UTI: "org.n8gray.makefile", syntax: "makefile"))
             }
         }
         

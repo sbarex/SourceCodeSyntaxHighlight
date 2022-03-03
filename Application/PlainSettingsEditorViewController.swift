@@ -10,6 +10,7 @@ import AppKit
 
 class PlainSettingsEditorViewController: NSViewController {
     @IBOutlet weak var patternTextField: NSTextField!
+    @IBOutlet weak var patternMimeTextField: NSTextField!
     @IBOutlet weak var regExpButton: NSButton!
     @IBOutlet weak var caseSensitiveButton: NSButton!
     @IBOutlet weak var syntaxPopupButton: NSPopUpButton!
@@ -63,7 +64,8 @@ class PlainSettingsEditorViewController: NSViewController {
     }
     
     func initSettings() {
-        patternTextField?.stringValue = plainSettings?.pattern ?? ""
+        patternTextField?.stringValue = plainSettings?.patternFile ?? ""
+        patternMimeTextField?.stringValue = plainSettings?.patternMime ?? ""
         regExpButton?.state = plainSettings?.isRegExp ?? false ? .on : .off
         caseSensitiveButton?.state = plainSettings?.isCaseSensitive ?? false ? .on : .off
         availableSyntax = HighlightWrapper.shared.languages
@@ -96,7 +98,7 @@ class PlainSettingsEditorViewController: NSViewController {
         tableView?.selectRowIndexes(IndexSet(integer: index), byExtendingSelection: false)
         tableView?.scrollRowToVisible(index)
         
-        doneButton?.isEnabled = !(plainSettings?.pattern ?? "").isEmpty
+        doneButton?.isEnabled = !(plainSettings?.patternFile ?? "").isEmpty || !(plainSettings?.patternMime ?? "").isEmpty
     }
     
     @IBAction func handleCancel(_ sender: Any) {
@@ -124,7 +126,7 @@ class PlainSettingsEditorViewController: NSViewController {
             uti = allFileTypes[tableView.selectedRow - 2].UTI
         }
         
-        handler?(PlainSettings(pattern: self.patternTextField.stringValue, isRegExp: regExpButton.state == .on, isCaseInsensitive: caseSensitiveButton.state == .off, UTI: uti, syntax: stx))
+        handler?(PlainSettings(patternFile: self.patternTextField.stringValue, patternMime: self.patternMimeTextField.stringValue, isRegExp: regExpButton.state == .on, isCaseInsensitive: caseSensitiveButton.state == .off, UTI: uti, syntax: stx))
         
         self.dismiss(self)
     }
@@ -184,10 +186,10 @@ extension PlainSettingsEditorViewController: NSTableViewDelegate {
 
 extension PlainSettingsEditorViewController: NSTextFieldDelegate {
     func controlTextDidChange(_ obj: Notification) {
-        guard let textFiled = obj.object as? NSTextField, textFiled == patternTextField else {
+        guard let textFiled = obj.object as? NSTextField, textFiled == patternTextField || textFiled == patternMimeTextField else {
             return
         }
-        doneButton.isEnabled = !textFiled.stringValue.isEmpty
+        doneButton.isEnabled = !patternTextField.stringValue.isEmpty || !patternMimeTextField.stringValue.isEmpty
     }
 }
 

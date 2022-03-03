@@ -423,7 +423,7 @@ class SCSHBaseXPCService: NSObject {
             } else {
                 try? "No settings found for the file UTI (\(u?.UTI ?? ""))".appendLine(to: logFile)
                 attributes = MagicAttributes(url: url, logFile: logFile)
-                plain = settings.searchPlainSettings(for: url)
+                plain = settings.searchPlainSettings(for: url, mimeType: attributes?.mimeType)
                 if !(plain?.UTI.isEmpty ?? true) {
                     uti = plain!.UTI
                 }
@@ -467,7 +467,7 @@ class SCSHBaseXPCService: NSObject {
                 }
                 
                 if plain == nil {
-                    plain = PlainSettings(pattern: ".*", isRegExp: true, isCaseInsensitive: false, UTI: "public.data", syntax: syntax)
+                    plain = PlainSettings(patternFile: ".*", patternMime: "", isRegExp: true, isCaseInsensitive: false, UTI: "public.data", syntax: syntax)
                 }
             }
         } else {
