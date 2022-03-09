@@ -2,6 +2,15 @@ Changelog
 =======
 
 
+### 2.1.10 (58)
+New features:
+- Support for Configuration profile files (`.mobileconfig`) as _XML_.
+
+Bugfix:
+- Fixed color wheel lag refresh.
+- Fixed support for rust.
+
+
 ### 2.1.9 (57)
 New fatures:
 - New mime type criteria for the plain files.
@@ -10,14 +19,17 @@ New fatures:
 Bugfix:
 - Fixed the bug of extra arguments white space.
 
+
 ### 2.1.8 (56)
 Bugfix:
 - Regression fix for rft background color.
+
 
 ### 2.1.8 (55)
 New features:
 - Support for Gdscript files (Godot engine) (`.gd`).
 - Highlight updated to version 4.2.
+
 
 ### 2.1.7 (54)
 New features:
@@ -28,6 +40,7 @@ Bugfix:
 - Better procedure to install the command line tool.
 - Fixed custom css style for global settings.
 - Fixed the Sparkle integration bug. **If you have installed version 2.1.6 you may need to [re-download the updated app from the web](https://github.com/sbarex/SourceCodeSyntaxHighlight/releases/download/2.1.7/Syntax.Highlight.zip).** 
+
 
 ### 2.1.6 (53)
 New features:
