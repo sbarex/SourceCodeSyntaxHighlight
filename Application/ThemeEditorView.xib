@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19529"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -36,7 +36,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tyJ-o7-KYu">
-                    <rect key="frame" x="6" y="1156" width="78" height="16"/>
+                    <rect key="frame" x="6" y="1435" width="78" height="16"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Description:" id="zIz-68-p0p">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -44,7 +44,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5Ih-og-Zh4">
-                    <rect key="frame" x="90" y="1153" width="1474" height="21"/>
+                    <rect key="frame" x="90" y="1432" width="2059" height="21"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="wOY-lP-prj">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -55,7 +55,7 @@
                     </connections>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Cc2-N1-y5X">
-                    <rect key="frame" x="18" y="1129" width="66" height="16"/>
+                    <rect key="frame" x="18" y="1408" width="66" height="16"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Style:" id="I0R-f4-fr8">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -63,7 +63,7 @@
                     </textFieldCell>
                 </textField>
                 <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Z2L-wh-6gV">
-                    <rect key="frame" x="89" y="1126" width="135" height="20"/>
+                    <rect key="frame" x="89" y="1405" width="135" height="20"/>
                     <segmentedCell key="cell" borderStyle="border" alignment="left" segmentDistribution="fillEqually" style="roundRect" trackingMode="selectOne" id="Srg-Yu-gUJ">
                         <font key="font" metaFont="cellTitle"/>
                         <segments>
@@ -77,16 +77,16 @@
                     </connections>
                 </segmentedControl>
                 <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="XIT-KY-4uU">
-                    <rect key="frame" x="0.0" y="1116" width="1572" height="5"/>
+                    <rect key="frame" x="0.0" y="1395" width="2157" height="5"/>
                 </box>
                 <scrollView verticalHuggingPriority="249" borderType="none" autohidesScrollers="YES" horizontalLineScroll="17" horizontalPageScroll="10" verticalLineScroll="17" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F0K-5q-GjL">
-                    <rect key="frame" x="0.0" y="31" width="1572" height="1087"/>
+                    <rect key="frame" x="0.0" y="31" width="2157" height="1366"/>
                     <clipView key="contentView" id="Zmt-Fg-izz">
-                        <rect key="frame" x="0.0" y="0.0" width="1572" height="1087"/>
+                        <rect key="frame" x="0.0" y="0.0" width="2157" height="1366"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="firstColumnOnly" columnReordering="NO" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" usesAutomaticRowHeights="YES" viewBased="YES" id="NJv-Cb-zgY">
-                                <rect key="frame" x="0.0" y="0.0" width="1572" height="1087"/>
+                                <rect key="frame" x="0.0" y="0.0" width="2157" height="1366"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <size key="intercellSpacing" width="17" height="0.0"/>
                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -254,12 +254,12 @@
                     </scroller>
                 </scrollView>
                 <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="gDc-vs-BXX">
-                    <rect key="frame" x="0.0" y="28" width="1572" height="5"/>
+                    <rect key="frame" x="0.0" y="28" width="2157" height="5"/>
                 </box>
                 <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7Sz-7q-gWJ">
                     <rect key="frame" x="10" y="4" width="194" height="22"/>
                     <subviews>
-                        <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="Vdh-f9-1UG">
+                        <colorWell continuous="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vdh-f9-1UG">
                             <rect key="frame" x="0.0" y="1" width="60" height="20"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="60" id="WG6-Qn-DPU"/>
@@ -330,7 +330,7 @@
                     </customSpacing>
                 </stackView>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zhj-PT-YA6">
-                    <rect key="frame" x="18" y="587" width="1536" height="21"/>
+                    <rect key="frame" x="18" y="726" width="2121" height="21"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" enabled="NO" allowsUndo="NO" alignment="center" title="Select a theme" id="VyF-Ug-19b">
                         <font key="font" textStyle="title2" name=".SFNS-Regular"/>
                         <color key="textColor" name="tertiaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -338,7 +338,7 @@
                     </textFieldCell>
                 </textField>
                 <popUpButton horizontalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Utk-Ud-Zr1">
-                    <rect key="frame" x="1529" y="8" width="35" height="15"/>
+                    <rect key="frame" x="2114" y="8" width="35" height="15"/>
                     <popUpButtonCell key="cell" type="bevel" bezelStyle="rounded" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" pullsDown="YES" autoenablesItems="NO" id="QCV-RC-x8e">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="menu"/>

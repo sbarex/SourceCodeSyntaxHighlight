@@ -276,6 +276,8 @@ class ThemeEditorView: NSView, SettingsSplitViewElement {
         newKeywordMenuItem.isEnabled = false
         deleteMenuItem.isEnabled = false
         
+        NSColorPanel.shared.isContinuous = self.colorWell.isContinuous
+        
         NotificationCenter.default.addObserver(self, selector: #selector(handleThemeChanged(_:)), name: .ThemeNeedRefresh, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleThemeDeleted(_:)), name: .CustomThemeRemoved, object: nil)
     }
