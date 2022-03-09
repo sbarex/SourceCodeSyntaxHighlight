@@ -43,6 +43,7 @@
 				<string>com.apple.dt.document.ascii-property-list</string>
 				<string>com.apple.dt.interfacebuilder.document.storyboard</string>
 				<string>com.apple.interfacebuilder.document.cocoa</string>
+				<string>com.apple.mobileconfig</string>
 				<string>com.apple.property-list</string>
 				<string>com.apple.rez-source</string>
 				<string>com.apple.terminal.settings</string>
@@ -216,6 +217,7 @@
 				<string>public.properties</string>
 				<string>public.python-script</string>
 				<string>public.ruby-script</string>
+				<string>public.rust-source</string>
 				<string>public.script</string>
 				<string>public.shell-script</string>
 				<string>public.source-code</string>

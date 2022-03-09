@@ -131,6 +131,7 @@ The application can also handle some [plain files](#plain-files) without extensi
 - Coffee source files (`.coffee`)
 - Coldfusion files (`.cfc`, `.cfm`, `.cfml`)
 - Configuration files (`.conf`)
+- Configuration profiles (`.mobileconfig`) _as `XML`_
 - CSON source files (`.cson`)
 - CSS files (`.css`)
 - Dart source files (`.dart`) **`.dart` is reserved by macOS and cannot be handled.**
@@ -583,6 +584,15 @@ The application embed the [`Highlight`](http://www.andre-simon.de/doku/highlight
 > /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -dump
 > ```
 
+- handle extension from command line (https://stackoverflow.com/questions/66546696/how-to-enable-and-debug-a-macos-file-provider-extension , https://stackoverflow.com/questions/34898903/what-do-the-prefixes-in-the-output-of-macos-pluginkit-mean/36839118#36839118 , https://kevin.deldycke.com/2019/07/macos-commands/ ):
+```sh
+# list all registered quicklook plugins:
+pluginkit -mAvvv -p com.apple.quicklook.preview 
+
+# info about a plugin:
+pluginkit -m -v -i org.sbarex.SourceCodeSyntaxHighlight.QuicklookExtension --raw
+
+```
 
 ## Credits
 Developed by [sbarex](https://github.com/sbarex) with :heart:.
