@@ -181,6 +181,7 @@ The application can also handle some [plain files](#plain-files) without extensi
 - Logos source files (`.xm`)
 - Lua source files (`.lua`)
 - Makefile files (`.mk`, `.mak`)
+- Markdown files (`.md`, `.rmd`): _ Please use the [QLMarkdown plugin](https://github.com/sbarex/QLMarkdown)_
 - MF source files (`.mf`)
 - Microsoft Active Server Page files (`.asp`, `.aspx`)
 - Microsoft PowerShell files (`.psm1`, `.psd1`, `.ps1`)
@@ -478,6 +479,10 @@ The command line tool require macOS 10.15.4 or later.
 ### Is it possible to enable / disable support for individual formats?
 > No, Apple does not allow this functionality.
 
+### Markdown files are not supported
+> This is a deliberate choice. Most users want to see the formatting and not the source code of their markdown files.
+> If you need to view the markdown files (also with the possibility of choosing whether to show the formatting or the source code) I have developed a special plugin: [QLMarkdown plugin](https://github.com/sbarex/QLMarkdown)
+
 ### Is it possible to add support for _xyz_ format?
 > It depends… first the format must be handled by `highlight`. Check in the _Inquiry window_ if the file is supported.
 > If is supported please send me the UTI associated to the file. You can also view the UTI with this terminal command:
@@ -487,7 +492,6 @@ The command line tool require macOS 10.15.4 or later.
 > Some common files cannot be handled by third party extension because are reserved by the system (for example, `.ts`, `.html`, …).
 >
 > You can customize the behavior for files with no extension yourself. See [Plain files](#plain-files) settings.
-
 
 ### The file icon do not show the preview
 > This Application only generate the Quick Look Preview and does not provide a thumbnail service for the Finder icon.
@@ -519,12 +523,12 @@ To work around this problem, it is possible to use an XPC service that may have 
 
 The XPC service is executed automatically when requested by the application or the Quick Look Extension. After closing the Quick Look preview the process is automatically closed after some seconds releasing the resources.
 
-The Application and the Quick Look Extension can preview files showing the formatted code as HTML, inside a WKWebView, or as RTF inside a NSTextView. Especially in Big Sur, the use of WebKit within the Quick Look Preview has numerous bugs, so **before macOS 12 Monterey, the suggested rendering engine is `RTF`**.
+The Application and the Quick Look Extension can preview files showing the formatted code as HTML, inside a WKWebView, or as RTF inside a NSTextView. Especially in Big Sur, the use of WebKit within the Quick Look Preview has numerous bugs, so **before macOS 12 Monterey, the suggested rendering engine is `RTF`**. From macOS 12 Monterey, the plugin adopt the new data based quicklook API.
 
 The settings are stored in `~/Library/Preferences/org.sbarex.SourceCodeSyntaxHighlight.plist`.
 Custom themes and styles are saved in `~/Library/Application Support/Syntax Highlight`.
 
-The application embed the [`Highlight`](http://www.andre-simon.de/doku/highlight/en/highlight.php) engine that can be build inside the Xcode project.
+The application embed the [`Highlight`](http://www.andre-simon.de/doku/highlight/en/highlight.php) engine that is build inside the Xcode project.
 
 ![highlight info](assets/about_highlight.png)
 
