@@ -9,19 +9,21 @@
             <enclosure 
                        type="application/octet-stream" 
                        url="https://github.com/sbarex/SourceCodeSyntaxHighlight/releases/download/2.1.10/Syntax.Highlight.zip" 
-                       sparkle:shortVersionString="2.1.10" sparkle:version="58" 
-                       sparkle:edSignature="/sUahZli9/5WSTcdgbCgBIkmT5CcX4dAqwtmQiNnRWCQa7MrTQEm3cm4FzqWPUkgjqQMPF8++GEp5+QvcxhVAg==" length="10692893" 
+                       sparkle:shortVersionString="2.1.10" sparkle:version="59" 
+                       sparkle:edSignature="n+cZNank5PwIAL6z46QJirfbi9qV3DXnwUWQfzB/2xqeONujLoOWuc59f8CgkaZoOwnJ63bnMyLWYea8nuhRDw==" length="10693476" 
             />
             <description><![CDATA[
-                <h2>Release 2.1.10 (58)</h2>
+                <h2>Release 2.1.10 (59)</h2>
                 <p>New features:</p>
                 <ul>
                     <li>Support for Configuration profile files (<code>.mobileconfig</code>) as <i>XML</i>.</li>
+                    <li>Added support for Ada, BibTex (<code>.bib</code>), Document Type Definition (<code>.dtd</code>), Dylang.</li>
                 </ul>
                 <p>Bug fix:</p>
                 <ul>
                     <li>Fixed color wheel lag refresh.</li>
                     <li>Fixed support for Rust.</li>
+                    <li>Better support for files managed by TextMate.</li>
                 </ul>
 
                 <p><a href="https://github.com/sbarex/SourceCodeSyntaxHighlight/blob/master/CHANGELOG.md">See the complete changelog.</a></p>
