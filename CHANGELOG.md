@@ -2,13 +2,22 @@ Changelog
 =======
 
 
+
+### 2.1.10 (59)
+New features:
+- Added support for Ada, BibTex (`.bib`), Document Type Definition  (`.dtd`), Dylang.
+
+Bugfix:  
+- Better support for files managed by TextMate.
+
+
 ### 2.1.10 (58)
 New features:
 - Support for Configuration profile files (`.mobileconfig`) as _XML_.
 
 Bugfix:
 - Fixed color wheel lag refresh.
-- Fixed support for rust.
+- Fixed support for Rust.
 
 
 ### 2.1.9 (57)

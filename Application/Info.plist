@@ -2003,6 +2003,70 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
+				<string>public.script</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>CGI script</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.macromates.textmate.cgi-script</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>cgi</string>
+					<string>fcgi</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.text</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Configuration file</string>
+			<key>UTTypeIconFile</key>
+			<string>Config</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.macromates.textmate.config-file</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>cfg</string>
+					<string>conf</string>
+					<string>config</string>
+					<string>htaccess</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.source-code</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Lisp source</string>
+			<key>UTTypeIconFile</key>
+			<string>Lisp</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.macromates.textmate.lisp</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>lisp</string>
+					<string>cl</string>
+					<string>l</string>
+					<string>lsp</string>
+					<string>mud</string>
+					<string>el</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
 				<string>public.plain-text</string>
 			</array>
 			<key>UTTypeDescription</key>
@@ -2024,6 +2088,153 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
+				<string>public.source-code</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>D source</string>
+			<key>UTTypeIconFile</key>
+			<string>D</string>
+			<key>UTTypeIdentifier</key>
+			<string>org.dlang.d</string>
+			<key>UTTypeReferenceURL</key>
+			<string>https://dlang.org</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>d</string>
+					<string>di</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.source-code</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>R source</string>
+			<key>UTTypeIdentifier</key>
+			<string>org.r-project.r</string>
+			<key>UTTypeReferenceURL</key>
+			<string>http://www.r-project.org</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>r</string>
+					<string>s</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.html</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>HTML with embedded Ruby</string>
+			<key>UTTypeIconFile</key>
+			<string>RHTML</string>
+			<key>UTTypeIdentifier</key>
+			<string>org.ruby-lang.eruby</string>
+			<key>UTTypeReferenceURL</key>
+			<string>https://www.ruby-lang.org/en/</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>rhtml</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.source-code</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>SQL with embedded Ruby</string>
+			<key>UTTypeIconFile</key>
+			<string>SQL</string>
+			<key>UTTypeIdentifier</key>
+			<string>org.rubyonrails.erb-sql</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>erbsql</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.text</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>BibTeX Database</string>
+			<key>UTTypeIconFile</key>
+			<string>BibTeX</string>
+			<key>UTTypeIdentifier</key>
+			<string>org.tug.tex.bibtex</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>bib</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.text</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Cascading Style Sheet</string>
+			<key>UTTypeIconFile</key>
+			<string>CSS</string>
+			<key>UTTypeIdentifier</key>
+			<string>org.w3.css</string>
+			<key>UTTypeReferenceURL</key>
+			<string>http://www.w3.org/Style/CSS/</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>css</string>
+				</array>
+				<key>public.mime-type</key>
+				<string>text/css</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.text</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Document Type Definition</string>
+			<key>UTTypeIconFile</key>
+			<string>DTD</string>
+			<key>UTTypeIdentifier</key>
+			<string>org.w3.xml-dtd</string>
+			<key>UTTypeReferenceURL</key>
+			<string>http://www.w3.org/XML/</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>dtd</string>
+				</array>
+				<key>public.mime-type</key>
+				<string>application/xml-dtd</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
 				<string>public.xml</string>
 			</array>
 			<key>UTTypeIdentifier</key>
@@ -2033,6 +2244,50 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>xsl</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.source-code</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Ada source</string>
+			<key>UTTypeIconFile</key>
+			<string>ADA</string>
+			<key>UTTypeIdentifier</key>
+			<string>public.ada-source</string>
+			<key>UTTypeReferenceURL</key>
+			<string>http://en.wikipedia.org/wiki/Ada_(programming_language)</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>ada</string>
+					<string>adb</string>
+					<string>ads</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.source-code</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Dylan source</string>
+			<key>UTTypeIconFile</key>
+			<string>Dylan</string>
+			<key>UTTypeIdentifier</key>
+			<string>public.dylan-source</string>
+			<key>UTTypeReferenceURL</key>
+			<string>http://opendylan.org</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>dylan</string>
 				</array>
 			</dict>
 		</dict>

@@ -70,6 +70,9 @@
 				<string>com.eiffel.source-code</string>
 				<string>com.google.earth.kml</string>
 				<string>com.jetbrain.source</string>
+				<string>com.macromates.textmate.cgi-script</string>
+				<string>com.macromates.textmate.config-file</string>
+				<string>com.macromates.textmate.lisp</string>
 				<string>com.macromates.textmate.scheme</string>
 				<string>com.macromates.textmate.standard-ml</string>
 				<string>com.microsoft.asp</string>
@@ -106,7 +109,6 @@
 				<string>org.bash.source</string>
 				<string>org.clojure</string>
 				<string>org.cmake.makefile</string>
-				<string>org.cmake.cmake</string>
 				<string>org.clojure.script</string>
 				<string>org.cocoapods.podspec</string>
 				<string>org.codehaus.groovy-source</string>
@@ -114,6 +116,7 @@
 				<string>org.coffeescript.coffeescript</string>
 				<string>org.cson.source</string>
 				<string>org.dartlang.dart</string>
+				<string>org.dlang.d</string>
 				<string>org.emcascript.emcascript</string>
 				<string>org.erlang.erlang</string>
 				<string>org.erlang.erlang-source</string>
@@ -162,10 +165,13 @@
 				<string>org.opml.source</string>
 				<string>org.pddl.pddl</string>
 				<string>org.python.compiled-script</string>
+				<string>org.r-project.r</string>
 				<string>org.racket-lang.source</string>
 				<string>org.rdf.source</string>
 				<string>org.rubygems.gemspec</string>
 				<string>org.ruby-lang.erb</string>
+				<string>org.ruby-lang.eruby</string>
+				<string>org.rubyonrails.erb-sql</string>
 				<string>org.rust-lang.rust</string>
 				<string>org.rust-lang.source</string>
 				<string>org.sbarex.conf</string>
@@ -177,6 +183,7 @@
 				<string>org.scala.source</string>
 				<string>org.tug.lua</string>
 				<string>org.tug.tex</string>
+				<string>org.tug.tex.bibtex</string>
 				<string>org.tug.sty</string>
 				<string>org.vim.vim-script</string>
 				<string>org.vuejs.vue</string>
@@ -185,6 +192,9 @@
 				<string>org.xsd.schema</string>
 				<string>org.xul.source</string>
 				<string>org.yaml.yaml</string>
+				<string>org.w3.css</string>
+				<string>org.w3.xml-dtd</string>
+				<string>public.ada-source</string>
 				<string>public.bash-script</string>
 				<string>public.csh-script</string>
 				<string>public.css</string>
@@ -198,6 +208,7 @@
 				<string>public.data</string>
 				<string>public.data.xml.opml</string>
 				<string>public.diff</string>
+				<string>public.dylan-source</string>
 				<string>public.fortran-source</string>
 				<string>public.fortran-90-source</string>
 				<string>public.gd</string>

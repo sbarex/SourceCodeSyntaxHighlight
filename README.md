@@ -109,8 +109,7 @@ On _**macOS 12 Monterey**, the system allows you to manage these previously unau
 Most programming languages are supported. 
 The application can also handle some [plain files](#plain-files) without extension.
 
-- (G)AWK files (`.awk`)
-- HTML Abstraction Markup Language (`.haml`)
+- Ada (`.ada`)
 - Adobe Acrobat Sequence files (`.sequ`) _as `XML`_
 - Adobe Flash ActionScript source files (`.as`)
 - Adobe JSX script files (`.jsx`)
@@ -120,7 +119,9 @@ The application can also handle some [plain files](#plain-files) without extensi
 - Assembler source files (`.asm`, `.s79`)
 - Azkaban flow files (`.flow`) as _`YAML`_
 - ATL files (`.atl`)
+- (G)AWK files (`.awk`)
 - Bash Script files (`.bash`)
+- BibTex (`.bib`)
 - C Shell script files (`.csh`)
 - C Source files (`.c`, `.h`)
 - C# Source files (`.cs`)
@@ -134,9 +135,12 @@ The application can also handle some [plain files](#plain-files) without extensi
 - Configuration profiles (`.mobileconfig`) _as `XML`_
 - CSON source files (`.cson`)
 - CSS files (`.css`)
+- D (`.d`)
 - Dart source files (`.dart`) **`.dart` is reserved by macOS and cannot be handled.**
 - Diff files (`.diff`, `.patch`)
+- Document Type Definition (`.dtd`)
 - DOS Bat files (`.bat`, `.cmd`)
+- Dylang (`.dylan`)
 - ECore files (`.ecore`)
 - Eiffel project files (`.ecf`) _as `XML`_
 - Eiffel source files (`.e`, `.ex`, `.exs`)
@@ -151,6 +155,7 @@ The application can also handle some [plain files](#plain-files) without extensi
 - Gradle source files (`.gradle`)
 - Groovy source files (`.groovy`)
 - Haskell source files (`.hs`, `.lhs`)
+- HTML Abstraction Markup Language (`.haml`)
 - IDL source files (`.pro`)
 - INF files (`.inf`)
 - INI configuration files (`.ini`, `.cfg`)
@@ -177,7 +182,7 @@ The application can also handle some [plain files](#plain-files) without extensi
 - Lua source files (`.lua`)
 - Makefile files (`.mk`, `.mak`)
 - MF source files (`.mf`)
-- Microsoft Active Server Page files (`.asp`)
+- Microsoft Active Server Page files (`.asp`, `.aspx`)
 - Microsoft PowerShell files (`.psm1`, `.psd1`, `.ps1`)
 - Nim source files (`.nim`)
 - Objective-C source files (`.m`)
@@ -194,6 +199,7 @@ The application can also handle some [plain files](#plain-files) without extensi
 - Properties files (`.properties`) _as `INI`_
 - Property List files (`.plist`) _dynamically decompiled with `plutil`_ **On macOS 10.15 Catalina `.plist` is reserved by the system and cannot be handled.**
 - Python source files (`.py`)
+- R (`.r`)
 - Racket (`.rkt`) _as `Lisp`_
 - RDF files (`.rdf`)
 - Readme files (`.readme`) _as plain text_
