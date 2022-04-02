@@ -2,10 +2,19 @@ Changelog
 =======
 
 
+### 2.1.11 (60)
+New features:
+- Highlight updated to 4.2.
+- Added support for reStructured Text files (`.rst`).
+- Added support for many UTIs defined by MacVim.
+
+Bugfix: 
+- Removed the predefined preprocessor for beautify JSON files. 
+
 
 ### 2.1.10 (59)
 New features:
-- Added support for Ada, BibTex (`.bib`), Document Type Definition  (`.dtd`), Dylang.
+- Added support for Ada, BibTex (`.bib`), Document Type Definition (`.dtd`), Dylang.
 
 Bugfix:  
 - Better support for files managed by TextMate.

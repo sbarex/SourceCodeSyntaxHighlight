@@ -181,7 +181,7 @@ The application can also handle some [plain files](#plain-files) without extensi
 - Logos source files (`.xm`)
 - Lua source files (`.lua`)
 - Makefile files (`.mk`, `.mak`)
-- Markdown files (`.md`, `.rmd`): _ Please use the [QLMarkdown plugin](https://github.com/sbarex/QLMarkdown)_
+- Markdown files (`.md`, `.rmd`): _please use [QLMarkdown](https://github.com/sbarex/QLMarkdow)_ which allows you to choose whether to display formatted output or the highlighted source code. 
 - MF source files (`.mf`)
 - Microsoft Active Server Page files (`.asp`, `.aspx`)
 - Microsoft PowerShell files (`.psm1`, `.psd1`, `.ps1`)
@@ -204,6 +204,7 @@ The application can also handle some [plain files](#plain-files) without extensi
 - Racket (`.rkt`) _as `Lisp`_
 - RDF files (`.rdf`)
 - Readme files (`.readme`) _as plain text_
+- reStructuredText document (`.rst`)
 - Rez files (`.r`)
 - Ruby on Rails files (`.rhtml`, `.erb`, `.rjs`)
 - Ruby Gems file (`.gemfile`)
@@ -280,7 +281,7 @@ When customizing the settings for a specific format, these options will be avail
 |Settings|Description|Advanced|
 |:---------|:-------------| :----: |
 |Append highlight arguments|Arguments _appended_ to the _Extra highlight arguments_. Arguments that contains a white space must be protected inside quotes. |Yes|
-|Preprocessor|Set a program or a shell script to preprocess the source file before the formatting. The program must output to stdout the data to be passed to `highlight`. You **must** pass the name of the source file using the `$targetHL` placeholder. With the preprocessor you can handle file format not directly supported by `highlight`. This option is ignored when using a Language Server. The execution of the preprocessor is made inside the same env of the script that handle `highlight`. For example you can beautify a JSON file with this preprocesso: `python3 -m json.tool $targetHL`. _When you use a preprocessor you will probably want to disable the support for version control._  |Yes|
+|Preprocessor|Set a program or a shell script to preprocess the source file before the formatting. The program must output to stdout the data to be passed to `highlight`. You **must** pass the name of the source file using the `$targetHL` placeholder. With the preprocessor you can handle file format not directly supported by `highlight`. This option is ignored when using a Language Server. The execution of the preprocessor is made inside the same env of the script that handle `highlight`. For example you can beautify a JSON file with this preprocessor: `python3 -m json.tool $targetHL`. _When you use a preprocessor you will probably want to disable the support for version control._  |Yes|
 |Syntax| Set which language must be used to recognize the source file. If not set will be used the file name extension. |Yes|
 
 
@@ -480,8 +481,8 @@ The command line tool require macOS 10.15.4 or later.
 > No, Apple does not allow this functionality.
 
 ### Markdown files are not supported
-> This is a deliberate choice. Most users want to see the formatting and not the source code of their markdown files.
-> If you need to view the markdown files (also with the possibility of choosing whether to show the formatting or the source code) I have developed a special plugin: [QLMarkdown plugin](https://github.com/sbarex/QLMarkdown)
+> This is a deliberate choice. Most users want to see the formatted output and not the source code of their markdown files.
+> If you need to view the markdown files (also with the possibility of choosing whether to show the formatting or the source code) I have developed [QLMarkdown](https://github.com/sbarex/QLMarkdown).
 
 ### Is it possible to add support for _xyz_ format?
 > It depends… first the format must be handled by `highlight`. Check in the _Inquiry window_ if the file is supported.
