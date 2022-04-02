@@ -165,6 +165,7 @@
 				<string>org.opml.source</string>
 				<string>org.pddl.pddl</string>
 				<string>org.python.compiled-script</string>
+				<string>org.python.restructuredtext</string>
 				<string>org.r-project.r</string>
 				<string>org.racket-lang.source</string>
 				<string>org.rdf.source</string>
@@ -185,7 +186,28 @@
 				<string>org.tug.tex</string>
 				<string>org.tug.tex.bibtex</string>
 				<string>org.tug.sty</string>
+				<string>org.vim.as-file</string>
+				<string>org.vim.asp-file</string>
+				<string>org.vim.aspx-file</string>
+				<string>org.vim.cs-file</string>
+				<string>org.vim.css-file</string>
+				<string>org.vim.dtd-file</string>
+				<string>org.vim.dylan-file</string>
+				<string>org.vim.fscript-file</string>
+				<string>org.vim.hs-file</string>
+				<string>org.vim.inc-file</string>
+				<string>org.vim.ini-file</string>
+				<string>org.vim.jsp-file</string>
+				<string>org.vim.lisp-file</string>
+				<string>org.vim.pch-file</string>
+				<string>org.vim.pch++-file</string>
+				<string>org.vim.sql-file</string>
+				<string>org.vim.tex-file</string>
+				<string>org.vim.vb-file</string>
+				<string>org.vim.vba-file</string>
 				<string>org.vim.vim-script</string>
+				<string>org.vim.xsl-file</string>
+				<string>org.vim.yaml-file</string>
 				<string>org.vuejs.vue</string>
 				<string>org.w3.xsl</string>
 				<string>org.xml-tools.source</string>
