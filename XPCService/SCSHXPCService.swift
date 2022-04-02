@@ -191,6 +191,14 @@ class SCSHXPCService: SCSHBaseXPCService, SCSHXPCServiceProtocol {
         settings.version = Settings.version
         defaultsDomain[SettingsBase.Key.version] = SettingsBase.version
         
+        if let jsonSettings = settings.utiSettings["public.json"] {
+            // Drop the python beautify.
+            if jsonSettings.preprocessor.contains("python3 -m json.tool") {
+                jsonSettings.preprocessor = ""
+                jsonSettings.isPreprocessorDefined = false
+            }
+        }
+        
         // Store the converted settings.
         settings.synchronize(domain: type(of: self).XPCDomain, CSSFolder: type(of: self).getCustomStylesUrl(createIfMissing: true))
         
