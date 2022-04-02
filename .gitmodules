@@ -1,5 +1,5 @@
 [submodule "highlight-wrapper/highlight"]
 	path = highlight-wrapper/highlight
-	url = https://gitlab.com/sbarex/highlight.git
+	url = https://gitlab.com/saalen/highlight.git
 	ignore = dirty
 	branch = master

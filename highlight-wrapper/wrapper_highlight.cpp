@@ -55,7 +55,7 @@ __unused char *get_highlight_email() {
 __unused char *get_highlight_about() {
     string about =
             "highlight version " + highlight::Info::getVersion() +
-            "\n Copyright (C) 2002-2021 Andre Simon <a dot simon at mailbox.org>" +
+            "\n Copyright (C) 2002-2022 Andre Simon <a dot simon at mailbox.org>" +
             "\n\n Argparser class" +
             "\n Copyright (C) 2006-2008 Antonio Diaz Diaz <ant_diaz at teleline.es>" +
             "\n\n Artistic Style Classes (3.1 rev. 672)" +
