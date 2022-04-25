@@ -250,6 +250,12 @@ extension Settings: SettingsCSS {
         
         updateDomains(SettingsBase.Key.dumpPlain, isDumpPlainData)
         updateDomains(SettingsBase.Key.vcs, isVCS)
+        updateDomains(SettingsBase.Key.vcs_add_light, self.vcsAddLightColor)
+        updateDomains(SettingsBase.Key.vcs_add_dark, self.vcsAddDarkColor)
+        updateDomains(SettingsBase.Key.vcs_edit_light, self.vcsEditLightColor)
+        updateDomains(SettingsBase.Key.vcs_edit_dark, self.vcsEditDarkColor)
+        updateDomains(SettingsBase.Key.vcs_del_light, self.vcsDelLightColor)
+        updateDomains(SettingsBase.Key.vcs_del_dark, self.vcsDelDarkColor)
         updateDomains(SettingsBase.Key.git_path, gitPath)
         updateDomains(SettingsBase.Key.hg_path, hgPath)
         updateDomains(SettingsBase.Key.svn_path, svnPath)
