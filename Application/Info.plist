@@ -235,6 +235,7 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
+				<string>dyn.ah62d4rv4ge80g7dx</string>
 				<string>com.microsoft.typescript</string>
 				<string>public.source-code</string>
 				<string>public.text</string>
@@ -250,8 +251,10 @@
 			<dict>
 				<key>public.filename-extension</key>
 				<array>
-					<string>tsx</string>
 					<string>ts</string>
+					<string>tsx</string>
+					<string>mts</string>
+					<string>cts</string>
 				</array>
 				<key>public.mime-type</key>
 				<array>
@@ -1269,6 +1272,28 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
+				<string>dyn.ah62d4rv4ge80g4xx</string>
+				<string>com.netscape.javascript-source</string>
+				<string>public.script</string>
+				<string>public.source-code</string>
+				<string>public.plain-text</string>
+				<string>public.text</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string></string>
+			<key>UTTypeIdentifier</key>
+			<string>org.nodejs.cjs</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>cjs</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
 				<string>public.source-code</string>
 			</array>
 			<key>UTTypeDescription</key>
@@ -1846,6 +1871,9 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>ts</string>
+					<string>tsx</string>
+					<string>mts</string>
+					<string>cts</string>
 				</array>
 			</dict>
 		</dict>
@@ -1974,6 +2002,28 @@
 				<array>
 					<string>tex</string>
 					<string>latex</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.source-code</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>TypeScript source file</string>
+			<key>UTTypeIconFile</key>
+			<string>BBEditTextDocument.icns</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.barebones.bbedit.typescript-source</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>ts</string>
+					<string>tsx</string>
+					<string>mts</string>
+					<string>cts</string>
 				</array>
 			</dict>
 		</dict>

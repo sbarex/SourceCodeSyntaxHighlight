@@ -186,6 +186,7 @@ The application can also handle some [plain files](#plain-files) without extensi
 - Microsoft Active Server Page files (`.asp`, `.aspx`)
 - Microsoft PowerShell files (`.psm1`, `.psd1`, `.ps1`)
 - Nim source files (`.nim`)
+- Node CommonJS module (`.cjs`)
 - Objective-C source files (`.m`)
 - Objective-C++ source files (`.mm`)
 - OCaml source files (`.ml`, `.mll`, `.mly`)
@@ -224,7 +225,7 @@ The application can also handle some [plain files](#plain-files) without extensi
 - TeX and LaTeX files (`.tex`, `.sty`, `.cls`, `.latex`, `.ltx`, `.texi`, `.ctx`, `.sty`)
 - Text files (`.txt`, `.text`)
 - Toml files (`.toml`)
-- Typescript files (`.ts`, `.tsx`) **`.ts` is reserved by macOS and cannot be handled.**
+- Typescript files (`.ts`, `.tsx`, `.cts`, `.mts`) **`.ts` and `.mts` are reserved by macOS and cannot be handled.**
 - Verilog HDL files (`.v`, `.vl`)
 - VHDL source files (`.vhd`, `.vhdl`)
 - VIM script files (`.vim`)
@@ -508,6 +509,7 @@ The command line tool require macOS 10.15.4 or later.
 - Icons of the custom file format are disabled on Catalina (cause an application freeze).
 - In `RTF` mode the colors may be slightly lighter than what is set (probably due to the different handling of color profile). 
 - Typescript `.ts` format cannot be handled because is reserved by macOS and associated to the mpeg video stream format.
+- If a quicklook windows is opened when the system switch the theme appearance, the contents will not be refreshed to the new style.
 
 
 ## Note for developers

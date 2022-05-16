@@ -157,6 +157,7 @@
 				<string>org.n8gray.verilog</string>
 				<string>org.n8gray.vhdl</string>
 				<string>org.n8gray.xhtml</string>
+				<string>org.nodejs.cjs</string>
 				<string>org.ocaml.ocaml</string>
 				<string>org.ocaml.ocaml-interface</string>
 				<string>org.ocaml.ocaml-source</string>
@@ -181,6 +182,7 @@
 				<string>org.sbarex.ms-powershell-module</string>
 				<string>org.sbarex.ms-powershell-module-manifest</string>
 				<string>org.sbarex.nim</string>
+				<string>org.sbarex.qlsyntaxhighlight.dummy</string>
 				<string>org.scala.source</string>
 				<string>org.tug.lua</string>
 				<string>org.tug.tex</string>
@@ -258,6 +260,7 @@
 				<string>public.tcsh-script</string>
 				<string>public.tex</string>
 				<string>public.text</string>
+				<string>public.toml</string>
 				<string>public.tsx</string>
 				<string>public.typescript</string>
 				<string>public.unix-executable</string>
@@ -300,6 +303,8 @@
 				<string>dyn.ah62d4rv4ge81u6k</string>
 				<string>dyn.ah62d4rv4ge81u7k</string>
 				<string>dyn.ah62d4rv4ge80s3a</string>
+				<string>dyn.ah62d4rv4ge80g4xx</string>
+				<string>dyn.ah62d4rv4ge80g7dx</string>
 			</array>
 			<key>QLSupportsSearchableItems</key>
 			<false/>
