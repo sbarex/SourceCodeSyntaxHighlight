@@ -2,6 +2,18 @@ Changelog
 =======
 
 
+### 2.1.12 (61)
+New features:
+- Added support for Node CommonJS module (`.cjs`).
+- Added support for some new Typescript extensions (`.mts`, `.cts`) [but `.mts` is handled by the System as a video file].
+- Better way to handle some special settings with a YAML file. 
+
+Bugfix: 
+- Support for `.toml` files.
+- Persistence of VCS colors.
+- Plain file pattern match.
+
+
 ### 2.1.11 (60)
 New features:
 - Highlight updated to 4.2.

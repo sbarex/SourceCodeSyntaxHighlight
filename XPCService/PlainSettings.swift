@@ -96,9 +96,11 @@ struct PlainSettings {
             let patternMime = self.isCaseSensitive ? self.patternMime : self.patternMime.lowercased()
             
             if !patternFile.isEmpty && filename != patternFile {
+                // File pattern not satisfied.
                 return false
             }
-            guard !patternMime.isEmpty, let mime = self.isCaseSensitive ? mimeType?.lowercased() : mimeType, mime == patternMime else {
+            if !patternMime.isEmpty, let mime = self.isCaseSensitive ? mimeType?.lowercased() : mimeType, mime != patternMime {
+                // Mime pattern not satisfied.
                 return false
             }
             valid = true
