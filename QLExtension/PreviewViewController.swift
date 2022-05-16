@@ -150,7 +150,7 @@ class PreviewViewController: NSViewController, QLPreviewingController, WKNavigat
         self.fileUrl = url
         
         os_log(
-            "Generating preview for file %{public}s",
+            "Generating preview for file %{public}s…",
             log: self.log,
             type: .info,
             url.path
@@ -168,6 +168,7 @@ class PreviewViewController: NSViewController, QLPreviewingController, WKNavigat
                 }
                 switch result {
                 case .html(let code, let settings):
+                    os_log(OSLogType.info, log: self.log, "Preferred content size: %{public}f x %{public}f", settings?.qlWindowSize.width ?? 0, settings?.qlWindowSize.height ?? 0)
                     self.preferredContentSize = settings?.qlWindowSize ?? .zero
                     self.handler = handler
                     if self.webView == nil {
@@ -304,6 +305,7 @@ class PreviewViewController: NSViewController, QLPreviewingController, WKNavigat
                         text = t
                     } else {
                         let t: NSMutableAttributedString
+                        os_log(OSLogType.error, log: self.log, "Syntax Highlight: unable to convert data to RTF!")
                         if let settings = settings, let a: NSAttributedString = "Syntax Highlight: unable to convert data to RTF.\n\n".toRTF(settings: settings) {
                             t = NSMutableAttributedString(attributedString: a)
                         } else {
@@ -321,6 +323,7 @@ class PreviewViewController: NSViewController, QLPreviewingController, WKNavigat
                 }
             }
         } catch {
+            os_log(OSLogType.error, log: self.log, "Error processing the file: %{public}s", error.localizedDescription)
             handler(error)
         }
     }
@@ -336,58 +339,71 @@ class PreviewViewController: NSViewController, QLPreviewingController, WKNavigat
             case .html(let code, let settings):
                 if settings?.isRenderingSupported ?? false {
                     if settings?.isImage ?? false {
+                        os_log(OSLogType.info, log: self.log, "File rendered as image.")
                         r = QLPreviewReply(dataOfContentType: UTType.image, contentSize: .zero) { _ in
                             return (try? Data(contentsOf: request.fileURL)) ?? "Unable to load the image file!".data(using: .utf8)!
                         }
                     } else if settings?.isPDF ?? false {
+                        os_log(OSLogType.info, log: self.log, "File rendered as PDF.")
                         r = QLPreviewReply(dataOfContentType: UTType.pdf, contentSize: .zero) { _ in
                             return (try? Data(contentsOf: request.fileURL)) ?? "Unable to load the PDF file!".data(using: .utf8)!
                         }
                     } else if settings?.isMovie ?? false {
+                        os_log(OSLogType.info, log: self.log, "File rendered as movie.")
                         r = QLPreviewReply(dataOfContentType: UTType.movie, contentSize: .zero) { _ in
                             return (try? Data(contentsOf: request.fileURL)) ?? "Unable to load the movie file!".data(using: .utf8)!
                         }
                     } else if settings?.isAudio ?? false {
+                        os_log(OSLogType.info, log: self.log, "File rendered as audio.")
                         r = QLPreviewReply(dataOfContentType: UTType.audio, contentSize: .zero) { _ in
                             return (try? Data(contentsOf: request.fileURL)) ?? "Unable to load the audio file!".data(using: .utf8)!
                         }
                     } else {
+                        os_log(OSLogType.info, log: self.log, "Syntax highlighted in HTML format, content size: %{public}f x %{public}f.", settings?.qlWindowSize.width ?? 0, settings?.qlWindowSize.height ?? 0)
                         r = QLPreviewReply(dataOfContentType: UTType.html, contentSize: settings?.qlWindowSize ?? .zero) { _ in
                             return code.data(using: .utf8)!
                         }
                     }
                 } else {
+                    os_log(OSLogType.error, log: self.log, "Unable to process the file.")
                     r = QLPreviewReply(fileURL: request.fileURL)
                 }
             case .rtf(let data, let settings):
                 if settings?.isRenderingSupported ?? false {
                     if settings?.isImage ?? false {
+                        os_log(OSLogType.info, log: self.log, "File rendered as image.")
                         r = QLPreviewReply(dataOfContentType: UTType.image, contentSize: .zero) { _ in
                             return (try? Data(contentsOf: request.fileURL)) ?? "Unable to load the image file!".data(using: .utf8)!
                         }
                     } else if settings?.isPDF ?? false {
+                        os_log(OSLogType.info, log: self.log, "File rendered as PDF.")
                         r = QLPreviewReply(dataOfContentType: UTType.pdf, contentSize: .zero) { _ in
                             return (try? Data(contentsOf: request.fileURL)) ?? "Unable to load the PDF file!".data(using: .utf8)!
                         }
                     } else if settings?.isMovie ?? false {
+                        os_log(OSLogType.info, log: self.log, "File rendered as moview.")
                         r = QLPreviewReply(dataOfContentType: UTType.movie, contentSize: .zero) { _ in
                             return (try? Data(contentsOf: request.fileURL)) ?? "Unable to load the movie file!".data(using: .utf8)!
                         }
                     } else if settings?.isAudio ?? false {
+                        os_log(OSLogType.info, log: self.log, "File rendered as audio.")
                         r = QLPreviewReply(dataOfContentType: UTType.audio, contentSize: .zero) { _ in
                             return (try? Data(contentsOf: request.fileURL)) ?? "Unable to load the audio file!".data(using: .utf8)!
                         }
                     }  else {
+                        os_log(OSLogType.info, log: self.log, "Syntax highlighted in RTF format, content size: %{public}f x %{public}f.", settings?.qlWindowSize.width ?? 0, settings?.qlWindowSize.height ?? 0)
                         r = QLPreviewReply(dataOfContentType: UTType.rtf, contentSize: settings?.qlWindowSize ?? .zero) { _ in
                             return data
                         }
                     }
                 } else {
+                    os_log(OSLogType.error, log: self.log, "Unable to process the file.")
                     r = QLPreviewReply(fileURL: request.fileURL)
                 }
             }
             handler(r, nil)
         } catch {
+            os_log(OSLogType.error, log: self.log, "Error processing the file: %{public}s", error.localizedDescription)
             handler(nil, error)
         }
     }
@@ -445,7 +461,7 @@ class PreviewViewController: NSViewController, QLPreviewingController, WKNavigat
     
     func renderFile(at url: URL, refreshingSettings: Bool) throws -> RenderResult {
         os_log(
-            "Generating preview for file %{public}s",
+            "Generating preview for file %{public}s…",
             log: self.log,
             type: .info,
             url.path
@@ -460,9 +476,11 @@ class PreviewViewController: NSViewController, QLPreviewingController, WKNavigat
             print("Received error:", error)
              */
         }) as? XPCLightRenderServiceProtocol else {
+            os_log(OSLogType.error, log: self.log, "Syntax Highlight: invalid XPC service!")
             return RenderResult.html(code: "Syntax Highlight: invalid XPC service.\n\(connettion_error?.localizedDescription ?? "")".toHTML(), settings: nil)
         }
         guard connettion_error == nil else {
+            os_log(OSLogType.error, log: self.log, "Syntax Highlight: %{public}s", connettion_error!.localizedDescription)
             return RenderResult.html(code: "Syntax Highlight: \(connettion_error!.localizedDescription).".toHTML(), settings: nil)
         }
         
@@ -490,6 +508,9 @@ class PreviewViewController: NSViewController, QLPreviewingController, WKNavigat
             }
         }
         
+        if result == nil {
+            os_log(OSLogType.error, log: self.log, "Syntax Highlight error!")
+        }
         return result ?? RenderResult.html(code: "Syntax Highlight error.".toHTML(), settings: nil)
     }
 }

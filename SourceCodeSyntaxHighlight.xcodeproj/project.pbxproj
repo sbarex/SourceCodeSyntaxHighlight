@@ -98,12 +98,16 @@
 		835A07C8274AD49B0033A30A /* about_highlight.png in Copy Image help */ = {isa = PBXBuildFile; fileRef = 8304B0B4238E8B21007A455C /* about_highlight.png */; };
 		8362579125A8B52900475069 /* SCSHTheme+C.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8362578525A8B47200475069 /* SCSHTheme+C.swift */; };
 		836257A325A8BD8E00475069 /* HighlightWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8362579725A8BD6A00475069 /* HighlightWrapper.swift */; };
-		836257B525A9D7C800475069 /* defaults in Copy Highlight share files */ = {isa = PBXBuildFile; fileRef = 83DF2E3524597EAE007DFF76 /* defaults */; };
 		836257BB25A9D7CB00475069 /* colorize.sh in Copy Highlight share files */ = {isa = PBXBuildFile; fileRef = 8359236F2355B19F001506B6 /* colorize.sh */; };
 		8362582925A9F3E100475069 /* Syntax Highlight XPC Render.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = 838F465A238D813500268B4A /* Syntax Highlight XPC Render.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		836A09E0270442F30067AF0D /* languages.json in CopyFiles */ = {isa = PBXBuildFile; fileRef = 836A09DE270441680067AF0D /* languages.json */; };
 		836CBCD92712221600A228AE /* vcs.lua in Copy extra plugins */ = {isa = PBXBuildFile; fileRef = 836DAC07270AD7A900053043 /* vcs.lua */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		836CBCDC2712C70200A228AE /* VCSSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836CBCDB2712C70200A228AE /* VCSSettingsViewController.swift */; };
+		836CD780283024BF00F074CB /* Yams in Frameworks */ = {isa = PBXBuildFile; productRef = 836CD77F283024BF00F074CB /* Yams */; };
+		836CD783283024D000F074CB /* Yams in Frameworks */ = {isa = PBXBuildFile; productRef = 836CD782283024D000F074CB /* Yams */; };
+		836CD7852830250800F074CB /* Yams in Frameworks */ = {isa = PBXBuildFile; productRef = 836CD7842830250800F074CB /* Yams */; };
+		836CD7872830250D00F074CB /* Yams in Frameworks */ = {isa = PBXBuildFile; productRef = 836CD7862830250D00F074CB /* Yams */; };
+		836CD789283029C500F074CB /* settings.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 836CD788283029B600F074CB /* settings.yaml */; };
 		836D01E22386BE9F00B85545 /* SCSHTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835923EB235A3A85001506B6 /* SCSHTheme.swift */; };
 		836D01E42386C7CD00B85545 /* File+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836D01E32386C7CD00B85545 /* File+Ext.swift */; };
 		836D01E72386DE5300B85545 /* String+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836D01E52386DE4E00B85545 /* String+ext.swift */; };
@@ -343,7 +347,6 @@
 				83A0691123672FD100C795D6 /* style.css in Copy Highlight share files */,
 				834DA8362735BD2600519C78 /* style2.css in Copy Highlight share files */,
 				831C71112618CB2A0011C3F8 /* share in Copy Highlight share files */,
-				836257B525A9D7C800475069 /* defaults in Copy Highlight share files */,
 			);
 			name = "Copy Highlight share files";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -590,6 +593,7 @@
 		836B55D0272F2712008297D5 /* syntax_highlight_cli.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = syntax_highlight_cli.entitlements; sourceTree = "<group>"; };
 		836CBCDB2712C70200A228AE /* VCSSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCSSettingsViewController.swift; sourceTree = "<group>"; };
 		836CBCDD2712FD3A00A228AE /* settings_vcs.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings_vcs.png; sourceTree = "<group>"; };
+		836CD788283029B600F074CB /* settings.yaml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = settings.yaml; sourceTree = "<group>"; };
 		836D01DF2385214D00B85545 /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
 		836D01E32386C7CD00B85545 /* File+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "File+Ext.swift"; sourceTree = "<group>"; };
 		836D01E52386DE4E00B85545 /* String+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+ext.swift"; sourceTree = "<group>"; };
@@ -636,7 +640,6 @@
 		83C981F2238B04BC00718132 /* custom_css.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = custom_css.png; sourceTree = "<group>"; };
 		83C981F4238B0C6100718132 /* theme_editor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = theme_editor.png; sourceTree = "<group>"; };
 		83D33410263A96C3003CEEFD /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
-		83DF2E3524597EAE007DFF76 /* defaults */ = {isa = PBXFileReference; lastKnownFileType = folder; path = defaults; sourceTree = "<group>"; };
 		83E5E67925AE1FF900FAF5E2 /* SaveAsFormatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveAsFormatView.swift; sourceTree = "<group>"; };
 		83E5E67B25AE1FF900FAF5E2 /* SaveAsFormatView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SaveAsFormatView.xib; sourceTree = "<group>"; };
 		83EAEE842740FD2F0093B9B7 /* vcs_preview.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vcs_preview.png; sourceTree = "<group>"; };
@@ -655,6 +658,7 @@
 				83550720255FCFDF00A9D695 /* Quartz.framework in Frameworks */,
 				8359239B23565890001506B6 /* Foundation.framework in Frameworks */,
 				8342C90E277EF4340018FCD8 /* Sparkle in Frameworks */,
+				836CD7852830250800F074CB /* Yams in Frameworks */,
 				8359239923565889001506B6 /* WebKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -671,6 +675,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				836CD780283024BF00F074CB /* Yams in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -678,6 +683,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				836CD7872830250D00F074CB /* Yams in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -685,6 +691,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				836CD783283024D000F074CB /* Yams in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -721,8 +728,8 @@
 				8319450826383626002E5B86 /* dos2unix */,
 				831C6CFA2618AAB50011C3F8 /* highlight */,
 				831C70DA2618ABAB0011C3F8 /* share */,
-				83DF2E3524597EAE007DFF76 /* defaults */,
 				8359236F2355B19F001506B6 /* colorize.sh */,
+				836CD788283029B600F074CB /* settings.yaml */,
 				83A0691023672FD100C795D6 /* style.css */,
 				834DA8332735BC0B00519C78 /* style2.css */,
 			);
@@ -1337,6 +1344,7 @@
 			name = "Syntax Highlight";
 			packageProductDependencies = (
 				8342C90D277EF4340018FCD8 /* Sparkle */,
+				836CD7842830250800F074CB /* Yams */,
 			);
 			productName = QLExt;
 			productReference = 83592345235599F6001506B6 /* Syntax Highlight.app */;
@@ -1373,6 +1381,9 @@
 			dependencies = (
 			);
 			name = "Syntax Highlight XPC Service";
+			packageProductDependencies = (
+				836CD77F283024BF00F074CB /* Yams */,
+			);
 			productName = XPCService;
 			productReference = 8359237B23563BDF001506B6 /* Syntax Highlight XPC Service.xpc */;
 			productType = "com.apple.product-type.xpc-service";
@@ -1392,6 +1403,7 @@
 			);
 			name = syntax_highlight_cli;
 			packageProductDependencies = (
+				836CD7862830250D00F074CB /* Yams */,
 			);
 			productName = syntax_highlight_cli;
 			productReference = 8373D5C32716161800B43140 /* syntax_highlight_cli */;
@@ -1410,6 +1422,9 @@
 			dependencies = (
 			);
 			name = "Syntax Highlight XPC Render";
+			packageProductDependencies = (
+				836CD782283024D000F074CB /* Yams */,
+			);
 			productName = SyntaxHighlightRenderXPC;
 			productReference = 838F465A238D813500268B4A /* Syntax Highlight XPC Render.xpc */;
 			productType = "com.apple.product-type.xpc-service";
@@ -1473,6 +1488,7 @@
 			mainGroup = 8359233C235599F6001506B6;
 			packageReferences = (
 				8342C90C277EF4340018FCD8 /* XCRemoteSwiftPackageReference "Sparkle" */,
+				836CD77E283024BF00F074CB /* XCRemoteSwiftPackageReference "Yams" */,
 			);
 			productRefGroup = 83592346235599F6001506B6 /* Products */;
 			projectDirPath = "";
@@ -1516,6 +1532,7 @@
 				83E5E68225AE242F00FAF5E2 /* SaveAsFormatView.xib in Resources */,
 				83567FCC25F2BC20004A3E94 /* Storyboard.storyboard in Resources */,
 				8356802525F56010004A3E94 /* PreviewView.xib in Resources */,
+				836CD789283029C500F074CB /* settings.yaml in Resources */,
 				83408DDE23804A0700128B0C /* examples in Resources */,
 				837F088623802A8000D3893B /* SyntaxHighlight.help in Resources */,
 				83950D7D25FC9B01002CF526 /* ThemeEditorView.xib in Resources */,
@@ -1885,7 +1902,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 60;
+				CURRENT_PROJECT_VERSION = 61;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1902,7 +1919,7 @@
 					"$(inherited)",
 					"\"$(BUILT_PRODUCTS_DIR)/highlight\"",
 				);
-				MARKETING_VERSION = 2.1.11;
+				MARKETING_VERSION = 2.1.12;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1920,7 +1937,7 @@
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 60;
+				CURRENT_PROJECT_VERSION = 61;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1937,7 +1954,7 @@
 					"$(inherited)",
 					"\"$(BUILT_PRODUCTS_DIR)/highlight\"",
 				);
-				MARKETING_VERSION = 2.1.11;
+				MARKETING_VERSION = 2.1.12;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1953,7 +1970,7 @@
 				CODE_SIGN_ENTITLEMENTS = QLExtension/QLExtension.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 60;
+				CURRENT_PROJECT_VERSION = 61;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1966,7 +1983,7 @@
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
-				MARKETING_VERSION = 2.1.11;
+				MARKETING_VERSION = 2.1.12;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.QuicklookExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1982,7 +1999,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 60;
+				CURRENT_PROJECT_VERSION = 61;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1995,7 +2012,7 @@
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
-				MARKETING_VERSION = 2.1.11;
+				MARKETING_VERSION = 2.1.12;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.QuicklookExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2012,7 +2029,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 60;
+				CURRENT_PROJECT_VERSION = 61;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = XPCService/Info.plist;
@@ -2021,7 +2038,7 @@
 					"$(LD_RUNPATH_SEARCH_PATHS_$(IS_MACCATALYST)_$(_BOOL_$(SKIP_INSTALL)))",
 				);
 				LIBRARY_SEARCH_PATHS = "\"$(BUILT_PRODUCTS_DIR)/highlight\"";
-				MARKETING_VERSION = 2.1.11;
+				MARKETING_VERSION = 2.1.12;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.XPCService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2040,7 +2057,7 @@
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 60;
+				CURRENT_PROJECT_VERSION = 61;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = XPCService/Info.plist;
@@ -2049,7 +2066,7 @@
 					"$(LD_RUNPATH_SEARCH_PATHS_$(IS_MACCATALYST)_$(_BOOL_$(SKIP_INSTALL)))",
 				);
 				LIBRARY_SEARCH_PATHS = "\"$(BUILT_PRODUCTS_DIR)/highlight\"";
-				MARKETING_VERSION = 2.1.11;
+				MARKETING_VERSION = 2.1.12;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.XPCService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2099,7 +2116,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 60;
+				CURRENT_PROJECT_VERSION = 61;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2111,7 +2128,7 @@
 					"$(inherited)",
 					"@loader_path/../../../../Frameworks",
 				);
-				MARKETING_VERSION = 2.1.11;
+				MARKETING_VERSION = 2.1.12;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.XPCRender;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2131,7 +2148,7 @@
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 60;
+				CURRENT_PROJECT_VERSION = 61;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2143,7 +2160,7 @@
 					"$(inherited)",
 					"@loader_path/../../../../Frameworks",
 				);
-				MARKETING_VERSION = 2.1.11;
+				MARKETING_VERSION = 2.1.12;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.XPCRender;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2259,6 +2276,14 @@
 				kind = branch;
 			};
 		};
+		836CD77E283024BF00F074CB /* XCRemoteSwiftPackageReference "Yams" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/jpsim/Yams";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -2266,6 +2291,26 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 8342C90C277EF4340018FCD8 /* XCRemoteSwiftPackageReference "Sparkle" */;
 			productName = Sparkle;
+		};
+		836CD77F283024BF00F074CB /* Yams */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 836CD77E283024BF00F074CB /* XCRemoteSwiftPackageReference "Yams" */;
+			productName = Yams;
+		};
+		836CD782283024D000F074CB /* Yams */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 836CD77E283024BF00F074CB /* XCRemoteSwiftPackageReference "Yams" */;
+			productName = Yams;
+		};
+		836CD7842830250800F074CB /* Yams */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 836CD77E283024BF00F074CB /* XCRemoteSwiftPackageReference "Yams" */;
+			productName = Yams;
+		};
+		836CD7862830250D00F074CB /* Yams */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 836CD77E283024BF00F074CB /* XCRemoteSwiftPackageReference "Yams" */;
+			productName = Yams;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

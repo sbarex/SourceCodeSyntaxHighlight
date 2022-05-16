@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="20037" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20037"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -62,11 +62,11 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="c22-O7-iKe">
-            <rect key="frame" x="0.0" y="0.0" width="4503" height="850"/>
+            <rect key="frame" x="0.0" y="0.0" width="4533" height="850"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <gridView horizontalHuggingPriority="249" xPlacement="leading" yPlacement="center" rowAlignment="none" translatesAutoresizingMaskIntoConstraints="NO" id="0T1-eh-T9u">
-                    <rect key="frame" x="0.0" y="132" width="4503" height="718"/>
+                    <rect key="frame" x="0.0" y="132" width="4533" height="718"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="UX1-Xe-OEz" secondAttribute="trailing" constant="6" id="1EC-S4-H7d"/>
                         <constraint firstItem="9lC-ZQ-SGD" firstAttribute="width" secondItem="g84-Vh-moe" secondAttribute="width" id="Fqy-kk-Dwn"/>
@@ -317,13 +317,13 @@
                         </gridCell>
                         <gridCell row="7Fa-ya-moY" column="Gck-5r-ihD" id="ZDk-j6-PgP">
                             <box key="contentView" horizontalHuggingPriority="249" borderType="line" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="UX1-Xe-OEz">
-                                <rect key="frame" x="205" y="516" width="4295" height="29"/>
+                                <rect key="frame" x="205" y="516" width="4325" height="29"/>
                                 <view key="contentView" id="kwH-Hg-vPS">
-                                    <rect key="frame" x="3" y="3" width="4289" height="23"/>
+                                    <rect key="frame" x="3" y="3" width="4319" height="23"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SCg-7c-w8J">
-                                            <rect key="frame" x="4266" y="4" width="15" height="15"/>
+                                            <rect key="frame" x="4296" y="4" width="15" height="15"/>
                                             <buttonCell key="cell" type="inline" bezelStyle="inline" image="font_panel" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="idR-RX-9HI">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="smallSystemBold"/>
@@ -333,7 +333,7 @@
                                             </connections>
                                         </button>
                                         <textField horizontalHuggingPriority="248" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hvR-2L-HaF">
-                                            <rect key="frame" x="6" y="4" width="4254" height="16"/>
+                                            <rect key="frame" x="6" y="4" width="4284" height="16"/>
                                             <textFieldCell key="cell" lineBreakMode="clipping" id="qZf-V6-K5M">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -562,10 +562,10 @@
                         </gridCell>
                         <gridCell row="jUh-vB-Wi1" column="Gck-5r-ihD" id="jdS-Ur-03u">
                             <stackView key="contentView" distribution="fill" orientation="horizontal" alignment="centerY" spacing="4" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" horizontalHuggingPriority="249" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="E8R-g7-R4x">
-                                <rect key="frame" x="208" y="336" width="4289" height="21"/>
+                                <rect key="frame" x="208" y="336" width="4325" height="21"/>
                                 <subviews>
                                     <textField horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ncm-z0-FS0">
-                                        <rect key="frame" x="0.0" y="0.0" width="4269" height="21"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="4305" height="21"/>
                                         <string key="toolTip">Preprocessor is any command line program or shell script that returns to the stdout the data to be formatted.  Use the placeholder $targetHL for the target file name. </string>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="cat $targetHL" drawsBackground="YES" id="ySl-JY-XvU">
                                             <font key="font" usesAppearanceFont="YES"/>
@@ -577,7 +577,7 @@
                                         </connections>
                                     </textField>
                                     <imageView toolTip="Warning: the preprocessor do not contain the $targetHL placeholder." horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="f5n-uP-zlA">
-                                        <rect key="frame" x="4273" y="3" width="16" height="16"/>
+                                        <rect key="frame" x="4309" y="3" width="16" height="16"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="16" id="EXD-Jh-He6"/>
                                             <constraint firstAttribute="height" constant="16" id="itg-u5-YGI"/>
@@ -786,7 +786,7 @@
                         <gridCell row="Tyb-uM-equ" column="K0M-TP-aZe" id="E6d-kn-772">
                             <textField key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="YA3-R3-beG">
                                 <rect key="frame" x="-2" y="116" width="206" height="16"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Custom Quick Look:" id="U9E-0z-m8I">
+                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Custom Quick Look size:" id="U9E-0z-m8I">
                                     <font key="font" usesAppearanceFont="YES"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -795,7 +795,7 @@
                         </gridCell>
                         <gridCell row="Tyb-uM-equ" column="Gck-5r-ihD" id="r4K-Y8-sJv">
                             <stackView key="contentView" distribution="equalSpacing" orientation="horizontal" alignment="firstBaseline" spacing="2" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KV9-fB-7Y9">
-                                <rect key="frame" x="208" y="113" width="274" height="22"/>
+                                <rect key="frame" x="208" y="113" width="240" height="22"/>
                                 <subviews>
                                     <switch horizontalHuggingPriority="750" verticalHuggingPriority="750" baseWritingDirection="leftToRight" alignment="left" translatesAutoresizingMaskIntoConstraints="NO" id="jfe-l3-6Vw">
                                         <rect key="frame" x="-2" y="-2" width="42" height="25"/>
@@ -803,16 +803,8 @@
                                             <action selector="handleQLSizeChanged:" target="-2" id="Edf-gf-fdP"/>
                                         </connections>
                                     </switch>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6EN-M1-KFK">
-                                        <rect key="frame" x="38" y="3" width="36" height="16"/>
-                                        <textFieldCell key="cell" lineBreakMode="clipping" title=" size:" id="Vpm-6R-TIg">
-                                            <font key="font" metaFont="system"/>
-                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                    </textField>
                                     <textField verticalHuggingPriority="750" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="3VB-dU-Ndh">
-                                        <rect key="frame" x="74" y="1" width="80" height="21"/>
+                                        <rect key="frame" x="40" y="1" width="80" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="0UB-PL-r2P"/>
                                             <constraint firstAttribute="width" relation="lessThanOrEqual" constant="80" id="SZr-ER-phR"/>
@@ -832,7 +824,7 @@
                                         </connections>
                                     </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="oX9-cb-QV4">
-                                        <rect key="frame" x="154" y="3" width="20" height="16"/>
+                                        <rect key="frame" x="120" y="3" width="20" height="16"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title=" ⨉ " id="anS-CX-hpU">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -840,7 +832,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <textField verticalHuggingPriority="750" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="wMk-4m-Xf1">
-                                        <rect key="frame" x="174" y="1" width="80" height="21"/>
+                                        <rect key="frame" x="140" y="1" width="80" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="hjj-T5-VIc"/>
                                         </constraints>
@@ -855,7 +847,7 @@
                                         </connections>
                                     </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="d0s-UA-xEs">
-                                        <rect key="frame" x="254" y="3" width="22" height="16"/>
+                                        <rect key="frame" x="220" y="3" width="22" height="16"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title=" px" id="otg-TV-b6O">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -872,10 +864,8 @@
                                     <integer value="1000"/>
                                     <integer value="1000"/>
                                     <integer value="1000"/>
-                                    <integer value="1000"/>
                                 </visibilityPriorities>
                                 <customSpacing>
-                                    <real value="3.4028234663852886e+38"/>
                                     <real value="3.4028234663852886e+38"/>
                                     <real value="3.4028234663852886e+38"/>
                                     <real value="3.4028234663852886e+38"/>
