@@ -65,7 +65,13 @@ class PreviewView: NSView, SettingsSplitViewElement {
     fileprivate (set) var isRefreshig = false
     
     
-    var isLight = (UserDefaults.standard.string(forKey: "AppleInterfaceStyle") ?? "Light") == "Light" {
+    var isLight: Bool = {
+        if #available(macOS 11.0, *) {
+            return NSAppearance.currentDrawing().bestMatch(from: [.aqua, .darkAqua]) ?? .aqua == .aqua
+        } else {
+            return (UserDefaults.standard.string(forKey: "AppleInterfaceStyle") ?? "Light") == "Light"
+        }
+    }() {
         didSet {
             if oldValue != isLight {
                 self.refreshPreview()
