@@ -77,10 +77,11 @@ class SettingsBase: NSObject {
         
         static let customizedUTISettings = "uti-settings"
         static let plainSettings = "plain-settings"
+        static let specialSettingsGlobal = "global-special-settings"
         
         static let connectedUTI = "uti"
         
-        static let specialSettings = "specialSettings"
+        static let specialSettingsFormat = "specialSettings"
 
         static let preprocessor = "preprocessor"
         static let syntax = "syntax"
@@ -365,7 +366,7 @@ class SettingsBase: NSObject {
     
     var isCustomized: Bool {
         get {
-            let state = isFormatDefined || isLightThemeNameDefined || isDarkThemeNameDefined || isLineNumbersDefined || isWordWrapDefined || isLineLengthDefined || isTabSpacesDefined || isArgumentsDefined || isCSSDefined || isFormatDefined || isFontSizeDefined || isVCSDefined
+            let state = isFormatDefined || isLightThemeNameDefined || isDarkThemeNameDefined || isLineNumbersDefined || isWordWrapDefined || isLineLengthDefined || isTabSpacesDefined || isArgumentsDefined || isCSSDefined || isFontSizeDefined || isVCSDefined
             
             guard !state else {
                 return true
@@ -649,7 +650,11 @@ class SettingsBase: NSObject {
     }
     
     func isOSThemeLight() -> Bool {
-        return (UserDefaults.standard.string(forKey: "AppleInterfaceStyle") ?? "Light") == "Light"
+        if #available(macOS 11.0, *) {
+            return NSAppearance.currentDrawing().bestMatch(from: [.aqua, .darkAqua]) ?? .aqua == .aqua
+        } else {
+            return (UserDefaults.standard.string(forKey: "AppleInterfaceStyle") ?? "Light") == "Light"
+        }
     }
     
     func getTheme() -> ThemeBaseColor {
@@ -767,7 +772,6 @@ protocol SettingsFormatProtocol: SettingsBase {
 class SettingsFormat: SettingsBase, SettingsFormatProtocol, SettingsLSP {
     var uti: String
     
-    var isSpecialSettingsPopulated: Bool = false
     var isCSSPopulated: Bool = false
     
     dynamic var isAppendArgumentsDefined: Bool {
@@ -912,7 +916,7 @@ class SettingsFormat: SettingsBase, SettingsFormatProtocol, SettingsLSP {
         
         overrideLSP(fromDictionary: dict)
         
-        if let specials = settings[SettingsBase.Key.specialSettings] as? [String: String] {
+        if let specials = settings[SettingsBase.Key.specialSettingsFormat] as? [String: String] {
             if let v = specials[SettingsBase.Key.preprocessor] {
                 self.specialPreprocessor = v
             }
@@ -952,7 +956,7 @@ class SettingsFormat: SettingsBase, SettingsFormatProtocol, SettingsLSP {
                 special[SettingsBase.Key.appendedExtraArguments] = appendArguments
             }
             if !special.isEmpty {
-                r[SettingsBase.Key.specialSettings] = special
+                r[SettingsBase.Key.specialSettingsFormat] = special
             }
         }
         
@@ -978,6 +982,8 @@ class Settings: SettingsBase {
     
     var isAllSpecialSettingsPopulated: Bool = false
     var isAllCSSPopulated: Bool = false
+    
+    var specialSettings:  [String: [String: [String: String]]] = [:]
     
     internal var plainSettings: [PlainSettings] = []
     
@@ -1149,6 +1155,10 @@ class Settings: SettingsBase {
             self.qlWindowHeight = v
         }
         
+        if let v = settings[SettingsBase.Key.specialSettingsGlobal] as? [String: [String: [String: String]]] {
+            self.specialSettings = v
+        }
+        
         self.isFormatDefined = true
         self.isLightThemeNameDefined = true
         self.isDarkThemeNameDefined = true
@@ -1215,6 +1225,8 @@ class Settings: SettingsBase {
             }
         }
         r[SettingsBase.Key.plainSettings] = plain
+        
+        r[SettingsBase.Key.specialSettingsGlobal] = self.specialSettings
         
         return r
     }
@@ -1443,6 +1455,43 @@ class Settings: SettingsBase {
         self.plainSettings.insert(settings, at: at)
         self.isDirty = true
         return p
+    }
+    
+    @discardableResult
+    func setSpecialSettings(url: URL, in format_settings: SettingsFormat) -> Bool
+    {
+        guard self.isAllSpecialSettingsPopulated else {
+            return false
+        }
+        var found = false
+        if let uti = (try? url.resourceValues(forKeys: [.typeIdentifierKey]))?.typeIdentifier {
+            if let props = self.specialSettings["UTIs"]?[uti] {
+                if let v = props["syntax"] {
+                    format_settings.specialSyntax = v
+                }
+                if let v = props["prepropcessor"] {
+                    format_settings.specialPreprocessor = v
+                }
+                if let v = props["extra"] {
+                    format_settings.specialAppendArguments = v
+                }
+                found = true
+            }
+        }
+        let ext = url.pathExtension.lowercased()
+        if let props = self.specialSettings["extensions"]?[ext] {
+            if let v = props["syntax"] {
+                format_settings.specialSyntax = v
+            }
+            if let v = props["prepropcessor"] {
+                format_settings.specialPreprocessor = v
+            }
+            if let v = props["extra"] {
+                format_settings.specialAppendArguments = v
+            }
+            found = true
+        }
+        return found
     }
     
     // MARK: - Highlight

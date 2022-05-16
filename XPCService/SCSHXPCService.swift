@@ -459,7 +459,6 @@ class SCSHXPCService: SCSHBaseXPCService, SCSHXPCServiceProtocol {
 
     override internal class func initSettings() -> Settings {
         let settings = super.initSettings()
-        settings.populateAllSpecialSettings(supportFolder: applicationSupportUrl, serviceBundle: self.serviceBundle)
         if let dir = self.getCustomStylesUrl(createIfMissing: false) {
             settings.populateUTIsCSS(cssFolder: dir)
         }
@@ -488,10 +487,6 @@ class SCSHXPCService: SCSHBaseXPCService, SCSHXPCServiceProtocol {
                     try? self.settings.utiSettings[uti]?.purgeCSS(inFolder: CSSFolder)
                 }
                 try? self.settings.purgeCSS(inFolder: CSSFolder)
-            }
-            
-            for (_, settings) in new_settings.utiSettings {
-                settings.isSpecialSettingsPopulated = true
             }
             
             self.settings = new_settings

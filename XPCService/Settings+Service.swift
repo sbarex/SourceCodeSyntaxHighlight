@@ -7,6 +7,8 @@
 //
 
 import Cocoa
+import OSLog
+import Yams
 
 protocol SettingsCSS: SettingsBase {
     func getCSSFile(inFolder folder: URL) -> URL
@@ -54,39 +56,6 @@ extension SettingsFormat: SettingsCSS {
         }
     }
     
-    /// Fill the settings loading a custom .plist file for the UTI (if exists).
-    func populateSpecialSettings(supportFolder: URL?, serviceBundle: Bundle?) {
-        self.isSpecialSettingsPopulated = true
-        
-        guard let baseSettings = type(of: self).getSpecialSettingsFile(uti: uti, supportFolder: supportFolder, serviceBundle: serviceBundle)?.path else {
-            return
-        }
-        populateSpecialSettings(fromPlist: URL(fileURLWithPath: baseSettings))
-    }
-    
-    func populateSpecialSettings(fromPlist file: URL) {
-        guard let plistXML = FileManager.default.contents(atPath: file.path) else {
-            return
-        }
-        do {
-            // Customize the base global settings with the special values inside the plist.
-            if let plistData = try PropertyListSerialization.propertyList(from: plistXML, options: .mutableContainers, format: nil) as? [String: String] {
-            
-                if let v = plistData[SettingsBase.Key.syntax] {
-                    self.specialSyntax = v
-                }
-                if let v = plistData[SettingsBase.Key.preprocessor], !v.trimmingCharacters(in: .whitespaces).isEmpty {
-                    self.specialPreprocessor = v
-                }
-                if let v = plistData[SettingsBase.Key.extraArguments], !v.trimmingCharacters(in: .whitespaces).isEmpty {
-                    self.specialAppendArguments = v
-                }
-            }
-        } catch {
-            print("Error reading plist \(file.path): \(error)")
-        }
-    }
-    
     /// Fill the CSS with value of associated file.
     /// - parameters:
     ///   - cssFolder: Folder for search the CSS file.
@@ -123,38 +92,53 @@ extension Settings: SettingsCSS {
     func populateAllSpecialSettings(supportFolder: URL?, serviceBundle: Bundle) {
         self.isAllSpecialSettingsPopulated = true
         
-        let process = { (file: String, p: URL) in
-            let url = URL(fileURLWithPath: file, relativeTo: p)
-            guard url.pathExtension == "plist" else {
-                return
-            }
-            let name = url.deletingPathExtension().lastPathComponent
-            let uti_settings = self.utiSettings[name] ?? self.createSettings(forUTI: name)
-            uti_settings.populateSpecialSettings(fromPlist: url)
-        }
-        
-        var d: ObjCBool = false
-        // Process files on support folder.
-        if let supportDir = supportFolder?.appendingPathComponent("defaults"), FileManager.default.fileExists(atPath: supportDir.path, isDirectory: &d), d.boolValue {
-            do {
-                for file in try FileManager.default.contentsOfDirectory(atPath: supportDir.path) {
-                    process(file, supportDir)
-                }
-            } catch {
-            }
-        }
-        
         // Process files on bundle the application support folder.
-        if let p = serviceBundle.url(forResource: "defaults", withExtension: nil, subdirectory: "highlight") {
+        if let p = serviceBundle.url(forResource: "settings", withExtension: "yaml"), let data = try? String(contentsOf: p) {
             do {
-                for file in try FileManager.default.contentsOfDirectory(atPath: p.path) {
-                    if let f = supportFolder?.appendingPathComponent("defaults/\(file)"), FileManager.default.fileExists(atPath: f.path) {
-                        // Exists a custom file on the application support folder.
-                        continue
-                    }
-                    process(file, p)
+                if let d = try Yams.load(yaml: data) as? [String: [String: [String: String]]] {
+                    self.specialSettings = d
                 }
             } catch {
+                print(error)
+            }
+        }
+        
+        // Process files on support folder.
+        if let p = supportFolder?.appendingPathComponent("settings.yaml"), let data = try? String(contentsOf: p) {
+            do {
+                if let d = try Yams.load(yaml: data) as? [String: [String: [String: String]]] {
+                    for group in d {
+                        if self.specialSettings[group.key] == nil {
+                            self.specialSettings[group.key] = [:]
+                        }
+                        for item in group.value {
+                            if self.specialSettings[group.key]![item.key] == nil {
+                                self.specialSettings[group.key]![item.key] = item.value
+                            } else {
+                                self.specialSettings[group.key]![item.key] = self.specialSettings[group.key]![item.key]?.merging(item.value, uniquingKeysWith: { _, new in
+                                    return new
+                                })
+                            }
+                        }
+                    }
+                }
+            } catch {
+                print(error)
+            }
+        }
+        
+        if let utis = self.specialSettings["UTIs"] {
+            for item in utis {
+                let uti_settings = self.utiSettings[item.key] ?? self.createSettings(forUTI: item.key)
+                if let v = item.value["syntax"] {
+                    uti_settings.specialSyntax = v
+                }
+                if let v = item.value["preprocessor"] {
+                    uti_settings.specialPreprocessor = v
+                }
+                if let v = item.value["extra"] {
+                    uti_settings.specialAppendArguments = v
+                }
             }
         }
     }

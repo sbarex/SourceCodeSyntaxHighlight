@@ -56,84 +56,6 @@ class SCSHBaseXPCService: NSObject {
     }
     
     // MARK: - Class methods
-    /*
-    internal class func populateSpecialSettings(_ settings: Settings) {
-        for (uti, uti_settings) in settings.utiSettings {
-            let baseSettings: String
-            if let file = applicationSupportUrl?.appendingPathComponent("defaults/\(uti).plist"), FileManager.default.fileExists(atPath: file.path) {
-                // Customized file inside the application support folder.
-                baseSettings = file.path
-            } else if let file = self.serviceBundle.path(forResource: uti, ofType: "plist", inDirectory: "highlight/defaults") {
-                // Customized file inside the application resources folder.
-                baseSettings = file
-            } else {
-                baseSettings = ""
-            }
-            if !baseSettings.isEmpty, let plistXML = FileManager.default.contents(atPath: baseSettings) {
-                do {
-                    // Customize the base global settings with the special values inside the plist.
-                    if let plistData = try PropertyListSerialization.propertyList(from: plistXML, options: .mutableContainers, format: nil) as? [String: String] {
-                    
-                        uti_settings.specialSyntax = plistData[SettingsBase.Key.syntax]
-                        uti_settings.specialPreprocessor = plistData[SettingsBase.Key.preprocessor]
-                        uti_settings.specialAppendArguments = plistData[SettingsBase.Key.appendedExtraArguments]
-                    }
-                } catch {
-                    print("Error reading plist \(baseSettings): \(error)")
-                }
-            }
-        }
-        
-        let process = { (file: String, p: URL) in
-            let url = URL(fileURLWithPath: file, relativeTo: p)
-            guard url.pathExtension == "plist" else {
-                return
-            }
-            let name = url.deletingPathExtension().lastPathComponent
-            guard !settings.hasCustomizedSettings(forUTI: name) else {
-                return
-            }
-            
-            if let plistXML = FileManager.default.contents(atPath: url.path) {
-                do {
-                    // Customize the base global settings with the special values inside the plist.
-                    guard let plistData = try PropertyListSerialization.propertyList(from: plistXML, options: .mutableContainers, format: nil) as? [String:String] else {
-                        return
-                    }
-                    let uti_settings = settings.createSettings(forUTI: name)
-                    uti_settings.specialSyntax = plistData[SettingsBase.Key.syntax]
-                    uti_settings.specialPreprocessor = plistData[SettingsBase.Key.preprocessor]
-                    uti_settings.specialAppendArguments = plistData[SettingsBase.Key.appendedExtraArguments]
-                } catch {
-                    print("Error reading plist \(file): \(error)")
-                }
-            }
-        }
-        
-        var d: ObjCBool = false
-        if let p = applicationSupportUrl?.appendingPathComponent("defaults"), FileManager.default.fileExists(atPath: p.path, isDirectory: &d), d.boolValue {
-            do {
-                for file in try FileManager.default.contentsOfDirectory(atPath: p.path) {
-                    process(file, p)
-                }
-            } catch {
-            }
-        }
-        
-        if let p = self.serviceBundle.url(forResource: "defaults", withExtension: nil, subdirectory: "highlight") {
-            do {
-                for file in try FileManager.default.contentsOfDirectory(atPath: p.path) {
-                    if let f = applicationSupportUrl?.appendingPathComponent("defaults/\(file)"), FileManager.default.fileExists(atPath: f.path) {
-                        // Exists a custom file on the application support folder.
-                        continue
-                    }
-                    process(file, p)
-                }
-            } catch {
-            }
-        }
-    }
-    */
     
     internal class func initSettings() -> Settings {
         let settings = Settings(defaultsDomain: XPCDomain)
@@ -141,6 +63,7 @@ class SCSHBaseXPCService: NSObject {
         if let dir = self.getCustomStylesUrl(createIfMissing: false) {
             settings.populateCSS(cssFolder: dir)
         }
+        settings.populateAllSpecialSettings(supportFolder: applicationSupportUrl, serviceBundle: self.serviceBundle)
         
         return settings
     }
@@ -408,8 +331,6 @@ class SCSHBaseXPCService: NSObject {
         
         try? "Start processing \(url.path) …".appendLine(to: logFile)
         
-        let custom_settings: SettingsRendering
-        
         var uti = settings.searchUTI(for: url)
         var plain: PlainSettings?
         let attributes: MagicAttributes?
@@ -475,20 +396,24 @@ class SCSHBaseXPCService: NSObject {
             attributes = nil
         }
         
+        let custom_settings: SettingsRendering
+        
         if let uti = uti {
             try? "Detected UTI: \(uti)".appendLine(to: logFile)
             let utiSettings = settings.utiSettings[uti] ?? settings.createSettings(forUTI: uti)
             
-            if !utiSettings.isSpecialSettingsPopulated {
-                utiSettings.populateSpecialSettings(supportFolder: self.applicationSupportUrl, serviceBundle: self.serviceBundle)
-            }
             if !utiSettings.isCSSPopulated, let dir = self.getCustomStylesUrl(createIfMissing: false) {
                 utiSettings.populateCSS(fromFolder: dir)
             }
             
+            settings.setSpecialSettings(url: url, in: utiSettings)
             custom_settings = SettingsRendering(globalSettings: settings, format: utiSettings)
         } else {
-            custom_settings = SettingsRendering(globalSettings: settings, format: nil)
+            var utiSettings: SettingsFormat? = SettingsFormat(settings: [:])
+            if !settings.setSpecialSettings(url: url, in: utiSettings!) {
+                utiSettings = nil
+            }
+            custom_settings = SettingsRendering(globalSettings: settings, format: utiSettings)
         }
         
         custom_settings.logFile = logFile
@@ -497,12 +422,18 @@ class SCSHBaseXPCService: NSObject {
             custom_settings.override(fromDictionary: overridingSettings)
         }
         
+        if custom_settings.isVCS, let diff = self.getVCSDiff(url: url, settings: custom_settings) {
+            custom_settings.vcsDiff = diff
+            // print(diff)
+        }
+        
         if plain != nil {
             try? "File recognized as plain data.".appendLine(to: custom_settings.logFile)
             var st = stat()
             stat(url.path, &st)
             guard st.st_size > 0 else {
                 try? "\tThe file is empty.".appendLine(to: custom_settings.logFile)
+                // TODO: Show empty file warning also for files with extension.
                 let data = "Syntax Highlight: the file is empty.".toData(settings: custom_settings, cssFile: extraCss)
                 return (data: data, settings: custom_settings)
             }
@@ -622,9 +553,6 @@ img {
                 let data = "Syntax Highlight: could not determine encoding of the file.".toData(settings: custom_settings, cssFile: extraCss)
                 return (data: data, settings: custom_settings)
             }
-        } else if custom_settings.isVCS, let diff = self.getVCSDiff(url: url, settings: custom_settings) {
-            custom_settings.vcsDiff = diff
-            // print(diff)
         }
         
         do {
@@ -717,45 +645,55 @@ img {
         return chunks
     }
 
-    static func getGitDiff(url: URL, git: String) -> [String]? {
+    static func getGitDiff(url: URL, git: String, log logFile: URL?) -> [String]? {
         guard !git.isEmpty else {
             return nil
         }
         do {
+            try? "Getting the git status…".appendLine(to: logFile)
+            try? "\(git) diff -U0 -0 \(url.path)".appendLine(to: logFile)
+            
             let result = try ShellTask.runTask(command: git, arguments: ["diff", "-U0", "-0", url.path], cwd: url.deletingLastPathComponent().path)
             
             guard result.exitCode == 0, let stringOutput = result.output() else {
+                try? "ERROR: could not determine the git status: \(result.exitCode) \(result.errorOutput() ?? "") \(result.output() ?? "")".appendLine(to: logFile)
                 return nil
             }
             let chunks = parseUnifiedDiff(stringOutput)
             return chunks
         } catch {
+            try? "ERROR: could not determine the git status: \(error.localizedDescription)".appendLine(to: logFile)
             // let e = error
             // print(e)
             return nil
         }
     }
 
-    static func getHgDiff(url: URL, hg: String) -> [String]? {
+    static func getHgDiff(url: URL, hg: String, log logFile: URL?) -> [String]? {
         guard !hg.isEmpty else {
             return nil
         }
         do {
+            try? "Getting the mercurial status…".appendLine(to: logFile)
+            try? "\(hg) diff -U0 \(url.path)".appendLine(to: logFile)
+            
             let result = try ShellTask.runTask(command: hg, arguments: ["diff", "-U0", url.path], cwd: url.deletingLastPathComponent().path)
             
             guard result.exitCode == 0, let stringOutput = result.output() else {
+                try? "ERROR: could not determine the hg status: \(result.exitCode) \(result.errorOutput() ?? "") \(result.output() ?? "")".appendLine(to: logFile)
                 return nil
             }
             let chunks = parseUnifiedDiff(stringOutput)
             return chunks
         } catch {
+            try? "ERROR: could not determine the hg status: \(error.localizedDescription)".appendLine(to: logFile)
             // let e = error
             // print(e)
             return nil
         }
     }
 
-    static func getSVNDiff(url: URL, svn: String) -> [String]? {
+    static func getSVNDiff(url: URL, svn: String, log logFile: URL?) -> [String]? {
         guard !svn.isEmpty else {
             return nil
         }
@@ -764,11 +702,17 @@ img {
     }
 
     static func getVCSDiff(url: URL, settings: Settings) -> [String]? {
-        if let diff = getGitDiff(url: url, git: settings.gitPath) {
+        let log: URL?
+        if let settings = settings as? SettingsRendering {
+            log = settings.logFile
+        } else {
+            log = nil
+        }
+        if let diff = getGitDiff(url: url, git: settings.gitPath, log: log) {
             return diff
-        } else if let diff = getHgDiff(url: url, hg: settings.hgPath) {
+        } else if let diff = getHgDiff(url: url, hg: settings.hgPath, log: log) {
             return diff
-        } else if let diff = getSVNDiff(url: url, svn: settings.svnPath) {
+        } else if let diff = getSVNDiff(url: url, svn: settings.svnPath, log: log) {
             return diff
         } else {
             return nil

@@ -1,0 +1,314 @@
+  
+UTIs:
+    _plist: &plist
+        syntax: xml
+        preprocessor: /usr/bin/plutil -convert xml1 -o - $targetHL
+
+    _xml: &xml
+        syntax: xml
+    
+    com.adobe.acrobat.sequ: *xml
+    dyn.ah62d4rv4ge81g3pvsy: *xml
+    
+    com.adobe.edn:
+        syntax: clojure
+    
+    com.apple.applescript.script:
+        syntax: applescript
+        preprocessor: /usr/bin/osadecompile $targetHL
+    
+    com.apple.dt.interfacebuilder.document.storyboard: *xml
+    com.apple.interfacebuilder.document.cocoa: *xml
+    com.apple.mobileconfig: *xml
+    com.apple.property-list: *plist
+    com.apple.terminal.settings: *plist
+        
+    com.apple.terminal.shell-script:
+        syntax: shellscript
+    
+    com.apple.xcode.entitlements-property-list: *plist
+    com.apple.xcode.strings-dictionary: *plist
+    com.apple.xcode.strings-text: *plist
+    
+    com.barebones.bbedit.ini-configuration:
+        syntax: ini
+        
+    com.barebones.bbedit.typescript-source:
+        syntax: typescript
+        
+    com.google.earth.kml: *xml
+    com.jetbrain.source: *xml
+    
+    com.microsoft.typescript:
+        syntax: typescript
+    dyn.ah62d4rv4ge80g7dx:
+        syntax: typescript
+
+    com.microsoft.xaml: *xml
+    com.seriflabs.xmp: *xml
+    dyn.ah62d4rv4ge81u5pu: *xml
+    
+    com.sun.java-class:
+        syntax: java
+        preprocessor: javap -c $targetHL
+        extra: --plug-in java_library
+        
+    com.sun.java-properties:
+        syntax: ini
+        
+    com.sun.java-source:
+        syntax: java
+        extra: --plug-in java_library
+
+    com.sun.javafx:
+        syntax: fx
+        
+    com.symfony.twig:
+        syntax: html
+        
+    dev.svelte.source:
+        syntax: html
+    dyn.ah62d4rv4ge81g7xfrv4gn:
+        syntax: html
+    
+        
+    dyn.ah62d4rv4ge81a8p:
+        syntax: py
+        preprocessor: uncompyle6 $targetHL
+        
+    io.azkaban.flow:
+        syntax: yaml
+    dyn.ah62d4rv4ge80q5dts6:
+        syntax: yaml
+
+    is.workflow.my.workflow: *plist
+    dyn.ah62d4rv4ge81s3xqr75u: *plist
+
+    org.applescript.source:
+        syntax: applescript
+        preprocessor: /usr/bin/osadecompile $targetHL
+
+    org.arduino.ino-source:
+        extra: --plug-in cpp_syslog
+        
+    org.aruduino.source:
+        syntax: c
+        
+    org.asm.source:
+        syntax: assembler
+    dyn.ah62d4rv4ge80c65r:
+        syntax: assembler
+        
+    org.bash.source:
+        extra: --plug-in bash_functions
+        
+    org.clojure.script:
+        syntax: clojure
+        
+    org.cocoapods.podspec:
+        syntax: ruby
+        
+    dyn.ah62d4rv4ge80g5pbrrwu:
+        syntax: cmake
+    
+    dyn.ah62d4rv4ge80s52:
+        syntax: go
+        
+    org.fish.source:
+        extra: --plug-in bash_functions
+        
+    dyn.ah62d4rv4ge80s6xbqv0gn:
+        syntax: gradle
+        
+    org.kmt.source:
+        syntax: scala
+        
+    dyn.ah62d4rv4ge80y5a:
+        syntax: julia
+        
+    dyn.ah62d4rv4ge8007a:
+        syntax: kotlin
+        
+    org.microsoft.inf:
+        syntax: ini
+        
+    org.n8gray.lisp:
+        syntax: lisp
+        
+    org.nodejs.cjs:
+        syntax: javascript
+    dyn.ah62d4rv4ge80g4xx:
+        syntax: javascript
+        
+    org.omg.ecore: *xml
+    org.opml.opml: *xml
+    org.opml.source: *xml
+    dyn.ah62d4rv4ge8086drru: *xml
+    
+    org.pddl.pddl:
+        syntax: lisp
+    dyn.ah62d4rv4ge81a3deru:
+        syntqx: lisp
+        
+    org.racket-lang.source:
+        syntax: lisp
+        
+    org.rdf.source: *xml
+    
+    dyn.ah62d4rv4ge81e62:
+        syntax: rust
+    
+    org.xml-tools.source: *xml
+    dyn.ah62d4rv4ge81u6pzqz3hw: *xml
+    dyn.ah62d4rv4ge81u6k: *xml
+    dyn.ah62d4rv4ge81u7k: *xml
+    
+    org.xsd.schema: *xml
+    dyn.ah62d4rv4ge81u65e: *xml
+    org.xul.source: *xml
+    
+    public.bash-script:
+        extra: --plug-in bash_functions
+        
+    public.c-plus-plus-source:
+        extra: --plug-in cpp_syslog
+        
+    public.c-source:
+        extra: --plug-in cpp_syslog
+        
+    public.data.xml.opml: *xml
+    
+    public.make-source:
+        syntax: makefile
+    
+    public.objective-c-source:
+        syntax: objc
+        
+    public.properties:
+        syntax: ini
+        
+    public.shell-script:
+        extra: --plug-in bash_functions
+        
+    public.typescript:
+        syntax: typescript
+        
+    public.zsh-script:
+        extra: --plug-in bash_functions
+        
+    dyn.ah62d4rv4ge81g22:
+        syntax: scala
+    dyn.ah62d4rv4ge81g25brvuu:
+        syntax: scala
+        
+    dyn.ah62d4rv4ge80y652:
+        syntax: jsx
+        
+    dyn.ah62d4rv4ge80w5pq: *xml
+    
+    dyn.ah62d4rv4ge80c75p:
+        syntax: awk
+        
+    dyn.ah62d4rv4ge81g6pq:
+        syntax: sql
+        
+    dyn.ah62d4rv4ge81g22:
+        syntax: scala
+    dyn.ah62d4rv4ge81g25brvuu:
+        syntax: scala
+    
+    dyn.ah62d4rv4ge81u6pzqz3hw: *xml
+    dyn.ah62d4rv4ge81u6k: *xml
+    dyn.ah62d4rv4ge81u7k: *xml
+    
+    dyn.ah62d4rv4ge81g25xsq:
+        syntax: scss
+        
+    dyn.ah62d4rv4ge80s3a:
+        syntax: gd
+
+extensions:
+    _plist*: &plist
+        syntax: xml
+        preprocessor: /usr/bin/plutil -convert xml1 -o - $targetHL
+
+    _xml*: &xml
+        syntax: xml
+        
+    _typescript*: &typescript
+        syntax: typescript
+    
+    # org.nodejs.cjs, dyn.ah62d4rv4ge80g4xx
+    cjs:
+        syntax: javascript
+    # org.sbarex.compiled-python-script
+    pyc:
+        syntax: py
+        preprocessor: uncompyle6 $targetHL
+        
+    conf:
+        # org.sbarex.conf
+        syntax: ini
+        
+    # org.sbarex.ms-powershell-module-manifest:
+    psd1:
+        syntax: ps1
+    # org.sbarex.ms-powershell-module
+    psm1:
+        syntax: ps1
+    
+    # dyn.ah62d4rv4ge81g22
+    sc:
+        syntax: scala
+    # dyn.ah62d4rv4ge81g22
+    sbt:
+        syntax: scala
+        
+    # dyn.ah62d4rv4ge80w5pq
+    iml: *xml
+
+    # dyn.ah62d4rv4ge80g7dx:
+    ts: *typescript
+    tsx: *typescript
+    mts: *typescript
+    cts: *typescript
+
+    # dyn.ah62d4rv4ge81g7xfrv4gn
+    svelte:
+        syntax: svelte
+
+            
+    # dyn.ah62d4rv4ge80q5dts6
+    flow:
+        syntax: yaml
+    dyn.ah62d4rv4ge81s3xqr75u: *plist
+
+            
+    # dyn.ah62d4rv4ge8007a
+    kts:
+        syntax: kotlin
+    kt:
+        syntax: kotlin
+        
+            
+    # dyn.ah62d4rv4ge81g22
+    sc:
+        syntax: scala
+    # dyn.ah62d4rv4ge81g25brvuu
+    sbt:
+        syntax: scala
+        
+        
+    # dyn.ah62d4rv4ge81u6pzqz3hw
+    # dyn.ah62d4rv4ge81u6k
+    # dyn.ah62d4rv4ge81u7k
+    xsd: *xml
+    xquery: *xml
+    xq: *xml
+    xu: *xml
+
+    # dyn.ah62d4rv4ge81u65e
+    xsd: *xml
+
+    # dyn.ah62d4rv4ge81g3pvsy
+    sequ: *xml
