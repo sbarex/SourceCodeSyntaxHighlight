@@ -181,7 +181,7 @@ The application can also handle some [plain files](#plain-files) without extensi
 - Logos source files (`.xm`)
 - Lua source files (`.lua`)
 - Makefile files (`.mk`, `.mak`)
-- Markdown files (`.md`, `.rmd`): _please use [QLMarkdown](https://github.com/sbarex/QLMarkdow)_ which allows you to choose whether to display formatted output or the highlighted source code. 
+- Markdown files (`.md`, `.rmd`): _please use [QLMarkdown](https://github.com/sbarex/QLMarkdown)_ which allows you to choose whether to display formatted output or the highlighted source code. 
 - MF source files (`.mf`)
 - Microsoft Active Server Page files (`.asp`, `.aspx`)
 - Microsoft PowerShell files (`.psm1`, `.psd1`, `.ps1`)
