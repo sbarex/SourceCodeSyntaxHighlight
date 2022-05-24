@@ -66,6 +66,7 @@
 				<string>com.barebones.bbedit.verilog-hdl-source</string>
 				<string>com.barebones.bbedit.vhdl-source</string>
 				<string>com.dhowett.logos</string>
+				<string>com.docker.dockerfile</string>
 				<string>com.eiffel.eiffelstudio-project-config</string>
 				<string>com.eiffel.source-code</string>
 				<string>com.google.earth.kml</string>
@@ -305,6 +306,8 @@
 				<string>dyn.ah62d4rv4ge80s3a</string>
 				<string>dyn.ah62d4rv4ge80g4xx</string>
 				<string>dyn.ah62d4rv4ge80g7dx</string>
+				<string>dyn.ah62d4rv4ge81u6pzqz3hw</string>
+				<string>dyn.ah62d4rv4ge80k55drrw1e3xmrvwu</string>
 			</array>
 			<key>QLSupportsSearchableItems</key>
 			<false/>

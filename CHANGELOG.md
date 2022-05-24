@@ -2,6 +2,14 @@ Changelog
 =======
 
 
+### 2.1.13 (62)
+New features:
+- Added support for Dockerfile (`.dockerfile`)
+
+Bugfix: 
+- Fixed support for ocaml files.
+
+
 ### 2.1.12 (61)
 New features:
 - Added support for Node CommonJS module (`.cjs`).

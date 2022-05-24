@@ -226,6 +226,12 @@ UTIs:
         
     dyn.ah62d4rv4ge80s3a:
         syntax: gd
+        
+    dyn.ah62d4rv4ge81u6pzqz3hw:
+        syntax: ocaml
+        
+    dyn.ah62d4rv4ge80k55drrw1e3xmrvwu:
+        syntax: dockerfile
 
 extensions:
     _plist*: &plist
@@ -312,3 +318,14 @@ extensions:
 
     # dyn.ah62d4rv4ge81g3pvsy
     sequ: *xml
+            
+    # dyn.ah62d4rv4ge81u6pzqz3hw:
+    ml:
+        syntax: ocaml
+    mll:
+        syntax: ocaml
+    mly:
+        syntax: ocaml
+        
+    dockerfile:
+        syntax: dockerfile

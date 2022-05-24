@@ -138,6 +138,7 @@ The application can also handle some [plain files](#plain-files) without extensi
 - D (`.d`)
 - Dart source files (`.dart`) **`.dart` is reserved by macOS and cannot be handled.**
 - Diff files (`.diff`, `.patch`)
+- Dockerfile (`.dockerfile`)
 - Document Type Definition (`.dtd`)
 - DOS Bat files (`.bat`, `.cmd`)
 - Dylang (`.dylan`)

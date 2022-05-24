@@ -130,14 +130,14 @@
 				<string>public.source-code</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>Symfony twig template</string>
+			<string>Dockerfile</string>
 			<key>UTTypeIdentifier</key>
-			<string>com.symfony.twig</string>
+			<string>com.docker.dockerfile</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>public.filename-extension</key>
 				<array>
-					<string>twig</string>
+					<string>dockerfile</string>
 				</array>
 			</dict>
 		</dict>
@@ -370,6 +370,23 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>mf</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.source-code</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Symfony twig template</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.symfony.twig</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>twig</string>
 				</array>
 			</dict>
 		</dict>
@@ -1311,6 +1328,10 @@
 			</dict>
 		</dict>
 		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.source-code</string>
+			</array>
 			<key>UTTypeDescription</key>
 			<string>OCaml File</string>
 			<key>UTTypeIdentifier</key>
