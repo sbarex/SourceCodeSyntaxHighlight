@@ -70,11 +70,6 @@ UTIs:
         syntax: html
     dyn.ah62d4rv4ge81g7xfrv4gn:
         syntax: html
-    
-        
-    dyn.ah62d4rv4ge81a8p:
-        syntax: py
-        preprocessor: uncompyle6 $targetHL
         
     io.azkaban.flow:
         syntax: yaml
@@ -108,26 +103,8 @@ UTIs:
     org.cocoapods.podspec:
         syntax: ruby
         
-    dyn.ah62d4rv4ge80g5pbrrwu:
-        syntax: cmake
-    
-    dyn.ah62d4rv4ge80s52:
-        syntax: go
-        
-    org.fish.source:
-        extra: --plug-in bash_functions
-        
-    dyn.ah62d4rv4ge80s6xbqv0gn:
-        syntax: gradle
-        
-    org.kmt.source:
-        syntax: scala
-        
-    dyn.ah62d4rv4ge80y5a:
-        syntax: julia
-        
-    dyn.ah62d4rv4ge8007a:
-        syntax: kotlin
+    org.khronos.gltf:
+        syntax: json
         
     org.microsoft.inf:
         syntax: ini
@@ -209,6 +186,36 @@ UTIs:
     dyn.ah62d4rv4ge80c75p:
         syntax: awk
         
+    dyn.ah62d4rv4ge80q5xd:
+        syntax: sql
+    dyn.ah62d4rv4ge81a6xd:
+        syntax: sql
+    dyn.ah62d4rv4ge81k6xh:
+        syntax: sql
+    dyn.ah62d4rv4ge81a45x:
+        syntax: sql
+    dyn.ah62d4rv4ge81a45c:
+        syntax: sql
+    dyn.ah62d4rv4ge81a25p:
+        syntax: sql
+    dyn.ah62d4rv4ge81k6dx:
+        syntax: sql
+    dyn.ah62d4rv4ge81k6dc:
+        syntax: sql
+    dyn.ah62d4rv4ge81k8pu:
+        syntax: sql
+    dyn.ah62d4rv4ge81k2pc:
+        syntax: sql
+    dyn.ah62d4rv4ge80c7xy:
+        syntax: sql
+    dyn.ah62d4rv4ge80g55s:
+        syntax: sql
+    dyn.ah62d4rv4ge81g6px:
+        syntax: sql
+    dyn.ah62d4rv4ge81q72:
+        syntax: sql
+    dyn.ah62d4rv4ge8047x1:
+        syntax: sql
     dyn.ah62d4rv4ge81g6pq:
         syntax: sql
         
@@ -232,6 +239,31 @@ UTIs:
         
     dyn.ah62d4rv4ge80k55drrw1e3xmrvwu:
         syntax: dockerfile
+        
+    dyn.ah62d4rv4ge80g5pbrrwu:
+        syntax: cmake
+    
+    dyn.ah62d4rv4ge80s52:
+        syntax: go
+        
+    org.fish.source:
+        extra: --plug-in bash_functions
+        
+    dyn.ah62d4rv4ge80s6xbqv0gn:
+        syntax: gradle
+        
+    org.kmt.source:
+        syntax: scala
+        
+    dyn.ah62d4rv4ge80y5a:
+        syntax: julia
+        
+    dyn.ah62d4rv4ge8007a:
+        syntax: kotlin
+    
+    dyn.ah62d4rv4ge81a8p:
+        syntax: py
+        preprocessor: uncompyle6 $targetHL
 
 extensions:
     _plist*: &plist
@@ -247,6 +279,40 @@ extensions:
     # org.nodejs.cjs, dyn.ah62d4rv4ge80g4xx
     cjs:
         syntax: javascript
+        
+    fnc:
+        syntax: sql
+    prc:
+        syntax: sql
+    trg:
+        syntax: sql
+    pks:
+        syntax: sql
+    pkb:
+        syntax: sql
+    pck:
+        syntax: sql
+    tps:
+        syntax: sql
+    tpb:
+        syntax: sql
+    typ:
+        syntax: sql
+    tab:
+        syntax: sql
+    avt:
+        syntax: sql
+    con:
+        syntax: sql
+    sqs:
+        syntax: sql
+    vw:
+        syntax: sql
+    mvw:
+        syntax: sql
+    trg:
+        syntax: sql
+    
     # org.sbarex.compiled-python-script
     pyc:
         syntax: py
@@ -329,3 +395,6 @@ extensions:
         
     dockerfile:
         syntax: dockerfile
+        
+    gltf:
+        syntax: json

@@ -79,14 +79,14 @@ fi
 
 # Reader used to get the contents of the target file.
 if [[ ${convertEOL} != "" ]]; then
-    #reader=(cat "\"${targetHL}\"" \| perl -p -e 's/\\r\\n/\\n/' \| tr '\\r' '\\n')
-    reader=(cat "\"${targetHL}\"" \| "\"${dos2unix}\"" -c mac \| "\"${dos2unix}\"")
+    #reader=(cat "'${targetHL}'" \| perl -p -e 's/\\r\\n/\\n/' \| tr '\\r' '\\n')
+    reader=(cat "'${targetHL}'" \| "\"${dos2unix}\"" -c mac \| "\"${dos2unix}\"")
 else
-    reader=(cat "\"${targetHL}\"")
+    reader=(cat "'${targetHL}'")
 fi
 
 # debug "Handling special cases"
-case ${targetHL} in
+case "${targetHL}" in
     *.graffle | *.ps )
         exit 1
         ;;

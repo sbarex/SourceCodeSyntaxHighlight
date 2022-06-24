@@ -305,6 +305,38 @@
 			</dict>
 		</dict>
 		<dict>
+			<key>UTTypeDescription</key>
+			<string>Oracle PL/SQL</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.item</string>
+			</array>
+			<key>UTTypeIdentifier</key>
+			<string>com.oracle.sql</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>fnc</string>
+					<string>prc</string>
+					<string>trg</string>
+					<string>pks</string>
+					<string>pkb</string>
+					<string>pck</string>
+					<string>tps</string>
+					<string>tpb</string>
+					<string>typ</string>
+					<string>tab</string>
+					<string>avt</string>
+					<string>con</string>
+					<string>sqs</string>
+					<string>vw</string>
+					<string>mvw</string>
+					<string>trg</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>dyn.ah62d4rv4ge81u5pu</string>
@@ -2175,6 +2207,28 @@
 				<array>
 					<string>d</string>
 					<string>di</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeDescription</key>
+			<string>Graphics Language Transmission Format </string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.json</string>
+				<string>public.text</string>
+				<string>public.data</string>
+				<string>public.item</string>
+				<string>public.content</string>
+				<string>public.3d-content</string>
+			</array>
+			<key>UTTypeIdentifier</key>
+			<string>org.khronos.gltf</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>gltf</string>
 				</array>
 			</dict>
 		</dict>

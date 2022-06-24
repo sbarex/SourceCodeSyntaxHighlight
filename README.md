@@ -154,6 +154,7 @@ The application can also handle some [plain files](#plain-files) without extensi
 - GoLang source files (`.go`)
 - Google Earth KML Document files (`.kml`) _as `XML`_
 - Gradle source files (`.gradle`)
+- Graphics Language Transmission Format (`.gltf`) _as `JSON`_
 - Groovy source files (`.groovy`)
 - Haskell source files (`.hs`, `.lhs`)
 - HTML Abstraction Markup Language (`.haml`)
@@ -192,6 +193,7 @@ The application can also handle some [plain files](#plain-files) without extensi
 - Objective-C++ source files (`.mm`)
 - OCaml source files (`.ml`, `.mll`, `.mly`)
 - OPML (Outline Processor Markup Language) files (`.opml`) _as `XML`_
+- Oracle PL/SQL files (`.fnc`, `.prc`, `.trg`, `.pks`, `.pkb`, `.pck`, `.tps`, `.tpb`, `.typ`, `.tab`, `.avt`, `.con`, `.sqs`, `.vw`, `.mvw`, `.trg`) _as `SQL`_
 - Paradox files (`.sc`)
 - Pascal source files (`.pas`)
 - Patch files (`.patch`, `.diff`)

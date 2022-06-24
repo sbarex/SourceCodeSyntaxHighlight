@@ -1,10 +1,18 @@
 Changelog
 =======
 
+### 2.1.14 (63)
+New features:
+- Added support for Graphics Language Transmission Format (`.gltf`) as _JSON_.
+- Added support for Oracle PL/SQL files as _SQL_.
+
+Bugfix: 
+- Fixed rendering of files with special bash characters (like `$`) in the path. 
+
 
 ### 2.1.13 (62)
 New features:
-- Added support for Dockerfile (`.dockerfile`)
+- Added support for Dockerfile (`.dockerfile`).
 
 Bugfix: 
 - Fixed support for ocaml files.

@@ -86,6 +86,7 @@
 				<string>com.microsoft.visual-basic</string>
 				<string>com.microsoft.xaml</string>
 				<string>com.netscape.javascript-source</string>
+				<string>com.oracle.sql</string>
 				<string>com.sass-lang.sass</string>
 				<string>com.sun.java-properties</string>
 				<string>com.sun.java-source</string>
@@ -133,6 +134,7 @@
 				<string>org.inno.source</string>
 				<string>org.iso.sql</string>
 				<string>org.julialang.julia</string>
+				<string>org.khronos.gltf</string>
 				<string>org.kmt.source</string>
 				<string>org.km3</string>
 				<string>org.kotlinlang.source</string>
@@ -308,6 +310,22 @@
 				<string>dyn.ah62d4rv4ge80g7dx</string>
 				<string>dyn.ah62d4rv4ge81u6pzqz3hw</string>
 				<string>dyn.ah62d4rv4ge80k55drrw1e3xmrvwu</string>
+				<string>dyn.ah62d4rv4ge80q5xd</string>
+				<string>dyn.ah62d4rv4ge81a6xd</string>
+				<string>dyn.ah62d4rv4ge81k6xh</string>
+				<string>dyn.ah62d4rv4ge81a45x</string>
+				<string>dyn.ah62d4rv4ge81a45c</string>
+				<string>dyn.ah62d4rv4ge81a25p</string>
+				<string>dyn.ah62d4rv4ge81k6dx</string>
+				<string>dyn.ah62d4rv4ge81k6dc</string>
+				<string>dyn.ah62d4rv4ge81k8pu</string>
+				<string>dyn.ah62d4rv4ge81k2pc</string>
+				<string>dyn.ah62d4rv4ge80c7xy</string>
+				<string>dyn.ah62d4rv4ge80g55s</string>
+				<string>dyn.ah62d4rv4ge81g6px</string>
+				<string>dyn.ah62d4rv4ge81q72</string>
+				<string>dyn.ah62d4rv4ge8047x1</string>
+				<string>dyn.ah62d4rv4ge81k6xh</string>
 			</array>
 			<key>QLSupportsSearchableItems</key>
 			<false/>
