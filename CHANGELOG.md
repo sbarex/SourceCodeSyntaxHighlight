@@ -1,6 +1,15 @@
 Changelog
 =======
 
+### 2.1.15 (64)
+New features:
+- Added support for JSON with Comments (`.jsonc`).
+- Added support for OpenSSH RSA public key (`.pub`) _as plain text_
+
+Bugfix: 
+- Fixed bug in assigning special settings for certain UTIs. 
+
+
 ### 2.1.14 (63)
 New features:
 - Added support for Graphics Language Transmission Format (`.gltf`) as _JSON_.
