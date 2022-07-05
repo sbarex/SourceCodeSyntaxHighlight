@@ -134,6 +134,7 @@
 				<string>org.inno.source</string>
 				<string>org.iso.sql</string>
 				<string>org.julialang.julia</string>
+				<string>org.json.jsonc</string>
 				<string>org.khronos.gltf</string>
 				<string>org.kmt.source</string>
 				<string>org.km3</string>
@@ -326,6 +327,8 @@
 				<string>dyn.ah62d4rv4ge81q72</string>
 				<string>dyn.ah62d4rv4ge8047x1</string>
 				<string>dyn.ah62d4rv4ge81k6xh</string>
+				<string>dyn.ah62d4rv4ge80y65tr3vu</string>
+				<string>dyn.ah62d4rv4ge81a7pc</string>
 			</array>
 			<key>QLSupportsSearchableItems</key>
 			<false/>

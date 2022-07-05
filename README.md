@@ -173,7 +173,7 @@ The application can also handle some [plain files](#plain-files) without extensi
 - JavaFX ML (`.fxml`)
 - Javascript files (`.js`, `.jscript`, `.javascript`, `.mjs`)
 - Jetbrains Project file (`.iml`)
-- JSON files (`.json`)
+- JSON files (`.json`, `.jsonc`)
 - Julia source files  (`.jl`)
 - Kermeta source files (`.kmt`)
 - Korn Shell script files (`.ksh`)
@@ -192,6 +192,7 @@ The application can also handle some [plain files](#plain-files) without extensi
 - Objective-C source files (`.m`)
 - Objective-C++ source files (`.mm`)
 - OCaml source files (`.ml`, `.mll`, `.mly`)
+- OpenSSH RSA public key (`.pub`) _as plain text_
 - OPML (Outline Processor Markup Language) files (`.opml`) _as `XML`_
 - Oracle PL/SQL files (`.fnc`, `.prc`, `.trg`, `.pks`, `.pkb`, `.pck`, `.tps`, `.tpb`, `.typ`, `.tab`, `.avt`, `.con`, `.sqs`, `.vw`, `.mvw`, `.trg`) _as `SQL`_
 - Paradox files (`.sc`)

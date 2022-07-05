@@ -305,12 +305,12 @@
 			</dict>
 		</dict>
 		<dict>
-			<key>UTTypeDescription</key>
-			<string>Oracle PL/SQL</string>
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.item</string>
 			</array>
+			<key>UTTypeDescription</key>
+			<string>Oracle PL/SQL</string>
 			<key>UTTypeIdentifier</key>
 			<string>com.oracle.sql</string>
 			<key>UTTypeTagSpecification</key>
@@ -905,6 +905,23 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>jl</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.text</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>JSON with comments</string>
+			<key>UTTypeIdentifier</key>
+			<string>org.json.jsonc</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>jsonc</string>
 				</array>
 			</dict>
 		</dict>
@@ -2211,8 +2228,6 @@
 			</dict>
 		</dict>
 		<dict>
-			<key>UTTypeDescription</key>
-			<string>Graphics Language Transmission Format </string>
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.json</string>
@@ -2222,6 +2237,8 @@
 				<string>public.content</string>
 				<string>public.3d-content</string>
 			</array>
+			<key>UTTypeDescription</key>
+			<string>Graphics Language Transmission Format </string>
 			<key>UTTypeIdentifier</key>
 			<string>org.khronos.gltf</string>
 			<key>UTTypeTagSpecification</key>
