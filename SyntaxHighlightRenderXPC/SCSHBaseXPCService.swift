@@ -341,6 +341,10 @@ class SCSHBaseXPCService: NSObject {
                 try? "No settings found for the file UTI (\(u.UTI)) but a customized plist file exists.".appendLine(to: logFile)
                 plain = nil
                 attributes = nil
+            } else if let u = u, let _ = settings.utiSettings[u.UTI] {
+                uti = u.UTI
+                plain = nil
+                attributes = nil
             } else {
                 try? "No settings found for the file UTI (\(u?.UTI ?? ""))".appendLine(to: logFile)
                 attributes = MagicAttributes(url: url, logFile: logFile)
