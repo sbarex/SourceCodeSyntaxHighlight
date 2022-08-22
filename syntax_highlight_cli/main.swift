@@ -25,7 +25,7 @@ func usage(exitCode: Int = -1) {
     print("\(name)")
     print("Usage: \(name) [-o <path>] <file> [..]")
     print("\nArguments:")
-    print(" -h                          \tShow this help and exit")
+    print(" -h                          \tShow this help and exit.")
     
     print(" -t                          \tTest without save/output the result.")
     print(" -o <path>                   \tSave the output to <path>.")

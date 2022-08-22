@@ -405,7 +405,7 @@ $ /Application/Syntax\ Highlight.app/Contents/Resources/syntax_highlight_cli -h
 Usage: syntax_highlight_cli [-o <path>] <file> [..]
 
 Arguments:
- -h                              Show this help and exit
+ -h                              Show this help and exit.
  -t                              Test without save/output the result.
  -o <path>                       Save the output to <path>.
                                  If <path> is a directory a new file is created with the name of the source.
