@@ -41,7 +41,7 @@ You can install the application in various ways. When the main application is la
 After installation, _the application must be launched at least once to allow the system to detect the Quick Look extension_. [See below](#enable-the-quick-look-extension) for instructions on how to enable the Quick Look extension. 
 
 ### Download precompiled release
-Head over to the [releases](https://github.com/sbarex/SourceCodeSyntaxHighlight/releases) page to view the latest version. Move the `Syntax Highlight.app` into the `Applications` folder.
+Head over to the [releases](https://github.com/sbarex/SourceCodeSyntaxHighlight/releases) page to view the latest version. Move `Syntax Highlight.app` into the `Applications` folder.
 
 ### Install with Homebrew Cask
 Syntax Highlight can also be installed via [Homebrew Cask](https://github.com/Homebrew/homebrew-cask). If you have not installed Homebrew, follow the simple instructions [here](https://brew.sh/). After that, run `brew install --cask --no-quarantine syntax-highlight` to install the current version of Syntax Highlight.
@@ -49,12 +49,12 @@ Syntax Highlight can also be installed via [Homebrew Cask](https://github.com/Ho
 ### Note for the precompiled release
 The [precompiled app](https://github.com/sbarex/SourceCodeSyntaxHighlight/releases) is not notarized or signed, so the first time you run the app the system may show a warning about the impossibility to check for malicious software.
 
-To fix, you can launch the app with right click (or ctrl click) on the app icon and choose the open action.
+To fix, you can launch the app with right-click (or Control-click) on the app icon and choose the open action.
 
 You can also execute this command from the terminal:
 
 ```
-$ xattr -r -d com.apple.quarantine "FULL PATH OF THE Syntax Highlight.app (you can drag the file to get the pull path)"
+$ xattr -r -d com.apple.quarantine "FULL PATH OF Syntax Highlight.app (you can drag the file to get the pull path)"
 ```
 
 Alternatively, after trying to launch the app for the first time, you can open the `System Preferences > Security & Privacy > General (tab)` and click the `Open Anyway` button.
@@ -63,7 +63,7 @@ This will resolve the error of an unsigned application when launching the app.
 
 ### Build from source
 
-The release application is compiled as universal binary (Intel and Apple Silicon processor).
+The release application is compiled as a universal binary (Intel and Apple silicon processor).
 
 After cloning remember to fetch submodules:
 
@@ -82,7 +82,7 @@ When opening the app _for the first time_, you may see a pop-up warning about un
 To fix follow these steps: 
 
 - Switch to Finder and navigate to the application. 
-- Right click (or ctrl click) `Syntax Highlight.app` and choose the `Open` item from the contextual menu. 
+- Right-click (or Control-click) `Syntax Highlight.app` and choose the `Open` item from the contextual menu. 
 - A modal popup appears stating:
   > "Syntax Highlight.app" can’t be opened because Apple cannot check it for malicious software.
 - Click `Open` to confirm.
@@ -96,9 +96,9 @@ For more info see the [note for the precompiled release](#note-for-the-precompil
 The Quick Look Extension uses the [Uniform Type Identifier (UTI)](https://developer.apple.com/library/archive/documentation/FileManagement/Conceptual/understanding_utis/understand_utis_intro/understand_utis_intro.html) to handle the supported formats (and not simply the file name extension).
 Inside the definition on an UTI there are the list of extensions and mime type associated with it.
 
-Some file types are directly associated to an UTI by the system. Other formats are registered by the owner application. In this way some extensions can be associated to multiple UTIs based on the applications currently installed. For this reason, this application supports many UTIs even if they are apparently redundant.
+Some file types are directly associated to a UTI by the system. Other formats are registered by the owner application. In this way some extensions can be associated to multiple UTIs based on the applications currently installed. For this reason, this application supports many UTIs even if they are apparently redundant.
 
-_**MacOS 10.15 Catalina does not** allow to manage some file formats including (but not limited to):_  `.xml`, `.plist`, `.html`, `.ts`, `.dart`, '.txt', common images (`.jpg`, `.gif`, `.png`), …
+_**MacOS 10.15 Catalina does not** allow to manage some file formats including (but not limited to):_  `.xml`, `.plist`, `.html`, `.ts`, `.dart`, `.txt`, common images (`.jpg`, `.gif`, `.png`), …
 
 On _**macOS 11 Big Sur**, the system allows you to manage these previously unauthorized extensions:_ `.plist`.
 
@@ -122,15 +122,15 @@ The application can also handle some [plain files](#plain-files) without extensi
 - (G)AWK files (`.awk`)
 - Bash Script files (`.bash`)
 - BibTex (`.bib`)
-- C Shell script files (`.csh`)
-- C Source files (`.c`, `.h`)
-- C# Source files (`.cs`)
-- C++ Source files (`.cpp`, `.cp`, `.c++`, `.cc`, `.cxx`, `.hpp`, `.hh`, `.hxx`, `.ipp` )
-- Clojure Script (`.cli`, `.cljs`, `.cljc`, `.edn`)
+- C shell script files (`.csh`)
+- C source files (`.c`, `.h`)
+- C# source files (`.cs`)
+- C++ source files (`.cpp`, `.cp`, `.c++`, `.cc`, `.cxx`, `.hpp`, `.hh`, `.hxx`, `.ipp` )
+- ClojureScript (`.cli`, `.cljs`, `.cljc`, `.edn`)
 - CMake files (`.cmake`)
 - CocoaPod files (`.podspec`) _as `Ruby`_
-- Coffee source files (`.coffee`)
-- Coldfusion files (`.cfc`, `.cfm`, `.cfml`)
+- CoffeeScript source files (`.coffee`)
+- ColdFusion files (`.cfc`, `.cfm`, `.cfml`)
 - Configuration files (`.conf`)
 - Configuration profiles (`.mobileconfig`) _as `XML`_
 - CSON source files (`.cson`)
@@ -140,18 +140,18 @@ The application can also handle some [plain files](#plain-files) without extensi
 - Diff files (`.diff`, `.patch`)
 - Dockerfile (`.dockerfile`)
 - Document Type Definition (`.dtd`)
-- DOS Bat files (`.bat`, `.cmd`)
+- DOS batch files (`.bat`, `.cmd`)
 - Dylang (`.dylan`)
 - ECore files (`.ecore`)
 - Eiffel project files (`.ecf`) _as `XML`_
 - Eiffel source files (`.e`, `.ex`, `.exs`)
 - Erlang source files (`.erl`, `.hri`)
 - F# source files (`.fsx`, `.fs`)
-- Fish source files (`.fish`)
+- fish source files (`.fish`)
 - Fortran source files (`.f`, `.for`, `.f90`)
-- GCC Linked files (`.ld`, `.map`, `.d`)
+- GCC linked files (`.ld`, `.map`, `.d`)
 - Gdscript (Godot engine) (`.gd`).
-- GoLang source files (`.go`)
+- Golang source files (`.go`)
 - Google Earth KML Document files (`.kml`) _as `XML`_
 - Gradle source files (`.gradle`)
 - Graphics Language Transmission Format (`.gltf`) _as `JSON`_
@@ -163,6 +163,7 @@ The application can also handle some [plain files](#plain-files) without extensi
 - INI configuration files (`.ini`, `.cfg`)
 - Inno source files (`.iss`)
 - INO source files (`.ino`)
+- IntelliJ IDEA module (`.iml`)
 - Interface Builder Storyboard (`.storybard`) _as `XML`_
 - Interface Builder XIB (`.xib`) _as `XML`_
 - Java Compiled Class (`.class`) _require `javap` to decompile_
@@ -171,14 +172,13 @@ The application can also handle some [plain files](#plain-files) without extensi
 - Java source code (`.java`, `.jav`)
 - Java Web Start (`.jnlp`)
 - JavaFX ML (`.fxml`)
-- Javascript files (`.js`, `.jscript`, `.javascript`, `.mjs`)
-- Jetbrains Project file (`.iml`)
+- JavaScript files (`.js`, `.jscript`, `.javascript`, `.mjs`)
 - JSON files (`.json`, `.jsonc`)
 - Julia source files  (`.jl`)
 - Kermeta source files (`.kmt`)
 - Korn Shell script files (`.ksh`)
 - Kotlin source files (`.kt`, `.kts`)
-- Less stylesheet (`.less`)
+- LESS stylesheet (`.less`)
 - Lisp source files (`.lisp`, `.lsp`, `.asd`, `.el`)
 - Logos source files (`.xm`)
 - Lua source files (`.lua`)
@@ -208,7 +208,7 @@ The application can also handle some [plain files](#plain-files) without extensi
 - R (`.r`)
 - Racket (`.rkt`) _as `Lisp`_
 - RDF files (`.rdf`)
-- Readme files (`.readme`) _as plain text_
+- README files (`.readme`) _as plain text_
 - reStructuredText document (`.rst`)
 - Rez files (`.r`)
 - Ruby on Rails files (`.rhtml`, `.erb`, `.rjs`)
@@ -228,8 +228,8 @@ The application can also handle some [plain files](#plain-files) without extensi
 - Tenex C Shell script files (`.tcsh`)
 - TeX and LaTeX files (`.tex`, `.sty`, `.cls`, `.latex`, `.ltx`, `.texi`, `.ctx`, `.sty`)
 - Text files (`.txt`, `.text`)
-- Toml files (`.toml`)
-- Typescript files (`.ts`, `.tsx`, `.cts`, `.mts`) **`.ts` and `.mts` are reserved by macOS and cannot be handled.**
+- TOML files (`.toml`)
+- TypeScript files (`.ts`, `.tsx`, `.cts`, `.mts`) **`.ts` and `.mts` are reserved by macOS and cannot be handled.**
 - Verilog HDL files (`.v`, `.vl`)
 - VHDL source files (`.vhd`, `.vhdl`)
 - VIM script files (`.vim`)
@@ -243,7 +243,7 @@ The application can also handle some [plain files](#plain-files) without extensi
 - XSD Schema files (`.xsd`, `.xquery`, `.xq`, `.xu`)
 - XUL files (`.xul`)
 - YAML files (`.yaml`)
-- Z Shell script files (`.zsh`)
+- Z shell script files (`.zsh`)
 
 ## Application settings
 
@@ -350,7 +350,7 @@ For text files, syntax highlighting is tried.
 
 You can specify a criteria for the file name and the mime type to apply a syntax highlighting and/or a specific display format. The criteria are evaluated in the order in which they are set. 
 
-If not display format is set, the system will try to derive it starting from the mime type.
+If no display format is set, the system will try to derive it starting from the mime type.
 
 Note that some files with no extension can be recognized by macOS with a UTI if they have the `com.apple.FinderInfo` extended attributed set.
 
