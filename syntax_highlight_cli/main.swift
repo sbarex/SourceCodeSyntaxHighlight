@@ -393,7 +393,7 @@ while i < Int(CommandLine.argc) {
 verbose = verbose && dest != nil
 
 if appUrl == nil {
-    appUrl = cliUrl.deletingLastPathComponent().deletingLastPathComponent()
+    appUrl = cliUrl.deletingLastPathComponent().deletingLastPathComponent().deletingLastPathComponent()
 }
 
 /*
