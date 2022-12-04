@@ -18,10 +18,10 @@
                 <ul>
                     <li>Update Highlight to release 4.4</li>
                     <li>Added support for Perl test scripts (<code>.t</code>).</li>
-                    <li>Added support for Sagemath language (<code>.sage</code>) as </i>Python</i>.</li>
+                    <li>Added support for Sagemath language (<code>.sage</code>) as <i>Python</i>.</li>
                     <li>Added support for SAS language (<code>.sas</code>).</li>
                     <li>Added support for Solidity language (<code>.sol</code>).</li>
-                    <li>Added support for Terraform files (<code>.tfvars</code>, <code>.tf</code>) as </i>YAML</i>.</li>
+                    <li>Added support for Terraform files (<code>.tfvars</code>, <code>.tf</code>) as <i>YAML</i>.</li>
                 </ul>
                 <p>Bug fix:</p>
                 <ul>
@@ -49,7 +49,7 @@
                 <p>New features:</p>
                 <ul>
                     <li>Added support for JSON with Comments (<code>.jsonc</code>).</li>
-                    <li>Added support for OpenSSH RSA public key (<code>.pub</code>) as </i>plain text</i>.</li>
+                    <li>Added support for OpenSSH RSA public key (<code>.pub</code>) as <i>plain text</i>.</li>
                 </ul>
                 <p>Bug fix:</p>
                 <ul>
