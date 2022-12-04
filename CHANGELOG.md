@@ -10,6 +10,7 @@ New features:
 - Added support for SAS language (`.sas`).
 - Added support for Solidity language (`.sol`).
 - Added support for Terraform files (`.tfvars` and `.tf`) _as YAML_.
+- Added support for Web Services Description Language (`.wsdl`) _as XML_.
 
 Bugfix:
 - Support for SQL files associated with the UTI `com.sequel-ace.sequel-ace.sql`.
