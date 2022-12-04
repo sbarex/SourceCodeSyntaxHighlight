@@ -21,7 +21,7 @@
                     <li>Added support for Sagemath language (<code>.sage</code>) as </i>Python</i>.</li>
                     <li>Added support for SAS language (<code>.sas</code>).</li>
                     <li>Added support for Solidity language (<code>.sol</code>).</li>
-                    <li>Added support for Terraform files (<code>.tfvars</code>, <code>.tf</code>) as </i>YAML_</i>.</li>
+                    <li>Added support for Terraform files (<code>.tfvars</code>, <code>.tf</code>) as </i>YAML</i>.</li>
                 </ul>
                 <p>Bug fix:</p>
                 <ul>
