@@ -199,7 +199,7 @@ The application can also handle some [plain files](#plain-files) without extensi
 - Pascal source files (`.pas`)
 - Patch files (`.patch`, `.diff`)
 - PDE source files (`.pde`, `.ino`)
-- Perl script files (`.pl`, `.pm`)
+- Perl script files (`.pl`, `.pm`, `.t`)
 - Planning Domain Description Language (`.pddl`) _as `Lisp`_
 - PHP source files (`.php`, `.php3`, `.php4`, `.ph3`, `.ph4`, `.phtml`)
 - Properties files (`.properties`) _as `INI`_
@@ -215,10 +215,13 @@ The application can also handle some [plain files](#plain-files) without extensi
 - Ruby Gems file (`.gemfile`)
 - Ruby script (`.rb`, `.rbw`)
 - Rust source files (`.rs`)
+- SageMath files (`.sage`) _as `Python`_
+- SAS files (`.sas`)
 - SASS/SCSS files (`.scss`)
 - Scala source files (`.sc`, `.sbt`, `.scala`)
 - Scheme source files (`.scm`)
-- Shell script files (`.bashrc`, `.zshrc`, `.sh`, )
+- Shell script files (`.bashrc`, `.zshrc`, `.sh`)
+- Solidity source files (`.sol`)
 - SQL files (`.sql`)
 - Standard ML source files (`.ml`)
 - Svelte (`.svelte`) _as `HTML`_
@@ -226,6 +229,7 @@ The application can also handle some [plain files](#plain-files) without extensi
 - Symfony Twig files (`.twig`)
 - TCL source files (`.tcl`)
 - Tenex C Shell script files (`.tcsh`)
+- Terraform files (`.tfvars`, `.tf`) _as `YAML`_
 - TeX and LaTeX files (`.tex`, `.sty`, `.cls`, `.latex`, `.ltx`, `.texi`, `.ctx`, `.sty`)
 - Text files (`.txt`, `.text`)
 - TOML files (`.toml`)

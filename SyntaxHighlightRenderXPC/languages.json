@@ -247,5 +247,6 @@
     "Ansible YAML": ["yaml", "yml"],
     "Jam": ["jam", "ham"],
     "Yang": ["yang"],
+    "Zig": ["zig"],
     "Zonnon": ["znn"]
 }

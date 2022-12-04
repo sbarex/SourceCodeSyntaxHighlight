@@ -87,7 +87,9 @@
 				<string>com.microsoft.xaml</string>
 				<string>com.netscape.javascript-source</string>
 				<string>com.oracle.sql</string>
+				<string>com.sas.source</string>
 				<string>com.sass-lang.sass</string>
+				<string>com.sequel-ace.sequel-ace.sql</string>
 				<string>com.sun.java-properties</string>
 				<string>com.sun.java-source</string>
 				<string>com.sun.java-server-pages</string>
@@ -103,6 +105,7 @@
 				<string>info.haml.haml</string>
 				<string>io.azkaban.flow</string>
 				<string>io.github.jsx</string>
+				<string>io.terraform.tfvars</string>
 				<string>is.workflow.my.workflow</string>
 				<string>org.applescript.source</string>
 				<string>org.arduino.ino-source</string>
@@ -168,6 +171,7 @@
 				<string>org.omg.ecore</string>
 				<string>org.opml.opml</string>
 				<string>org.opml.source</string>
+				<string>org.perl.test-script</string>
 				<string>org.pddl.pddl</string>
 				<string>org.python.compiled-script</string>
 				<string>org.python.restructuredtext</string>
@@ -180,6 +184,7 @@
 				<string>org.rubyonrails.erb-sql</string>
 				<string>org.rust-lang.rust</string>
 				<string>org.rust-lang.source</string>
+				<string>org.sagemath.source</string>
 				<string>org.sbarex.conf</string>
 				<string>org.sbarex.dart</string>
 				<string>org.sbarex.ms-powershell</string>
@@ -188,6 +193,7 @@
 				<string>org.sbarex.nim</string>
 				<string>org.sbarex.qlsyntaxhighlight.dummy</string>
 				<string>org.scala.source</string>
+				<string>org.soliditylang.source</string>
 				<string>org.tug.lua</string>
 				<string>org.tug.tex</string>
 				<string>org.tug.tex.bibtex</string>
@@ -216,6 +222,7 @@
 				<string>org.vim.yaml-file</string>
 				<string>org.vuejs.vue</string>
 				<string>org.w3.xsl</string>
+				<string>org.w3.wsdl</string>
 				<string>org.xml-tools.source</string>
 				<string>org.xsd.schema</string>
 				<string>org.xul.source</string>
@@ -329,6 +336,14 @@
 				<string>dyn.ah62d4rv4ge81k6xh</string>
 				<string>dyn.ah62d4rv4ge80y65tr3vu</string>
 				<string>dyn.ah62d4rv4ge81a7pc</string>
+				<string>dyn.ah62d4rv4ge81k</string>
+				<string>dyn.ah62d4rv4ge81g2px</string>
+				<string>dyn.ah62d4rv4ge80g65ksv002</string>
+				<string>dyn.ah62d4rv4ge81s65eru</string>
+				<string>dyn.ah62d4rv4ge81k3x0qf3hg</string>
+				<string>dyn.ah62d4rv4ge81k3u</string>
+				<string>dyn.ah62d4rv4ge81g55q</string>
+				<string>dyn.ah62d4rv4ge81g2phqy</string>
 			</array>
 			<key>QLSupportsSearchableItems</key>
 			<false/>

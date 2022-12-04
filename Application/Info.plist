@@ -339,6 +339,23 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
+				<string>public.source-code</string>
+			</array>
+			<key>UTTypeIdentifier</key>
+			<string>com.sas.source</string>
+			<key>UTTypeDescription</key>
+			<string>SAS file</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>sas</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
 				<string>dyn.ah62d4rv4ge81u5pu</string>
 				<string>public.data</string>
 			</array>
@@ -474,6 +491,24 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>flow</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>dyn.ah62d4rv4ge81k3x0qf3hg</string>
+				<string>dyn.ah62d4rv4ge81k3u</string>
+				<string>public.item</string>
+			</array>
+			<key>UTTypeIdentifier</key>
+			<string>io.terraform.tfvars</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>tf</string>
+					<string>tfvars</string>
 				</array>
 			</dict>
 		</dict>
@@ -1454,6 +1489,22 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
+				<string>public.perl-script</string>
+				<string>dyn.ah62d4rv4ge81k</string>
+			</array>
+			<key>UTTypeIdentifier</key>
+			<string>org.perl.test-script</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>t</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
 				<string>public.item</string>
 			</array>
 			<key>UTTypeDescription</key>
@@ -1560,6 +1611,22 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>rs</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>dyn.ah62d4rv4ge81g2phqy</string>
+				<string>public.data</string>
+			</array>
+			<key>UTTypeIdentifier</key>
+			<string>org.sagemath.source</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>sage</string>
 				</array>
 			</dict>
 		</dict>
@@ -1695,6 +1762,22 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
+				<string>dyn.ah62d4rv4ge81g55q</string>
+				<string>public.data</string>
+			</array>
+			<key>UTTypeIdentifier</key>
+			<string>org.soliditylang.source</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>sol</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
 				<string>public.source-code</string>
 			</array>
 			<key>UTTypeDescription</key>
@@ -1724,6 +1807,22 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>vue</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.xml</string>
+				<string>dyn.ah62d4rv4ge81s65eru</string>
+			</array>
+			<key>UTTypeIdentifier</key>
+			<string>org.w3.wsdl</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>wsdl</string>
 				</array>
 			</dict>
 		</dict>

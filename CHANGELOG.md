@@ -1,6 +1,21 @@
 Changelog
 =======
 
+
+### 2.1.16 (65)
+New features:
+- Update Highlight to release 4.4
+- Added support for Perl test scripts (`.t`).
+- Added support for Sagemath language (`.sage`) _as Python_
+- Added support for SAS language (`.sas`).
+- Added support for Solidity language (`.sol`).
+- Added support for Terraform files (`.tfvars` and `.tf`) _as YAML_.
+
+Bugfix:
+- Support for SQL files associated with the UTI `com.sequel-ace.sequel-ace.sql`.
+- Fixed bug on syntax_highlight_cli.
+
+
 ### 2.1.15 (64)
 New features:
 - Added support for JSON with Comments (`.jsonc`).

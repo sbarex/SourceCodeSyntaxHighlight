@@ -103,7 +103,7 @@ ifeq ($(ONLY_ACTIVE_ARCH),NO)
 	lipo -create -output $@ "${BUILD_DIR}/dos2unix-x86_64" "${BUILD_DIR}/dos2unix-arm64"
 else
 	@echo "${bold}Creating dos2unix for ${NATIVE_ARCH}...${normal}"
-	@rm $@ > /dev/null
+	@rm -f $@ > /dev/null
 ifeq ($(NATIVE_ARCH),x86_64)
 		ln -f "${BUILD_DIR}/dos2unix-x86_64" $@
 else

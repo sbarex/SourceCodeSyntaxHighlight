@@ -69,7 +69,7 @@
 		8359235F23559A2B001506B6 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8359235E23559A2B001506B6 /* Quartz.framework */; };
 		8359236223559A2B001506B6 /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8359236123559A2B001506B6 /* PreviewViewController.swift */; };
 		8359236523559A2B001506B6 /* PreviewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8359236323559A2B001506B6 /* PreviewViewController.xib */; };
-		8359236A23559A2B001506B6 /* Syntax Highlight Quicklook Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 8359235C23559A2B001506B6 /* Syntax Highlight Quicklook Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		8359236A23559A2B001506B6 /* Syntax Highlight Quicklook Extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8359235C23559A2B001506B6 /* Syntax Highlight Quicklook Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		8359238023563BDF001506B6 /* SCSHXPCServiceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8359237F23563BDF001506B6 /* SCSHXPCServiceDelegate.swift */; };
 		8359238223563BDF001506B6 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8359238123563BDF001506B6 /* main.swift */; };
 		8359238623563BDF001506B6 /* Syntax Highlight XPC Service.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = 8359237B23563BDF001506B6 /* Syntax Highlight XPC Service.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -226,15 +226,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		8359236E23559A2B001506B6 /* Embed App Extensions */ = {
+		8359236E23559A2B001506B6 /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				8359236A23559A2B001506B6 /* Syntax Highlight Quicklook Extension.appex in Embed App Extensions */,
+				8359236A23559A2B001506B6 /* Syntax Highlight Quicklook Extension.appex in Embed Foundation Extensions */,
 			);
-			name = "Embed App Extensions";
+			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		8359238A23563BDF001506B6 /* Embed XPC Services */ = {
@@ -1323,7 +1323,7 @@
 				83592341235599F6001506B6 /* Sources */,
 				83592342235599F6001506B6 /* Frameworks */,
 				83592343235599F6001506B6 /* Resources */,
-				8359236E23559A2B001506B6 /* Embed App Extensions */,
+				8359236E23559A2B001506B6 /* Embed Foundation Extensions */,
 				8359238A23563BDF001506B6 /* Embed XPC Services */,
 				83B4856E25A7A1BF00DE0CF4 /* Copy Highlight share files */,
 				838F164E2380B01200A13F0F /* Copy Image help */,
@@ -1453,7 +1453,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1300;
-				LastUpgradeCheck = 1300;
+				LastUpgradeCheck = 1400;
 				ORGANIZATIONNAME = sbarex;
 				TargetAttributes = {
 					83592344235599F6001506B6 = {
@@ -1810,6 +1810,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -1873,6 +1874,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -1902,7 +1904,8 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 64;
+				CURRENT_PROJECT_VERSION = 65;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1919,7 +1922,7 @@
 					"$(inherited)",
 					"\"$(BUILT_PRODUCTS_DIR)/highlight\"",
 				);
-				MARKETING_VERSION = 2.1.15;
+				MARKETING_VERSION = 2.1.16;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1937,7 +1940,8 @@
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 64;
+				CURRENT_PROJECT_VERSION = 65;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1954,7 +1958,7 @@
 					"$(inherited)",
 					"\"$(BUILT_PRODUCTS_DIR)/highlight\"",
 				);
-				MARKETING_VERSION = 2.1.15;
+				MARKETING_VERSION = 2.1.16;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1970,7 +1974,8 @@
 				CODE_SIGN_ENTITLEMENTS = QLExtension/QLExtension.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 64;
+				CURRENT_PROJECT_VERSION = 65;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1983,7 +1988,7 @@
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
-				MARKETING_VERSION = 2.1.15;
+				MARKETING_VERSION = 2.1.16;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.QuicklookExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1999,7 +2004,8 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 64;
+				CURRENT_PROJECT_VERSION = 65;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2012,7 +2018,7 @@
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
-				MARKETING_VERSION = 2.1.15;
+				MARKETING_VERSION = 2.1.16;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.QuicklookExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2029,7 +2035,8 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 64;
+				CURRENT_PROJECT_VERSION = 65;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = XPCService/Info.plist;
@@ -2038,7 +2045,7 @@
 					"$(LD_RUNPATH_SEARCH_PATHS_$(IS_MACCATALYST)_$(_BOOL_$(SKIP_INSTALL)))",
 				);
 				LIBRARY_SEARCH_PATHS = "\"$(BUILT_PRODUCTS_DIR)/highlight\"";
-				MARKETING_VERSION = 2.1.15;
+				MARKETING_VERSION = 2.1.16;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.XPCService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2057,7 +2064,8 @@
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 64;
+				CURRENT_PROJECT_VERSION = 65;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = XPCService/Info.plist;
@@ -2066,7 +2074,7 @@
 					"$(LD_RUNPATH_SEARCH_PATHS_$(IS_MACCATALYST)_$(_BOOL_$(SKIP_INSTALL)))",
 				);
 				LIBRARY_SEARCH_PATHS = "\"$(BUILT_PRODUCTS_DIR)/highlight\"";
-				MARKETING_VERSION = 2.1.15;
+				MARKETING_VERSION = 2.1.16;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.XPCService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2085,6 +2093,7 @@
 				CODE_SIGN_ENTITLEMENTS = syntax_highlight_cli/syntax_highlight_cli.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.15.4;
@@ -2100,6 +2109,7 @@
 				CODE_SIGN_ENTITLEMENTS = syntax_highlight_cli/syntax_highlight_cli.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.15.4;
@@ -2116,7 +2126,8 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 64;
+				CURRENT_PROJECT_VERSION = 65;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2128,7 +2139,7 @@
 					"$(inherited)",
 					"@loader_path/../../../../Frameworks",
 				);
-				MARKETING_VERSION = 2.1.15;
+				MARKETING_VERSION = 2.1.16;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.XPCRender;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2148,7 +2159,8 @@
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 64;
+				CURRENT_PROJECT_VERSION = 65;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2160,7 +2172,7 @@
 					"$(inherited)",
 					"@loader_path/../../../../Frameworks",
 				);
-				MARKETING_VERSION = 2.1.15;
+				MARKETING_VERSION = 2.1.16;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.XPCRender;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2176,6 +2188,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.relaunch;
@@ -2190,6 +2203,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.relaunch;

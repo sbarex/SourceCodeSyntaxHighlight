@@ -273,7 +273,44 @@ UTIs:
     # .pub
     dyn.ah62d4rv4ge81a7pc:
         syntax: txt
-
+    
+    # .sas
+    dyn.ah62d4rv4ge81g2px:
+        syntax: sas
+    
+    # .t
+    dyn.ah62d4rv4ge81k:
+        syntax: perl
+        
+    # .cshtml
+    dyn.ah62d4rv4ge80g65ksv002:
+        syntax: csharp
+        
+    org.w3.wsdl:
+        syntax: xml
+        
+    # .wsdl
+    dyn.ah62d4rv4ge81s65eru:
+        syntax: xml
+        
+    # .tfvars
+    dyn.ah62d4rv4ge81k3x0qf3hg:
+        syntax: yaml
+    # .tf
+    dyn.ah62d4rv4ge81k3u:
+        syntax: yaml
+    
+    # .sage
+    dyn.ah62d4rv4ge81g2phqy:
+        syntax: py
+    
+    com.sequel-ace.sequel-ace.sql:
+        syntax: sql
+        
+    # .sol
+    dyn.ah62d4rv4ge81g55q
+        syntax: sol
+        
 extensions:
     _plist*: &plist
         syntax: xml
@@ -415,3 +452,18 @@ extensions:
     # dyn.ah62d4rv4ge81a7pc
     pub:
         syntax: txt
+        
+    .sage:
+        syntax: py
+        
+    t:
+        syntax: perl
+    
+    # dyn.ah62d4rv4ge81s65eru
+    wsdl:
+        syntax: xml
+        
+    tfvars:
+        syntax: yaml
+    tf:
+        syntax: yaml

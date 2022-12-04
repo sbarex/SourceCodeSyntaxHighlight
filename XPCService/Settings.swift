@@ -1574,13 +1574,13 @@ class SettingsRendering: Settings, SettingsFormatProtocol, SettingsLSP {
     var isLight: Bool?
     var vcsDiff: [String]
     
-    @available(macOS 12.0, *)
+    // @available(macOS 12.0, *)
     lazy var isImage: Bool = false
-    @available(macOS 12.0, *)
+    // @available(macOS 12.0, *)
     lazy var isPDF: Bool = false
-    @available(macOS 12.0, *)
+    // @available(macOS 12.0, *)
     lazy var isMovie: Bool = false
-    @available(macOS 12.0, *)
+    // @available(macOS 12.0, *)
     lazy var isAudio: Bool = false
 
     var isRenderingSupported: Bool = true
