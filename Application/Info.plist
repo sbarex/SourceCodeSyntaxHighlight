@@ -497,6 +497,22 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
+				<string>dyn.ah62d4rv4ge8063u</string>
+				<string>public.item</string>
+			</array>
+			<key>UTTypeIdentifier</key>
+			<string>io.nextflow.source</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>nf</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
 				<string>dyn.ah62d4rv4ge81k3x0qf3hg</string>
 				<string>dyn.ah62d4rv4ge81k3u</string>
 				<string>public.item</string>
@@ -721,6 +737,22 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>groovy</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.item</string>
+				<string>dyn.ah62d4rv4ge80g6u</string>
+			</array>
+			<key>UTTypeIdentifier</key>
+			<string>org.crystal-lang.source</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>cr</string>
 				</array>
 			</dict>
 		</dict>

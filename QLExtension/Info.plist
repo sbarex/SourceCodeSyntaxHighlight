@@ -105,6 +105,7 @@
 				<string>info.haml.haml</string>
 				<string>io.azkaban.flow</string>
 				<string>io.github.jsx</string>
+				<string>io.nextflow.source</string>
 				<string>io.terraform.tfvars</string>
 				<string>is.workflow.my.workflow</string>
 				<string>org.applescript.source</string>
@@ -119,6 +120,7 @@
 				<string>org.codehaus.groovy-source</string>
 				<string>org.coffee.source</string>
 				<string>org.coffeescript.coffeescript</string>
+				<string>org.crystal-lang.source</string>
 				<string>org.cson.source</string>
 				<string>org.dartlang.dart</string>
 				<string>org.dlang.d</string>
@@ -344,6 +346,8 @@
 				<string>dyn.ah62d4rv4ge81k3u</string>
 				<string>dyn.ah62d4rv4ge81g55q</string>
 				<string>dyn.ah62d4rv4ge81g2phqy</string>
+				<string>dyn.ah62d4rv4ge80g6u</string>
+				<string>dyn.ah62d4rv4ge8063u</string>
 			</array>
 			<key>QLSupportsSearchableItems</key>
 			<false/>

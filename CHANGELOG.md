@@ -2,6 +2,15 @@ Changelog
 =======
 
 
+### 2.1.17 (66)
+New features:
+- Added support for Crystal language (`.cr`)
+- Added support for NextFlow language (`.nf`) _as Groovy (Java)_
+
+Bugfix:
+- Fixed a bug on standard settings.
+
+
 ### 2.1.16 (65)
 New features:
 - Update Highlight to release 4.4

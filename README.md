@@ -133,6 +133,7 @@ The application can also handle some [plain files](#plain-files) without extensi
 - ColdFusion files (`.cfc`, `.cfm`, `.cfml`)
 - Configuration files (`.conf`)
 - Configuration profiles (`.mobileconfig`) _as `XML`_
+- Crystal language (`.cr`)
 - CSON source files (`.cson`)
 - CSS files (`.css`)
 - D (`.d`)
@@ -187,6 +188,7 @@ The application can also handle some [plain files](#plain-files) without extensi
 - MF source files (`.mf`)
 - Microsoft Active Server Page files (`.asp`, `.aspx`)
 - Microsoft PowerShell files (`.psm1`, `.psd1`, `.ps1`)
+- NextFlow (`.nf`) _as Groovy (Java)_
 - Nim source files (`.nim`)
 - Node CommonJS module (`.cjs`)
 - Objective-C source files (`.m`)

@@ -269,6 +269,14 @@ UTIs:
     dyn.ah62d4rv4ge81a8p:
         syntax: py
         preprocessor: uncompyle6 $targetHL
+       
+    # .cr
+    dyn.ah62d4rv4ge80g6u:
+        syntax: crystal
+        
+    # .nf
+    dyn.ah62d4rv4ge8063u:
+        syntax: groovy
         
     # .pub
     dyn.ah62d4rv4ge81a7pc:
@@ -325,6 +333,9 @@ extensions:
     # org.nodejs.cjs, dyn.ah62d4rv4ge80g4xx
     cjs:
         syntax: javascript
+        
+    cr:
+        syntax: crystal
         
     fnc:
         syntax: sql
@@ -430,6 +441,9 @@ extensions:
 
     # dyn.ah62d4rv4ge81g3pvsy
     sequ: *xml
+    
+    nf:
+        syntax: groovy
             
     # dyn.ah62d4rv4ge81u6pzqz3hw:
     ml:
