@@ -89,6 +89,7 @@
     "Go": ["go"],
     "Graphviz": ["graphviz", "dot"],
     "Haml (HTML Abstraction Markup Language)": ["haml"],
+    "Hare": ["hare"],
     "Haskell": ["haskell", "hs"],
     "haXe": ["haxe", "hx"],
     "Hecl": ["hcl"],
