@@ -26,17 +26,17 @@
                 "textEncoding": "UTF-8", 
                 "webkitTextEncoding": "UTF-8",
                 "qlcc_debug": "",
-                "HIGHLIGHT_DATADIR": "/Users/sbaldiss/Library/Developer/Xcode/DerivedData/SourceCodeSyntaxHighlight-bnsfsxgomeklhdgtcayqsqiapprh/Build/Products/Debug/Syntax Highlight.app/Contents/PlugIns/Syntax Highlight Quicklook Extension.appex/Contents/XPCServices/Syntax Highlight XPC Service.xpc/Contents/Resources/highlight/share/",
+                "HIGHLIGHT_DATADIR": "/Users/sbaldiss/Library/Developer/Xcode/DerivedData/SourceCodeSyntaxHighlight-bnsfsxgomeklhdgtcayqsqiapprh/Build/Products/Debug/Syntax Highlight.app/Contents/PlugIns/Syntax Highlight Quick Look Extension.appex/Contents/XPCServices/Syntax Highlight XPC Service.xpc/Contents/Resources/highlight/share/",
                 "fontSizePoints": "9", 
                 "font": "Menlo",
-                "pathHL": "/Users/sbaldiss/Library/Developer/Xcode/DerivedData/SourceCodeSyntaxHighlight-bnsfsxgomeklhdgtcayqsqiapprh/Build/Products/Debug/Syntax Highlight.app/Contents/PlugIns/Syntax Highlight Quicklook Extension.appex/Contents/XPCServices/Syntax Highlight XPC Service.xpc/Contents/Resources/highlight/bin/highlight",
-                "extraHLFlags": " --line-numbers --wrap-no-numbers --line-length=80 -V --replace-tabs=4 -O html -e \"/Users/sbaldiss/Library/Developer/Xcode/DerivedData/SourceCodeSyntaxHighlight-bnsfsxgomeklhdgtcayqsqiapprh/Build/Products/Debug/Syntax Highlight.app/Contents/PlugIns/Syntax Highlight Quicklook Extension.appex/Contents/XPCServices/Syntax Highlight XPC Service.xpc/Contents/Resources/style.css\"",
+                "pathHL": "/Users/sbaldiss/Library/Developer/Xcode/DerivedData/SourceCodeSyntaxHighlight-bnsfsxgomeklhdgtcayqsqiapprh/Build/Products/Debug/Syntax Highlight.app/Contents/PlugIns/Syntax Highlight Quick Look Extension.appex/Contents/XPCServices/Syntax Highlight XPC Service.xpc/Contents/Resources/highlight/bin/highlight",
+                "extraHLFlags": " --line-numbers --wrap-no-numbers --line-length=80 -V --replace-tabs=4 -O html -e \"/Users/sbaldiss/Library/Developer/Xcode/DerivedData/SourceCodeSyntaxHighlight-bnsfsxgomeklhdgtcayqsqiapprh/Build/Products/Debug/Syntax Highlight.app/Contents/PlugIns/Syntax Highlight Quick Look Extension.appex/Contents/XPCServices/Syntax Highlight XPC Service.xpc/Contents/Resources/style.css\"",
                 "hlTheme16": "0",
                 "hlTheme": "zenburn"
             },
             "program": "${workspaceFolder}/test.sh",
             "args": [
-                "/Users/sbaldiss/Library/Developer/Xcode/DerivedData/SourceCodeSyntaxHighlight-bnsfsxgomeklhdgtcayqsqiapprh/Build/Products/Debug/Syntax Highlight.app/Contents/PlugIns/Syntax Highlight Quicklook Extension.appex/Contents/XPCServices/Syntax Highlight XPC Service.xpc/Contents/Resources",
+                "/Users/sbaldiss/Library/Developer/Xcode/DerivedData/SourceCodeSyntaxHighlight-bnsfsxgomeklhdgtcayqsqiapprh/Build/Products/Debug/Syntax Highlight.app/Contents/PlugIns/Syntax Highlight Quick Look Extension.appex/Contents/XPCServices/Syntax Highlight XPC Service.xpc/Contents/Resources",
                 "/Users/sbaldiss/Develop/OSX/QLExt/XPCService/SCSHXPCService.swift",
                 "0"
             ]
@@ -49,17 +49,17 @@
                 "textEncoding": "UTF-8", 
                 "webkitTextEncoding": "UTF-8",
                 "qlcc_debug": "",
-                "HIGHLIGHT_DATADIR": "/Users/sbaldiss/Library/Developer/Xcode/DerivedData/SourceCodeSyntaxHighlight-bnsfsxgomeklhdgtcayqsqiapprh/Build/Products/Debug/Syntax Highlight.app/Contents/PlugIns/Syntax Highlight Quicklook Extension.appex/Contents/XPCServices/Syntax Highlight XPC Service.xpc/Contents/Resources/highlight/share/",
+                "HIGHLIGHT_DATADIR": "/Users/sbaldiss/Library/Developer/Xcode/DerivedData/SourceCodeSyntaxHighlight-bnsfsxgomeklhdgtcayqsqiapprh/Build/Products/Debug/Syntax Highlight.app/Contents/PlugIns/Syntax Highlight Quick Look Extension.appex/Contents/XPCServices/Syntax Highlight XPC Service.xpc/Contents/Resources/highlight/share/",
                 "fontSizePoints": "9", 
                 "font": "Menlo",
-                "pathHL": "/Users/sbaldiss/Library/Developer/Xcode/DerivedData/SourceCodeSyntaxHighlight-bnsfsxgomeklhdgtcayqsqiapprh/Build/Products/Debug/Syntax Highlight.app/Contents/PlugIns/Syntax Highlight Quicklook Extension.appex/Contents/XPCServices/Syntax Highlight XPC Service.xpc/Contents/Resources/highlight/bin/highlight",
-                "extraHLFlags": " --line-numbers --wrap-no-numbers --line-length=80 -V --replace-tabs=4 -O html -e \"/Users/sbaldiss/Library/Developer/Xcode/DerivedData/SourceCodeSyntaxHighlight-bnsfsxgomeklhdgtcayqsqiapprh/Build/Products/Debug/Syntax Highlight.app/Contents/PlugIns/Syntax Highlight Quicklook Extension.appex/Contents/XPCServices/Syntax Highlight XPC Service.xpc/Contents/Resources/style.css\"",
+                "pathHL": "/Users/sbaldiss/Library/Developer/Xcode/DerivedData/SourceCodeSyntaxHighlight-bnsfsxgomeklhdgtcayqsqiapprh/Build/Products/Debug/Syntax Highlight.app/Contents/PlugIns/Syntax Highlight Quick Look Extension.appex/Contents/XPCServices/Syntax Highlight XPC Service.xpc/Contents/Resources/highlight/bin/highlight",
+                "extraHLFlags": " --line-numbers --wrap-no-numbers --line-length=80 -V --replace-tabs=4 -O html -e \"/Users/sbaldiss/Library/Developer/Xcode/DerivedData/SourceCodeSyntaxHighlight-bnsfsxgomeklhdgtcayqsqiapprh/Build/Products/Debug/Syntax Highlight.app/Contents/PlugIns/Syntax Highlight Quick Look Extension.appex/Contents/XPCServices/Syntax Highlight XPC Service.xpc/Contents/Resources/style.css\"",
                 "hlTheme16": "0",
                 "hlTheme": "zenburn"
             },
             "program": "${workspaceFolder}/colorize.sh",
             "args": [
-                "/Users/sbaldiss/Library/Developer/Xcode/DerivedData/SourceCodeSyntaxHighlight-bnsfsxgomeklhdgtcayqsqiapprh/Build/Products/Debug/Syntax Highlight.app/Contents/PlugIns/Syntax Highlight Quicklook Extension.appex/Contents/XPCServices/Syntax Highlight XPC Service.xpc/Contents/Resources",
+                "/Users/sbaldiss/Library/Developer/Xcode/DerivedData/SourceCodeSyntaxHighlight-bnsfsxgomeklhdgtcayqsqiapprh/Build/Products/Debug/Syntax Highlight.app/Contents/PlugIns/Syntax Highlight Quick Look Extension.appex/Contents/XPCServices/Syntax Highlight XPC Service.xpc/Contents/Resources",
                 "/Users/sbaldiss/Develop/OSX/QLExt/XPCService/SCSHXPCService.swift",
                  0
             ]

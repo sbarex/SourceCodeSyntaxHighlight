@@ -616,7 +616,7 @@ The application embed the [`Highlight`](http://www.andre-simon.de/doku/highlight
 pluginkit -mAvvv -p com.apple.quicklook.preview 
 
 # info about a plugin:
-pluginkit -m -v -i org.sbarex.SourceCodeSyntaxHighlight.QuicklookExtension --raw
+pluginkit -m -v -i org.sbarex.SourceCodeSyntaxHighlight.QuickLookExtension --raw
 
 ```
 
