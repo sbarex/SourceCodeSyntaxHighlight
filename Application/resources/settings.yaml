@@ -30,6 +30,11 @@ UTIs:
     com.apple.xcode.strings-dictionary: *plist
     com.apple.xcode.strings-text: *plist
     
+    com.autoit.au3:
+        syntax: autoit
+    dyn.ah62d4rv4ge80c7mx:
+        syntax: autoit
+        
     com.barebones.bbedit.ini-configuration:
         syntax: ini
         
@@ -111,6 +116,11 @@ UTIs:
     dyn.ah62d4rv4ge80y65tr3vu:
         syntax: json
         
+    org.jsonlines.jsonl:
+        syntax: json
+    dyn.ah62d4rv4ge80y65tr30a:
+        syntax: json
+                
     org.microsoft.inf:
         syntax: ini
         
@@ -318,6 +328,13 @@ UTIs:
     # .sol
     dyn.ah62d4rv4ge81g55q:
         syntax: sol
+    
+    #.ado
+    dyn.ah62d4rv4ge80c3dt:
+        syntax: txt
+    #.do
+    dyn.ah62d4rv4ge80k52:
+        syntax: txt
         
 extensions:
     _plist*: &plist
@@ -330,6 +347,17 @@ extensions:
     _typescript*: &typescript
         syntax: typescript
     
+    ado:
+        syntax: txt
+    
+    au3:
+        syntax: autoit
+    a3x:
+        syntax: autoit
+        
+    do:
+        syntax: txt
+        
     # org.nodejs.cjs, dyn.ah62d4rv4ge80g4xx
     cjs:
         syntax: javascript
@@ -378,6 +406,12 @@ extensions:
     conf:
         # org.sbarex.conf
         syntax: ini
+        
+    jsonl:
+        syntax: json
+        
+    mjs:
+        syntax: javascript
         
     # org.sbarex.ms-powershell-module-manifest:
     psd1:

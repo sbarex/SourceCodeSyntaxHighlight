@@ -52,6 +52,7 @@
 				<string>com.apple.xcode.strings-dictionary</string>
 				<string>com.apple.xcode.strings-text</string>
 				<string>com.apple.xml-property-list</string>
+				<string>com.autoit.au3</string>
 				<string>com.barebones.bbedit.go-source</string>
 				<string>com.barebones.bbedit.ini-configuration</string>
 				<string>com.barebones.bbedit.jsp-source</string>
@@ -90,6 +91,7 @@
 				<string>com.sas.source</string>
 				<string>com.sass-lang.sass</string>
 				<string>com.sequel-ace.sequel-ace.sql</string>
+				<string>com.stata.source</string>
 				<string>com.sun.java-properties</string>
 				<string>com.sun.java-source</string>
 				<string>com.sun.java-server-pages</string>
@@ -140,6 +142,7 @@
 				<string>org.iso.sql</string>
 				<string>org.julialang.julia</string>
 				<string>org.json.jsonc</string>
+				<string>org.jsonlines.jsonl</string>
 				<string>org.khronos.gltf</string>
 				<string>org.kmt.source</string>
 				<string>org.km3</string>
@@ -348,6 +351,10 @@
 				<string>dyn.ah62d4rv4ge81g2phqy</string>
 				<string>dyn.ah62d4rv4ge80g6u</string>
 				<string>dyn.ah62d4rv4ge8063u</string>
+				<string>dyn.ah62d4rv4ge80c3dt</string>
+				<string>dyn.ah62d4rv4ge80k52</string>
+				<string>dyn.ah62d4rv4ge80y65tr30a</string>
+				<string>dyn.ah62d4rv4ge80c7mx</string>
 			</array>
 			<key>QLSupportsSearchableItems</key>
 			<false/>
@@ -358,6 +365,6 @@
 		<string>$(PRODUCT_MODULE_NAME).PreviewViewController</string>
 	</dict>
 	<key>NSHumanReadableCopyright</key>
-	<string>Developed by SBAREX (2019-2022).</string>
+	<string>Developed by SBAREX (2019-2023).</string>
 </dict>
 </plist>

@@ -2,6 +2,19 @@ Changelog
 =======
 
 
+### 2.1.18 (67)
+New features:
+- Update Highlight to release 4.5.
+- Update Lua to release 5.4.4.
+- Added support for Autoit files (`.au3`, `.a3x`).
+- Added support for JSON Lines files (`.jsonl`) _as JSON_.
+- Added support for Stata files (`.do`, `.ado`) _as plain text_.
+
+Bugfix:
+- Fixed unrecognized `.mjs` files.
+- Fixed bug for preview files with special characters on the path.
+
+
 ### 2.1.17 (66)
 New features:
 - Added support for Crystal language (`.cr`)

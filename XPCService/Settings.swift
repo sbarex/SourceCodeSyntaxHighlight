@@ -865,7 +865,7 @@ class SettingsFormat: SettingsBase, SettingsFormatProtocol, SettingsLSP {
     }
     
     required internal init(settings: [String: AnyHashable]) {
-        self.uti = settings[SettingsBase.Key.connectedUTI] as! String
+        self.uti = (settings[SettingsBase.Key.connectedUTI] as? String) ?? ""
         
         self.appendArguments = ""
         self.isAppendArgumentsDefined = false

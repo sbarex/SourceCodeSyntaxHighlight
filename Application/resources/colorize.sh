@@ -5,6 +5,7 @@
 #
 # Copyright 2007 Nathaniel Gray.
 # Copyright 2012-2018 Anthony Gelibert.
+# Copyright 2019-2023 Sbarex.
 #
 # Expects   $1 = name of file to colorize
 #
@@ -52,9 +53,7 @@ dos2unix="$pathDos2unix"
 if [ "x${targetHL}" = "x" ]; then
     echo "Error: missing target env!" >> ${err_device}
     exit 1
-fi
-
-if [[ ! -a "$targetHL" ]]; then
+elif [[ ! -a "$targetHL" ]]; then
     echo "Error: missing target file!" >> ${err_device}
     exit 1
 fi
@@ -71,58 +70,71 @@ if [ "x${textEncoding}" = "x" ]; then
     textEncoding="UTF-8"
 fi
 
-debug "Starting colorize.sh"
+debug 'Starting `colorize.sh`'
 if hash gdate 2>/dev/null; then
 else
-    debug "# install gdate with \`brew install coreutils\` to show the nanoseconds time stamp #"
+    debug '# Install `gdate` with `brew install coreutils` to show the nanoseconds time stamp #'
 fi
+
+# Se il percorso del file viene passato tra doppi apici (che comportano l'espansione delle varibili che iniziano con $) è necessario proteggere nel valore i caratteri doppio apice e dollaro:
+# - protegge gli apici doppi " con \" e gli $ con \$.
+# - gli apici singoli ' non devono essere protetti dato che il percorso è racchiuso tra doppi apici.
+escaped_targetHL=$(echo ${targetHL} | sed "s/\"/\\\\\"/g;s/\\\$/\\\\\$/g")
+
+# Se il percorso del file viene passato tra apici singoli (che non comportano l'espansione delle varibili e l'interpretazione di caratteri speciali) è necessario proteggere nel valore il carattere apice singolo:
+# - protegge gli apici singoli ' sostituendoli con '"'"'
+# - gli apici doppi " e $ non devono essere protetti dato che il percorso è racchiuso tra apici singoli.
+# https://stackoverflow.com/a/1250279/1409904
+# https://stackoverflow.com/a/42082956/1409904
+escaped_targetHL=$(echo ${targetHL} | sed "s/'/'\"'\"'/g")
+
 
 # Reader used to get the contents of the target file.
 if [[ ${convertEOL} != "" ]]; then
     #reader=(cat "'${targetHL}'" \| perl -p -e 's/\\r\\n/\\n/' \| tr '\\r' '\\n')
-    reader=(cat "'${targetHL}'" \| "\"${dos2unix}\"" -c mac \| "\"${dos2unix}\"")
+    reader=(cat "'${escaped_targetHL}'" \| "\"${dos2unix}\"" -c mac \| "\"${dos2unix}\"")
 else
-    reader=(cat "'${targetHL}'")
+    reader=(cat "'${escaped_targetHL}'")
 fi
-
-# debug "Handling special cases"
-case "${targetHL}" in
-    *.graffle | *.ps )
-        exit 1
-        ;;
-    *.d )
-        lang=make
-        ;;
-    # *.class )
-    #     lang=java
-    #     reader=(/usr/local/bin/jad -ff -dead -noctor -p -t "${targetHL}")
-    #     plugin=(--plug-in java_library)
-    #     ;;
-    *.sql )
-        if grep -q -E "SQLite .* database" <(file -b "${targetHL}"); then
-            # skip binary sql databases.
-            exit 1
-        fi
-        lang=sql
-        ;;
-    *.pch | *.h )
-        if grep -q "@interface" <("${targetHL}") &> /dev/null; then
-            lang=objc
-        else
-            lang=h
-        fi
-        ;;
-    * )
-        lang=${targetHL##*.}
-        ;;
-esac
 
 if [[ ${syntaxHL} != "" ]]; then
     # Use the request file type.
     lang=${syntaxHL}
+else
+    # debug "Handling special cases"
+    case "${targetHL}" in
+        *.graffle | *.ps )
+            exit 1
+            ;;
+        *.d )
+            lang=make
+            ;;
+        # *.class )
+        #     lang=java
+        #     reader=(/usr/local/bin/jad -ff -dead -noctor -p -t "'${escaped_targetHL}'")
+        #     plugin=(--plug-in java_library)
+        #     ;;
+        *.sql )
+            if grep -q -E "SQLite .* database" <(file -b "'${escaped_targetHL}'"); then
+                # skip binary sql databases.
+                exit 1
+            fi
+            lang=sql
+            ;;
+        *.pch | *.h )
+            if grep -q "@interface" <("'${escaped_targetHL}'") &> /dev/null; then
+                lang=objc
+            else
+                lang=h
+            fi
+            ;;
+        * )
+            lang=${targetHL##*.}
+            ;;
+    esac
 fi
 
-debug "Target to colorize: ${targetHL}"
+debug "Target to colorize: '${escaped_targetHL}'"
 debug "Resolved to language: $lang"
 
 if [[ ${preprocessorHL} != "" ]]; then
@@ -142,7 +154,7 @@ go4it () {
     
     if [ "x${useLSP}" != "x" ]; then
         # LSP require full path.
-        cmdOptsHL+=(-i "${targetHL}")
+        cmdOptsHL+=(-i "'${escaped_targetHL}'")
     fi
     
     # debug "Environments:"
@@ -153,7 +165,7 @@ go4it () {
         # create a temporary file
         tmpfile=$(mktemp -t colorize)
         debug "Save reader output to a temporary file: $tmpfile"
-        debug "\$ ${reader} > \"$tmpfile\""
+        debug "\$ ${reader} \> \"$tmpfile\""
         
         # apply preprocessor
         (eval ${reader}) > "$tmpfile" 2>> ${err_device}
@@ -251,15 +263,15 @@ go4it () {
 
             debug "Generating the preview…"
             
-            debug "\$ head -c ${maxFileSizeHL} \"$tmpfile\" | \"${cmd}\" -T \"${targetHL}\" ${cmdOptsHL}"
+            debug "\$ head -c ${maxFileSizeHL} \"$tmpfile\" | \"${cmd}\" -T '${escaped_targetHL}' ${cmdOptsHL}"
             
-            {head -c ${maxFileSizeHL} "$tmpfile"  2>> ${err_device} ; printf "\n\n${comment1} Output truncated: the file ($bytes bytes) exceed the $maxFileSizeHL bytes limit. ${comment2}\n\n" } | "${cmd}" -T "${targetHL}" ${cmdOptsHL} 2>> ${err_device}
+            {head -c ${maxFileSizeHL} "$tmpfile"  2>> ${err_device} ; printf "\n\n${comment1} Output truncated: the file ($bytes bytes) exceed the $maxFileSizeHL bytes limit. ${comment2}\n\n" } | "${cmd}" -T "'${escaped_targetHL}'" ${cmdOptsHL} 2>> ${err_device}
             result=$?
         else
             debug "No need to truncate the data."
             debug "Generating the preview…"
-            debug "\$ cat \"$tmpfile\" | \"${cmd}\" -T \"${targetHL}\" ${cmdOptsHL}"
-            cat "$tmpfile" | "${cmd}" -T "${targetHL}" ${cmdOptsHL} 2>> ${err_device}
+            debug "\$ cat \"$tmpfile\" | \"${cmd}\" -T '${escaped_targetHL}' ${cmdOptsHL}"
+            cat "$tmpfile" | "${cmd}" -T "'${escaped_targetHL}'" ${cmdOptsHL} 2>> ${err_device}
             result=$?
         fi
         
@@ -280,11 +292,11 @@ go4it () {
     else
         debug "Generating the preview…"
         if [ "x${useLSP}" != "x" ]; then
-            debug "\$ \"${cmd}\" -T \"${targetHL}\" ${cmdOptsHL}"
-            "${cmd}" -T "${targetHL}" ${cmdOptsHL} 2>> ${err_device}
+            debug "\$ \"${cmd}\" -T '${escaped_targetHL}' ${cmdOptsHL}"
+            "${cmd}" -T "'${escaped_targetHL}'" ${cmdOptsHL} 2>> ${err_device}
         else
-            debug "\$ ${reader} | \"${cmd}\" -T \"${targetHL}\" ${cmdOptsHL}"
-            (eval ${reader}) 2>> ${err_device} | "${cmd}" -T "${targetHL}" ${cmdOptsHL} 2>> ${err_device}
+            debug "\$ ${reader} | \"${cmd}\" -T '${escaped_targetHL}' ${cmdOptsHL}"
+            (eval ${reader}) 2>> ${err_device} | "${cmd}" -T "'${escaped_targetHL}'" ${cmdOptsHL} 2>> ${err_device}
         fi
         
         result=$?

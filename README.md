@@ -117,6 +117,7 @@ The application can also handle some [plain files](#plain-files) without extensi
 - AppleScript (`.scpt`, `.applescript`, `.ascr`) _automatically decompiled with `osadecompile`_
 - Apple shell script files (`.command`)
 - Assembler source files (`.asm`, `.s79`)
+- Autolit files (`.au3`, `.a3x`)
 - Azkaban flow files (`.flow`) as _`YAML`_
 - ATL files (`.atl`)
 - (G)AWK files (`.awk`)
@@ -174,7 +175,8 @@ The application can also handle some [plain files](#plain-files) without extensi
 - Java Web Start (`.jnlp`)
 - JavaFX ML (`.fxml`)
 - JavaScript files (`.js`, `.jscript`, `.javascript`, `.mjs`)
-- JSON files (`.json`, `.jsonc`)
+- JSON files (`.json`, `.jsonc`) ** On macOS 13 Ventura with Apple Silicon the `.json` extension is reserved by the system and cannot be handled.** 
+- JSON Line files (`.jsonl`) _as `JSON`_
 - Julia source files  (`.jl`)
 - Kermeta source files (`.kmt`)
 - Korn Shell script files (`.ksh`)
@@ -226,6 +228,7 @@ The application can also handle some [plain files](#plain-files) without extensi
 - Solidity source files (`.sol`)
 - SQL files (`.sql`)
 - Standard ML source files (`.ml`)
+- Stata files (`.do`, `.ado`) _as plain text_
 - Svelte (`.svelte`) _as `HTML`_
 - Swift source files (`.swift`)
 - Symfony Twig files (`.twig`)
@@ -292,7 +295,7 @@ When customizing the settings for a specific format, these options will be avail
 |Settings|Description|Advanced|
 |:---------|:-------------| :----: |
 |Append highlight arguments|Arguments _appended_ to the _Extra highlight arguments_. Arguments that contains a white space must be protected inside quotes. |Yes|
-|Preprocessor|Set a program or a shell script to preprocess the source file before the formatting. The program must output to stdout the data to be passed to `highlight`. You **must** pass the name of the source file using the `$targetHL` placeholder. With the preprocessor you can handle file format not directly supported by `highlight`. This option is ignored when using a Language Server. The execution of the preprocessor is made inside the same env of the script that handle `highlight`. For example you can beautify a JSON file with this preprocessor: `python3 -m json.tool $targetHL`. _When you use a preprocessor you will probably want to disable the support for version control._  |Yes|
+|Preprocessor|Set a program or a shell script to preprocess the source file before the formatting. The program must output to stdout the data to be passed to `highlight`. You **must** pass the name of the source file using the `$targetHL` placeholder. You can also use the placeholder `$escaped_targetHL` _with the special chars escaped_ inside a double quotes. With the preprocessor you can handle file format not directly supported by `highlight`. This option is ignored when using a Language Server. The execution of the preprocessor is made inside the same env of the script that handle `highlight`. For example you can beautify a JSON file with this preprocessor: `python3 -m json.tool $targetHL` or `python3 -m json.tool "$escaped_targetHL"`. _When you use a preprocessor you will probably want to disable the support for version control._  |Yes|
 |Syntax| Set which language must be used to recognize the source file. If not set will be used the file name extension. |Yes|
 
 

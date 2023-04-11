@@ -33,7 +33,7 @@
 	<key>LSMinimumSystemVersion</key>
 	<string>$(MACOSX_DEPLOYMENT_TARGET)</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Developed by SBAREX (2019-2022).</string>
+	<string>Developed by SBAREX (2019-2023).</string>
 	<key>NSMainStoryboardFile</key>
 	<string>Storyboard</string>
 	<key>NSPrincipalClass</key>
@@ -104,6 +104,23 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>jsx</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>dyn.ah62d4rv4ge80c7mx</string>
+				<string>public.data</string>
+			</array>
+			<key>UTTypeIdentifier</key>
+			<string>com.autoit.au3</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>a3x</string>
+					<string>au3</string>
 				</array>
 			</dict>
 		</dict>
@@ -368,6 +385,24 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>xmp</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.item</string>
+				<string>dyn.ah62d4rv4ge80k52</string>
+				<string>dyn.ah62d4rv4ge80c3dt</string>
+			</array>
+			<key>UTTypeIdentifier</key>
+			<string>com.stata.source</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>do</string>
+					<string>ado</string>
 				</array>
 			</dict>
 		</dict>
@@ -989,6 +1024,22 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>jsonc</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>dyn.ah62d4rv4ge80y65tr30a</string>
+				<string>public.json</string>
+			</array>
+			<key>UTTypeIdentifier</key>
+			<string>org.jsonlines.jsonl</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>jsonl</string>
 				</array>
 			</dict>
 		</dict>
