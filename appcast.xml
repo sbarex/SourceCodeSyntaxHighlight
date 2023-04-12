@@ -3,6 +3,37 @@
     <channel>
         <title>Syntax Highlight</title>
         <item>
+            <title>2.1.18</title>
+            <pubDate>lun, 11 apr 2023 09:25:00 +0100</pubDate>
+            <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
+            <enclosure 
+                       type="application/octet-stream" 
+                       url="https://github.com/sbarex/SourceCodeSyntaxHighlight/releases/download/2.1.18/Syntax.Highlight.zip" 
+                       sparkle:shortVersionString="2.1.18" sparkle:version="67" 
+                       sparkle:edSignature="8ps76MEc2mT28dw1VTzILVDzYk9bC3n6gBsChTyKp+5COclmaYjxi3GNYv9J5vn1MfrYeLJmmAwJo1mdiZDhDw==" length="13474330"
+            />
+            <description><![CDATA[
+                <h2>Release 2.1.18 (67)</h2>
+                <p>New features:</p>
+                <ul>
+                    <li>Update Highlight to release 4.5.</li>
+                    <li>Update Lua to release 5.4.4.</li>
+                    <li>Added support for Autoit files (<code>.au3</code>, <code>.a3x</code>).</li>
+                    <li>Added support for JSON Lines files (<code>.jsonl</code>) <i>as JSON</i>.</li>
+                    <li>Added support for Stata files (<code>.do</code>, <code>.ado</code>) <i>as plain text</i>.</li>
+                </ul>
+                <p>Bug fix:</p>
+                <ul>
+                    <li>Fixed unrecognized <code>.mjs</code> files.</li>
+                    <li>Fixed bug for preview files with special characters on the path.</li>
+                </ul>
+
+                <p><a href="https://github.com/sbarex/SourceCodeSyntaxHighlight/blob/master/CHANGELOG.md">See the complete changelog.</a></p>
+            ]]>
+            </description>
+        </item>
+        
+        <item>
             <title>2.1.17</title>
             <pubDate>lun, 9 gen 2023 22:20:00 +0100</pubDate>
             <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
