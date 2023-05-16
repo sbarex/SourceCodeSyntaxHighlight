@@ -53,6 +53,11 @@ UTIs:
     com.seriflabs.xmp: *xml
     dyn.ah62d4rv4ge81u5pu: *xml
     
+    com.stata.stata.do:
+        syntax: stata
+    com.stata.source:
+        syntax: stata
+
     com.sun.java-class:
         syntax: java
         preprocessor: javap -c $targetHL
@@ -104,6 +109,9 @@ UTIs:
         
     org.clojure.script:
         syntax: clojure
+        
+    org.tug.cls:
+        syntax: latex
         
     org.cocoapods.podspec:
         syntax: ruby
@@ -169,6 +177,9 @@ UTIs:
         extra: --plug-in cpp_syslog
         
     public.data.xml.opml: *xml
+    
+    public.fortran-95-source:
+        syntax: fortran90
     
     public.make-source:
         syntax: makefile
@@ -358,6 +369,9 @@ extensions:
     do:
         syntax: txt
         
+    cls:
+        syntax: latex
+
     # org.nodejs.cjs, dyn.ah62d4rv4ge80g4xx
     cjs:
         syntax: javascript
@@ -365,6 +379,9 @@ extensions:
     cr:
         syntax: crystal
         
+    f95:
+        syntax: fortran90
+    
     fnc:
         syntax: sql
     prc:

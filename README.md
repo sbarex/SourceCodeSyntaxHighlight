@@ -150,7 +150,7 @@ The application can also handle some [plain files](#plain-files) without extensi
 - Erlang source files (`.erl`, `.hri`)
 - F# source files (`.fsx`, `.fs`)
 - fish source files (`.fish`)
-- Fortran source files (`.f`, `.for`, `.f90`)
+- Fortran source files (`.f`, `.for`, `.f90`, `.f95`)
 - GCC linked files (`.ld`, `.map`, `.d`)
 - Gdscript (Godot engine) (`.gd`).
 - Golang source files (`.go`)

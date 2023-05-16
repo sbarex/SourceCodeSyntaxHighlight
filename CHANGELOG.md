@@ -2,6 +2,11 @@ Changelog
 =======
 
 
+### 2.1.19 (68)
+- Better support for Stata files (`.do`, `.ado`) _as plain text_.
+- Better support for fortran (`.f95`) and LaTex (`.cls`) files.
+
+
 ### 2.1.18 (67)
 New features:
 - Update Highlight to release 4.5.

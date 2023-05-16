@@ -92,6 +92,7 @@
 				<string>com.sass-lang.sass</string>
 				<string>com.sequel-ace.sequel-ace.sql</string>
 				<string>com.stata.source</string>
+				<string>com.stata.stata.do</string>
 				<string>com.sun.java-properties</string>
 				<string>com.sun.java-source</string>
 				<string>com.sun.java-server-pages</string>
@@ -199,6 +200,7 @@
 				<string>org.sbarex.qlsyntaxhighlight.dummy</string>
 				<string>org.scala.source</string>
 				<string>org.soliditylang.source</string>
+				<string>org.tug.cls</string>
 				<string>org.tug.lua</string>
 				<string>org.tug.tex</string>
 				<string>org.tug.tex.bibtex</string>
@@ -251,6 +253,7 @@
 				<string>public.dylan-source</string>
 				<string>public.fortran-source</string>
 				<string>public.fortran-90-source</string>
+				<string>public.fortran-95-source</string>
 				<string>public.gd</string>
 				<string>public.ini</string>
 				<string>public.item</string>
