@@ -9,7 +9,7 @@
             <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
             <enclosure 
                        type="application/octet-stream" 
-                       url="https://github.com/sbarex/SourceCodeSyntaxHighlight/releases/download/2.1.18/Syntax.Highlight.zip" 
+                       url="https://github.com/sbarex/SourceCodeSyntaxHighlight/releases/download/2.1.19/Syntax.Highlight.zip" 
                        sparkle:shortVersionString="2.1.19" sparkle:version="68" 
                        sparkle:edSignature="6Gs9W2HB88J0aQQqWIomQoUJXjuh+nsQyVzYrqEdOGNNd5MKrtW8z0RQLxiFHrK1DI9z3GH+7F07QLberXsCBA==" length="13474487"
             />
