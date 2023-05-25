@@ -44,7 +44,11 @@ After installation, _the application must be launched at least once to allow the
 Head over to the [releases](https://github.com/sbarex/SourceCodeSyntaxHighlight/releases) page to view the latest version. Move `Syntax Highlight.app` into the `Applications` folder.
 
 ### Install with Homebrew Cask
-Syntax Highlight can also be installed via [Homebrew Cask](https://github.com/Homebrew/homebrew-cask). If you have not installed Homebrew, follow the simple instructions [here](https://brew.sh/). After that, run `brew install --cask --no-quarantine syntax-highlight` to install the current version of Syntax Highlight.
+Syntax Highlight can also be installed via [Homebrew Cask](https://github.com/Homebrew/homebrew-cask). If you have not installed Homebrew, follow the simple instructions [here](https://brew.sh/). After that, install the current version of Syntax Highlight with the following command:
+
+```bash
+brew install --cask --no-quarantine syntax-highlight
+```
 
 ### Note for the precompiled release
 The [precompiled app](https://github.com/sbarex/SourceCodeSyntaxHighlight/releases) is not notarized or signed, so the first time you run the app the system may show a warning about the impossibility to check for malicious software.
@@ -53,8 +57,8 @@ To fix, you can launch the app with right-click (or Control-click) on the app ic
 
 You can also execute this command from the terminal:
 
-```
-$ xattr -r -d com.apple.quarantine "FULL PATH OF Syntax Highlight.app (you can drag the file to get the pull path)"
+```bash
+xattr -r -d com.apple.quarantine "FULL PATH OF Syntax Highlight.app (you can drag the file to get the pull path)"
 ```
 
 Alternatively, after trying to launch the app for the first time, you can open the `System Preferences > Security & Privacy > General (tab)` and click the `Open Anyway` button.
@@ -67,9 +71,12 @@ The release application is compiled as a universal binary (Intel and Apple silic
 
 After cloning remember to fetch submodules:
 
+```bash
+git submodule init
 ```
-$ git submodule init
-$ git submodule update
+
+```bash
+git submodule update
 ```
 
 ## Enable the Quick Look extension
@@ -389,8 +396,8 @@ With the _Inquiry window_ you can see if a specific file type is handled by the 
 
 Alternatively you can see the UTI of a file with this Terminal command:
 
-```
-$ mdls -name kMDItemContentType -name kMDItemContentTypeTree filename.ext
+```bash
+mdls -name kMDItemContentType -name kMDItemContentTypeTree filename.ext
 ```
 
 It's likely that I didn't associate all the possible extensions managed by `highlight`.
@@ -407,8 +414,8 @@ The tool is located inside the `Syntax Highlight.app/Contents/Resources` folder 
 
 From the Application menu you can create a symbolic link into `/usr/local/bin` folder.
 
-```sh
-$ /Application/Syntax\ Highlight.app/Contents/Resources/syntax_highlight_cli -h
+```bash
+/Application/Syntax\ Highlight.app/Contents/Resources/syntax_highlight_cli -h
 ```
 ```
 Usage: syntax_highlight_cli [-o <path>] <file> [..]
@@ -502,7 +509,7 @@ The command line tool require macOS 10.15.4 or later.
 > It depends… first the format must be handled by `highlight`. Check in the _Inquiry window_ if the file is supported.
 > If is supported please send me the UTI associated to the file. You can also view the UTI with this terminal command:
 >
-> `$ mdls -name kMDItemContentType -name kMDItemContentTypeTree filename.ext`
+> `mdls -name kMDItemContentType -name kMDItemContentTypeTree filename.ext`
 >
 > Some common files cannot be handled by third party extension because are reserved by the system (for example, `.ts`, `.html`, …).
 >
@@ -606,18 +613,19 @@ The application embed the [`Highlight`](http://www.andre-simon.de/doku/highlight
 
 - https://stackoverflow.com/questions/16943819/where-do-uti-come-from/18014903#18014903
 > List all registered UTIs:
-> ```sh 
+> ```bash 
 > /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -dump
 > ```
 
 - handle extension from command line (https://stackoverflow.com/questions/66546696/how-to-enable-and-debug-a-macos-file-provider-extension , https://stackoverflow.com/questions/34898903/what-do-the-prefixes-in-the-output-of-macos-pluginkit-mean/36839118#36839118 , https://kevin.deldycke.com/2019/07/macos-commands/ ):
-```sh
-# list all registered quicklook plugins:
+
+List all registered quicklook plugins:
+```bash
 pluginkit -mAvvv -p com.apple.quicklook.preview 
-
-# info about a plugin:
+```
+İnfo about a plugin:
+```bash
 pluginkit -m -v -i org.sbarex.SourceCodeSyntaxHighlight.QuicklookExtension --raw
-
 ```
 
 ## Credits
