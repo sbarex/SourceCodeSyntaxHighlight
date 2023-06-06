@@ -2,6 +2,11 @@ Changelog
 =======
 
 
+### Unreleased
+New features:
+- Added support for bazel files (`.bazel`, `.bzl`) _as plain text_.
+
+
 ### 2.1.19 (68)
 - Better support for Stata files (`.do`, `.ado`) _as plain text_.
 - Better support for fortran (`.f95`) and LaTex (`.cls`) files.

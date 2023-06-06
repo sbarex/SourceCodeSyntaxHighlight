@@ -106,7 +106,10 @@ UTIs:
         
     org.bash.source:
         extra: --plug-in bash_functions
-        
+
+    org.bazel.source:
+        syntax: bazel
+
     org.clojure.script:
         syntax: clojure
         
@@ -346,7 +349,15 @@ UTIs:
     #.do
     dyn.ah62d4rv4ge80k52:
         syntax: txt
-        
+
+    # .bazel
+    dyn.ah62d4rv4ge80e2p4qz0a:
+        syntax: txt
+
+    # .bzl
+    dyn.ah62d4rv4ge80e8xq:
+        syntax: txt
+
 extensions:
     _plist*: &plist
         syntax: xml
@@ -367,6 +378,12 @@ extensions:
         syntax: autoit
         
     do:
+        syntax: txt
+
+    bazel:
+        syntax: txt
+
+    bzl:
         syntax: txt
         
     cls:

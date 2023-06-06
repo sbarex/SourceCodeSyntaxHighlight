@@ -129,6 +129,7 @@ The application can also handle some [plain files](#plain-files) without extensi
 - ATL files (`.atl`)
 - (G)AWK files (`.awk`)
 - Bash Script files (`.bash`)
+- Bazel files (`.bazel`, `.bzl`)
 - BibTex (`.bib`)
 - C shell script files (`.csh`)
 - C source files (`.c`, `.h`)

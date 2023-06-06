@@ -116,6 +116,7 @@
 				<string>org.arduino.source</string>
 				<string>org.asm.source</string>
 				<string>org.bash.source</string>
+				<string>org.bazel.source</string>
 				<string>org.clojure</string>
 				<string>org.cmake.makefile</string>
 				<string>org.clojure.script</string>
@@ -358,6 +359,8 @@
 				<string>dyn.ah62d4rv4ge80k52</string>
 				<string>dyn.ah62d4rv4ge80y65tr30a</string>
 				<string>dyn.ah62d4rv4ge80c7mx</string>
+				<string>dyn.ah62d4rv4ge80e2p4qz0a</string>
+				<string>dyn.ah62d4rv4ge80e8xq</string>
 			</array>
 			<key>QLSupportsSearchableItems</key>
 			<false/>

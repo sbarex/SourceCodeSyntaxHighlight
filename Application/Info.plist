@@ -2709,6 +2709,26 @@
 				</array>
 			</dict>
 		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.item</string>
+				<string>dyn.ah62d4rv4ge80e2p4qz0a</string>
+				<string>dyn.ah62d4rv4ge80e8xq</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Bazel file</string>
+			<key>UTTypeIdentifier</key>
+			<string>org.bazel.source</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>bazel</string>
+					<string>bzl</string>
+				</array>
+			</dict>
+		</dict>
 	</array>
 </dict>
 </plist>
