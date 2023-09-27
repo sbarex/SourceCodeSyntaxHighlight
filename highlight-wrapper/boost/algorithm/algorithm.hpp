@@ -20,7 +20,7 @@
 #include <functional> // for plus and multiplies
 
 #include <boost/config.hpp>
-#include <boost/utility/enable_if.hpp> // for boost::disable_if
+#include <boost/core/enable_if.hpp> // for boost::disable_if
 #include <boost/type_traits/is_integral.hpp>
 
 namespace boost { namespace algorithm {

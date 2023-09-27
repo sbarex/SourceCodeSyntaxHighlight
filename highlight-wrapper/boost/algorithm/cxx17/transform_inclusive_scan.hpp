@@ -22,6 +22,21 @@
 
 namespace boost { namespace algorithm {
 
+/// \fn transform_inclusive_scan ( InputIterator first, InputIterator last, OutputIterator result, BinaryOperation bOp, UnaryOperation uOp, T init )
+/// \brief Transforms elements from the input range with uOp and then combines
+/// those transformed elements with bOp such that the n-1th element and the nth
+/// element are combined. Inclusivity means that the nth element is included in
+/// the nth combination.
+/// \return The updated output iterator
+///
+/// \param first  The start of the input sequence
+/// \param last   The end of the input sequence
+/// \param result The output iterator to write the results into
+/// \param bOp    The operation for combining transformed input elements
+/// \param uOp    The operation for transforming input elements
+/// \param init   The initial value
+///
+/// \note This function is part of the C++17 standard library
 template<class InputIterator, class OutputIterator,
          class BinaryOperation, class UnaryOperation, class T>
 OutputIterator transform_inclusive_scan(InputIterator first, InputIterator last,
@@ -37,6 +52,20 @@ OutputIterator transform_inclusive_scan(InputIterator first, InputIterator last,
     return result;
 }
 
+/// \fn transform_inclusive_scan ( InputIterator first, InputIterator last, OutputIterator result, BinaryOperation bOp, UnaryOperation uOp, T init )
+/// \brief Transforms elements from the input range with uOp and then combines
+/// those transformed elements with bOp such that the n-1th element and the nth
+/// element are combined. Inclusivity means that the nth element is included in
+/// the nth combination. The first value will be used as the init.
+/// \return The updated output iterator
+///
+/// \param first  The start of the input sequence
+/// \param last   The end of the input sequence
+/// \param result The output iterator to write the results into
+/// \param bOp    The operation for combining transformed input elements
+/// \param uOp    The operation for transforming input elements
+///
+/// \note This function is part of the C++17 standard library
 template<class InputIterator, class OutputIterator,
          class BinaryOperation, class UnaryOperation>
 OutputIterator transform_inclusive_scan(InputIterator first, InputIterator last,

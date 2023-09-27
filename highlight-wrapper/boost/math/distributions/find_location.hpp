@@ -12,7 +12,6 @@
 #include <boost/math/distributions/complement.hpp>
 #include <boost/math/policies/policy.hpp>
 #include <boost/math/tools/traits.hpp>
-#include <boost/static_assert.hpp>
 #include <boost/math/special_functions/fpclassify.hpp>
 #include <boost/math/policies/error_handling.hpp>
 // using boost::math::policies::policy;
@@ -26,7 +25,7 @@ namespace boost
   // Function to find location of random variable z
   // to give probability p (given scale)
   // Applies to normal, lognormal, extreme value, Cauchy, (and symmetrical triangular),
-  // enforced by BOOST_STATIC_ASSERT below.
+  // enforced by static_assert below.
 
     template <class Dist, class Policy>
     inline
@@ -38,13 +37,8 @@ namespace boost
       const Policy& pol 
       )
     {
-#if !defined(BOOST_NO_SFINAE) && !BOOST_WORKAROUND(__SUNPRO_CC, BOOST_TESTED_AT(0x590))
-      // Will fail to compile here if try to use with a distribution without scale & location,
-      // for example pareto, and many others.  These tests are disabled by the pp-logic
-      // above if the compiler doesn't support the SFINAE tricks used in the traits class.
-      BOOST_STATIC_ASSERT(::boost::math::tools::is_distribution<Dist>::value); 
-      BOOST_STATIC_ASSERT(::boost::math::tools::is_scaled_distribution<Dist>::value);
-#endif
+      static_assert(::boost::math::tools::is_distribution<Dist>::value, "The provided distribution does not meet the conceptual requirements of a distribution."); 
+      static_assert(::boost::math::tools::is_scaled_distribution<Dist>::value, "The provided distribution does not meet the conceptual requirements of a scaled distribution."); 
       static const char* function = "boost::math::find_location<Dist, Policy>&, %1%)";
 
       if(!(boost::math::isfinite)(p) || (p < 0) || (p > 1))

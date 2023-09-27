@@ -6,13 +6,27 @@
 #ifndef BOOST_MATH_TOOLS_SIMPLE_CONTINUED_FRACTION_HPP
 #define BOOST_MATH_TOOLS_SIMPLE_CONTINUED_FRACTION_HPP
 
+#include <array>
 #include <vector>
 #include <ostream>
 #include <iomanip>
 #include <cmath>
+#include <cstdint>
 #include <limits>
 #include <stdexcept>
+#include <sstream>
+
+#include <boost/math/tools/is_standalone.hpp>
+#ifndef BOOST_MATH_STANDALONE
+#include <boost/config.hpp>
+#ifdef BOOST_NO_CXX17_IF_CONSTEXPR
+#error "The header <boost/math/norms.hpp> can only be used in C++17 and later."
+#endif
+#endif
+
+#ifndef BOOST_MATH_STANDALONE
 #include <boost/core/demangle.hpp>
+#endif
 
 namespace boost::math::tools {
 
@@ -37,7 +51,7 @@ public:
         x = 1/(x-bj);
         Real f = bj;
         if (bj == 0) {
-           f = 16*std::numeric_limits<Real>::min();
+           f = 16*(std::numeric_limits<Real>::min)();
         }
         Real C = f;
         Real D = 0;
@@ -52,11 +66,11 @@ public:
           x = 1/(x-bj);
           D += bj;
           if (D == 0) {
-             D = 16*std::numeric_limits<Real>::min();
+             D = 16*(std::numeric_limits<Real>::min)();
           }
           C = bj + 1/C;
           if (C==0) {
-             C = 16*std::numeric_limits<Real>::min();
+             C = 16*(std::numeric_limits<Real>::min)();
           }
           D = 1/D;
           f *= (C*D);
@@ -74,7 +88,11 @@ public:
          if (b_[i] <= 0) {
             std::ostringstream oss;
             oss << "Found a negative partial denominator: b[" << i << "] = " << b_[i] << "."
+                #ifndef BOOST_MATH_STANDALONE
                 << " This means the integer type '" << boost::core::demangle(typeid(Z).name())
+                #else
+                << " This means the integer type '" << typeid(Z).name()
+                #endif
                 << "' has overflowed and you need to use a wider type,"
                 << " or there is a bug.";
             throw std::overflow_error(oss.str());
@@ -89,7 +107,7 @@ public:
          using std::log;
          using std::exp;
          // Precompute the most probable logarithms. See the Gauss-Kuzmin distribution for details.
-         // Example: b_i = 1 has probability -log_2(3/4) ≈ .415:
+         // Example: b_i = 1 has probability -log_2(3/4) ~ .415:
          // A random partial denominator has ~80% chance of being in this table:
          const std::array<Real, 7> logs{std::numeric_limits<Real>::quiet_NaN(), Real(0), log(static_cast<Real>(2)), log(static_cast<Real>(3)), log(static_cast<Real>(4)), log(static_cast<Real>(5)), log(static_cast<Real>(6))};
          Real log_prod = 0;

@@ -17,6 +17,7 @@
 #include <boost/math/distributions/complement.hpp>
 
 #include <utility>
+#include <type_traits>
 
 namespace boost{ namespace math
 {
@@ -71,10 +72,10 @@ template <class RealType = double, class Policy = policies::policy<> >
 class gamma_distribution
 {
 public:
-   typedef RealType value_type;
-   typedef Policy policy_type;
+   using value_type = RealType;
+   using policy_type = Policy;
 
-   gamma_distribution(RealType l_shape, RealType l_scale = 1)
+   explicit gamma_distribution(RealType l_shape, RealType l_scale = 1)
       : m_shape(l_shape), m_scale(l_scale)
    {
       RealType result;
@@ -100,15 +101,22 @@ private:
 
 // NO typedef because of clash with name of gamma function.
 
+#ifdef __cpp_deduction_guides
+template <class RealType>
+gamma_distribution(RealType)->gamma_distribution<typename boost::math::tools::promote_args<RealType>::type>;
+template <class RealType>
+gamma_distribution(RealType,RealType)->gamma_distribution<typename boost::math::tools::promote_args<RealType>::type>;
+#endif
+
 template <class RealType, class Policy>
-inline const std::pair<RealType, RealType> range(const gamma_distribution<RealType, Policy>& /* dist */)
+inline std::pair<RealType, RealType> range(const gamma_distribution<RealType, Policy>& /* dist */)
 { // Range of permissible values for random variable x.
    using boost::math::tools::max_value;
    return std::pair<RealType, RealType>(static_cast<RealType>(0), max_value<RealType>());
 }
 
 template <class RealType, class Policy>
-inline const std::pair<RealType, RealType> support(const gamma_distribution<RealType, Policy>& /* dist */)
+inline std::pair<RealType, RealType> support(const gamma_distribution<RealType, Policy>& /* dist */)
 { // Range of supported values for random variable x.
    // This is range where cdf rises from 0 to 1, and outside it, the pdf is zero.
    using boost::math::tools::max_value;
@@ -139,6 +147,33 @@ inline RealType pdf(const gamma_distribution<RealType, Policy>& dist, const Real
    result = gamma_p_derivative(shape, x / scale, Policy()) / scale;
    return result;
 } // pdf
+
+template <class RealType, class Policy>
+inline RealType logpdf(const gamma_distribution<RealType, Policy>& dist, const RealType& x)
+{
+   BOOST_MATH_STD_USING  // for ADL of std functions
+   using boost::math::lgamma;
+
+   static const char* function = "boost::math::logpdf(const gamma_distribution<%1%>&, %1%)";
+
+   RealType k = dist.shape();
+   RealType theta = dist.scale();
+
+   RealType result = -std::numeric_limits<RealType>::infinity();
+   if(false == detail::check_gamma(function, theta, k, &result, Policy()))
+      return result;
+   if(false == detail::check_gamma_x(function, x, &result, Policy()))
+      return result;
+
+   if(x == 0)
+   {
+      return std::numeric_limits<RealType>::quiet_NaN();
+   }
+
+   result = -k*log(theta) + (k-1)*log(x) - lgamma(k) - (x/theta);
+   
+   return result;
+} // logpdf
 
 template <class RealType, class Policy>
 inline RealType cdf(const gamma_distribution<RealType, Policy>& dist, const RealType& x)

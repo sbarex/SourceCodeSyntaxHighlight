@@ -10,8 +10,8 @@
 #pragma once
 #endif
 
-#include <boost/config/no_tr1/cmath.hpp>
-#include <boost/cstdint.hpp>
+#include <cstdint>
+#include <cmath>
 #include <boost/math/tools/precision.hpp>
 
 namespace boost{ namespace math{ namespace tools{
@@ -24,8 +24,7 @@ public:
       : m_min(tools::max_value<T>()),
         m_max(-tools::max_value<T>()),
         m_total(0),
-        m_squared_total(0),
-        m_count(0)
+        m_squared_total(0)
    {}
    void add(const T& val)
    {
@@ -41,7 +40,7 @@ public:
    T max BOOST_PREVENT_MACRO_SUBSTITUTION()const{ return m_max; }
    T total()const{ return m_total; }
    T mean()const{ return m_total / static_cast<T>(m_count); }
-   boost::uintmax_t count()const{ return m_count; }
+   std::uintmax_t count()const{ return m_count; }
    T variance()const
    {
       BOOST_MATH_STD_USING
@@ -77,7 +76,7 @@ public:
    }
 private:
    T m_min, m_max, m_total, m_squared_total;
-   boost::uintmax_t m_count;
+   std::uintmax_t m_count{0};
 };
 
 } // namespace tools

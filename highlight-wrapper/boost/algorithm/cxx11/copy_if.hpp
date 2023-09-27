@@ -126,6 +126,86 @@ copy_until ( const Range &r, OutputIterator result, Predicate p )
     return boost::algorithm::copy_until (boost::begin (r), boost::end(r), result, p);
 }
 
+/// \fn copy_if_while ( InputIterator first, InputIterator last, OutputIterator result, CopyPredicate copy_pred, TerminatePred term_pred )
+/// \brief Copies all the elements from the input range that satisfy the
+/// copy predicate to the output range while the termination predicate is
+/// satisfied.
+/// \return The updated output iterator
+///
+/// \param first     The start of the input sequence
+/// \param last      One past the end of the input sequence
+/// \param result    An output iterator to write the results into
+/// \param copy_pred A predicate for testing whether to the current element
+/// \param term_pred A predicate for testing whether to end the copy operation
+template<typename InputIterator, typename OutputIterator, typename CopyPredicate, typename TerminatePred>
+BOOST_CXX14_CONSTEXPR std::pair<InputIterator, OutputIterator>
+copy_if_while ( InputIterator first, InputIterator last, OutputIterator result, CopyPredicate copy_pred, TerminatePred term_pred)
+{
+    for ( ; first != last && term_pred(*first); ++first ) {
+        if (copy_pred(*first)) {
+            *result++ = *first;
+        }
+    }
+    return std::make_pair(first, result);
+}
+
+/// \fn copy_if_while ( const Range& r, OutputIterator result, CopyPredicate copy_pred, TerminatePred term_pred )
+/// \brief Copies all the elements from the input range that satisfy the
+/// copy predicate to the output range while the termination predicate is
+/// satisfied.
+/// \return The updated output iterator
+///
+/// \param r         The input range
+/// \param result    An output iterator to write the results into
+/// \param copy_pred A predicate for testing whether to the current element
+/// \param term_pred A predicate for testing whether to end the copy operation
+template<typename Range, typename OutputIterator, typename CopyPredicate, typename TerminatePred>
+BOOST_CXX14_CONSTEXPR std::pair<typename boost::range_iterator<const Range>::type, OutputIterator>
+copy_if_while ( const Range& r, OutputIterator result, CopyPredicate copy_pred, TerminatePred term_pred)
+{
+    return boost::algorithm::copy_if_while(boost::begin(r), boost::end(r), result, copy_pred, term_pred);
+}
+
+/// \fn copy_if_until ( InputIterator first, InputIterator last, OutputIterator result, CopyPredicate copy_pred, TerminatePred term_pred )
+/// \brief Copies all the elements from the input range that satisfy the
+/// copy predicate to the output range until the termination predicate is
+/// satisfied.
+/// \return The updated output iterator
+///
+/// \param first     The start of the input sequence
+/// \param last      One past the end of the input sequence
+/// \param result    An output iterator to write the results into
+/// \param copy_pred A predicate for testing whether to the current element
+/// \param term_pred A predicate for testing whether to end the copy operation
+template<typename InputIterator, typename OutputIterator, typename CopyPredicate, typename TerminatePred>
+BOOST_CXX14_CONSTEXPR std::pair<InputIterator, OutputIterator>
+copy_if_until ( InputIterator first, InputIterator last, OutputIterator result, CopyPredicate copy_pred, TerminatePred term_pred)
+{
+    for ( ; first != last && !term_pred(*first); ++first ) {
+        if (copy_pred(*first)) {
+            *result++ = *first;
+        }
+    }
+    return std::make_pair(first, result);
+}
+
+/// \fn copy_if_until ( const Range& r, OutputIterator result, CopyPredicate copy_pred, TerminatePred term_pred )
+/// \brief Copies all the elements from the input range that satisfy the
+/// copy predicate to the output range until the termination predicate is
+/// satisfied.
+/// \return The updated output iterator
+///
+/// \param r         The input range
+/// \param result    An output iterator to write the results into
+/// \param copy_pred A predicate for testing whether to the current element
+/// \param term_pred A predicate for testing whether to end the copy operation
+template<typename Range, typename OutputIterator, typename CopyPredicate, typename TerminatePred>
+BOOST_CXX14_CONSTEXPR std::pair<typename boost::range_iterator<const Range>::type, OutputIterator>
+copy_if_until ( const Range& r, OutputIterator result, CopyPredicate copy_pred, TerminatePred term_pred)
+{
+    return boost::algorithm::copy_if_until(boost::begin(r), boost::end(r), result, copy_pred, term_pred);
+}
+
 }} // namespace boost and algorithm
 
 #endif  // BOOST_ALGORITHM_COPY_IF_HPP

@@ -11,9 +11,11 @@
 #ifndef BOOST_MATH_DISTRIBUTION_CONCEPT_HPP
 #define BOOST_MATH_DISTRIBUTION_CONCEPT_HPP
 
+#ifndef BOOST_MATH_STANDALONE
+
 #include <boost/math/distributions/complement.hpp>
 #include <boost/math/distributions/fwd.hpp>
-#ifdef BOOST_MSVC
+#ifdef _MSC_VER
 #pragma warning(push)
 #pragma warning(disable: 4100)
 #pragma warning(disable: 4510)
@@ -21,7 +23,7 @@
 #pragma warning(disable: 4189) // local variable is initialized but not referenced.
 #endif
 #include <boost/concept_check.hpp>
-#ifdef BOOST_MSVC
+#ifdef _MSC_VER
 #pragma warning(pop)
 #endif
 #include <utility>
@@ -47,8 +49,8 @@ public:
    // but we need a way to instantiate the archetype:
    static distribution_archetype& get_object()
    {
-      // will never get caled:
-      return *reinterpret_cast<distribution_archetype*>(0);
+      // will never get called:
+      return *reinterpret_cast<distribution_archetype*>(nullptr);
    }
 }; // template <class RealType>class distribution_archetype
 
@@ -486,6 +488,10 @@ Distribution* DistributionConcept<Distribution>::pd = 0;
 } // namespace concepts
 } // namespace math
 } // namespace boost
+
+#else
+#error This header can not be used in standalone mode.
+#endif // BOOST_MATH_STANDALONE
 
 #endif // BOOST_MATH_DISTRIBUTION_CONCEPT_HPP
 

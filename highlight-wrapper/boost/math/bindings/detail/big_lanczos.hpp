@@ -22,7 +22,7 @@ typedef lanczos13 lanczos13UDT;
 // Max experimental error (with arbitrary precision arithmetic) 2.9524e-38
 // Generated with compiler: Microsoft Visual C++ version 8.0 on Win32 at Mar 23 2006
 //
-struct lanczos22UDT : public boost::integral_constant<int, 120>
+struct lanczos22UDT : public std::integral_constant<int, 120>
 {
    //
    // Produces slightly better than 128-bit long-double precision when 

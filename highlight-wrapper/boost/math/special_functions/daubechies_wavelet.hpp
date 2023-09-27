@@ -21,6 +21,14 @@
 #include <boost/math/interpolators/detail/quintic_hermite_detail.hpp>
 #include <boost/math/interpolators/detail/septic_hermite_detail.hpp>
 
+#include <boost/math/tools/is_standalone.hpp>
+#ifndef BOOST_MATH_STANDALONE
+#include <boost/config.hpp>
+#ifdef BOOST_NO_CXX17_IF_CONSTEXPR
+#error "The header <boost/math/norms.hpp> can only be used in C++17 and later."
+#endif
+#endif
+
 namespace boost::math {
 
    template<class Real, int p, int order>
@@ -72,25 +80,25 @@ namespace boost::math {
       //
       // Some type manipulation so we know the type of the interpolator, and the vector type it requires:
       //
-      typedef std::vector < std::array < Real, p < 6 ? 2 : p < 10 ? 3 : 4>> vector_type;
+      using vector_type = std::vector < std::array < Real, p < 6 ? 2 : p < 10 ? 3 : 4>>;
       //
       // List our interpolators:
       //
-      typedef std::tuple<
+      using interpolator_list = std::tuple<
          detail::null_interpolator, detail::matched_holder_aos<vector_type>, detail::linear_interpolation_aos<vector_type>,
          interpolators::detail::cardinal_cubic_hermite_detail_aos<vector_type>, interpolators::detail::cardinal_quintic_hermite_detail_aos<vector_type>,
-         interpolators::detail::cardinal_septic_hermite_detail_aos<vector_type> > interpolator_list;
+         interpolators::detail::cardinal_septic_hermite_detail_aos<vector_type> > ;
       //
       // Select the one we need:
       //
-      typedef std::tuple_element_t<
+      using interpolator_type = std::tuple_element_t<
          p == 1 ? 0 :
          p == 2 ? 1 :
          p == 3 ? 2 :
          p <= 5 ? 3 :
-         p <= 9 ? 4 : 5, interpolator_list> interpolator_type;
+         p <= 9 ? 4 : 5, interpolator_list>;
    public:
-      daubechies_wavelet(int grid_refinements = -1)
+      explicit daubechies_wavelet(int grid_refinements = -1)
       {
          static_assert(p < 20, "Daubechies wavelets are only implemented for p < 20.");
          static_assert(p > 0, "Daubechies wavelets must have at least 1 vanishing moment.");
@@ -106,7 +114,7 @@ namespace boost::math {
          {
             if (grid_refinements < 0)
             {
-               if (std::is_same_v<Real, float>)
+               if constexpr (std::is_same_v<Real, float>)
                {
                   if (grid_refinements == -2)
                   {
@@ -123,7 +131,7 @@ namespace boost::math {
                      grid_refinements = r[p];
                   }
                }
-               else if (std::is_same_v<Real, double>)
+               else if constexpr (std::is_same_v<Real, double>)
                {
                   //                          p= 2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19
                   std::array<int, 20> r{ -1, -1, 21, 21, 21, 21, 21, 21, 21, 21, 20, 20, 19, 18, 18, 18, 18, 18, 18, 18 };
@@ -200,6 +208,7 @@ namespace boost::math {
          {
             return 0;
          }
+
          if constexpr (p == 1)
          {
             if (x < Real(1) / Real(2))
@@ -212,7 +221,10 @@ namespace boost::math {
             }
             return -1;
          }
-         return (*m_interpolator)(x);
+         else
+         {
+            return (*m_interpolator)(x);
+         }
       }
 
       inline Real prime(Real x) const
@@ -237,7 +249,7 @@ namespace boost::math {
 
       std::pair<Real, Real> support() const
       {
-         return { Real(-p + 1), Real(p) };
+         return std::make_pair(Real(-p + 1), Real(p));
       }
 
       int64_t bytes() const
@@ -250,4 +262,5 @@ namespace boost::math {
    };
 
 }
-#endif
+
+#endif // BOOST_MATH_SPECIAL_DAUBECHIES_WAVELET_HPP

@@ -28,15 +28,16 @@
   #include <sstream>
   #include <stdexcept>
   #include <string>
-  #include <boost/static_assert.hpp>
-  #include <boost/throw_exception.hpp>
+  #include <boost/math/tools/assert.hpp>
+  #include <boost/math/tools/nothrow.hpp>
+  #include <boost/math/tools/throw_exception.hpp>
 
 //  #if (0)
   #if defined(__GNUC__)
 
   // Forward declarations of quadruple-precision string functions.
-  extern "C" int quadmath_snprintf(char *str, size_t size, const char *format, ...) throw();
-  extern "C" boost::math::cstdfloat::detail::float_internal128_t strtoflt128(const char*, char **) throw();
+  extern "C" int quadmath_snprintf(char *str, size_t size, const char *format, ...) BOOST_MATH_NOTHROW;
+  extern "C" boost::math::cstdfloat::detail::float_internal128_t strtoflt128(const char*, char **) BOOST_MATH_NOTHROW;
 
   namespace std
   {
@@ -86,7 +87,7 @@
                                         my_digits,
                                         x);
 
-      if(v < 0) { BOOST_THROW_EXCEPTION(std::runtime_error("Formatting of boost::float128_t failed internally in quadmath_snprintf().")); }
+      if(v < 0) { BOOST_MATH_THROW_EXCEPTION(std::runtime_error("Formatting of boost::float128_t failed internally in quadmath_snprintf().")); }
 
       if(v >= static_cast<int>(sizeof(my_buffer) - 1U))
       {
@@ -106,7 +107,7 @@
         }
         catch(const std::bad_alloc&)
         {
-          BOOST_THROW_EXCEPTION(std::runtime_error("Formatting of boost::float128_t failed while allocating memory."));
+          BOOST_MATH_THROW_EXCEPTION(std::runtime_error("Formatting of boost::float128_t failed while allocating memory."));
         }
 #endif
         const int v2 = ::quadmath_snprintf(my_buffer2,
@@ -117,7 +118,7 @@
 
         if(v2 >= v + 3)
         {
-          BOOST_THROW_EXCEPTION(std::runtime_error("Formatting of boost::float128_t failed."));
+          BOOST_MATH_THROW_EXCEPTION(std::runtime_error("Formatting of boost::float128_t failed."));
         }
 
         static_cast<void>(ostr << my_buffer2);
@@ -152,7 +153,7 @@
 
         is.setstate(ios_base::failbit);
 
-        BOOST_THROW_EXCEPTION(std::runtime_error("Unable to interpret input string as a boost::float128_t"));
+        BOOST_MATH_THROW_EXCEPTION(std::runtime_error("Unable to interpret input string as a boost::float128_t"));
       }
 
       return is;
@@ -160,7 +161,7 @@
   }
 
 //  #elif defined(__GNUC__)
-  #elif defined(BOOST_INTEL)
+  #elif defined(__INTEL_COMPILER)
 
   // The section for I/O stream support for the ICC compiler is particularly
   // long, because these functions must be painstakingly synthesized from
@@ -173,8 +174,7 @@
 
   #include <cstring>
   #include <cctype>
-  #include <boost/lexical_cast.hpp>
-
+  
   namespace boost { namespace math { namespace cstdfloat { namespace detail {
 
   template<class string_type>
@@ -331,7 +331,8 @@
       }
 
       str.append(1U, 'e');
-      string_type e = boost::lexical_cast<string_type>(std::abs(my_exp));
+
+      string_type e = std::to_string(std::abs(my_exp));
 
       if(e.size() < 2U)
       {
@@ -576,12 +577,12 @@
     bool is_neg       = false;
     bool is_neg_expon = false;
 
-    BOOST_CONSTEXPR_OR_CONST int ten = 10;
+    constexpr int ten = 10;
 
     int expon       = 0;
     int digits_seen = 0;
 
-    BOOST_CONSTEXPR_OR_CONST int max_digits = std::numeric_limits<float_type>::max_digits10 + 1;
+    constexpr int max_digits = std::numeric_limits<float_type>::max_digits10 + 1;
 
     if(*p == static_cast<char>('+'))
     {
@@ -760,14 +761,14 @@
 
         is.setstate(ios_base::failbit);
 
-        BOOST_THROW_EXCEPTION(std::runtime_error("Unable to interpret input string as a boost::float128_t"));
+        BOOST_MATH_THROW_EXCEPTION(std::runtime_error("Unable to interpret input string as a boost::float128_t"));
       }
 
       return is;
     }
   }
 
-  #endif // Use __GNUC__ or BOOST_INTEL libquadmath
+  #endif // Use __GNUC__ or __INTEL_COMPILER libquadmath
 
   #endif // Not BOOST_CSTDFLOAT_NO_LIBQUADMATH_SUPPORT (i.e., the user would like to have libquadmath support)
 

@@ -1,4 +1,4 @@
-/* 
+/*
     Copyright 2008 Adobe Systems Incorporated
 
    Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -84,7 +84,7 @@ namespace boost { namespace algorithm {
 template <
     typename BidirectionalIterator,  // models BidirectionalIterator
     typename Pred>                   // models UnaryPredicate
-std::pair<BidirectionalIterator, BidirectionalIterator> gather 
+std::pair<BidirectionalIterator, BidirectionalIterator> gather
         ( BidirectionalIterator first, BidirectionalIterator last, BidirectionalIterator pivot, Pred pred )
 {
 //  The first call partitions everything up to (but not including) the pivot element,
@@ -106,11 +106,11 @@ template <
     typename BidirectionalRange,    //
     typename Pred>                  // Pred models UnaryPredicate
 std::pair<
-    typename boost::range_iterator<const BidirectionalRange>::type,
-    typename boost::range_iterator<const BidirectionalRange>::type>
+    typename boost::range_iterator<BidirectionalRange>::type,
+    typename boost::range_iterator<BidirectionalRange>::type>
 gather (
-    const BidirectionalRange &range,
-    typename boost::range_iterator<const BidirectionalRange>::type pivot,
+    BidirectionalRange &range,
+    typename boost::range_iterator<BidirectionalRange>::type pivot,
     Pred pred )
 {
     return boost::algorithm::gather ( boost::begin ( range ), boost::end ( range ), pivot, pred );

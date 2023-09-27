@@ -5,6 +5,7 @@
 
 #ifndef BOOST_MATH_TOOLS_AGM_HPP
 #define BOOST_MATH_TOOLS_AGM_HPP
+#include <limits>
 #include <cmath>
 
 namespace boost { namespace math { namespace tools {
@@ -12,6 +13,8 @@ namespace boost { namespace math { namespace tools {
 template<typename Real>
 Real agm(Real a, Real g)
 {
+    using std::sqrt;
+    
     if (a < g)
     {
         // Mathematica, mpfr, and mpmath are all symmetric functions:

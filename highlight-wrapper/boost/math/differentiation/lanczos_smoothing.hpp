@@ -6,11 +6,22 @@
 #ifndef BOOST_MATH_DIFFERENTIATION_LANCZOS_SMOOTHING_HPP
 #define BOOST_MATH_DIFFERENTIATION_LANCZOS_SMOOTHING_HPP
 #include <cmath> // for std::abs
+#include <cstddef>
 #include <limits> // to nan initialize
 #include <vector>
 #include <string>
+#include <cstdint>
 #include <stdexcept>
-#include <boost/assert.hpp>
+#include <type_traits>
+#include <boost/math/tools/assert.hpp>
+
+#include <boost/math/tools/is_standalone.hpp>
+#ifndef BOOST_MATH_STANDALONE
+#include <boost/config.hpp>
+#ifdef BOOST_NO_CXX17_IF_CONSTEXPR
+#error "The header <boost/math/norms.hpp> can only be used in C++17 and later."
+#endif
+#endif
 
 namespace boost::math::differentiation {
 
@@ -24,7 +35,7 @@ class discrete_legendre {
                                                         m_qrm2pp{0}, m_qrm1pp{0}
     {
         using std::abs;
-        BOOST_ASSERT_MSG(abs(m_x) <= 1, "Three term recurrence is stable only for |x| <=1.");
+        BOOST_MATH_ASSERT_MSG(abs(m_x) <= 1, "Three term recurrence is stable only for |x| <=1.");
         // The integer n indexes a family of discrete Legendre polynomials indexed by k <= 2*n
     }
 
@@ -82,7 +93,7 @@ class discrete_legendre {
 
     Real operator()(Real x, std::size_t k)
     {
-        BOOST_ASSERT_MSG(k <= 2 * m_n, "r <= 2n is required.");
+        BOOST_MATH_ASSERT_MSG(k <= 2 * m_n, "r <= 2n is required.");
         if (k == 0)
         {
             return 1;
@@ -104,7 +115,7 @@ class discrete_legendre {
     }
 
     Real prime(Real x, std::size_t k) {
-        BOOST_ASSERT_MSG(k <= 2 * m_n, "r <= 2n is required.");
+        BOOST_MATH_ASSERT_MSG(k <= 2 * m_n, "r <= 2n is required.");
         if (k == 0) {
             return 0;
         }
@@ -210,8 +221,8 @@ std::vector<Real> boundary_velocity_filter(std::size_t n, std::size_t p, int64_t
 template <class Real>
 std::vector<Real> acceleration_filter(std::size_t n, std::size_t p, int64_t s)
 {
-    BOOST_ASSERT_MSG(p <= 2*n, "Approximation order must be <= 2*n");
-    BOOST_ASSERT_MSG(p > 2, "Approximation order must be > 2");
+    BOOST_MATH_ASSERT_MSG(p <= 2*n, "Approximation order must be <= 2*n");
+    BOOST_MATH_ASSERT_MSG(p > 2, "Approximation order must be > 2");
 
     std::vector<Real> coeffs(p+1, std::numeric_limits<Real>::quiet_NaN());
     Real sn = Real(s) / Real(n);
@@ -251,14 +262,14 @@ public:
     {
         static_assert(!std::is_integral_v<Real>,
                       "Spacing must be a floating point type.");
-        BOOST_ASSERT_MSG(spacing > 0,
+        BOOST_MATH_ASSERT_MSG(spacing > 0,
                          "Spacing between samples must be > 0.");
 
         if constexpr (order == 1)
         {
-            BOOST_ASSERT_MSG(approximation_order <= 2 * n,
+            BOOST_MATH_ASSERT_MSG(approximation_order <= 2 * n,
                              "The approximation order must be <= 2n");
-            BOOST_ASSERT_MSG(approximation_order >= 2,
+            BOOST_MATH_ASSERT_MSG(approximation_order >= 2,
                              "The approximation order must be >= 2");
 
             if constexpr (std::is_same_v<Real, float> || std::is_same_v<Real, double>)
@@ -356,7 +367,7 @@ public:
         }
         else
         {
-            BOOST_ASSERT_MSG(false, "Derivatives of order 3 and higher are not implemented.");
+            BOOST_MATH_ASSERT_MSG(false, "Derivatives of order 3 and higher are not implemented.");
         }
     }
 
@@ -371,7 +382,7 @@ public:
         static_assert(std::is_same_v<typename RandomAccessContainer::value_type, Real>,
                       "The type of the values in the vector provided does not match the type in the filters.");
 
-        BOOST_ASSERT_MSG(std::size(v) >= m_boundary_filters[0].size(),
+        BOOST_MATH_ASSERT_MSG(std::size(v) >= m_boundary_filters[0].size(),
             "Vector must be at least as long as the filter length");
 
         if constexpr (order==1)
@@ -567,8 +578,8 @@ public:
     discrete_lanczos_derivative& operator=(const discrete_lanczos_derivative&) = delete;
 
     // Allow moves:
-    discrete_lanczos_derivative(discrete_lanczos_derivative&&) = default;
-    discrete_lanczos_derivative& operator=(discrete_lanczos_derivative&&) = default;
+    discrete_lanczos_derivative(discrete_lanczos_derivative&&) noexcept = default;
+    discrete_lanczos_derivative& operator=(discrete_lanczos_derivative&&) noexcept = default;
 
 private:
     std::vector<Real> m_f;

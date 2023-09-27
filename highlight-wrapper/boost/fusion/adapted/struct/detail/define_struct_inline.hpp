@@ -326,6 +326,9 @@
 #define BOOST_FUSION_DEFINE_STRUCT_INLINE_ITERATOR_IMPL_IMPL(                   \
     NAME, ATTRIBUTES_SEQ, ATTRIBUTES_SEQ_SIZE)                                  \
                                                                                 \
+    BOOST_FUSION_PUSH_WARNINGS                                                  \
+    BOOST_FUSION_DISABLE_MSVC_WARNING(4512)                                     \
+                                                                                \
     template <typename boost_fusion_detail_Seq, int N>                          \
     struct BOOST_FUSION_ITERATOR_NAME(NAME)                                     \
         : boost::fusion::iterator_facade<                                       \
@@ -418,7 +421,10 @@
                 return type(it.seq_);                                           \
             }                                                                   \
         };                                                                      \
-    };
+    };                                                                          \
+                                                                                \
+    BOOST_FUSION_POP_WARNINGS                                                   \
+    /**/
 
 
 #define BOOST_FUSION_DEFINE_STRUCT_INLINE_MEMBERS_IMPL_IMPL(                    \

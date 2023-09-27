@@ -20,9 +20,9 @@
 #include <boost/range/begin.hpp>
 #include <boost/range/end.hpp>
 
-#include <boost/utility/enable_if.hpp>
+#include <boost/core/enable_if.hpp>
 #include <boost/type_traits/is_same.hpp>
-#include <boost/mpl/identity.hpp>
+#include <boost/type_traits/type_identity.hpp> // for boost::type_identity
 
 namespace boost { namespace algorithm {
 
@@ -127,7 +127,7 @@ namespace boost { namespace algorithm {
 /// \param p     A binary predicate that returns true if two elements are ordered.
 ///
     template <typename R, typename Pred>
-    BOOST_CXX14_CONSTEXPR typename boost::lazy_disable_if_c< boost::is_same<R, Pred>::value, boost::mpl::identity<bool> >::type
+    BOOST_CXX14_CONSTEXPR typename boost::lazy_disable_if_c< boost::is_same<R, Pred>::value, boost::type_identity<bool> >::type
     is_sorted ( const R &range, Pred p )
     {
         return boost::algorithm::is_sorted ( boost::begin ( range ), boost::end ( range ), p );

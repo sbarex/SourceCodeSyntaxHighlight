@@ -19,6 +19,11 @@
 #include <boost/fusion/view/repetitive_view/detail/next_impl.hpp>
 #include <boost/fusion/view/repetitive_view/detail/value_of_impl.hpp>
 
+#ifdef _MSC_VER
+#  pragma warning(push)
+#  pragma warning(disable: 4512) // assignment operator could not be generated.
+#endif
+
 namespace boost { namespace fusion
 {
     struct repetitive_view_iterator_tag;
@@ -46,11 +51,12 @@ namespace boost { namespace fusion
 
         Sequence& seq;
         pos_type pos;
-
-        // silence MSVC warning C4512: assignment operator could not be generated
-        BOOST_DELETED_FUNCTION(repetitive_view_iterator& operator= (repetitive_view_iterator const&))
     };
 }}
+
+#ifdef _MSC_VER
+#  pragma warning(pop)
+#endif
 
 #ifdef BOOST_FUSION_WORKAROUND_FOR_LWG_2408
 namespace std

@@ -30,7 +30,7 @@
 #include <boost/exception/info.hpp>
 #include <boost/throw_exception.hpp>
 
-#include <boost/utility/enable_if.hpp>
+#include <boost/core/enable_if.hpp>
 #include <boost/type_traits/is_integral.hpp>
 
 
@@ -48,9 +48,9 @@ namespace boost { namespace algorithm {
     \brief  Thrown when the input sequence unexpectedly ends
 
 */
-struct hex_decode_error : virtual boost::exception, virtual std::exception {};
-struct not_enough_input : virtual hex_decode_error {};
-struct non_hex_input    : virtual hex_decode_error {};
+struct BOOST_SYMBOL_VISIBLE hex_decode_error : virtual boost::exception, virtual std::exception {};
+struct BOOST_SYMBOL_VISIBLE not_enough_input : virtual hex_decode_error {};
+struct BOOST_SYMBOL_VISIBLE non_hex_input    : virtual hex_decode_error {};
 typedef boost::error_info<struct bad_char_,char> bad_char;
 
 namespace detail {

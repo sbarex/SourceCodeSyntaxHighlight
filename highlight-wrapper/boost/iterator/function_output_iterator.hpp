@@ -12,13 +12,53 @@
 #define BOOST_ITERATOR_FUNCTION_OUTPUT_ITERATOR_HPP
 
 #include <iterator>
+#include <boost/config.hpp>
+#include <boost/core/enable_if.hpp>
+#include <boost/type_traits/is_same.hpp>
+#include <boost/type_traits/remove_cv.hpp>
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
+#include <boost/type_traits/remove_reference.hpp>
+#endif
 
 namespace boost {
 namespace iterators {
 
   template <class UnaryFunction>
   class function_output_iterator {
+  private:
     typedef function_output_iterator self;
+
+    class output_proxy {
+    public:
+      explicit output_proxy(UnaryFunction& f) BOOST_NOEXCEPT : m_f(f) { }
+
+#ifdef BOOST_NO_CXX11_RVALUE_REFERENCES
+      template <class T>
+      typename boost::disable_if_c<
+        boost::is_same< typename boost::remove_cv< T >::type, output_proxy >::value,
+        output_proxy&
+      >::type operator=(const T& value) {
+        m_f(value);
+        return *this;
+      }
+#else
+      template <class T>
+      typename boost::disable_if_c<
+        boost::is_same< typename boost::remove_cv< typename boost::remove_reference< T >::type >::type, output_proxy >::value,
+        output_proxy&
+      >::type operator=(T&& value) {
+        m_f(static_cast< T&& >(value));
+        return *this;
+      }
+#endif
+
+      BOOST_DEFAULTED_FUNCTION(output_proxy(output_proxy const& that), BOOST_NOEXCEPT : m_f(that.m_f) {})
+      BOOST_DELETED_FUNCTION(output_proxy& operator=(output_proxy const&))
+
+    private:
+      UnaryFunction& m_f;
+    };
+
   public:
     typedef std::output_iterator_tag iterator_category;
     typedef void                value_type;
@@ -31,17 +71,10 @@ namespace iterators {
     explicit function_output_iterator(const UnaryFunction& f)
       : m_f(f) {}
 
-    struct output_proxy {
-      output_proxy(UnaryFunction& f) : m_f(f) { }
-      template <class T> output_proxy& operator=(const T& value) {
-        m_f(value);
-        return *this;
-      }
-      UnaryFunction& m_f;
-    };
     output_proxy operator*() { return output_proxy(m_f); }
     self& operator++() { return *this; }
     self& operator++(int) { return *this; }
+
   private:
     UnaryFunction m_f;
   };

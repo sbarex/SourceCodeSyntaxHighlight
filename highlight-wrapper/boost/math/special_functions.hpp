@@ -48,12 +48,8 @@
 #include <boost/math/special_functions/hypergeometric_1F0.hpp>
 #include <boost/math/special_functions/hypergeometric_0F1.hpp>
 #include <boost/math/special_functions/hypergeometric_2F0.hpp>
-#if !defined(BOOST_NO_CXX11_AUTO_DECLARATIONS) && !defined(BOOST_NO_CXX11_LAMBDAS) && !defined(BOOST_NO_CXX11_UNIFIED_INITIALIZATION_SYNTAX) && !defined(BOOST_NO_CXX11_HDR_TUPLE)
 #include <boost/math/special_functions/hypergeometric_1F1.hpp>
-#if !defined(BOOST_NO_CXX11_HDR_INITIALIZER_LIST) && !defined(BOOST_NO_CXX11_HDR_CHRONO)
 #include <boost/math/special_functions/hypergeometric_pFq.hpp>
-#endif
-#endif
 #include <boost/math/special_functions/jacobi_elliptic.hpp>
 #include <boost/math/special_functions/laguerre.hpp>
 #include <boost/math/special_functions/lanczos.hpp>
@@ -81,15 +77,9 @@
 #include <boost/math/special_functions/ulp.hpp>
 #include <boost/math/special_functions/relative_difference.hpp>
 #include <boost/math/special_functions/lambert_w.hpp>
-
-#ifndef BOOST_NO_CXX11_HDR_TYPE_TRAITS
 #include <boost/math/special_functions/gegenbauer.hpp>
-#endif
-#ifndef BOOST_NO_CXX11_STATIC_ASSERT
 #include <boost/math/special_functions/jacobi.hpp>
-#endif
-#ifndef BOOST_NO_CXX11_AUTO_DECLARATIONS
+#ifndef BOOST_NO_EXCEPTIONS
 #include <boost/math/special_functions/legendre_stieltjes.hpp>
 #endif
-
 #endif // BOOST_MATH_SPECIAL_FUNCTIONS_HPP

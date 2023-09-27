@@ -12,6 +12,7 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 //
 
+#include <boost/bind/detail/requires_cxx11.hpp>
 #include <boost/config.hpp>
 #include <boost/config/workaround.hpp>
 #include <utility>
@@ -22,7 +23,7 @@ namespace boost
 namespace _bi
 {
 
-#if !defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES) && !defined(BOOST_NO_CXX11_RVALUE_REFERENCES) && !defined(BOOST_NO_CXX11_DECLTYPE)
+#if !defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES) && !defined(BOOST_NO_CXX11_RVALUE_REFERENCES) && !defined(BOOST_NO_CXX11_DECLTYPE) && !(defined(BOOST_GCC) && BOOST_GCC < 40600)
 
 template<class T> struct protect_make_void
 {

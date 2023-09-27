@@ -11,12 +11,11 @@
 #include <vector>
 #include <utility> // for std::move
 #include <algorithm> // for std::is_sorted
-#include <boost/lexical_cast.hpp>
+#include <string>
 #include <boost/math/special_functions/fpclassify.hpp>
-#include <boost/core/demangle.hpp>
-#include <boost/assert.hpp>
+#include <boost/math/tools/assert.hpp>
 
-namespace boost{ namespace math{ namespace detail{
+namespace boost{ namespace math{ namespace interpolators { namespace detail{
 
 template<class Real>
 class barycentric_rational_imp
@@ -72,13 +71,13 @@ barycentric_rational_imp<Real>::barycentric_rational_imp(InputIterator1 start_x,
         // But if we're going to do a memcpy, we can do some error checking which is inexpensive relative to the copy:
         if(boost::math::isnan(*start_x))
         {
-            std::string msg = std::string("x[") + boost::lexical_cast<std::string>(i) + "] is a NAN";
+            std::string msg = std::string("x[") + std::to_string(i) + "] is a NAN";
             throw std::domain_error(msg);
         }
 
         if(boost::math::isnan(*start_y))
         {
-           std::string msg = std::string("y[") + boost::lexical_cast<std::string>(i) + "] is a NAN";
+           std::string msg = std::string("y[") + std::to_string(i) + "] is a NAN";
            throw std::domain_error(msg);
         }
 
@@ -91,9 +90,9 @@ barycentric_rational_imp<Real>::barycentric_rational_imp(InputIterator1 start_x,
 template <class Real>
 barycentric_rational_imp<Real>::barycentric_rational_imp(std::vector<Real>&& x, std::vector<Real>&& y,size_t approximation_order) : m_x(std::move(x)), m_y(std::move(y))
 {
-    BOOST_ASSERT_MSG(m_x.size() == m_y.size(), "There must be the same number of abscissas and ordinates.");
-    BOOST_ASSERT_MSG(approximation_order < m_x.size(), "Approximation order must be < data length.");
-    BOOST_ASSERT_MSG(std::is_sorted(m_x.begin(), m_x.end()), "The abscissas must be listed in increasing order x[0] < x[1] < ... < x[n-1].");
+    BOOST_MATH_ASSERT_MSG(m_x.size() == m_y.size(), "There must be the same number of abscissas and ordinates.");
+    BOOST_MATH_ASSERT_MSG(approximation_order < m_x.size(), "Approximation order must be < data length.");
+    BOOST_MATH_ASSERT_MSG(std::is_sorted(m_x.begin(), m_x.end()), "The abscissas must be listed in increasing order x[0] < x[1] < ... < x[n-1].");
     calculate_weights(approximation_order);
 }
 
@@ -105,7 +104,7 @@ void barycentric_rational_imp<Real>::calculate_weights(size_t approximation_orde
     m_w.resize(n, 0);
     for(int64_t k = 0; k < n; ++k)
     {
-        int64_t i_min = (std::max)(k - (int64_t) approximation_order, (int64_t) 0);
+        int64_t i_min = (std::max)(k - static_cast<int64_t>(approximation_order), static_cast<int64_t>(0));
         int64_t i_max = k;
         if (k >= n - (std::ptrdiff_t)approximation_order)
         {
@@ -128,10 +127,10 @@ void barycentric_rational_imp<Real>::calculate_weights(size_t approximation_orde
                 if (abs(diff) < (numeric_limits<Real>::min)())
                 {
                    std::string msg = std::string("Spacing between  x[")
-                      + boost::lexical_cast<std::string>(k) + std::string("] and x[")
-                      + boost::lexical_cast<std::string>(i) + std::string("] is ")
-                      + boost::lexical_cast<std::string>(diff) + std::string(", which is smaller than the epsilon of ")
-                      + boost::core::demangle(typeid(Real).name());
+                      + std::to_string(k) + std::string("] and x[")
+                      + std::to_string(i) + std::string("] is ")
+                      + std::string("smaller than the epsilon of ")
+                      + std::string(typeid(Real).name());
                     throw std::logic_error(msg);
                 }
                 inv_product *= diff;
@@ -211,5 +210,5 @@ Real barycentric_rational_imp<Real>::prime(Real x) const
 
     return numerator/denominator;
 }
-}}}
+}}}}
 #endif

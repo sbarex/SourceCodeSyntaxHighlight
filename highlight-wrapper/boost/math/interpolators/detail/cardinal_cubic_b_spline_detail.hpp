@@ -60,7 +60,7 @@ Real b3_spline(Real x)
         Real y = 2 - absx;
         return boost::math::constants::sixth<Real>()*y*y*y;
     }
-    return (Real) 0;
+    return static_cast<Real>(0);
 }
 
 template<class Real>
@@ -79,7 +79,7 @@ Real b3_spline_prime(Real x)
     {
         return -boost::math::constants::half<Real>()*(2 - x)*(2 - x);
     }
-    return (Real) 0;
+    return static_cast<Real>(0);
 }
 
 template<class Real>
@@ -98,7 +98,7 @@ Real b3_spline_double_prime(Real x)
     {
         return (2 - x);
     }
-    return (Real) 0;
+    return static_cast<Real>(0);
 }
 
 
@@ -159,8 +159,8 @@ cardinal_cubic_b_spline_imp<Real>::cardinal_cubic_b_spline_imp(BidiIterator f, B
     if (boost::math::isnan(b1))
     {
         size_t n = length - 1;
-        Real t0 = 4*(f[n-3] + third<Real>()*f[n - 1]);
-        Real t1 = -(25*third<Real>()*f[n - 4] + f[n])/4  - 3*f[n - 2];
+        Real t0 = -4*(f[n - 1] + third<Real>()*f[n - 3]);
+        Real t1 = (25*third<Real>()*f[n] + f[n - 4])/4  + 3*f[n - 2];
 
         b1 = m_h_inv*(t0 + t1);
     }
@@ -192,7 +192,7 @@ cardinal_cubic_b_spline_imp<Real>::cardinal_cubic_b_spline_imp(BidiIterator f, B
     // There are, in fact 5 diagonals, but they only differ from zero on the first and last row,
     // so we can patch up the tridiagonal row reduction algorithm to deal with two special rows.
     // See Kress, equations 8.41
-    // The the "tridiagonal" matrix is:
+    // The "tridiagonal" matrix is:
     // 1  0 -1
     // 1  4  1
     //    1  4  1
@@ -225,7 +225,7 @@ cardinal_cubic_b_spline_imp<Real>::cardinal_cubic_b_spline_imp(BidiIterator f, B
     // mapsto
     // 1 0 -1 | r0
     // 0 1 1/2| (r1 - r0)/4
-    super_diagonal[1] = 0.5;
+    super_diagonal[1] = static_cast<Real>(0.5);
     rhs[1] = (rhs[1] - rhs[0])/4;
 
     // Now do a tridiagonal row reduction the standard way, until just before the last row:
@@ -274,8 +274,8 @@ Real cardinal_cubic_b_spline_imp<Real>::operator()(Real x) const
     using std::ceil;
     using std::floor;
 
-    size_t k_min = (size_t) (max)(static_cast<long>(0), boost::math::ltrunc(ceil(t - 2)));
-    size_t k_max = (size_t) (max)((min)(static_cast<long>(m_beta.size() - 1), boost::math::ltrunc(floor(t + 2))), (long) 0);
+    size_t k_min = static_cast<size_t>((max)(static_cast<long>(0), boost::math::ltrunc(ceil(t - 2))));
+    size_t k_max = static_cast<size_t>((max)((min)(static_cast<long>(m_beta.size() - 1), boost::math::ltrunc(floor(t + 2))), 0l));
 
     for (size_t k = k_min; k <= k_max; ++k)
     {
@@ -296,8 +296,8 @@ Real cardinal_cubic_b_spline_imp<Real>::prime(Real x) const
     using std::ceil;
     using std::floor;
 
-    size_t k_min = (size_t) (max)(static_cast<long>(0), boost::math::ltrunc(ceil(t - 2)));
-    size_t k_max = (size_t) (min)(static_cast<long>(m_beta.size() - 1), boost::math::ltrunc(floor(t + 2)));
+    size_t k_min = static_cast<size_t>((max)(static_cast<long>(0), boost::math::ltrunc(ceil(t - 2))));
+    size_t k_max = static_cast<size_t>((min)(static_cast<long>(m_beta.size() - 1), boost::math::ltrunc(floor(t + 2))));
 
     for (size_t k = k_min; k <= k_max; ++k)
     {
@@ -317,8 +317,8 @@ Real cardinal_cubic_b_spline_imp<Real>::double_prime(Real x) const
     using std::ceil;
     using std::floor;
 
-    size_t k_min = (size_t) (max)(static_cast<long>(0), boost::math::ltrunc(ceil(t - 2)));
-    size_t k_max = (size_t) (min)(static_cast<long>(m_beta.size() - 1), boost::math::ltrunc(floor(t + 2)));
+    size_t k_min = static_cast<size_t>((max)(static_cast<long>(0), boost::math::ltrunc(ceil(t - 2))));
+    size_t k_max = static_cast<size_t>((min)(static_cast<long>(m_beta.size() - 1), boost::math::ltrunc(floor(t + 2))));
 
     for (size_t k = k_min; k <= k_max; ++k)
     {

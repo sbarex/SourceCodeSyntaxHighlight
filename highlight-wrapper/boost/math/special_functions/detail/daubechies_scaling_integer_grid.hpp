@@ -9,8 +9,8 @@
 #ifndef BOOST_MATH_DAUBECHIES_SCALING_INTEGER_GRID_HPP
 #define BOOST_MATH_DAUBECHIES_SCALING_INTEGER_GRID_HPP
 #include <array>
-#include <float.h>
-#include <boost/config.hpp>
+#include <cfloat>
+#include <boost/math/tools/config.hpp>
 /*
 In order to keep the character count as small as possible and speed up
 compiler parsing times, we define a macro C_ which appends an appropriate
@@ -22,7 +22,7 @@ The suffix is as follows:
 * Nothing otherwise.
 */
 
-#ifdef BOOST_HAS_FLOAT128
+#ifdef BOOST_MATH_USE_FLOAT128
 #  define C_(x) static_cast<Real>(x##Q)
 #elif (LDBL_MANT_DIG > DBL_MANT_DIG)
 #  define C_(x) static_cast<Real>(x##L)

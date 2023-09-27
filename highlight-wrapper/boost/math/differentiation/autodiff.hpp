@@ -113,9 +113,9 @@ struct type_at {
 
 template <typename RealType, size_t Order, size_t Depth>
 struct type_at<fvar<RealType, Order>, Depth> {
-  using type = typename conditional<Depth == 0,
-                                    fvar<RealType, Order>,
-                                    typename type_at<RealType, Depth - 1>::type>::type;
+  using type = typename std::conditional<Depth == 0,
+                                         fvar<RealType, Order>,
+                                         typename type_at<RealType, Depth - 1>::type>::type;
 };
 
 template <typename RealType, size_t Depth>
@@ -125,6 +125,7 @@ using get_type_at = typename type_at<RealType, Depth>::type;
 // https://www.boost.org/libs/math/doc/html/math_toolkit/real_concepts.html
 template <typename RealType, size_t Order>
 class fvar {
+ protected:
   std::array<RealType, Order + 1> v;
 
  public:
@@ -1490,7 +1491,7 @@ fvar<RealType, Order> sqrt(fvar<RealType, Order> const& cr) {
   BOOST_IF_CONSTEXPR (order == 0)
     return fvar<RealType, Order>(*derivatives);
   else {
-    root_type numerator = 0.5;
+    root_type numerator = root_type(0.5);
     root_type powers = 1;
 #ifndef BOOST_NO_CXX17_IF_CONSTEXPR
     derivatives[1] = numerator / *derivatives;
@@ -2027,8 +2028,8 @@ struct promote_args_2<RealType0, detail::autodiff_fvar_type<RealType1, Order1>> 
 };
 
 template <typename destination_t, typename RealType, std::size_t Order>
-inline BOOST_MATH_CONSTEXPR destination_t real_cast(detail::autodiff_fvar_type<RealType, Order> const& from_v)
-    BOOST_NOEXCEPT_IF(BOOST_MATH_IS_FLOAT(destination_t) && BOOST_MATH_IS_FLOAT(RealType)) {
+inline constexpr destination_t real_cast(detail::autodiff_fvar_type<RealType, Order> const& from_v)
+    noexcept(BOOST_MATH_IS_FLOAT(destination_t) && BOOST_MATH_IS_FLOAT(RealType)) {
   return real_cast<destination_t>(static_cast<detail::autodiff_root_type<RealType, Order>>(from_v));
 }
 
@@ -2040,13 +2041,13 @@ template <class Policy, std::size_t Order>
 using fvar_t = differentiation::detail::fvar<Policy, Order>;
 template <class Policy, std::size_t Order>
 struct evaluation<fvar_t<float, Order>, Policy> {
-  using type = fvar_t<typename conditional<Policy::promote_float_type::value, double, float>::type, Order>;
+  using type = fvar_t<typename std::conditional<Policy::promote_float_type::value, double, float>::type, Order>;
 };
 
 template <class Policy, std::size_t Order>
 struct evaluation<fvar_t<double, Order>, Policy> {
   using type =
-      fvar_t<typename conditional<Policy::promote_double_type::value, long double, double>::type, Order>;
+      fvar_t<typename std::conditional<Policy::promote_double_type::value, long double, double>::type, Order>;
 };
 
 }  // namespace policies

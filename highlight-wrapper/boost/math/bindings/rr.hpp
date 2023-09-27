@@ -6,19 +6,19 @@
 #ifndef BOOST_MATH_NTL_RR_HPP
 #define BOOST_MATH_NTL_RR_HPP
 
-#include <boost/config.hpp>
-#include <boost/limits.hpp>
 #include <boost/math/tools/real_cast.hpp>
 #include <boost/math/tools/precision.hpp>
+#include <boost/math/tools/config.hpp>
 #include <boost/math/constants/constants.hpp>
 #include <boost/math/tools/roots.hpp>
 #include <boost/math/special_functions/fpclassify.hpp>
 #include <boost/math/bindings/detail/big_digamma.hpp>
 #include <boost/math/bindings/detail/big_lanczos.hpp>
-
+#include <stdexcept>
 #include <ostream>
 #include <istream>
-#include <boost/config/no_tr1/cmath.hpp>
+#include <cmath>
+#include <limits>
 #include <NTL/RR.h>
 
 namespace boost{ namespace math{
@@ -41,12 +41,10 @@ public:
    {
       m_value = c;
    }
-#ifndef BOOST_NO_INTRINSIC_WCHAR_T
    RR(wchar_t c)
    {
       m_value = c;
    }
-#endif
    RR(unsigned char c)
    {
       m_value = c;
@@ -79,16 +77,14 @@ public:
    {
       assign_large_int(c);
    }
-#ifdef BOOST_HAS_LONG_LONG
-   RR(boost::ulong_long_type c)
+   RR(unsigned long long c)
    {
       assign_large_int(c);
    }
-   RR(boost::long_long_type c)
+   RR(long long c)
    {
       assign_large_int(c);
    }
-#endif
    RR(float c)
    {
       m_value = c;
@@ -106,19 +102,15 @@ public:
    RR& operator=(char c) { m_value = c; return *this; }
    RR& operator=(unsigned char c) { m_value = c; return *this; }
    RR& operator=(signed char c) { m_value = c; return *this; }
-#ifndef BOOST_NO_INTRINSIC_WCHAR_T
    RR& operator=(wchar_t c) { m_value = c; return *this; }
-#endif
    RR& operator=(short c) { m_value = c; return *this; }
    RR& operator=(unsigned short c) { m_value = c; return *this; }
    RR& operator=(int c) { assign_large_int(c); return *this; }
    RR& operator=(unsigned int c) { assign_large_int(c); return *this; }
    RR& operator=(long c) { assign_large_int(c); return *this; }
    RR& operator=(unsigned long c) { assign_large_int(c); return *this; }
-#ifdef BOOST_HAS_LONG_LONG
-   RR& operator=(boost::long_long_type c) { assign_large_int(c); return *this; }
-   RR& operator=(boost::ulong_long_type c) { assign_large_int(c); return *this; }
-#endif
+   RR& operator=(long long c) { assign_large_int(c); return *this; }
+   RR& operator=(unsigned long long c) { assign_large_int(c); return *this; }
    RR& operator=(float c) { m_value = c; return *this; }
    RR& operator=(double c) { m_value = c; return *this; }
    RR& operator=(long double c) { assign_large_real(c); return *this; }
@@ -206,7 +198,7 @@ private:
    template <class V>
    void assign_large_int(V a)
    {
-#ifdef BOOST_MSVC
+#ifdef _MSC_VER
 #pragma warning(push)
 #pragma warning(disable:4146)
 #endif
@@ -214,7 +206,7 @@ private:
       int exp = 0;
       NTL::RR t;
       bool neg = a < V(0) ? true : false;
-      if(neg) 
+      if(neg)
          a = -a;
       while(a)
       {
@@ -225,7 +217,7 @@ private:
       }
       if(neg)
          m_value = -m_value;
-#ifdef BOOST_MSVC
+#ifdef _MSC_VER
 #pragma warning(pop)
 #endif
    }
@@ -395,8 +387,8 @@ inline RR tanh(RR a)
          *exp -= 1;
          r.value().e += 1;
       }
-      BOOST_ASSERT(r < 1);
-      BOOST_ASSERT(r >= 0.5);
+      BOOST_MATH_ASSERT(r < 1);
+      BOOST_MATH_ASSERT(r >= 0.5);
       return r;
    }
    inline RR ldexp(RR r, int exp)
@@ -475,7 +467,7 @@ struct ntl_lanczos
          return lanczos61UDT::lanczos_sum_near_2(z);
    }
    static ntl::RR g()
-   { 
+   {
       unsigned long p = ntl::RR::precision();
       if(p <= 72)
          return lanczos13UDT::g();
@@ -699,8 +691,8 @@ namespace ntl{
       double r;
       conv(r, z.value());
       return boost::math::tools::halley_iterate(
-         asin_root(z), 
-         RR(std::asin(r)), 
+         asin_root(z),
+         RR(std::asin(r)),
          RR(-boost::math::constants::pi<RR>()/2),
          RR(boost::math::constants::pi<RR>()/2),
          NTL::RR::precision());
@@ -727,8 +719,8 @@ namespace ntl{
       double r;
       conv(r, z.value());
       return boost::math::tools::halley_iterate(
-         acos_root(z), 
-         RR(std::acos(r)), 
+         acos_root(z),
+         RR(std::acos(r)),
          RR(-boost::math::constants::pi<RR>()/2),
          RR(boost::math::constants::pi<RR>()/2),
          NTL::RR::precision());
@@ -756,8 +748,8 @@ namespace ntl{
       double r;
       conv(r, z.value());
       return boost::math::tools::halley_iterate(
-         atan_root(z), 
-         RR(std::atan(r)), 
+         atan_root(z),
+         RR(std::atan(r)),
          -boost::math::constants::pi<RR>()/2,
          boost::math::constants::pi<RR>()/2,
          NTL::RR::precision());
@@ -838,7 +830,7 @@ namespace ntl{
 namespace detail{
 
 template <class Policy>
-ntl::RR digamma_imp(ntl::RR x, const boost::integral_constant<int, 0>* , const Policy& pol)
+ntl::RR digamma_imp(ntl::RR x, const std::integral_constant<int, 0>* , const Policy& pol)
 {
    //
    // This handles reflection of negative arguments, and all our
@@ -866,7 +858,7 @@ ntl::RR digamma_imp(ntl::RR x, const boost::integral_constant<int, 0>* , const P
       //
       if(remainder == 0)
       {
-         return policies::raise_pole_error<ntl::RR>("boost::math::digamma<%1%>(%1%)", 0, (1-x), pol);
+         return policies::raise_pole_error<ntl::RR>("boost::math::digamma<%1%>(%1%)", nullptr, (1-x), pol);
       }
       result = constants::pi<ntl::RR>() / tan(constants::pi<ntl::RR>() * remainder);
    }

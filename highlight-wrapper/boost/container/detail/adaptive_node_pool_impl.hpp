@@ -33,6 +33,7 @@
 #include <boost/container/detail/placement_new.hpp>
 #include <boost/container/detail/mpl.hpp>
 #include <boost/move/detail/to_raw_pointer.hpp>
+#include <boost/move/detail/force_ptr.hpp>
 #include <boost/container/detail/type_traits.hpp>
 // intrusive
 #include <boost/intrusive/pointer_traits.hpp>
@@ -41,7 +42,6 @@
 #include <boost/intrusive/slist.hpp>
 // other
 #include <boost/assert.hpp>
-#include <boost/core/no_exceptions_support.hpp>
 #include <cstddef>
 
 namespace boost {
@@ -535,12 +535,12 @@ class private_adaptive_node_pool_impl_common
                //Check that header offsets are correct
                hdr_offset_holder *hdr_off_holder = this->priv_first_subblock_from_block(const_cast<block_info_t *>(&*it), num_subblocks, real_block_alignment);
                for (size_type i = 0, max = num_subblocks; i < max; ++i) {
-                  const size_type offset = reinterpret_cast<char*>(const_cast<block_info_t *>(&*it)) - reinterpret_cast<char*>(hdr_off_holder);
+                  const size_type offset = size_type(reinterpret_cast<char*>(const_cast<block_info_t *>(&*it)) - reinterpret_cast<char*>(hdr_off_holder));
                   (void)offset;
                   BOOST_ASSERT(hdr_off_holder->hdr_offset == offset);
                   BOOST_ASSERT(0 == (reinterpret_cast<std::size_t>(hdr_off_holder) & (real_block_alignment - 1)));
                   BOOST_ASSERT(0 == (hdr_off_holder->hdr_offset & (real_block_alignment - 1)));
-                  hdr_off_holder = reinterpret_cast<hdr_offset_holder *>(reinterpret_cast<char*>(hdr_off_holder) + real_block_alignment);
+                  hdr_off_holder = move_detail::force_ptr<hdr_offset_holder *>(reinterpret_cast<char*>(hdr_off_holder) + real_block_alignment);
                }
             }
          }
@@ -563,7 +563,7 @@ class private_adaptive_node_pool_impl_common
 
    hdr_offset_holder *priv_first_subblock_from_block(block_info_t *block, const size_type num_subblocks, const size_type real_block_alignment, AlignOnlyFalse) const
    {
-      hdr_offset_holder *const hdr_off_holder = reinterpret_cast<hdr_offset_holder*>
+      hdr_offset_holder *const hdr_off_holder = move_detail::force_ptr<hdr_offset_holder*>
             (reinterpret_cast<char*>(block) - (num_subblocks-1)*real_block_alignment);
       BOOST_ASSERT(hdr_off_holder->hdr_offset == size_type(reinterpret_cast<char*>(block) - reinterpret_cast<char*>(hdr_off_holder)));
       BOOST_ASSERT(0 == ((std::size_t)hdr_off_holder & (real_block_alignment - 1)));
@@ -574,7 +574,7 @@ class private_adaptive_node_pool_impl_common
    hdr_offset_holder *priv_first_subblock_from_block(block_info_t *block, const size_type num_subblocks, const size_type real_block_alignment, AlignOnlyTrue) const
    {
       (void)num_subblocks; (void)real_block_alignment;
-      return reinterpret_cast<hdr_offset_holder*>(block);
+      return move_detail::force_ptr<hdr_offset_holder*>(block);
    }
 
    void priv_deallocate_free_blocks_impl( const size_type max_free_blocks, const size_type real_num_node
@@ -759,7 +759,7 @@ class private_adaptive_node_pool_impl_common
                            , const size_type real_num_node, const size_type num_subblocks)
    {
       size_type i = 0;
-      BOOST_TRY{
+      BOOST_CONTAINER_TRY{
          this->priv_invariants(real_num_node, num_subblocks, real_block_alignment);
          while(i != n){
             //If there are no free nodes we allocate all needed blocks
@@ -799,12 +799,12 @@ class private_adaptive_node_pool_impl_common
             i += num_elems;
          }
       }
-      BOOST_CATCH(...){
+      BOOST_CONTAINER_CATCH(...){
          this->priv_deallocate_nodes(chain, max_free_blocks, real_num_node, num_subblocks, real_block_alignment);
          this->priv_invariants(real_num_node, num_subblocks, real_block_alignment);
-         BOOST_RETHROW
+         BOOST_CONTAINER_RETHROW
       }
-      BOOST_CATCH_END
+      BOOST_CONTAINER_CATCH_END
       this->priv_invariants(real_num_node, num_subblocks, real_block_alignment);
    }
 
@@ -903,7 +903,7 @@ class private_adaptive_node_pool_impl_common
          reinterpret_cast<hdr_offset_holder*>((std::size_t)node & size_type(~(real_block_alignment - 1)));
       BOOST_ASSERT(0 == ((std::size_t)hdr_off_holder & (real_block_alignment - 1)));
       BOOST_ASSERT(0 == (hdr_off_holder->hdr_offset & (real_block_alignment - 1)));
-      block_info_t *block = reinterpret_cast<block_info_t *>
+      block_info_t *block = move_detail::force_ptr<block_info_t *>
          (reinterpret_cast<char*>(hdr_off_holder) + hdr_off_holder->hdr_offset);
       BOOST_ASSERT(block->hdr_offset == 0);
       return block;

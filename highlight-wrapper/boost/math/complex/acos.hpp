@@ -11,7 +11,7 @@
 #ifndef BOOST_MATH_LOG1P_INCLUDED
 #  include <boost/math/special_functions/log1p.hpp>
 #endif
-#include <boost/assert.hpp>
+#include <boost/math/tools/assert.hpp>
 
 #ifdef BOOST_NO_STDC_NAMESPACE
 namespace std{ using ::sqrt; using ::fabs; using ::acos; using ::asin; using ::atan; using ::atan2; }
@@ -20,7 +20,7 @@ namespace std{ using ::sqrt; using ::fabs; using ::acos; using ::asin; using ::a
 namespace boost{ namespace math{
 
 template<class T> 
-std::complex<T> acos(const std::complex<T>& z)
+[[deprecated("Replaced by C++11")]] std::complex<T> acos(const std::complex<T>& z)
 {
    //
    // This implementation is a transcription of the pseudo-code in:
@@ -44,7 +44,7 @@ std::complex<T> acos(const std::complex<T>& z)
    static const T log_two = boost::math::constants::ln_two<T>();
    static const T quarter_pi = s_pi / 4;
    
-#ifdef BOOST_MSVC
+#ifdef _MSC_VER
 #pragma warning(push)
 #pragma warning(disable:4127)
 #endif
@@ -202,7 +202,7 @@ std::complex<T> acos(const std::complex<T>& z)
             // but we have no way to test that here, so for now just assert
             // on the assumption:
             //
-            BOOST_ASSERT(x == 1);
+            BOOST_MATH_ASSERT(x == 1);
             real = std::sqrt(y);
             imag = std::sqrt(y);
          }
@@ -235,7 +235,7 @@ std::complex<T> acos(const std::complex<T>& z)
       imag = (boost::math::changesign)(imag);
 
    return std::complex<T>(real, imag);
-#ifdef BOOST_MSVC
+#ifdef _MSC_VER
 #pragma warning(pop)
 #endif
 }

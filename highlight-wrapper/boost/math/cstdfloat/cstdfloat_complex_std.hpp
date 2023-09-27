@@ -97,7 +97,7 @@
 
       template<typename X>
       explicit complex(const complex<X>& x) : re(x.real()),
-                                     im(x.imag()) { }
+                                              im(x.imag()) { }
 
       const value_type& real() const { return re; }
       const value_type& imag() const { return im; }
@@ -105,13 +105,13 @@
       value_type& real() { return re; }
       value_type& imag() { return im; }
       #else
-      BOOST_CONSTEXPR complex(const value_type& r = value_type(),
-                              const value_type& i = value_type()) : re(r),
-                                                                    im(i) { }
+      constexpr complex(const value_type& r = value_type(),
+                        const value_type& i = value_type()) : re(r),
+                                                              im(i) { }
 
       template<typename X>
-      explicit BOOST_CONSTEXPR complex(const complex<X>& x) : re(x.real()),
-                                                     im(x.imag()) { }
+      explicit constexpr complex(const complex<X>& x) : re(x.real()),
+                                                        im(x.imag()) { }
 
       value_type real() const { return re; }
       value_type imag() const { return im; }
@@ -230,10 +230,10 @@
     inline complex<BOOST_CSTDFLOAT_EXTENDED_COMPLEX_FLOAT_TYPE> proj (const complex<BOOST_CSTDFLOAT_EXTENDED_COMPLEX_FLOAT_TYPE>& x)
     {
       const BOOST_CSTDFLOAT_EXTENDED_COMPLEX_FLOAT_TYPE m = (std::numeric_limits<BOOST_CSTDFLOAT_EXTENDED_COMPLEX_FLOAT_TYPE>::max)();
-      if ((x.real() > m)
-        || (x.real() < -m)
-        || (x.imag() > m)
-        || (x.imag() < -m))
+      if (   (x.real() >  m)
+          || (x.real() < -m)
+          || (x.imag() >  m)
+          || (x.imag() < -m))
       {
         // We have an infinity, return a normalized infinity, respecting the sign of the imaginary part:
          return complex<BOOST_CSTDFLOAT_EXTENDED_COMPLEX_FLOAT_TYPE>(std::numeric_limits<BOOST_CSTDFLOAT_EXTENDED_COMPLEX_FLOAT_TYPE>::infinity(), x.imag() < 0 ? -0 : 0);
@@ -403,7 +403,62 @@
       using std::atan2;
       using std::log;
 
-      return complex<BOOST_CSTDFLOAT_EXTENDED_COMPLEX_FLOAT_TYPE>(log(std::norm(x)) / 2, atan2(x.imag(), x.real()));
+      const bool re_isneg  = (x.real() < 0);
+      const bool re_isnan  = (x.real() != x.real());
+      const bool re_isinf  = ((!re_isneg) ? bool(+x.real() > (std::numeric_limits<BOOST_CSTDFLOAT_EXTENDED_COMPLEX_FLOAT_TYPE>::max)())
+                                          : bool(-x.real() > (std::numeric_limits<BOOST_CSTDFLOAT_EXTENDED_COMPLEX_FLOAT_TYPE>::max)()));
+
+      const bool im_isneg  = (x.imag() < 0);
+      const bool im_isnan  = (x.imag() != x.imag());
+      const bool im_isinf  = ((!im_isneg) ? bool(+x.imag() > (std::numeric_limits<BOOST_CSTDFLOAT_EXTENDED_COMPLEX_FLOAT_TYPE>::max)())
+                                          : bool(-x.imag() > (std::numeric_limits<BOOST_CSTDFLOAT_EXTENDED_COMPLEX_FLOAT_TYPE>::max)()));
+
+      if(re_isnan || im_isnan) { return x; }
+
+      if(re_isinf || im_isinf)
+      {
+        return complex<BOOST_CSTDFLOAT_EXTENDED_COMPLEX_FLOAT_TYPE>(std::numeric_limits<BOOST_CSTDFLOAT_EXTENDED_COMPLEX_FLOAT_TYPE>::infinity(),
+                                                                    BOOST_CSTDFLOAT_EXTENDED_COMPLEX_FLOAT_TYPE(0.0));
+      }
+
+      const bool re_iszero = ((re_isneg || (x.real() > 0)) == false);
+
+      if(re_iszero)
+      {
+        const bool im_iszero = ((im_isneg || (x.imag() > 0)) == false);
+
+        if(im_iszero)
+        {
+          return std::complex<BOOST_CSTDFLOAT_EXTENDED_COMPLEX_FLOAT_TYPE>
+                 (
+                   -std::numeric_limits<BOOST_CSTDFLOAT_EXTENDED_COMPLEX_FLOAT_TYPE>::infinity(),
+                   BOOST_CSTDFLOAT_EXTENDED_COMPLEX_FLOAT_TYPE(0.0)
+                 );
+        }
+        else
+        {
+          if(im_isneg == false)
+          {
+            return std::complex<BOOST_CSTDFLOAT_EXTENDED_COMPLEX_FLOAT_TYPE>
+                   (
+                     log(x.imag()),
+                     boost::math::constants::half_pi<BOOST_CSTDFLOAT_EXTENDED_COMPLEX_FLOAT_TYPE>()
+                   );
+          }
+          else
+          {
+            return std::complex<BOOST_CSTDFLOAT_EXTENDED_COMPLEX_FLOAT_TYPE>
+                   (
+                     log(-x.imag()),
+                     -boost::math::constants::half_pi<BOOST_CSTDFLOAT_EXTENDED_COMPLEX_FLOAT_TYPE>()
+                   );
+          }
+        }
+      }
+      else
+      {
+        return complex<BOOST_CSTDFLOAT_EXTENDED_COMPLEX_FLOAT_TYPE>(log(std::norm(x)) / 2, atan2(x.imag(), x.real()));
+      }
     }
 
     inline complex<BOOST_CSTDFLOAT_EXTENDED_COMPLEX_FLOAT_TYPE> log10(const complex<BOOST_CSTDFLOAT_EXTENDED_COMPLEX_FLOAT_TYPE>& x)
@@ -497,19 +552,135 @@
     inline complex<BOOST_CSTDFLOAT_EXTENDED_COMPLEX_FLOAT_TYPE> pow(const complex<BOOST_CSTDFLOAT_EXTENDED_COMPLEX_FLOAT_TYPE>& x,
                                                                     const BOOST_CSTDFLOAT_EXTENDED_COMPLEX_FLOAT_TYPE& a)
     {
-      return std::exp(a * std::log(x));
+      const bool x_im_isneg  = (x.imag() < 0);
+      const bool x_im_iszero = ((x_im_isneg || (x.imag() > 0)) == false);
+
+      if(x_im_iszero)
+      {
+        using std::pow;
+
+        const BOOST_CSTDFLOAT_EXTENDED_COMPLEX_FLOAT_TYPE pxa = pow(x.real(), a);
+
+        return complex<BOOST_CSTDFLOAT_EXTENDED_COMPLEX_FLOAT_TYPE>(pxa, BOOST_CSTDFLOAT_EXTENDED_COMPLEX_FLOAT_TYPE(0));
+      }
+      else
+      {
+        return std::exp(a * std::log(x));
+      }
     }
 
     inline complex<BOOST_CSTDFLOAT_EXTENDED_COMPLEX_FLOAT_TYPE> pow(const complex<BOOST_CSTDFLOAT_EXTENDED_COMPLEX_FLOAT_TYPE>& x,
                                                                     const complex<BOOST_CSTDFLOAT_EXTENDED_COMPLEX_FLOAT_TYPE>& a)
     {
-      return std::exp(a * std::log(x));
+      const bool x_im_isneg  = (x.imag() < 0);
+      const bool x_im_iszero = ((x_im_isneg || (x.imag() > 0)) == false);
+
+      if(x_im_iszero)
+      {
+        using std::pow;
+
+        return pow(x.real(), a);
+      }
+      else
+      {
+        return std::exp(a * std::log(x));
+      }
     }
 
     inline complex<BOOST_CSTDFLOAT_EXTENDED_COMPLEX_FLOAT_TYPE> pow(const BOOST_CSTDFLOAT_EXTENDED_COMPLEX_FLOAT_TYPE& x,
                                                                     const complex<BOOST_CSTDFLOAT_EXTENDED_COMPLEX_FLOAT_TYPE>& a)
     {
-      return std::exp(a * std::log(x));
+      const bool x_isneg = (x < 0);
+      const bool x_isnan = (x != x);
+      const bool x_isinf = ((!x_isneg) ? bool(+x > (std::numeric_limits<BOOST_CSTDFLOAT_EXTENDED_COMPLEX_FLOAT_TYPE>::max)())
+                                       : bool(-x > (std::numeric_limits<BOOST_CSTDFLOAT_EXTENDED_COMPLEX_FLOAT_TYPE>::max)()));
+
+      const bool a_re_isneg = (a.real() < 0);
+      const bool a_re_isnan = (a.real() != a.real());
+      const bool a_re_isinf = ((!a_re_isneg) ? bool(+a.real() > (std::numeric_limits<BOOST_CSTDFLOAT_EXTENDED_COMPLEX_FLOAT_TYPE>::max)())
+                                             : bool(-a.real() > (std::numeric_limits<BOOST_CSTDFLOAT_EXTENDED_COMPLEX_FLOAT_TYPE>::max)()));
+
+      const bool a_im_isneg = (a.imag() < 0);
+      const bool a_im_isnan = (a.imag() != a.imag());
+      const bool a_im_isinf = ((!a_im_isneg) ? bool(+a.imag() > (std::numeric_limits<BOOST_CSTDFLOAT_EXTENDED_COMPLEX_FLOAT_TYPE>::max)())
+                                             : bool(-a.imag() > (std::numeric_limits<BOOST_CSTDFLOAT_EXTENDED_COMPLEX_FLOAT_TYPE>::max)()));
+
+      const bool args_is_nan = (x_isnan || a_re_isnan || a_im_isnan);
+      const bool a_is_finite = (!(a_re_isnan || a_re_isinf || a_im_isnan || a_im_isinf));
+
+      complex<BOOST_CSTDFLOAT_EXTENDED_COMPLEX_FLOAT_TYPE> result;
+
+      if(args_is_nan)
+      {
+        result =
+          complex<BOOST_CSTDFLOAT_EXTENDED_COMPLEX_FLOAT_TYPE>
+          (
+            std::numeric_limits<BOOST_CSTDFLOAT_EXTENDED_COMPLEX_FLOAT_TYPE>::quiet_NaN(),
+            std::numeric_limits<BOOST_CSTDFLOAT_EXTENDED_COMPLEX_FLOAT_TYPE>::quiet_NaN()
+          );
+      }
+      else if(x_isinf)
+      {
+        if(a_is_finite)
+        {
+          result =
+            complex<BOOST_CSTDFLOAT_EXTENDED_COMPLEX_FLOAT_TYPE>
+            (
+              std::numeric_limits<BOOST_CSTDFLOAT_EXTENDED_COMPLEX_FLOAT_TYPE>::infinity(),
+              std::numeric_limits<BOOST_CSTDFLOAT_EXTENDED_COMPLEX_FLOAT_TYPE>::infinity()
+            );
+        }
+        else
+        {
+          result =
+            complex<BOOST_CSTDFLOAT_EXTENDED_COMPLEX_FLOAT_TYPE>
+            (
+              std::numeric_limits<BOOST_CSTDFLOAT_EXTENDED_COMPLEX_FLOAT_TYPE>::quiet_NaN(),
+              std::numeric_limits<BOOST_CSTDFLOAT_EXTENDED_COMPLEX_FLOAT_TYPE>::quiet_NaN()
+            );
+        }
+      }
+      else if(x > 0)
+      {
+        result = std::exp(a * std::log(x));
+      }
+      else if(x < 0)
+      {
+        using std::acos;
+        using std::log;
+
+        const complex<BOOST_CSTDFLOAT_EXTENDED_COMPLEX_FLOAT_TYPE>
+          cpx_lg_x
+          (
+            log(-x),
+            acos(BOOST_CSTDFLOAT_EXTENDED_COMPLEX_FLOAT_TYPE(-1))
+          );
+
+        result = std::exp(a * cpx_lg_x);
+      }
+      else
+      {
+        if(a_is_finite)
+        {
+          result =
+            complex<BOOST_CSTDFLOAT_EXTENDED_COMPLEX_FLOAT_TYPE>
+            (
+              BOOST_CSTDFLOAT_EXTENDED_COMPLEX_FLOAT_TYPE(0),
+              BOOST_CSTDFLOAT_EXTENDED_COMPLEX_FLOAT_TYPE(0)
+            );
+        }
+        else
+        {
+          result =
+            complex<BOOST_CSTDFLOAT_EXTENDED_COMPLEX_FLOAT_TYPE>
+            (
+              std::numeric_limits<BOOST_CSTDFLOAT_EXTENDED_COMPLEX_FLOAT_TYPE>::quiet_NaN(),
+              std::numeric_limits<BOOST_CSTDFLOAT_EXTENDED_COMPLEX_FLOAT_TYPE>::quiet_NaN()
+            );
+        }
+      }
+
+      return result;
     }
 
     inline complex<BOOST_CSTDFLOAT_EXTENDED_COMPLEX_FLOAT_TYPE> sinh(const complex<BOOST_CSTDFLOAT_EXTENDED_COMPLEX_FLOAT_TYPE>& x)

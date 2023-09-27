@@ -18,6 +18,7 @@
 #include <cmath>
 #include <limits>
 #include <memory>
+#include <string>
 #include <boost/math/quadrature/detail/exp_sinh_detail.hpp>
 
 namespace boost{ namespace math{ namespace quadrature {
@@ -30,9 +31,9 @@ public:
       : m_imp(std::make_shared<detail::exp_sinh_detail<Real, Policy>>(max_refinements)) {}
 
     template<class F>
-    auto integrate(const F& f, Real a, Real b, Real tol = boost::math::tools::root_epsilon<Real>(), Real* error = nullptr, Real* L1 = nullptr, std::size_t* levels = nullptr)->decltype(std::declval<F>()(std::declval<Real>()))  const;
+    auto integrate(const F& f, Real a, Real b, Real tol = boost::math::tools::root_epsilon<Real>(), Real* error = nullptr, Real* L1 = nullptr, std::size_t* levels = nullptr) const ->decltype(std::declval<F>()(std::declval<Real>()));
     template<class F>
-    auto integrate(const F& f, Real tol = boost::math::tools::root_epsilon<Real>(), Real* error = nullptr, Real* L1 = nullptr, std::size_t* levels = nullptr)->decltype(std::declval<F>()(std::declval<Real>()))  const;
+    auto integrate(const F& f, Real tol = boost::math::tools::root_epsilon<Real>(), Real* error = nullptr, Real* L1 = nullptr, std::size_t* levels = nullptr) const ->decltype(std::declval<F>()(std::declval<Real>()));
 
 private:
     std::shared_ptr<detail::exp_sinh_detail<Real, Policy>> m_imp;
@@ -40,9 +41,11 @@ private:
 
 template<class Real, class Policy>
 template<class F>
-auto exp_sinh<Real, Policy>::integrate(const F& f, Real a, Real b, Real tolerance, Real* error, Real* L1, std::size_t* levels)->decltype(std::declval<F>()(std::declval<Real>()))  const
+auto exp_sinh<Real, Policy>::integrate(const F& f, Real a, Real b, Real tolerance, Real* error, Real* L1, std::size_t* levels) const ->decltype(std::declval<F>()(std::declval<Real>()))
 {
     typedef decltype(f(a)) K;
+    static_assert(!std::is_integral<K>::value,
+                  "The return type cannot be integral, it must be either a real or complex floating point type.");
     using std::abs;
     using boost::math::constants::half;
     using boost::math::quadrature::detail::exp_sinh_detail;
@@ -58,7 +61,7 @@ auto exp_sinh<Real, Policy>::integrate(const F& f, Real a, Real b, Real toleranc
     if ((boost::math::isfinite)(a) && (b >= boost::math::tools::max_value<Real>()))
     {
         // If a = 0, don't use an additional level of indirection:
-        if (a == (Real) 0)
+        if (a == static_cast<Real>(0))
         {
             return m_imp->integrate(f, error, L1, function, tolerance, levels);
         }
@@ -83,9 +86,14 @@ auto exp_sinh<Real, Policy>::integrate(const F& f, Real a, Real b, Real toleranc
 
 template<class Real, class Policy>
 template<class F>
-auto exp_sinh<Real, Policy>::integrate(const F& f, Real tolerance, Real* error, Real* L1, std::size_t* levels)->decltype(std::declval<F>()(std::declval<Real>())) const
+auto exp_sinh<Real, Policy>::integrate(const F& f, Real tolerance, Real* error, Real* L1, std::size_t* levels) const ->decltype(std::declval<F>()(std::declval<Real>()))
 {
     static const char* function = "boost::math::quadrature::exp_sinh<%1%>::integrate";
+    using std::abs;
+    if (abs(tolerance) > 1) {
+        std::string msg = std::string(__FILE__) + ":" + std::to_string(__LINE__) + ":" + std::string(function) + ": The tolerance provided is unusually large; did you confuse it with a domain bound?";
+        throw std::domain_error(msg);
+    }
     return m_imp->integrate(f, error, L1, function, tolerance, levels);
 }
 

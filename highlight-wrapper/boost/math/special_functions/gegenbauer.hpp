@@ -6,6 +6,7 @@
 #ifndef BOOST_MATH_SPECIAL_GEGENBAUER_HPP
 #define BOOST_MATH_SPECIAL_GEGENBAUER_HPP
 
+#include <limits>
 #include <stdexcept>
 #include <type_traits>
 
@@ -16,7 +17,11 @@ Real gegenbauer(unsigned n, Real lambda, Real x)
 {
     static_assert(!std::is_integral<Real>::value, "Gegenbauer polynomials required floating point arguments.");
     if (lambda <= -1/Real(2)) {
-        throw std::domain_error("lambda > -1/2 is required.");
+#ifndef BOOST_NO_EXCEPTIONS
+       throw std::domain_error("lambda > -1/2 is required.");
+#else
+       return std::numeric_limits<Real>::quiet_NaN();
+#endif
     }
     // The only reason to do this is because of some instability that could be present for x < 0 that is not present for x > 0.
     // I haven't observed this, but then again, I haven't managed to test an exhaustive number of parameters.

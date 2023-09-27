@@ -176,8 +176,8 @@ public:
         Real x = (t-m_t0)*m_inv_h;
         // Support of B_5 is [-3, 3]. So -3 < x - j + 2 < 3, so x-1 < j < x+5.
         // TODO: Zero pad m_alpha so that only the domain check is necessary.
-        int64_t j_min = std::max(int64_t(0), int64_t(ceil(x-1)));
-        int64_t j_max = std::min(int64_t(m_alpha.size() - 1), int64_t(floor(x+5)) );
+        int64_t j_min = (std::max)(int64_t(0), int64_t(ceil(x-1)));
+        int64_t j_max = (std::min)(int64_t(m_alpha.size() - 1), int64_t(floor(x+5)) );
         Real s = 0;
         for (int64_t j = j_min; j <= j_max; ++j) {
             // TODO: Use Cox 1972 to generate all integer translates of B5 simultaneously.
@@ -196,8 +196,8 @@ public:
         }
         Real x = (t-m_t0)*m_inv_h;
         // Support of B_5 is [-3, 3]. So -3 < x - j + 2 < 3, so x-1 < j < x+5
-        int64_t j_min = std::max(int64_t(0), int64_t(ceil(x-1)));
-        int64_t j_max = std::min(int64_t(m_alpha.size() - 1), int64_t(floor(x+5)) );
+        int64_t j_min = (std::max)(int64_t(0), int64_t(ceil(x-1)));
+        int64_t j_max = (std::min)(int64_t(m_alpha.size() - 1), int64_t(floor(x+5)) );
         Real s = 0;
         for (int64_t j = j_min; j <= j_max; ++j) {
             s += m_alpha[j]*cardinal_b_spline_prime<5, Real>(x - j + 2);
@@ -216,8 +216,8 @@ public:
         }
         Real x = (t-m_t0)*m_inv_h;
         // Support of B_5 is [-3, 3]. So -3 < x - j + 2 < 3, so x-1 < j < x+5
-        int64_t j_min = std::max(int64_t(0), int64_t(ceil(x-1)));
-        int64_t j_max = std::min(int64_t(m_alpha.size() - 1), int64_t(floor(x+5)) );
+        int64_t j_min = (std::max)(int64_t(0), int64_t(ceil(x-1)));
+        int64_t j_max = (std::min)(int64_t(m_alpha.size() - 1), int64_t(floor(x+5)) );
         Real s = 0;
         for (int64_t j = j_min; j <= j_max; ++j) {
             s += m_alpha[j]*cardinal_b_spline_double_prime<5, Real>(x - j + 2);

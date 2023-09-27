@@ -55,12 +55,12 @@ namespace boost
         return true;
       }
       template <class RealType, class Policy>
-      inline bool check_dist(const char* function, const RealType& p, RealType* result, const Policy& /* pol */, const boost::true_type&)
+      inline bool check_dist(const char* function, const RealType& p, RealType* result, const Policy& /* pol */, const std::true_type&)
       {
         return check_success_fraction(function, p, result, Policy());
       }
       template <class RealType, class Policy>
-      inline bool check_dist(const char* , const RealType& , RealType* , const Policy& /* pol */, const boost::false_type&)
+      inline bool check_dist(const char* , const RealType& , RealType* , const Policy& /* pol */, const std::false_type&)
       {
          return true;
       }
@@ -126,6 +126,11 @@ namespace boost
 
     typedef bernoulli_distribution<double> bernoulli;
 
+    #ifdef __cpp_deduction_guides
+    template <class RealType>
+    bernoulli_distribution(RealType)->bernoulli_distribution<typename boost::math::tools::promote_args<RealType>::type>;
+    #endif
+
     template <class RealType, class Policy>
     inline const std::pair<RealType, RealType> range(const bernoulli_distribution<RealType, Policy>& /* dist */)
     { // Range of permissible values for random variable k = {0, 1}.
@@ -146,7 +151,7 @@ namespace boost
       return dist.success_fraction();
     } // mean
 
-    // Rely on dereived_accessors quantile(half)
+    // Rely on derived_accessors quantile(half)
     //template <class RealType>
     //inline RealType median(const bernoulli_distribution<RealType, Policy>& dist)
     //{ // Median of bernoulli distribution is not defined.

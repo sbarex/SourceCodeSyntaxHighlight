@@ -8,6 +8,16 @@
 #include <algorithm>
 #include <iterator>
 #include <stdexcept>
+#include <type_traits>
+#include <utility>
+
+#include <boost/math/tools/is_standalone.hpp>
+#ifndef BOOST_MATH_STANDALONE
+#include <boost/config.hpp>
+#ifdef BOOST_NO_CXX17_IF_CONSTEXPR
+#error "The header <boost/math/norms.hpp> can only be used in C++17 and later."
+#endif
+#endif
 
 namespace boost { namespace math{
 
@@ -30,10 +40,10 @@ public:
        if constexpr (std::is_integral_v<Real>)
        {
          if (x < m_v[0]) {
-           return double(0);
+           return static_cast<double>(0);
          }
          if (x >= m_v[m_v.size()-1]) {
-           return double(1);
+           return static_cast<double>(1);
          }
          auto it = std::upper_bound(m_v.begin(), m_v.end(), x);
          return static_cast<double>(std::distance(m_v.begin(), it))/static_cast<double>(m_v.size());

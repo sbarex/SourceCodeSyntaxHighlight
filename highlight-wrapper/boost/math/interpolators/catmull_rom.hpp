@@ -14,20 +14,20 @@
 #include <algorithm>
 #include <iterator>
 #include <stdexcept>
-#include <boost/config.hpp>
+#include <limits>
 
 namespace std_workaround {
 
-#if defined(__cpp_lib_nonmember_container_access) || (defined(BOOST_MSVC) && (BOOST_MSVC >= 1900))
+#if defined(__cpp_lib_nonmember_container_access) || (defined(_MSC_VER) && (_MSC_VER >= 1900))
    using std::size;
 #else
    template <class C>
-   inline BOOST_CONSTEXPR std::size_t size(const C& c)
+   inline constexpr std::size_t size(const C& c)
    {
       return c.size();
    }
    template <class T, std::size_t N>
-   inline BOOST_CONSTEXPR std::size_t size(const T(&array)[N]) BOOST_NOEXCEPT
+   inline constexpr std::size_t size(const T(&array)[N]) noexcept
    {
       return N;
    }
@@ -111,9 +111,9 @@ catmull_rom<Point, RandomAccessContainer>::catmull_rom(RandomAccessContainer&& p
     m_pnts[num_pnts+2] = m_pnts[1];
 
     auto tmp = m_pnts[num_pnts-1];
-    for (std::ptrdiff_t i = num_pnts-1; i >= 0; --i)
+    for (auto i = num_pnts; i > 0; --i)
     {
-        m_pnts[i+1] = m_pnts[i];
+        m_pnts[i] = m_pnts[i - 1];
     }
     m_pnts[0] = tmp;
 
@@ -160,7 +160,12 @@ Point catmull_rom<Point, RandomAccessContainer>::operator()(const typename Point
     typename Point::value_type s0s = m_s[i-1] - s;
     typename Point::value_type s1s = m_s[i] - s;
     typename Point::value_type s2s = m_s[i+1] - s;
-    typename Point::value_type s3s = m_s[i+2] - s;
+    size_t ip2 = i + 2;
+    // When the curve is closed and we evaluate at the end, the endpoint is in fact the startpoint.
+    if (ip2 == m_s.size()) {
+        ip2 = 0;
+    }
+    typename Point::value_type s3s = m_s[ip2] - s;
 
     Point A1_or_A3;
     typename Point::value_type denom = 1/(m_s[i] - m_s[i-1]);
@@ -182,14 +187,14 @@ Point catmull_rom<Point, RandomAccessContainer>::operator()(const typename Point
         B1_or_C[j] = denom*(s2s*A1_or_A3[j] - s0s*A2_or_B2[j]);
     }
 
-    denom = 1/(m_s[i+2] - m_s[i+1]);
+    denom = 1/(m_s[ip2] - m_s[i+1]);
     for(size_t j = 0; j < size(m_pnts[0]); ++j)
     {
-        A1_or_A3[j] = denom*(s3s*m_pnts[i+1][j] - s2s*m_pnts[i+2][j]);
+        A1_or_A3[j] = denom*(s3s*m_pnts[i+1][j] - s2s*m_pnts[ip2][j]);
     }
 
     Point B2;
-    denom = 1/(m_s[i+2] - m_s[i]);
+    denom = 1/(m_s[ip2] - m_s[i]);
     for(size_t j = 0; j < size(m_pnts[0]); ++j)
     {
         B2[j] = denom*(s3s*A2_or_B2[j] - s1s*A1_or_A3[j]);

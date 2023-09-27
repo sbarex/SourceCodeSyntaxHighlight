@@ -6,14 +6,18 @@
 #ifndef BOOST_MATH_QUADRATURE_DETAIL_OOURA_FOURIER_INTEGRALS_DETAIL_HPP
 #define BOOST_MATH_QUADRATURE_DETAIL_OOURA_FOURIER_INTEGRALS_DETAIL_HPP
 #include <utility> // for std::pair.
-#include <mutex>
-#include <atomic>
 #include <vector>
 #include <iostream>
 #include <boost/math/special_functions/expm1.hpp>
 #include <boost/math/special_functions/sin_pi.hpp>
 #include <boost/math/special_functions/cos_pi.hpp>
 #include <boost/math/constants/constants.hpp>
+#include <boost/math/tools/config.hpp>
+
+#ifdef BOOST_HAS_THREADS
+#include <mutex>
+#include <atomic>
+#endif
 
 namespace boost { namespace math { namespace quadrature { namespace detail {
 
@@ -378,8 +382,10 @@ private:
         lnode_row.shrink_to_fit();
         lweight_row.shrink_to_fit();
 
+        #ifdef BOOST_HAS_THREADS
         // std::scoped_lock once C++17 is more common?
         std::lock_guard<std::mutex> lock(node_weight_mutex_);
+        #endif 
         // Another thread might have already finished this calculation and appended it to the nodes/weights:
         if (current_num_levels == big_nodes_.size()) {
             big_nodes_.push_back(bnode_row);
@@ -413,7 +419,9 @@ private:
         return I0;
     }
 
+    #ifdef BOOST_HAS_THREADS
     std::mutex node_weight_mutex_;
+    #endif
     // Nodes for n >= 0, giving t_n = pi*phi(nh)/h. Generally t_n >> 1.
     std::vector<std::vector<Real>> big_nodes_;
     // The term bweights_ will indicate that these are weights corresponding
@@ -424,7 +432,12 @@ private:
     std::vector<std::vector<Real>> little_nodes_;
     std::vector<std::vector<Real>> lweights_;
     Real rel_err_goal_;
-    std::atomic<long> starting_level_;
+
+    #ifdef BOOST_HAS_THREADS
+    std::atomic<long> starting_level_{};
+    #else
+    long starting_level_;
+    #endif
     size_t requested_levels_;
 };
 
@@ -606,7 +619,10 @@ private:
         lnode_row.shrink_to_fit();
         lweight_row.shrink_to_fit();
 
+        #ifdef BOOST_HAS_THREADS
         std::lock_guard<std::mutex> lock(node_weight_mutex_);
+        #endif
+
         // Another thread might have already finished this calculation and appended it to the nodes/weights:
         if (current_num_levels == big_nodes_.size()) {
             big_nodes_.push_back(bnode_row);
@@ -635,14 +651,23 @@ private:
         return I0;
     }
 
+    #ifdef BOOST_HAS_THREADS
     std::mutex node_weight_mutex_;
+    #endif 
+
     std::vector<std::vector<Real>> big_nodes_;
     std::vector<std::vector<Real>> bweights_;
 
     std::vector<std::vector<Real>> little_nodes_;
     std::vector<std::vector<Real>> lweights_;
     Real rel_err_goal_;
-    std::atomic<long> starting_level_;
+
+    #ifdef BOOST_HAS_THREADS
+    std::atomic<long> starting_level_{};
+    #else
+    long starting_level_;
+    #endif
+
     size_t requested_levels_;
 };
 

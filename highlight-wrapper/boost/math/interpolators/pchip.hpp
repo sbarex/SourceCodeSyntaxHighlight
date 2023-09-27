@@ -6,6 +6,7 @@
 
 #ifndef BOOST_MATH_INTERPOLATORS_PCHIP_HPP
 #define BOOST_MATH_INTERPOLATORS_PCHIP_HPP
+#include <sstream>
 #include <memory>
 #include <boost/math/interpolators/detail/cubic_hermite_detail.hpp>
 
@@ -25,13 +26,17 @@ public:
         using std::isnan;
         if (x.size() < 4)
         {
-            throw std::domain_error("Must be at least four data points.");
+            std::ostringstream oss;
+            oss << __FILE__ << ":" << __LINE__ << ":" << __func__;
+            oss << " This interpolator requires at least four data points.";
+            throw std::domain_error(oss.str());
         }
         RandomAccessContainer s(x.size(), std::numeric_limits<Real>::quiet_NaN());
         if (isnan(left_endpoint_derivative))
         {
-            // O(h) finite difference derivative:
-            // This, I believe, is the only derivative guaranteed to be monotonic:
+            // If the derivative is not specified, this seems as good a choice as any.
+            // In particular, it satisfies the monotonicity constraint 0 <= |y'[0]| < 4Delta_i,
+            // where Delta_i is the secant slope:
             s[0] = (y[1]-y[0])/(x[1]-x[0]);
         }
         else
@@ -53,11 +58,13 @@ public:
             }
             else
             {
+                // See here:
+                // https://www.mathworks.com/content/dam/mathworks/mathworks-dot-com/moler/interp.pdf
+                // Un-numbered equation just before Section 3.5:
                 s[k] = (w1+w2)/(w1/dkm1 + w2/dk);
             }
 
         }
-        // Quadratic extrapolation at the other end:
         auto n = s.size();
         if (isnan(right_endpoint_derivative))
         {

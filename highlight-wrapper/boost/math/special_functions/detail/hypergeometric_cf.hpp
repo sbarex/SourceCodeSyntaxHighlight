@@ -166,7 +166,7 @@
   inline T compute_cf_pFq(detail::hypergeometric_pFq_cf_term<T, p, q>& term, const Policy& pol)
   {
     BOOST_MATH_STD_USING
-    boost::uintmax_t max_iter = policies::get_max_series_iterations<Policy>();
+    std::uintmax_t max_iter = policies::get_max_series_iterations<Policy>();
     const T result = tools::continued_fraction_b(
       term,
       boost::math::policies::get_epsilon<T, Policy>(),

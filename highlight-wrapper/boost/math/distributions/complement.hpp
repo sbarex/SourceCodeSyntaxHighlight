@@ -29,7 +29,7 @@ struct complemented2_type
    const RealType& param;
 
 private:
-   complemented2_type& operator=(const complemented2_type&);
+   complemented2_type& operator=(const complemented2_type&) = delete;
 };
 
 template <class Dist, class RealType1, class RealType2>
@@ -47,7 +47,7 @@ struct complemented3_type
    const RealType1& param1;
    const RealType2& param2;
 private:
-   complemented3_type& operator=(const complemented3_type&);
+   complemented3_type& operator=(const complemented3_type&) = delete;
 };
 
 template <class Dist, class RealType1, class RealType2, class RealType3>
@@ -68,7 +68,7 @@ struct complemented4_type
    const RealType2& param2;
    const RealType3& param3;
 private:
-   complemented4_type& operator=(const complemented4_type&);
+   complemented4_type& operator=(const complemented4_type&) = delete;
 };
 
 template <class Dist, class RealType1, class RealType2, class RealType3, class RealType4>
@@ -92,7 +92,7 @@ struct complemented5_type
    const RealType3& param3;
    const RealType4& param4;
 private:
-   complemented5_type& operator=(const complemented5_type&);
+   complemented5_type& operator=(const complemented5_type&) = delete;
 };
 
 template <class Dist, class RealType1, class RealType2, class RealType3, class RealType4, class RealType5>
@@ -119,7 +119,7 @@ struct complemented6_type
    const RealType4& param4;
    const RealType5& param5;
 private:
-   complemented6_type& operator=(const complemented6_type&);
+   complemented6_type& operator=(const complemented6_type&) = delete;
 };
 
 template <class Dist, class RealType1, class RealType2, class RealType3, class RealType4, class RealType5, class RealType6>
@@ -149,7 +149,7 @@ struct complemented7_type
    const RealType5& param5;
    const RealType6& param6;
 private:
-   complemented7_type& operator=(const complemented7_type&);
+   complemented7_type& operator=(const complemented7_type&) = delete;
 };
 
 template <class Dist, class RealType>

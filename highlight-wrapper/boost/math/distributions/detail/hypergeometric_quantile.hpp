@@ -104,7 +104,7 @@ inline unsigned round_x_from_q(unsigned x, T /*q*/, T /*cum*/, T /*fudge_factor*
 template <class T, class Policy>
 unsigned hypergeometric_quantile_imp(T p, T q, unsigned r, unsigned n, unsigned N, const Policy& pol)
 {
-#ifdef BOOST_MSVC
+#ifdef _MSC_VER
 #  pragma warning(push)
 #  pragma warning(disable:4267)
 #endif
@@ -113,7 +113,7 @@ unsigned hypergeometric_quantile_imp(T p, T q, unsigned r, unsigned n, unsigned 
    BOOST_FPU_EXCEPTION_GUARD
    T result;
    T fudge_factor = 1 + tools::epsilon<T>() * ((N <= boost::math::prime(boost::math::max_prime - 1)) ? 50 : 2 * N);
-   unsigned base = static_cast<unsigned>((std::max)(0, (int)(n + r) - (int)(N)));
+   unsigned base = static_cast<unsigned>((std::max)(0, static_cast<int>(n + r) - static_cast<int>(N)));
    unsigned lim = (std::min)(r, n);
 
    BOOST_MATH_INSTRUMENT_VARIABLE(p);
@@ -155,7 +155,7 @@ unsigned hypergeometric_quantile_imp(T p, T q, unsigned r, unsigned n, unsigned 
       }
       while(result < p)
       {
-         diff = (diff > tools::min_value<T>() * 8) 
+         diff = (diff > tools::min_value<T>() * 8)
             ? T(n - x) * T(r - x) * diff / (T(x + 1) * T(N + x + 1 - n - r))
             : hypergeometric_pdf<T>(x + 1, r, n, N, pol);
          if(result + diff / 2 > p)
@@ -219,7 +219,7 @@ unsigned hypergeometric_quantile_imp(T p, T q, unsigned r, unsigned n, unsigned 
       }
       return round_x_from_q(x, q, result, fudge_factor, base, lim, discrete_quantile_type());
    }
-#ifdef BOOST_MSVC
+#ifdef _MSC_VER
 #  pragma warning(pop)
 #endif
 }
@@ -231,9 +231,9 @@ inline unsigned hypergeometric_quantile(T p, T q, unsigned r, unsigned n, unsign
    typedef typename tools::promote_args<T>::type result_type;
    typedef typename policies::evaluation<result_type, Policy>::type value_type;
    typedef typename policies::normalise<
-      Policy, 
-      policies::promote_float<false>, 
-      policies::promote_double<false>, 
+      Policy,
+      policies::promote_float<false>,
+      policies::promote_double<false>,
       policies::assert_undefined<> >::type forwarding_policy;
 
    return detail::hypergeometric_quantile_imp<value_type>(p, q, r, n, N, forwarding_policy());

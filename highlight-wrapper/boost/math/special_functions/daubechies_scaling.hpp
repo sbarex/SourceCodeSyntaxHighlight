@@ -7,17 +7,29 @@
 
 #ifndef BOOST_MATH_SPECIAL_DAUBECHIES_SCALING_HPP
 #define BOOST_MATH_SPECIAL_DAUBECHIES_SCALING_HPP
+
+#include <cstdint>
+#include <cstring>
+#include <cmath>
 #include <vector>
 #include <array>
-#include <cmath>
 #include <thread>
 #include <future>
 #include <iostream>
+#include <memory>
 #include <boost/math/special_functions/detail/daubechies_scaling_integer_grid.hpp>
 #include <boost/math/filters/daubechies.hpp>
 #include <boost/math/interpolators/detail/cubic_hermite_detail.hpp>
 #include <boost/math/interpolators/detail/quintic_hermite_detail.hpp>
 #include <boost/math/interpolators/detail/septic_hermite_detail.hpp>
+
+#include <boost/math/tools/is_standalone.hpp>
+#ifndef BOOST_MATH_STANDALONE
+#  include <boost/config.hpp>
+#  ifdef BOOST_NO_CXX17_IF_CONSTEXPR
+#    error "The header <boost/special_functions/daubechies_scaling.hpp> can only be used in C++17 and later."
+#  endif
+#endif
 
 namespace boost::math {
 
@@ -46,7 +58,7 @@ std::vector<Real> daubechies_scaling_dyadic_grid(int64_t j_max)
     std::vector<Real> v(2*p + (2*p-1)*((1<<j_max) -1), std::numeric_limits<Real>::quiet_NaN());
     v[0] = 0;
     v[v.size()-1] = 0;
-    for (int64_t i = 0; i < (int64_t) phik.size(); ++i) {
+    for (int64_t i = 0; i < static_cast<int64_t>(phik.size()); ++i) {
         v[i*(1uLL<<j_max)] = phik[i];
     }
 
@@ -58,19 +70,19 @@ std::vector<Real> daubechies_scaling_dyadic_grid(int64_t j_max)
             // Where this value will go:
             int64_t delivery_idx = k*(1uLL << (j_max-j));
             // This is a nice check, but we've tested this exhaustively, and it's an expensive check:
-            //if (delivery_idx >= (int64_t) v.size()) {
+            //if (delivery_idx >= static_cast<int64_t>(v.size())) {
             //    std::cerr << "Delivery index out of range!\n";
             //    continue;
             //}
             Real term = 0;
-            for (int64_t l = 0; l < (int64_t) c.size(); ++l)
+            for (int64_t l = 0; l < static_cast<int64_t>(c.size()); ++l)
             {
                 int64_t idx = k*(int64_t(1) << (j_max - j + 1)) - l*(int64_t(1) << j_max);
                 if (idx < 0)
                 {
                     break;
                 }
-                if (idx < (int64_t) v.size())
+                if (idx < static_cast<int64_t>(v.size()))
                 {
                     term += c[l]*v[idx];
                 }
@@ -122,7 +134,7 @@ public:
 
     int64_t bytes() const
     {
-        return 2*y_.size()*sizeof(Real) + sizeof(this);
+        return 2*y_.size()*sizeof(Real) + sizeof(*this);
     }
 
 private:
@@ -165,7 +177,7 @@ public:
 
     int64_t bytes() const
     {
-        return data_.size()*data_[0].size()*sizeof(Real) + sizeof(this);
+        return data_.size()*data_[0].size()*sizeof(Real) + sizeof(*this);
     }
 
 private:
@@ -199,12 +211,13 @@ public:
     inline Real prime(Real x) const
     {
         using std::floor;
+
         Real y = x*s_;
         Real k = floor(y);
 
         int64_t kk = static_cast<int64_t>(k);
         Real t = y - k;
-        return (1-t)*dydx_[kk] + t*dydx_[kk+1];
+        return static_cast<Real>((Real(1)-t)*dydx_[kk] + t*dydx_[kk+1]);
     }
 
     int64_t bytes() const
@@ -253,7 +266,7 @@ public:
 
     int64_t bytes() const
     {
-        return sizeof(this) + data_.size()*data_[0].size()*sizeof(Real);
+        return sizeof(*this) + data_.size()*data_[0].size()*sizeof(Real);
     }
 
 private:
@@ -266,170 +279,170 @@ private:
 template <class T>
 struct daubechies_eval_type
 {
-   typedef T type;
+    using type = T;
 
-   static const std::vector<T>& vector_cast(const std::vector<T>& v) { return v; }
+    static const std::vector<T>& vector_cast(const std::vector<T>& v) { return v; }
 
 };
 template <>
 struct daubechies_eval_type<float>
 {
-   typedef double type;
+    using type = double;
 
-   inline static std::vector<float> vector_cast(const std::vector<double>& v)
-   {
-      std::vector<float> result(v.size());
-      for (unsigned i = 0; i < v.size(); ++i)
-         result[i] = static_cast<float>(v[i]);
-      return result;
-   }
+    inline static std::vector<float> vector_cast(const std::vector<double>& v)
+    {
+        std::vector<float> result(v.size());
+        for (unsigned i = 0; i < v.size(); ++i)
+            result[i] = static_cast<float>(v[i]);
+        return result;
+    }
 };
 template <>
 struct daubechies_eval_type<double>
 {
-   typedef long double type;
+    using type = long double;
 
-   inline static std::vector<double> vector_cast(const std::vector<long double>& v)
-   {
-      std::vector<double> result(v.size());
-      for (unsigned i = 0; i < v.size(); ++i)
-         result[i] = static_cast<double>(v[i]);
-      return result;
-   }
+    inline static std::vector<double> vector_cast(const std::vector<long double>& v)
+    {
+        std::vector<double> result(v.size());
+        for (unsigned i = 0; i < v.size(); ++i)
+            result[i] = static_cast<double>(v[i]);
+        return result;
+    }
 };
 
 struct null_interpolator
 {
-   template <class T>
-   T operator()(const T&)
-   {
-      return 1;
-   }
+    template <class T>
+    T operator()(const T&)
+    {
+        return 1;
+    }
 };
 
 } // namespace detail
 
 template<class Real, int p>
 class daubechies_scaling {
-   //
-   // Some type manipulation so we know the type of the interpolator, and the vector type it requires:
-   //
-   typedef std::vector<std::array<Real, p < 6 ? 2 : p < 10 ? 3 : 4>> vector_type;
-   //
-   // List our interpolators:
-   //
-   typedef std::tuple<
-      detail::null_interpolator, detail::matched_holder_aos<vector_type>, detail::linear_interpolation_aos<vector_type>, 
-      interpolators::detail::cardinal_cubic_hermite_detail_aos<vector_type>, interpolators::detail::cardinal_quintic_hermite_detail_aos<vector_type>,
-      interpolators::detail::cardinal_septic_hermite_detail_aos<vector_type> > interpolator_list;
-   //
-   // Select the one we need:
-   //
-   typedef std::tuple_element_t<
-      p == 1 ? 0 :
-      p == 2 ? 1 :
-      p == 3 ? 2 :
-      p <= 5 ? 3 :
-      p <= 9 ? 4 : 5, interpolator_list> interpolator_type;
+    //
+    // Some type manipulation so we know the type of the interpolator, and the vector type it requires:
+    //
+    using vector_type = std::vector<std::array<Real, p < 6 ? 2 : p < 10 ? 3 : 4>>;
+    //
+    // List our interpolators:
+    //
+    using interpolator_list = std::tuple<
+        detail::null_interpolator, detail::matched_holder_aos<vector_type>, detail::linear_interpolation_aos<vector_type>, 
+        interpolators::detail::cardinal_cubic_hermite_detail_aos<vector_type>, interpolators::detail::cardinal_quintic_hermite_detail_aos<vector_type>,
+        interpolators::detail::cardinal_septic_hermite_detail_aos<vector_type> >;
+    //
+    // Select the one we need:
+    //
+    using interpolator_type = std::tuple_element_t<
+        p == 1 ? 0 :
+        p == 2 ? 1 :
+        p == 3 ? 2 :
+        p <= 5 ? 3 :
+        p <= 9 ? 4 : 5, interpolator_list>;
 
 public:
-   daubechies_scaling(int grid_refinements = -1)
-   {
-      static_assert(p < 20, "Daubechies scaling functions are only implemented for p < 20.");
-      static_assert(p > 0, "Daubechies scaling functions must have at least 1 vanishing moment.");
-      if constexpr (p == 1)
-      {
-         return;
-      }
-      else {
-         if (grid_refinements < 0)
-         {
-            if (std::is_same_v<Real, float>)
+    daubechies_scaling(int grid_refinements = -1)
+    {
+        static_assert(p < 20, "Daubechies scaling functions are only implemented for p < 20.");
+        static_assert(p > 0, "Daubechies scaling functions must have at least 1 vanishing moment.");
+        if constexpr (p == 1)
+        {
+            return;
+        }
+        else {
+            if (grid_refinements < 0)
             {
-               if (grid_refinements == -2)
-               {
-                  // Control absolute error:
-                  //                          p= 2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19
-                  std::array<int, 20> r{ -1, -1, 18, 19, 16, 11,  8,  7,  7,  7,  5,  5,  4,  4,  4,  4,  3,  3,  3,  3 };
-                  grid_refinements = r[p];
-               }
-               else
-               {
-                  // Control relative error:
-                  //                          p= 2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19
-                  std::array<int, 20> r{ -1, -1, 21, 21, 21, 17, 16, 15, 14, 13, 12, 11, 11, 11, 11, 11, 11, 11, 11, 11 };
-                  grid_refinements = r[p];
-               }
+                if (std::is_same_v<Real, float>)
+                {
+                if (grid_refinements == -2)
+                {
+                    // Control absolute error:
+                    //                          p= 2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19
+                    std::array<int, 20> r{ -1, -1, 18, 19, 16, 11,  8,  7,  7,  7,  5,  5,  4,  4,  4,  4,  3,  3,  3,  3 };
+                    grid_refinements = r[p];
+                }
+                else
+                {
+                    // Control relative error:
+                    //                          p= 2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19
+                    std::array<int, 20> r{ -1, -1, 21, 21, 21, 17, 16, 15, 14, 13, 12, 11, 11, 11, 11, 11, 11, 11, 11, 11 };
+                    grid_refinements = r[p];
+                }
+                }
+                else if (std::is_same_v<Real, double>)
+                {
+                    //                          p= 2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19
+                    std::array<int, 20> r{ -1, -1, 21, 21, 21, 21, 21, 21, 21, 21, 20, 20, 19, 19, 18, 18, 18, 18, 18, 18 };
+                    grid_refinements = r[p];
+                }
+                else
+                {
+                    grid_refinements = 21;
+                }
             }
-            else if (std::is_same_v<Real, double>)
+
+            // Compute the refined grid:
+            // In fact for float precision I know the grid must be computed in double precision and then cast back down, or else parts of the support are systematically inaccurate.
+            std::future<std::vector<Real>> t0 = std::async(std::launch::async, [&grid_refinements]() {
+                // Computing in higher precision and downcasting is essential for 1ULP evaluation in float precision:
+                auto v = daubechies_scaling_dyadic_grid<typename detail::daubechies_eval_type<Real>::type, p, 0>(grid_refinements);
+                return detail::daubechies_eval_type<Real>::vector_cast(v);
+                });
+            // Compute the derivative of the refined grid:
+            std::future<std::vector<Real>> t1 = std::async(std::launch::async, [&grid_refinements]() {
+                auto v = daubechies_scaling_dyadic_grid<typename detail::daubechies_eval_type<Real>::type, p, 1>(grid_refinements);
+                return detail::daubechies_eval_type<Real>::vector_cast(v);
+                });
+
+            // if necessary, compute the second and third derivative:
+            std::vector<Real> d2ydx2;
+            std::vector<Real> d3ydx3;
+            if constexpr (p >= 6) {
+                std::future<std::vector<Real>> t3 = std::async(std::launch::async, [&grid_refinements]() {
+                auto v = daubechies_scaling_dyadic_grid<typename detail::daubechies_eval_type<Real>::type, p, 2>(grid_refinements);
+                return detail::daubechies_eval_type<Real>::vector_cast(v);
+                });
+
+                if constexpr (p >= 10) {
+                std::future<std::vector<Real>> t4 = std::async(std::launch::async, [&grid_refinements]() {
+                    auto v = daubechies_scaling_dyadic_grid<typename detail::daubechies_eval_type<Real>::type, p, 3>(grid_refinements);
+                    return detail::daubechies_eval_type<Real>::vector_cast(v);
+                    });
+                d3ydx3 = t4.get();
+                }
+                d2ydx2 = t3.get();
+            }
+
+
+            auto y = t0.get();
+            auto dydx = t1.get();
+
+            if constexpr (p >= 2)
             {
-               //                          p= 2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19
-               std::array<int, 20> r{ -1, -1, 21, 21, 21, 21, 21, 21, 21, 21, 20, 20, 19, 19, 18, 18, 18, 18, 18, 18 };
-               grid_refinements = r[p];
+                vector_type data(y.size());
+                for (size_t i = 0; i < y.size(); ++i)
+                {
+                    data[i][0] = y[i];
+                    data[i][1] = dydx[i];
+                    if constexpr (p >= 6)
+                        data[i][2] = d2ydx2[i];
+                    if constexpr (p >= 10)
+                        data[i][3] = d3ydx3[i];
+                }
+                if constexpr (p <= 3)
+                    m_interpolator = std::make_shared<interpolator_type>(std::move(data), grid_refinements, Real(0));
+                else
+                    m_interpolator = std::make_shared<interpolator_type>(std::move(data), Real(0), Real(1) / (1 << grid_refinements));
             }
             else
-            {
-               grid_refinements = 21;
-            }
-         }
-
-         // Compute the refined grid:
-         // In fact for float precision I know the grid must be computed in double precision and then cast back down, or else parts of the support are systematically inaccurate.
-         std::future<std::vector<Real>> t0 = std::async(std::launch::async, [&grid_refinements]() {
-            // Computing in higher precision and downcasting is essential for 1ULP evaluation in float precision:
-            auto v = daubechies_scaling_dyadic_grid<typename detail::daubechies_eval_type<Real>::type, p, 0>(grid_refinements);
-            return detail::daubechies_eval_type<Real>::vector_cast(v);
-            });
-         // Compute the derivative of the refined grid:
-         std::future<std::vector<Real>> t1 = std::async(std::launch::async, [&grid_refinements]() {
-            auto v = daubechies_scaling_dyadic_grid<typename detail::daubechies_eval_type<Real>::type, p, 1>(grid_refinements);
-            return detail::daubechies_eval_type<Real>::vector_cast(v);
-            });
-
-         // if necessary, compute the second and third derivative:
-         std::vector<Real> d2ydx2;
-         std::vector<Real> d3ydx3;
-         if constexpr (p >= 6) {
-            std::future<std::vector<Real>> t3 = std::async(std::launch::async, [&grid_refinements]() {
-               auto v = daubechies_scaling_dyadic_grid<typename detail::daubechies_eval_type<Real>::type, p, 2>(grid_refinements);
-               return detail::daubechies_eval_type<Real>::vector_cast(v);
-               });
-
-            if constexpr (p >= 10) {
-               std::future<std::vector<Real>> t4 = std::async(std::launch::async, [&grid_refinements]() {
-                  auto v = daubechies_scaling_dyadic_grid<typename detail::daubechies_eval_type<Real>::type, p, 3>(grid_refinements);
-                  return detail::daubechies_eval_type<Real>::vector_cast(v);
-                  });
-               d3ydx3 = t4.get();
-            }
-            d2ydx2 = t3.get();
-         }
-
-
-         auto y = t0.get();
-         auto dydx = t1.get();
-
-         if constexpr (p >= 2)
-         {
-            vector_type data(y.size());
-            for (size_t i = 0; i < y.size(); ++i)
-            {
-               data[i][0] = y[i];
-               data[i][1] = dydx[i];
-               if constexpr (p >= 6)
-                  data[i][2] = d2ydx2[i];
-               if constexpr (p >= 10)
-                  data[i][3] = d3ydx3[i];
-            }
-            if constexpr (p <= 3)
-               m_interpolator = std::make_shared<interpolator_type>(std::move(data), grid_refinements, Real(0));
-            else
-               m_interpolator = std::make_shared<interpolator_type>(std::move(data), Real(0), Real(1) / (1 << grid_refinements));
-         }
-         else
-            m_interpolator = std::make_shared<detail::null_interpolator>();
-      }
-   }
+                m_interpolator = std::make_shared<detail::null_interpolator>();
+        }
+    }
 
     inline Real operator()(Real x) const
     {
@@ -443,7 +456,7 @@ public:
     inline Real prime(Real x) const
     {
         static_assert(p > 2, "The 3-vanishing moment Daubechies scaling function is the first which is continuously differentiable.");
-        if (x <= 0 || x >= 2*p-1)
+        if (x <= Real(0) || x >= 2*p-1)
         {
             return 0;
         }
@@ -467,7 +480,7 @@ public:
 
     int64_t bytes() const
     {
-       return m_interpolator->bytes() + sizeof(m_interpolator);
+        return m_interpolator->bytes() + sizeof(m_interpolator);
     }
 
 private:

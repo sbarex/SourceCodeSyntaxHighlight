@@ -19,10 +19,14 @@
     "Do not #include this file directly. This should only be #included by autodiff.hpp for C++11 compatibility."
 #endif
 
-#include <boost/mp11/integer_sequence.hpp>
+#include <type_traits>
+#include <boost/math/tools/mp.hpp>
 
 namespace boost {
 namespace math {
+
+namespace mp = tools::meta_programming;
+
 namespace differentiation {
 inline namespace autodiff_v1 {
 namespace detail {
@@ -354,27 +358,27 @@ fvar<RealType, Order>& fvar<RealType, Order>::set_root(root_type const& root) {
 }
 
 template <typename RealType, size_t Order, size_t... Is>
-auto make_fvar_for_tuple(mp11::index_sequence<Is...>, RealType const& ca)
+auto make_fvar_for_tuple(mp::index_sequence<Is...>, RealType const& ca)
     -> decltype(make_fvar<RealType, zero<Is>::value..., Order>(ca)) {
   return make_fvar<RealType, zero<Is>::value..., Order>(ca);
 }
 
 template <typename RealType, size_t... Orders, size_t... Is, typename... RealTypes>
-auto make_ftuple_impl(mp11::index_sequence<Is...>, RealTypes const&... ca)
-    -> decltype(std::make_tuple(make_fvar_for_tuple<RealType, Orders>(mp11::make_index_sequence<Is>{},
+auto make_ftuple_impl(mp::index_sequence<Is...>, RealTypes const&... ca)
+    -> decltype(std::make_tuple(make_fvar_for_tuple<RealType, Orders>(mp::make_index_sequence<Is>{},
                                                                       ca)...)) {
-  return std::make_tuple(make_fvar_for_tuple<RealType, Orders>(mp11::make_index_sequence<Is>{}, ca)...);
+  return std::make_tuple(make_fvar_for_tuple<RealType, Orders>(mp::make_index_sequence<Is>{}, ca)...);
 }
 
 }  // namespace detail
 
 template <typename RealType, size_t... Orders, typename... RealTypes>
 auto make_ftuple(RealTypes const&... ca)
-    -> decltype(detail::make_ftuple_impl<RealType, Orders...>(mp11::index_sequence_for<RealTypes...>{},
+    -> decltype(detail::make_ftuple_impl<RealType, Orders...>(mp::index_sequence_for<RealTypes...>{},
                                                               ca...)) {
   static_assert(sizeof...(Orders) == sizeof...(RealTypes),
                 "Number of Orders must match number of function parameters.");
-  return detail::make_ftuple_impl<RealType, Orders...>(mp11::index_sequence_for<RealTypes...>{}, ca...);
+  return detail::make_ftuple_impl<RealType, Orders...>(mp::index_sequence_for<RealTypes...>{}, ca...);
 }
 
 }  // namespace autodiff_v1

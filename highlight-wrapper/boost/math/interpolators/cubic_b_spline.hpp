@@ -23,9 +23,9 @@
 #define BOOST_MATH_INTERPOLATORS_CUBIC_B_SPLINE_HPP
 
 #include <boost/math/interpolators/detail/cubic_b_spline_detail.hpp>
-#include <boost/config/header_deprecated.hpp>
+#include <boost/math/tools/header_deprecated.hpp>
 
-BOOST_HEADER_DEPRECATED("<boost/math/interpolators/cardinal_cubic_b_spline.hpp>");
+BOOST_MATH_HEADER_DEPRECATED("<boost/math/interpolators/cardinal_cubic_b_spline.hpp>");
 
 namespace boost{ namespace math{
 

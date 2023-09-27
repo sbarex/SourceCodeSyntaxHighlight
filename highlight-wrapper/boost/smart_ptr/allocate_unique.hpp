@@ -1,5 +1,5 @@
 /*
-Copyright 2019 Glen Joseph Fernandes
+Copyright 2019-2021 Glen Joseph Fernandes
 (glenjofe@gmail.com)
 
 Distributed under the Boost Software License, Version 1.0.
@@ -8,6 +8,7 @@ Distributed under the Boost Software License, Version 1.0.
 #ifndef BOOST_SMART_PTR_ALLOCATE_UNIQUE_HPP
 #define BOOST_SMART_PTR_ALLOCATE_UNIQUE_HPP
 
+#include <boost/smart_ptr/detail/requires_cxx11.hpp>
 #include <boost/smart_ptr/detail/sp_noexcept.hpp>
 #include <boost/smart_ptr/detail/sp_nullptr_t.hpp>
 #include <boost/core/allocator_access.hpp>
@@ -475,6 +476,15 @@ allocate_unique(const A& alloc,
         detail::sp_alloc_size<T>::value, boost::first_scalar(&value),
         detail::sp_alloc_size<typename remove_extent<T>::type>::value);
     return c.release();
+}
+
+template<class T, class U, class A>
+inline typename allocator_pointer<typename allocator_rebind<A,
+    typename detail::sp_alloc_value<T>::type>::type>::type
+get_allocator_pointer(const std::unique_ptr<T,
+    alloc_deleter<U, A> >& p) BOOST_NOEXCEPT
+{
+    return p.get().ptr();
 }
 
 } /* boost */

@@ -8,6 +8,7 @@ Distributed under the Boost Software License, Version 1.0.
 #ifndef BOOST_SMART_PTR_ALLOCATE_LOCAL_SHARED_ARRAY_HPP
 #define BOOST_SMART_PTR_ALLOCATE_LOCAL_SHARED_ARRAY_HPP
 
+#include <boost/smart_ptr/detail/requires_cxx11.hpp>
 #include <boost/smart_ptr/allocate_shared_array.hpp>
 #include <boost/smart_ptr/local_shared_ptr.hpp>
 

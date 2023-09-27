@@ -10,7 +10,7 @@
 #define BOOST_FUSION_SUPPORT_DEDUCE_HPP_INCLUDED
 
 #include <boost/fusion/support/config.hpp>
-#include <boost/ref.hpp>
+#include <boost/core/ref.hpp>
 
 #ifndef BOOST_NO_CXX11_HDR_FUNCTIONAL
 #include <functional>

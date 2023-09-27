@@ -181,9 +181,9 @@ T airy_ai_zero_imp(int m, const Policy& pol)
    // of decimal digits in the numeric type T, being at least 12.
    const int my_digits10 = static_cast<int>(static_cast<float>(policies::digits<T, Policy>() * 0.301F));
 
-   const boost::uintmax_t iterations_allowed = static_cast<boost::uintmax_t>((std::max)(12, my_digits10 * 2));
+   const std::uintmax_t iterations_allowed = static_cast<std::uintmax_t>((std::max)(12, my_digits10 * 2));
 
-   boost::uintmax_t iterations_used = iterations_allowed;
+   std::uintmax_t iterations_used = iterations_allowed;
 
    // Use a dynamic tolerance because the roots get closer the higher m gets.
    T tolerance;
@@ -233,9 +233,9 @@ T airy_bi_zero_imp(int m, const Policy& pol)
    // of decimal digits in the numeric type T, being at least 12.
    const int my_digits10 = static_cast<int>(static_cast<float>(policies::digits<T, Policy>() * 0.301F));
 
-   const boost::uintmax_t iterations_allowed = static_cast<boost::uintmax_t>((std::max)(12, my_digits10 * 2));
+   const std::uintmax_t iterations_allowed = static_cast<std::uintmax_t>((std::max)(12, my_digits10 * 2));
 
-   boost::uintmax_t iterations_used = iterations_allowed;
+   std::uintmax_t iterations_used = iterations_allowed;
 
    // Use a dynamic tolerance because the roots get closer the higher m gets.
    T tolerance;
@@ -362,7 +362,7 @@ inline T airy_ai_zero(int m, const Policy& /*pol*/)
       policies::discrete_quantile<>,
       policies::assert_undefined<> >::type forwarding_policy;
 
-   BOOST_STATIC_ASSERT_MSG(    false == std::numeric_limits<T>::is_specialized
+   static_assert(    false == std::numeric_limits<T>::is_specialized
                            || (   true  == std::numeric_limits<T>::is_specialized
                                && false == std::numeric_limits<T>::is_integer),
                            "Airy value type must be a floating-point type.");
@@ -385,7 +385,7 @@ inline OutputIterator airy_ai_zero(
 {
    typedef T result_type;
 
-   BOOST_STATIC_ASSERT_MSG(    false == std::numeric_limits<T>::is_specialized
+   static_assert(    false == std::numeric_limits<T>::is_specialized
                            || (   true  == std::numeric_limits<T>::is_specialized
                                && false == std::numeric_limits<T>::is_integer),
                            "Airy value type must be a floating-point type.");
@@ -419,7 +419,7 @@ inline T airy_bi_zero(int m, const Policy& /*pol*/)
       policies::discrete_quantile<>,
       policies::assert_undefined<> >::type forwarding_policy;
 
-   BOOST_STATIC_ASSERT_MSG(    false == std::numeric_limits<T>::is_specialized
+   static_assert(    false == std::numeric_limits<T>::is_specialized
                            || (   true  == std::numeric_limits<T>::is_specialized
                                && false == std::numeric_limits<T>::is_integer),
                            "Airy value type must be a floating-point type.");
@@ -442,7 +442,7 @@ inline OutputIterator airy_bi_zero(
 {
    typedef T result_type;
 
-   BOOST_STATIC_ASSERT_MSG(    false == std::numeric_limits<T>::is_specialized
+   static_assert(    false == std::numeric_limits<T>::is_specialized
                            || (   true  == std::numeric_limits<T>::is_specialized
                                && false == std::numeric_limits<T>::is_integer),
                            "Airy value type must be a floating-point type.");

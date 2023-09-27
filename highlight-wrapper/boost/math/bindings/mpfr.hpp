@@ -11,12 +11,11 @@
 #ifndef BOOST_MATH_MPLFR_BINDINGS_HPP
 #define BOOST_MATH_MPLFR_BINDINGS_HPP
 
-#include <boost/config.hpp>
-#include <boost/lexical_cast.hpp>
+#include <type_traits>
 
-#ifdef BOOST_MSVC
+#ifdef _MSC_VER
 //
-// We get a lot of warnings from the gmp, mpfr and gmpfrxx headers, 
+// We get a lot of warnings from the gmp, mpfr and gmpfrxx headers,
 // disable them here, so we only see warnings from *our* code:
 //
 #pragma warning(push)
@@ -25,7 +24,7 @@
 
 #include <gmpfrxx.h>
 
-#ifdef BOOST_MSVC
+#ifdef _MSC_VER
 #pragma warning(pop)
 #endif
 
@@ -37,6 +36,7 @@
 #include <boost/math/bindings/detail/big_digamma.hpp>
 #include <boost/math/bindings/detail/big_lanczos.hpp>
 #include <boost/math/tools/big_constant.hpp>
+#include <boost/math/tools/config.hpp>
 
 inline mpfr_class fabs(const mpfr_class& v)
 {
@@ -181,12 +181,12 @@ inline long long lltrunc(__gmp_expr<T,U> const& x, const Policy& pol)
    return lltrunc(static_cast<mpfr_class>(x), pol);
 }
 
-namespace boost{ 
+namespace boost{
 
 #ifdef BOOST_MATH_USE_FLOAT128
-   template<> struct is_convertible<BOOST_MATH_FLOAT128_TYPE, mpfr_class> : public boost::integral_constant<bool, false>{};
+   template<> struct std::is_convertible<BOOST_MATH_FLOAT128_TYPE, mpfr_class> : public std::integral_constant<bool, false>{};
 #endif
-   template<> struct is_convertible<long long, mpfr_class> : public boost::integral_constant<bool, false>{};
+   template<> struct std::is_convertible<long long, mpfr_class> : public std::integral_constant<bool, false>{};
 
 namespace math{
 
@@ -253,7 +253,7 @@ struct mpfr_lanczos
          return lanczos61UDT::lanczos_sum_near_2(z);
    }
    static mpfr_class g()
-   { 
+   {
       unsigned long p = mpfr_class::get_dprec();
       if(p <= 72)
          return lanczos13UDT::g();
@@ -282,7 +282,7 @@ struct construction_traits;
 template <class Policy>
 struct construction_traits<mpfr_class, Policy>
 {
-   typedef boost::integral_constant<int, 0> type;
+   typedef std::integral_constant<int, 0> type;
 };
 
 }
@@ -297,7 +297,7 @@ struct promote_arg<__gmp_expr<T,U> >
 };
 
 template<>
-inline int digits<mpfr_class>(BOOST_MATH_EXPLICIT_TEMPLATE_TYPE_SPEC(mpfr_class)) BOOST_NOEXCEPT
+inline int digits<mpfr_class>(BOOST_MATH_EXPLICIT_TEMPLATE_TYPE_SPEC(mpfr_class)) noexcept
 {
    return mpfr_class::get_dprec();
 }
@@ -335,7 +335,7 @@ inline mpfr_class real_cast<mpfr_class, long long>(long long t)
    }
    while(t)
    {
-      result += ldexp((double)(t & 0xffffL), expon);
+      result += ldexp(static_cast<double>(t & 0xffffL), expon);
       expon += 32;
       t >>= 32;
    }
@@ -455,14 +455,22 @@ inline mpfr_class skewness(const extreme_value_distribution<mpfr_class, Policy>&
    // This is 12 * sqrt(6) * zeta(3) / pi^3:
    // See http://mathworld.wolfram.com/ExtremeValueDistribution.html
    //
-   return boost::lexical_cast<mpfr_class>("1.1395470994046486574927930193898461120875997958366");
+   #ifdef BOOST_MATH_STANDALONE
+   static_assert(sizeof(Policy) == 0, "mpfr skewness can not be calculated in standalone mode");
+   #endif
+
+   return static_cast<mpfr_class>("1.1395470994046486574927930193898461120875997958366");
 }
 
 template <class Policy>
 inline mpfr_class skewness(const rayleigh_distribution<mpfr_class, Policy>& /*dist*/)
 {
   // using namespace boost::math::constants;
-  return boost::lexical_cast<mpfr_class>("0.63111065781893713819189935154422777984404221106391");
+  #ifdef BOOST_MATH_STANDALONE
+  static_assert(sizeof(Policy) == 0, "mpfr skewness can not be calculated in standalone mode");
+  #endif
+
+  return static_cast<mpfr_class>("0.63111065781893713819189935154422777984404221106391");
   // Computed using NTL at 150 bit, about 50 decimal digits.
   // return 2 * root_pi<RealType>() * pi_minus_three<RealType>() / pow23_four_minus_pi<RealType>();
 }
@@ -471,7 +479,11 @@ template <class Policy>
 inline mpfr_class kurtosis(const rayleigh_distribution<mpfr_class, Policy>& /*dist*/)
 {
   // using namespace boost::math::constants;
-  return boost::lexical_cast<mpfr_class>("3.2450893006876380628486604106197544154170667057995");
+  #ifdef BOOST_MATH_STANDALONE
+  static_assert(sizeof(Policy) == 0, "mpfr kurtosis can not be calculated in standalone mode");
+  #endif
+
+  return static_cast<mpfr_class>("3.2450893006876380628486604106197544154170667057995");
   // Computed using NTL at 150 bit, about 50 decimal digits.
   // return 3 - (6 * pi<RealType>() * pi<RealType>() - 24 * pi<RealType>() + 16) /
   // (four_minus_pi<RealType>() * four_minus_pi<RealType>());
@@ -482,7 +494,11 @@ inline mpfr_class kurtosis_excess(const rayleigh_distribution<mpfr_class, Policy
 {
   //using namespace boost::math::constants;
   // Computed using NTL at 150 bit, about 50 decimal digits.
-  return boost::lexical_cast<mpfr_class>("0.2450893006876380628486604106197544154170667057995");
+  #ifdef BOOST_MATH_STANDALONE
+  static_assert(sizeof(Policy) == 0, "mpfr excess kurtosis can not be calculated in standalone mode");
+  #endif
+
+  return static_cast<mpfr_class>("0.2450893006876380628486604106197544154170667057995");
   // return -(6 * pi<RealType>() * pi<RealType>() - 24 * pi<RealType>() + 16) /
   //   (four_minus_pi<RealType>() * four_minus_pi<RealType>());
 } // kurtosis
@@ -493,7 +509,7 @@ namespace detail{
 // Version of Digamma accurate to ~100 decimal digits.
 //
 template <class Policy>
-mpfr_class digamma_imp(mpfr_class x, const boost::integral_constant<int, 0>* , const Policy& pol)
+mpfr_class digamma_imp(mpfr_class x, const std::integral_constant<int, 0>* , const Policy& pol)
 {
    //
    // This handles reflection of negative arguments, and all our
@@ -521,7 +537,7 @@ mpfr_class digamma_imp(mpfr_class x, const boost::integral_constant<int, 0>* , c
       //
       if(remainder == 0)
       {
-         return policies::raise_pole_error<mpfr_class>("boost::math::digamma<%1%>(%1%)", 0, (1-x), pol);
+         return policies::raise_pole_error<mpfr_class>("boost::math::digamma<%1%>(%1%)", nullptr, (1-x), pol);
       }
       result = constants::pi<mpfr_class>() / tan(constants::pi<mpfr_class>() * remainder);
    }
@@ -533,12 +549,12 @@ mpfr_class digamma_imp(mpfr_class x, const boost::integral_constant<int, 0>* , c
 // starting guess for Halley iteration:
 //
 template <class Policy>
-inline mpfr_class erf_inv_imp(const mpfr_class& p, const mpfr_class& q, const Policy&, const boost::integral_constant<int, 64>*)
+inline mpfr_class erf_inv_imp(const mpfr_class& p, const mpfr_class& q, const Policy&, const std::integral_constant<int, 64>*)
 {
    BOOST_MATH_STD_USING // for ADL of std names.
 
    mpfr_class result = 0;
-   
+
    if(p <= 0.5)
    {
       //
@@ -554,7 +570,7 @@ inline mpfr_class erf_inv_imp(const mpfr_class& p, const mpfr_class& q, const Po
       // Maximum Deviation Found (actual empfr_classor term at infinite precision) 8.030e-21
       //
       static const float Y = 0.0891314744949340820313f;
-      static const mpfr_class P[] = {    
+      static const mpfr_class P[] = {
          -0.000508781949658280665617,
          -0.00836874819741736770379,
          0.0334806625409744615033,
@@ -564,7 +580,7 @@ inline mpfr_class erf_inv_imp(const mpfr_class& p, const mpfr_class& q, const Po
          0.00822687874676915743155,
          -0.00538772965071242932965
       };
-      static const mpfr_class Q[] = {    
+      static const mpfr_class Q[] = {
          1,
          -0.970005043303290640362,
          -1.56574558234175846809,
@@ -595,7 +611,7 @@ inline mpfr_class erf_inv_imp(const mpfr_class& p, const mpfr_class& q, const Po
       // Maximum Deviation Found (empfr_classor term) 4.811e-20
       //
       static const float Y = 2.249481201171875f;
-      static const mpfr_class P[] = {    
+      static const mpfr_class P[] = {
          -0.202433508355938759655,
          0.105264680699391713268,
          8.37050328343119927838,
@@ -606,7 +622,7 @@ inline mpfr_class erf_inv_imp(const mpfr_class& p, const mpfr_class& q, const Po
          21.1294655448340526258,
          -3.67192254707729348546
       };
-      static const mpfr_class Q[] = {    
+      static const mpfr_class Q[] = {
          1,
          6.24264124854247537712,
          3.9713437953343869095,
@@ -634,7 +650,7 @@ inline mpfr_class erf_inv_imp(const mpfr_class& p, const mpfr_class& q, const Po
       //
       // x(Y+R(x-B))
       //
-      // where Y is a constant, B is the lowest value of x for which 
+      // where Y is a constant, B is the lowest value of x for which
       // the approximation is valid, and R(x-B) is optimised for a low
       // absolute empfr_classor compared to Y.
       //
@@ -648,7 +664,7 @@ inline mpfr_class erf_inv_imp(const mpfr_class& p, const mpfr_class& q, const Po
       {
          // Max empfr_classor found: 1.089051e-20
          static const float Y = 0.807220458984375f;
-         static const mpfr_class P[] = {    
+         static const mpfr_class P[] = {
             -0.131102781679951906451,
             -0.163794047193317060787,
             0.117030156341995252019,
@@ -661,7 +677,7 @@ inline mpfr_class erf_inv_imp(const mpfr_class& p, const mpfr_class& q, const Po
             0.285225331782217055858e-7,
             -0.681149956853776992068e-9
          };
-         static const mpfr_class Q[] = {    
+         static const mpfr_class Q[] = {
             1,
             3.46625407242567245975,
             5.38168345707006855425,
@@ -679,7 +695,7 @@ inline mpfr_class erf_inv_imp(const mpfr_class& p, const mpfr_class& q, const Po
       {
          // Max empfr_classor found: 8.389174e-21
          static const float Y = 0.93995571136474609375f;
-         static const mpfr_class P[] = {    
+         static const mpfr_class P[] = {
             -0.0350353787183177984712,
             -0.00222426529213447927281,
             0.0185573306514231072324,
@@ -690,7 +706,7 @@ inline mpfr_class erf_inv_imp(const mpfr_class& p, const mpfr_class& q, const Po
             -0.230404776911882601748e-9,
             0.266339227425782031962e-11
          };
-         static const mpfr_class Q[] = {    
+         static const mpfr_class Q[] = {
             1,
             1.3653349817554063097,
             0.762059164553623404043,
@@ -707,7 +723,7 @@ inline mpfr_class erf_inv_imp(const mpfr_class& p, const mpfr_class& q, const Po
       {
          // Max empfr_classor found: 1.481312e-19
          static const float Y = 0.98362827301025390625f;
-         static const mpfr_class P[] = {    
+         static const mpfr_class P[] = {
             -0.0167431005076633737133,
             -0.00112951438745580278863,
             0.00105628862152492910091,
@@ -718,7 +734,7 @@ inline mpfr_class erf_inv_imp(const mpfr_class& p, const mpfr_class& q, const Po
             -0.281128735628831791805e-13,
             0.99055709973310326855e-16
          };
-         static const mpfr_class Q[] = {    
+         static const mpfr_class Q[] = {
             1,
             0.591429344886417493481,
             0.138151865749083321638,
@@ -735,7 +751,7 @@ inline mpfr_class erf_inv_imp(const mpfr_class& p, const mpfr_class& q, const Po
       {
          // Max empfr_classor found: 5.697761e-20
          static const float Y = 0.99714565277099609375f;
-         static const mpfr_class P[] = {    
+         static const mpfr_class P[] = {
             -0.0024978212791898131227,
             -0.779190719229053954292e-5,
             0.254723037413027451751e-4,
@@ -745,7 +761,7 @@ inline mpfr_class erf_inv_imp(const mpfr_class& p, const mpfr_class& q, const Po
             0.145596286718675035587e-11,
             -0.116765012397184275695e-17
          };
-         static const mpfr_class Q[] = {    
+         static const mpfr_class Q[] = {
             1,
             0.207123112214422517181,
             0.0169410838120975906478,
@@ -762,7 +778,7 @@ inline mpfr_class erf_inv_imp(const mpfr_class& p, const mpfr_class& q, const Po
       {
          // Max empfr_classor found: 1.279746e-20
          static const float Y = 0.99941349029541015625f;
-         static const mpfr_class P[] = {    
+         static const mpfr_class P[] = {
             -0.000539042911019078575891,
             -0.28398759004727721098e-6,
             0.899465114892291446442e-6,
@@ -772,7 +788,7 @@ inline mpfr_class erf_inv_imp(const mpfr_class& p, const mpfr_class& q, const Po
             0.135880130108924861008e-14,
             -0.348890393399948882918e-21
          };
-         static const mpfr_class Q[] = {    
+         static const mpfr_class Q[] = {
             1,
             0.0845746234001899436914,
             0.00282092984726264681981,
@@ -791,49 +807,53 @@ inline mpfr_class erf_inv_imp(const mpfr_class& p, const mpfr_class& q, const Po
 
 inline mpfr_class bessel_i0(mpfr_class x)
 {
+   #ifdef BOOST_MATH_STANDALONE
+   static_assert(sizeof(x) == 0, "mpfr bessel_i0 can not be calculated in standalone mode");
+   #endif
+
     static const mpfr_class P1[] = {
-        boost::lexical_cast<mpfr_class>("-2.2335582639474375249e+15"),
-        boost::lexical_cast<mpfr_class>("-5.5050369673018427753e+14"),
-        boost::lexical_cast<mpfr_class>("-3.2940087627407749166e+13"),
-        boost::lexical_cast<mpfr_class>("-8.4925101247114157499e+11"),
-        boost::lexical_cast<mpfr_class>("-1.1912746104985237192e+10"),
-        boost::lexical_cast<mpfr_class>("-1.0313066708737980747e+08"),
-        boost::lexical_cast<mpfr_class>("-5.9545626019847898221e+05"),
-        boost::lexical_cast<mpfr_class>("-2.4125195876041896775e+03"),
-        boost::lexical_cast<mpfr_class>("-7.0935347449210549190e+00"),
-        boost::lexical_cast<mpfr_class>("-1.5453977791786851041e-02"),
-        boost::lexical_cast<mpfr_class>("-2.5172644670688975051e-05"),
-        boost::lexical_cast<mpfr_class>("-3.0517226450451067446e-08"),
-        boost::lexical_cast<mpfr_class>("-2.6843448573468483278e-11"),
-        boost::lexical_cast<mpfr_class>("-1.5982226675653184646e-14"),
-        boost::lexical_cast<mpfr_class>("-5.2487866627945699800e-18"),
+        static_cast<mpfr_class>("-2.2335582639474375249e+15"),
+        static_cast<mpfr_class>("-5.5050369673018427753e+14"),
+        static_cast<mpfr_class>("-3.2940087627407749166e+13"),
+        static_cast<mpfr_class>("-8.4925101247114157499e+11"),
+        static_cast<mpfr_class>("-1.1912746104985237192e+10"),
+        static_cast<mpfr_class>("-1.0313066708737980747e+08"),
+        static_cast<mpfr_class>("-5.9545626019847898221e+05"),
+        static_cast<mpfr_class>("-2.4125195876041896775e+03"),
+        static_cast<mpfr_class>("-7.0935347449210549190e+00"),
+        static_cast<mpfr_class>("-1.5453977791786851041e-02"),
+        static_cast<mpfr_class>("-2.5172644670688975051e-05"),
+        static_cast<mpfr_class>("-3.0517226450451067446e-08"),
+        static_cast<mpfr_class>("-2.6843448573468483278e-11"),
+        static_cast<mpfr_class>("-1.5982226675653184646e-14"),
+        static_cast<mpfr_class>("-5.2487866627945699800e-18"),
     };
     static const mpfr_class Q1[] = {
-        boost::lexical_cast<mpfr_class>("-2.2335582639474375245e+15"),
-        boost::lexical_cast<mpfr_class>("7.8858692566751002988e+12"),
-        boost::lexical_cast<mpfr_class>("-1.2207067397808979846e+10"),
-        boost::lexical_cast<mpfr_class>("1.0377081058062166144e+07"),
-        boost::lexical_cast<mpfr_class>("-4.8527560179962773045e+03"),
-        boost::lexical_cast<mpfr_class>("1.0"),
+        static_cast<mpfr_class>("-2.2335582639474375245e+15"),
+        static_cast<mpfr_class>("7.8858692566751002988e+12"),
+        static_cast<mpfr_class>("-1.2207067397808979846e+10"),
+        static_cast<mpfr_class>("1.0377081058062166144e+07"),
+        static_cast<mpfr_class>("-4.8527560179962773045e+03"),
+        static_cast<mpfr_class>("1.0"),
     };
     static const mpfr_class P2[] = {
-        boost::lexical_cast<mpfr_class>("-2.2210262233306573296e-04"),
-        boost::lexical_cast<mpfr_class>("1.3067392038106924055e-02"),
-        boost::lexical_cast<mpfr_class>("-4.4700805721174453923e-01"),
-        boost::lexical_cast<mpfr_class>("5.5674518371240761397e+00"),
-        boost::lexical_cast<mpfr_class>("-2.3517945679239481621e+01"),
-        boost::lexical_cast<mpfr_class>("3.1611322818701131207e+01"),
-        boost::lexical_cast<mpfr_class>("-9.6090021968656180000e+00"),
+        static_cast<mpfr_class>("-2.2210262233306573296e-04"),
+        static_cast<mpfr_class>("1.3067392038106924055e-02"),
+        static_cast<mpfr_class>("-4.4700805721174453923e-01"),
+        static_cast<mpfr_class>("5.5674518371240761397e+00"),
+        static_cast<mpfr_class>("-2.3517945679239481621e+01"),
+        static_cast<mpfr_class>("3.1611322818701131207e+01"),
+        static_cast<mpfr_class>("-9.6090021968656180000e+00"),
     };
     static const mpfr_class Q2[] = {
-        boost::lexical_cast<mpfr_class>("-5.5194330231005480228e-04"),
-        boost::lexical_cast<mpfr_class>("3.2547697594819615062e-02"),
-        boost::lexical_cast<mpfr_class>("-1.1151759188741312645e+00"),
-        boost::lexical_cast<mpfr_class>("1.3982595353892851542e+01"),
-        boost::lexical_cast<mpfr_class>("-6.0228002066743340583e+01"),
-        boost::lexical_cast<mpfr_class>("8.5539563258012929600e+01"),
-        boost::lexical_cast<mpfr_class>("-3.1446690275135491500e+01"),
-        boost::lexical_cast<mpfr_class>("1.0"),
+        static_cast<mpfr_class>("-5.5194330231005480228e-04"),
+        static_cast<mpfr_class>("3.2547697594819615062e-02"),
+        static_cast<mpfr_class>("-1.1151759188741312645e+00"),
+        static_cast<mpfr_class>("1.3982595353892851542e+01"),
+        static_cast<mpfr_class>("-6.0228002066743340583e+01"),
+        static_cast<mpfr_class>("8.5539563258012929600e+01"),
+        static_cast<mpfr_class>("-3.1446690275135491500e+01"),
+        static_cast<mpfr_class>("1.0"),
     };
     mpfr_class value, factor, r;
 
@@ -946,7 +966,7 @@ inline mpfr_class bessel_i1(mpfr_class x)
 
 }
 
-template<> struct is_convertible<long double, mpfr_class> : public boost::false_type{};
+template<> struct std::is_convertible<long double, mpfr_class> : public std::false_type{};
 
 }
 

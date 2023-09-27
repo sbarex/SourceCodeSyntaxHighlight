@@ -273,7 +273,6 @@ interval<T, Policies> nth_root(interval<T, Policies> const &x, int k)
   if (interval_lib::detail::test_input(x)) return I::empty();
   assert(k > 0);
   if (k == 1) return x;
-  typename Policies::rounding rnd;
   typedef typename interval_lib::unprotect<I>::type R;
   if (!interval_lib::user::is_pos(x.upper())) {
     if (interval_lib::user::is_zero(x.upper())) {

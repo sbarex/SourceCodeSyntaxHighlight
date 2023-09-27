@@ -1,5 +1,5 @@
 //  Copyright John Maddock 2007.
-
+//  Copyright Matt Borland 2021.
 //  Use, modification and distribution are subject to the
 //  Boost Software License, Version 1.0. (See accompanying file
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -25,84 +25,113 @@ as defined above, and has member functions "scale" and "location".
 #pragma once
 #endif
 
-#include <boost/mpl/has_xxx.hpp>
-#include <boost/type_traits/integral_constant.hpp>
+#include <type_traits>
 
 namespace boost{ namespace math{ namespace tools{
 
 namespace detail{
 
-BOOST_MPL_HAS_XXX_TRAIT_NAMED_DEF(has_value_type, value_type, true)
-BOOST_MPL_HAS_XXX_TRAIT_NAMED_DEF(has_policy_type, policy_type, true)
-BOOST_MPL_HAS_XXX_TRAIT_NAMED_DEF(has_backend_type, backend_type, true)
+#define BOOST_MATH_HAS_NAMED_TRAIT(trait, name)                         \
+template <typename T>                                                   \
+class trait                                                             \
+{                                                                       \
+private:                                                                \
+   using yes = char;                                                    \
+   struct no { char x[2]; };                                            \
+                                                                        \
+   template <typename U>                                                \
+   static yes test(typename U::name* = nullptr);                        \
+                                                                        \
+   template <typename U>                                                \
+   static no test(...);                                                 \
+                                                                        \
+public:                                                                 \
+   static constexpr bool value = (sizeof(test<T>(0)) == sizeof(char));  \
+};
 
-template<class D>
+BOOST_MATH_HAS_NAMED_TRAIT(has_value_type, value_type)
+BOOST_MATH_HAS_NAMED_TRAIT(has_policy_type, policy_type)
+BOOST_MATH_HAS_NAMED_TRAIT(has_backend_type, backend_type)
+
+// C++17-esque helpers
+#if defined(__cpp_variable_templates) && __cpp_variable_templates >= 201304L
+template <typename T>
+constexpr bool has_value_type_v = has_value_type<T>::value;
+
+template <typename T>
+constexpr bool has_policy_type_v = has_policy_type<T>::value;
+
+template <typename T>
+constexpr bool has_backend_type_v = has_backend_type<T>::value;
+#endif
+
+template <typename D>
 char cdf(const D& ...);
-template<class D>
+template <typename D>
 char quantile(const D& ...);
 
-template <class D>
+template <typename D>
 struct has_cdf
 {
    static D d;
-   BOOST_STATIC_CONSTANT(bool, value = sizeof(cdf(d, 0.0f)) != 1);
+   static constexpr bool value = sizeof(cdf(d, 0.0f)) != 1;
 };
 
-template <class D>
+template <typename D>
 struct has_quantile
 {
    static D d;
-   BOOST_STATIC_CONSTANT(bool, value = sizeof(quantile(d, 0.0f)) != 1);
+   static constexpr bool value = sizeof(quantile(d, 0.0f)) != 1;
 };
 
-template <class D>
+template <typename D>
 struct is_distribution_imp
 {
-   BOOST_STATIC_CONSTANT(bool, value = 
+   static constexpr bool value =
       has_quantile<D>::value 
       && has_cdf<D>::value
       && has_value_type<D>::value
-      && has_policy_type<D>::value);
+      && has_policy_type<D>::value;
 };
 
-template <class sig, sig val>
+template <typename sig, sig val>
 struct result_tag{};
 
-template <class D>
+template <typename D>
 double test_has_location(const volatile result_tag<typename D::value_type (D::*)()const, &D::location>*);
-template <class D>
+template <typename D>
 char test_has_location(...);
 
-template <class D>
+template <typename D>
 double test_has_scale(const volatile result_tag<typename D::value_type (D::*)()const, &D::scale>*);
-template <class D>
+template <typename D>
 char test_has_scale(...);
 
-template <class D, bool b>
+template <typename D, bool b>
 struct is_scaled_distribution_helper
 {
-   BOOST_STATIC_CONSTANT(bool, value = false);
+   static constexpr bool value = false;
 };
 
-template <class D>
+template <typename D>
 struct is_scaled_distribution_helper<D, true>
 {
-   BOOST_STATIC_CONSTANT(bool, value = 
+   static constexpr bool value = 
       (sizeof(test_has_location<D>(0)) != 1) 
       && 
-      (sizeof(test_has_scale<D>(0)) != 1));
+      (sizeof(test_has_scale<D>(0)) != 1);
 };
 
-template <class D>
+template <typename D>
 struct is_scaled_distribution_imp
 {
-   BOOST_STATIC_CONSTANT(bool, value = (::boost::math::tools::detail::is_scaled_distribution_helper<D, ::boost::math::tools::detail::is_distribution_imp<D>::value>::value));
+   static constexpr bool value = (::boost::math::tools::detail::is_scaled_distribution_helper<D, ::boost::math::tools::detail::is_distribution_imp<D>::value>::value);
 };
 
 } // namespace detail
 
-template <class T> struct is_distribution : public boost::integral_constant<bool, ::boost::math::tools::detail::is_distribution_imp<T>::value> {};
-template <class T> struct is_scaled_distribution : public boost::integral_constant<bool, ::boost::math::tools::detail::is_scaled_distribution_imp<T>::value> {};
+template <typename T> struct is_distribution : public std::integral_constant<bool, ::boost::math::tools::detail::is_distribution_imp<T>::value> {};
+template <typename T> struct is_scaled_distribution : public std::integral_constant<bool, ::boost::math::tools::detail::is_scaled_distribution_imp<T>::value> {};
 
 }}}
 

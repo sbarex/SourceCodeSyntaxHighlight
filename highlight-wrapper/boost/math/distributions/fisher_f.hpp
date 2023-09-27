@@ -54,6 +54,11 @@ private:
 
 typedef fisher_f_distribution<double> fisher_f;
 
+#ifdef __cpp_deduction_guides
+template <class RealType>
+fisher_f_distribution(RealType,RealType)->fisher_f_distribution<typename boost::math::tools::promote_args<RealType>::type>;
+#endif
+
 template <class RealType, class Policy>
 inline const std::pair<RealType, RealType> range(const fisher_f_distribution<RealType, Policy>& /*dist*/)
 { // Range of permissible values for random variable x.
@@ -301,10 +306,10 @@ inline RealType mode(const fisher_f_distribution<RealType, Policy>& dist)
          && detail::check_df(
             function, df2, &error_result, Policy()))
       return error_result;
-   if(df2 <= 2)
+   if(df1 <= 2)
    {
       return policies::raise_domain_error<RealType>(
-         function, "Second degree of freedom was %1% but must be > 2 in order for the distribution to have a mode.", df2, Policy());
+         function, "First degree of freedom was %1% but must be > 2 in order for the distribution to have a mode.", df1, Policy());
    }
    return df2 * (df1 - 2) / (df1 * (df2 + 2));
 }

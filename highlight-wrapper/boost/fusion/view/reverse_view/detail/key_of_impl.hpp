@@ -1,5 +1,6 @@
 /*=============================================================================
     Copyright (c) 2009 Christopher Schmidt
+    Copyright (c) 2021-2022 Denis Mikhailov
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -10,6 +11,7 @@
 
 #include <boost/fusion/support/config.hpp>
 #include <boost/fusion/iterator/key_of.hpp>
+#include <boost/fusion/iterator/prior.hpp>
 
 namespace boost { namespace fusion { namespace extension
 {
@@ -21,8 +23,15 @@ namespace boost { namespace fusion { namespace extension
     {
         template <typename It>
         struct apply
-          : result_of::key_of<typename It::it_type>
-        {};
+        {
+            typedef typename
+                result_of::key_of<
+                    typename result_of::prior<
+                        typename It::first_type
+                    >::type
+                >::type
+            type;
+        };
     };
 }}}
 

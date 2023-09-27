@@ -26,6 +26,11 @@
 #include <boost/fusion/view/nview/detail/distance_impl.hpp>
 #include <boost/fusion/view/nview/detail/equal_to_impl.hpp>
 
+#ifdef _MSC_VER
+#  pragma warning(push)
+#  pragma warning(disable: 4512) // assignment operator could not be generated.
+#endif
+
 namespace boost { namespace fusion
 {
     struct nview_iterator_tag;
@@ -46,12 +51,13 @@ namespace boost { namespace fusion
           : seq(in_seq) {}
 
         Sequence& seq;
-
-        // silence MSVC warning C4512: assignment operator could not be generated
-        BOOST_DELETED_FUNCTION(nview_iterator& operator= (nview_iterator const&))
     };
 
 }}
+
+#ifdef _MSC_VER
+#  pragma warning(pop)
+#endif
 
 #ifdef BOOST_FUSION_WORKAROUND_FOR_LWG_2408
 namespace std

@@ -26,14 +26,14 @@
 #include <boost/config.hpp>
 #include <boost/range/begin.hpp>
 #include <boost/range/end.hpp>
-#include <boost/mpl/identity.hpp>      // for identity
-#include <boost/utility/enable_if.hpp> // for boost::disable_if
+#include <boost/type_traits/type_identity.hpp> // for boost::type_identity
+#include <boost/core/enable_if.hpp>            // for boost::disable_if
 
 namespace boost { namespace algorithm {
 
 /// \fn clamp ( T const& val, 
-///               typename boost::mpl::identity<T>::type const & lo, 
-///               typename boost::mpl::identity<T>::type const & hi, Pred p )
+///               typename boost::type_identity<T>::type const & lo, 
+///               typename boost::type_identity<T>::type const & hi, Pred p )
 /// \return the value "val" brought into the range [ lo, hi ]
 ///     using the comparison predicate p.
 ///     If p ( val, lo ) return lo.
@@ -48,8 +48,8 @@ namespace boost { namespace algorithm {
 ///
   template<typename T, typename Pred> 
   BOOST_CXX14_CONSTEXPR T const & clamp ( T const& val, 
-    typename boost::mpl::identity<T>::type const & lo, 
-    typename boost::mpl::identity<T>::type const & hi, Pred p )
+    typename boost::type_identity<T>::type const & lo, 
+    typename boost::type_identity<T>::type const & hi, Pred p )
   {
 //    assert ( !p ( hi, lo ));    // Can't assert p ( lo, hi ) b/c they might be equal
     return p ( val, lo ) ? lo : p ( hi, val ) ? hi : val;
@@ -57,8 +57,8 @@ namespace boost { namespace algorithm {
 
 
 /// \fn clamp ( T const& val, 
-///               typename boost::mpl::identity<T>::type const & lo, 
-///               typename boost::mpl::identity<T>::type const & hi )
+///               typename boost::identity<T>::type const & lo, 
+///               typename boost::identity<T>::type const & hi )
 /// \return the value "val" brought into the range [ lo, hi ].
 ///     If the value is less than lo, return lo.
 ///     If the value is greater than "hi", return hi.
@@ -70,8 +70,8 @@ namespace boost { namespace algorithm {
 ///
   template<typename T> 
   BOOST_CXX14_CONSTEXPR T const& clamp ( const T& val, 
-    typename boost::mpl::identity<T>::type const & lo, 
-    typename boost::mpl::identity<T>::type const & hi )
+    typename boost::type_identity<T>::type const & lo, 
+    typename boost::type_identity<T>::type const & hi )
   {
     return boost::algorithm::clamp ( val, lo, hi, std::less<T>());
   } 

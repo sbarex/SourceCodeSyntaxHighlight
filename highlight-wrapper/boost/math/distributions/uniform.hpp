@@ -140,6 +140,13 @@ namespace boost{ namespace math
 
   typedef uniform_distribution<double> uniform;
 
+  #ifdef __cpp_deduction_guides
+  template <class RealType>
+  uniform_distribution(RealType)->uniform_distribution<typename boost::math::tools::promote_args<RealType>::type>;
+  template <class RealType>
+  uniform_distribution(RealType,RealType)->uniform_distribution<typename boost::math::tools::promote_args<RealType>::type>;
+  #endif
+
   template <class RealType, class Policy>
   inline const std::pair<RealType, RealType> range(const uniform_distribution<RealType, Policy>& /* dist */)
   { // Range of permissible values for random variable x.
@@ -355,7 +362,7 @@ namespace boost{ namespace math
     RealType lower = dist.lower();
     RealType upper = dist.upper();
     RealType result = 0;  // of checks.
-    if(false == detail::check_uniform("boost::math::kurtosis_execess(const uniform_distribution<%1%>&)", lower, upper, &result, Policy()))
+    if(false == detail::check_uniform("boost::math::kurtosis_excess(const uniform_distribution<%1%>&)", lower, upper, &result, Policy()))
     {
       return result;
     }

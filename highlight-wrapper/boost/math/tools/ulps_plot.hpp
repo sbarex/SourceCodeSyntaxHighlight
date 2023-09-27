@@ -14,11 +14,14 @@
 #include <string>
 #include <list>
 #include <random>
+#include <limits>
 #include <stdexcept>
+#include <boost/math/tools/is_standalone.hpp>
 #include <boost/math/tools/condition_numbers.hpp>
-#include <boost/random/uniform_real_distribution.hpp>
-#include <boost/algorithm/string/predicate.hpp>
 
+#ifndef BOOST_MATH_STANDALONE
+#include <boost/random/uniform_real_distribution.hpp>
+#endif
 
 // Design of this function comes from:
 // https://blogs.mathworks.com/cleve/2017/01/23/ulps-plots-reveal-math-function-accurary/
@@ -109,7 +112,7 @@ public:
         }
 
         PreciseReal worst_ulp_distance = 0;
-        PreciseReal min_y = std::numeric_limits<PreciseReal>::max();
+        PreciseReal min_y = (std::numeric_limits<PreciseReal>::max)();
         PreciseReal max_y = std::numeric_limits<PreciseReal>::lowest();
         for (auto const & ulp_vec : plot.ulp_list_)
         {
@@ -151,7 +154,7 @@ public:
             }
         }
 
-        int height = static_cast<int>(floor(double(plot.width_)/1.61803));
+        int height = static_cast<int>(floor(static_cast<double>(plot.width_)/1.61803));
         int margin_top = 40;
         int margin_left = 25;
         if (plot.title_.size() == 0)
@@ -209,11 +212,11 @@ public:
         else
         {
             std::vector<double> ys{-3.0, -2.5, -2.0, -1.5, -1.0, -0.5, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0};
-            for (size_t i = 0; i < ys.size(); ++i)
+            for (double & i : ys)
             {
-                if (min_y <= ys[i] && ys[i] <= max_y)
+                if (min_y <= i && i <= max_y)
                 {
-                    PreciseReal y_cord_dataspace = ys[i];
+                    PreciseReal y_cord_dataspace = i;
                     PreciseReal y = y_scale(y_cord_dataspace);
                     fs << "<line x1='0' y1='" << y << "' x2='" << graph_width
                        << "' y2='" << y
@@ -449,10 +452,22 @@ ulps_plot<F, PreciseReal, CoarseReal>& ulps_plot<F, PreciseReal, CoarseReal>::ul
     return *this;
 }
 
+namespace detail{
+bool ends_with(std::string const& filename, std::string const& suffix)
+{
+    if(filename.size() < suffix.size())
+    {
+        return false;
+    }
+
+    return std::equal(std::begin(suffix), std::end(suffix), std::end(filename) - suffix.size());
+}
+}
+
 template<class F, typename PreciseReal, typename CoarseReal>
 void ulps_plot<F, PreciseReal, CoarseReal>::write(std::string const & filename) const
 {
-    if (!boost::algorithm::ends_with(filename, ".svg"))
+    if(!boost::math::tools::detail::ends_with(filename, ".svg"))
     {
         throw std::logic_error("Only svg files are supported at this time.");
     }
@@ -485,8 +500,16 @@ ulps_plot<F, PreciseReal, CoarseReal>::ulps_plot(F hi_acc_impl, CoarseReal a, Co
         std::random_device rd;
         gen.seed(rd());
     }
+
     // Boost's uniform_real_distribution can generate quad and multiprecision random numbers; std's cannot:
+    #ifndef BOOST_MATH_STANDALONE
     boost::random::uniform_real_distribution<PreciseReal> dis(static_cast<PreciseReal>(a), static_cast<PreciseReal>(b));
+    #else
+    // Use std::random in standalone mode if it is a type that the standard library can support (float, double, or long double)
+    static_assert(std::numeric_limits<PreciseReal>::digits10 <= std::numeric_limits<long double>::digits10, "Standalone mode does not support types with precision that exceeds long double");
+    std::uniform_real_distribution<PreciseReal> dis(static_cast<PreciseReal>(a), static_cast<PreciseReal>(b));
+    #endif
+
     precise_abscissas_.resize(samples);
     coarse_abscissas_.resize(samples);
 
@@ -560,7 +583,7 @@ ulps_plot<F, PreciseReal, CoarseReal>& ulps_plot<F, PreciseReal, CoarseReal>::ad
         PreciseReal y_hi_acc = precise_ordinates_[i];
         PreciseReal y_lo_acc = static_cast<PreciseReal>(g(coarse_abscissas_[i]));
         PreciseReal absy = abs(y_hi_acc);
-        PreciseReal dist = static_cast<PreciseReal>(nextafter(static_cast<CoarseReal>(absy), std::numeric_limits<CoarseReal>::max()) - static_cast<CoarseReal>(absy));
+        PreciseReal dist = static_cast<PreciseReal>(nextafter(static_cast<CoarseReal>(absy), (std::numeric_limits<CoarseReal>::max)()) - static_cast<CoarseReal>(absy));
         ulps[i] = static_cast<CoarseReal>((y_lo_acc - y_hi_acc)/dist);
     }
     ulp_list_.emplace_back(ulps);

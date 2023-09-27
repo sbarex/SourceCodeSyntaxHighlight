@@ -52,11 +52,6 @@
 #include <boost/math/tools/roots.hpp> // for root finding.
 #include <boost/math/distributions/detail/inv_discrete_quantile.hpp>
 
-#include <boost/type_traits/is_floating_point.hpp>
-#include <boost/type_traits/is_integral.hpp>
-#include <boost/type_traits/is_same.hpp>
-#include <boost/mpl/if.hpp>
-
 #include <limits> // using std::numeric_limits;
 #include <utility>
 
@@ -181,7 +176,7 @@ namespace boost
         // Discrete Distributions" Yong CAI and K. KRISHNAMOORTHY
         // http://www.ucs.louisiana.edu/~kxk4695/Discrete_new.pdf
         //
-        return ibeta_inv(successes, failures + 1, alpha, static_cast<RealType*>(0), Policy());
+        return ibeta_inv(successes, failures + 1, alpha, static_cast<RealType*>(nullptr), Policy());
       } // find_lower_bound_on_p
 
       static RealType find_upper_bound_on_p(
@@ -209,7 +204,7 @@ namespace boost
         // Discrete Distributions" Yong CAI and K. KRISHNAMOORTHY
         // http://www.ucs.louisiana.edu/~kxk4695/Discrete_new.pdf
         //
-        return ibetac_inv(successes, failures, alpha, static_cast<RealType*>(0), Policy());
+        return ibetac_inv(successes, failures, alpha, static_cast<RealType*>(nullptr), Policy());
       } // find_upper_bound_on_p
 
       // Estimate number of trials :
@@ -255,6 +250,11 @@ namespace boost
     }; // template <class RealType, class Policy> class negative_binomial_distribution
 
     typedef negative_binomial_distribution<double> negative_binomial; // Reserved name of type double.
+
+    #ifdef __cpp_deduction_guides
+    template <class RealType>
+    negative_binomial_distribution(RealType,RealType)->negative_binomial_distribution<typename boost::math::tools::promote_args<RealType>::type>;
+    #endif
 
     template <class RealType, class Policy>
     inline const std::pair<RealType, RealType> range(const negative_binomial_distribution<RealType, Policy>& /* dist */)
@@ -492,7 +492,7 @@ namespace boost
       //
       // Max iterations permitted:
       //
-      boost::uintmax_t max_iter = policies::get_max_root_iterations<Policy>();
+      std::uintmax_t max_iter = policies::get_max_root_iterations<Policy>();
       typedef typename Policy::discrete_quantile_type discrete_type;
       return detail::inverse_discrete_quantile(
          dist,
@@ -579,7 +579,7 @@ namespace boost
        //
        // Max iterations permitted:
        //
-       boost::uintmax_t max_iter = policies::get_max_root_iterations<Policy>();
+       std::uintmax_t max_iter = policies::get_max_root_iterations<Policy>();
        typedef typename Policy::discrete_quantile_type discrete_type;
        return detail::inverse_discrete_quantile(
           dist,

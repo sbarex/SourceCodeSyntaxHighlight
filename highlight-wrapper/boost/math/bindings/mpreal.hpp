@@ -11,12 +11,11 @@
 #ifndef BOOST_MATH_MPREAL_BINDINGS_HPP
 #define BOOST_MATH_MPREAL_BINDINGS_HPP
 
-#include <boost/config.hpp>
-#include <boost/lexical_cast.hpp>
+#include <type_traits>
 
-#ifdef BOOST_MSVC
+#ifdef _MSC_VER
 //
-// We get a lot of warnings from the gmp, mpfr and gmpfrxx headers, 
+// We get a lot of warnings from the gmp, mpfr and gmpfrxx headers,
 // disable them here, so we only see warnings from *our* code:
 //
 #pragma warning(push)
@@ -25,7 +24,7 @@
 
 #include <mpreal.h>
 
-#ifdef BOOST_MSVC
+#ifdef _MSC_VER
 #pragma warning(pop)
 #endif
 
@@ -36,6 +35,10 @@
 #include <boost/math/special_functions/math_fwd.hpp>
 #include <boost/math/bindings/detail/big_digamma.hpp>
 #include <boost/math/bindings/detail/big_lanczos.hpp>
+#include <boost/math/tools/config.hpp>
+#ifndef BOOST_MATH_STANDALONE
+#include <boost/lexical_cast.hpp>
+#endif
 
 namespace mpfr{
 
@@ -229,7 +232,7 @@ struct mpreal_lanczos
          return lanczos61UDT::lanczos_sum_near_2(z);
    }
    static mpfr::mpreal g()
-   { 
+   {
       unsigned long p = mpfr::mpreal::get_default_prec();
       if(p <= 72)
          return lanczos13UDT::g();
@@ -292,7 +295,7 @@ inline mpfr::mpreal real_cast<mpfr::mpreal, long long>(long long t)
    }
    while(t)
    {
-      result += ldexp((double)(t & 0xffffL), expon);
+      result += ldexp(static_cast<double>(t & 0xffffL), expon);
       expon += 32;
       t >>= 32;
    }
@@ -402,6 +405,10 @@ inline mpfr::mpreal skewness(const extreme_value_distribution<mpfr::mpreal, Poli
    // This is 12 * sqrt(6) * zeta(3) / pi^3:
    // See http://mathworld.wolfram.com/ExtremeValueDistribution.html
    //
+   #ifdef BOOST_MATH_STANDALONE
+   static_assert(sizeof(Policy) == 0, "mpreal skewness can not be calculated in standalone mode");
+   #endif
+
    return boost::lexical_cast<mpfr::mpreal>("1.1395470994046486574927930193898461120875997958366");
 }
 
@@ -409,6 +416,10 @@ template <class Policy>
 inline mpfr::mpreal skewness(const rayleigh_distribution<mpfr::mpreal, Policy>& /*dist*/)
 {
   // using namespace boost::math::constants;
+  #ifdef BOOST_MATH_STANDALONE
+  static_assert(sizeof(Policy) == 0, "mpreal skewness can not be calculated in standalone mode");
+  #endif
+
   return boost::lexical_cast<mpfr::mpreal>("0.63111065781893713819189935154422777984404221106391");
   // Computed using NTL at 150 bit, about 50 decimal digits.
   // return 2 * root_pi<RealType>() * pi_minus_three<RealType>() / pow23_four_minus_pi<RealType>();
@@ -418,6 +429,10 @@ template <class Policy>
 inline mpfr::mpreal kurtosis(const rayleigh_distribution<mpfr::mpreal, Policy>& /*dist*/)
 {
   // using namespace boost::math::constants;
+  #ifdef BOOST_MATH_STANDALONE
+  static_assert(sizeof(Policy) == 0, "mpreal kurtosis can not be calculated in standalone mode");
+  #endif
+
   return boost::lexical_cast<mpfr::mpreal>("3.2450893006876380628486604106197544154170667057995");
   // Computed using NTL at 150 bit, about 50 decimal digits.
   // return 3 - (6 * pi<RealType>() * pi<RealType>() - 24 * pi<RealType>() + 16) /
@@ -429,6 +444,10 @@ inline mpfr::mpreal kurtosis_excess(const rayleigh_distribution<mpfr::mpreal, Po
 {
   //using namespace boost::math::constants;
   // Computed using NTL at 150 bit, about 50 decimal digits.
+  #ifdef BOOST_MATH_STANDALONE
+  static_assert(sizeof(Policy) == 0, "mpreal excess kurtosis can not be calculated in standalone mode");
+  #endif
+
   return boost::lexical_cast<mpfr::mpreal>("0.2450893006876380628486604106197544154170667057995");
   // return -(6 * pi<RealType>() * pi<RealType>() - 24 * pi<RealType>() + 16) /
   //   (four_minus_pi<RealType>() * four_minus_pi<RealType>());
@@ -440,7 +459,7 @@ namespace detail{
 // Version of Digamma accurate to ~100 decimal digits.
 //
 template <class Policy>
-mpfr::mpreal digamma_imp(mpfr::mpreal x, const boost::integral_constant<int, 0>* , const Policy& pol)
+mpfr::mpreal digamma_imp(mpfr::mpreal x, const std::integral_constant<int, 0>* , const Policy& pol)
 {
    //
    // This handles reflection of negative arguments, and all our
@@ -468,7 +487,7 @@ mpfr::mpreal digamma_imp(mpfr::mpreal x, const boost::integral_constant<int, 0>*
       //
       if(remainder == 0)
       {
-         return policies::raise_pole_error<mpfr::mpreal>("boost::math::digamma<%1%>(%1%)", 0, (1-x), pol);
+         return policies::raise_pole_error<mpfr::mpreal>("boost::math::digamma<%1%>(%1%)", nullptr, (1-x), pol);
       }
       result = constants::pi<mpfr::mpreal>() / tan(constants::pi<mpfr::mpreal>() * remainder);
    }
@@ -480,12 +499,12 @@ mpfr::mpreal digamma_imp(mpfr::mpreal x, const boost::integral_constant<int, 0>*
 // starting guess for Halley iteration:
 //
 template <class Policy>
-mpfr::mpreal erf_inv_imp(const mpfr::mpreal& p, const mpfr::mpreal& q, const Policy&, const boost::integral_constant<int, 64>*)
+mpfr::mpreal erf_inv_imp(const mpfr::mpreal& p, const mpfr::mpreal& q, const Policy&, const std::integral_constant<int, 64>*)
 {
    BOOST_MATH_STD_USING // for ADL of std names.
 
    mpfr::mpreal result = 0;
-   
+
    if(p <= 0.5)
    {
       //
@@ -501,7 +520,7 @@ mpfr::mpreal erf_inv_imp(const mpfr::mpreal& p, const mpfr::mpreal& q, const Pol
       // Maximum Deviation Found (actual empfr_classor term at infinite precision) 8.030e-21
       //
       static const float Y = 0.0891314744949340820313f;
-      static const mpfr::mpreal P[] = {    
+      static const mpfr::mpreal P[] = {
          -0.000508781949658280665617,
          -0.00836874819741736770379,
          0.0334806625409744615033,
@@ -511,7 +530,7 @@ mpfr::mpreal erf_inv_imp(const mpfr::mpreal& p, const mpfr::mpreal& q, const Pol
          0.00822687874676915743155,
          -0.00538772965071242932965
       };
-      static const mpfr::mpreal Q[] = {    
+      static const mpfr::mpreal Q[] = {
          1,
          -0.970005043303290640362,
          -1.56574558234175846809,
@@ -542,7 +561,7 @@ mpfr::mpreal erf_inv_imp(const mpfr::mpreal& p, const mpfr::mpreal& q, const Pol
       // Maximum Deviation Found (empfr_classor term) 4.811e-20
       //
       static const float Y = 2.249481201171875f;
-      static const mpfr::mpreal P[] = {    
+      static const mpfr::mpreal P[] = {
          -0.202433508355938759655,
          0.105264680699391713268,
          8.37050328343119927838,
@@ -553,7 +572,7 @@ mpfr::mpreal erf_inv_imp(const mpfr::mpreal& p, const mpfr::mpreal& q, const Pol
          21.1294655448340526258,
          -3.67192254707729348546
       };
-      static const mpfr::mpreal Q[] = {    
+      static const mpfr::mpreal Q[] = {
          1,
          6.24264124854247537712,
          3.9713437953343869095,
@@ -581,7 +600,7 @@ mpfr::mpreal erf_inv_imp(const mpfr::mpreal& p, const mpfr::mpreal& q, const Pol
       //
       // x(Y+R(x-B))
       //
-      // where Y is a constant, B is the lowest value of x for which 
+      // where Y is a constant, B is the lowest value of x for which
       // the approximation is valid, and R(x-B) is optimised for a low
       // absolute empfr_classor compared to Y.
       //
@@ -595,7 +614,7 @@ mpfr::mpreal erf_inv_imp(const mpfr::mpreal& p, const mpfr::mpreal& q, const Pol
       {
          // Max empfr_classor found: 1.089051e-20
          static const float Y = 0.807220458984375f;
-         static const mpfr::mpreal P[] = {    
+         static const mpfr::mpreal P[] = {
             -0.131102781679951906451,
             -0.163794047193317060787,
             0.117030156341995252019,
@@ -608,7 +627,7 @@ mpfr::mpreal erf_inv_imp(const mpfr::mpreal& p, const mpfr::mpreal& q, const Pol
             0.285225331782217055858e-7,
             -0.681149956853776992068e-9
          };
-         static const mpfr::mpreal Q[] = {    
+         static const mpfr::mpreal Q[] = {
             1,
             3.46625407242567245975,
             5.38168345707006855425,
@@ -626,7 +645,7 @@ mpfr::mpreal erf_inv_imp(const mpfr::mpreal& p, const mpfr::mpreal& q, const Pol
       {
          // Max empfr_classor found: 8.389174e-21
          static const float Y = 0.93995571136474609375f;
-         static const mpfr::mpreal P[] = {    
+         static const mpfr::mpreal P[] = {
             -0.0350353787183177984712,
             -0.00222426529213447927281,
             0.0185573306514231072324,
@@ -637,7 +656,7 @@ mpfr::mpreal erf_inv_imp(const mpfr::mpreal& p, const mpfr::mpreal& q, const Pol
             -0.230404776911882601748e-9,
             0.266339227425782031962e-11
          };
-         static const mpfr::mpreal Q[] = {    
+         static const mpfr::mpreal Q[] = {
             1,
             1.3653349817554063097,
             0.762059164553623404043,
@@ -654,7 +673,7 @@ mpfr::mpreal erf_inv_imp(const mpfr::mpreal& p, const mpfr::mpreal& q, const Pol
       {
          // Max empfr_classor found: 1.481312e-19
          static const float Y = 0.98362827301025390625f;
-         static const mpfr::mpreal P[] = {    
+         static const mpfr::mpreal P[] = {
             -0.0167431005076633737133,
             -0.00112951438745580278863,
             0.00105628862152492910091,
@@ -665,7 +684,7 @@ mpfr::mpreal erf_inv_imp(const mpfr::mpreal& p, const mpfr::mpreal& q, const Pol
             -0.281128735628831791805e-13,
             0.99055709973310326855e-16
          };
-         static const mpfr::mpreal Q[] = {    
+         static const mpfr::mpreal Q[] = {
             1,
             0.591429344886417493481,
             0.138151865749083321638,
@@ -682,7 +701,7 @@ mpfr::mpreal erf_inv_imp(const mpfr::mpreal& p, const mpfr::mpreal& q, const Pol
       {
          // Max empfr_classor found: 5.697761e-20
          static const float Y = 0.99714565277099609375f;
-         static const mpfr::mpreal P[] = {    
+         static const mpfr::mpreal P[] = {
             -0.0024978212791898131227,
             -0.779190719229053954292e-5,
             0.254723037413027451751e-4,
@@ -692,7 +711,7 @@ mpfr::mpreal erf_inv_imp(const mpfr::mpreal& p, const mpfr::mpreal& q, const Pol
             0.145596286718675035587e-11,
             -0.116765012397184275695e-17
          };
-         static const mpfr::mpreal Q[] = {    
+         static const mpfr::mpreal Q[] = {
             1,
             0.207123112214422517181,
             0.0169410838120975906478,
@@ -709,7 +728,7 @@ mpfr::mpreal erf_inv_imp(const mpfr::mpreal& p, const mpfr::mpreal& q, const Pol
       {
          // Max empfr_classor found: 1.279746e-20
          static const float Y = 0.99941349029541015625f;
-         static const mpfr::mpreal P[] = {    
+         static const mpfr::mpreal P[] = {
             -0.000539042911019078575891,
             -0.28398759004727721098e-6,
             0.899465114892291446442e-6,
@@ -719,7 +738,7 @@ mpfr::mpreal erf_inv_imp(const mpfr::mpreal& p, const mpfr::mpreal& q, const Pol
             0.135880130108924861008e-14,
             -0.348890393399948882918e-21
          };
-         static const mpfr::mpreal Q[] = {    
+         static const mpfr::mpreal Q[] = {
             1,
             0.0845746234001899436914,
             0.00282092984726264681981,
@@ -738,6 +757,10 @@ mpfr::mpreal erf_inv_imp(const mpfr::mpreal& p, const mpfr::mpreal& q, const Pol
 
 inline mpfr::mpreal bessel_i0(mpfr::mpreal x)
 {
+   #ifdef BOOST_MATH_STANDALONE
+   static_assert(sizeof(x) == 0, "mpreal bessel_i0 can not be calculated in standalone mode");
+   #endif
+
     static const mpfr::mpreal P1[] = {
         boost::lexical_cast<mpfr::mpreal>("-2.2335582639474375249e+15"),
         boost::lexical_cast<mpfr::mpreal>("-5.5050369673018427753e+14"),

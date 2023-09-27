@@ -97,6 +97,13 @@ private:
 
 typedef inverse_chi_squared_distribution<double> inverse_chi_squared;
 
+#ifdef __cpp_deduction_guides
+template <class RealType>
+inverse_chi_squared_distribution(RealType)->inverse_chi_squared_distribution<typename boost::math::tools::promote_args<RealType>::type>;
+template <class RealType>
+inverse_chi_squared_distribution(RealType,RealType)->inverse_chi_squared_distribution<typename boost::math::tools::promote_args<RealType>::type>;
+#endif
+
 template <class RealType, class Policy>
 inline const std::pair<RealType, RealType> range(const inverse_chi_squared_distribution<RealType, Policy>& /*dist*/)
 {  // Range of permissible values for random variable x.

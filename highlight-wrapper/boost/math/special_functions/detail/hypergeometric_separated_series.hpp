@@ -17,7 +17,7 @@
   {
     BOOST_MATH_STD_USING
 
-    boost::uintmax_t max_iter = policies::get_max_series_iterations<Policy>();
+    std::uintmax_t max_iter = policies::get_max_series_iterations<Policy>();
     const T factor = policies::get_epsilon<T, Policy>();
 
     T denom = 1, numer = 1;

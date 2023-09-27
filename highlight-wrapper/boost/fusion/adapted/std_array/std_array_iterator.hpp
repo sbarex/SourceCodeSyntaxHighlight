@@ -19,6 +19,11 @@
 #include <boost/fusion/iterator/iterator_facade.hpp>
 #include <boost/fusion/adapted/std_array/detail/array_size.hpp>
 
+#ifdef _MSC_VER
+#  pragma warning(push)
+#  pragma warning(disable: 4512) // assignment operator could not be generated.
+#endif
+
 namespace boost { namespace fusion
 {
     struct random_access_traversal_tag;
@@ -99,9 +104,11 @@ namespace boost { namespace fusion
                 return type();
             }
         };
-
-        BOOST_DELETED_FUNCTION(std_array_iterator& operator=(std_array_iterator const&))
     };
 }}
+
+#ifdef _MSC_VER
+#  pragma warning(pop)
+#endif
 
 #endif

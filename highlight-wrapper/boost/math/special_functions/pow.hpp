@@ -17,13 +17,12 @@
 #include <boost/math/policies/policy.hpp>
 #include <boost/math/policies/error_handling.hpp>
 #include <boost/math/tools/promotion.hpp>
-#include <boost/mpl/greater_equal.hpp>
 
 
 namespace boost {
 namespace math {
 
-#ifdef BOOST_MSVC
+#ifdef _MSC_VER
 #pragma warning(push)
 #pragma warning(disable:4702) // Unreachable code, only triggered in release mode and /W4
 #endif
@@ -113,12 +112,7 @@ struct power_if_positive<0, true>
 template <int N>
 struct select_power_if_positive
 {
-    typedef typename mpl::greater_equal<
-                         boost::integral_constant<int, N>,
-                         boost::integral_constant<int, 0>
-                     >::type is_positive;
-
-    typedef power_if_positive<N, is_positive::value> type;
+    using type = power_if_positive<N, (N >= 0)>;
 };
 
 
@@ -128,7 +122,7 @@ struct select_power_if_positive
 template <int N, typename T, class Policy>
 BOOST_CXX14_CONSTEXPR inline typename tools::promote_args<T>::type pow(T base, const Policy& policy)
 { 
-   typedef typename tools::promote_args<T>::type result_type;
+   using result_type = typename tools::promote_args<T>::type;
    return detail::select_power_if_positive<N>::type::result(static_cast<result_type>(base), policy); 
 }
 
@@ -136,7 +130,7 @@ template <int N, typename T>
 BOOST_CXX14_CONSTEXPR inline typename tools::promote_args<T>::type pow(T base)
 { return pow<N>(base, policies::policy<>()); }
 
-#ifdef BOOST_MSVC
+#ifdef _MSC_VER
 #pragma warning(pop)
 #endif
 

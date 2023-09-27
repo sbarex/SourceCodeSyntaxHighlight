@@ -17,6 +17,11 @@
 #include <boost/type_traits/is_const.hpp>
 #include <boost/type_traits/add_const.hpp>
 
+#ifdef _MSC_VER
+#  pragma warning(push)
+#  pragma warning(disable: 4512) // assignment operator could not be generated.
+#endif
+
 namespace boost { namespace fusion
 {
     struct random_access_traversal_tag;
@@ -155,12 +160,12 @@ namespace boost { namespace fusion
         {};
 
         Seq& seq_;
-
-        // silence MSVC warning C4512: assignment operator could not be generated
-        BOOST_DELETED_FUNCTION(map_iterator& operator= (map_iterator const&))
     };
-
 }}
+
+#ifdef _MSC_VER
+#  pragma warning(pop)
+#endif
 
 #ifdef BOOST_FUSION_WORKAROUND_FOR_LWG_2408
 namespace std

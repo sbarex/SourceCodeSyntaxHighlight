@@ -57,7 +57,9 @@
       class equation_as_9_3_39_and_its_derivative
       {
       public:
-        equation_as_9_3_39_and_its_derivative(const T& zt) : zeta(zt) { }
+        explicit equation_as_9_3_39_and_its_derivative(const T& zt) : zeta(zt) { }
+
+        equation_as_9_3_39_and_its_derivative(const equation_as_9_3_39_and_its_derivative&) = default;
 
         boost::math::tuple<T, T> operator()(const T& z) const
         {
@@ -79,7 +81,7 @@
         }
 
       private:
-        const equation_as_9_3_39_and_its_derivative& operator=(const equation_as_9_3_39_and_its_derivative&);
+        const equation_as_9_3_39_and_its_derivative& operator=(const equation_as_9_3_39_and_its_derivative&) = delete;
         const T zeta;
       };
 
@@ -126,13 +128,13 @@
         const T range_zmin = (std::max<T>)(z_estimate - T(1), T(1));
         const T range_zmax = z_estimate + T(1);
 
-        const int my_digits10 = static_cast<int>(static_cast<float>(boost::math::tools::digits<T>() * 0.301F));
+        const auto my_digits10 = static_cast<int>(static_cast<float>(boost::math::tools::digits<T>() * 0.301F));
 
         // Select the maximum allowed iterations based on the number
         // of decimal digits in the numeric type T, being at least 12.
-        const boost::uintmax_t iterations_allowed = static_cast<boost::uintmax_t>((std::max)(12, my_digits10 * 2));
+        const auto iterations_allowed = static_cast<std::uintmax_t>((std::max)(12, my_digits10 * 2));
 
-        boost::uintmax_t iterations_used = iterations_allowed;
+        std::uintmax_t iterations_used = iterations_allowed;
 
         // Calculate the root of z as a function of zeta.
         const T z = boost::math::tools::newton_raphson_iterate(
@@ -187,6 +189,8 @@
                              const Policy& pol) : my_v(v),
                                                   my_pol(pol) { }
 
+          function_object_jv(const function_object_jv&) = default;
+
           T operator()(const T& x) const
           {
             return boost::math::cyl_bessel_j(my_v, x, my_pol);
@@ -195,7 +199,7 @@
         private:
           const T my_v;
           const Policy& my_pol;
-          const function_object_jv& operator=(const function_object_jv&);
+          const function_object_jv& operator=(const function_object_jv&) = delete;
         };
 
         template<class T, class Policy>
@@ -207,6 +211,8 @@
                                           const Policy& pol) : my_v(v),
                                                                my_order_is_zero(order_is_zero),
                                                                my_pol(pol) { }
+
+          function_object_jv_and_jv_prime(const function_object_jv_and_jv_prime&) = default;
 
           boost::math::tuple<T, T> operator()(const T& x) const
           {
@@ -237,7 +243,7 @@
           const T my_v;
           const bool my_order_is_zero;
           const Policy& my_pol;
-          const function_object_jv_and_jv_prime& operator=(const function_object_jv_and_jv_prime&);
+          const function_object_jv_and_jv_prime& operator=(const function_object_jv_and_jv_prime&) = delete;
         };
 
         template<class T> bool my_bisection_unreachable_tolerance(const T&, const T&) { return false; }
@@ -319,7 +325,7 @@
             }
 
             // Perform several steps of bisection iteration to refine the guess.
-            boost::uintmax_t number_of_iterations(12U);
+            std::uintmax_t number_of_iterations(12U);
 
             // Do the bisection iteration.
             const boost::math::tuple<T, T> guess_pair =
@@ -405,6 +411,8 @@
                              const Policy& pol) : my_v(v),
                                                   my_pol(pol) { }
 
+          function_object_yv(const function_object_yv&) = default;
+
           T operator()(const T& x) const
           {
             return boost::math::cyl_neumann(my_v, x, my_pol);
@@ -413,7 +421,7 @@
         private:
           const T my_v;
           const Policy& my_pol;
-          const function_object_yv& operator=(const function_object_yv&);
+          const function_object_yv& operator=(const function_object_yv&) = delete;
         };
 
         template<class T, class Policy>
@@ -423,6 +431,8 @@
           function_object_yv_and_yv_prime(const T& v,
                                           const Policy& pol) : my_v(v),
                                                                my_pol(pol) { }
+
+          function_object_yv_and_yv_prime(const function_object_yv_and_yv_prime&) = default;
 
           boost::math::tuple<T, T> operator()(const T& x) const
           {
@@ -456,7 +466,7 @@
         private:
           const T my_v;
           const Policy& my_pol;
-          const function_object_yv_and_yv_prime& operator=(const function_object_yv_and_yv_prime&);
+          const function_object_yv_and_yv_prime& operator=(const function_object_yv_and_yv_prime&) = delete;
         };
 
         template<class T> bool my_bisection_unreachable_tolerance(const T&, const T&) { return false; }
@@ -550,7 +560,7 @@
             }
 
             // Perform several steps of bisection iteration to refine the guess.
-            boost::uintmax_t number_of_iterations(12U);
+            std::uintmax_t number_of_iterations(12U);
 
             // Do the bisection iteration.
             const boost::math::tuple<T, T> guess_pair =

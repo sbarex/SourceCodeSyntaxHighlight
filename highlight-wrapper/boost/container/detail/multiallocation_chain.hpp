@@ -31,6 +31,7 @@
 // intrusive
 #include <boost/intrusive/slist.hpp>
 #include <boost/intrusive/pointer_traits.hpp>
+#include <boost/intrusive/detail/twin.hpp>
 // move
 #include <boost/move/utility_core.hpp>
 
@@ -79,6 +80,7 @@ class basic_multiallocation_chain
    typedef VoidPointer                       void_pointer;
    typedef typename slist_impl_t::iterator   iterator;
    typedef typename slist_impl_t::size_type  size_type;
+   typedef boost::intrusive::twin<void_pointer> pointer_pair;
 
    basic_multiallocation_chain()
       :  slist_impl_()
@@ -151,8 +153,8 @@ class basic_multiallocation_chain
       char_ptr elem = char_pointer_traits::static_cast_from(b);
       if(num_units){
          char_ptr prev_elem = elem;
-         elem += unit_bytes;
-         for(size_type i = 0; i != num_units-1; ++i, elem += unit_bytes){
+         elem += difference_type(unit_bytes);
+         for(size_type i = 0; i != num_units-1u; ++i, elem += difference_type(unit_bytes)){
             ::new (boost::movelib::to_raw_pointer(prev_elem), boost_container_new_t()) void_pointer(elem);
             prev_elem = elem;
          }
@@ -170,17 +172,17 @@ class basic_multiallocation_chain
    static iterator iterator_to(const void_pointer &p)
    {  return slist_impl_t::s_iterator_to(to_node(p));   }
 
-   std::pair<void_pointer, void_pointer> extract_data()
+   pointer_pair extract_data()
    {
       if(BOOST_LIKELY(!slist_impl_.empty())){
-         std::pair<void_pointer, void_pointer> ret
+         pointer_pair ret
             (slist_impl_.begin().operator->()
             ,slist_impl_.last().operator->());
          slist_impl_.clear();
          return ret;
       }
       else {
-         return std::pair<void_pointer, void_pointer>();
+         return pointer_pair();
       }
    }
 };
@@ -217,8 +219,9 @@ class transform_multiallocation_chain
    public:
    typedef transform_iterator
       < typename MultiallocationChain::iterator
-      , dtl::cast_functor <T> >             iterator;
+      , dtl::cast_functor <T> >                          iterator;
    typedef typename MultiallocationChain::size_type      size_type;
+   typedef boost::intrusive::twin<pointer>               pointer_pair;
 
    transform_multiallocation_chain()
       : MultiallocationChain()
@@ -283,10 +286,10 @@ class transform_multiallocation_chain
    static iterator iterator_to(const pointer &p)
    {  return iterator(MultiallocationChain::iterator_to(p));  }
 
-   std::pair<pointer, pointer> extract_data()
+   pointer_pair extract_data()
    {
-      std::pair<void_pointer, void_pointer> data(this->MultiallocationChain::extract_data());
-      return std::pair<pointer, pointer>(cast(data.first), cast(data.second));
+      typename MultiallocationChain::pointer_pair data(this->MultiallocationChain::extract_data());
+      return pointer_pair(cast(data.first), cast(data.second));
    }
 /*
    MultiallocationChain &extract_multiallocation_chain()

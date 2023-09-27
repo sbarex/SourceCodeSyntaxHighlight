@@ -9,6 +9,7 @@
 #include <algorithm>
 #include <stdexcept>
 #include <sstream>
+#include <limits>
 #include <cmath>
 
 namespace boost {

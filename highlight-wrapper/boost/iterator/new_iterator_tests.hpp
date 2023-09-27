@@ -87,11 +87,11 @@ void readable_iterator_test(const Iterator i1, T v)
 
 # if !BOOST_WORKAROUND(__MWERKS__, <= 0x2407)
   readable_iterator_traversal_test(i1, v, detail::is_postfix_incrementable<Iterator>());
-      
+
   // I think we don't really need this as it checks the same things as
   // the above code.
   BOOST_STATIC_ASSERT(is_readable_iterator<Iterator>::value);
-# endif 
+# endif
 }
 
 template <class Iterator, class T>
@@ -106,7 +106,7 @@ void writable_iterator_test(Iterator i, T v, T v2)
           detail::is_incrementable<Iterator>
         , detail::is_postfix_incrementable<Iterator>
       >());
-# endif 
+# endif
 }
 
 template <class Iterator>
@@ -131,7 +131,7 @@ void constant_lvalue_iterator_test(Iterator i, T v1)
 # ifndef BOOST_NO_LVALUE_RETURN_DETECTION
   BOOST_STATIC_ASSERT(is_lvalue_iterator<Iterator>::value);
   BOOST_STATIC_ASSERT(!is_non_const_lvalue_iterator<Iterator>::value);
-# endif 
+# endif
 }
 
 template <class Iterator, class T>
@@ -143,17 +143,17 @@ void non_const_lvalue_iterator_test(Iterator i, T v1, T v2)
   BOOST_STATIC_ASSERT((is_same<value_type&, reference>::value));
   T& v3 = *i2;
   BOOST_TEST(v1 == v3);
-  
+
   // A non-const lvalue iterator is not neccessarily writable, but we
   // are assuming the value_type is assignable here
   *i = v2;
-  
+
   T& v4 = *i2;
   BOOST_TEST(v2 == v4);
 # ifndef BOOST_NO_LVALUE_RETURN_DETECTION
   BOOST_STATIC_ASSERT(is_lvalue_iterator<Iterator>::value);
   BOOST_STATIC_ASSERT(is_non_const_lvalue_iterator<Iterator>::value);
-# endif 
+# endif
 }
 
 template <class Iterator, class T>
@@ -248,7 +248,7 @@ void random_access_readable_iterator_test(Iterator i, int N, TrueVals vals)
     BOOST_TEST(*i == vals[N - 1 - c]);
     typename std::iterator_traits<Iterator>::value_type x = j[N - 1 - c];
     BOOST_TEST(*i == x);
-    Iterator q = k - c; 
+    Iterator q = k - c;
     BOOST_TEST(*i == *q);
     BOOST_TEST(i > j);
     BOOST_TEST(i >= j);

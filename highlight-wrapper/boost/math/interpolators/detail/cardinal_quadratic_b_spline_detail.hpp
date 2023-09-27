@@ -27,7 +27,7 @@ Real b2_spline(Real x) {
         Real y = absx - Real(3)/Real(2);
         return y*y/2;
     }
-    return (Real) 0;
+    return static_cast<Real>(0);
 }
 
 template <class Real>
@@ -44,7 +44,7 @@ Real b2_spline_prime(Real x) {
     {
         return x - Real(3)/Real(2);
     }
-    return (Real) 0;
+    return static_cast<Real>(0);
 }
 
 
@@ -154,8 +154,8 @@ public:
         using std::floor;
         using std::ceil;
         Real x = (t-m_t0)*m_inv_h;
-        size_t j_min = ceil(x - Real(1)/Real(2));
-        size_t j_max = ceil(x + Real(5)/Real(2));
+        auto j_min = static_cast<size_t>(ceil(x - Real(1)/Real(2)));
+        auto j_max = static_cast<size_t>(ceil(x + Real(5)/Real(2)));
         if (j_max >= m_alpha.size()) {
             j_max = m_alpha.size() - 1;
         }
@@ -180,8 +180,8 @@ public:
         using std::floor;
         using std::ceil;
         Real x = (t-m_t0)*m_inv_h;
-        size_t j_min = ceil(x - Real(1)/Real(2));
-        size_t j_max = ceil(x + Real(5)/Real(2));
+        auto j_min = static_cast<size_t>(ceil(x - Real(1)/Real(2)));
+        auto j_max = static_cast<size_t>(ceil(x + Real(5)/Real(2)));
         if (j_max >= m_alpha.size()) {
             j_max = m_alpha.size() - 1;
         }

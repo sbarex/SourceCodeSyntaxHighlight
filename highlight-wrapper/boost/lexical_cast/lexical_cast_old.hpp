@@ -1,6 +1,6 @@
 // Copyright Kevlin Henney, 2000-2005.
 // Copyright Alexander Nasonov, 2006-2010.
-// Copyright Antony Polukhin, 2011-2020.
+// Copyright Antony Polukhin, 2011-2023.
 //
 // Distributed under the Boost Software License, Version 1.0. (See
 // accompanying file LICENSE_1_0.txt or copy at
@@ -153,10 +153,10 @@ namespace boost {
     template<typename Target, typename Source>
     Target lexical_cast(Source arg)
     {
-        typedef typename detail::widest_char< 
-            BOOST_DEDUCED_TYPENAME detail::stream_char<Target>::type 
-          , BOOST_DEDUCED_TYPENAME detail::stream_char<Source>::type 
-        >::type char_type; 
+        typedef typename detail::widest_char<
+            BOOST_DEDUCED_TYPENAME detail::stream_char<Target>::type
+          , BOOST_DEDUCED_TYPENAME detail::stream_char<Source>::type
+        >::type char_type;
 
         typedef std::char_traits<char_type> traits;
         detail::lexical_stream<Target, Source, traits> interpreter;

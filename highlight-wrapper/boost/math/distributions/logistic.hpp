@@ -51,7 +51,14 @@ namespace boost { namespace math {
     
     
     typedef logistic_distribution<double> logistic;
-    
+
+    #ifdef __cpp_deduction_guides
+    template <class RealType>
+    logistic_distribution(RealType)->logistic_distribution<typename boost::math::tools::promote_args<RealType>::type>;
+    template <class RealType>
+    logistic_distribution(RealType,RealType)->logistic_distribution<typename boost::math::tools::promote_args<RealType>::type>;
+    #endif
+
     template <class RealType, class Policy>
     inline const std::pair<RealType, RealType> range(const logistic_distribution<RealType, Policy>& /* dist */)
     { // Range of permissible values for random variable x.
@@ -139,6 +146,49 @@ namespace boost { namespace math {
        if(power < -tools::log_max_value<RealType>())
           return 1;
        return 1 / (1 + exp(power)); 
+    }
+
+    template <class RealType, class Policy>
+    inline RealType logcdf(const logistic_distribution<RealType, Policy>& dist, const RealType& x)
+    {
+       RealType scale = dist.scale();
+       RealType location = dist.location();
+       RealType result = 0; // of checks.
+       static const char* function = "boost::math::cdf(const logistic_distribution<%1%>&, %1%)";
+       if(false == detail::check_scale(function, scale, &result, Policy()))
+       {
+          return result;
+       }
+       if(false == detail::check_location(function, location, &result, Policy()))
+       {
+          return result;
+       }
+
+       if((boost::math::isinf)(x))
+       {
+          if(x < 0) 
+          {
+            return 0; // -infinity
+          }
+          return 1; // + infinity
+       }
+
+       if(false == detail::check_x(function, x, &result, Policy()))
+       {
+          return result;
+       }
+       BOOST_MATH_STD_USING
+       RealType power = (location - x) / scale;
+       if(power > tools::log_max_value<RealType>())
+       {
+          return 0;
+       }
+       if(power < -tools::log_max_value<RealType>())
+       {
+          return 1;
+       }
+
+       return -log1p(exp(power));
     } 
     
     template <class RealType, class Policy>
@@ -211,6 +261,42 @@ namespace boost { namespace math {
           return 1;
        return 1 / (1 + exp(power)); 
     } 
+
+    template <class RealType, class Policy>
+    inline RealType logcdf(const complemented2_type<logistic_distribution<RealType, Policy>, RealType>& c)
+    {
+       BOOST_MATH_STD_USING
+       RealType location = c.dist.location();
+       RealType scale = c.dist.scale();
+       RealType x = c.param;
+       static const char* function = "boost::math::cdf(const complement(logistic_distribution<%1%>&), %1%)";
+
+       RealType result = 0;
+       if(false == detail::check_scale(function, scale, &result, Policy()))
+       {
+          return result;
+       }
+       if(false == detail::check_location(function, location, &result, Policy()))
+       {
+          return result;
+       }
+       if((boost::math::isinf)(x))
+       {
+          if(x < 0) return 1; // cdf complement -infinity is unity.
+          return 0; // cdf complement +infinity is zero.
+       }
+       if(false == detail::check_x(function, x, &result, Policy()))
+       {
+          return result;
+       }
+       RealType power = (x - location) / scale;
+       if(power > tools::log_max_value<RealType>())
+          return 0;
+       if(power < -tools::log_max_value<RealType>())
+          return 1;
+       
+       return -log1p(exp(power));
+    }  
 
     template <class RealType, class Policy>
     inline RealType quantile(const complemented2_type<logistic_distribution<RealType, Policy>, RealType>& c)

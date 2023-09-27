@@ -18,6 +18,11 @@
 #include <boost/type_traits/is_const.hpp>
 #include <boost/fusion/iterator/iterator_facade.hpp>
 
+#ifdef _MSC_VER
+#  pragma warning(push)
+#  pragma warning(disable: 4512) // assignment operator could not be generated.
+#endif
+
 namespace boost { namespace fusion
 {
     struct random_access_traversal_tag;
@@ -102,10 +107,12 @@ namespace boost { namespace fusion
                 return type();
             }
         };
-
-        BOOST_DELETED_FUNCTION(array_iterator& operator=(array_iterator const&))
     };
 }}
+
+#ifdef _MSC_VER
+#  pragma warning(pop)
+#endif
 
 #ifdef BOOST_FUSION_WORKAROUND_FOR_LWG_2408
 namespace std

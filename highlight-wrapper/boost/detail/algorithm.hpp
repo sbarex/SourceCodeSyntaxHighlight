@@ -30,7 +30,7 @@
 
 #ifndef BOOST_ALGORITHM_HPP
 #define BOOST_ALGORITHM_HPP
-#include <boost/detail/iterator.hpp>
+
 // Algorithms on sequences
 //
 // The functions in this file have not yet gone through formal

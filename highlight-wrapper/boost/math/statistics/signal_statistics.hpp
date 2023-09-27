@@ -8,11 +8,18 @@
 
 #include <algorithm>
 #include <iterator>
-#include <boost/assert.hpp>
+#include <boost/math/tools/assert.hpp>
 #include <boost/math/tools/complex.hpp>
 #include <boost/math/tools/roots.hpp>
 #include <boost/math/statistics/univariate_statistics.hpp>
 
+#include <boost/math/tools/is_standalone.hpp>
+#ifndef BOOST_MATH_STANDALONE
+#include <boost/config.hpp>
+#ifdef BOOST_NO_CXX17_IF_CONSTEXPR
+#error "The header <boost/math/norms.hpp> can only be used in C++17 and later."
+#endif
+#endif
 
 namespace boost::math::statistics {
 
@@ -21,7 +28,7 @@ auto absolute_gini_coefficient(ForwardIterator first, ForwardIterator last)
 {
     using std::abs;
     using RealOrComplex = typename std::iterator_traits<ForwardIterator>::value_type;
-    BOOST_ASSERT_MSG(first != last && std::next(first) != last, "Computation of the Gini coefficient requires at least two samples.");
+    BOOST_MATH_ASSERT_MSG(first != last && std::next(first) != last, "Computation of the Gini coefficient requires at least two samples.");
 
     std::sort(first, last,  [](RealOrComplex a, RealOrComplex b) { return abs(b) > abs(a); });
 
@@ -74,7 +81,7 @@ auto hoyer_sparsity(const ForwardIterator first, const ForwardIterator last)
     using T = typename std::iterator_traits<ForwardIterator>::value_type;
     using std::abs;
     using std::sqrt;
-    BOOST_ASSERT_MSG(first != last && std::next(first) != last, "Computation of the Hoyer sparsity requires at least two samples.");
+    BOOST_MATH_ASSERT_MSG(first != last && std::next(first) != last, "Computation of the Hoyer sparsity requires at least two samples.");
 
     if constexpr (std::is_unsigned<T>::value)
     {
@@ -128,7 +135,7 @@ template<class Container>
 auto oracle_snr(Container const & signal, Container const & noisy_signal)
 {
     using Real = typename Container::value_type;
-    BOOST_ASSERT_MSG(signal.size() == noisy_signal.size(),
+    BOOST_MATH_ASSERT_MSG(signal.size() == noisy_signal.size(),
                      "Signal and noisy_signal must be have the same number of elements.");
     if constexpr (std::is_integral<Real>::value)
     {
@@ -197,7 +204,7 @@ template<class Container>
 auto mean_invariant_oracle_snr(Container const & signal, Container const & noisy_signal)
 {
     using Real = typename Container::value_type;
-    BOOST_ASSERT_MSG(signal.size() == noisy_signal.size(), "Signal and noisy signal must be have the same number of elements.");
+    BOOST_MATH_ASSERT_MSG(signal.size() == noisy_signal.size(), "Signal and noisy signal must be have the same number of elements.");
 
     Real mu = boost::math::statistics::mean(signal);
     Real numerator = 0;
@@ -244,8 +251,8 @@ auto oracle_snr_db(Container const & signal, Container const & noisy_signal)
 template<class ForwardIterator>
 auto m2m4_snr_estimator(ForwardIterator first, ForwardIterator last, decltype(*first) estimated_signal_kurtosis=1, decltype(*first) estimated_noise_kurtosis=3)
 {
-    BOOST_ASSERT_MSG(estimated_signal_kurtosis > 0, "The estimated signal kurtosis must be positive");
-    BOOST_ASSERT_MSG(estimated_noise_kurtosis > 0, "The estimated noise kurtosis must be positive.");
+    BOOST_MATH_ASSERT_MSG(estimated_signal_kurtosis > 0, "The estimated signal kurtosis must be positive");
+    BOOST_MATH_ASSERT_MSG(estimated_noise_kurtosis > 0, "The estimated noise kurtosis must be positive.");
     using Real = typename std::iterator_traits<ForwardIterator>::value_type;
     using std::sqrt;
     if constexpr (std::is_floating_point<Real>::value || std::numeric_limits<Real>::max_exponent)
@@ -313,7 +320,7 @@ auto m2m4_snr_estimator(ForwardIterator first, ForwardIterator last, decltype(*f
     }
     else
     {
-        BOOST_ASSERT_MSG(false, "The M2M4 estimator has not been implemented for this type.");
+        BOOST_MATH_ASSERT_MSG(false, "The M2M4 estimator has not been implemented for this type.");
         return std::numeric_limits<Real>::quiet_NaN();
     }
 }

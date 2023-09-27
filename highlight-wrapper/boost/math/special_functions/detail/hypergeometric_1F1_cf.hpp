@@ -39,7 +39,7 @@
      T hypergeometric_1F1_cf(const T& a, const T& b, const T& z, const Policy& pol, const char* function)
      {
         hypergeometric_1F1_cf_func<T> func(a, b, z);
-        boost::uintmax_t max_iter = boost::math::policies::get_max_series_iterations<Policy>();
+        std::uintmax_t max_iter = boost::math::policies::get_max_series_iterations<Policy>();
         T result = boost::math::tools::continued_fraction_a(func, boost::math::policies::get_epsilon<T, Policy>(), max_iter);
         boost::math::policies::check_series_iterations<T>(function, max_iter, pol);
         return 1 + a * z / (b * (1 + result));

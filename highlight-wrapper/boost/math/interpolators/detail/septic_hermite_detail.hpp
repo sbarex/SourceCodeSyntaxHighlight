@@ -9,6 +9,7 @@
 #include <algorithm>
 #include <stdexcept>
 #include <sstream>
+#include <limits>
 #include <cmath>
 
 namespace boost {
@@ -172,7 +173,7 @@ public:
         return dydx;
     }
 
-    inline Real double_prime(Real x) const
+    inline Real double_prime(Real) const
     {
         return std::numeric_limits<Real>::quiet_NaN();
     }

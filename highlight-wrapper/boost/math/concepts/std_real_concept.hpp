@@ -16,15 +16,12 @@
 // A template instantiated with std_real_concept will *only*
 // compile if it std::whatever is in scope.
 
-#include <boost/config.hpp>
-#include <boost/limits.hpp>
 #include <boost/math/policies/policy.hpp>
 #include <boost/math/special_functions/math_fwd.hpp>
-
+#include <limits>
 #include <ostream>
 #include <istream>
-#include <boost/config/no_tr1/cmath.hpp>
-#include <math.h> // fmodl
+#include <cmath>
 
 #ifndef BOOST_MATH_STD_REAL_CONCEPT_HPP
 #define BOOST_MATH_STD_REAL_CONCEPT_HPP
@@ -60,10 +57,9 @@ public:
 #if defined(__DECCXX) || defined(__SUNPRO_CC)
    std_real_concept(unsigned long long c) : m_value(static_cast<std_real_concept_base_type>(c)){}
    std_real_concept(long long c) : m_value(static_cast<std_real_concept_base_type>(c)){}
-#elif defined(BOOST_HAS_LONG_LONG)
-   std_real_concept(boost::ulong_long_type c) : m_value(static_cast<std_real_concept_base_type>(c)){}
-   std_real_concept(boost::long_long_type c) : m_value(static_cast<std_real_concept_base_type>(c)){}
 #endif
+   std_real_concept(unsigned long long c) : m_value(static_cast<std_real_concept_base_type>(c)){}
+   std_real_concept(long long c) : m_value(static_cast<std_real_concept_base_type>(c)){}
    std_real_concept(float c) : m_value(c){}
    std_real_concept(double c) : m_value(c){}
    std_real_concept(long double c) : m_value(c){}
@@ -87,10 +83,10 @@ public:
 #if defined(__DECCXX) || defined(__SUNPRO_CC)
    std_real_concept& operator=(unsigned long long c) { m_value = static_cast<std_real_concept_base_type>(c); return *this; }
    std_real_concept& operator=(long long c) { m_value = static_cast<std_real_concept_base_type>(c); return *this; }
-#elif defined(BOOST_HAS_LONG_LONG)
-   std_real_concept& operator=(boost::long_long_type c) { m_value = static_cast<std_real_concept_base_type>(c); return *this; }
-   std_real_concept& operator=(boost::ulong_long_type c) { m_value = static_cast<std_real_concept_base_type>(c); return *this; }
 #endif
+   std_real_concept& operator=(long long c) { m_value = static_cast<std_real_concept_base_type>(c); return *this; }
+   std_real_concept& operator=(unsigned long long c) { m_value = static_cast<std_real_concept_base_type>(c); return *this; }
+
    std_real_concept& operator=(float c) { m_value = c; return *this; }
    std_real_concept& operator=(double c) { m_value = c; return *this; }
    std_real_concept& operator=(long double c) { m_value = c; return *this; }
@@ -277,19 +273,15 @@ inline long lround(const concepts::std_real_concept& v)
    return boost::math::lround(v.value(), policies::policy<>());
 }
 
-#ifdef BOOST_HAS_LONG_LONG
-
 template <class Policy>
-inline boost::long_long_type llround(const concepts::std_real_concept& v, const Policy& pol)
+inline long long llround(const concepts::std_real_concept& v, const Policy& pol)
 {
    return boost::math::llround(v.value(), pol);
 }
-inline boost::long_long_type llround(const concepts::std_real_concept& v)
+inline long long llround(const concepts::std_real_concept& v)
 {
    return boost::math::llround(v.value(), policies::policy<>());
 }
-
-#endif
 
 template <class Policy>
 inline int itrunc(const concepts::std_real_concept& v, const Policy& pol)
@@ -311,19 +303,15 @@ inline long ltrunc(const concepts::std_real_concept& v)
    return boost::math::ltrunc(v.value(), policies::policy<>());
 }
 
-#ifdef BOOST_HAS_LONG_LONG
-
 template <class Policy>
-inline boost::long_long_type lltrunc(const concepts::std_real_concept& v, const Policy& pol)
+inline long long lltrunc(const concepts::std_real_concept& v, const Policy& pol)
 {
    return boost::math::lltrunc(v.value(), pol);
 }
-inline boost::long_long_type lltrunc(const concepts::std_real_concept& v)
+inline long long lltrunc(const concepts::std_real_concept& v)
 {
    return boost::math::lltrunc(v.value(), policies::policy<>());
 }
-
-#endif
 
 // Streaming:
 template <class charT, class traits>
@@ -352,7 +340,6 @@ inline std::basic_istream<charT, traits>& operator>>(std::basic_istream<charT, t
 } // namespace concepts
 }}
 
-#include <boost/math/tools/precision.hpp>
 #include <boost/math/tools/big_constant.hpp>
 
 namespace boost{ namespace math{
@@ -360,7 +347,7 @@ namespace tools
 {
 
 template <>
-inline concepts::std_real_concept make_big_value<concepts::std_real_concept>(boost::math::tools::largest_float val, const char*, boost::false_type const&, boost::false_type const&)
+inline concepts::std_real_concept make_big_value<concepts::std_real_concept>(boost::math::tools::largest_float val, const char*, std::false_type const&, std::false_type const&)
 {
    return val;  // Can't use lexical_cast here, sometimes it fails....
 }
@@ -396,7 +383,7 @@ inline concepts::std_real_concept epsilon(BOOST_MATH_EXPLICIT_TEMPLATE_TYPE_SPEC
 }
 
 template <>
-inline BOOST_MATH_CONSTEXPR int digits<concepts::std_real_concept>(BOOST_MATH_EXPLICIT_TEMPLATE_TYPE_SPEC(concepts::std_real_concept)) BOOST_NOEXCEPT
+inline constexpr int digits<concepts::std_real_concept>(BOOST_MATH_EXPLICIT_TEMPLATE_TYPE_SPEC(concepts::std_real_concept)) noexcept
 { // Assume number of significand bits is same as std_real_concept_base_type,
   // unless std::numeric_limits<T>::is_specialized to provide digits.
    return digits<concepts::std_real_concept_base_type>();
@@ -411,7 +398,7 @@ inline double real_cast<double, concepts::std_real_concept>(concepts::std_real_c
 
 } // namespace tools
 
-#if BOOST_WORKAROUND(BOOST_MSVC, <= 1310)
+#if defined(_MSC_VER) && (_MSC_VER <= 1310)
 using concepts::itrunc;
 using concepts::ltrunc;
 using concepts::lltrunc;

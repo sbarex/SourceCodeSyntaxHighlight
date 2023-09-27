@@ -55,13 +55,9 @@
 #include <boost/math/distributions/detail/common_error_handling.hpp>
 #include <boost/math/distributions/normal.hpp>
 #include <boost/math/distributions/gamma.hpp> // for gamma function
-// using boost::math::gamma_p;
 
 #include <boost/math/tools/tuple.hpp>
-//using std::tr1::tuple;
-//using std::tr1::make_tuple;
 #include <boost/math/tools/roots.hpp>
-//using boost::math::tools::newton_raphson_iterate;
 
 #include <utility>
 
@@ -71,10 +67,10 @@ template <class RealType = double, class Policy = policies::policy<> >
 class inverse_gaussian_distribution
 {
 public:
-   typedef RealType value_type;
-   typedef Policy policy_type;
+   using value_type = RealType;
+   using policy_type = Policy;
 
-   inverse_gaussian_distribution(RealType l_mean = 1, RealType l_scale = 1)
+   explicit inverse_gaussian_distribution(RealType l_mean = 1, RealType l_scale = 1)
       : m_mean(l_mean), m_scale(l_scale)
    { // Default is a 1,1 inverse_gaussian distribution.
      static const char* function = "boost::math::inverse_gaussian_distribution<%1%>::inverse_gaussian_distribution";
@@ -113,17 +109,24 @@ private:
    RealType m_scale;    // distribution standard deviation or scale, aka lambda.
 }; // class normal_distribution
 
-typedef inverse_gaussian_distribution<double> inverse_gaussian;
+using inverse_gaussian = inverse_gaussian_distribution<double>;
+
+#ifdef __cpp_deduction_guides
+template <class RealType>
+inverse_gaussian_distribution(RealType)->inverse_gaussian_distribution<typename boost::math::tools::promote_args<RealType>::type>;
+template <class RealType>
+inverse_gaussian_distribution(RealType,RealType)->inverse_gaussian_distribution<typename boost::math::tools::promote_args<RealType>::type>;
+#endif
 
 template <class RealType, class Policy>
-inline const std::pair<RealType, RealType> range(const inverse_gaussian_distribution<RealType, Policy>& /*dist*/)
+inline std::pair<RealType, RealType> range(const inverse_gaussian_distribution<RealType, Policy>& /*dist*/)
 { // Range of permissible values for random variable x, zero to max.
    using boost::math::tools::max_value;
    return std::pair<RealType, RealType>(static_cast<RealType>(0.), max_value<RealType>()); // - to + max value.
 }
 
 template <class RealType, class Policy>
-inline const std::pair<RealType, RealType> support(const inverse_gaussian_distribution<RealType, Policy>& /*dist*/)
+inline std::pair<RealType, RealType> support(const inverse_gaussian_distribution<RealType, Policy>& /*dist*/)
 { // Range of supported values for random variable x, zero to max.
   // This is range where cdf rises from 0 to 1, and outside it, the pdf is zero.
    using boost::math::tools::max_value;
@@ -168,6 +171,43 @@ inline RealType pdf(const inverse_gaussian_distribution<RealType, Policy>& dist,
 } // pdf
 
 template <class RealType, class Policy>
+inline RealType logpdf(const inverse_gaussian_distribution<RealType, Policy>& dist, const RealType& x)
+{ // Probability Density Function
+   BOOST_MATH_STD_USING  // for ADL of std functions
+
+   RealType scale = dist.scale();
+   RealType mean = dist.mean();
+   RealType result = -std::numeric_limits<RealType>::infinity();
+   static const char* function = "boost::math::logpdf(const inverse_gaussian_distribution<%1%>&, %1%)";
+   if(false == detail::check_scale(function, scale, &result, Policy()))
+   {
+      return result;
+   }
+   if(false == detail::check_location(function, mean, &result, Policy()))
+   {
+      return result;
+   }
+   if(false == detail::check_x_gt0(function, mean, &result, Policy()))
+   {
+      return result;
+   }
+   if(false == detail::check_positive_x(function, x, &result, Policy()))
+   {
+      return result;
+   }
+
+   if (x == 0)
+   {
+     return std::numeric_limits<RealType>::quiet_NaN(); // Convenient, even if not defined mathematically. log(0)
+   }
+
+   const RealType two_pi = boost::math::constants::two_pi<RealType>();
+   
+   result = (-scale*pow(mean - x, RealType(2))/(mean*mean*x) + log(scale) - 3*log(x) - log(two_pi)) / 2;
+   return result;
+} // pdf
+
+template <class RealType, class Policy>
 inline RealType cdf(const inverse_gaussian_distribution<RealType, Policy>& dist, const RealType& x)
 { // Cumulative Density Function.
    BOOST_MATH_STD_USING  // for ADL of std functions.
@@ -196,10 +236,7 @@ inline RealType cdf(const inverse_gaussian_distribution<RealType, Policy>& dist,
    {
      return 0; // Convenient, even if not defined mathematically.
    }
-   // Problem with this formula for large scale > 1000 or small x, 
-   //result = 0.5 * (erf(sqrt(scale / x) * ((x / mean) - 1) / constants::root_two<RealType>(), Policy()) + 1)
-   //  + exp(2 * scale / mean) / 2 
-   //  * (1 - erf(sqrt(scale / x) * (x / mean + 1) / constants::root_two<RealType>(), Policy()));
+   // Problem with this formula for large scale > 1000 or small x
    // so use normal distribution version:
    // Wikipedia CDF equation http://en.wikipedia.org/wiki/Inverse_Gaussian_distribution.
 
@@ -263,22 +300,20 @@ namespace detail
   template <class RealType>
   inline RealType guess_ig(RealType p, RealType mu = 1, RealType lambda = 1)
   { // guess at random variate value x for inverse gaussian quantile.
-      BOOST_MATH_STD_USING
-      using boost::math::policies::policy;
-      // Error type.
-      using boost::math::policies::overflow_error;
-      // Action.
-      using boost::math::policies::ignore_error;
+    BOOST_MATH_STD_USING
+    using boost::math::policies::policy;
+    // Error type.
+    using boost::math::policies::overflow_error;
+    // Action.
+    using boost::math::policies::ignore_error;
 
-      typedef policy<
-        overflow_error<ignore_error> // Ignore overflow (return infinity)
-      > no_overthrow_policy;
+    using no_overthrow_policy = policy<overflow_error<ignore_error>>;
 
     RealType x; // result is guess at random variate value x.
     RealType phi = lambda / mu;
     if (phi > 2.)
     { // Big phi, so starting to look like normal Gaussian distribution.
-      //    x=(qnorm(p,0,1,true,false) - 0.5 * sqrt(mu/lambda)) / sqrt(lambda/mu);
+      //
       // Whitmore, G.A. and Yalovsky, M.
       // A normalising logarithmic transformation for inverse Gaussian random variables,
       // Technometrics 20-2, 207-208 (1978), but using expression from
@@ -293,14 +328,12 @@ namespace detail
       using boost::math::gamma_distribution;
 
       // Define the distribution, using gamma_nooverflow:
-      typedef gamma_distribution<RealType, no_overthrow_policy> gamma_nooverflow;
+      using gamma_nooverflow = gamma_distribution<RealType, no_overthrow_policy>;
 
       gamma_nooverflow g(static_cast<RealType>(0.5), static_cast<RealType>(1.));
 
-      // gamma_nooverflow g(static_cast<RealType>(0.5), static_cast<RealType>(1.));
-      // R qgamma(0.2, 0.5, 1)  0.0320923
+      // R qgamma(0.2, 0.5, 1) = 0.0320923
       RealType qg = quantile(complement(g, p));
-      //RealType qg1 = qgamma(1.- p, 0.5, 1.0, true, false);
       x = lambda / (qg * 2);
       // 
       if (x > mu/2) // x > mu /2?
@@ -343,19 +376,19 @@ inline RealType quantile(const inverse_gaussian_distribution<RealType, Policy>& 
    { // overflow 
       result = policies::raise_overflow_error<RealType>(function,
         "probability parameter is 1, but must be < 1!", Policy());
-      return result; // std::numeric_limits<RealType>::infinity();
+      return result; // infinity;
    }
 
   RealType guess = detail::guess_ig(p, dist.mean(), dist.scale());
   using boost::math::tools::max_value;
 
-  RealType min = 0.; // Minimum possible value is bottom of range of distribution.
+  RealType min = static_cast<RealType>(0); // Minimum possible value is bottom of range of distribution.
   RealType max = max_value<RealType>();// Maximum possible value is top of range. 
   // int digits = std::numeric_limits<RealType>::digits; // Maximum possible binary digits accuracy for type T.
   // digits used to control how accurate to try to make the result.
   // To allow user to control accuracy versus speed,
   int get_digits = policies::digits<RealType, Policy>();// get digits from policy, 
-  boost::uintmax_t m = policies::get_max_root_iterations<Policy>(); // and max iterations.
+  std::uintmax_t m = policies::get_max_root_iterations<Policy>(); // and max iterations.
   using boost::math::tools::newton_raphson_iterate;
   result =
     newton_raphson_iterate(inverse_gaussian_quantile_functor<RealType, Policy>(dist, p), guess, min, max, get_digits, m);
@@ -371,21 +404,7 @@ inline RealType cdf(const complemented2_type<inverse_gaussian_distribution<RealT
    RealType mean = c.dist.mean();
    RealType x = c.param;
    static const char* function = "boost::math::cdf(const complement(inverse_gaussian_distribution<%1%>&), %1%)";
-   // infinite arguments not supported.
-   //if((boost::math::isinf)(x))
-   //{
-   //  if(x < 0) return 1; // cdf complement -infinity is unity.
-   //  return 0; // cdf complement +infinity is zero
-   //}
-   // These produce MSVC 4127 warnings, so the above used instead.
-   //if(std::numeric_limits<RealType>::has_infinity && x == std::numeric_limits<RealType>::infinity())
-   //{ // cdf complement +infinity is zero.
-   //  return 0;
-   //}
-   //if(std::numeric_limits<RealType>::has_infinity && x == -std::numeric_limits<RealType>::infinity())
-   //{ // cdf complement -infinity is unity.
-   //  return 1;
-   //}
+
    RealType result = 0;
    if(false == detail::check_scale(function, scale, &result, Policy()))
       return result;
@@ -435,12 +454,12 @@ inline RealType quantile(const complemented2_type<inverse_gaussian_distribution<
    // Complement.
    using boost::math::tools::max_value;
 
-  RealType min = 0.; // Minimum possible value is bottom of range of distribution.
+  RealType min = static_cast<RealType>(0); // Minimum possible value is bottom of range of distribution.
   RealType max = max_value<RealType>();// Maximum possible value is top of range. 
   // int digits = std::numeric_limits<RealType>::digits; // Maximum possible binary digits accuracy for type T.
   // digits used to control how accurate to try to make the result.
   int get_digits = policies::digits<RealType, Policy>();
-  boost::uintmax_t m = policies::get_max_root_iterations<Policy>();
+  std::uintmax_t m = policies::get_max_root_iterations<Policy>();
   using boost::math::tools::newton_raphson_iterate;
   result =
     newton_raphson_iterate(inverse_gaussian_quantile_complement_functor<RealType, Policy>(c.dist, q), guess, min, max, get_digits, m);

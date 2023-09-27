@@ -43,14 +43,11 @@
 #include <boost/math/special_functions/fpclassify.hpp> // isnan.
 #include <boost/math/tools/roots.hpp> // for root finding.
 #include <boost/math/distributions/detail/inv_discrete_quantile.hpp>
-
-#include <boost/type_traits/is_floating_point.hpp>
-#include <boost/type_traits/is_integral.hpp>
-#include <boost/type_traits/is_same.hpp>
-#include <boost/mpl/if.hpp>
+#include <boost/math/special_functions/log1p.hpp>
 
 #include <limits> // using std::numeric_limits;
 #include <utility>
+#include <cmath>
 
 #if defined (BOOST_MSVC)
 #  pragma warning(push)
@@ -163,7 +160,7 @@ namespace boost
         // Discrete Distributions" Yong CAI and K. KRISHNAMOORTHY
         // http://www.ucs.louisiana.edu/~kxk4695/Discrete_new.pdf
         //
-        return ibeta_inv(successes, failures + 1, alpha, static_cast<RealType*>(0), Policy());
+        return ibeta_inv(successes, failures + 1, alpha, static_cast<RealType*>(nullptr), Policy());
       } // find_lower_bound_on_p
 
       static RealType find_upper_bound_on_p(
@@ -192,7 +189,7 @@ namespace boost
         // Discrete Distributions" Yong CAI and K. Krishnamoorthy
         // http://www.ucs.louisiana.edu/~kxk4695/Discrete_new.pdf
         //
-        return ibetac_inv(successes, failures, alpha, static_cast<RealType*>(0), Policy());
+        return ibetac_inv(successes, failures, alpha, static_cast<RealType*>(nullptr), Policy());
       } // find_upper_bound_on_p
 
       // Estimate number of trials :
@@ -227,7 +224,7 @@ namespace boost
         if(false == geometric_detail::check_dist_and_k(
           function, p, k, &result, Policy())
           &&  detail::check_probability(function, alpha, &result, Policy()))
-        { 
+        {
           return result;
         }
         result = ibetac_inva(k + 1, p, alpha, Policy());  // returns n - k
@@ -240,6 +237,11 @@ namespace boost
     }; // template <class RealType, class Policy> class geometric_distribution
 
     typedef geometric_distribution<double> geometric; // Reserved name of type double.
+
+    #ifdef __cpp_deduction_guides
+    template <class RealType>
+    geometric_distribution(RealType)->geometric_distribution<typename boost::math::tools::promote_args<RealType>::type>;
+    #endif
 
     template <class RealType, class Policy>
     inline const std::pair<RealType, RealType> range(const geometric_distribution<RealType, Policy>& /* dist */)
@@ -270,7 +272,7 @@ namespace boost
       BOOST_MATH_STD_USING // ADL of std functions.
       return 0;
     } // mode
-    
+
     template <class RealType, class Policy>
     inline RealType variance(const geometric_distribution<RealType, Policy>& dist)
     { // Variance of Binomial distribution = (1-p) / p^2.
@@ -378,9 +380,39 @@ namespace boost
       return probability;
     } // cdf Cumulative Distribution Function geometric.
 
-      template <class RealType, class Policy>
-      inline RealType cdf(const complemented2_type<geometric_distribution<RealType, Policy>, RealType>& c)
-      { // Complemented Cumulative Distribution Function geometric.
+    template <class RealType, class Policy>
+    inline RealType logcdf(const geometric_distribution<RealType, Policy>& dist, const RealType& k)
+    { // Cumulative Distribution Function of geometric.
+      using std::pow;
+      static const char* function = "boost::math::logcdf(const geometric_distribution<%1%>&, %1%)";
+
+      // k argument may be integral, signed, or unsigned, or floating point.
+      // If necessary, it has already been promoted from an integral type.
+      RealType p = dist.success_fraction();
+      // Error check:
+      RealType result = 0;
+      if(false == geometric_detail::check_dist_and_k(
+        function,
+        p,
+        k,
+        &result, Policy()))
+      {
+        return -std::numeric_limits<RealType>::infinity();
+      }
+      if(k == 0)
+      {
+        return log(p); // success_fraction
+      }
+      //RealType q = 1 - p;  // Bad for small p
+      //RealType probability = 1 - std::pow(q, k+1);
+
+      RealType z = boost::math::log1p(-p, Policy()) * (k + 1);
+      return log1p(-exp(z), Policy());
+    } // logcdf Cumulative Distribution Function geometric.
+
+    template <class RealType, class Policy>
+    inline RealType cdf(const complemented2_type<geometric_distribution<RealType, Policy>, RealType>& c)
+    { // Complemented Cumulative Distribution Function geometric.
       BOOST_MATH_STD_USING
       static const char* function = "boost::math::cdf(const geometric_distribution<%1%>&, %1%)";
       // k argument may be integral, signed, or unsigned, or floating point.
@@ -402,6 +434,30 @@ namespace boost
       RealType probability = exp(z);
       return probability;
     } // cdf Complemented Cumulative Distribution Function geometric.
+
+    template <class RealType, class Policy>
+    inline RealType logcdf(const complemented2_type<geometric_distribution<RealType, Policy>, RealType>& c)
+    { // Complemented Cumulative Distribution Function geometric.
+      BOOST_MATH_STD_USING
+      static const char* function = "boost::math::logcdf(const geometric_distribution<%1%>&, %1%)";
+      // k argument may be integral, signed, or unsigned, or floating point.
+      // If necessary, it has already been promoted from an integral type.
+      RealType const& k = c.param;
+      geometric_distribution<RealType, Policy> const& dist = c.dist;
+      RealType p = dist.success_fraction();
+      // Error check:
+      RealType result = 0;
+      if(false == geometric_detail::check_dist_and_k(
+        function,
+        p,
+        k,
+        &result, Policy()))
+      {
+        return -std::numeric_limits<RealType>::infinity();
+      }
+
+      return boost::math::log1p(-p, Policy()) * (k+1);
+    } // logcdf Complemented Cumulative Distribution Function geometric.
 
     template <class RealType, class Policy>
     inline RealType quantile(const geometric_distribution<RealType, Policy>& dist, const RealType& x)
@@ -446,7 +502,7 @@ namespace boost
       {
         return 0;
       }
-   
+
       // log(1-x) /log(1-success_fraction) -1; but use log1p in case success_fraction is small
       result = boost::math::log1p(-x, Policy()) / boost::math::log1p(-success_fraction, Policy()) - 1;
       // Subtract a few epsilons here too?

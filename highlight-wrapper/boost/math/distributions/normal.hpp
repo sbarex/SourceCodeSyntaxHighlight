@@ -21,6 +21,7 @@
 #include <boost/math/distributions/detail/common_error_handling.hpp>
 
 #include <utility>
+#include <type_traits>
 
 namespace boost{ namespace math{
 
@@ -28,10 +29,10 @@ template <class RealType = double, class Policy = policies::policy<> >
 class normal_distribution
 {
 public:
-   typedef RealType value_type;
-   typedef Policy policy_type;
+   using value_type = RealType;
+   using policy_type = Policy;
 
-   normal_distribution(RealType l_mean = 0, RealType sd = 1)
+   explicit normal_distribution(RealType l_mean = 0, RealType sd = 1)
       : m_mean(l_mean), m_sd(sd)
    { // Default is a 'standard' normal distribution N01.
      static const char* function = "boost::math::normal_distribution<%1%>::normal_distribution";
@@ -69,15 +70,29 @@ private:
    RealType m_sd;    // distribution standard deviation or scale.
 }; // class normal_distribution
 
-typedef normal_distribution<double> normal;
+using normal = normal_distribution<double>;
 
-#ifdef BOOST_MSVC
+//
+// Deduction guides, note we don't check the 
+// value of __cpp_deduction_guides, just assume
+// they work as advertised, even if this is pre-final C++17.
+//
+#ifdef __cpp_deduction_guides
+
+template <class RealType>
+normal_distribution(RealType, RealType)->normal_distribution<typename boost::math::tools::promote_args<RealType>::type>;
+template <class RealType>
+normal_distribution(RealType)->normal_distribution<typename boost::math::tools::promote_args<RealType>::type>;
+
+#endif
+
+#ifdef _MSC_VER
 #pragma warning(push)
 #pragma warning(disable:4127)
 #endif
 
 template <class RealType, class Policy>
-inline const std::pair<RealType, RealType> range(const normal_distribution<RealType, Policy>& /*dist*/)
+inline std::pair<RealType, RealType> range(const normal_distribution<RealType, Policy>& /*dist*/)
 { // Range of permissible values for random variable x.
   if (std::numeric_limits<RealType>::has_infinity)
   { 
@@ -91,7 +106,7 @@ inline const std::pair<RealType, RealType> range(const normal_distribution<RealT
 }
 
 template <class RealType, class Policy>
-inline const std::pair<RealType, RealType> support(const normal_distribution<RealType, Policy>& /*dist*/)
+inline std::pair<RealType, RealType> support(const normal_distribution<RealType, Policy>& /*dist*/)
 { // This is range values for random variable x where cdf rises from 0 to 1, and outside it, the pdf is zero.
   if (std::numeric_limits<RealType>::has_infinity)
   { 
@@ -104,7 +119,7 @@ inline const std::pair<RealType, RealType> support(const normal_distribution<Rea
   }
 }
 
-#ifdef BOOST_MSVC
+#ifdef _MSC_VER
 #pragma warning(pop)
 #endif
 
@@ -131,11 +146,6 @@ inline RealType pdf(const normal_distribution<RealType, Policy>& dist, const Rea
    {
      return 0; // pdf + and - infinity is zero.
    }
-   // Below produces MSVC 4127 warnings, so the above used instead.
-   //if(std::numeric_limits<RealType>::has_infinity && abs(x) == std::numeric_limits<RealType>::infinity())
-   //{ // pdf + and - infinity is zero.
-   //  return 0;
-   //}
    if(false == detail::check_x(function, x, &result, Policy()))
    {
       return result;
@@ -150,6 +160,42 @@ inline RealType pdf(const normal_distribution<RealType, Policy>& dist, const Rea
 
    return result;
 } // pdf
+
+template <class RealType, class Policy>
+inline RealType logpdf(const normal_distribution<RealType, Policy>& dist, const RealType& x)
+{
+   BOOST_MATH_STD_USING  // for ADL of std functions
+
+   const RealType sd = dist.standard_deviation();
+   const RealType mean = dist.mean();
+
+   static const char* function = "boost::math::logpdf(const normal_distribution<%1%>&, %1%)";
+
+   RealType result = -std::numeric_limits<RealType>::infinity();
+   if(false == detail::check_scale(function, sd, &result, Policy()))
+   {
+      return result;
+   }
+   if(false == detail::check_location(function, mean, &result, Policy()))
+   {
+      return result;
+   }
+   if((boost::math::isinf)(x))
+   {
+      return result; // pdf + and - infinity is zero so logpdf is -inf
+   }
+   if(false == detail::check_x(function, x, &result, Policy()))
+   {
+      return result;
+   }
+
+   const RealType pi = boost::math::constants::pi<RealType>();
+   const RealType half = boost::math::constants::half<RealType>();
+
+   result = -log(sd) - half*log(2*pi) - (x-mean)*(x-mean)/(2*sd*sd);
+
+   return result;
+}
 
 template <class RealType, class Policy>
 inline RealType cdf(const normal_distribution<RealType, Policy>& dist, const RealType& x)
@@ -173,15 +219,6 @@ inline RealType cdf(const normal_distribution<RealType, Policy>& dist, const Rea
      if(x < 0) return 0; // -infinity
      return 1; // + infinity
    }
-   // These produce MSVC 4127 warnings, so the above used instead.
-   //if(std::numeric_limits<RealType>::has_infinity && x == std::numeric_limits<RealType>::infinity())
-   //{ // cdf +infinity is unity.
-   //  return 1;
-   //}
-   //if(std::numeric_limits<RealType>::has_infinity && x == -std::numeric_limits<RealType>::infinity())
-   //{ // cdf -infinity is zero.
-   //  return 0;
-   //}
    if(false == detail::check_x(function, x, &result, Policy()))
    {
      return result;
@@ -235,15 +272,6 @@ inline RealType cdf(const complemented2_type<normal_distribution<RealType, Polic
      if(x < 0) return 1; // cdf complement -infinity is unity.
      return 0; // cdf complement +infinity is zero
    }
-   // These produce MSVC 4127 warnings, so the above used instead.
-   //if(std::numeric_limits<RealType>::has_infinity && x == std::numeric_limits<RealType>::infinity())
-   //{ // cdf complement +infinity is zero.
-   //  return 0;
-   //}
-   //if(std::numeric_limits<RealType>::has_infinity && x == -std::numeric_limits<RealType>::infinity())
-   //{ // cdf complement -infinity is unity.
-   //  return 1;
-   //}
    if(false == detail::check_x(function, x, &result, Policy()))
       return result;
 

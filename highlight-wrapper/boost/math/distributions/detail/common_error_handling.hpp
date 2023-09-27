@@ -14,7 +14,7 @@
 // using boost::math::isfinite;
 // using boost::math::isnan;
 
-#ifdef BOOST_MSVC
+#ifdef _MSC_VER
 # pragma warning(push)
 # pragma warning(disable: 4702) // unreachable code (return after domain_error throw).
 #endif
@@ -185,11 +185,12 @@ inline bool check_non_centrality(
       RealType* result,
       const Policy& pol)
 {
-   if((ncp < 0) || !(boost::math::isfinite)(ncp))
-   { // Assume scale == 0 is NOT valid for any distribution.
+   static const RealType upper_limit = static_cast<RealType>((std::numeric_limits<long long>::max)()) - boost::math::policies::get_max_root_iterations<Policy>();
+   if((ncp < 0) || !(boost::math::isfinite)(ncp) || ncp > upper_limit)
+   {
       *result = policies::raise_domain_error<RealType>(
          function,
-         "Non centrality parameter is %1%, but must be > 0 !", ncp, pol);
+         "Non centrality parameter is %1%, but must be > 0, and a countable value such that x+1 != x", ncp, pol);
       return false;
    }
    return true;
@@ -216,7 +217,7 @@ inline bool check_finite(
 } // namespace math
 } // namespace boost
 
-#ifdef BOOST_MSVC
+#ifdef _MSC_VER
 #  pragma warning(pop)
 #endif
 
