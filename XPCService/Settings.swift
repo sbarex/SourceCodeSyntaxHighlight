@@ -285,7 +285,7 @@ class SettingsBase: NSObject {
             requestRefreshOnChanged(oldValue: oldValue, newValue: isAllowInteractiveActionsDefined)
         }
     }
-    /// If true enable js action on the quicklook preview but disable dblclick and click and drag on window.
+    /// If true enable js action on the Quick Look preview but disable dblclick and click and drag on window.
     dynamic var allowInteractiveActions: Bool {
         didSet {
             requestRefreshOnChanged(oldValue: oldValue, newValue: allowInteractiveActions)

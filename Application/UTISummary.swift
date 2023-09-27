@@ -2,7 +2,7 @@
 //  UTISummary.swift
 //  Syntax Highlight
 //
-//  Created by Simone Baldissini on 03/03/22.
+//  Created by Sbarex on 03/03/22.
 //  Copyright © 2022 sbarex. All rights reserved.
 //
 

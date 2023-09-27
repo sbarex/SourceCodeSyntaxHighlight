@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1400"
+   LastUpgradeVersion = "1500"
    wasCreatedForAppExtension = "YES"
    version = "2.0">
    <BuildAction
@@ -16,8 +16,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "8359235B23559A2B001506B6"
-               BuildableName = "Syntax Highlight Quicklook Extension.appex"
-               BlueprintName = "Syntax Highlight Quicklook Extension"
+               BuildableName = "Syntax Highlight Quick Look Extension.appex"
+               BlueprintName = "Syntax Highlight Quick Look Extension"
                ReferencedContainer = "container:SourceCodeSyntaxHighlight.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>

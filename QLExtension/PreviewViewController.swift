@@ -31,7 +31,7 @@ import Syntax_Highlight_XPC_Render
 class StaticTextView: NSTextView {
     override func mouseDown(with event: NSEvent) {
         if event.clickCount > 1, let u = (self.window?.contentViewController as? PreviewViewController)?.fileUrl {
-            // Open the source file by a double click on the quicklook preview window.
+            // Open the source file by a double click on the Quick Look preview window.
             NSWorkspace.shared.open(u)
         }
         /*
@@ -55,7 +55,7 @@ class StaticWebView: WKWebView {
     
     override func mouseDown(with event: NSEvent) {
         if event.clickCount > 1, let u = fileUrl {
-            // Open the source file by a double click on the quicklook preview window.
+            // Open the source file by a double click on the Quick Look preview window.
             NSWorkspace.shared.open(u)
         } else {
             let pos = self.convert(event.locationInWindow, from: nil)
@@ -184,7 +184,7 @@ class PreviewViewController: NSViewController, QLPreviewingController, WKNavigat
                         // configuration.userContentController.add(self, name: "jsHandler")
                     
                         /* MARK: FIXME
-                        On Big Sur as far as I know, QuickLook extensions don't honor com.apple.security.network.client, so WebKit process immediately crash.
+                        On Big Sur as far as I know, Quick Look extensions don't honor com.apple.security.network.client, so WebKit process immediately crash.
                         To temporary fix add this entitlements exception
                         com.apple.security.temporary-exception.mach-lookup.global-name:
                         <key>com.apple.security.temporary-exception.mach-lookup.global-name</key>
@@ -410,7 +410,7 @@ class PreviewViewController: NSViewController, QLPreviewingController, WKNavigat
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         if let handler = self.handler {
-            // Show the quicklook preview only after the complete rendering (preventing a flickering glitch).
+            // Show the Quick Look preview only after the complete rendering (preventing a flickering glitch).
             /*
             let w = NSScroller.scrollerWidth(for: NSControl.ControlSize.regular, scrollerStyle: NSScroller.Style.overlay)
             webView.evaluateJavaScript("""

@@ -27,6 +27,7 @@ Inside it uses [Highlight](http://www.andre-simon.de/doku/highlight/en/highlight
     - [Colors](#colors)
     - [Inquiry file](#inquiry-file)
   - [Command line interface](#command-line-interface)
+  - [Add support to a custom format](#add-support-to-a-custom-format)
   - [FAQ](#faq)
   - [Known bugs](#known-bugs)
   - [Note for developers](#note-for-developers)
@@ -114,7 +115,7 @@ On _**macOS 12 Monterey**, the system allows you to manage these previously unau
 ### Supported formats
 
 Most programming languages are supported. 
-The application can also handle some [plain files](#plain-files) without extension.
+The application can also handle some [plain files](#plain-files) **without extension**.
 
 - Ada (`.ada`)
 - Adobe Acrobat Sequence files (`.sequ`) _as `XML`_
@@ -129,6 +130,7 @@ The application can also handle some [plain files](#plain-files) without extensi
 - ATL files (`.atl`)
 - (G)AWK files (`.awk`)
 - Bash Script files (`.bash`)
+- Bezel (`.bezel`) as _plain text_
 - BibTex (`.bib`)
 - C shell script files (`.csh`)
 - C source files (`.c`, `.h`)
@@ -181,7 +183,7 @@ The application can also handle some [plain files](#plain-files) without extensi
 - Java source code (`.java`, `.jav`)
 - Java Web Start (`.jnlp`)
 - JavaFX ML (`.fxml`)
-- JavaScript files (`.js`, `.jscript`, `.javascript`, `.mjs`)
+- JavaScript files (`.js`, `.jscript`, `.javascript`, `.mjs`, `.jsm`)
 - JSON files (`.json`, `.jsonc`) ** On macOS 13 Ventura with Apple Silicon the `.json` extension is reserved by the system and cannot be handled.** 
 - JSON Line files (`.jsonl`) _as `JSON`_
 - Julia source files  (`.jl`)
@@ -193,7 +195,8 @@ The application can also handle some [plain files](#plain-files) without extensi
 - Logos source files (`.xm`)
 - Lua source files (`.lua`)
 - Makefile files (`.mk`, `.mak`)
-- Markdown files (`.md`, `.rmd`): _please use [QLMarkdown](https://github.com/sbarex/QLMarkdown)_ which allows you to choose whether to display formatted output or the highlighted source code. 
+- Markdown files (`.md`, `.rmd`): _please use [QLMarkdown](https://github.com/sbarex/QLMarkdown)_ which allows you to choose whether to display formatted output or the highlighted source code.
+- Media Presentation Description (`.mpd`) _as XML_. 
 - MF source files (`.mf`)
 - Microsoft Active Server Page files (`.asp`, `.aspx`)
 - Microsoft PowerShell files (`.psm1`, `.psd1`, `.ps1`)
@@ -232,6 +235,7 @@ The application can also handle some [plain files](#plain-files) without extensi
 - Scala source files (`.sc`, `.sbt`, `.scala`)
 - Scheme source files (`.scm`)
 - Shell script files (`.bashrc`, `.zshrc`, `.sh`)
+- Smali (`.smali`) _as plain text_.
 - Solidity source files (`.sol`)
 - SQL files (`.sql`)
 - Standard ML source files (`.ml`)
@@ -246,6 +250,7 @@ The application can also handle some [plain files](#plain-files) without extensi
 - Text files (`.txt`, `.text`)
 - TOML files (`.toml`)
 - TypeScript files (`.ts`, `.tsx`, `.cts`, `.mts`) **`.ts` and `.mts` are reserved by macOS and cannot be handled.**
+- Visual Studio Code Workspace (`.code-workspace`) _ as `JSON`_
 - Verilog HDL files (`.v`, `.vl`)
 - VHDL source files (`.vhd`, `.vhdl`)
 - VIM script files (`.vim`)
@@ -340,7 +345,7 @@ The you can choose the colors used to mark the changed lines. On every format yo
 _On `RTF` mode, the VCS plugin can be disabled if the syntax language defines more keyword groups than those defined in the theme._
 
 ### Plain files
-The Application can preview plain files _without an extension_ whose format is unknown. 
+The Application can preview plain files **without an extension** whose format is unknown. 
 
 ![Unknown files](assets/settings_plain.png)
 
@@ -477,6 +482,14 @@ The highlighted data is printed to the `stdout` or writed to file if you use the
 
 The command line tool require macOS 10.15.4 or later.
 
+
+## Add support to a custom format
+
+** You cannot manually add support for a new file format.** This operation must be done during compilation time. Any attempt to manipulate the application causes the code signature to be violated, making it unusable!
+
+See also the FAQ.
+
+
 ## FAQ
 
 ### The Quick Look preview doesn't work
@@ -513,7 +526,7 @@ The command line tool require macOS 10.15.4 or later.
 >
 > Some common files cannot be handled by third party extension because are reserved by the system (for example, `.ts`, `.html`, …).
 >
-> You can customize the behavior for files with no extension yourself. See [Plain files](#plain-files) settings.
+> You can customize the behavior for files **with no extension** yourself. See [Plain files](#plain-files) settings.
 
 ### The file icon do not show the preview
 > This Application only generate the Quick Look Preview and does not provide a thumbnail service for the Finder icon.
@@ -529,7 +542,7 @@ The command line tool require macOS 10.15.4 or later.
 - Icons of the custom file format are disabled on Catalina (cause an application freeze).
 - In `RTF` mode the colors may be slightly lighter than what is set (probably due to the different handling of color profile). 
 - Typescript `.ts` format cannot be handled because is reserved by macOS and associated to the mpeg video stream format.
-- If a quicklook windows is opened when the system switch the theme appearance, the contents will not be refreshed to the new style.
+- If a Quick Look window is opened when the system switch the theme appearance, the contents will not be refreshed to the new style.
 
 
 ## Note for developers
@@ -546,7 +559,7 @@ To work around this problem, it is possible to use an XPC service that may have 
 
 The XPC service is executed automatically when requested by the application or the Quick Look Extension. After closing the Quick Look preview the process is automatically closed after some seconds releasing the resources.
 
-The Application and the Quick Look Extension can preview files showing the formatted code as HTML, inside a WKWebView, or as RTF inside a NSTextView. Especially in Big Sur, the use of WebKit within the Quick Look Preview has numerous bugs, so **before macOS 12 Monterey, the suggested rendering engine is `RTF`**. From macOS 12 Monterey, the plugin adopt the new data based quicklook API.
+The Application and the Quick Look Extension can preview files showing the formatted code as HTML, inside a WKWebView, or as RTF inside a NSTextView. Especially in Big Sur, the use of WebKit within the Quick Look Preview has numerous bugs, so **before macOS 12 Monterey, the suggested rendering engine is `RTF`**. From macOS 12 Monterey, the plugin adopt the new data based Quick Look API.
 
 The settings are stored in `~/Library/Preferences/org.sbarex.SourceCodeSyntaxHighlight.plist`.
 Custom themes and styles are saved in `~/Library/Application Support/Syntax Highlight`.
@@ -619,13 +632,13 @@ The application embed the [`Highlight`](http://www.andre-simon.de/doku/highlight
 
 - handle extension from command line (https://stackoverflow.com/questions/66546696/how-to-enable-and-debug-a-macos-file-provider-extension , https://stackoverflow.com/questions/34898903/what-do-the-prefixes-in-the-output-of-macos-pluginkit-mean/36839118#36839118 , https://kevin.deldycke.com/2019/07/macos-commands/ ):
 
-List all registered quicklook plugins:
+List all registered Quick Look plugins:
 ```bash
 pluginkit -mAvvv -p com.apple.quicklook.preview 
 ```
 İnfo about a plugin:
 ```bash
-pluginkit -m -v -i org.sbarex.SourceCodeSyntaxHighlight.QuicklookExtension --raw
+pluginkit -m -v -i org.sbarex.SourceCodeSyntaxHighlight.QuickLookExtension --raw
 ```
 
 ## Credits

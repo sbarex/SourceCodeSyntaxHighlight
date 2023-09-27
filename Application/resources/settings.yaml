@@ -159,7 +159,6 @@ UTIs:
         syntax: rust
     
     org.xml-tools.source: *xml
-    dyn.ah62d4rv4ge81u6pzqz3hw: *xml
     dyn.ah62d4rv4ge81u6k: *xml
     dyn.ah62d4rv4ge81u7k: *xml
     
@@ -244,24 +243,14 @@ UTIs:
         syntax: sql
     dyn.ah62d4rv4ge81g6pq:
         syntax: sql
-        
-    dyn.ah62d4rv4ge81g22:
-        syntax: scala
-    dyn.ah62d4rv4ge81g25brvuu:
-        syntax: scala
     
     dyn.ah62d4rv4ge81u6pzqz3hw: *xml
-    dyn.ah62d4rv4ge81u6k: *xml
-    dyn.ah62d4rv4ge81u7k: *xml
     
     dyn.ah62d4rv4ge81g25xsq:
         syntax: scss
         
     dyn.ah62d4rv4ge80s3a:
         syntax: gd
-        
-    dyn.ah62d4rv4ge81u6pzqz3hw:
-        syntax: ocaml
         
     dyn.ah62d4rv4ge80k55drrw1e3xmrvwu:
         syntax: dockerfile
@@ -290,10 +279,30 @@ UTIs:
     dyn.ah62d4rv4ge81a8p:
         syntax: py
         preprocessor: uncompyle6 $targetHL
-       
+    
+    # .bazel
+    dyn.ah62d4rv4ge80e2p4qz0a:
+        syntax: txt
+    
+    # .code-workspace
+    dyn.ah62d4rv4ge80g55eqy01s55wrr31a2pdqy:
+        syntax: json
+    
     # .cr
     dyn.ah62d4rv4ge80g6u:
         syntax: crystal
+        
+    #.jsm
+    dyn.ah62d4rv4ge80y65r:
+        syntax: javascript
+    
+    # .makefile
+    dyn.ah62d4rv4ge8042ppqzxgw5df:
+        syntax: makefile
+    
+    # .mpd
+    dyn.ah62d4rv4ge8046de:
+        syntax: xml
         
     # .nf
     dyn.ah62d4rv4ge8063u:
@@ -306,6 +315,10 @@ UTIs:
     # .sas
     dyn.ah62d4rv4ge81g2px:
         syntax: sas
+        
+    # smali
+    dyn.ah62d4rv4ge81g5pbrvyu:
+        syntax: txt
     
     # .t
     dyn.ah62d4rv4ge81k:
@@ -365,10 +378,13 @@ extensions:
         syntax: autoit
     a3x:
         syntax: autoit
-        
-    do:
+    
+    bazel:
         syntax: txt
         
+    code-workspace:
+        syntax: json
+    
     cls:
         syntax: latex
 
@@ -379,11 +395,19 @@ extensions:
     cr:
         syntax: crystal
         
+    do:
+        syntax: txt
+        
     f95:
         syntax: fortran90
     
     fnc:
         syntax: sql
+       
+    #dyn.ah62d4rv4ge80y65r
+    jsm:
+        syntax: javascript
+        
     prc:
         syntax: sql
     trg:
@@ -412,8 +436,6 @@ extensions:
         syntax: sql
     mvw:
         syntax: sql
-    trg:
-        syntax: sql
     
     # org.sbarex.compiled-python-script
     pyc:
@@ -440,10 +462,16 @@ extensions:
     # dyn.ah62d4rv4ge81g22
     sc:
         syntax: scala
+        
     # dyn.ah62d4rv4ge81g22
+    # dyn.ah62d4rv4ge81g25brvuu
     sbt:
         syntax: scala
-        
+            
+    # dyn.ah62d4rv4ge81g5pbrvyu
+    smali:
+        syntax: txt
+
     # dyn.ah62d4rv4ge80w5pq
     iml: *xml
 
@@ -470,25 +498,14 @@ extensions:
     kt:
         syntax: kotlin
         
-            
-    # dyn.ah62d4rv4ge81g22
-    sc:
-        syntax: scala
-    # dyn.ah62d4rv4ge81g25brvuu
-    sbt:
-        syntax: scala
-        
-        
     # dyn.ah62d4rv4ge81u6pzqz3hw
     # dyn.ah62d4rv4ge81u6k
     # dyn.ah62d4rv4ge81u7k
+    # dyn.ah62d4rv4ge81u65e
     xsd: *xml
     xquery: *xml
     xq: *xml
     xu: *xml
-
-    # dyn.ah62d4rv4ge81u65e
-    xsd: *xml
 
     # dyn.ah62d4rv4ge81g3pvsy
     sequ: *xml
@@ -513,6 +530,10 @@ extensions:
     # dyn.ah62d4rv4ge80y65tr3vu
     jsonc:
         syntax: json
+        
+    #dyn.ah62d4rv4ge8046de
+    mpd:
+        syntax: xml
 
     # dyn.ah62d4rv4ge81a7pc
     pub:

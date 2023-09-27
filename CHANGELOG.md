@@ -2,7 +2,22 @@ Changelog
 =======
 
 
+### 2.1.20 (69)
+New features:
+- Update Highlight to release 4.8.
+- Update Lua to release 5.4.6.
+- Update Boost to release 1.8.3.
+- Update Dos2Unix to release 7.5.1.
+- Support for `.code-workspace` files _as JSON_.
+- Support for bazel (`.bazel`) and smali (`.smali`) files _as plain text_.
+- Support for Media Presentation Description (`.mpd`) _as XML_.
+
+Bugfix:
+- Fixed unrecognized `.jsm` files.
+
+
 ### 2.1.19 (68)
+New features:
 - Better support for Stata files (`.do`, `.ado`) _as plain text_.
 - Better support for fortran (`.f95`) and LaTex (`.cls`) files.
 
@@ -312,7 +327,7 @@ Bugfix:
 
 ### 1.0.b30
 New features:
-- Auto update with Sparkle framework. Auto updated works only when run the main application and not from the quicklook extension. You must have launched the application at least twice for the update checks to begin, or you can use the appropriate item in the application menu.
+- Auto update with Sparkle framework. Auto updated works only when run the main application and not from the Quick Look extension. You must have launched the application at least twice for the update checks to begin, or you can use the appropriate item in the application menu.
 - In the Preferences window, new button to show UTI instead of the extensions.
 
 Bugfix:
@@ -413,7 +428,7 @@ New features:
 
 ### 1.0.b16
 New features:
-- XPC service splitted into two services. One is used by the quicklook extension with only the code to read the current settings and format the preview. The second one has also the code to change the settings, inquiry the themes and all the requested features for the main application interface. I hope this change makes the quicklook extension more reactive and consume less resources.
+- XPC service splitted into two services. One is used by the Quick Look extension with only the code to read the current settings and format the preview. The second one has also the code to change the settings, inquiry the themes and all the requested features for the main application interface. I hope this change makes the Quick Look extension more reactive and consume less resources.
 - Rewrite the settings engine.
 
 
@@ -421,13 +436,13 @@ New features:
 New features:
 - Support for `.h` header files.
 - Target to 10.15 (now the standard swift library is not embedded).
-- New interactive preview setting to allow the execution of js code inside the quicklook preview.
+- New interactive preview setting to allow the execution of js code inside the Quick Look preview.
 
 Bugfix:
-- Removed markdown support in the quicklook extension.
+- Removed markdown support in the Quick Look extension.
 - Fix little space for theme name on popover theme selector.
 - Images of help files have been compressed.
-- Added a margin around the preview on the quicklook window.
+- Added a margin around the preview on the Quick Look window.
 - Fast generation of theme icons.
 
 
@@ -450,6 +465,6 @@ New features:
 - Inside the application support folder are saved the custom css styles and customized themes.
 
 Bugfix:
-- Now double click on the quicklook preview open the file.
+- Now double click on the Quick Look preview open the file.
 - Bugfix on font preferences.
 - System for purging and migrating old settings to new system.

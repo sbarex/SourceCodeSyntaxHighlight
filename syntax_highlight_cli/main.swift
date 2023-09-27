@@ -408,7 +408,7 @@ if let logFile = logFile {
 }
 
 let appBundleUrl = appUrl.appendingPathComponent("Contents/Resources")
-let xpcBundleUrl = appBundleUrl.appendingPathComponent("../PlugIns/Syntax Highlight Quicklook Extension.appex/Contents/XPCServices/Resources")
+let xpcBundleUrl = appBundleUrl.appendingPathComponent("../PlugIns/Syntax Highlight Quick Look Extension.appex/Contents/XPCServices/Resources")
 
 let highlightBin = appBundleUrl.appendingPathComponent("highlight/bin/highlight")
 let highlightDataDir = appBundleUrl.appendingPathComponent("highlight/share")

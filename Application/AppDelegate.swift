@@ -117,7 +117,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
         return true
     }
     
-    /// Get the url of the quicklook extension.
+    /// Get the url of the Quick Look extension.
     func getQLAppexUrl() -> URL? {
         guard let base_url = Bundle.main.builtInPlugInsURL else {
             return nil
@@ -136,7 +136,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
     }
     
     lazy var handledUTIs: [UTI] = {
-        // Get the list of all uti supported by the quicklook extension.
+        // Get the list of all uti supported by the Quick Look extension.
         guard let url = getQLAppexUrl(), let bundle = Bundle(url: url), let extensionInfo = bundle.object(forInfoDictionaryKey: "NSExtension") as? [String: Any], let attributes = extensionInfo["NSExtensionAttributes"] as? [String: Any], let supportedTypes = attributes["QLSupportedContentTypes"] as? [String] else {
             return []
         }

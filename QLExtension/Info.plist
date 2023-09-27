@@ -78,6 +78,7 @@
 				<string>com.macromates.textmate.scheme</string>
 				<string>com.macromates.textmate.standard-ml</string>
 				<string>com.microsoft.asp</string>
+				<string>com.microsoft.code-workspace</string>
 				<string>com.microsoft.csharp-source</string>
 				<string>com.microsoft.c-sharp</string>
 				<string>com.microsoft.f-sharp</string>
@@ -116,6 +117,7 @@
 				<string>org.arduino.source</string>
 				<string>org.asm.source</string>
 				<string>org.bash.source</string>
+				<string>org.bazel.source</string>
 				<string>org.clojure</string>
 				<string>org.cmake.makefile</string>
 				<string>org.clojure.script</string>
@@ -199,6 +201,7 @@
 				<string>org.sbarex.nim</string>
 				<string>org.sbarex.qlsyntaxhighlight.dummy</string>
 				<string>org.scala.source</string>
+				<string>org.smali.source</string>
 				<string>org.soliditylang.source</string>
 				<string>org.tug.cls</string>
 				<string>org.tug.lua</string>
@@ -324,7 +327,6 @@
 				<string>dyn.ah62d4rv4ge80s3a</string>
 				<string>dyn.ah62d4rv4ge80g4xx</string>
 				<string>dyn.ah62d4rv4ge80g7dx</string>
-				<string>dyn.ah62d4rv4ge81u6pzqz3hw</string>
 				<string>dyn.ah62d4rv4ge80k55drrw1e3xmrvwu</string>
 				<string>dyn.ah62d4rv4ge80q5xd</string>
 				<string>dyn.ah62d4rv4ge81a6xd</string>
@@ -358,6 +360,12 @@
 				<string>dyn.ah62d4rv4ge80k52</string>
 				<string>dyn.ah62d4rv4ge80y65tr30a</string>
 				<string>dyn.ah62d4rv4ge80c7mx</string>
+				<string>dyn.ah62d4rv4ge80g55eqy01s55wrr31a2pdqy</string>
+				<string>dyn.ah62d4rv4ge80e2p4qz0a</string>
+				<string>dyn.ah62d4rv4ge81g5pbrvyu</string>
+				<string>dyn.ah62d4rv4ge8042ppqzxgw5df</string>
+				<string>dyn.ah62d4rv4ge8046de</string>
+				<string>dyn.ah62d4rv4ge80y65r</string>
 			</array>
 			<key>QLSupportsSearchableItems</key>
 			<false/>

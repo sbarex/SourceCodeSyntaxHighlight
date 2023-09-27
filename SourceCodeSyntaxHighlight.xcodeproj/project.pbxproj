@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -69,7 +69,7 @@
 		8359235F23559A2B001506B6 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8359235E23559A2B001506B6 /* Quartz.framework */; };
 		8359236223559A2B001506B6 /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8359236123559A2B001506B6 /* PreviewViewController.swift */; };
 		8359236523559A2B001506B6 /* PreviewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8359236323559A2B001506B6 /* PreviewViewController.xib */; };
-		8359236A23559A2B001506B6 /* Syntax Highlight Quicklook Extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8359235C23559A2B001506B6 /* Syntax Highlight Quicklook Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		8359236A23559A2B001506B6 /* Syntax Highlight Quick Look Extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8359235C23559A2B001506B6 /* Syntax Highlight Quick Look Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		8359238023563BDF001506B6 /* SCSHXPCServiceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8359237F23563BDF001506B6 /* SCSHXPCServiceDelegate.swift */; };
 		8359238223563BDF001506B6 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8359238123563BDF001506B6 /* main.swift */; };
 		8359238623563BDF001506B6 /* Syntax Highlight XPC Service.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = 8359237B23563BDF001506B6 /* Syntax Highlight XPC Service.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -232,7 +232,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				8359236A23559A2B001506B6 /* Syntax Highlight Quicklook Extension.appex in Embed Foundation Extensions */,
+				8359236A23559A2B001506B6 /* Syntax Highlight Quick Look Extension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -566,7 +566,7 @@
 		8359234C235599F9001506B6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		83592351235599F9001506B6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		83592352235599F9001506B6 /* SCSHApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SCSHApp.entitlements; sourceTree = "<group>"; };
-		8359235C23559A2B001506B6 /* Syntax Highlight Quicklook Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Syntax Highlight Quicklook Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8359235C23559A2B001506B6 /* Syntax Highlight Quick Look Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Syntax Highlight Quick Look Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8359235E23559A2B001506B6 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
 		8359236123559A2B001506B6 /* PreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
 		8359236423559A2B001506B6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PreviewViewController.xib; sourceTree = "<group>"; };
@@ -1105,7 +1105,7 @@
 			isa = PBXGroup;
 			children = (
 				83592345235599F6001506B6 /* Syntax Highlight.app */,
-				8359235C23559A2B001506B6 /* Syntax Highlight Quicklook Extension.appex */,
+				8359235C23559A2B001506B6 /* Syntax Highlight Quick Look Extension.appex */,
 				8359237B23563BDF001506B6 /* Syntax Highlight XPC Service.xpc */,
 				838F465A238D813500268B4A /* Syntax Highlight XPC Render.xpc */,
 				83FD6ED0246B061600F5BDF3 /* relaunch */,
@@ -1350,9 +1350,9 @@
 			productReference = 83592345235599F6001506B6 /* Syntax Highlight.app */;
 			productType = "com.apple.product-type.application";
 		};
-		8359235B23559A2B001506B6 /* Syntax Highlight Quicklook Extension */ = {
+		8359235B23559A2B001506B6 /* Syntax Highlight Quick Look Extension */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8359236B23559A2B001506B6 /* Build configuration list for PBXNativeTarget "Syntax Highlight Quicklook Extension" */;
+			buildConfigurationList = 8359236B23559A2B001506B6 /* Build configuration list for PBXNativeTarget "Syntax Highlight Quick Look Extension" */;
 			buildPhases = (
 				8359235823559A2B001506B6 /* Sources */,
 				8359235923559A2B001506B6 /* Frameworks */,
@@ -1364,9 +1364,9 @@
 			dependencies = (
 				8362582B25A9F3E100475069 /* PBXTargetDependency */,
 			);
-			name = "Syntax Highlight Quicklook Extension";
+			name = "Syntax Highlight Quick Look Extension";
 			productName = QLExtension;
-			productReference = 8359235C23559A2B001506B6 /* Syntax Highlight Quicklook Extension.appex */;
+			productReference = 8359235C23559A2B001506B6 /* Syntax Highlight Quick Look Extension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
 		8359237A23563BDF001506B6 /* Syntax Highlight XPC Service */ = {
@@ -1452,8 +1452,9 @@
 		8359233D235599F6001506B6 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1300;
-				LastUpgradeCheck = 1400;
+				LastUpgradeCheck = 1500;
 				ORGANIZATIONNAME = sbarex;
 				TargetAttributes = {
 					83592344235599F6001506B6 = {
@@ -1509,7 +1510,7 @@
 			projectRoot = "";
 			targets = (
 				83592344235599F6001506B6 /* Syntax Highlight */,
-				8359235B23559A2B001506B6 /* Syntax Highlight Quicklook Extension */,
+				8359235B23559A2B001506B6 /* Syntax Highlight Quick Look Extension */,
 				8359237A23563BDF001506B6 /* Syntax Highlight XPC Service */,
 				838F4659238D813500268B4A /* Syntax Highlight XPC Render */,
 				83FD6ECF246B061600F5BDF3 /* relaunch */,
@@ -1739,7 +1740,7 @@
 		};
 		8359236923559A2B001506B6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 8359235B23559A2B001506B6 /* Syntax Highlight Quicklook Extension */;
+			target = 8359235B23559A2B001506B6 /* Syntax Highlight Quick Look Extension */;
 			targetProxy = 8359236823559A2B001506B6 /* PBXContainerItemProxy */;
 		};
 		8359238523563BDF001506B6 /* PBXTargetDependency */ = {
@@ -1814,6 +1815,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1878,6 +1880,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -1904,10 +1907,11 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 68;
+				CURRENT_PROJECT_VERSION = 69;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1922,7 +1926,7 @@
 					"$(inherited)",
 					"\"$(BUILT_PRODUCTS_DIR)/highlight\"",
 				);
-				MARKETING_VERSION = 2.1.19;
+				MARKETING_VERSION = 2.1.20;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1940,10 +1944,11 @@
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 68;
+				CURRENT_PROJECT_VERSION = 69;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1958,7 +1963,7 @@
 					"$(inherited)",
 					"\"$(BUILT_PRODUCTS_DIR)/highlight\"",
 				);
-				MARKETING_VERSION = 2.1.19;
+				MARKETING_VERSION = 2.1.20;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1974,7 +1979,7 @@
 				CODE_SIGN_ENTITLEMENTS = QLExtension/QLExtension.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 68;
+				CURRENT_PROJECT_VERSION = 69;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -1989,7 +1994,7 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				MARKETING_VERSION = 2.1.19;
-				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.QuicklookExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.QuickLookExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
@@ -2004,7 +2009,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 68;
+				CURRENT_PROJECT_VERSION = 69;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -2020,7 +2025,7 @@
 				);
 				MARKETING_VERSION = 2.1.19;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp";
-				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.QuicklookExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.QuickLookExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
@@ -2035,7 +2040,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 68;
+				CURRENT_PROJECT_VERSION = 69;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -2045,7 +2050,7 @@
 					"$(LD_RUNPATH_SEARCH_PATHS_$(IS_MACCATALYST)_$(_BOOL_$(SKIP_INSTALL)))",
 				);
 				LIBRARY_SEARCH_PATHS = "\"$(BUILT_PRODUCTS_DIR)/highlight\"";
-				MARKETING_VERSION = 2.1.19;
+				MARKETING_VERSION = 2.1.20;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.XPCService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2064,7 +2069,7 @@
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 68;
+				CURRENT_PROJECT_VERSION = 69;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -2074,7 +2079,7 @@
 					"$(LD_RUNPATH_SEARCH_PATHS_$(IS_MACCATALYST)_$(_BOOL_$(SKIP_INSTALL)))",
 				);
 				LIBRARY_SEARCH_PATHS = "\"$(BUILT_PRODUCTS_DIR)/highlight\"";
-				MARKETING_VERSION = 2.1.19;
+				MARKETING_VERSION = 2.1.20;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.XPCService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2126,7 +2131,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 68;
+				CURRENT_PROJECT_VERSION = 69;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -2139,7 +2144,7 @@
 					"$(inherited)",
 					"@loader_path/../../../../Frameworks",
 				);
-				MARKETING_VERSION = 2.1.19;
+				MARKETING_VERSION = 2.1.20;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.XPCRender;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2159,7 +2164,7 @@
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 68;
+				CURRENT_PROJECT_VERSION = 69;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -2172,7 +2177,7 @@
 					"$(inherited)",
 					"@loader_path/../../../../Frameworks",
 				);
-				MARKETING_VERSION = 2.1.19;
+				MARKETING_VERSION = 2.1.20;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.XPCRender;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2234,7 +2239,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8359236B23559A2B001506B6 /* Build configuration list for PBXNativeTarget "Syntax Highlight Quicklook Extension" */ = {
+		8359236B23559A2B001506B6 /* Build configuration list for PBXNativeTarget "Syntax Highlight Quick Look Extension" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8359236C23559A2B001506B6 /* Debug */,

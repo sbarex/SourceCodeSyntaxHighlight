@@ -192,7 +192,7 @@ extension Settings: SettingsCSS {
         let defaults = UserDefaults.standard
         var defaultsDomain = defaults.persistentDomain(forName: domain) ?? [:]
         
-        let updateDomains = { (key: String, value: AnyHashable?) in
+        let updateDomains = { (key: String, value: AnyHashable?) -> Void in
             if let v = value {
                 defaultsDomain[key] = v
             } else {
