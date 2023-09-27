@@ -2,6 +2,37 @@
 <rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
     <channel>
         <title>Syntax Highlight</title>
+
+        <item>
+            <title>2.1.20</title>
+            <pubDate>mer, 27 set 2023 21:35:00 +0100</pubDate>
+            <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
+            <enclosure 
+                       type="application/octet-stream" 
+                       url="https://github.com/sbarex/SourceCodeSyntaxHighlight/releases/download/2.1.19/Syntax.Highlight.zip" 
+                       sparkle:shortVersionString="2.1.20" sparkle:version="69" 
+                       sparkle:edSignature="yspyPukkDqEFXPWmG16zZeAMUX0l+3ZSMxH7vk06/FzkJfs8qiQ+y9/vDMlYLOero7SV6rbotO40ZiQ5D+s8Ag==" length="13873925"
+            />
+            <description><![CDATA[
+                <h2>Release 2.1.20 (69)</h2>
+                <p>New features:</p>
+                <ul>
+                    <li>Update Highlight to release 4.8.</li>
+                    <li>Update Lua to release 5.4.6.</li>
+                    <li>Update Boost to release 1.8.3.</li>
+                    <li>Update Dos2Unix to release 7.5.1.</li>
+                    <li>Support for <code>.code-workspace</code> files <i>as JSON</i>.</li>
+                    <li>Support for bazel (<code>.bazel</code>) and smali (<code>.smali</code>) files <i>as plain text</i>.</li>
+                    <li>Support for Media Presentation Description (<code>.mpd</code>) <i>as XML</i>.</li>
+                </ul>
+                <p>Bug fix:</p>
+                <ul>
+                    <li>Fixed unrecognized <code>.jsm</code> files.</li>
+                </ul>
+                <p><a href="https://github.com/sbarex/SourceCodeSyntaxHighlight/blob/master/CHANGELOG.md">See the complete changelog.</a></p>
+            ]]>
+            </description>
+        </item>
         
         <item>
             <title>2.1.19</title>
