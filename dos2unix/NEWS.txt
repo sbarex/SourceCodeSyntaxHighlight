@@ -1,3 +1,29 @@
+2023-08-29: Version 7.5.1
+
+  * Fixed problem of converting a symbolic link target
+    that is on another file system.
+  * Updated Chinese and Serbian translations.
+
+2023-05-17: Version 7.5.0
+
+  * New option -e, --add-eol to add a line break to the last
+    line if there isn't one. Option --no-add-eol disables the
+    feature.
+  * New option -O, --to-stdout to write to standard output.
+
+2023-02-11: Version 7.4.4
+
+  * New Catalan, Georgian, Romanian, and Korean translations of the
+    UI messages.
+  * New Korean and Romanian translations of the manual.
+  * Several translation updates.
+
+2022-06-05: Version 7.4.3
+
+  * New Serbian translation of the manual.
+  * Updated Esperanto translation.
+  * Skip GB18030 tests on Darwin.
+
 2020-10-12: Version 7.4.2
 
   * New Friulian translation of the messages.
@@ -6,7 +32,7 @@
 
 2019-09-24: Version 7.4.1
 
-  * Updated Danish, German, Hungarian, Japanese and Ukranian translations.
+  * Updated Danish, German, Hungarian, Japanese and Ukrainian translations.
   * Code cleanup.
 
 2017-10-10: Version 7.4.0
@@ -115,7 +141,7 @@
 
   * Dos2unix is part of the Translation Project (TP).
     All translations go via the Translation Project.
-    See http://translationproject.org/
+    See https://translationproject.org/
   * New translations of UI messages: Brazilian Portuguese, Chinese (traditional),
     Danish, French, Hungarian, Polish, Serbian, Ukrainian, Vietnamese.
   * New translations of the manual: Brazilian Portuguese, French, German,
@@ -164,7 +190,7 @@
 
 2012-01-27: Version 5.3.2
 
-  * New homepage URL: http://waterlan.home.xs4all.nl/dos2unix.html
+  * New homepage URL: https://waterlan.home.xs4all.nl/dos2unix.html
   * Compiles for native MSYS.
   * Compile with OpenWatcom for DOS32 and Win32.
   * Detect code page on OS/2.

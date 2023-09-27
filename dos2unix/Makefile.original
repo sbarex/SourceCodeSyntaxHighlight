@@ -1,6 +1,6 @@
 # Author: Erwin Waterlander
 #
-#   Copyright (C) 2009-2020 Erwin Waterlander
+#   Copyright (C) 2009-2022 Erwin Waterlander
 #   All rights reserved.
 #
 #   Redistribution and use in source and binary forms, with or without
@@ -396,7 +396,7 @@ $(UNIX2DOS_BIN): unix2dos.o querycp.o common.o
 	$(CC) $+ $(LDFLAGS) $(LIBS) -o $@
 
 # DJGPP supports linking of .EXEs via 'stubify'.
-# See djgpp.mak and http://www.delorie.com/djgpp/v2faq/faq22_5.html
+# See djgpp.mak and https://www.delorie.com/djgpp/v2faq/faq22_5.html
 # ln -s does automatic stubify in DJGPP 2.03.
 # This changed in DJGPP 2.05. DJGPP 2.05 emulates symbolic links.
 
@@ -508,6 +508,9 @@ man/fr/man1/$(PACKAGE).$(HTMLEXT) : man/fr/man1/$(PACKAGE).pod
 man/nl/man1/$(PACKAGE).$(HTMLEXT) : man/nl/man1/$(PACKAGE).pod
 	PERL_UNICODE=SDA pod2html --title="$(PACKAGE) $(DOS2UNIX_VERSION) - DOS/Mac naar Unix en vice versa tekstbestand formaat omzetter" $< > $@
 
+man/ko/man1/$(PACKAGE).$(HTMLEXT) : man/ko/man1/$(PACKAGE).pod
+	PERL_UNICODE=SDA pod2html --title="$(PACKAGE) $(DOS2UNIX_VERSION) - DOS/맥 에서 유닉스에서, 그 반대로의 텍스트 파일 형식 변환 프로그램" $< > $@
+
 man/pl/man1/$(PACKAGE).$(HTMLEXT) : man/pl/man1/$(PACKAGE).pod
 	PERL_UNICODE=SDA pod2html --title="$(PACKAGE) $(DOS2UNIX_VERSION) - konwerter formatu plików tekstowych między systemami DOS/Mac a Uniksem" $< > $@
 
@@ -520,8 +523,14 @@ man/uk/man1/$(PACKAGE).$(HTMLEXT) : man/uk/man1/$(PACKAGE).pod
 man/zh_CN/man1/$(PACKAGE).$(HTMLEXT) : man/zh_CN/man1/$(PACKAGE).pod
 	PERL_UNICODE=SDA pod2html --title="$(PACKAGE) $(DOS2UNIX_VERSION) - DOS/Mac - Unix文件格式转换器" $< > $@
 
+man/sr/man1/$(PACKAGE).$(HTMLEXT) : man/sr/man1/$(PACKAGE).pod
+	PERL_UNICODE=SDA pod2html --title="$(PACKAGE) $(DOS2UNIX_VERSION) - претварач формата текстуалних датотека из ДОС/Мек-а у Јуникс и обратно" $< > $@
+
 man/sv/man1/$(PACKAGE).$(HTMLEXT) : man/sv/man1/$(PACKAGE).pod
 	PERL_UNICODE=SDA pod2html --title="$(PACKAGE) $(DOS2UNIX_VERSION) - textfilsformatskonverterare från DOS/Mac till Unix och vice versa" $< > $@
+
+man/ro/man1/$(PACKAGE).$(HTMLEXT) : man/ro/man1/$(PACKAGE).pod
+	PERL_UNICODE=SDA pod2html --title="$(PACKAGE) $(DOS2UNIX_VERSION) - Convertor de format de fișier text din DOS/Mac în Unix și viceversa" $< > $@
 
 test: all
 ifneq ($(DJGPP),)

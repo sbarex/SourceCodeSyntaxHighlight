@@ -2,9 +2,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>dos2unix 7.4.2 - Formatumwandlung f&#xfc;r Textdateien von DOS/Mac nach Unix und umgekehrt</title>
+<title>dos2unix 7.5.1 - Formatumwandlung f&#xfc;r Textdateien von DOS/Mac nach Unix und umgekehrt</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:root@localhost" />
+<link rev="made" href="mailto:ASSI@walter.nonet" />
 </head>
 
 <body>
@@ -43,8 +43,8 @@
 
 <h1 id="BERSICHT">&Uuml;BERSICHT</h1>
 
-<pre><code>    dos2unix [Optionen] [DATEI &hellip;] [-n EINGABEDATEI AUSGABEDATEI &hellip;]
-    unix2dos [Optionen] [DATEI &hellip;] [-n EINGABEDATEI AUSGABEDATEI &hellip;]</code></pre>
+<pre><code>dos2unix [Optionen] [DATEI &hellip;] [-n EINGABEDATEI AUSGABEDATEI &hellip;]
+unix2dos [Optionen] [DATEI &hellip;] [-n EINGABEDATEI AUSGABEDATEI &hellip;]</code></pre>
 
 <h1 id="BESCHREIBUNG">BESCHREIBUNG</h1>
 
@@ -71,11 +71,11 @@
 
 <p>nimmt an, dass alle folgenden Optionen Dateinamen sind. Verwenden Sie diese Option, wenn Sie Dateien umwandeln wollen, deren Namen mit einem Minuszeichen beginnen. Um beispielsweise eine Datei namens &raquo;-bla&laquo; umzuwandeln, k&ouml;nnen Sie folgenden Befehl verwenden:</p>
 
-<pre><code>    dos2unix -- -bla</code></pre>
+<pre><code>dos2unix -- -bla</code></pre>
 
 <p>oder im Neue-Datei-Modus:</p>
 
-<pre><code>    dos2unix -n -- -bla ausgabe.txt</code></pre>
+<pre><code>dos2unix -n -- -bla ausgabe.txt</code></pre>
 
 </dd>
 <dt id="allow-chown"><b>--allow-chown</b></dt>
@@ -83,7 +83,7 @@
 
 <p>erlaubt die &Auml;nderung des Eigent&uuml;mers der Datei im Alte-Datei-Modus.</p>
 
-<p>When this option is used, the conversion will not be aborted when the user and/or group ownership of the original file can&#39;t be preserved in old file mode. Conversion will continue and the converted file will get the same new ownership as if it was converted in new file mode. See also options <code>-o</code> and <code>-n</code>. This option is only available if dos2unix has support for preserving the user and group ownership of files.</p>
+<p>Wenn diese Option verwendet wird, dann bricht die Umwandlung nicht ab, wenn der Eigent&uuml;mer und die Gruppe der Originaldatei im Alte-Datei-Modus nicht erhalten werden kann. Die Umwandlung wird fortgesetzt und die umgewandelte Datei erh&auml;lt den gleichen neuen Eigent&uuml;mer, als w&auml;re sie im Neue-Datei-Modus umgewandelt worden. Siehe auch die Optionen <code>-o</code> und <code>-n</code>. Diese Option ist nur verf&uuml;gbar, wenn dos2unix &uuml;ber Unterst&uuml;tzung f&uuml;r die Erhaltung des Eigent&uuml;mers und der Gruppe von Dateien verf&uuml;gt.</p>
 
 </dd>
 <dt id="ascii"><b>-ascii</b></dt>
@@ -200,6 +200,14 @@
 <p>Die Standardkodierung kann durch Setzen der Umgebungsvariable DOS2UNIX_DISPLAY_ENC auf <code>unicode</code>, <code>unicodebom</code>, <code>utf8</code> oder <code>utf8</code> ge&auml;ndert werden.</p>
 
 </dd>
+<dt id="e---add-eol"><b>-e, --add-eol</b></dt>
+<dd>
+
+<p>Add a line break to the last line if there isn&#39;t one. This works for every conversion.</p>
+
+<p>A file converted from DOS to Unix format may lack a line break on the last line. There are text editors that write text files without a line break on the last line. Some Unix programs have problems processing these files, because the POSIX standard defines that every line in a text file must end with a terminating newline character. For instance concatenating files may not give the expected result.</p>
+
+</dd>
 <dt id="f---force"><b>-f, --force</b></dt>
 <dd>
 
@@ -227,14 +235,14 @@
 
 <p>Beispielausgabe:</p>
 
-<pre><code>     6       0       0  no_bom    text    dos.txt
-     0       6       0  no_bom    text    unix.txt
-     0       0       6  no_bom    text    mac.txt
-     6       6       6  no_bom    text    mixed.txt
-    50       0       0  UTF-16LE  text    utf16le.txt
-     0      50       0  no_bom    text    utf8unix.txt
-    50       0       0  UTF-8     text    utf8dos.txt
-     2     418     219  no_bom    binary  dos2unix.exe</code></pre>
+<pre><code> 6       0       0  no_bom    text    dos.txt
+ 0       6       0  no_bom    text    unix.txt
+ 0       0       6  no_bom    text    mac.txt
+ 6       6       6  no_bom    text    mixed.txt
+50       0       0  UTF-16LE  text    utf16le.txt
+ 0      50       0  no_bom    text    utf8unix.txt
+50       0       0  UTF-8     text    utf8dos.txt
+ 2     418     219  no_bom    binary  dos2unix.exe</code></pre>
 
 <p>Beachten sie, dass manchmal eine Bin&auml;rdatei f&auml;lschlicherweise als Textdatei erkannt wird. Siehe auch Option <code>-s</code>.</p>
 
@@ -304,31 +312,31 @@
 
 <p>Informationen zu allen *.txt-Dateien anzeigen:</p>
 
-<pre><code>    dos2unix -i *.txt</code></pre>
+<pre><code>dos2unix -i *.txt</code></pre>
 
 <p>Nur die Anzahl der DOS-Zeilenumbr&uuml;che und Unix-Zeilenumbr&uuml;che anzeigen:</p>
 
-<pre><code>    dos2unix -idu *.txt</code></pre>
+<pre><code>dos2unix -idu *.txt</code></pre>
 
 <p>Nur die Markierung der Bytereihenfolge anzeigen:</p>
 
-<pre><code>    dos2unix --info=b *.txt</code></pre>
+<pre><code>dos2unix --info=b *.txt</code></pre>
 
 <p>Die Dateien auflisten, die DOS-Zeilenumbr&uuml;che enthalten:</p>
 
-<pre><code>    dos2unix -ic *.txt</code></pre>
+<pre><code>dos2unix -ic *.txt</code></pre>
 
 <p>Die Dateien auflisten, die Unix-Zeilenumbr&uuml;che enthalten:</p>
 
-<pre><code>    unix2dos -ic *.txt</code></pre>
+<pre><code>unix2dos -ic *.txt</code></pre>
 
 <p>Nur Dateien umwandeln, die DOS-Zeilenumbr&uuml;che enthalten und die anderen Dateien unver&auml;ndert belassen:</p>
 
-<pre><code>    dos2unix -ic0 *.txt | xargs -0 dos2unix</code></pre>
+<pre><code>dos2unix -ic0 *.txt | xargs -0 dos2unix</code></pre>
 
 <p>Nach Textdateien suchen, die DOS-Zeilenumbr&uuml;che enthalten:</p>
 
-<pre><code>    find -name &#39;*.txt&#39; -print0 | xargs -0 dos2unix -ic</code></pre>
+<pre><code>find -name &#39;*.txt&#39; -print0 | xargs -0 dos2unix -ic</code></pre>
 
 </dd>
 <dt id="k---keepdate"><b>-k, --keepdate</b></dt>
@@ -376,10 +384,26 @@
 
 <p>verhindert die &Auml;nderung des Eigent&uuml;mers der Datei im Alte-Datei-Modus (Voreinstellung).</p>
 
-<p>Abort conversion when the user and/or group ownership of the original file can&#39;t be preserved in old file mode. See also options <code>-o</code> and <code>-n</code>. This option is only available if dos2unix has support for preserving the user and group ownership of files.</p>
+<p>bricht die Umwandlung ab, wenn der Eigent&uuml;mer und/oder die Gruppe der Originaldatei im Alte-Datei-Modus nicht erhalten werden kann. Siehe auch die Optionen <code>-o</code> und <code>-n</code>. Diese Option ist nur verf&uuml;gbar, wenn dos2unix &uuml;ber Unterst&uuml;tzung f&uuml;r die Erhaltung des Eigent&uuml;mers und der Gruppe von Dateien verf&uuml;gt.</p>
 
 </dd>
-<dt id="o---oldfile-DATEI"><b>-o, --oldfile DATEI &hellip;</b></dt>
+<dt id="no-add-eol"><b>--no-add-eol</b></dt>
+<dd>
+
+<p>Do not add a line break to the last line if there isn&#39;t one.</p>
+
+</dd>
+<dt id="O---to-stdout"><b>-O, --to-stdout</b></dt>
+<dd>
+
+<p>Write to standard output, like a Unix filter. Use option <code>-o</code> to go back to old file (in-place) mode.</p>
+
+<p>Combined with option <code>-e</code> files can be properly concatenated. No merged last and first lines, and no Unicode byte order marks in the middle of the concatenated file. Example:</p>
+
+<pre><code>dos2unix -e -O file1.txt file2.txt &gt; output.txt</code></pre>
+
+</dd>
+<dt id="o---oldfile-FILE"><b>-o, --oldfile FILE ...</b></dt>
 <dd>
 
 <p>Alte-Datei-Modus. Die DATEI wird umgewandelt und durch die Ausgabedatei &uuml;berschrieben. Per Vorgabe werden Umwandlungen in diesem Modus ausgef&uuml;hrt. Platzhalter sind verwendbar.</p>
@@ -390,11 +414,11 @@
 
 <p>Die Umwandlung f&uuml;hrt stets &uuml;ber eine tempor&auml;re Datei. Tritt im Laufe der Umwandlung ein Fehler auf, wird die tempor&auml;re Datei gel&ouml;scht und die Originaldatei bleibt intakt. War die Umwandlung erfolgreich, wird die Originaldatei durch die tempor&auml;re Datei ersetzt. Sie k&ouml;nnen Schreibrechte f&uuml;r die Originaldatei haben, aber keine Rechte, um die gleichen Eigentumsverh&auml;ltnisse wie die der Originaldatei f&uuml;r die tempor&auml;re Datei festzulegen. Das bedeutet, dass Sie Eigent&uuml;mer und Gruppe der Originaldatei nicht bewahren k&ouml;nnen. In diesem Fall k&ouml;nnen Sie die Option <code>--allow-chown</code> verwenden, um die Umwandlung fortzusetzen:</p>
 
-<pre><code>    dos2unix --allow-chown foo.txt</code></pre>
+<pre><code>dos2unix --allow-chown foo.txt</code></pre>
 
 <p>Eine weitere Option ist der Neue-Datei-Modus:</p>
 
-<pre><code>    dos2unix -n foo.txt foo.txt</code></pre>
+<pre><code>dos2unix -n foo.txt foo.txt</code></pre>
 
 <p>Der Vorteil der Option <code>--allow-chown</code> ist, dass Sie Platzhalter verwenden k&ouml;nnen und die Eigentumsverh&auml;ltnisse bewahrt bleiben, sofern m&ouml;glich.</p>
 
@@ -516,35 +540,35 @@
 
 <p>Umwandlung aus der vorgegebenen DOS-Codepage nach Unix Latin-1:</p>
 
-<pre><code>    dos2unix -iso -n in.txt ausgabe.txt</code></pre>
+<pre><code>dos2unix -iso -n in.txt ausgabe.txt</code></pre>
 
 <p>Umwandlung von DOS CP850 nach Unix Latin-1:</p>
 
-<pre><code>    dos2unix -850 -n eingabe.txt ausgabe.txt</code></pre>
+<pre><code>dos2unix -850 -n eingabe.txt ausgabe.txt</code></pre>
 
 <p>Umwandlung von Windows CP1252 nach Unix Latin-1:</p>
 
-<pre><code>    dos2unix -1252 -n eingabe.txt ausgabe.txt</code></pre>
+<pre><code>dos2unix -1252 -n eingabe.txt ausgabe.txt</code></pre>
 
 <p>Umwandlung von Windows CP1252 nach Unix UTF-8 (Unicode):</p>
 
-<pre><code>    iconv -f CP1252 -t UTF-8 eingabe.txt | dos2unix &gt; ausgabe.txt</code></pre>
+<pre><code>iconv -f CP1252 -t UTF-8 eingabe.txt | dos2unix &gt; ausgabe.txt</code></pre>
 
 <p>Umwandlung von Unix Latin-1 in die vorgegebene DOS-Codepage:</p>
 
-<pre><code>    unix2dos -iso -n eingabe.txt ausgabe.txt</code></pre>
+<pre><code>unix2dos -iso -n eingabe.txt ausgabe.txt</code></pre>
 
 <p>Umwandlung von Unix Latin-1 nach DOS CP850:</p>
 
-<pre><code>    unix2dos -850 -n eingabe.txt ausgabe.txt</code></pre>
+<pre><code>unix2dos -850 -n eingabe.txt ausgabe.txt</code></pre>
 
 <p>Umwandlung von Unix Latin-1 nach Windows CP1252:</p>
 
-<pre><code>    unix2dos -1252 -n eingabe.txt ausgabe.txt</code></pre>
+<pre><code>unix2dos -1252 -n eingabe.txt ausgabe.txt</code></pre>
 
 <p>Umwandlung von Unix UTF-8 (Unicode) nach Windows CP1252:</p>
 
-<pre><code>    unix2dos &lt; eingabe.txt | iconv -f UTF-8 -t CP1252 &gt; ausgabe.txt</code></pre>
+<pre><code>unix2dos &lt; eingabe.txt | iconv -f UTF-8 -t CP1252 &gt; ausgabe.txt</code></pre>
 
 <p>Siehe auch <a href="http://czyborra.com/charsets/codepages.html">http://czyborra.com/charsets/codepages.html</a> und <a href="http://czyborra.com/charsets/iso8859.html">http://czyborra.com/charsets/iso8859.html</a>.</p>
 
@@ -603,19 +627,19 @@
 
 <p>Umwandlung von Windows UTF-16 (mit BOM) nach Unix UTF-8:</p>
 
-<pre><code>    dos2unix -n eingabe.txt ausgabe.txt</code></pre>
+<pre><code>dos2unix -n eingabe.txt ausgabe.txt</code></pre>
 
 <p>Umwandlung von Windows UTF-16LE (ohne BOM) nach Unix UTF-8:</p>
 
-<pre><code>    dos2unix -ul -n eingabe.txt ausgabe.txt</code></pre>
+<pre><code>dos2unix -ul -n eingabe.txt ausgabe.txt</code></pre>
 
 <p>Umwandlung von Unix UTF-8 nach Windows UTF-8 mit BOM:</p>
 
-<pre><code>    unix2dos -m -n eingabe.txt ausgabe.txt</code></pre>
+<pre><code>unix2dos -m -n eingabe.txt ausgabe.txt</code></pre>
 
 <p>Umwandlung von Unix UTF-8 nach Windows UTF-16:</p>
 
-<pre><code>    unix2dos &lt; eingabe.txt | iconv -f UTF-8 -t UTF-16 &gt; ausgabe.txt</code></pre>
+<pre><code>unix2dos &lt; eingabe.txt | iconv -f UTF-8 -t UTF-16 &gt; ausgabe.txt</code></pre>
 
 <h1 id="GB18030">GB18030</h1>
 
@@ -633,73 +657,73 @@
 
 <p>Aus der Standardeingabe lesen und in die Standardausgabe schreiben:</p>
 
-<pre><code>    dos2unix &lt; a.txt
-    cat a.txt | dos2unix</code></pre>
+<pre><code>dos2unix &lt; a.txt
+cat a.txt | dos2unix</code></pre>
 
 <p>a.txt umwandeln und ersetzen, b.txt umwandeln und ersetzen:</p>
 
-<pre><code>    dos2unix a.txt b.txt
-    dos2unix -o a.txt b.txt</code></pre>
+<pre><code>dos2unix a.txt b.txt
+dos2unix -o a.txt b.txt</code></pre>
 
 <p>a.txt im ascii-Modus umwandeln und ersetzen:</p>
 
-<pre><code>    dos2unix a.txt</code></pre>
+<pre><code>dos2unix a.txt</code></pre>
 
 <p>a.txt im ascii-Modus umwandeln und ersetzen, b.txt im 7bit-Modus umwandeln und ersetzen:</p>
 
-<pre><code>    dos2unix a.txt -c 7bit b.txt
-    dos2unix -c ascii a.txt -c 7bit b.txt
-    dos2unix -ascii a.txt -7 b.txt</code></pre>
+<pre><code>dos2unix a.txt -c 7bit b.txt
+dos2unix -c ascii a.txt -c 7bit b.txt
+dos2unix -ascii a.txt -7 b.txt</code></pre>
 
 <p>a.txt aus dem Mac- in das Unix-Format umwandeln:</p>
 
-<pre><code>    dos2unix -c mac a.txt
-    mac2unix a.txt</code></pre>
+<pre><code>dos2unix -c mac a.txt
+mac2unix a.txt</code></pre>
 
 <p>a.txt aus dem Unix- in das Mac-Format umwandeln:</p>
 
-<pre><code>    unix2dos -c mac a.txt
-    unix2mac a.txt</code></pre>
+<pre><code>unix2dos -c mac a.txt
+unix2mac a.txt</code></pre>
 
 <p>a.txt unter Beibehaltung des urspr&uuml;nglichen Zeitstempels umwandeln:</p>
 
-<pre><code>    dos2unix -k a.txt
-    dos2unix -k -o a.txt</code></pre>
+<pre><code>dos2unix -k a.txt
+dos2unix -k -o a.txt</code></pre>
 
 <p>a.txt umwandeln und das Ergebnis nach e.txt schreiben:</p>
 
-<pre><code>    dos2unix -n a.txt e.txt</code></pre>
+<pre><code>dos2unix -n a.txt e.txt</code></pre>
 
 <p>a.txt umwandeln und das Ergebnis nach e.txt schreiben, wobei e.txt den gleichen Zeitstempel erh&auml;lt wie a.txt:</p>
 
-<pre><code>    dos2unix -k -n a.txt e.txt</code></pre>
+<pre><code>dos2unix -k -n a.txt e.txt</code></pre>
 
 <p>a.txt umwandeln und ersetzen, b.txt umwandeln und das Ergebnis nach e.txt schreiben:</p>
 
-<pre><code>    dos2unix a.txt -n b.txt e.txt
-    dos2unix -o a.txt -n b.txt e.txt</code></pre>
+<pre><code>dos2unix a.txt -n b.txt e.txt
+dos2unix -o a.txt -n b.txt e.txt</code></pre>
 
 <p>c.txt umwandeln und das Ergebnis nach e.txt schreiben, a.txt umwandeln und ersetzen, b.txt umwandeln und ersetzen, d.txt umwandeln und das Ergebnis nach f.txt schreiben:</p>
 
-<pre><code>    dos2unix -n c.txt e.txt -o a.txt b.txt -n d.txt f.txt</code></pre>
+<pre><code>dos2unix -n c.txt e.txt -o a.txt b.txt -n d.txt f.txt</code></pre>
 
 <h1 id="REKURSIVE-UMWANDLUNG">REKURSIVE UMWANDLUNG</h1>
 
 <p>In einer Unix-Shell k&ouml;nnen Sie dos2unix zusammen mit den Befehlen find(1) und xargs(1) verwenden, um Textdateien in einem Verzeichnisbaum rekursiv umzuwandeln. Um beispielsweise alle *.txt-Dateien im aktuellen Verzeichnis und dessen Unterverzeichnissen umzuwandeln, geben Sie Folgendes ein:</p>
 
-<pre><code>    find . -name &#39;*.txt&#39; -print0 |xargs -0 dos2unix</code></pre>
+<pre><code>find . -name &#39;*.txt&#39; -print0 |xargs -0 dos2unix</code></pre>
 
 <p>Die find(1)-Option <code>-print0</code> und die korrespondierende xargs(1)-Option <code>-0</code> werden f&uuml;r Dateien ben&ouml;tigt, deren Namen Leerzeichen oder Anf&uuml;hrungszeichen enthalten. Ansonsten k&ouml;nnen diese Optionen weggelassen werden. Eine weitere M&ouml;glichkeit ist, find(1) zusammen mit der Option <code>-exec</code> zu verwenden:</p>
 
-<pre><code>    find . -name &#39;*.txt&#39; -exec dos2unix {} \;</code></pre>
+<pre><code>find . -name &#39;*.txt&#39; -exec dos2unix {} \;</code></pre>
 
 <p>In einer Windows-Eingabeaufforderung kann der folgende Befehl verwendet werden:</p>
 
-<pre><code>    for /R %G in (*.txt) do dos2unix &quot;%G&quot;</code></pre>
+<pre><code>for /R %G in (*.txt) do dos2unix &quot;%G&quot;</code></pre>
 
 <p>In der Windows PowerShell k&ouml;nnen Sie folgenden Befehl verwenden:</p>
 
-<pre><code>    get-childitem -path . -filter &#39;*.txt&#39; -recurse | foreach-object {dos2unix $_.Fullname}</code></pre>
+<pre><code>get-childitem -path . -filter &#39;*.txt&#39; -recurse | foreach-object {dos2unix $_.Fullname}</code></pre>
 
 <h1 id="LOKALISIERUNG">LOKALISIERUNG</h1>
 
@@ -710,13 +734,13 @@
 
 <p>Die prim&auml;re Sprache wird durch die Umgebungsvariable LANG festgelegt. Diese Variable besteht aus mehreren Teilen: Der erste Teil besteht aus zwei Kleinbuchstaben, die den Sprachcode angeben. Der zweite Teil ist optional und bezeichnet den L&auml;ndercode in Gro&szlig;buchstaben, vom davor stehenden Sprachcode durch einen Unterstrich getrennt. Der dritte Teil ist ebenfalls optional und gibt die Zeichenkodierung an, vom L&auml;ndercode durch einen Punkt getrennt. Einige Beispiele f&uuml;r Standard-POSIX-Shells:</p>
 
-<pre><code>    export LANG=de               Deutsch
-    export LANG=de_DE            Deutsch, Deutschland
-    export LANG=de_AT            Deutsch, &Ouml;sterreich
-    export LANG=es_ES            Spanisch, Spanien
-    export LANG=es_MX            Spanisch, Mexiko
-    export LANG=en_US.iso88591   Englisch, USA, Latin-1-Zeichenkodierung
-    export LANG=en_GB.UTF-8      Englisch, GB, UTF-8-Zeichenkodierung</code></pre>
+<pre><code>export LANG=de               Deutsch
+export LANG=de_DE            Deutsch, Deutschland
+export LANG=de_AT            Deutsch, &Ouml;sterreich
+export LANG=es_ES            Spanisch, Spanien
+export LANG=es_MX            Spanisch, Mexiko
+export LANG=en_US.iso88591   Englisch, USA, Latin-1-Zeichenkodierung
+export LANG=en_GB.UTF-8      Englisch, GB, UTF-8-Zeichenkodierung</code></pre>
 
 <p>Eine vollst&auml;ndige Liste der Sprachen und L&auml;ndercodes finden Sie im Gettext-Handbuch: <a href="http://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html">http://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html</a></p>
 
@@ -738,7 +762,7 @@
 
 <p>Beispiel (POSIX-Shell):</p>
 
-<pre><code>    export DOS2UNIX_LOCALEDIR=$HOME/share/locale</code></pre>
+<pre><code>export DOS2UNIX_LOCALEDIR=$HOME/share/locale</code></pre>
 
 </dd>
 </dl>

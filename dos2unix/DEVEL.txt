@@ -21,7 +21,7 @@ breaks untouched.
 2. Unix filter
 ==============
 
-  When a standard Unix filter, e.g. sed or tr, reads input from a file it sends
+  When a standard Unix filter, e.g. sed or sort, reads input from a file it sends
 its output by default to standard out. This implementation of dos2unix does by
 default in-place conversion (overwriting the input file), which seems not in line.
 
@@ -29,15 +29,15 @@ default in-place conversion (overwriting the input file), which seems not in lin
 own implementation of dos2unix. There is a lot of variation in command names,
 options, and behavior. The SunOS version of dos2unix, after which this version was
 modeled, does by default paired conversion.
-  This implementation of dos2unix has too much legacy to change the current behaviour.
-Changing it would have more disadvantages than advantages. Most people expect
-dos2unix to do in-place conversion. The majority of other open source implementations
-also convert by default in-place. In-place conversion has the advantage that it is
-very easy to convert multiple files by using wild cards.
-  This implementation of dos2unix does send the output to standard-out when the
-input comes from standard-in. So you can use it as filter. Note that dos2unix/
-unix2dos is also used a lot on non-Unix operating systems where the filter idea
-is less known.
+  This implementation of dos2unix has too much legacy to change the current
+default behaviour.  Changing it would have more disadvantages than advantages.
+Most people expect dos2unix to do in-place conversion. The majority of other
+open source implementations also convert by default in-place. In-place
+conversion has the advantage that it is very easy to convert multiple files by
+using wild cards. Note that dos2unix/unix2dos is also used a lot on non-Unix
+operating systems where the filter idea is less known.
+  Since version 7.5.0 dos2unix has option -O to write to standard output like
+a Unix filter.
 
 
 3. Recursive conversion of files
@@ -58,7 +58,7 @@ no need to duplicate this.
 of several DOS code pages to and from ISO-8859-1. These conversions are also
 part of the SunOS dos2unix implementation after which this implementation has
 been modeled. Although these conversions are not much used these days they have
-been added for the sake completeness. Conversion of CP1252 was added, because
+been added for the sake of completeness. Conversion of CP1252 was added, because
 it is used a lot in the Western world. It's almost identical to ISO-8859-1. There
 is no intention to add other conversions to and from ISO-8859-1.
 

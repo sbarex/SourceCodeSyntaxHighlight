@@ -1,7 +1,7 @@
 /*
 #  Copyright and License
 #
-#   Copyright (C) 2009-2017 Erwin Waterlander
+#   Copyright (C) 2009-2023 Erwin Waterlander
 #   All rights reserved.
 #
 #   Redistribution and use in source and binary forms, with or without
@@ -237,6 +237,18 @@ PowerShell.
 The default encoding can be changed with environment variable DOS2UNIX_DISPLAY_ENC
 by setting it to C<unicode>, C<unicodebom>, C<utf8>, or C<utf8bom>.
 
+=item B<-e, --add-eol>
+
+Add a line break to the last line if there isn't one. This works for every
+conversion.
+
+A file converted from DOS to Unix format may lack a line break on the last
+line. There are text editors that write text files without a line break on the
+last line. Some Unix programs have problems processing these files, because the
+POSIX standard defines that every line in a text file must end with a
+terminating newline character. For instance concatenating files may not give
+the expected result.
+
 =item B<-f, --force>
 
 Force conversion of binary files.
@@ -401,6 +413,21 @@ Abort conversion when the user and/or group ownership of the original file
 can't be preserved in old file mode. See also options C<-o> and C<-n>. This
 option is only available if dos2unix has support for preserving the user
 and group ownership of files.
+
+=item B<--no-add-eol>
+
+Do not add a line break to the last line if there isn't one.
+
+=item B<-O, --to-stdout>
+
+Write to standard output, like a Unix filter. Use option C<-o> to go back to
+old file (in-place) mode.
+
+Combined with option C<-e> files can be properly concatenated. No merged last
+and first lines, and no Unicode byte order marks in the middle of the
+concatenated file. Example:
+
+    dos2unix -e -O file1.txt file2.txt > output.txt
 
 =item B<-o, --oldfile FILE ...>
 

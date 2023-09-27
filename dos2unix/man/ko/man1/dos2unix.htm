@@ -1,0 +1,803 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>dos2unix 7.5.1 - DOS/&#xb9e5; &#xc5d0;&#xc11c; &#xc720;&#xb2c9;&#xc2a4;&#xc5d0;&#xc11c;, &#xadf8; &#xbc18;&#xb300;&#xb85c;&#xc758; &#xd14d;&#xc2a4;&#xd2b8; &#xd30c;&#xc77c; &#xd615;&#xc2dd; &#xbcc0;&#xd658; &#xd504;&#xb85c;&#xadf8;&#xb7a8;</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:ASSI@walter.nonet" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#">&#xC774;&#xB984;</a></li>
+  <li><a href="#1">&#xAC1C;&#xC694;</a></li>
+  <li><a href="#2">&#xC124;&#xBA85;</a></li>
+  <li><a href="#3">&#xC635;&#xC158;</a></li>
+  <li><a href="#4">&#xB9E5; &#xBAA8;&#xB4DC;</a></li>
+  <li><a href="#5">&#xBCC0;&#xD658; &#xBAA8;&#xB4DC;</a></li>
+  <li><a href="#6">&#xC720;&#xB2C8;&#xCF54;&#xB4DC;</a>
+    <ul>
+      <li><a href="#7">&#xC778;&#xCF54;&#xB529;</a></li>
+      <li><a href="#8">&#xBCC0;&#xD658;</a></li>
+      <li><a href="#BOM">&#xBC14;&#xC774;&#xD2B8; &#xC21C;&#xC11C; &#xD45C;&#xC2DC;(BOM)</a></li>
+      <li><a href="#9">&#xC708;&#xB3C4;&#xC6B0;&#xC758; &#xC720;&#xB2C8;&#xCF54;&#xB4DC; &#xD30C;&#xC77C; &#xC774;&#xB984;</a></li>
+      <li><a href="#10">&#xC720;&#xB2C8;&#xCF54;&#xB4DC; &#xC608;&#xC81C;</a></li>
+    </ul>
+  </li>
+  <li><a href="#GB18030">GB18030</a></li>
+  <li><a href="#11">&#xC608;&#xC81C;</a></li>
+  <li><a href="#12">&#xC7AC;&#xADC0; &#xBCC0;&#xD658;</a></li>
+  <li><a href="#13">&#xC9C0;&#xC5ED;&#xD654;</a></li>
+  <li><a href="#14">&#xBC18;&#xD658; &#xAC12;</a></li>
+  <li><a href="#15">&#xD45C;&#xC900;</a></li>
+  <li><a href="#16">&#xC800;&#xC790;</a></li>
+  <li><a href="#17">&#xCD94;&#xAC00; &#xCC38;&#xC870;</a></li>
+</ul>
+
+<h1 id="">&#xC774;&#xB984;</h1>
+
+<p>dos2unix - DOS/&#xB9E5; &#xC5D0;&#xC11C; &#xC720;&#xB2C9;&#xC2A4;&#xB85C;, &#xB0B4;&#xC9C0;&#xB294; &#xADF8; &#xBC18;&#xB300;&#xB85C;&#xC758; &#xD14D;&#xC2A4;&#xD2B8; &#xD30C;&#xC77C; &#xD615;&#xC2DD; &#xBCC0;&#xD658; &#xD504;&#xB85C;&#xADF8;&#xB7A8;</p>
+
+<h1 id="1">&#xAC1C;&#xC694;</h1>
+
+<pre><code>dos2unix [&lt;&#xC635;&#xC158;&gt;] [&lt;&#xD30C;&#xC77C;&gt; ...] [-n &lt;&#xC785;&#xB825;&#xD30C;&#xC77C;&gt; &lt;&#xCD9C;&#xB825;&#xD30C;&#xC77C;&gt; ...]
+unix2dos [&lt;&#xC635;&#xC158;&gt;] [&lt;&#xD30C;&#xC77C;&gt; ...] [-n &lt;&#xC785;&#xB825;&#xD30C;&#xC77C;&gt; &lt;&#xCD9C;&#xB825;&#xD30C;&#xC77C;&gt; ...]</code></pre>
+
+<h1 id="2">&#xC124;&#xBA85;</h1>
+
+<p>dos2unix &#xD328;&#xD0A4;&#xC9C0;&#xC5D0;&#xB294; DOS &#xB610;&#xB294; &#xB9E5; &#xD615;&#xC2DD;&#xC744; &#xC720;&#xB2C9;&#xC2A4; &#xD615;&#xC2DD;&#xC73C;&#xB85C;, &#xB0B4;&#xC9C0;&#xB294; &#xADF8; &#xBC18;&#xB300;&#xB85C; &#xC6D0;&#xC2DC; &#xD14D;&#xC2A4;&#xD2B8; &#xD30C;&#xC77C;&#xC744; &#xBCC0;&#xD658;&#xD558;&#xB294; <code>dos2unix</code> &#xC720;&#xD2F8;&#xB9AC;&#xD2F0;&#xC640; <code>unix2dos</code> &#xC720;&#xD2F8;&#xB9AC;&#xD2F0;&#xAC00; &#xB4E4;&#xC5B4;&#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+
+<p>DOS/&#xC708;&#xB3C4;&#xC6B0; &#xD14D;&#xC2A4;&#xD2B8; &#xAC1C;&#xD589; &#xBB38;&#xC790;&#xB294; &#xCE90;&#xB9AC;&#xC9C0; &#xB9AC;&#xD134;(CR)&#xACFC; &#xB4A4;&#xB530;&#xB77C;&#xC624;&#xB294; &#xB77C;&#xC778; &#xD53C;&#xB4DC;(LF) &#xBB38;&#xC790;&#xB97C; &#xACB0;&#xD569;&#xD55C; &#xD615;&#xD0DC;&#xB97C; &#xCDE8;&#xD569;&#xB2C8;&#xB2E4;. &#xC720;&#xB2C9;&#xC2A4; &#xD14D;&#xC2A4;&#xD2B8; &#xD30C;&#xC77C;&#xC758; &#xAC1C;&#xD589;&#xBB38;&#xC790;&#xB294; &#xB77C;&#xC778; &#xD53C;&#xB4DC;(LF) &#xD558;&#xB098; &#xBFD0;&#xC785;&#xB2C8;&#xB2E4;. Mac OS X &#xC774;&#xC804;&#xC758; &#xB9E5; &#xD14D;&#xC2A4;&#xD2B8; &#xD30C;&#xC77C;&#xC740; &#xCE90;&#xB9AC;&#xC9C0; &#xB9AC;&#xD134;(CR) &#xBB38;&#xC790; &#xD558;&#xB098; &#xBFD0;&#xC774;&#xC5C8;&#xC2B5;&#xB2C8;&#xB2E4;. &#xADF8;&#xB7EC;&#xB098; &#xC9C0;&#xAE08;&#xC740; Mac OS&#xC5D0;&#xC11C;&#xB3C4; &#xC720;&#xB2C9;&#xC2A4; &#xBC29;&#xC2DD; (LF) &#xAC1C;&#xD589; &#xBB38;&#xC790;&#xB97C; &#xCDE8;&#xD569;&#xB2C8;&#xB2E4;.</p>
+
+<p>&#xAC1C;&#xD589; &#xBB38;&#xC790; &#xAD00;&#xB828;&#xD558;&#xC5EC; dos2unix&#xC5D0;&#xC11C;&#xB294; &#xD30C;&#xC77C; &#xC778;&#xCF54;&#xB529;&#xB3C4; &#xBCC0;&#xD658;&#xD560; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;. &#xC77C;&#xBD80; DOS &#xCF54;&#xB4DC; &#xD398;&#xC774;&#xC9C0;&#xB294; &#xC720;&#xB2C9;&#xC2A4; Latin-1 &#xC778;&#xCF54;&#xB529;&#xC73C;&#xB85C; &#xBCC0;&#xD658;&#xD560; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;. &#xADF8;&#xB9AC;&#xACE0; &#xC708;&#xB3C4;&#xC6B0; &#xC720;&#xB2C8;&#xCF54;&#xB4DC;(UTF-16) &#xD30C;&#xC77C;&#xC740; &#xC720;&#xB2C9;&#xC2A4; &#xC720;&#xB2C8;&#xCF54;&#xB4DC; (UTF-8) &#xD30C;&#xC77C;&#xB85C; &#xBCC0;&#xD658;&#xD560; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+
+<p>&#xC774;&#xC9C4; &#xD30C;&#xC77C;&#xC740; &#xBCC0;&#xD658;&#xC744; &#xAC15;&#xC81C;&#xD558;&#xC9C0; &#xC54A;&#xB294; &#xD55C; &#xC790;&#xB3D9;&#xC73C;&#xB85C; &#xAC74;&#xB108;&#xB701;&#xB2C8;&#xB2E4;.</p>
+
+<p>&#xB514;&#xB809;&#xD130;&#xB9AC;&#xC640; FIFO &#xAC19;&#xC740; &#xC77C;&#xBC18; &#xD30C;&#xC77C; &#xC678; &#xC694;&#xC18C;&#xB294; &#xC790;&#xB3D9;&#xC73C;&#xB85C; &#xAC74;&#xB108;&#xB701;&#xB2C8;&#xB2E4;.</p>
+
+<p>&#xC2EC;&#xBCFC;&#xB9AD; &#xB9C1;&#xD06C;&#xC640; &#xB300;&#xC0C1;&#xC740; &#xBCF4;&#xD1B5; (&#xC644;&#xC804;&#xD788;) &#xC5F0;&#xACB0;&#xD55C; &#xC0C1;&#xD0DC;&#xAC00; &#xC544;&#xB2D9;&#xB2C8;&#xB2E4;. &#xC2EC;&#xBCFC;&#xB9AD; &#xB9C1;&#xD06C;&#xB294; &#xBCC4;&#xB3C4;&#xB85C; &#xBC14;&#xAFC0; &#xC218; &#xC788;&#xAC70;&#xB098;, &#xC2EC;&#xBCFC;&#xB9AD; &#xB9C1;&#xD06C; &#xB300;&#xC0C1;&#xC73C;&#xB85C; &#xAE30;&#xB85D;&#xD560; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;. &#xC2EC;&#xBCFC;&#xB9AD; &#xB9C1;&#xD06C; &#xB300;&#xC0C1; &#xAE30;&#xB85D;&#xC740; &#xC708;&#xB3C4;&#xC6B0;&#xC5D0;&#xC11C; &#xC9C0;&#xC6D0;&#xD558;&#xC9C0; &#xC54A;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+
+<p>dos2unix&#xB294; SunOS/&#xC194;&#xB77C;&#xB9AC;&#xC2A4;&#xC758; dos2unix&#xAC00; &#xB098;&#xC628; &#xD6C4; &#xAD6C;&#xC131;&#xD55C; &#xBAA8;&#xB378;&#xC785;&#xB2C8;&#xB2E4;. SunOS/&#xC194;&#xB77C;&#xB9AC;&#xC2A4; &#xBC84;&#xC804;&#xACFC; &#xD55C;&#xAC00;&#xC9C0; &#xC911;&#xC694;&#xD55C; &#xCC28;&#xC774;&#xAC00; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;. SunOS/&#xC194;&#xB77C;&#xB9AC;&#xC2A4; &#xBC84;&#xC804;&#xC740; &#xD398;&#xC5B4;&#xB9C1; &#xBCC0;&#xD658;(&#xC0C8; &#xD30C;&#xC77C; &#xBAA8;&#xB4DC;)&#xB9CC; &#xC9C0;&#xC6D0;&#xD558;&#xC9C0;&#xB9CC;, &#xC774; &#xBC84;&#xC804;&#xC740; &#xC790;&#xCCB4; &#xBCC0;&#xD658;(&#xC774;&#xC804; &#xD30C;&#xC77C; &#xBAA8;&#xB4DC;)&#xB3C4; &#xC9C0;&#xC6D0;&#xD569;&#xB2C8;&#xB2E4;. <code>-o</code>, <code>-n</code> &#xC635;&#xC158;&#xB3C4; &#xCC38;&#xACE0;&#xD558;&#xC2ED;&#xC2DC;&#xC624;. &#xB2E4;&#xB978; &#xCC28;&#xC774;&#xC810;&#xC774; &#xC788;&#xB2E4;&#xBA74; SunOS/&#xC194;&#xB77C;&#xB9AC;&#xC2A4; &#xBC84;&#xC804;&#xC740; <i>iso</i> &#xBAA8;&#xB4DC; &#xBCC0;&#xD658;&#xC774; &#xAE30;&#xBCF8;&#xC774;&#xC9C0;&#xB9CC; &#xC774; &#xBC84;&#xC804;&#xC740; <i>ascii</i> &#xBAA8;&#xB4DC; &#xBCC0;&#xD658;&#xC774; &#xAE30;&#xBCF8;&#xC785;&#xB2C8;&#xB2E4;.</p>
+
+<h1 id="3">&#xC635;&#xC158;</h1>
+
+<dl>
+
+<dt id="pod"><b>--</b></dt>
+<dd>
+
+<p>&#xB4A4;&#xB530;&#xB77C;&#xC624;&#xB294; &#xBAA8;&#xB4E0; &#xC635;&#xC158;&#xC740; &#xD30C;&#xC77C; &#xC774;&#xB984;&#xC73C;&#xB85C; &#xAC04;&#xC8FC;&#xD569;&#xB2C8;&#xB2E4;. &#xB300;&#xC2DC; &#xBB38;&#xC790;&#xB85C; &#xC2DC;&#xC791;&#xD558;&#xB294; &#xC774;&#xB984;&#xC744; &#xAC00;&#xC9C4; &#xD30C;&#xC77C;&#xC744; &#xBCC0;&#xD658;&#xD558;&#xB824;&#xBA74; &#xC774; &#xC635;&#xC158;&#xC744; &#xC0AC;&#xC6A9;&#xD558;&#xC2ED;&#xC2DC;&#xC624;. &#xC608;&#xB97C; &#xB4E4;&#xC5B4; &quot;-foo&quot; &#xD30C;&#xC77C;&#xC744; &#xBCC0;&#xD658;&#xD560; &#xACBD;&#xC6B0;, &#xB2E4;&#xC74C; &#xBA85;&#xB839;&#xC744; &#xC0AC;&#xC6A9;&#xD560; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;:</p>
+
+<pre><code>dos2unix -- -foo</code></pre>
+
+<p>&#xB610;&#xB294; &#xC0C8; &#xD30C;&#xC77C; &#xBAA8;&#xB4DC;&#xC5D0;&#xC11C;:</p>
+
+<pre><code>dos2unix -n -- -foo out.txt</code></pre>
+
+</dd>
+<dt id="allow-chown"><b>--allow-chown</b></dt>
+<dd>
+
+<p>&#xC774;&#xC804; &#xD30C;&#xC77C; &#xBAA8;&#xB4DC;&#xC758; &#xD30C;&#xC77C; &#xC18C;&#xC720;&#xAD8C;&#xC744; &#xBC14;&#xAFC0; &#xC218; &#xC788;&#xAC8C; &#xD569;&#xB2C8;&#xB2E4;.</p>
+
+<p>&#xC774; &#xC635;&#xC158;&#xC744; &#xC0AC;&#xC6A9;&#xD558;&#xBA74; &#xC774;&#xC804; &#xD30C;&#xC77C;&#xC758; &#xC0AC;&#xC6A9;&#xC790; &#xB610;&#xB294; &#xADF8;&#xB8F9; &#xC18C;&#xC720;&#xAD8C;&#xC744; &#xC720;&#xC9C0;&#xD560; &#xC218; &#xC5C6;&#xC744; &#xB54C; &#xBCC0;&#xD658;&#xC744; &#xBA48;&#xCD94;&#xC9C0; &#xC54A;&#xC2B5;&#xB2C8;&#xB2E4;. &#xC0C8; &#xD30C;&#xC77C;&#xC758; &#xBAA8;&#xB4DC;&#xB85C; &#xBCC0;&#xD658;&#xD560; &#xB54C; &#xCC98;&#xB7FC; &#xB3D9;&#xC77C;&#xD558;&#xAC8C; &#xBCC0;&#xD658;&#xD55C; &#xD30C;&#xC77C;&#xC5D0; &#xC0C8; &#xC18C;&#xC720;&#xAD8C;&#xC744; &#xBD80;&#xC5EC;&#xD558;&#xBA74;&#xC11C; &#xBCC0;&#xD658;&#xC744; &#xACC4;&#xC18D;&#xD569;&#xB2C8;&#xB2E4;. <code>-o</code>, <code>-n</code> &#xC635;&#xC158;&#xB3C4; &#xCC38;&#xACE0;&#xD558;&#xC2ED;&#xC2DC;&#xC624;. &#xC774; &#xC635;&#xC158;&#xC740; dos2unix&#xC5D0;&#xC11C; &#xD30C;&#xC77C;&#xC758; &#xC0AC;&#xC6A9;&#xC790; &#xBC0F; &#xADF8;&#xB8F9; &#xC18C;&#xC720;&#xAD8C;&#xC744; &#xC720;&#xC9C0;&#xD558;&#xB294; &#xAE30;&#xB2A5;&#xC774; &#xC788;&#xC744; &#xACBD;&#xC6B0;&#xC5D0;&#xB9CC; &#xC0AC;&#xC6A9;&#xD560; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+
+</dd>
+<dt id="ascii"><b>-ascii</b></dt>
+<dd>
+
+<p>&#xC904; &#xBC14;&#xAFC8; &#xBB38;&#xC790;&#xB9CC; &#xBCC0;&#xD658;&#xD569;&#xB2C8;&#xB2E4;. &#xAE30;&#xBCF8; &#xBCC0;&#xD658; &#xBAA8;&#xB4DC;&#xC785;&#xB2C8;&#xB2E4;.</p>
+
+</dd>
+<dt id="iso"><b>-iso</b></dt>
+<dd>
+
+<p>DOS&#xC640; ISO-8859-1 &#xBB38;&#xC790; &#xC138;&#xD2B8; &#xBCC0;&#xD658;&#xC744; &#xC9C4;&#xD589;&#xD569;&#xB2C8;&#xB2E4;. &#xBCC0;&#xD658; &#xBAA8;&#xB4DC; &#xC139;&#xC158;&#xC744; &#xCC38;&#xACE0;&#xD558;&#xC2ED;&#xC2DC;&#xC624;.</p>
+
+</dd>
+<dt id="pod-1252"><b>-1252</b></dt>
+<dd>
+
+<p>&#xC708;&#xB3C4;&#xC6B0; &#xCF54;&#xB4DC; &#xD398;&#xC774;&#xC9C0; 1252(&#xC11C;&#xC720;&#xB7FD;&#xC5B4;)&#xB97C; &#xD65C;&#xC6A9;&#xD569;&#xB2C8;&#xB2E4;.</p>
+
+</dd>
+<dt id="pod-437"><b>-437</b></dt>
+<dd>
+
+<p>DOS &#xCF54;&#xB4DC; &#xD398;&#xC774;&#xC9C0; 437(&#xBBF8;&#xD569;&#xC911;&#xAD6D;)&#xC744; &#xD65C;&#xC6A9;&#xD569;&#xB2C8;&#xB2E4;. ISO &#xBCC0;&#xD658;&#xC2DC; &#xAE30;&#xBCF8; &#xCF54;&#xB4DC; &#xD398;&#xC774;&#xC9C0;&#xB85C; &#xD65C;&#xC6A9;&#xD569;&#xB2C8;&#xB2E4;.</p>
+
+</dd>
+<dt id="pod-850"><b>-850</b></dt>
+<dd>
+
+<p>DOS &#xCF54;&#xB4DC; &#xD398;&#xC774;&#xC9C0; 850(&#xC11C;&#xC720;&#xB7FD;&#xC5B4;)&#xC744; &#xD65C;&#xC6A9;&#xD569;&#xB2C8;&#xB2E4;.</p>
+
+</dd>
+<dt id="pod-860"><b>-860</b></dt>
+<dd>
+
+<p>DOS &#xCF54;&#xB4DC; &#xD398;&#xC774;&#xC9C0; 860(&#xD3EC;&#xB974;&#xD22C;&#xAC08;&#xC5B4;)&#xC744; &#xD65C;&#xC6A9;&#xD569;&#xB2C8;&#xB2E4;.</p>
+
+</dd>
+<dt id="pod-863"><b>-863</b></dt>
+<dd>
+
+<p>DOS &#xCF54;&#xB4DC; &#xD398;&#xC774;&#xC9C0; 863(&#xCE90;&#xB098;&#xB2E4; &#xD504;&#xB791;&#xC2A4;&#xC5B4;)&#xC744; &#xD65C;&#xC6A9;&#xD569;&#xB2C8;&#xB2E4;.</p>
+
+</dd>
+<dt id="pod-865"><b>-865</b></dt>
+<dd>
+
+<p>DOS &#xCF54;&#xB4DC; &#xD398;&#xC774;&#xC9C0; 865(&#xBD81;&#xC720;&#xB7FD;&#xC5B4;)&#xB97C; &#xD65C;&#xC6A9;&#xD569;&#xB2C8;&#xB2E4;.</p>
+
+</dd>
+<dt id="pod-7"><b>-7</b></dt>
+<dd>
+
+<p>8&#xBE44;&#xD2B8; &#xBB38;&#xC790;&#xB97C; 7&#xBE44;&#xD2B8; &#xC601;&#xC5ED;&#xC73C;&#xB85C; &#xBCC0;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</p>
+
+</dd>
+<dt id="b---keep-bom"><b>-b, --keep-bom</b></dt>
+<dd>
+
+<p>&#xBC14;&#xC774;&#xD2B8; &#xC21C;&#xC11C; &#xD45C;&#xC2DC;(BOM)&#xB97C; &#xC720;&#xC9C0;&#xD569;&#xB2C8;&#xB2E4;. &#xC785;&#xB825; &#xD30C;&#xC77C;&#xC5D0; BOM&#xC774; &#xB4E4;&#xC5B4;&#xC788;&#xB2E4;&#xBA74;, &#xCD9C;&#xB825; &#xD30C;&#xC77C;&#xC5D0; BOM&#xC744; &#xAE30;&#xB85D;&#xD569;&#xB2C8;&#xB2E4;. DOS &#xAC1C;&#xD589; &#xBB38;&#xC790;&#xB97C; &#xBCC0;&#xD658;&#xD560; &#xB54C; &#xAE30;&#xBCF8; &#xB3D9;&#xC791;&#xC785;&#xB2C8;&#xB2E4;. <code>-r</code>&#xC635;&#xC158; &#xC815;&#xBCF4;&#xB3C4; &#xCC38;&#xACE0;&#xD558;&#xC2ED;&#xC2DC;&#xC624;.</p>
+
+</dd>
+<dt id="c---convmode"><b>-c, --convmode &lt;&#xBCC0;&#xD658;&#xBAA8;&#xB4DC;&gt;</b></dt>
+<dd>
+
+<p>&#xBCC0;&#xD658; &#xBAA8;&#xB4DC;&#xB97C; &#xC124;&#xC815;&#xD569;&#xB2C8;&#xB2E4;. &lt;&#xBCC0;&#xD658;&#xBAA8;&#xB4DC;&gt;&#xB294; <i>ascii</i>, <i>7bit</i>, <i>iso</i>, <i>mac</i> &#xAC12; &#xC911; &#xD558;&#xB098;&#xC774;&#xBA70; ascii&#xAC00; &#xAE30;&#xBCF8;&#xAC12;&#xC785;&#xB2C8;&#xB2E4;.</p>
+
+</dd>
+<dt id="D---display-enc"><b>-D, --display-enc &lt;&#xC778;&#xCF54;&#xB529;&gt;</b></dt>
+<dd>
+
+<p>&#xD45C;&#xC2DC; &#xD14D;&#xC2A4;&#xD2B8; &#xC778;&#xCF54;&#xB529;&#xC744; &#xC124;&#xC815;&#xD569;&#xB2C8;&#xB2E4;. &lt;&#xC778;&#xCF54;&#xB529;&gt;&#xC740; <i>ansi</i>, <i>unicode</i>, <i>unicodebom</i>, <i>utf8</i>, <i>utf8bom</i> &#xAC12; &#xC911; &#xD558;&#xB098;&#xC774;&#xBA70;, ansi&#xAC00; &#xAE30;&#xBCF8;&#xAC12;&#xC785;&#xB2C8;&#xB2E4;.</p>
+
+<p>&#xC774; &#xC635;&#xC158;&#xC740; &#xC720;&#xB2C8;&#xCF54;&#xB4DC; &#xD30C;&#xC77C; &#xC774;&#xB984;&#xC744; &#xC9C0;&#xC6D0;&#xD558;&#xB294; &#xC708;&#xB3C4;&#xC6B0;&#xC6A9; dos2unix&#xC5D0;&#xC11C;&#xB9CC; &#xC0AC;&#xC6A9;&#xD560; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;. &#xC774; &#xC635;&#xC158;&#xC740; &#xC2E4;&#xC81C; &#xD30C;&#xC77C; &#xC774;&#xB984;&#xC744; &#xC77D;&#xACE0; &#xC4F0;&#xB294;&#xB370; &#xC544;&#xBB34;&#xB7F0; &#xC601;&#xD5A5;&#xC744; &#xC8FC;&#xC9C0; &#xC54A;&#xC73C;&#xBA70;, &#xC5B4;&#xB5BB;&#xAC8C; &#xB098;&#xD0C0;&#xB0B4;&#xB294; &#xC9C0;&#xC5D0; &#xB300;&#xD574;&#xC11C;&#xB9CC; &#xC601;&#xD5A5;&#xC744; &#xC90D;&#xB2C8;&#xB2E4;.</p>
+
+<p>&#xD14D;&#xC2A4;&#xD2B8; &#xC778;&#xCF54;&#xB529; &#xAE30;&#xBC18;&#xC73C;&#xB85C; &#xC708;&#xB3C4;&#xC6B0; &#xCF58;&#xC194;&#xC5D0;&#xC11C; &#xD14D;&#xC2A4;&#xD2B8;&#xB97C; &#xB098;&#xD0C0;&#xB0B4;&#xB294; &#xBC29;&#xBC95;&#xC5D0;&#xB294; &#xC5EC;&#xB7EC;&#xAC00;&#xC9C0;&#xAC00; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;. &#xAC01; &#xBC29;&#xBC95;&#xC5D0;&#xB294; &#xACE0;&#xC720;&#xC758; &#xC7A5;&#xC810;&#xACFC; &#xB2E8;&#xC810;&#xC774; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+
+<dl>
+
+<dt id="ansi"><b>ansi</b></dt>
+<dd>
+
+<p>dos2unix&#xC758; &#xAE30;&#xBCF8; &#xBC29;&#xC2DD;&#xC740; ANSI &#xC778;&#xCF54;&#xB529; &#xD14D;&#xC2A4;&#xD2B8;&#xB97C; &#xD65C;&#xC6A9;&#xD558;&#xB294; &#xBC29;&#xBC95;&#xC785;&#xB2C8;&#xB2E4;. &#xD558;&#xC704; &#xD638;&#xD658;&#xC131;&#xC774; &#xC7A5;&#xC810;&#xC785;&#xB2C8;&#xB2E4;. &#xB798;&#xC2A4;&#xD130; &#xBC0F; &#xD2B8;&#xB8E8;&#xD0C0;&#xC785; &#xAE00;&#xAF34;&#xC5D0; &#xB3D9;&#xC791;&#xD569;&#xB2C8;&#xB2E4;. &#xC77C;&#xBD80; &#xAD6D;&#xAC00;&#xC5D0;&#xC11C;&#xB294; dos2unix&#xC5D0;&#xC11C; &#xC708;&#xB3C4;&#xC6B0; &#xC2DC;&#xC2A4;&#xD15C; &#xCF54;&#xB4DC; &#xD398;&#xC774;&#xC9C0;&#xB97C; &#xC0AC;&#xC6A9;&#xD558;&#xAE30; &#xB54C;&#xBB38;&#xC5D0; <code>chcp</code> &#xBA85;&#xB839;&#xC73C;&#xB85C; &#xC708;&#xB3C4;&#xC6B0; &#xC2DC;&#xC2A4;&#xD15C; ANSI &#xCF54;&#xB4DC; &#xD398;&#xC774;&#xC9C0;&#xB85C; DOS OEM &#xD65C;&#xC131; &#xCF54;&#xB4DC; &#xD398;&#xC774;&#xC9C0;&#xB97C; &#xBC14;&#xAFB8;&#xC5B4;&#xC57C; &#xD569;&#xB2C8;&#xB2E4;.</p>
+
+<p>ANSI &#xBC29;&#xC2DD;&#xC758; &#xB2E8;&#xC810;&#xC740; &#xAD6D;&#xC81C;&#xC5B4; &#xD30C;&#xC77C; &#xC774;&#xB984;&#xC774; &#xC2DC;&#xC2A4;&#xD15C; &#xAE30;&#xBCF8; &#xCF54;&#xB4DC; &#xD398;&#xC774;&#xC9C0;&#xC5D0; &#xB4E4;&#xC5B4;&#xC788;&#xC9C0; &#xC54A;&#xC544; &#xC81C;&#xB300;&#xB85C; &#xD654;&#xBA74;&#xC5D0; &#xB098;&#xD0C0;&#xB098;&#xC9C0; &#xC54A;&#xC2B5;&#xB2C8;&#xB2E4;. &#xBB3C;&#xC74C;&#xD45C; &#xAE30;&#xD638; &#xB610;&#xB294; &#xC798;&#xBABB;&#xB41C; &#xAE30;&#xD638;&#xAC00; &#xB300;&#xC2E0; &#xB098;&#xD0C0;&#xB0A0; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;. &#xD0C0; &#xC5B8;&#xC5B4; &#xD30C;&#xC77C; &#xC774;&#xB984;&#xC73C;&#xB85C; &#xB3D9;&#xC791;&#xD558;&#xC9C0; &#xC54A;&#xB294;&#xB2E4;&#xBA74; &#xC774; &#xBC29;&#xC2DD;&#xC774; &#xAD1C;&#xCC2E;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+
+</dd>
+<dt id="unicode-unicodebom"><b>unicode, unicodebom</b></dt>
+<dd>
+
+<p>&#xC720;&#xB2C8;&#xCF54;&#xB4DC;(UTF-16&#xC758; &#xC708;&#xB3C4;&#xC6B0; &#xC774;&#xB984;) &#xC778;&#xCF54;&#xB529;&#xC758; &#xC7A5;&#xC810;&#xC774;&#xB780; &#xD14D;&#xC2A4;&#xD2B8;&#xAC00; &#xBCF4;&#xD1B5; &#xC81C;&#xB300;&#xB85C; &#xB098;&#xD0C0;&#xB09C;&#xB2E4;&#xB294; &#xC810;&#xC785;&#xB2C8;&#xB2E4;. &#xD65C;&#xC131; &#xCF54;&#xB4DC; &#xD398;&#xC774;&#xC9C0;&#xB97C; &#xBC14;&#xAFC0; &#xD544;&#xC694;&#xB294; &#xC5C6;&#xC2B5;&#xB2C8;&#xB2E4;. &#xCF58;&#xC194;&#xC758; &#xC804;&#xC138;&#xACC4; &#xBB38;&#xC790;&#xAC00; &#xC81C;&#xB300;&#xB85C; &#xB098;&#xD0C0;&#xB098;&#xB824;&#xBA74; &#xD2B8;&#xB8E8;&#xD0C0;&#xC785; &#xAE00;&#xAF34;&#xC744; &#xC120;&#xD0DD;&#xD574;&#xC57C;&#xD569;&#xB2C8;&#xB2E4;. &#xBB38;&#xC790;&#xAC00; &#xD2B8;&#xB8E8;&#xD0C0;&#xC785; &#xAE00;&#xAF34; &#xC138;&#xD2B8;&#xC5D0; &#xB4E4;&#xC5B4;&#xC788;&#xC9C0; &#xC54A;&#xC73C;&#xBA74; &#xC791;&#xC740; &#xC0AC;&#xAC01;&#xD615; &#xBAA8;&#xC591;&#xC744; &#xBCFC; &#xC218; &#xC788;&#xC73C;&#xBA70;, &#xB54C;&#xB85C;&#xB294; &#xBB3C;&#xC74C;&#xD45C;&#xB85C; &#xB098;&#xD0C0;&#xB098;&#xAE30;&#xB3C4; &#xD569;&#xB2C8;&#xB2E4;.</p>
+
+<p>ConEmu &#xCF58;&#xC194;&#xC744; &#xC0AC;&#xC6A9;&#xD55C;&#xB2E4;&#xBA74; ConEmu&#xC5D0;&#xC11C; &#xC801;&#xC808;&#xD55C; &#xAE00;&#xAF34;&#xC744; &#xC790;&#xB3D9;&#xC73C;&#xB85C; &#xC120;&#xD0DD;&#xD558;&#xBBC0;&#xB85C; &#xBAA8;&#xB4E0; &#xD14D;&#xC2A4;&#xD2B8;&#xAC00; &#xC81C;&#xB300;&#xB85C; &#xB098;&#xD0C0;&#xB0A9;&#xB2C8;&#xB2E4;.</p>
+
+<p>&#xC720;&#xB2C8;&#xCF54;&#xB4DC; &#xC0AC;&#xC6A9;&#xC758; &#xB2E8;&#xC810;&#xC740; ASCII&#xC640; &#xD638;&#xD658;&#xC131;&#xC774; &#xC5C6;&#xB2E4;&#xB294; &#xC810;&#xC785;&#xB2C8;&#xB2E4;. &#xB2E4;&#xB978; &#xD504;&#xB85C;&#xADF8;&#xB7A8;&#xC73C;&#xB85C; &#xCD9C;&#xB825;&#xC744; &#xC804;&#xB2EC;&#xD560; &#xB54C; &#xC27D;&#xAC8C; &#xCC98;&#xB9AC;&#xD560; &#xC218; &#xC5C6;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+
+<p><code>unicodebom</code> &#xBC29;&#xC2DD;&#xC744; &#xC0AC;&#xC6A9;&#xD558;&#xBA74; BOM(&#xBC14;&#xC774;&#xD2B8; &#xC21C;&#xC11C; &#xD45C;&#xC2DC;)&#xC744; &#xD14D;&#xC2A4;&#xD2B8; &#xC55E;&#xC5D0; &#xB461;&#xB2C8;&#xB2E4;. BOM&#xC740; &#xD30C;&#xC6CC;&#xC178;&#xC5D0;&#xC11C; &#xCD9C;&#xB825; &#xB0B4;&#xC6A9;&#xC744; &#xC62C;&#xBC14;&#xB974;&#xAC8C; &#xC804;&#xB2EC; &#xB610;&#xB294; &#xD30C;&#xC774;&#xD551;&#xD560; &#xB54C; &#xD544;&#xC694;&#xD569;&#xB2C8;&#xB2E4;.</p>
+
+</dd>
+<dt id="utf8-utf8bom"><b>utf8, utf8bom</b></dt>
+<dd>
+
+<p>utf8&#xC758; &#xC7A5;&#xC810;&#xC740; ASCII&#xC640;&#xC758; &#xD638;&#xD658;&#xC131;&#xC785;&#xB2C8;&#xB2E4;. &#xCF58;&#xC194;&#xC758; &#xAE00;&#xAF34;&#xC744; &#xD2B8;&#xB8E8;&#xD0C0;&#xC785; &#xAE00;&#xAF34;&#xB85C; &#xC120;&#xD0DD;&#xD574;&#xC57C; &#xD569;&#xB2C8;&#xB2E4;. &#xD2B8;&#xB8E8;&#xD0C0;&#xC785; &#xAE00;&#xAF34;&#xB85C; &#xC124;&#xC815;&#xD558;&#xBA74; <code>unicode</code> &#xC778;&#xCF54;&#xB529; &#xB54C;&#xC640; &#xBE44;&#xC2B7;&#xD558;&#xAC8C; &#xB098;&#xD0C0;&#xB0A9;&#xB2C8;&#xB2E4;.</p>
+
+<p>&#xB2E8;&#xC810;&#xC740; &#xB798;&#xC2A4;&#xD130; &#xAE00;&#xAF34;&#xC744; &#xAE30;&#xBCF8;&#xC73C;&#xB85C; &#xC0AC;&#xC6A9;&#xD558;&#xBA74; ASCII &#xC778;&#xCF54;&#xB529; &#xD558;&#xC9C0; &#xC54A;&#xB294; &#xBB38;&#xC790;&#xB97C; &#xC798;&#xBABB; &#xB098;&#xD0C0;&#xB0BC; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;. &#xC720;&#xB2C8;&#xCF54;&#xB4DC; &#xD30C;&#xC77C; &#xC774;&#xB984; &#xBFD0;&#xB9CC; &#xC544;&#xB2C8;&#xB77C; &#xBC88;&#xC5ED; &#xBA54;&#xC2DC;&#xC9C0; &#xC870;&#xCC28; &#xC81C;&#xB300;&#xB85C; &#xC77D;&#xC744; &#xC218; &#xC5C6;&#xC2B5;&#xB2C8;&#xB2E4;. &#xC708;&#xB3C4;&#xC6B0;&#xC5D0;&#xC11C;&#xB294; &#xB3D9;&#xC544;&#xC2DC;&#xC544; &#xC9C0;&#xC5ED;&#xC73C;&#xB85C; &#xC124;&#xC815;&#xD588;&#xC744; &#xACBD;&#xC6B0; &#xBA54;&#xC2DC;&#xC9C0;&#xAC00; &#xB098;&#xD0C0;&#xB0A0; &#xB54C; &#xCF58;&#xC194; &#xD654;&#xBA74;&#xC774; &#xC0C1;&#xB2F9;&#xD788; &#xB9CE;&#xC774; &#xAE5C;&#xBE61;&#xAC70;&#xB9AC;&#xB294;&#xAC78; &#xBCFC; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+
+<p>ConEmu &#xCF58;&#xC194;&#xC5D0;&#xC11C;&#xB294; utf8 &#xC778;&#xCF54;&#xB529;&#xC774; &#xC81C;&#xB300;&#xB85C; &#xB3D9;&#xC791;&#xD569;&#xB2C8;&#xB2E4;.</p>
+
+<p><code>utf8bom</code> &#xBC29;&#xC2DD;&#xC744; &#xC0AC;&#xC6A9;&#xD558;&#xBA74; UTF-8 &#xD14D;&#xC2A4;&#xD2B8; &#xC55E;&#xC5D0; BOM(&#xBC14;&#xC774;&#xD2B8; &#xC21C;&#xC11C; &#xD45C;&#xC2DC;)&#xB97C; &#xB461;&#xB2C8;&#xB2E4;. BOM&#xC740; &#xD30C;&#xC6CC;&#xC178;&#xC5D0;&#xC11C; &#xCD9C;&#xB825; &#xB0B4;&#xC6A9;&#xC744; &#xC62C;&#xBC14;&#xB974;&#xAC8C; &#xC804;&#xB2EC; &#xB610;&#xB294; &#xD30C;&#xC774;&#xD551;&#xD560; &#xB54C; &#xD544;&#xC694;&#xD569;&#xB2C8;&#xB2E4;.</p>
+
+</dd>
+</dl>
+
+<p>&#xAE30;&#xBCF8; &#xC778;&#xCF54;&#xB529;&#xC740; DOS2UNIX_DISPLAY_ENC &#xD658;&#xACBD; &#xBCC0;&#xC218;&#xB97C; <code>unicode</code>, <code>unicodebom</code>, <code>utf8</code>, <code>utf8bom</code> &#xC911; &#xAC12; &#xD558;&#xB098;&#xB85C; &#xC124;&#xC815;&#xD558;&#xC5EC; &#xBC14;&#xAFC0; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+
+</dd>
+<dt id="e---add-eol"><b>-e, --add-eol</b></dt>
+<dd>
+
+<p>&#xAC1C;&#xD589; &#xBB38;&#xC790;&#xAC00; &#xC904; &#xB05D;&#xC5D0; &#xC5C6;&#xC744; &#xACBD;&#xC6B0; &#xCD94;&#xAC00;&#xD569;&#xB2C8;&#xB2E4;. &#xBAA8;&#xB4E0; &#xBCC0;&#xD658; &#xACFC;&#xC815;&#xC5D0;&#xC11C; &#xB3D9;&#xC791;&#xD569;&#xB2C8;&#xB2E4;.</p>
+
+<p>DOS &#xD615;&#xC2DD;&#xC5D0;&#xC11C; &#xC720;&#xB2C9;&#xC2A4; &#xD615;&#xC2DD;&#xC73C;&#xB85C; &#xBCC0;&#xD658;&#xD55C; &#xD30C;&#xC77C;&#xC758; &#xD589; &#xB05D;&#xC5D0; &#xAC1C;&#xD589; &#xBB38;&#xC790;&#xAC00; &#xBE60;&#xC9C8; &#xC218;&#xB3C4; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;. &#xD589; &#xB05D;&#xC5D0; &#xAC1C;&#xD589; &#xBB38;&#xC790;&#xAC00; &#xBE60;&#xC9C4; &#xCC44;&#xB85C; &#xD14D;&#xC2A4;&#xD2B8; &#xD30C;&#xC77C;&#xC744; &#xAE30;&#xB85D;&#xD558;&#xB294; &#xD14D;&#xC2A4;&#xD2B8; &#xD3B8;&#xC9D1;&#xAE30;&#xAC00; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;. &#xD14D;&#xC2A4;&#xD2B8; &#xD30C;&#xC77C;&#xC758; &#xBAA8;&#xB4E0; &#xC904; &#xB05D;&#xC5D0; &#xBC18;&#xB4DC;&#xC2DC; &#xAC1C;&#xD589; &#xBB38;&#xC790;&#xB85C; &#xB05D;&#xB098;&#xC57C; &#xD558;&#xB294;&#xAC8C; POSIX &#xD45C;&#xC900;&#xC774;&#xAE30;&#xC5D0;, &#xC77C;&#xBD80; &#xC720;&#xB2C9;&#xC2A4; &#xD504;&#xB85C;&#xADF8;&#xB7A8;&#xC5D0;&#xC11C;&#xB294; &#xC774; &#xD30C;&#xC77C;&#xC744; &#xCC98;&#xB9AC;&#xD558;&#xB294; &#xBB38;&#xC81C;&#xAC00; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;. &#xC608;&#xB97C; &#xB4E4;&#xBA74;, &#xD30C;&#xC77C; &#xB0B4;&#xC6A9;&#xC744; &#xD569;&#xCE60; &#xB54C; &#xC608;&#xC0C1;&#xD55C; &#xB300;&#xB85C; &#xACB0;&#xACFC;&#xAC00; &#xB098;&#xD0C0;&#xB098;&#xC9C0; &#xC54A;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+
+</dd>
+<dt id="f---force"><b>-f, --force</b></dt>
+<dd>
+
+<p>&#xAC15;&#xC81C;&#xB85C; &#xC774;&#xC9C4; &#xD30C;&#xC77C;&#xC744; &#xBCC0;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</p>
+
+</dd>
+<dt id="gb---gb18030"><b>-gb, --gb18030</b></dt>
+<dd>
+
+<p>&#xC708;&#xB3C4;&#xC6B0;&#xC5D0;&#xC11C;&#xB294; &#xB85C;&#xCE98; &#xC124;&#xC815; &#xC5EC;&#xBD80;&#xC640; &#xAD00;&#xACC4; &#xC5C6;&#xC774; UTF-16 &#xD30C;&#xC77C;&#xC774; &#xAE30;&#xBCF8;&#xC774;&#xAE30;&#xC5D0; UTF-8&#xB85C; &#xBCC0;&#xD658;&#xD569;&#xB2C8;&#xB2E4;. &#xC774; &#xC635;&#xC158;&#xC744; &#xC0AC;&#xC6A9;&#xD558;&#xBA74; UTF-16 &#xD30C;&#xC77C;&#xC744; GB18030&#xC73C;&#xB85C; &#xBCC0;&#xD658;&#xD569;&#xB2C8;&#xB2E4;. &#xC774; &#xC635;&#xC158;&#xC740; &#xC708;&#xB3C4;&#xC6B0;&#xC5D0;&#xC11C;&#xB9CC; &#xC0AC;&#xC6A9;&#xD560; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;. GB18030 &#xC139;&#xC158;&#xC744; &#xCC38;&#xACE0;&#xD558;&#xC2ED;&#xC2DC;&#xC624;.</p>
+
+</dd>
+<dt id="h---help"><b>-h, --help</b></dt>
+<dd>
+
+<p>&#xB3C4;&#xC6C0;&#xB9D0;&#xC744; &#xD45C;&#xC2DC;&#xD558;&#xACE0; &#xB098;&#xAC11;&#xB2C8;&#xB2E4;.</p>
+
+</dd>
+<dt id="i---info"><b>-i[&lt;&#xD50C;&#xB798;&#xADF8;&gt;], --info[=&lt;&#xD50C;&#xB798;&#xADF8;&gt;] &lt;&#xD30C;&#xC77C;&gt; ...</b></dt>
+<dd>
+
+<p>&#xD30C;&#xC77C; &#xC815;&#xBCF4;&#xB97C; &#xD45C;&#xC2DC;&#xD569;&#xB2C8;&#xB2E4;. &#xBCC0;&#xD658; &#xB3D9;&#xC791;&#xC740; &#xD558;&#xC9C0; &#xC54A;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+
+<p>&#xB2E4;&#xC74C; &#xC815;&#xBCF4;&#xB97C; DOS &#xAC1C;&#xD589; &#xBB38;&#xC790; &#xC218;, &#xC720;&#xB2C9;&#xC2A4; &#xAC1C;&#xD589; &#xBB38;&#xC790; &#xC218;, &#xB9E5; &#xAC1C;&#xD589; &#xBB38;&#xC790; &#xC218;, &#xBC14;&#xC774;&#xD2B8; &#xC21C;&#xC11C; &#xD45C;&#xC2DC;, &#xD14D;&#xC2A4;&#xD2B8; &#xB610;&#xB294; &#xC774;&#xC9C4; &#xD30C;&#xC77C; &#xC5EC;&#xBD80;, &#xD30C;&#xC77C; &#xC774;&#xB984; &#xC21C;&#xC73C;&#xB85C; &#xC815;&#xBCF4;&#xB97C; &#xCD9C;&#xB825;&#xD569;&#xB2C8;&#xB2E4;.</p>
+
+<p>&#xC608;&#xC81C; &#xCD9C;&#xB825;:</p>
+
+<pre><code> 6       0       0  no_bom    text    dos.txt
+ 0       6       0  no_bom    text    unix.txt
+ 0       0       6  no_bom    text    mac.txt
+ 6       6       6  no_bom    text    mixed.txt
+50       0       0  UTF-16LE  text    utf16le.txt
+ 0      50       0  no_bom    text    utf8unix.txt
+50       0       0  UTF-8     text    utf8dos.txt
+ 2     418     219  no_bom    binary  dos2unix.exe</code></pre>
+
+<p>&#xB54C;&#xB85C;&#xB294; &#xC774;&#xC9C4; &#xD30C;&#xC77C;&#xC744; &#xD14D;&#xC2A4;&#xD2B8; &#xD30C;&#xC77C;&#xB85C; &#xC798;&#xBABB; &#xC54C;&#xC544;&#xCC4C; &#xC218;&#xB3C4; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;. <code>-s</code> &#xC635;&#xC158;&#xB3C4; &#xCC38;&#xACE0;&#xD558;&#xC2ED;&#xC2DC;&#xC624;.</p>
+
+<p>&#xCD9C;&#xB825; &#xBC29;&#xC2DD;&#xC744; &#xBC14;&#xAFC0; &#xCD94;&#xAC00; &#xD50C;&#xB798;&#xADF8;&#xB97C; &#xC124;&#xC815;&#xD560; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;. &#xD50C;&#xB798;&#xADF8; &#xD558;&#xB098; &#xC774;&#xC0C1;&#xC744; &#xCD94;&#xAC00;&#xD560; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+
+<dl>
+
+<dt id="pod0"><b>0</b></dt>
+<dd>
+
+<p>&#xD30C;&#xC77C; &#xC815;&#xBCF4; &#xD589; &#xB05D;&#xC758; &#xAC1C;&#xD589; &#xBB38;&#xC790; &#xB300;&#xC2E0; &#xB110; &#xBB38;&#xC790;&#xB97C; &#xCD9C;&#xB825;&#xD569;&#xB2C8;&#xB2E4;. c &#xD50C;&#xB798;&#xADF8;&#xB97C; &#xC0AC;&#xC6A9;&#xD560; &#xB54C; &#xACF5;&#xBC31; &#xB610;&#xB294; &#xB530;&#xC634;&#xD45C;&#xB85C; &#xD30C;&#xC77C; &#xC774;&#xB984; &#xD574;&#xC11D;&#xC744; &#xC62C;&#xBC14;&#xB974;&#xAC8C; &#xD560; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;. &#xC774; &#xD50C;&#xB798;&#xADF8;&#xB294; xargs(1) &#xC635;&#xC158; <code>-0</code> &#xB610;&#xB294; <code>--null</code>&#xC744; &#xD568;&#xAED8; &#xC0AC;&#xC6A9;&#xD558;&#xC2ED;&#xC2DC;&#xC624;.</p>
+
+</dd>
+<dt id="d"><b>d</b></dt>
+<dd>
+
+<p>DOS &#xAC1C;&#xD589; &#xBB38;&#xC790;&#xB97C; &#xCD9C;&#xB825;&#xD569;&#xB2C8;&#xB2E4;.</p>
+
+</dd>
+<dt id="u"><b>u</b></dt>
+<dd>
+
+<p>&#xC720;&#xB2C9;&#xC2A4; &#xAC1C;&#xD589; &#xBB38;&#xC790;&#xB97C; &#xCD9C;&#xB825;&#xD569;&#xB2C8;&#xB2E4;.</p>
+
+</dd>
+<dt id="m"><b>m</b></dt>
+<dd>
+
+<p>&#xB9E5; &#xAC1C;&#xD589; &#xBB38;&#xC790;&#xB97C; &#xCD9C;&#xB825;&#xD569;&#xB2C8;&#xB2E4;.</p>
+
+</dd>
+<dt id="b"><b>b</b></dt>
+<dd>
+
+<p>&#xBC14;&#xC774;&#xD2B8; &#xC21C;&#xC11C; &#xD45C;&#xC2DC;&#xB97C; &#xCD9C;&#xB825;&#xD569;&#xB2C8;&#xB2E4;.</p>
+
+</dd>
+<dt id="t"><b>t</b></dt>
+<dd>
+
+<p>&#xD30C;&#xC77C;&#xC758; &#xD14D;&#xC2A4;&#xD2B8; &#xB610;&#xB294; &#xC774;&#xC9C4; &#xC5EC;&#xBD80;&#xB97C; &#xCD9C;&#xB825;&#xD569;&#xB2C8;&#xB2E4;.</p>
+
+</dd>
+<dt id="c"><b>c</b></dt>
+<dd>
+
+<p>&#xBCC0;&#xD658;&#xD560; &#xD30C;&#xC77C;&#xB9CC; &#xCD9C;&#xB825;&#xD569;&#xB2C8;&#xB2E4;.</p>
+
+<p>dos2unix&#xC5D0; <code>c</code> &#xD50C;&#xB798;&#xADF8;&#xB97C; &#xC0AC;&#xC6A9;&#xD558;&#xBA74; DOS &#xAC1C;&#xD589; &#xBB38;&#xC790;&#xAC00; &#xB4E4;&#xC5B4;&#xAC04; &#xD30C;&#xC77C;&#xB9CC; &#xCD9C;&#xB825;&#xD569;&#xB2C8;&#xB2E4;. unix2dos&#xB294; &#xC720;&#xB2C9;&#xC2A4; &#xAC1C;&#xD589; &#xBB38;&#xC790;&#xAC00; &#xB4E4;&#xC5B4;&#xAC04; &#xD30C;&#xC77C; &#xC774;&#xB984;&#xB9CC; &#xCD9C;&#xB825;&#xD569;&#xB2C8;&#xB2E4;.</p>
+
+</dd>
+<dt id="h"><b>h</b></dt>
+<dd>
+
+<p>&#xD5E4;&#xB354;&#xB97C; &#xCD9C;&#xB825;&#xD569;&#xB2C8;&#xB2E4;.</p>
+
+</dd>
+<dt id="p"><b>p</b></dt>
+<dd>
+
+<p>&#xACBD;&#xB85C;&#xB97C; &#xBE80; &#xD30C;&#xC77C; &#xC774;&#xB984;&#xC744; &#xB098;&#xD0C0;&#xB0C5;&#xB2C8;&#xB2E4;.</p>
+
+</dd>
+</dl>
+
+<p>&#xC608;&#xC81C;:</p>
+
+<p>&#xBAA8;&#xB4E0; *.txt &#xD30C;&#xC77C; &#xC815;&#xBCF4; &#xCD9C;&#xB825;:</p>
+
+<pre><code>dos2unix -i *.txt</code></pre>
+
+<p>DOS &#xAC1C;&#xD589; &#xBB38;&#xC790;&#xC640; &#xC720;&#xB2C9;&#xC2A4; &#xAC1C;&#xD589; &#xBB38;&#xC790; &#xAC2F;&#xC218;&#xB9CC; &#xCD9C;&#xB825;:</p>
+
+<pre><code>dos2unix -idu *.txt</code></pre>
+
+<p>&#xBC14;&#xC774;&#xD2B8; &#xC21C;&#xC11C; &#xD45C;&#xC2DC;&#xB9CC; &#xB098;&#xD0C0;&#xB0B4;&#xAE30;:</p>
+
+<pre><code>dos2unix --info=b *.txt</code></pre>
+
+<p>DOS &#xAC1C;&#xD589; &#xBB38;&#xC790;&#xAC00; &#xB4E4;&#xC5B4;&#xAC04; &#xD30C;&#xC77C; &#xBAA9;&#xB85D; &#xCD9C;&#xB825;:</p>
+
+<pre><code>dos2unix -ic *.txt</code></pre>
+
+<p>&#xC720;&#xB2C9;&#xC2A4; &#xAC1C;&#xD589; &#xBB38;&#xC790;&#xAC00; &#xB4E4;&#xC5B4;&#xAC04; &#xD30C;&#xC77C; &#xBAA9;&#xB85D; &#xCD9C;&#xB825;:</p>
+
+<pre><code>unix2dos -ic *.txt</code></pre>
+
+<p>DOS &#xAC1C;&#xD589; &#xBB38;&#xC790;&#xAC00; &#xB4E4;&#xC5B4;&#xAC04; &#xD30C;&#xC77C;&#xB9CC; &#xBCC0;&#xD658;&#xD558;&#xBA70; &#xB2E4;&#xB978; &#xD30C;&#xC77C;&#xC740; &#xAC74;&#xB4DC;&#xB9AC;&#xC9C0; &#xC54A;&#xC2B5;&#xB2C8;&#xB2E4;:</p>
+
+<pre><code>dos2unix -ic0 *.txt | xargs -0 dos2unix</code></pre>
+
+<p>DOS &#xAC1C;&#xD589; &#xBB38;&#xC790;&#xAC00; &#xB4E4;&#xC5B4;&#xAC04; &#xD14D;&#xC2A4;&#xD2B8; &#xD30C;&#xC77C; &#xCC3E;&#xAE30;:</p>
+
+<pre><code>find -name &#39;*.txt&#39; -print0 | xargs -0 dos2unix -ic</code></pre>
+
+</dd>
+<dt id="k---keepdate"><b>-k, --keepdate</b></dt>
+<dd>
+
+<p>&#xCD9C;&#xB825; &#xD30C;&#xC77C;&#xC758; &#xB0A0;&#xC9DC; &#xC2A4;&#xD0EC;&#xD504;&#xB294; &#xC785;&#xB825; &#xD30C;&#xC77C;&#xACFC; &#xB3D9;&#xC77C;&#xD558;&#xAC8C; &#xC124;&#xC815;&#xD569;&#xB2C8;&#xB2E4;.</p>
+
+</dd>
+<dt id="L---license"><b>-L, --license</b></dt>
+<dd>
+
+<p>&#xD504;&#xB85C;&#xADF8;&#xB7A8; &#xB77C;&#xC774;&#xC120;&#xC2A4;&#xB97C; &#xD45C;&#xC2DC;&#xD569;&#xB2C8;&#xB2E4;.</p>
+
+</dd>
+<dt id="l---newline"><b>-l, --newline</b></dt>
+<dd>
+
+<p>&#xBD80;&#xAC00; &#xAC1C;&#xD589; &#xBB38;&#xC790;&#xB97C; &#xCD94;&#xAC00;&#xD569;&#xB2C8;&#xB2E4;.</p>
+
+<p><b>dos2unix</b>: DOS &#xAC1C;&#xD589; &#xBB38;&#xC790;&#xB9CC;&#xC744; &#xC720;&#xB2C9;&#xC2A4; &#xAC1C;&#xD589; &#xBB38;&#xC790; &#xB458;&#xB85C; &#xBCC0;&#xD658;&#xD569;&#xB2C8;&#xB2E4;. &#xB9E5; &#xBAA8;&#xB4DC;&#xC5D0;&#xC11C;&#xB294; &#xB9E5; &#xAC1C;&#xD589; &#xBB38;&#xC790;&#xB9CC;&#xC744; &#xC720;&#xB2C9;&#xC2A4; &#xAC1C;&#xD589; &#xBB38;&#xC790; &#xB458;&#xB85C; &#xBCC0;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</p>
+
+<p><b>unix2dos</b>: &#xC720;&#xB2C9;&#xC2A4; &#xAC1C;&#xD589; &#xBB38;&#xC790;&#xB9CC;&#xC744; DOS &#xAC1C;&#xD589; &#xBB38;&#xC790; &#xB458;&#xB85C; &#xBCC0;&#xD658;&#xD569;&#xB2C8;&#xB2E4;. &#xB9E5; &#xBAA8;&#xB4DC;&#xC5D0;&#xC11C;&#xB294; &#xC720;&#xB2C9;&#xC2A4; &#xAC1C;&#xD589; &#xBB38;&#xC790;&#xB97C; &#xB9E5; &#xAC1C;&#xD589; &#xBB38;&#xC790; &#xB458;&#xB85C; &#xBCC0;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</p>
+
+</dd>
+<dt id="m---add-bom"><b>-m, --add-bom</b></dt>
+<dd>
+
+<p>&#xBC14;&#xC774;&#xD2B8; &#xC21C;&#xC11C; &#xD45C;&#xC2DC;(BOM)&#xB97C; &#xCD9C;&#xB825; &#xD30C;&#xC77C;&#xC5D0; &#xAE30;&#xB85D;&#xD569;&#xB2C8;&#xB2E4;. &#xAE30;&#xBCF8;&#xC801;&#xC73C;&#xB85C; UTF-8 BOM&#xC744; &#xAE30;&#xB85D;&#xD569;&#xB2C8;&#xB2E4;.</p>
+
+<p>&#xC785;&#xB825; &#xD30C;&#xC77C; &#xC778;&#xCF54;&#xB529;&#xC774; UTF-16&#xC774;&#xACE0; <code>-u</code> &#xC635;&#xC158;&#xC744; &#xC0AC;&#xC6A9;&#xD588;&#xB2E4;&#xBA74; UTF-16 BOM&#xC744; &#xAE30;&#xB85D;&#xD569;&#xB2C8;&#xB2E4;.</p>
+
+<p>&#xCD9C;&#xB825; &#xC778;&#xCF54;&#xB529;&#xC774; UTF-8, UTF-16, GB18030&#xC774; &#xC544;&#xB2C8;&#xB77C;&#xBA74; &#xC774; &#xC635;&#xC158;&#xC744; &#xC0AC;&#xC6A9;&#xD558;&#xC9C0; &#xB9C8;&#xC2ED;&#xC2DC;&#xC624;. &#xC720;&#xB2C8;&#xCF54;&#xB4DC; &#xC139;&#xC158;&#xB3C4; &#xCC38;&#xACE0;&#xD558;&#xC2ED;&#xC2DC;&#xC624;.</p>
+
+</dd>
+<dt id="n---newfile"><b>-n, --newfile &lt;&#xC785;&#xB825;&#xD30C;&#xC77C;&gt; &lt;&#xCD9C;&#xB825;&#xD30C;&#xC77C;&gt; ...</b></dt>
+<dd>
+
+<p>&#xC0C8; &#xD30C;&#xC77C; &#xBAA8;&#xB4DC;&#xC785;&#xB2C8;&#xB2E4;. &lt;&#xC785;&#xB825;&#xD30C;&#xC77C;&gt;&#xC744; &#xBCC0;&#xD658;&#xD558;&#xC5EC; &lt;&#xCD9C;&#xB825;&#xD30C;&#xC77C;&gt;&#xC5D0; &#xAE30;&#xB85D;&#xD569;&#xB2C8;&#xB2E4;. &#xD30C;&#xC77C; &#xC774;&#xB984;&#xC740; &#xC9DD;&#xC73C;&#xB85C; &#xC9C0;&#xC815;&#xD558;&#xBA70; &#xC640;&#xC77C;&#xB4DC;&#xCE74;&#xB4DC; &#xC774;&#xB984;&#xC740; &#xC0AC;&#xC6A9;&#xD558;&#xC9C0; <i>&#xB9D0;&#xC544;&#xC57C;</i> &#xD558;&#xBA70;, &#xADF8;&#xB807;&#xC9C0; &#xC54A;&#xC73C;&#xBA74; &#xD30C;&#xC77C;&#xC744; <i>&#xC783;&#xC2B5;&#xB2C8;&#xB2E4;</i>.</p>
+
+<p>&#xC0C8; &#xD30C;&#xC77C;(&#xC9DD;)&#xBAA8;&#xB4DC;&#xB85C; &#xD30C;&#xC77C; &#xBCC0;&#xD658;&#xC744; &#xC2DC;&#xC791;&#xD55C; &#xC0AC;&#xC6A9;&#xC790;&#xB294; &#xBCC0;&#xD658;&#xD55C; &#xD30C;&#xC77C;&#xC758; &#xC18C;&#xC720;&#xC790;&#xAC00; &#xB429;&#xB2C8;&#xB2E4;. &#xC0C8; &#xD30C;&#xC77C;&#xC758; &#xC77D;&#xAE30;/&#xC4F0;&#xAE30; &#xAD8C;&#xD55C;&#xC740; &#xBCC0;&#xD658;&#xC744; &#xC2E4;&#xD589;&#xD55C; &#xC0AC;&#xC6A9;&#xC790;&#xC758; umask(1)&#xB97C; &#xBE80; &#xC6D0;&#xBCF8; &#xD30C;&#xC77C;&#xC758; &#xAD8C;&#xD55C;&#xC73C;&#xB85C; &#xBD80;&#xC5EC;&#xD569;&#xB2C8;&#xB2E4;.</p>
+
+</dd>
+<dt id="no-allow-chown"><b>--no-allow-chown</b></dt>
+<dd>
+
+<p>&#xC774;&#xC804; &#xD30C;&#xC77C; &#xBAA8;&#xB4DC;&#xC758; &#xD30C;&#xC77C; &#xC18C;&#xC720;&#xAD8C; &#xBCC0;&#xACBD;&#xC744; &#xD5C8;&#xC6A9;&#xD558;&#xC9C0; &#xC54A;&#xC2B5;&#xB2C8;&#xB2E4;(&#xAE30;&#xBCF8;&#xAC12;).</p>
+
+<p>&#xC6D0;&#xBCF8; &#xD30C;&#xC77C;&#xC758; &#xC0AC;&#xC6A9;&#xC790; &#xB610;&#xB294; &#xADF8;&#xB8F9; &#xC18C;&#xC720;&#xAD8C;&#xC744; &#xC774;&#xC804; &#xD30C;&#xC77C; &#xBAA8;&#xB4DC;&#xC5D0;&#xC11C; &#xC720;&#xC9C0;&#xD560; &#xC218; &#xC5C6;&#xB2E4;&#xBA74; &#xBCC0;&#xD658;&#xC744; &#xBA48;&#xCDA5;&#xB2C8;&#xB2E4;. <code>-o</code>, <code>-n</code> &#xC635;&#xC158;&#xB3C4; &#xCC38;&#xACE0;&#xD558;&#xC2ED;&#xC2DC;&#xC624;. &#xC774; &#xC635;&#xC158;&#xC740; dos2unix&#xC5D0;&#xC11C; &#xD30C;&#xC77C;&#xC758; &#xC0AC;&#xC6A9;&#xC790; &#xBC0F; &#xADF8;&#xB8F9; &#xC18C;&#xC720;&#xAD8C;&#xC744; &#xC720;&#xC9C0;&#xD558;&#xB294; &#xAE30;&#xB2A5;&#xC774; &#xC788;&#xC744; &#xACBD;&#xC6B0;&#xC5D0;&#xB9CC; &#xC0AC;&#xC6A9;&#xD560; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+
+</dd>
+<dt id="no-add-eol"><b>--no-add-eol</b></dt>
+<dd>
+
+<p>&#xAC1C;&#xD589; &#xBB38;&#xC790;&#xAC00; &#xC904; &#xB05D;&#xC5D0; &#xC5C6;&#xC744; &#xACBD;&#xC6B0; &#xB123;&#xC9C0; &#xC54A;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+
+</dd>
+<dt id="O---to-stdout"><b>-O, --to-stdout</b></dt>
+<dd>
+
+<p>&#xC720;&#xB2C9;&#xC2A4; &#xD544;&#xD130; &#xB3D9;&#xC791;&#xACFC; &#xBE44;&#xC2B7;&#xD558;&#xAC8C; &#xD45C;&#xC900; &#xCD9C;&#xB825;&#xC5D0; &#xAE30;&#xB85D;&#xD569;&#xB2C8;&#xB2E4;. &#xC774;&#xC804; &#xD30C;&#xC77C;(&#xAE30;&#xB85D;) &#xBAA8;&#xB4DC;&#xB85C; &#xB3CC;&#xC544;&#xAC00;&#xB824;&#xBA74; <code>-o</code> &#xC635;&#xC158;&#xC744; &#xC0AC;&#xC6A9;&#xD569;&#xB2C8;&#xB2E4;.</p>
+
+<p><code>-e</code> &#xC635;&#xC158;&#xC744; &#xBD99;&#xC5EC; &#xACB0;&#xD569;&#xD55C; &#xD30C;&#xC77C;&#xC740; &#xC81C;&#xB300;&#xB85C; &#xB0B4;&#xC6A9;&#xC744; &#xD569;&#xCE60; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;. &#xB9C8;&#xC9C0;&#xB9C9; &#xC904;&#xACFC; &#xCCAB;&#xC904;&#xC740; &#xBCD1;&#xD569;&#xD558;&#xC9C0; &#xC54A;&#xC73C;&#xBA70;, &#xACB0;&#xD569;&#xD55C; &#xD30C;&#xC77C; &#xB0B4;&#xC6A9; &#xC911;&#xAC04;&#xC5D0; &#xB4E4;&#xC5B4;&#xC788;&#xB294; &#xC720;&#xB2C8;&#xCF54;&#xB4DC; &#xBC14;&#xC774;&#xD2B8; &#xC21C;&#xC11C; &#xD45C;&#xC2DC;&#xB294; &#xB4E4;&#xC5B4;&#xAC00;&#xC9C0; &#xC54A;&#xC2B5;&#xB2C8;&#xB2E4;. &#xC608;&#xB97C; &#xB4E4;&#xBA74;:</p>
+
+<pre><code>dos2unix -e -O file1.txt file2.txt &gt; output.txt</code></pre>
+
+</dd>
+<dt id="o---oldfile"><b>-o, --oldfile &lt;&#xD30C;&#xC77C;&gt; ...</b></dt>
+<dd>
+
+<p>&#xC774;&#xC804; &#xD30C;&#xC77C; &#xBAA8;&#xB4DC;. &lt;&#xD30C;&#xC77C;&gt;&#xC744; &#xBCC0;&#xD658;&#xD558;&#xACE0; &#xCD9C;&#xB825;&#xC744; &lt;&#xD30C;&#xC77C;&gt;&#xC5D0; &#xB36E;&#xC5B4;&#xC501;&#xB2C8;&#xB2E4;. &#xD504;&#xB85C;&#xADF8;&#xB7A8; &#xAE30;&#xBCF8;&#xAC12;&#xC740; &#xC774; &#xBAA8;&#xB4DC;&#xB85C;&#xC758; &#xC2E4;&#xD589;&#xC785;&#xB2C8;&#xB2E4;. &#xC640;&#xC77C;&#xB4DC;&#xCE74;&#xB4DC; &#xC774;&#xB984;&#xC744; &#xC0AC;&#xC6A9;&#xD560; &#xC218;&#xB3C4; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+
+<p>&#xC774;&#xC804; &#xD30C;&#xC77C;(&#xC790;&#xCCB4; &#xBCC0;&#xD658;)&#xBAA8;&#xB4DC;&#xC5D0;&#xC11C; &#xBCC0;&#xD658;&#xD55C; &#xD30C;&#xC77C;&#xC740; &#xB3D9;&#xC77C;&#xD55C; &#xC18C;&#xC720;&#xC790;, &#xADF8;&#xB8F9;, &#xC77D;&#xAE30; &#xC4F0;&#xAE30; &#xAD8C;&#xD55C;&#xC744; &#xC6D0;&#xBCF8; &#xD30C;&#xC77C;&#xACFC; &#xB3D9;&#xC77C;&#xD558;&#xAC8C; &#xC720;&#xC9C0;&#xD569;&#xB2C8;&#xB2E4;. &#xAC8C;&#xB2E4;&#xAC00; &#xC4F0;&#xAE30; &#xAD8C;&#xD55C;&#xC774; &#xC788;&#xB294; &#xB2E4;&#xB978; &#xC0AC;&#xC6A9;&#xC790;(&#xC608;&#xB97C; &#xB4E4;&#xC5B4;, root)&#xAC00; &#xD30C;&#xC77C;&#xC744; &#xBCC0;&#xD658;&#xD588;&#xB2E4; &#xD558;&#xB354;&#xB77C;&#xB3C4; &#xB9C8;&#xCC2C;&#xAC00;&#xC9C0;&#xC785;&#xB2C8;&#xB2E4;. &#xC6D0;&#xBCF8; &#xAC12;&#xC744; &#xADF8;&#xB300;&#xB85C; &#xC720;&#xC9C0;&#xD560; &#xC218; &#xC5C6;&#xC744; &#xACBD;&#xC6B0;&#xC5D0;&#xB294; &#xBCC0;&#xD658;&#xC744; &#xBA48;&#xCDA5;&#xB2C8;&#xB2E4;. &#xC18C;&#xC720;&#xAD8C; &#xBCC0;&#xACBD;&#xC774; &#xAC00;&#xB2A5;&#xD558;&#xB2E8;&#xAC74; &#xACE7; &#xC6D0;&#xBCF8; &#xC18C;&#xC720;&#xC790;&#xAC00; &#xB354;&#xC774;&#xC0C1; &#xD30C;&#xC77C;&#xC744; &#xC77D;&#xC744; &#xC218; &#xC5C6;&#xC74C;&#xC744; &#xC758;&#xBBF8;&#xD569;&#xB2C8;&#xB2E4;. &#xC18C;&#xC720;&#xADF8;&#xB8F9; &#xBCC0;&#xACBD;&#xC740; &#xC6D0;&#xD558;&#xC9C0; &#xC54A;&#xB294; &#xC0AC;&#xC6A9;&#xC790;&#xAC00; &#xD30C;&#xC77C;&#xC744; &#xC77D;&#xAC8C; &#xD560; &#xC218; &#xC788;&#xC5B4; &#xBCF4;&#xC548; &#xBB38;&#xC81C;&#xB97C; &#xC57C;&#xAE30;&#xD560; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;. &#xC18C;&#xC720;&#xC790;, &#xC18C;&#xC720;&#xADF8;&#xB8F9;, &#xC77D;&#xAE30;/&#xC4F0;&#xAE30; &#xAD8C;&#xD55C; &#xC720;&#xC9C0;&#xB294; &#xC720;&#xB2C9;&#xC2A4;&#xC5D0;&#xC11C;&#xB9CC; &#xC9C0;&#xC6D0;&#xD569;&#xB2C8;&#xB2E4;.</p>
+
+<p>dos2unix&#xC5D0;&#xC11C; &#xD30C;&#xC77C;&#xC758; &#xC0AC;&#xC6A9;&#xC790; &#xBC0F; &#xADF8;&#xB8F9; &#xC18C;&#xC720;&#xAD8C;&#xC744; &#xC720;&#xC9C0;&#xD558;&#xB294; &#xAE30;&#xB2A5;&#xC744; &#xC9C0;&#xC6D0;&#xD558;&#xB294;&#xC9C0; &#xD655;&#xC778;&#xD558;&#xB824;&#xBA74; <code>dos2unix -V</code>&#xB97C; &#xC785;&#xB825;&#xD558;&#xC2ED;&#xC2DC;&#xC624;.</p>
+
+<p>&#xBCC0;&#xD658; &#xB3D9;&#xC791;&#xC740; &#xD56D;&#xC0C1; &#xC784;&#xC2DC; &#xD30C;&#xC77C;&#xB85C; &#xCC98;&#xB9AC;&#xD569;&#xB2C8;&#xB2E4;. &#xBCC0;&#xD658; &#xACFC;&#xC815; &#xB3C4;&#xC911; &#xC624;&#xB958;&#xAC00; &#xBC1C;&#xC0DD;&#xD558;&#xBA74;, &#xC784;&#xC2DC; &#xD30C;&#xC77C;&#xC744; &#xC0AD;&#xC81C;&#xD558;&#xACE0; &#xC6D0;&#xBCF8; &#xD30C;&#xC77C;&#xC744; &#xADF8;&#xB300;&#xB85C; &#xB461;&#xB2C8;&#xB2E4;. &#xBCC0;&#xD658;&#xC774; &#xB05D;&#xB098;&#xBA74; &#xC6D0;&#xBCF8; &#xD30C;&#xC77C;&#xC744; &#xC784;&#xC2DC; &#xD30C;&#xC77C;&#xB85C; &#xBC14;&#xAFC9;&#xB2C8;&#xB2E4;. &#xC2E4;&#xD589;&#xD55C; &#xC0AC;&#xC6A9;&#xC790;&#xB294; &#xC6D0;&#xBCF8; &#xD30C;&#xC77C;&#xC758; &#xC4F0;&#xAE30; &#xAD8C;&#xD55C;&#xC744; &#xAC00;&#xC9C0;&#xACA0;&#xC9C0;&#xB9CC;, &#xC6D0;&#xBCF8; &#xD30C;&#xC77C;&#xCC98;&#xB7FC; &#xC784;&#xC2DC; &#xD30C;&#xC77C;&#xC5D0; &#xC0AC;&#xC6A9;&#xC790; &#xB610;&#xB294; &#xADF8;&#xB8F9; &#xC18C;&#xC720;&#xAD8C;&#xC744; &#xB3D9;&#xC77C;&#xD558;&#xAC8C; &#xBD80;&#xC5EC;&#xD560; &#xC218;&#xB294; &#xC5C6;&#xC2B5;&#xB2C8;&#xB2E4;. &#xC989;, &#xC6D0;&#xBCF8; &#xD30C;&#xC77C;&#xC758; &#xC0AC;&#xC6A9;&#xC790; &#xB610;&#xB294; &#xADF8;&#xB8F9; &#xAD8C;&#xD55C;&#xC744; &#xADF8;&#xB300;&#xB85C; &#xB300;&#xC0C1; &#xD30C;&#xC77C;&#xC5D0; &#xC124;&#xC815;&#xD560; &#xC218;&#xB294; &#xC5C6;&#xB2E8; &#xB73B;&#xC785;&#xB2C8;&#xB2E4;. &#xC774; &#xACBD;&#xC6B0; <code>--allow-chown</code> &#xC635;&#xC158;&#xC744; &#xC0AC;&#xC6A9;&#xD558;&#xC5EC; &#xBCC0;&#xD658;&#xC744; &#xACC4;&#xC18D;&#xD560; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;:</p>
+
+<pre><code>dos2unix --allow-chown foo.txt</code></pre>
+
+<p>&#xB2E4;&#xB978; &#xC635;&#xC158;&#xC740; &#xC0C8; &#xD30C;&#xC77C; &#xBAA8;&#xB4DC;&#xC5D0;&#xC11C; &#xC0AC;&#xC6A9;&#xD569;&#xB2C8;&#xB2E4;:</p>
+
+<pre><code>dos2unix -n foo.txt foo.txt</code></pre>
+
+<p><code>--allow-chown</code> &#xC635;&#xC158;&#xC758; &#xC7A5;&#xC810;&#xC740; &#xC640;&#xC77C;&#xB4DC; &#xCE74;&#xB4DC;&#xB97C; &#xC0AC;&#xC6A9;&#xD560; &#xC218; &#xC788;&#xC73C;&#xBA70;, &#xAC00;&#xB2A5;&#xD558;&#xB2E4;&#xBA74; &#xC18C;&#xC720;&#xAD00; &#xC18D;&#xC131;&#xC744; &#xC720;&#xC9C0;&#xD569;&#xB2C8;&#xB2E4;.</p>
+
+</dd>
+<dt id="q---quiet"><b>-q, --quiet</b></dt>
+<dd>
+
+<p>&#xBBF8; &#xCD9C;&#xB825; &#xBAA8;&#xB4DC;. &#xBAA8;&#xB4E0; &#xACBD;&#xACE0;&#xC640; &#xBA54;&#xC2DC;&#xC9C0;&#xB97C; &#xB055;&#xB2C8;&#xB2E4;. &#xBC18;&#xD658; &#xAC12;&#xC740; 0&#xC785;&#xB2C8;&#xB2E4;. &#xC798;&#xBABB;&#xB41C; &#xBA85;&#xB839;&#xD589; &#xC635;&#xC158;&#xC744; &#xC0AC;&#xC6A9;&#xD588;&#xC744; &#xB54C;&#xB294; &#xC774; &#xACBD;&#xC6B0;&#xC5D0;&#xC11C; &#xC81C;&#xC678;&#xD569;&#xB2C8;&#xB2E4;.</p>
+
+</dd>
+<dt id="r---remove-bom"><b>-r, --remove-bom</b></dt>
+<dd>
+
+<p>&#xBC14;&#xC774;&#xD2B8; &#xC21C;&#xC11C; &#xD45C;&#xC2DC;(BOM)&#xB97C; &#xC81C;&#xAC70;&#xD569;&#xB2C8;&#xB2E4;. BOM&#xC744; &#xCD9C;&#xB825; &#xD30C;&#xC77C;&#xC5D0; &#xAE30;&#xB85D;&#xD558;&#xC9C0; &#xC54A;&#xC2B5;&#xB2C8;&#xB2E4;. &#xC720;&#xB2C9;&#xC2A4; &#xAC1C;&#xD589; &#xBB38;&#xC790;&#xB85C; &#xBCC0;&#xD658;&#xD560; &#xB54C; &#xAE30;&#xBCF8; &#xB3D9;&#xC791;&#xC785;&#xB2C8;&#xB2E4;. <code>-b</code> &#xC635;&#xC158;&#xB3C4; &#xCC38;&#xACE0;&#xD558;&#xC2ED;&#xC2DC;&#xC624;.</p>
+
+</dd>
+<dt id="s---safe"><b>-s, --safe</b></dt>
+<dd>
+
+<p>&#xC774;&#xC9C4; &#xD30C;&#xC77C;&#xC740; &#xAC74;&#xB108;&#xB701;&#xB2C8;&#xB2E4;(&#xAE30;&#xBCF8;&#xAC12;).</p>
+
+<p>&#xC774;&#xC9C4; &#xD30C;&#xC77C; &#xAC74;&#xB108;&#xB6F0;&#xAE30;&#xB294; &#xAC11;&#xC791;&#xC2A4;&#xB7F0; &#xC2E4;&#xC218;&#xB97C; &#xD53C;&#xD558;&#xB294; &#xB3D9;&#xC791;&#xC785;&#xB2C8;&#xB2E4;. &#xC774;&#xC9C4; &#xD30C;&#xC77C; &#xAC10;&#xC2DC;&#xB294; 100% &#xC2E4;&#xD328; &#xC608;&#xBC29;&#xC744; &#xD558;&#xC9C0; &#xC54A;&#xC2B5;&#xB2C8;&#xB2E4;. &#xC785;&#xB825; &#xD30C;&#xC77C;&#xC5D0;&#xC11C; &#xD14D;&#xC2A4;&#xD2B8; &#xD30C;&#xC77C;&#xC5D0;&#xC11C; &#xBCF4;&#xD1B5; &#xCC3E;&#xC744; &#xC218; &#xC5C6;&#xB294; &#xC774;&#xC9C4; &#xC2EC;&#xBCFC;&#xC744; &#xAC80;&#xC0C9;&#xD569;&#xB2C8;&#xB2E4;. &#xC774;&#xC9C4; &#xD30C;&#xC77C;&#xC5D0;&#xB3C4; &#xC77C;&#xBC18; &#xD14D;&#xC2A4;&#xD2B8; &#xBB38;&#xC790;&#xB9CC; &#xB4E4;&#xC5B4;&#xC788;&#xC744; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;. &#xC774;&#xB7F0; &#xC774;&#xC9C4; &#xD30C;&#xC77C; &#xC885;&#xB958;&#xB294; (&#xADF8;&#xB798;&#xC11C;) &#xD14D;&#xC2A4;&#xD2B8; &#xD30C;&#xC77C;&#xB85C; &#xC2E4;&#xC218;&#xB85C; &#xC54C;&#xC544;&#xCC4C; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+
+</dd>
+<dt id="u---keep-utf16"><b>-u, --keep-utf16</b></dt>
+<dd>
+
+<p>&#xC785;&#xB825;&#xC758; UTF-16 &#xC778;&#xCF54;&#xB529; &#xC6D0;&#xBCF8;&#xC744; &#xC720;&#xC9C0;&#xD569;&#xB2C8;&#xB2E4;. &#xC6D0;&#xBCF8; &#xD30C;&#xC77C;&#xC740; &#xB3D9;&#xC77C;&#xD55C; UTF-16 &#xC778;&#xCF54;&#xB529;&#xC744; &#xB9AC;&#xD2C0;&#xC5D4;&#xB514;&#xC5B8; &#xB610;&#xB294; &#xBE45;&#xC5D4;&#xB514;&#xC5B8;&#xC73C;&#xB85C; &#xC785;&#xB825; &#xD30C;&#xC77C;&#xACFC; &#xAC19;&#xC774; &#xAE30;&#xB85D;&#xD569;&#xB2C8;&#xB2E4;. &#xC774;&#xB294; UTF-8&#xB85C;&#xC758; &#xBCC0;&#xD658;&#xC744; &#xB9C9;&#xC2B5;&#xB2C8;&#xB2E4;. UTF-16 BOM&#xC740; &#xC6D0;&#xBCF8;&#xC744; &#xB530;&#xB77C; &#xB300;&#xC0C1;&#xC5D0; &#xAE30;&#xB85D;&#xD569;&#xB2C8;&#xB2E4;. &#xC774; &#xC635;&#xC158; &#xB3D9;&#xC791;&#xC740; <code>-ascii</code> &#xC635;&#xC158;&#xC73C;&#xB85C; &#xB9C9;&#xC744; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+
+</dd>
+<dt id="ul---assume-utf16le"><b>-ul, --assume-utf16le</b></dt>
+<dd>
+
+<p>&#xC785;&#xB825; &#xD30C;&#xC77C; &#xD615;&#xC2DD;&#xC744; UTF-16LE&#xB85C; &#xAC00;&#xC815;&#xD569;&#xB2C8;&#xB2E4;.</p>
+
+<p>&#xBC14;&#xC774;&#xD2B8; &#xC21C;&#xC11C; &#xD45C;&#xC2DC;&#xAC00; &#xC785;&#xB825; &#xD30C;&#xC77C;&#xC5D0; &#xC788;&#xB2E4;&#xBA74; BOM&#xC740; &#xC774; &#xC635;&#xC158;&#xBCF4;&#xB2E4; &#xC6B0;&#xC120;&#xC21C;&#xC704;&#xB97C; &#xAC16;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+
+<p>&#xC798;&#xBABB;&#xB41C; &#xAC00;&#xC815;(&#xC785;&#xB825; &#xD30C;&#xC77C;&#xC774; UTF-16LE &#xD615;&#xC2DD;&#xC774; &#xC544;&#xB2C8;&#xB77C;&#xAC70;&#xB098;)&#xD558;&#xC5D0; &#xBCC0;&#xD658;&#xC5D0; &#xC131;&#xACF5;&#xD588;&#xB2E4;&#xBA74;, &#xC798;&#xBABB;&#xB41C; &#xB0B4;&#xC6A9;&#xC774; &#xB4E4;&#xC5B4;&#xAC04; UTF-8 &#xCD9C;&#xB825; &#xD30C;&#xC77C;&#xC744; &#xBC1B;&#xC744; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;. iconf(1) &#xBA85;&#xB839;&#xC744; &#xD65C;&#xC6A9;&#xD558;&#xC5EC; UTF-8 &#xCD9C;&#xB825; &#xD30C;&#xC77C;&#xC744; UTF-16LE&#xB85C; &#xB418;&#xB3CC;&#xB824; &#xBCC0;&#xD658;&#xD558;&#xB294; &#xBC29;&#xC2DD;&#xC73C;&#xB85C; &#xC798;&#xBABB;&#xB41C; &#xBCC0;&#xD658; &#xACB0;&#xACFC;&#xB97C; &#xB418;&#xB3CC;&#xB9B4; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;. &#xC774;&#xB7F0; &#xBC29;&#xBC95;&#xC73C;&#xB85C; &#xC6D0;&#xBCF8; &#xD30C;&#xC77C;&#xC744; &#xB418;&#xB3CC;&#xB9B4; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+
+<p>UTF-16LE&#xAC00; <i>&#xBCC0;&#xD658; &#xBAA8;&#xB4DC;</i>&#xB85C; &#xB3D9;&#xC791;&#xD55C;&#xB2E4;&#xACE0; &#xAC00;&#xC815;&#xD574;&#xBCF4;&#xACA0;&#xC2B5;&#xB2C8;&#xB2E4;. &#xAE30;&#xBCF8; <i>ascii</i> &#xBAA8;&#xB4DC;&#xB85C; &#xC804;&#xD658;&#xD558;&#xBA74; UTF-16LE&#xC5D0; &#xB300;&#xD55C; &#xAC00;&#xC815;&#xC740; &#xAEBC;&#xC9C4; &#xC0C1;&#xD0DC;&#xC785;&#xB2C8;&#xB2E4;.</p>
+
+</dd>
+<dt id="ub---assume-utf16be"><b>-ub, --assume-utf16be</b></dt>
+<dd>
+
+<p>&#xC785;&#xB825; &#xD30C;&#xC77C; &#xD615;&#xC2DD;&#xC744; UTF-16BE&#xB85C; &#xAC00;&#xC815;&#xD569;&#xB2C8;&#xB2E4;.</p>
+
+<p>&#xC774; &#xC635;&#xC158;&#xC740; <code>-ul</code>&#xACFC; &#xB3D9;&#xC77C;&#xD55C; &#xB3D9;&#xC791;&#xC744; &#xC218;&#xD589;&#xD569;&#xB2C8;&#xB2E4;.</p>
+
+</dd>
+<dt id="v---verbose"><b>-v, --verbose</b></dt>
+<dd>
+
+<p>&#xC790;&#xC138;&#xD55C; &#xBA54;&#xC2DC;&#xC9C0;&#xB97C; &#xD45C;&#xC2DC;&#xD569;&#xB2C8;&#xB2E4;. &#xCD94;&#xAC00;&#xB85C;, &#xBC14;&#xC774;&#xD2B8; &#xC21C;&#xC11C; &#xD45C;&#xC2DC; &#xC138;&#xBD80;&#xC815;&#xBCF4;&#xAC00; &#xB098;&#xD0C0;&#xB098;&#xBA70; &#xBCC0;&#xD658; &#xAC1C;&#xD589; &#xBB38;&#xC790;&#xAC00; &#xB098;&#xD0C0;&#xB0A9;&#xB2C8;&#xB2E4;.</p>
+
+</dd>
+<dt id="F---follow-symlink"><b>-F, --follow-symlink</b></dt>
+<dd>
+
+<p>&#xC2EC;&#xBCFC;&#xB9AD; &#xB9C1;&#xD06C;&#xB97C; &#xB530;&#xB77C;&#xAC00;&#xC11C; &#xB300;&#xC0C1;&#xC744; &#xBCC0;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</p>
+
+</dd>
+<dt id="R---replace-symlink"><b>-R, --replace-symlink</b></dt>
+<dd>
+
+<p>&#xC2EC;&#xBCFC;&#xB9AD; &#xB9C1;&#xD06C;&#xB97C; &#xBCC0;&#xD658; &#xD30C;&#xC77C;&#xB85C; &#xBC14;&#xAFC9;&#xB2C8;&#xB2E4;(&#xC6D0;&#xC2DC; &#xB300;&#xC0C1; &#xD30C;&#xC77C;&#xC740; &#xBC14;&#xB00C;&#xC9C0; &#xC54A;&#xC740; &#xC0C1;&#xD0DC;&#xB85C; &#xB461;&#xB2C8;&#xB2E4;).</p>
+
+</dd>
+<dt id="S---skip-symlink"><b>-S, --skip-symlink</b></dt>
+<dd>
+
+<p>&#xC2EC;&#xBCFC;&#xB9AD; &#xB9C1;&#xD06C;&#xC640; &#xB300;&#xC0C1;&#xC744; &#xBC14;&#xB00C;&#xC9C0; &#xC54A;&#xAC8C; &#xADF8;&#xB300;&#xB85C; &#xB461;&#xB2C8;&#xB2E4;(&#xAE30;&#xBCF8;&#xAC12;).</p>
+
+</dd>
+<dt id="V---version"><b>-V, --version</b></dt>
+<dd>
+
+<p>&#xBC84;&#xC804; &#xC815;&#xBCF4;&#xB97C; &#xD45C;&#xC2DC;&#xD558;&#xACE0; &#xB098;&#xAC11;&#xB2C8;&#xB2E4;.</p>
+
+</dd>
+</dl>
+
+<h1 id="4">&#xB9E5; &#xBAA8;&#xB4DC;</h1>
+
+<p>&#xC77C;&#xBC18; &#xBAA8;&#xB4DC;&#xC5D0;&#xC11C;&#xB294; &#xAC1C;&#xD589; &#xBB38;&#xC790;&#xB97C; DOS&#xC5D0;&#xC11C; &#xC720;&#xB2C9;&#xC2A4;&#xB85C; &#xADF8; &#xBC18;&#xB300;&#xB85C; &#xBCC0;&#xD658;&#xD569;&#xB2C8;&#xB2E4;. &#xB9E5; &#xAC1C;&#xD589; &#xBB38;&#xC790;&#xB294; &#xBCC0;&#xD658;&#xD558;&#xC9C0; &#xC54A;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+
+<p>&#xB9E5; &#xBAA8;&#xB4DC;&#xC5D0;&#xC11C; &#xAC1C;&#xD589; &#xBB38;&#xC790;&#xB97C; &#xB9E5;&#xC5D0;&#xC11C; &#xC720;&#xB2C9;&#xC2A4;&#xB85C;, &#xB0B4;&#xC9C0;&#xB294; &#xADF8; &#xBC18;&#xB300;&#xB85C; &#xBCC0;&#xD658;&#xD569;&#xB2C8;&#xB2E4;. DOS &#xAC1C;&#xD589; &#xBB38;&#xC790;&#xB97C; &#xBC14;&#xAFB8;&#xC9C0; &#xC54A;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+
+<p>&#xB9E5; &#xBAA8;&#xB4DC;&#xB97C; &#xC2E4;&#xD589;&#xD558;&#xB824;&#xBA74; <code>-c mac</code> &#xBA85;&#xB839;&#xD589; &#xC635;&#xC158;&#xC744; &#xC0AC;&#xC6A9;&#xD558;&#xAC70;&#xB098; <code>mac2unix</code> &#xBA85;&#xB839; &#xB610;&#xB294; <code>unix2mac</code> &#xBA85;&#xB839;&#xC744; &#xC0AC;&#xC6A9;&#xD558;&#xC2ED;&#xC2DC;&#xC624;.</p>
+
+<h1 id="5">&#xBCC0;&#xD658; &#xBAA8;&#xB4DC;</h1>
+
+<dl>
+
+<dt id="ascii1"><b>ascii</b></dt>
+<dd>
+
+<p><code>ascii</code> &#xBAA8;&#xB4DC;&#xC5D0;&#xC11C;&#xB294; &#xAC1C;&#xD589; &#xBB38;&#xC790;&#xB9CC; &#xBCC0;&#xD658;&#xD569;&#xB2C8;&#xB2E4;. ASCII &#xBAA8;&#xB4DC;&#xB294; &#xAE30;&#xBCF8; &#xBCC0;&#xD658; &#xBAA8;&#xB4DC;&#xC785;&#xB2C8;&#xB2E4;.</p>
+
+<p>7&#xBE44;&#xD2B8; &#xD45C;&#xC900; &#xBAA8;&#xB4DC;&#xB97C; ASCII &#xB77C;&#xACE0; &#xCE6D;&#xD558;&#xC9C0;&#xB9CC; &#xC2E4;&#xC81C; &#xBAA8;&#xB4DC;&#xB294; 8 &#xBE44;&#xD2B8;&#xC785;&#xB2C8;&#xB2E4;. &#xC720;&#xB2C8;&#xCF54;&#xB4DC; UTF-8 &#xD30C;&#xC77C;&#xC744; &#xBCC0;&#xD658;&#xD560; &#xB54C; &#xD56D;&#xC0C1; &#xC774; &#xBAA8;&#xB4DC;&#xB97C; &#xC0AC;&#xC6A9;&#xD558;&#xC2ED;&#xC2DC;&#xC624;.</p>
+
+</dd>
+<dt id="bit"><b>7bit</b></dt>
+<dd>
+
+<p>&#xC774; &#xBAA8;&#xB4DC;&#xC5D0;&#xC11C;&#xB294; ASCII &#xC601;&#xC5ED; &#xBC16;(128~255 &#xAC12;)&#xC758; &#xBAA8;&#xB4E0; 8&#xBE44;&#xD2B8; &#xBB38;&#xC790;&#xB97C; 7&#xBE44;&#xD2B8; &#xC601;&#xC5ED;&#xC73C;&#xB85C; &#xBCC0;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</p>
+
+</dd>
+<dt id="iso1"><b>iso</b></dt>
+<dd>
+
+<p>DOS &#xBB38;&#xC790; &#xC138;&#xD2B8;(&#xCF54;&#xB4DC; &#xD398;&#xC774;&#xC9C0;)&#xC5D0;&#xC11C; &#xC720;&#xB2C9;&#xC2A4; ISO &#xBB38;&#xC790; &#xC138;&#xD2B8; ISO-8859-1(Latin1)&#xB85C; &#xB610;&#xB294; &#xADF8; &#xBC18;&#xB300;&#xB85C; &#xBB38;&#xC790;&#xB97C; &#xBCC0;&#xD658;&#xD569;&#xB2C8;&#xB2E4;. ISO-8859-1&#xC5D0; &#xB300;&#xC751;&#xD558;&#xC9C0; &#xC54A;&#xB294; DOS &#xBB38;&#xC790;&#xB294; &#xBCC0;&#xD658;&#xD560; &#xC218; &#xC5C6;&#xC5B4; &#xAD6C;&#xB450;&#xC810;&#xC73C;&#xB85C; &#xBCC0;&#xD658;&#xD569;&#xB2C8;&#xB2E4;. ISO-8859-1&#xC5D0;&#xC11C; DOS &#xBB38;&#xC790; &#xC138;&#xD2B8;&#xB85C; &#xBCC0;&#xD658;&#xD560; &#xB54C;&#xB3C4; &#xB9C8;&#xCC2C;&#xAC00;&#xC9C0;&#xC785;&#xB2C8;&#xB2E4;.</p>
+
+<p>dos2unix&#xC5D0; <code>-iso</code>&#xC635;&#xC158;&#xB9CC; &#xC0AC;&#xC6A9;&#xD588;&#xC744; &#xACBD;&#xC6B0; &#xD65C;&#xC131; &#xCF54;&#xB4DC; &#xD398;&#xC774;&#xC9C0; &#xD655;&#xC778;&#xC744; &#xC2DC;&#xB3C4;&#xD569;&#xB2C8;&#xB2E4;. &#xBD88;&#xAC00;&#xB2A5;&#xD558;&#xB2E4;&#xBA74; dos2unix&#xB294; &#xBBF8;&#xD569;&#xC911;&#xAD6D;&#xC5D0;&#xC11C; &#xC8FC;&#xB85C; &#xC0AC;&#xC6A9;&#xD558;&#xB294; CP437 &#xAE30;&#xBCF8; &#xCF54;&#xB4DC; &#xD398;&#xC774;&#xC9C0;&#xB97C; &#xC0AC;&#xC6A9;&#xD569;&#xB2C8;&#xB2E4;. &#xCF54;&#xB4DC; &#xD398;&#xC774;&#xC9C0;&#xB97C; &#xAC15;&#xC81C;&#xB85C; &#xC9C0;&#xC815;&#xD558;&#xB824;&#xBA74; <code>-437</code> (US), <code>-850</code> (&#xC11C;&#xC720;&#xB7FD;&#xC5B4;), <code>-860</code> (&#xD3EC;&#xB974;&#xD22C;&#xAC08;&#xC5B4;), <code>-863</code> (&#xCE90;&#xB098;&#xB2E4; &#xD504;&#xB791;&#xC2A4;&#xC5B4;), <code>-865</code> (&#xBD81;&#xC720;&#xB7FD;&#xC5B4;) &#xC635;&#xC158; &#xC911; &#xD558;&#xB098;&#xB97C; &#xC0AC;&#xC6A9;&#xD558;&#xC2ED;&#xC2DC;&#xC624;. &#xC708;&#xB3C4;&#xC6B0; &#xCF54;&#xB4DC; &#xD398;&#xC774;&#xC9C0; CP1252 (&#xC11C;&#xC720;&#xB7FD;&#xC5B4;)&#xB294; <code>-1252</code> &#xC635;&#xC158;&#xC73C;&#xB85C; &#xC9C0;&#xC6D0;&#xD569;&#xB2C8;&#xB2E4;. &#xB2E4;&#xB978; &#xCF54;&#xB4DC; &#xD398;&#xC774;&#xC9C0;&#xB97C; &#xD65C;&#xC6A9;&#xD558;&#xB824;&#xBA74; dos2unix&#xC640; iconv(1)&#xB97C; &#xD568;&#xAED8; &#xC0AC;&#xC6A9;&#xD558;&#xC2ED;&#xC2DC;&#xC624;. iconv&#xB294; &#xB2E4;&#xC591;&#xD55C; &#xBB38;&#xC790; &#xC778;&#xCF54;&#xB529;&#xC744; &#xBCC0;&#xD658;&#xD560; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+
+<p>&#xC720;&#xB2C8;&#xCF54;&#xB4DC; &#xD14D;&#xC2A4;&#xD2B8; &#xD30C;&#xC77C;&#xC744; ISO &#xBC29;&#xC2DD;&#xC73C;&#xB85C; &#xBCC0;&#xD658;&#xD558;&#xC9C0; &#xB9C8;&#xC2ED;&#xC2DC;&#xC624;. UTF-8 &#xC778;&#xCF54;&#xB529; &#xD30C;&#xC77C;&#xC774; &#xAE68;&#xC9D1;&#xB2C8;&#xB2E4;.</p>
+
+<p>&#xC77C;&#xBD80; &#xC608;&#xC81C;:</p>
+
+<p>DOS &#xAE30;&#xBCF8; &#xCF54;&#xB4DC; &#xD398;&#xC774;&#xC9C0;&#xC5D0;&#xC11C; &#xC720;&#xB2C9;&#xC2A4; Latin-1&#xC73C;&#xB85C; &#xBCC0;&#xD658;:</p>
+
+<pre><code>dos2unix -iso -n in.txt out.txt</code></pre>
+
+<p>DOS CP850&#xC5D0;&#xC11C; &#xC720;&#xB2C9;&#xC2A4; Latin-1&#xC73C;&#xB85C; &#xBCC0;&#xD658;:</p>
+
+<pre><code>dos2unix -850 -n in.txt out.txt</code></pre>
+
+<p>&#xC708;&#xB3C4;&#xC6B0; CP1252&#xC5D0;&#xC11C; &#xC720;&#xB2C9;&#xC2A4; Latin-1&#xC73C;&#xB85C; &#xBCC0;&#xD658;:</p>
+
+<pre><code>dos2unix -1252 -n in.txt out.txt</code></pre>
+
+<p>&#xC708;&#xB3C4;&#xC6B0; CP1252&#xC5D0;&#xC11C; &#xC720;&#xB2C9;&#xC2A4; UTF-8(&#xC720;&#xB2C8;&#xCF54;&#xB4DC;)&#xB85C; &#xBCC0;&#xD658;:</p>
+
+<pre><code>iconv -f CP1252 -t UTF-8 in.txt | dos2unix &gt; out.txt</code></pre>
+
+<p>&#xC720;&#xB2C9;&#xC2A4; Latin-1&#xC5D0;&#xC11C; DOS &#xAE30;&#xBCF8; &#xCF54;&#xB4DC; &#xD398;&#xC774;&#xC9C0;&#xB85C; &#xBCC0;&#xD658;:</p>
+
+<pre><code>unix2dos -iso -n in.txt out.txt</code></pre>
+
+<p>&#xC720;&#xB2C9;&#xC2A4; Latin-1&#xC5D0;&#xC11C; DOS CP850&#xC73C;&#xB85C; &#xBCC0;&#xD658;:</p>
+
+<pre><code>unix2dos -850 -n in.txt out.txt</code></pre>
+
+<p>&#xC720;&#xB2C9;&#xC2A4; Latin-1&#xC5D0;&#xC11C; &#xC708;&#xB3C4;&#xC6B0; CP1252&#xB85C; &#xBCC0;&#xD658;:</p>
+
+<pre><code>unix2dos -1252 -n in.txt out.txt</code></pre>
+
+<p>&#xC720;&#xB2C9;&#xC2A4; UTF-8(&#xC720;&#xB2C8;&#xCF54;&#xB4DC;)&#xC5D0;&#xC11C; &#xC708;&#xB3C4;&#xC6B0; CP1252&#xB85C; &#xBCC0;&#xD658;:</p>
+
+<pre><code>unix2dos &lt; in.txt | iconv -f UTF-8 -t CP1252 &gt; out.txt</code></pre>
+
+<p><a href="http://czyborra.com/charsets/codepages.html">http://czyborra.com/charsets/codepages.html</a> &#xB9C1;&#xD06C;&#xC640; <a href="http://czyborra.com/charsets/iso8859.html">http://czyborra.com/charsets/iso8859.html</a> &#xB9C1;&#xD06C;&#xB3C4; &#xCC38;&#xACE0;&#xD558;&#xC2ED;&#xC2DC;&#xC624;.</p>
+
+</dd>
+</dl>
+
+<h1 id="6">&#xC720;&#xB2C8;&#xCF54;&#xB4DC;</h1>
+
+<h2 id="7">&#xC778;&#xCF54;&#xB529;</h2>
+
+<p>&#xC5EC;&#xB7EC;&#xAC00;&#xC9C0; &#xC720;&#xB2C8;&#xCF54;&#xB4DC; &#xC778;&#xCF54;&#xB529;&#xC774; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;. &#xC720;&#xB2C9;&#xC2A4;&#xC640; &#xB9AC;&#xB275;&#xC2A4; &#xC720;&#xB2C8;&#xCF54;&#xB4DC; &#xD30C;&#xC77C;&#xC740; &#xBCF4;&#xD1B5; UTF-8 &#xC778;&#xCF54;&#xB529; &#xBC29;&#xC2DD;&#xC73C;&#xB85C; &#xC778;&#xCF54;&#xB529;&#xD569;&#xB2C8;&#xB2E4;. &#xC708;&#xB3C4;&#xC6B0;&#xC5D0;&#xC11C;&#xB294; &#xC720;&#xB2C8;&#xCF54;&#xB4DC; &#xD14D;&#xC2A4;&#xD2B8; &#xD30C;&#xC77C;&#xC744; UTF-8, UTF-16, UTF-16 &#xBE45;&#xC5D4;&#xB514;&#xC5B8; &#xBC29;&#xC2DD;&#xC73C;&#xB85C; &#xC778;&#xCF54;&#xB529;&#xD560; &#xC218; &#xC788;&#xC9C0;&#xB9CC; &#xBCF4;&#xD1B5; UTF-16 &#xD615;&#xC2DD;&#xC73C;&#xB85C; &#xC778;&#xCF54;&#xB529;&#xD569;&#xB2C8;&#xB2E4;.</p>
+
+<h2 id="8">&#xBCC0;&#xD658;</h2>
+
+<p>&#xC720;&#xB2C8;&#xCF54;&#xB4DC; &#xD14D;&#xC2A4;&#xD2B8; &#xD30C;&#xC77C;&#xC5D0;&#xB294; DOS, &#xC720;&#xB2C9;&#xC2A4;, &#xB9E5; &#xAC1C;&#xD589; &#xBB38;&#xC790;&#xB97C; &#xC77C;&#xBC18; &#xD14D;&#xC2A4;&#xD2B8; &#xD30C;&#xC77C;&#xCC98;&#xB7FC; &#xAC00;&#xC9C8; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+
+<p>dos2unix&#xC640; unix2dos&#xC758; &#xBAA8;&#xB4E0; &#xBC84;&#xC804;&#xC5D0;&#xC11C;&#xB294; UTF-8&#xC774; ASCII&#xC640;&#xC758; &#xD558;&#xC704; &#xD638;&#xD658;&#xC131;&#xC744; &#xACE0;&#xB824;&#xD588;&#xAE30; &#xB54C;&#xBB38;&#xC5D0; UTF-8 &#xC778;&#xCF54;&#xB529; &#xD30C;&#xC77C;&#xC744; &#xBCC0;&#xD658;&#xD560; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+
+<p>UTF-16&#xC744; &#xC9C0;&#xC6D0;&#xD558;&#xB294; dos2unix&#xC640; unix2dos&#xB294; UTF-16 &#xB9AC;&#xD2C0;&#xC5D4;&#xB514;&#xC5B8; &#xBC0F; &#xBE45;&#xC5D4;&#xB514;&#xC5B8; &#xC778;&#xCF54;&#xB529; &#xD14D;&#xC2A4;&#xD2B8; &#xD30C;&#xC77C;&#xC744; &#xBAA8;&#xB450; &#xC77D;&#xC744; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;. dos2unix&#xC5D0; UTF-16 &#xC9C0;&#xC6D0; &#xAE30;&#xB2A5;&#xC774; &#xB4E4;&#xC5B4;&#xAC14;&#xB294;&#xC9C0; &#xD655;&#xC778;&#xD558;&#xB824;&#xBA74; <code>dos2unix -V</code> &#xBA85;&#xB839;&#xC744; &#xC785;&#xB825;&#xD558;&#xC2ED;&#xC2DC;&#xC624;.</p>
+
+<p>&#xC720;&#xB2C9;&#xC2A4;/&#xB9AC;&#xB205;&#xC2A4;&#xC5D0;&#xC11C; UTF-16 &#xC778;&#xCF54;&#xB529; &#xD30C;&#xC77C;&#xC740; &#xB85C;&#xCE98; &#xBB38;&#xC790; &#xC778;&#xCF54;&#xB529;&#xC73C;&#xB85C; &#xBCC0;&#xD658;&#xD569;&#xB2C8;&#xB2E4;. &#xC5B4;&#xB5A4; &#xB85C;&#xCE98; &#xBB38;&#xC790; &#xC778;&#xCF54;&#xB529;&#xC744; &#xC0AC;&#xC6A9;&#xD588;&#xB294;&#xC9C0; &#xD655;&#xC778;&#xD558;&#xB824;&#xBA74; locale(1) &#xBA85;&#xB839;&#xC744; &#xC0AC;&#xC6A9;&#xD558;&#xC2ED;&#xC2DC;&#xC624;. &#xBCC0;&#xD658;&#xC774; &#xBD88;&#xAC00;&#xB2A5;&#xD560; &#xACBD;&#xC6B0; &#xBCC0;&#xD658; &#xC624;&#xB958;&#xAC00; &#xB098;&#xD0C0;&#xB098;&#xBA70;, &#xD574;&#xB2F9; &#xD30C;&#xC77C;&#xC744; &#xAC74;&#xB108;&#xB701;&#xB2C8;&#xB2E4;.</p>
+
+<p>&#xC708;&#xB3C4;&#xC6B0;&#xC5D0;&#xC11C; UTF-16 &#xD30C;&#xC77C;&#xC740; &#xAE30;&#xBCF8;&#xC801;&#xC73C;&#xB85C; UTF-8&#xB85C; &#xBCC0;&#xD658;&#xD569;&#xB2C8;&#xB2E4;. UTF-8 &#xD615;&#xC2DD; &#xD14D;&#xC2A4;&#xD2B8; &#xD30C;&#xC77C;&#xC740; &#xC708;&#xB3C4;&#xC6B0;, &#xC720;&#xB2C9;&#xC2A4;, &#xB9AC;&#xB205;&#xC2A4;&#xC5D0;&#xC11C; &#xC798; &#xC77D;&#xD799;&#xB2C8;&#xB2E4;.</p>
+
+<p>UTF-16&#xACFC; UTF-8 &#xC778;&#xCF54;&#xB529;&#xC740; &#xC644;&#xC804;&#xD55C; &#xD638;&#xD658; &#xAD00;&#xACC4;&#xC774;&#xBA70;, &#xBCC0;&#xD658; &#xACFC;&#xC815;&#xC5D0; &#xC783;&#xC744; &#xB0B4;&#xC6A9;&#xC740; &#xC5C6;&#xC2B5;&#xB2C8;&#xB2E4;. UTF-16&#xC5D0;&#xC11C; UTF-8&#xB85C; &#xBCC0;&#xD658;&#xD558;&#xB358; &#xC911; &#xC624;&#xB958;&#xAC00; &#xB098;&#xD0C0;&#xB0AC;&#xB2E4;&#xBA74;, &#xC608;&#xB97C; &#xB4E4;&#xC5B4; UTF-16 &#xD30C;&#xC77C;&#xC5D0; &#xC624;&#xB958;&#xAC00; &#xC788;&#xB2E4;&#xBA74;, &#xD574;&#xB2F9; &#xD30C;&#xC77C;&#xC744; &#xAC74;&#xB108;&#xB701;&#xB2C8;&#xB2E4;.</p>
+
+<p><code>-u</code> &#xC635;&#xC158;&#xC744; &#xC0AC;&#xC6A9;&#xD558;&#xBA74; &#xC785;&#xB825; &#xD30C;&#xC77C;&#xC758; UTF-16 &#xC778;&#xCF54;&#xB529;&#xC744; &#xCD9C;&#xB825; &#xD30C;&#xC77C;&#xC5D0;&#xB3C4; &#xADF8;&#xB300;&#xB85C; &#xC801;&#xC6A9;&#xD569;&#xB2C8;&#xB2E4;. <code>-u</code> &#xC635;&#xC158;&#xC740; UTF-8&#xB85C;&#xC758; &#xBCC0;&#xD658;&#xC744; &#xB9C9;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+
+<p>dos2unix&#xC640; unix2dos&#xC5D0;&#xB294; UTF-8 &#xD30C;&#xC77C;&#xC744; UTF-16&#xC73C;&#xB85C; &#xBCC0;&#xD658;&#xD558;&#xB294; &#xC635;&#xC158;&#xC774; &#xC5C6;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+
+<p>ISO &#xBC0F; 7&#xBE44;&#xD2B8; &#xBAA8;&#xB4DC; &#xBCC0;&#xD658;&#xC740; UTF-16 &#xD30C;&#xC77C;&#xC5D0; &#xB3D9;&#xC791;&#xD558;&#xC9C0; &#xC54A;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+
+<h2 id="BOM">&#xBC14;&#xC774;&#xD2B8; &#xC21C;&#xC11C; &#xD45C;&#xC2DC;(BOM)</h2>
+
+<p>&#xC708;&#xB3C4;&#xC6B0;&#xC5D0;&#xC11C;&#xB294; &#xC720;&#xB2C8;&#xCF54;&#xB4DC; &#xD14D;&#xC2A4;&#xD2B8; &#xD30C;&#xC77C;&#xC5D0; &#xB300;&#xBD80;&#xBD84; &#xC708;&#xB3C4;&#xC6B0; &#xD504;&#xB85C;&#xADF8;&#xB7A8;(&#xBA54;&#xBAA8;&#xC7A5; &#xD3EC;&#xD568;)&#xC5D0;&#xC11C; BOM&#xC744; &#xAE30;&#xBCF8;&#xC73C;&#xB85C; &#xCD94;&#xAC00;&#xD558;&#xAE30; &#xB54C;&#xBB38;&#xC5D0; &#xBCF4;&#xD1B5; &#xBC14;&#xC774;&#xD2B8; &#xC21C;&#xC11C; &#xD45C;&#xC2DC;(BOM)&#xAC00; &#xB4E4;&#xC5B4;&#xAC11;&#xB2C8;&#xB2E4;. <a href="http://en.wikipedia.org/wiki/Byte_order_mark">http://en.wikipedia.org/wiki/Byte_order_mark</a> &#xB9C1;&#xD06C;&#xB97C; &#xCC38;&#xACE0;&#xD558;&#xC2ED;&#xC2DC;&#xC624;.</p>
+
+<p>&#xC720;&#xB2C9;&#xC2A4;&#xC5D0;&#xC11C;&#xB294; &#xC720;&#xB2C8;&#xCF54;&#xB4DC; &#xD30C;&#xC77C;&#xC5D0; BOM&#xC774; &#xB4E4;&#xC5B4;&#xAC00;&#xC9C0; &#xC54A;&#xC2B5;&#xB2C8;&#xB2E4;. &#xD14D;&#xC2A4;&#xD2B8; &#xD30C;&#xC77C;&#xC744; &#xB85C;&#xCE98; &#xBB38;&#xC790; &#xC778;&#xCF54;&#xB529;&#xC73C;&#xB85C; &#xC778;&#xCF54;&#xB529;&#xD588;&#xB2E4;&#xACE0; &#xAC00;&#xC815;&#xD569;&#xB2C8;&#xB2E4;.</p>
+
+<p>dos2unix&#xB294; UTF-16 &#xD615;&#xC2DD;&#xC778;&#xC9C0;, BOM&#xC774; &#xB4E4;&#xC5B4;&#xAC14;&#xB294;&#xC9C0;&#xB9CC; &#xC54C; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;. UTF-16 &#xD30C;&#xC77C;&#xC5D0; BOM&#xC774; &#xC5C6;&#xB2E4;&#xBA74; dos2unix&#xB294; &#xC774;&#xC9C4; &#xD30C;&#xC77C;&#xB85C; &#xC778;&#xC2DD;&#xD569;&#xB2C8;&#xB2E4;.</p>
+
+<p>UTF-16 &#xD30C;&#xC77C;&#xC744; BOM&#xC744; &#xBE7C;&#xACE0; &#xBCC0;&#xD658;&#xD558;&#xB824;&#xBA74; <code>-ul</code> &#xC635;&#xC158; &#xB610;&#xB294; <code>-ub</code> &#xC635;&#xC158;&#xC744; &#xC0AC;&#xC6A9;&#xD558;&#xC2ED;&#xC2DC;&#xC624;.</p>
+
+<p>dos2unix&#xC5D0;&#xC11C;&#xB294; &#xAE30;&#xBCF8;&#xC801;&#xC73C;&#xB85C; &#xCD9C;&#xB825; &#xD30C;&#xC77C;&#xC5D0; BOM&#xC744; &#xAE30;&#xB85D;&#xD558;&#xC9C0; &#xC54A;&#xC2B5;&#xB2C8;&#xB2E4;. &#xC785;&#xB825; &#xD30C;&#xC77C;&#xC5D0; BOM&#xC774; &#xC788;&#xB2E4;&#xBA74; dos2unix&#xC5D0; <code>-b</code> &#xC635;&#xC158;&#xC744; &#xC9C0;&#xC815;&#xD588;&#xC744; &#xB54C; &#xCD9C;&#xB825; &#xD30C;&#xC77C;&#xC5D0; BOM&#xC744; &#xAE30;&#xB85D;&#xD569;&#xB2C8;&#xB2E4;.</p>
+
+<p>unix2dos&#xC5D0;&#xC11C;&#xB294; &#xAE30;&#xBCF8;&#xC801;&#xC73C;&#xB85C; &#xC785;&#xB825; &#xD30C;&#xC77C;&#xC5D0; BOM&#xC774; &#xC788;&#xB2E4;&#xBA74; &#xCD9C;&#xB825; &#xD30C;&#xC77C;&#xC5D0; BOM&#xC744; &#xAE30;&#xB85D;&#xD569;&#xB2C8;&#xB2E4;. BOM&#xC744; &#xC81C;&#xAC70;&#xD558;&#xB824;&#xBA74; <code>-r</code> &#xC635;&#xC158;&#xC744; &#xC0AC;&#xC6A9;&#xD558;&#xC2ED;&#xC2DC;&#xC624;.</p>
+
+<p>dos2unix&#xC640; unix2dos&#xB294; <code>-m</code> &#xC635;&#xC158;&#xC744; &#xC0AC;&#xC6A9;&#xD558;&#xBA74; &#xD56D;&#xC0C1; BOM&#xC744; &#xAE30;&#xB85D;&#xD569;&#xB2C8;&#xB2E4;.</p>
+
+<h2 id="9">&#xC708;&#xB3C4;&#xC6B0;&#xC758; &#xC720;&#xB2C8;&#xCF54;&#xB4DC; &#xD30C;&#xC77C; &#xC774;&#xB984;</h2>
+
+<p>dos2unix&#xC5D0;&#xC11C;&#xB294; &#xC708;&#xB3C4;&#xC6B0; &#xBA85;&#xB839; &#xD504;&#xB86C;&#xD504;&#xD2B8;&#xC758; &#xC720;&#xB2C8;&#xCF54;&#xB4DC; &#xD30C;&#xC77C; &#xC774;&#xB984;&#xC744; &#xC77D;&#xACE0; &#xC4F0;&#xB294; &#xCD94;&#xAC00; &#xAE30;&#xB2A5;&#xC744; &#xC9C0;&#xC6D0;&#xD569;&#xB2C8;&#xB2E4;. dos2unix&#xC5D0;&#xC11C; &#xAE30;&#xBCF8; &#xC2DC;&#xC2A4;&#xD15C; ANSI &#xCF54;&#xB4DC; &#xD398;&#xC774;&#xC9C0;&#xC758; &#xC77C;&#xBD80;&#xAC00; &#xC544;&#xB2CC; &#xBB38;&#xC790;&#xAC00; &#xB4E4;&#xC5B4;&#xAC04; &#xC774;&#xB984;&#xC77C;&#xC9C0;&#xB77C;&#xB3C4; &#xD30C;&#xC77C;&#xC744; &#xC5F4; &#xC218; &#xC788;&#xB2E4;&#xB294; &#xB73B;&#xC785;&#xB2C8;&#xB2E4;. &#xC708;&#xB3C4;&#xC6B0;&#xC6A9; dos2unix&#xC5D0; &#xC720;&#xB2C8;&#xCF54;&#xB4DC; &#xD30C;&#xC77C; &#xC774;&#xB984; &#xC9C0;&#xC6D0; &#xAE30;&#xB2A5;&#xC774; &#xB4E4;&#xC5B4;&#xC788;&#xB294;&#xC9C0; &#xD655;&#xC778;&#xD558;&#xB824;&#xBA74; <code>dos2unix -V</code> &#xBA85;&#xB839;&#xC744; &#xC785;&#xB825;&#xD558;&#xC2ED;&#xC2DC;&#xC624;.</p>
+
+<p>&#xC708;&#xB3C4;&#xC6B0; &#xCF58;&#xC194;&#xC5D0; &#xC720;&#xB2C8;&#xCF54;&#xB4DC; &#xD30C;&#xC77C; &#xC774;&#xB984;&#xC744; &#xD45C;&#xC2DC;&#xD560; &#xB54C; &#xBA87;&#xAC00;&#xC9C0; &#xBB38;&#xC81C;&#xAC00; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;. <code>-D</code>, <code>--display-enc</code> &#xC635;&#xC158;&#xC744; &#xCC38;&#xACE0;&#xD558;&#xC2ED;&#xC2DC;&#xC624;. &#xCF58;&#xC194;&#xC5D0;&#xC11C; &#xD30C;&#xC77C; &#xC774;&#xB984;&#xC774; &#xC798;&#xBABB; &#xB098;&#xD0C0;&#xB0A0; &#xC218;&#xB294; &#xC788;&#xC9C0;&#xB9CC; &#xD30C;&#xC77C;&#xC740; (&#xC5B4;&#xCA0C;&#xB4E0;) &#xC62C;&#xBC14;&#xB978; &#xC774;&#xB984;&#xC73C;&#xB85C; &#xAE30;&#xB85D;&#xD569;&#xB2C8;&#xB2E4;.</p>
+
+<h2 id="10">&#xC720;&#xB2C8;&#xCF54;&#xB4DC; &#xC608;&#xC81C;</h2>
+
+<p>&#xC708;&#xB3C4;&#xC6B0; UTF-16(+BOM)&#xC744; &#xC720;&#xB2C9;&#xC2A4; UTF-8&#xB85C; &#xBCC0;&#xD658;:</p>
+
+<pre><code>dos2unix -n in.txt out.txt</code></pre>
+
+<p>&#xC708;&#xB3C4;&#xC6B0; UTF-16LE(-BOM)&#xB97C; &#xC720;&#xB2C9;&#xC2A4; UTF-8&#xB85C; &#xBCC0;&#xD658;:</p>
+
+<pre><code>dos2unix -ul -n in.txt out.txt</code></pre>
+
+<p>&#xC720;&#xB2C9;&#xC2A4; UTF-8&#xC744; &#xC708;&#xB3C4;&#xC6B0; UTF-8(+BOM)&#xB85C; &#xBCC0;&#xD658;:</p>
+
+<pre><code>unix2dos -m -n in.txt out.txt</code></pre>
+
+<p>&#xC720;&#xB2C9;&#xC2A4; UTF-8&#xC744; &#xC708;&#xB3C4;&#xC6B0; UTF-16&#xC73C;&#xB85C; &#xBCC0;&#xD658;:</p>
+
+<pre><code>unix2dos &lt; in.txt | iconv -f UTF-8 -t UTF-16 &gt; out.txt</code></pre>
+
+<h1 id="GB18030">GB18030</h1>
+
+<p>GB18030&#xC740; &#xC911;&#xD654;&#xC778;&#xBBFC;&#xACF5;&#xD654;&#xAD6D; &#xC815;&#xBD80; &#xD45C;&#xC900;&#xC785;&#xB2C8;&#xB2E4;. GB18030 &#xD45C;&#xC900; &#xD558;&#xC704; &#xD544;&#xC218; &#xC138;&#xD2B8;&#xB294; &#xC911;&#xD654;&#xC778;&#xBBFC;&#xACF5;&#xD654;&#xAD6D;&#xC5D0;&#xC11C; &#xD310;&#xB9E4;&#xD558;&#xB294; &#xBAA8;&#xB4E0; &#xD504;&#xB85C;&#xADF8;&#xB7A8; &#xC81C;&#xD488;&#xC5D0; &#xACF5;&#xC2DD;&#xC801;&#xC73C;&#xB85C; &#xD544;&#xC694;&#xD569;&#xB2C8;&#xB2E4;. <a href="http://en.wikipedia.org/wiki/GB_18030">http://en.wikipedia.org/wiki/GB_18030</a> &#xB9C1;&#xD06C;&#xB97C; &#xCC38;&#xACE0;&#xD558;&#xC2ED;&#xC2DC;&#xC624;.</p>
+
+<p>GB18030&#xC740; &#xC720;&#xB2C8;&#xCF54;&#xB4DC;&#xC640; &#xC644;&#xBCBD;&#xD558;&#xAC8C; &#xD638;&#xD658;&#xD558;&#xBA70;, &#xC720;&#xB2C8;&#xCF54;&#xB4DC; &#xBCC0;&#xD658; &#xD615;&#xC2DD;&#xC73C;&#xB85C; &#xACE0;&#xB824;&#xD560; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;. UTF-8&#xACFC; &#xC720;&#xC0AC;&#xD558;&#xAC8C;, GB18030&#xC740; ASCII&#xC640; &#xD638;&#xD658;&#xC131;&#xC744; &#xC9C0;&#xB2D9;&#xB2C8;&#xB2E4;. GB18030&#xC740; &#xB610;&#xD55C; GBK&#xB85C; &#xC54C;&#xB824;&#xC9C4; &#xC708;&#xB3C4;&#xC6B0; &#xCF54;&#xB4DC; &#xD398;&#xC774;&#xC9C0; 936&#xACFC;&#xB3C4; &#xD638;&#xD658;&#xC131;&#xC774; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+
+<p>&#xC720;&#xB2C9;&#xC2A4;/&#xB9AC;&#xB205;&#xC2A4;&#xC5D0;&#xC11C; UTF-16 &#xD30C;&#xC77C;&#xC740; &#xB85C;&#xCE98; &#xC778;&#xCF54;&#xB529;&#xC744; GB18030&#xC73C;&#xB85C; &#xC124;&#xC815;&#xD558;&#xBA74; GB18030&#xC73C;&#xB85C; &#xBCC0;&#xD658;&#xD569;&#xB2C8;&#xB2E4;. &#xCC38;&#xACE0;&#xB85C; &#xC2DC;&#xC2A4;&#xD15C;&#xC5D0;&#xC11C; &#xD574;&#xB2F9; &#xB85C;&#xCE98;&#xC744; &#xC9C0;&#xC6D0;&#xD560; &#xACBD;&#xC6B0;&#xC5D0;&#xB9CC; &#xB3D9;&#xC791;&#xD569;&#xB2C8;&#xB2E4;. &#xC9C0;&#xC6D0; &#xB85C;&#xCE98; &#xBAA9;&#xB85D;&#xC744; &#xC0B4;&#xD3B4;&#xBCF4;&#xB824;&#xBA74; <code>locale -a</code> &#xBA85;&#xB839;&#xC744; &#xC0AC;&#xC6A9;&#xD558;&#xC2ED;&#xC2DC;&#xC624;.</p>
+
+<p>&#xC708;&#xB3C4;&#xC6B0;&#xC5D0;&#xC11C;&#xB294; UTF-16 &#xD30C;&#xC77C;&#xC744; GB18030&#xC73C;&#xB85C; &#xBCC0;&#xD658;&#xD558;&#xB824;&#xBA74; <code>-gb</code> &#xC635;&#xC158;&#xC744; &#xC0AC;&#xC6A9;&#xD574;&#xC57C;&#xD569;&#xB2C8;&#xB2E4;.</p>
+
+<p>GB18030 &#xC778;&#xCF54;&#xB529; &#xD30C;&#xC77C;&#xC5D0;&#xB294; &#xC720;&#xB2C8;&#xCF54;&#xB4DC; &#xD30C;&#xC77C;&#xCC98;&#xB7FC; &#xBC14;&#xC774;&#xD2B8; &#xC21C;&#xC11C; &#xD45C;&#xC2DC;&#xAC00; &#xB4E4;&#xC5B4;&#xAC08; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+
+<h1 id="11">&#xC608;&#xC81C;</h1>
+
+<p>&#39;&#xD45C;&#xC900; &#xC785;&#xB825;&#39;&#xC744; &#xC77D;&#xC5B4; &#39;&#xD45C;&#xC900; &#xCD9C;&#xB825;&#39;&#xC5D0; &#xCD9C;&#xB825;:</p>
+
+<pre><code>dos2unix &lt; a.txt
+cat a.txt | dos2unix</code></pre>
+
+<p>a.txt&#xB97C; &#xBCC0;&#xD658;&#xD558;&#xACE0; &#xB0B4;&#xC6A9; &#xBC14;&#xAFB8;&#xAE30;. b.txt&#xB97C; &#xBCC0;&#xD658;&#xD558;&#xACE0; &#xB0B4;&#xC6A9; &#xBC14;&#xAFB8;&#xAE30;:</p>
+
+<pre><code>dos2unix a.txt b.txt
+dos2unix -o a.txt b.txt</code></pre>
+
+<p>a.txt&#xB97C; &#xC544;&#xC2A4;&#xD0A4; &#xBCC0;&#xD658; &#xBAA8;&#xB4DC;&#xB85C; &#xBCC0;&#xD658;&#xD558;&#xACE0; &#xB0B4;&#xC6A9; &#xBC14;&#xAFB8;&#xAE30;:</p>
+
+<pre><code>dos2unix a.txt</code></pre>
+
+<p>a.txt&#xB97C; &#xC544;&#xC2A4;&#xD0A4; &#xBCC0;&#xD658; &#xBAA8;&#xB4DC;&#xB85C; &#xBCC0;&#xD658;&#xD558;&#xACE0; &#xB0B4;&#xC6A9; &#xBC14;&#xAFB8;&#xAE30;, b.txt&#xB97C; 7&#xBE44;&#xD2B8; &#xBCC0;&#xD658; &#xBAA8;&#xB4DC;&#xB85C; &#xBCC0;&#xD658;&#xD558;&#xACE0; &#xB0B4;&#xC6A9; &#xBC14;&#xAFB8;&#xAE30;:</p>
+
+<pre><code>dos2unix a.txt -c 7bit b.txt
+dos2unix -c ascii a.txt -c 7bit b.txt
+dos2unix -ascii a.txt -7 b.txt</code></pre>
+
+<p>a.txt&#xB97C; &#xB9E5; &#xD615;&#xC2DD;&#xC5D0;&#xC11C; &#xC720;&#xB2C9;&#xC2A4; &#xD615;&#xC2DD;&#xC73C;&#xB85C; &#xBCC0;&#xD658;:</p>
+
+<pre><code>dos2unix -c mac a.txt
+mac2unix a.txt</code></pre>
+
+<p>a.txt&#xB97C; &#xC720;&#xB2C9;&#xC2A4; &#xD615;&#xC2DC;&#xC5D0;&#xC11C; &#xB9E5; &#xD615;&#xC2DD;&#xC73C;&#xB85C; &#xBCC0;&#xD658;:</p>
+
+<pre><code>unix2dos -c mac a.txt
+unix2mac a.txt</code></pre>
+
+<p>a.txt&#xC758; &#xB0A0;&#xC9DC; &#xC2A4;&#xD0EC;&#xD504;&#xB97C; &#xC720;&#xC9C0;&#xD558;&#xBA70; &#xBCC0;&#xD658;&#xD558;&#xACE0; &#xB0B4;&#xC6A9; &#xBC14;&#xAFB8;&#xAE30;:</p>
+
+<pre><code>dos2unix -k a.txt
+dos2unix -k -o a.txt</code></pre>
+
+<p>a.txt&#xB97C; &#xBCC0;&#xD658;&#xD558;&#xC5EC; e.txt&#xB85C; &#xAE30;&#xB85D;:</p>
+
+<pre><code>dos2unix -n a.txt e.txt</code></pre>
+
+<p>a.txt&#xB97C; &#xBCC0;&#xD658;&#xD558;&#xACE0; e.txt&#xB85C; &#xAE30;&#xB85D;, e.txt&#xC758; &#xB0A0;&#xC9DC; &#xC2A4;&#xD0EC;&#xD504;&#xB97C; a.txt&#xC640; &#xB3D9;&#xC77C;&#xD558;&#xAC8C; &#xC124;&#xC815;:</p>
+
+<pre><code>dos2unix -k -n a.txt e.txt</code></pre>
+
+<p>a.txt&#xB97C; &#xBCC0;&#xD658;&#xD558;&#xACE0; &#xB0B4;&#xC6A9; &#xBC14;&#xAFB8;&#xAE30;, b.txt&#xB97C; &#xBCC0;&#xD658;&#xD558;&#xACE0; e.txt&#xC5D0; &#xAE30;&#xB85D;:</p>
+
+<pre><code>dos2unix a.txt -n b.txt e.txt
+dos2unix -o a.txt -n b.txt e.txt</code></pre>
+
+<p>a.txt&#xB97C; &#xBCC0;&#xD658;&#xD558;&#xC5EC; e.txt&#xB85C; &#xAE30;&#xB85D;, a.txt&#xB97C; &#xBCC0;&#xD658;&#xD558;&#xACE0; &#xB0B4;&#xC6A9; &#xBC14;&#xAFB8;&#xAE30;, b.txt&#xB97C; &#xBCC0;&#xD658;&#xD558;&#xACE0; &#xB0B4;&#xC6A9; &#xBC14;&#xAFB8;&#xAE30;, d.txt&#xB97C; &#xBCC0;&#xD658;&#xD558;&#xACE0; f.txt&#xB85C; &#xAE30;&#xB85D;:</p>
+
+<pre><code>dos2unix -n c.txt e.txt -o a.txt b.txt -n d.txt f.txt</code></pre>
+
+<h1 id="12">&#xC7AC;&#xADC0; &#xBCC0;&#xD658;</h1>
+
+<p>&#xC720;&#xB2C9;&#xC2A4; &#xC178;&#xC5D0;&#xC11C; dos2unix&#xB85C; &#xD558;&#xC5EC;&#xAE08; &#xB514;&#xB809;&#xD130;&#xB9AC; &#xD2B8;&#xB9AC;&#xC758; &#xBAA8;&#xB4E0; &#xD14D;&#xC2A4;&#xD2B8; &#xD30C;&#xC77C;&#xC744; &#xC7AC;&#xADC0;&#xC801;&#xC73C;&#xB85C; &#xD0D0;&#xC0C9;&#xD558;&#xC5EC; &#xCC98;&#xB9AC;&#xD558;&#xB824; &#xD560; &#xB54C;, find(1)&#xC640; xargs(1) &#xBA85;&#xB839;&#xC744; &#xC0AC;&#xC6A9;&#xD560; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;. &#xC608;&#xB97C; &#xB4E4;&#xC5B4; &#xC544;&#xB798; &#xD615;&#xD0DC;&#xB97C; &#xAC16;&#xCD98; &#xB514;&#xB809;&#xD130;&#xB9AC; &#xD2B8;&#xB9AC;&#xC758; &#xBAA8;&#xB4E0; .txt &#xD30C;&#xC77C;&#xC744; &#xBCC0;&#xD658;&#xD558;&#xB824;&#xBA74;:</p>
+
+<pre><code>find . -name &#39;*.txt&#39; -print0 |xargs -0 dos2unix</code></pre>
+
+<p>find(1) &#xBA85;&#xB839;&#xC758; &#xC635;&#xC158; <code>-print0</code> &#xADF8;&#xB9AC;&#xACE0; &#xC774;&#xC5D0; &#xD574;&#xB2F9;&#xD558;&#xB294; xargs(1) &#xBA85;&#xB839;&#xC758; <code>-0</code>&#xC635;&#xC158;&#xC740; &#xC774;&#xB984;&#xC5D0; &#xACF5;&#xBC31;&#xC774;&#xB098; &#xB530;&#xC634;&#xD45C;&#xAC00; &#xC788;&#xC744; &#xACBD;&#xC6B0; &#xD544;&#xC694;&#xD569;&#xB2C8;&#xB2E4;. &#xACF5;&#xBC31;&#xC774;&#xB098; &#xB530;&#xC634;&#xD45C;&#xAC00; &#xC5C6;&#xC73C;&#xBA74; &#xC774; &#xC635;&#xC158;&#xC744; &#xC0DD;&#xB7B5;&#xD560; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;. &#xB2E4;&#xB978; &#xC635;&#xC158;&#xC73C;&#xB85C;&#xB294; find(1)&#xC758; <code>-exec</code> &#xC635;&#xC158;&#xC774; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;:</p>
+
+<pre><code>find . -name &#39;*.txt&#39; -exec dos2unix {} \;</code></pre>
+
+<p>&#xC708;&#xB3C4;&#xC6B0; &#xBA85;&#xB839; &#xD504;&#xB86C;&#xD504;&#xD2B8;&#xC5D0;&#xC11C; &#xB2E4;&#xC74C; &#xBA85;&#xB839;&#xC744; &#xD65C;&#xC6A9;&#xD560; &#xC218; &#xC5C6;&#xC2B5;&#xB2C8;&#xB2E4;:</p>
+
+<pre><code>for /R %G in (*.txt) do dos2unix &quot;%G&quot;</code></pre>
+
+<p>&#xD30C;&#xC6CC;&#xC178; &#xC0AC;&#xC6A9;&#xC790;&#xB294; &#xC708;&#xB3C4;&#xC6B0; &#xD30C;&#xC6CC;&#xC178;&#xC5D0;&#xC11C; &#xB2E4;&#xC74C; &#xBA85;&#xB839;&#xC744; &#xD65C;&#xC6A9;&#xD560; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;:</p>
+
+<pre><code>get-childitem -path . -filter &#39;*.txt&#39; -recurse | foreach-object {dos2unix $_.Fullname}</code></pre>
+
+<h1 id="13">&#xC9C0;&#xC5ED;&#xD654;</h1>
+
+<dl>
+
+<dt id="LANG"><b>LANG</b></dt>
+<dd>
+
+<p>&#xAE30;&#xBCF8; &#xC5B8;&#xC5B4;&#xB294; LANG &#xD658;&#xACBD; &#xBCC0;&#xC218;&#xB85C; &#xC120;&#xD0DD;&#xD569;&#xB2C8;&#xB2E4;. LANG &#xD658;&#xACBD; &#xBCC0;&#xC218;&#xB294; &#xBA87;&#xAC00;&#xC9C0; &#xBD80;&#xBD84;&#xC73C;&#xB85C; &#xAD6C;&#xC131;&#xD569;&#xB2C8;&#xB2E4;. &#xCCAB;&#xBC88;&#xC9F8; &#xBD80;&#xBD84;&#xC740; &#xC5B8;&#xC5B4; &#xCF54;&#xB4DC;&#xB97C; &#xC758;&#xBBF8;&#xD558;&#xB294; &#xBA87;&#xAC00;&#xC9C0; &#xBB38;&#xC790;&#xC785;&#xB2C8;&#xB2E4;. &#xB450;&#xBC88;&#xC81C; &#xBD80;&#xBD84;&#xC740; &#xB300;&#xBB38;&#xC790;&#xB85C; &#xC774;&#xB8E8;&#xC5B4;&#xC9C4; &#xAD6D;&#xAC00; &#xCF54;&#xB4DC;&#xC785;&#xB2C8;&#xB2E4;. &#xB450; &#xCF54;&#xB4DC; &#xC0AC;&#xC774;&#xC5D0;&#xB294; &#xBC11;&#xC904; &#xBB38;&#xC790;&#xAC00; &#xB4E4;&#xC5B4;&#xAC11;&#xB2C8;&#xB2E4;. &#xB9C8;&#xC9C0;&#xB9C9;&#xC73C;&#xB85C; &#xCD94;&#xAC00;&#xD558;&#xB294; &#xBD80;&#xBD84;&#xC740; &#xC810;&#xC774; &#xC55E;&#xC11C; &#xC624;&#xB294; &#xBB38;&#xC790; &#xC778;&#xCF54;&#xB529;&#xC785;&#xB2C8;&#xB2E4;. POSIX &#xD45C;&#xC900; &#xD615; &#xC178;&#xC5D0;&#xC11C; &#xBA87;&#xAC00;&#xC9C0; &#xC608;&#xC81C;&#xB97C; &#xBCF4;&#xC5EC;&#xB4DC;&#xB9AC;&#xB3C4;&#xB85D; &#xD558;&#xACA0;&#xC2B5;&#xB2C8;&#xB2E4;:</p>
+
+<pre><code>export LANG=nl               Dutch
+export LANG=nl_NL            Dutch, The Netherlands
+export LANG=nl_BE            Dutch, Belgium
+export LANG=es_ES            Spanish, Spain
+export LANG=es_MX            Spanish, Mexico
+export LANG=en_US.iso88591   English, USA, Latin-1 encoding
+export LANG=en_GB.UTF-8      English, UK, UTF-8 encoding</code></pre>
+
+<p>&#xC5B8;&#xC5B4; &#xBC0F; &#xAD6D;&#xAC00; &#xCF54;&#xB4DC; &#xC804;&#xCCB4; &#xBAA9;&#xB85D;&#xC744; &#xBCF4;&#xB824;&#xBA74; <a href="http://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html">http://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html</a> gettext &#xC124;&#xBA85;&#xC11C;&#xB97C; &#xCC38;&#xACE0;&#xD558;&#xC2ED;&#xC2DC;&#xC624;</p>
+
+<p>&#xC720;&#xB2C9;&#xC2A4; &#xC2DC;&#xC2A4;&#xD15C;&#xC5D0;&#xC11C;&#xB294; locale(1) &#xBA85;&#xB839;&#xC744; &#xD65C;&#xC6A9;&#xD558;&#xC5EC; &#xB85C;&#xCE98;&#xBCC4; &#xC815;&#xBCF4;&#xB97C; &#xAC00;&#xC838;&#xC62C; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+
+</dd>
+<dt id="LANGUAGE"><b>LANGUAGE</b></dt>
+<dd>
+
+<p>LANGUAGE &#xD658;&#xACBD; &#xBCC0;&#xC218;&#xC5D0;&#xB294; &#xC5B8;&#xC5B4;&#xB97C; &#xC6B0;&#xC120; &#xC21C;&#xC704;&#xBCC4;&#xB85C; &#xCF5C;&#xB860;&#xC73C;&#xB85C; &#xAD6C;&#xBD84;&#xD558;&#xC5EC; &#xC9C0;&#xC815;&#xD560; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;. dos2unix&#xC5D0;&#xC11C;&#xB294; LANGUAGE&#xB97C; LANG&#xBCF4;&#xB2E4; &#xC6B0;&#xC120;&#xD558;&#xC5EC; &#xCDE8;&#xAE09;&#xD569;&#xB2C8;&#xB2E4;. &#xC608;&#xB97C; &#xB4E4;&#xBA74; &#xB124;&#xB35C;&#xB780;&#xB4DC;&#xC5B4;&#xB97C; &#xBA3C;&#xC800; &#xADF8; &#xB2E4;&#xC74C;&#xC5D0; &#xB3C5;&#xC77C;&#xC5B4;&#xB97C; &#xC124;&#xC815;&#xD560; &#xACBD;&#xC6B0; <code>LANGUAGE=nl:de</code>(&#xC73C;)&#xB85C; &#xC124;&#xC815;&#xD569;&#xB2C8;&#xB2E4;. LANGUAGE &#xD658;&#xACBD; &#xBCC0;&#xC218;&#xC5D0; &#xC5B8;&#xC5B4;&#xBCC4; &#xC6B0;&#xC120; &#xC21C;&#xC704;&#xB97C; &#xB450;&#xC5B4; &#xC0AC;&#xC6A9;&#xD560; &#xC218; &#xC788;&#xAE30; &#xC804;&#xC5D0; LANG &#xD658;&#xACBD; &#xBCC0;&#xC218;&#xC5D0; &quot;C&quot; &#xB300;&#xC2E0; &#xB2E4;&#xB978; &#xAC12;&#xC744; &#xB123;&#xC5B4; &#xC9C0;&#xC5ED;&#xD654;&#xB97C; &#xC6B0;&#xC120; &#xC124;&#xC815;&#xD574;&#xC57C;&#xD569;&#xB2C8;&#xB2E4;. <a href="http://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-variable.html">http://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-variable.html</a> gettext &#xC124;&#xBA85;&#xC11C;&#xB97C; &#xCC38;&#xACE0;&#xD558;&#xC2ED;&#xC2DC;&#xC624;</p>
+
+<p>&#xC0AC;&#xC6A9;&#xD560; &#xC218; &#xC5C6;&#xB294; &#xC5B8;&#xC5B4;&#xB97C; &#xC120;&#xD0DD;&#xD588;&#xB2E4;&#xBA74; &#xD45C;&#xC900; (&#xAD6D;&#xC81C;) &#xC601;&#xC5B4; &#xBA54;&#xC2DC;&#xC9C0;&#xB85C; &#xB098;&#xD0C0;&#xB0A9;&#xB2C8;&#xB2E4;.</p>
+
+</dd>
+<dt id="DOS2UNIX_LOCALEDIR"><b>DOS2UNIX_LOCALEDIR</b></dt>
+<dd>
+
+<p>DOS2UNIX_LOCALEDIR &#xD658;&#xACBD; &#xBCC0;&#xC218;&#xB294;, &#xCEF4;&#xD30C;&#xC77C; &#xC2DC;&#xAC04;&#xC5D0;&#xB294; LOCALEDIR &#xD658;&#xACBD; &#xBCC0;&#xC218;&#xB97C; &#xC6B0;&#xC120; &#xD65C;&#xC6A9;&#xD560; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;. LOCALEDIR &#xD658;&#xACBD; &#xBCC0;&#xC218;&#xB294; &#xC5B8;&#xC5B4; &#xD30C;&#xC77C;&#xC744; &#xCC3E;&#xC744; &#xB54C; &#xD65C;&#xC6A9;&#xD569;&#xB2C8;&#xB2E4;. GNU &#xAE30;&#xBCF8;&#xAC12;&#xC740; <code>/usr/local/share/locale</code>&#xC785;&#xB2C8;&#xB2E4;. <b>--version</b> &#xC635;&#xC158;&#xC744; &#xC0AC;&#xC6A9;&#xD558;&#xBA74; LOCALEDIR&#xC774; &#xC0AC;&#xC6A9;&#xD558;&#xB294; &#xAC12;&#xC744; &#xBCF4;&#xC5EC;&#xC90D;&#xB2C8;&#xB2E4;.</p>
+
+<p>&#xC608;&#xC81C; (POSIX &#xC178;):</p>
+
+<pre><code>export DOS2UNIX_LOCALEDIR=$HOME/share/locale</code></pre>
+
+</dd>
+</dl>
+
+<h1 id="14">&#xBC18;&#xD658; &#xAC12;</h1>
+
+<p>&#xC131;&#xACF5;&#xD558;&#xBA74; 0&#xAC12;&#xC744; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;. &#xC2DC;&#xC2A4;&#xD15C; &#xC624;&#xB958;&#xAC00; &#xB098;&#xD0C0;&#xB098;&#xBA74; &#xAC00;&#xC7A5; &#xB9C8;&#xC9C0;&#xB9C9;&#xC5D0; &#xB098;&#xD0C0;&#xB09C; &#xC2DC;&#xC2A4;&#xD15C; &#xC624;&#xB958;&#xB97C; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;. &#xB2E4;&#xB978; &#xC624;&#xB958;&#xB294; 1 &#xAC12;&#xC744; &#xBC18;&#xD658;&#xD569;&#xB2C8;&#xB2E4;.</p>
+
+<p>&#xBBF8;&#xCD9C;&#xB825; &#xBAA8;&#xB4DC;&#xC758; &#xBC18;&#xD658; &#xAC12;&#xC740; &#xD56D;&#xC0C1; 0&#xC774;&#xC9C0;&#xB9CC;, &#xBA85;&#xB839;&#xD589; &#xC635;&#xC158;&#xC774; &#xC798;&#xBABB;&#xB410;&#xC744; &#xACBD;&#xC6B0;&#xB294; &#xC81C;&#xC678;&#xD569;&#xB2C8;&#xB2E4;.</p>
+
+<h1 id="15">&#xD45C;&#xC900;</h1>
+
+<p><a href="http://en.wikipedia.org/wiki/Text_file">http://en.wikipedia.org/wiki/Text_file</a></p>
+
+<p><a href="http://en.wikipedia.org/wiki/Carriage_return">http://en.wikipedia.org/wiki/Carriage_return</a></p>
+
+<p><a href="http://en.wikipedia.org/wiki/Newline">http://en.wikipedia.org/wiki/Newline</a></p>
+
+<p><a href="http://en.wikipedia.org/wiki/Unicode">http://en.wikipedia.org/wiki/Unicode</a></p>
+
+<h1 id="16">&#xC800;&#xC790;</h1>
+
+<p>Benjamin Lin - &lt;blin@socs.uts.edu.au&gt;, Bernd Johannes Wuebben (mac2unix mode) - &lt;wuebben@kde.org&gt;, Christian Wurll (add extra newline) - &lt;wurll@ira.uka.de&gt;, Erwin Waterlander - &lt;waterlan@xs4all.nl&gt; (maintainer)</p>
+
+<p>&#xD504;&#xB85C;&#xC81D;&#xD2B8; &#xD398;&#xC774;&#xC9C0;: <a href="http://waterlan.home.xs4all.nl/dos2unix.html">http://waterlan.home.xs4all.nl/dos2unix.html</a></p>
+
+<p>SourceForge &#xD398;&#xC774;&#xC9C0;: <a href="http://sourceforge.net/projects/dos2unix/">http://sourceforge.net/projects/dos2unix/</a></p>
+
+<h1 id="17">&#xCD94;&#xAC00; &#xCC38;&#xC870;</h1>
+
+<p>file(1) find(1) iconv(1) locale(1) xargs(1)</p>
+
+
+</body>
+
+</html>
+
+

@@ -4,10 +4,10 @@
  *    Remove cr ('\x0d') characters from a file.
  *
  *  The dos2unix package is distributed under FreeBSD style license.
- *  See also http://www.freebsd.org/copyright/freebsd-license.html
+ *  See also https://www.freebsd.org/copyright/freebsd-license.html
  *  --------
  *
- *  Copyright (C) 2009-2018 Erwin Waterlander
+ *  Copyright (C) 2009-2023 Erwin Waterlander
  *  Copyright (C) 1998 Christian Wurll
  *  Copyright (C) 1998 Bernd Johannes Wuebben
  *  Copyright (C) 1994-1995 Benjamin Lin.
@@ -81,7 +81,7 @@ Copyright (C) 2009-%d Erwin Waterlander\n\
 Copyright (C) 1998      Christian Wurll (Version 3.1)\n\
 Copyright (C) 1998      Bernd Johannes Wuebben (Version 3.0)\n\
 Copyright (C) 1994-1995 Benjamin Lin\n\
-All rights reserved.\n\n"),2016);
+All rights reserved.\n\n"),2023);
   PrintBSDLicense();
 }
 
@@ -180,6 +180,7 @@ int StripDelimiter(FILE* ipInF, FILE* ipOutF, CFlag *ipFlag, int CurChar, unsign
 int ConvertDosToUnixW(FILE* ipInF, FILE* ipOutF, CFlag *ipFlag, const char *progname)
 {
     int RetVal = 0;
+    wint_t PrevChar = WEOF;
     wint_t TempChar;
     wint_t TempNextChar;
     unsigned int line_nr = 1;
@@ -227,6 +228,18 @@ int ConvertDosToUnixW(FILE* ipInF, FILE* ipOutF, CFlag *ipFlag, const char *prog
               break;
             }
           }
+          PrevChar = TempChar;
+        }
+        if (TempChar == WEOF && ipFlag->add_eol && PrevChar != WEOF && PrevChar != 0x0a) {
+          /* Add missing line break at the last line. */
+            if (ipFlag->verbose > 1) {
+              D2U_UTF8_FPRINTF(stderr, "%s: ", progname);
+              D2U_UTF8_FPRINTF(stderr, _("Added line break to last line.\n"));
+            }
+            if (d2u_putwc(0x0a, ipOutF, ipFlag, progname) == WEOF) {
+              RetVal = -1;
+              d2u_putwc_error(ipFlag,progname);
+            }
         }
         if ((TempChar == WEOF) && ferror(ipInF)) {
           RetVal = -1;
@@ -251,15 +264,14 @@ int ConvertDosToUnixW(FILE* ipInF, FILE* ipOutF, CFlag *ipFlag, const char *prog
             break;
           }
           if ((TempChar != 0x0d)) {
-              if (TempChar == 0x0a) /* Count all DOS and Unix line breaks */
-                ++line_nr;
-              if(d2u_putwc(TempChar, ipOutF, ipFlag, progname) == WEOF) {
-                RetVal = -1;
-                d2u_putwc_error(ipFlag,progname);
-                break;
-              }
+            if (TempChar == 0x0a) /* Count all DOS and Unix line breaks */
+              ++line_nr;
+            if(d2u_putwc(TempChar, ipOutF, ipFlag, progname) == WEOF) {
+              RetVal = -1;
+              d2u_putwc_error(ipFlag,progname);
+              break;
             }
-          else{
+          } else{
             /* TempChar is a CR */
             if ( (TempNextChar = d2u_getwc(ipInF, ipFlag->bomtype)) != WEOF) {
               if (d2u_ungetwc( TempNextChar, ipInF, ipFlag->bomtype) == WEOF) {  /* put back peek char */
@@ -274,14 +286,15 @@ int ConvertDosToUnixW(FILE* ipInF, FILE* ipOutF, CFlag *ipFlag, const char *prog
                   RetVal = -1;
                   break;
                 }
+                PrevChar = TempChar;
                 continue;
               }
             }
             if (d2u_putwc(0x0a, ipOutF, ipFlag, progname) == WEOF) { /* MAC line end (CR). Put LF */
-                RetVal = -1;
-                d2u_putwc_error(ipFlag,progname);
-                break;
-              }
+              RetVal = -1;
+              d2u_putwc_error(ipFlag,progname);
+              break;
+            }
             converted++;
             line_nr++; /* Count all Mac line breaks */
             if (ipFlag->NewLine) {  /* add additional LF? */
@@ -292,6 +305,18 @@ int ConvertDosToUnixW(FILE* ipInF, FILE* ipOutF, CFlag *ipFlag, const char *prog
               }
             }
           }
+          PrevChar = TempChar;
+        }
+        if (TempChar == WEOF && ipFlag->add_eol && PrevChar != WEOF && !(PrevChar == 0x0a || PrevChar == 0x0d)) {
+          /* Add missing line break at the last line. */
+            if (ipFlag->verbose > 1) {
+              D2U_UTF8_FPRINTF(stderr, "%s: ", progname);
+              D2U_UTF8_FPRINTF(stderr, _("Added line break to last line.\n"));
+            }
+            if (d2u_putwc(0x0a, ipOutF, ipFlag, progname) == WEOF) {
+              RetVal = -1;
+              d2u_putwc_error(ipFlag,progname);
+            }
         }
         if ((TempChar == WEOF) && ferror(ipInF)) {
           RetVal = -1;
@@ -323,6 +348,7 @@ int ConvertDosToUnixW(FILE* ipInF, FILE* ipOutF, CFlag *ipFlag, const char *prog
 int ConvertDosToUnix(FILE* ipInF, FILE* ipOutF, CFlag *ipFlag, const char *progname)
 {
     int RetVal = 0;
+    int PrevChar = EOF;
     int TempChar;
     int TempNextChar;
     int *ConvTable;
@@ -410,6 +436,18 @@ int ConvertDosToUnix(FILE* ipInF, FILE* ipOutF, CFlag *ipFlag, const char *progn
               break;
             }
           }
+          PrevChar = TempChar;
+        }
+        if (TempChar == EOF && ipFlag->add_eol && PrevChar != EOF && PrevChar != '\x0a') {
+          /* Add missing line break at the last line. */
+            if (ipFlag->verbose > 1) {
+              D2U_UTF8_FPRINTF(stderr, "%s: ", progname);
+              D2U_UTF8_FPRINTF(stderr, _("Added line break to last line.\n"));
+            }
+           if (fputc('\x0a', ipOutF) == EOF) {
+              RetVal = -1;
+              d2u_putc_error(ipFlag,progname);
+            }
         }
         if ((TempChar == EOF) && ferror(ipInF)) {
           RetVal = -1;
@@ -434,15 +472,14 @@ int ConvertDosToUnix(FILE* ipInF, FILE* ipOutF, CFlag *ipFlag, const char *progn
             break;
           }
           if ((TempChar != '\x0d')) {
-              if (TempChar == '\x0a') /* Count all DOS and Unix line breaks */
-                ++line_nr;
-              if(fputc(ConvTable[TempChar], ipOutF) == EOF) {
-                RetVal = -1;
-                d2u_putc_error(ipFlag,progname);
-                break;
-              }
+            if (TempChar == '\x0a') /* Count all DOS and Unix line breaks */
+              ++line_nr;
+            if(fputc(ConvTable[TempChar], ipOutF) == EOF) {
+              RetVal = -1;
+              d2u_putc_error(ipFlag,progname);
+              break;
             }
-          else{
+          } else{
             /* TempChar is a CR */
             if ( (TempNextChar = fgetc(ipInF)) != EOF) {
               if (ungetc( TempNextChar, ipInF ) == EOF) {  /* put back peek char */
@@ -457,14 +494,15 @@ int ConvertDosToUnix(FILE* ipInF, FILE* ipOutF, CFlag *ipFlag, const char *progn
                   d2u_putc_error(ipFlag,progname);
                   break;
                 }
+                PrevChar = TempChar;
                 continue;
               }
             }
             if (fputc('\x0a', ipOutF) == EOF) { /* MAC line end (CR). Put LF */
-                RetVal = -1;
-                d2u_putc_error(ipFlag,progname);
-                break;
-              }
+              RetVal = -1;
+              d2u_putc_error(ipFlag,progname);
+              break;
+            }
             converted++;
             line_nr++; /* Count all Mac line breaks */
             if (ipFlag->NewLine) {  /* add additional LF? */
@@ -475,6 +513,18 @@ int ConvertDosToUnix(FILE* ipInF, FILE* ipOutF, CFlag *ipFlag, const char *progn
               }
             }
           }
+          PrevChar = TempChar;
+        }
+        if (TempChar == EOF && ipFlag->add_eol && PrevChar != EOF && !(PrevChar == '\x0a' || PrevChar == '\x0d')) {
+          /* Add missing line break at the last line. */
+            if (ipFlag->verbose > 1) {
+              D2U_UTF8_FPRINTF(stderr, "%s: ", progname);
+              D2U_UTF8_FPRINTF(stderr, _("Added line break to last line.\n"));
+            }
+            if (fputc('\x0a', ipOutF) == EOF) {
+              RetVal = -1;
+              d2u_putc_error(ipFlag,progname);
+            }
         }
         if ((TempChar == EOF) && ferror(ipInF)) {
           RetVal = -1;
@@ -601,4 +651,3 @@ int main (int argc, char *argv[])
   free(pFlag);
   return ret;
 }
-

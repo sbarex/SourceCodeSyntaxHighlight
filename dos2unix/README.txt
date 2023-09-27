@@ -18,7 +18,8 @@ FILE LIST
 
 PROJECT HOME PAGE
 
-        http://waterlan.home.xs4all.nl/dos2unix.html
+        https://waterlan.home.xs4all.nl/dos2unix.html
+        https://dos2unix.sourceforge.io/
 
 
 HISTORY
@@ -58,7 +59,7 @@ HISTORY
 
 AUTHORS
 
-        Erwin Waterlander       version 3.2 - 7.4.2  2009-2020
+        Erwin Waterlander       version 3.2 - 7.5.0  2009-2023
         Christian Wurll         version 3.1          1998
         Bernd Johannes Wuebben  version 3.0          1998
         Benjamin Lin            version 1.1 - 2.3    1994-1995
@@ -70,59 +71,73 @@ TRANSLATORS
         All translations go via the Translation Project.
 
         Translation of the messages.
-        See http://translationproject.org/domain/dos2unix.html
+        See https://translationproject.org/domain/dos2unix.html
 
         Brazilian Portuguese  Enrico Nicoletto             Version 6.0.5
         Brazilian Portuguese  Rafael Ferreira              Version 6.0.6 - 7.2
         Brazilian Portuguese  Rafael Fontenelle            Version 7.3.2 - 7.4.0
+        Catalan               Jordi Mas i Hernàndez        Version 7.4.4
         Chinese (simplified)  Tianze Wang                  Version 7.3.1 - 7.4.0
+                                                           7.5.1
+        Chinese (simplified)  Boyuan Yang                  Version 7.5.0
         Chinese (traditional) mail6543210                  Version 6.0.5
-        Chinese (traditional) pan93412                     Version 7.4.2
+        Chinese (traditional) Yi-Jyun Pan                  Version 7.4.2 - 7.5.1
         Danish                Thomas Pryds                 Version 6.0.5 - 6.0.6
         Danish                Joe Hansen                   Version 7.2.3 - 7.4.1
         Dutch                 Erwin Waterlander            Version 4.0   - 6.0.4
         Dutch                 Benno Schulenberg            Version 6.0.5 - 7.4.2
         Esperanto             Rugxulo                      Version 5.1   - 6.0.4
         Esperanto             Benno Schulenberg            Version 6.0.5 - 7.3
-        French                Frédéric Marchal             Version 6.0.5 - 7.4.0
+        Esperanto             Felipe Castro                Version 7.4.3
+        French                Frédéric Marchal             Version 6.0.5 - 7.5.0
         Friulian              Fabio Tomat                  Version 7.4.2
+        Georgian              Temuri Doghonadze            Version 7.4.4
         German                Philipp Thomas               Version 5.0   - 6.0.3, 7.0,
                                                            7.2.2 - 7.4.1
         German                Lars Wendler                 Version 6.0.4
         German                Mario Blättermann            Version 6.0.6, 7.1 - 7.2
-        German                Roland Illig                 Version 7.4.2
+        German                Roland Illig                 Version 7.4.2 - 7.5.0
         Hungarian             Balázs Úr                    Version 6.0.5 - 7.2.3,
                                                            7.4.0 - 7.4.1
         Hungarian             Gabor Kelemen                Version 7.3.4
         Japanese              Yasuaki Taniguchi            Version 7.1.1
         Japanese              Takeshi Hamasaki             Version 7.3.4 - 7.4.1
+        Korean                Seong-ho Cho                 Version 7.4.4 - 7.5.0
         Norwegian Bokmaal     Åka Sikrom                   Version 6.0.6 - 7.4.0
-        Polish                Jakub Bogusz                 Version 6.0.5 - 7.4.0
+        Norwegian Bokmaal     Johnny A. Solbu              Version 7.5.0
+        Polish                Jakub Bogusz                 Version 6.0.5 - 7.5.0
+        Romanian              Remus-Gabriel Chelu          Version 7.4.4 - 7.5.0
         Russian               Андрей Углик (Andrei Uhlik)  Version 6.0.4
         Russian               Yuri Kozlov                  Version 6.0.6 - 7.4.0
-        Serbian               Мирослав Николић             Version 6.0.5 - 7.4.2
+        Serbian               Мирослав Николић             Version 6.0.5 - 7.5.1
         Spanish               Julio A. Freyre-Gonzalez     Version 5.3.1 - 6.0.4
         Spanish               Enrique Lazcorreta Puigmartí Version 6.0.6 - 7.3.1
-        Swedish               Sebastian Rasmussen          Version 7.3.2 - 7.4.0
-        Ukrainian             Yuri Chornoivan              Version 6.0.5 - 7.4.1
-        Vietnamese            Trần Ngọc Quân               Version 6.0.5 - 7.4.0
+        Swedish               Sebastian Rasmussen          Version 7.3.2 - 7.5.0
+        Ukrainian             Yuri Chornoivan              Version 6.0.5 - 7.5.0
+        Vietnamese            Trần Ngọc Quân               Version 6.0.5 - 7.5.0
 
         Translation of the manual.
-        See http://translationproject.org/domain/dos2unix-man.html
+        See https://translationproject.org/domain/dos2unix-man.html
 
         Brazilian Portuguese  Rafael Ferreira              Version 6.0.5 - 7.2
         Brazilian Portuguese  Rafael Fontenelle            Version 7.3.2 - 7.4.0
         Chinese (simplified)  Tianze Wang                  Version 7.3.1 - 7.4.0
+                                                           7.5.1
+        Chinese (simplified)  Boyuan Yang, Tianze Wang     Version 7.4.4
+        Chinese (simplified)  Boyuan Yang                  Version 7.5.0
         Dutch                 Erwin Waterlander            Version 5.1.1 - 6.0.4
         Dutch                 Benno Schulenberg            Version 6.0.5 - 7.3.3
-        French                Frédéric Marchal             Version 6.0.5 - 7.4.0
+        French                Frédéric Marchal             Version 6.0.5 - 7.5.0
         German                Mario Blättermann            Version 6.0.5 - 7.4.0
         German                Roland Illig                 Version 7.4.2
-        Polish                Jakub Bogusz                 Version 6.0.5 - 7.4.0
+        Korean                Seong-ho Cho                 Version 7.4.4 - 7.5.0
+        Polish                Jakub Bogusz                 Version 6.0.5 - 7.5.0
+        Romanian              Remus-Gabriel Chelu          Version 7.4.4
+        Serbian               Мирослав Николић             Version 7.4.3 - 7.5.1
         Spanish               Julio A. Freyre-Gonzalez     Version 5.3.1 - 6.0.4
         Spanish               Enrique Lazcorreta Puigmartí Version 6.0.6 - 7.2.1
-        Swedish               Sebastian Rasmussen          Version 7.3.2 - 7.4.0
-        Ukrainian             Yuri Chornoivan              Version 6.0.5 - 7.4.2
+        Swedish               Sebastian Rasmussen          Version 7.3.2 - 7.5.0
+        Ukrainian             Yuri Chornoivan              Version 6.0.5 - 7.5.0
 
 
 ACKNOWLEDGEMENTS
@@ -175,26 +190,34 @@ ACKNOWLEDGEMENTS
         kirowata              Fixed a minor memory leak.
         Than Ngo              Fixed issues reported by Coverity Scan.
         Vladislav Glinsky     Reported typo in Ukrainian translation.        
+        Philipp Klaus Krause  Assign strerror return value to const char.
+        Victor                Reported that GB18030 conversion is not working on Darwin.
+        Victor                Idea for 'to standard output' mode (option -O).
+        anonymous             Idea for adding a newline to the last line if there isn't
+                              one (option -e).
+        fdamien12             Reported problem of converting  a symbolic link target
+                              that is on another file system.
+        Dimitry Andric        Aligned Dutch help text.
 
 
 FINDUTILS
 
         Windows users who are looking for the Unix 'find' and 'xargs' commands
         can find them in the findutils package for Windows at the ezwinports
-        project page at: http://sourceforge.net/projects/ezwinports/files/
+        project page at: https://sourceforge.net/projects/ezwinports/files/
 
         A DOS version of the findutils package can be obtained from the DJGPP
-        project (http://www.delorie.com/djgpp/) at
+        project (https://www.delorie.com/djgpp/) at
         ftp://ftp.delorie.com/pub/djgpp/current/v2gnu/
 
 CONTACT INFORMATION
 
-        Project home page        : http://waterlan.home.xs4all.nl/dos2unix.html
-        SourceForge project page : http://sourceforge.net/projects/dos2unix/
+        Project home page        : https://waterlan.home.xs4all.nl/dos2unix.html
+        SourceForge project page : https://sourceforge.net/projects/dos2unix/
 
         Erwin Waterlander
         waterlan@xs4all.nl
-        http://waterlan.home.xs4all.nl/
+        https://waterlan.home.xs4all.nl/
 
         If you need support you can email me directly or make a ticket on the
         SourceForge project page. Help in any form is appreciated. A problem

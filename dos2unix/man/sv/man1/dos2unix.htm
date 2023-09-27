@@ -2,9 +2,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>dos2unix 7.4.2 - textfilsformatskonverterare fr&#xe5;n DOS/Mac till Unix och vice versa</title>
+<title>dos2unix 7.5.1 - textfilsformatskonverterare fr&#xe5;n DOS/Mac till Unix och vice versa</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:root@localhost" />
+<link rev="made" href="mailto:ASSI@walter.nonet" />
 </head>
 
 <body>
@@ -43,8 +43,8 @@
 
 <h1 id="SYNOPSIS">SYNOPSIS</h1>
 
-<pre><code>    dos2unix [flaggor] [FIL &hellip;] [-n INFIL UTFIL &hellip;]
-    unix2dos [flaggor] [FIL &hellip;] [-n INFIL UTFIL &hellip;]</code></pre>
+<pre><code>dos2unix [flaggor] [FIL &hellip;] [-n INFIL UTFIL &hellip;]
+unix2dos [flaggor] [FIL &hellip;] [-n INFIL UTFIL &hellip;]</code></pre>
 
 <h1 id="BESKRIVNING">BESKRIVNING</h1>
 
@@ -71,11 +71,11 @@
 
 <p>Behandla alla efterf&ouml;ljande flaggor som filnamn. Anv&auml;nd denna flagga om du vill konvertera filer vars namn b&ouml;rjar med bindestreck. F&ouml;r att till exempel konvertera en fil med namnet &ldquo;-foo&ldquo; kan du anv&auml;nda detta kommando:</p>
 
-<pre><code>    dos2unix -- -foo</code></pre>
+<pre><code>dos2unix -- -foo</code></pre>
 
 <p>Eller i nyfilsl&auml;ge:</p>
 
-<pre><code>    dos2unix -n -- -foo out.txt</code></pre>
+<pre><code>dos2unix -n -- -foo out.txt</code></pre>
 
 </dd>
 <dt id="allow-chown"><b>--allow-chown</b></dt>
@@ -200,6 +200,14 @@
 <p>Standardkodningen kan &auml;ndras via milj&ouml;variabeln DOS2UNIX_DISPLAY_ENC genom att s&auml;tta den till <code>unicode</code>, <code>unicodebom</code>, <code>utf8</code> or <code>utf8bom</code>.</p>
 
 </dd>
+<dt id="e---add-eol"><b>-e, --add-eol</b></dt>
+<dd>
+
+<p>L&auml;gg till en radbrytning p&aring; sista raden om det inte finns n&aring;gon. Detta fungerar f&ouml;r alla konverteringar.</p>
+
+<p>En fil konverterad fr&aring;n DOS- till Unix-format kan sakna en radbrytning p&aring; sista raden. Det finns textredigerare som skriver textfiler utan en radbrytning p&aring; den sista raden. Vissa Unix-program har problem med att behandla dessa filer, d&aring; POSIX-standarden definierar det som att varje rad i en textfil m&aring;ste har ett avslutande nyradstecken. Att konkatenera filer kan till exempel ge ov&auml;ntat resultat.</p>
+
+</dd>
 <dt id="f---force"><b>-f, --force</b></dt>
 <dd>
 
@@ -227,14 +235,14 @@
 
 <p>Exempelutmatning:</p>
 
-<pre><code>     6       0       0  no_bom    text    dos.txt
-     0       6       0  no_bom    text    unix.txt
-     0       0       6  no_bom    text    mac.txt
-     6       6       6  no_bom    text    mixed.txt
-    50       0       0  UTF-16LE  text    utf16le.txt
-     0      50       0  no_bom    text    utf8unix.txt
-    50       0       0  UTF-8     text    utf8dos.txt
-     2     418     219  no_bom    bin&auml;r   dos2unix.exe</code></pre>
+<pre><code> 6       0       0  no_bom    text    dos.txt
+ 0       6       0  no_bom    text    unix.txt
+ 0       0       6  no_bom    text    mac.txt
+ 6       6       6  no_bom    text    mixed.txt
+50       0       0  UTF-16LE  text    utf16le.txt
+ 0      50       0  no_bom    text    utf8unix.txt
+50       0       0  UTF-8     text    utf8dos.txt
+ 2     418     219  no_bom    bin&auml;r   dos2unix.exe</code></pre>
 
 <p>Notera att en bin&auml;rfil ibland kan misstas f&ouml;r en textfil. Se vidare flaggan <code>-s</code>.</p>
 
@@ -304,31 +312,31 @@
 
 <p>Visa information f&ouml;r alla *.txt-filer:</p>
 
-<pre><code>    dos2unix -i *.txt</code></pre>
+<pre><code>dos2unix -i *.txt</code></pre>
 
 <p>Visa bara antalet DOS-radbrytningar och Unix-radbrytningar:</p>
 
-<pre><code>    dos2unix -idu *.txt</code></pre>
+<pre><code>dos2unix -idu *.txt</code></pre>
 
 <p>Visa bara byteordningsmarkeringen:</p>
 
-<pre><code>    dos2unix --info=b *.txt</code></pre>
+<pre><code>dos2unix --info=b *.txt</code></pre>
 
 <p>Lista filerna som har DOS-radbrytningar:</p>
 
-<pre><code>    dos2unix -ic *.txt</code></pre>
+<pre><code>dos2unix -ic *.txt</code></pre>
 
 <p>Lista filerna som har Unix-radbrytningar:</p>
 
-<pre><code>    unix2dos -ic *.txt</code></pre>
+<pre><code>unix2dos -ic *.txt</code></pre>
 
 <p>Konvertera endast filer som har DOS-radbrytningar och l&auml;mna &ouml;vriga filer or&ouml;rda:</p>
 
-<pre><code>    dos2unix -ic0 *.txt | xargs -0 dos2unix</code></pre>
+<pre><code>dos2unix -ic0 *.txt | xargs -0 dos2unix</code></pre>
 
 <p>Hitta textfiler som har DOS-radbrytningar:</p>
 
-<pre><code>    find -name &#39;*.txt&#39; -print0 | xargs -0 dos2unix -ic</code></pre>
+<pre><code>find -name &#39;*.txt&#39; -print0 | xargs -0 dos2unix -ic</code></pre>
 
 </dd>
 <dt id="k---keepdate"><b>-k, --keepdate</b></dt>
@@ -379,6 +387,22 @@
 <p>Avbryt konvertering n&auml;r anv&auml;ndar- och/eller grupp&auml;garskap f&ouml;r originalfilen inte kan bevaras i gammalt fill&auml;ge. Se ocks&aring; flaggorna <code>-o</code> och <code>-n</code>. Denna flagga &auml;r endast tillg&auml;nglig om dos2unix har st&ouml;d f&ouml;r att bevara anv&auml;ndar- och grupp&auml;garskap f&ouml;r filer.</p>
 
 </dd>
+<dt id="no-add-eol"><b>--no-add-eol</b></dt>
+<dd>
+
+<p>L&auml;gg inte till en radbrytning p&aring; den sista raden om det inte finns n&aring;gon.</p>
+
+</dd>
+<dt id="O---to-stdout"><b>-O, --to-stdout</b></dt>
+<dd>
+
+<p>Skriv till standard ut som ett Unix-filter. Anv&auml;nd flaggan <code>-o</code> f&ouml;r att &aring;terg&aring; till det gamla (p&aring;-plats) fill&auml;get.</p>
+
+<p>Kombinerat med flaggan <code>-e</code> kan filer konkateneras korrekt. Inga sammanfogade sista och f&ouml;rsta rader, och inga Unicode byteordningsmarkeringar i mitten p&aring; den konkatenerade filen. Exempel:</p>
+
+<pre><code>dos2unix -e -O fil1.txt fil2.txt &gt; ut.txt</code></pre>
+
+</dd>
 <dt id="o---oldfile-FIL"><b>-o, --oldfile FIL &hellip;</b></dt>
 <dd>
 
@@ -390,11 +414,11 @@
 
 <p>Konvertering g&ouml;rs alltid via en tempor&auml;rfil. N&auml;r ett fel intr&auml;ffar halvv&auml;gs i konverteringen tas den tempor&auml;ra filen bort och originalfilen finns kvar intakt. Om konverteringen &auml;r framg&aring;ngsrik kommer originalfilen att ers&auml;ttas med tempor&auml;rfilen. Du kanske har skrivr&auml;ttigheter till originalfilen men inte r&auml;ttigheter att st&auml;lla in samma anv&auml;ndar- och/eller gruppr&auml;ttighetsegenskaper p&aring; tempor&auml;rfilen som originalfilen har. Detta inneb&auml;r att du inte kan bevara anv&auml;ndar- och/eller grupp&auml;garskapet f&ouml;r originalfilen. I detta fall kan du anv&auml;nda flaggan <code>--allow-chown</code> f&ouml;r att forts&auml;tta konverteringen:</p>
 
-<pre><code>    dos2unix --allow-chown foo.txt</code></pre>
+<pre><code>dos2unix --allow-chown foo.txt</code></pre>
 
 <p>Ett annat alternativ &auml;r att anv&auml;nda nyfilsl&auml;ge:</p>
 
-<pre><code>    dos2unix -n foo.txt foo.txt</code></pre>
+<pre><code>dos2unix -n foo.txt foo.txt</code></pre>
 
 <p>F&ouml;rdelen med flaggan <code>--allow-chown</code> &auml;r att du kan anv&auml;nda jokertecken och att &auml;garskapsegenskaper om m&ouml;jligt kommer att bevaras.</p>
 
@@ -516,35 +540,35 @@
 
 <p>Konvertera fr&aring;n DOS standardteckentabell till Unix Latin-1:</p>
 
-<pre><code>    dos2unix -iso -n in.txt ut.txt</code></pre>
+<pre><code>dos2unix -iso -n in.txt ut.txt</code></pre>
 
 <p>Konvertera fr&aring;n DOS CP850 till Unix Latin-1:</p>
 
-<pre><code>    dos2unix -850 -n in.txt ut.txt</code></pre>
+<pre><code>dos2unix -850 -n in.txt ut.txt</code></pre>
 
 <p>Konvertera fr&aring;n Windows CP1252 till Unix Latin-1:</p>
 
-<pre><code>    dos2unix -1252 -n in.txt ut.txt</code></pre>
+<pre><code>dos2unix -1252 -n in.txt ut.txt</code></pre>
 
 <p>Konvertera fr&aring;n Windows CP1252 till Unix UTF-8 (Unicode):</p>
 
-<pre><code>    iconv -f CP1252 -t UTF-8 in.txt | dos2unix &gt; ut.txt</code></pre>
+<pre><code>iconv -f CP1252 -t UTF-8 in.txt | dos2unix &gt; ut.txt</code></pre>
 
 <p>Konvertera fr&aring;n Unix Latin-1 till DOS-standardteckentabell:</p>
 
-<pre><code>    unix2dos -iso -n in.txt ut.txt</code></pre>
+<pre><code>unix2dos -iso -n in.txt ut.txt</code></pre>
 
 <p>Konvertera fr&aring;n Unix Latin-1 till DOS CP850:</p>
 
-<pre><code>    unix2dos -850 -n in.txt ut.txt</code></pre>
+<pre><code>unix2dos -850 -n in.txt ut.txt</code></pre>
 
 <p>Konvertera fr&aring;n Unix Latin-1 till Windows CP1252:</p>
 
-<pre><code>    unix2dos -1252 -n in.txt ut.txt</code></pre>
+<pre><code>unix2dos -1252 -n in.txt ut.txt</code></pre>
 
 <p>Konvertera fr&aring;n Unix UTF-8 (Unicode) till Windows CP1252:</p>
 
-<pre><code>    unix2dos &lt; in.txt | iconv -f UTF-8 -t CP1252 &gt; ut.txt</code></pre>
+<pre><code>unix2dos &lt; in.txt | iconv -f UTF-8 -t CP1252 &gt; ut.txt</code></pre>
 
 <p>Se &auml;ven <a href="http://czyborra.com/charsets/codepages.html">http://czyborra.com/charsets/codepages.html</a> och <a href="http://czyborra.com/charsets/iso8859.html">http://czyborra.com/charsets/iso8859.html</a>.</p>
 
@@ -603,19 +627,19 @@
 
 <p>Konvertera fr&aring;n Windows UTF-16 (med BOM) till Unix UTF-8:</p>
 
-<pre><code>    dos2unix -n in.txt ut.txt</code></pre>
+<pre><code>dos2unix -n in.txt ut.txt</code></pre>
 
 <p>Konvertera fr&aring;n Windows UTF-16LE (utan BOM) till Unix UTF-8:</p>
 
-<pre><code>    dos2unix -ul -n in.txt ut.txt</code></pre>
+<pre><code>dos2unix -ul -n in.txt ut.txt</code></pre>
 
 <p>Konvertera fr&aring;n Unix UTF-8 till Windows UTF-8 med BOM:</p>
 
-<pre><code>    unix2dos -m -n in.txt ut.txt</code></pre>
+<pre><code>unix2dos -m -n in.txt ut.txt</code></pre>
 
 <p>Konvertera fr&aring;n Unix UTF-8 till Windows UTF-16:</p>
 
-<pre><code>    unix2dos &lt; in.txt | iconv -f UTF-8 -t UTF-16 &gt; ut.txt</code></pre>
+<pre><code>unix2dos &lt; in.txt | iconv -f UTF-8 -t UTF-16 &gt; ut.txt</code></pre>
 
 <h1 id="GB18030">GB18030</h1>
 
@@ -633,73 +657,73 @@
 
 <p>L&auml;sa inmatning fr&aring;n &ldquo;stdin&ldquo; och skriv utmatning till &ldquo;stdout&ldquo;:</p>
 
-<pre><code>    dos2unix &lt; a.txt
-    cat a.txt | dos2unix</code></pre>
+<pre><code>dos2unix &lt; a.txt
+cat a.txt | dos2unix</code></pre>
 
 <p>Konvertera och ers&auml;tta a.txt. Konvertera och ers&auml;tt b.txt:</p>
 
-<pre><code>    dos2unix a.txt b.txt
-    dos2unix -o a.txt b.txt</code></pre>
+<pre><code>dos2unix a.txt b.txt
+dos2unix -o a.txt b.txt</code></pre>
 
 <p>Konvertera och ers&auml;tt a.txt i ascii-konverteringsl&auml;ge:</p>
 
-<pre><code>    dos2unix a.txt</code></pre>
+<pre><code>dos2unix a.txt</code></pre>
 
 <p>Konvertera och ers&auml;tt a.txt i ascii-konverteringsl&auml;ge, konvertera och ers&auml;tt b.txt i 7bit-konverteringsl&auml;ge:</p>
 
-<pre><code>    dos2unix a.txt -c 7bit b.txt
-    dos2unix -c ascii a.txt -c 7bit b.txt
-    dos2unix -ascii a.txt -7 b.txt</code></pre>
+<pre><code>dos2unix a.txt -c 7bit b.txt
+dos2unix -c ascii a.txt -c 7bit b.txt
+dos2unix -ascii a.txt -7 b.txt</code></pre>
 
 <p>Konvertera a.txt fr&aring;n Mac- till Unix-format:</p>
 
-<pre><code>    dos2unix -c mac a.txt
-    mac2unix a.txt</code></pre>
+<pre><code>dos2unix -c mac a.txt
+mac2unix a.txt</code></pre>
 
 <p>Konvertera a.txt fr&aring;n Unix- till Mac-format:</p>
 
-<pre><code>    unix2dos -c mac a.txt
-    unix2mac a.txt</code></pre>
+<pre><code>unix2dos -c mac a.txt
+unix2mac a.txt</code></pre>
 
 <p>Konvertera och ers&auml;tt a.txt medan originalet tidsst&auml;mpel beh&aring;lls:</p>
 
-<pre><code>    dos2unix -k a.txt
-    dos2unix -k -o a.txt</code></pre>
+<pre><code>dos2unix -k a.txt
+dos2unix -k -o a.txt</code></pre>
 
 <p>Konvertera a.txt och skriv till e.txt:</p>
 
-<pre><code>    dos2unix -n a.txt e.txt</code></pre>
+<pre><code>dos2unix -n a.txt e.txt</code></pre>
 
 <p>Konvertera a.txt och skriv till e.txt, l&aring;t e.txt beh&aring;lla tidsst&auml;mpeln fr&aring;n a.txt:</p>
 
-<pre><code>    dos2unix -k -n a.txt e.txt</code></pre>
+<pre><code>dos2unix -k -n a.txt e.txt</code></pre>
 
 <p>Konvertera och ers&auml;tt a.txt, konvertera b.txt och skriv till e.txt:</p>
 
-<pre><code>    dos2unix a.txt -n b.txt e.txt
-    dos2unix -o a.txt -n b.txt e.txt</code></pre>
+<pre><code>dos2unix a.txt -n b.txt e.txt
+dos2unix -o a.txt -n b.txt e.txt</code></pre>
 
 <p>Konvertera c.txt och skriv till e.txt, konvertera och ers&auml;tt a.txt, konvertera och ers&auml;tt b.txt, konvertera d.txt och skriv till f.txt:</p>
 
-<pre><code>    dos2unix -n c.txt e.txt -o a.txt b.txt -n d.txt f.txt</code></pre>
+<pre><code>dos2unix -n c.txt e.txt -o a.txt b.txt -n d.txt f.txt</code></pre>
 
 <h1 id="REKURSIV-KONVERTERING">REKURSIV KONVERTERING</h1>
 
 <p>I ett Unix-skal kan kommandona find(1) och xargs(1) anv&auml;ndas f&ouml;r att k&ouml;ra dos2unix rekursivt &ouml;ver alla textfiler i ett katalogtr&auml;d. F&ouml;r att till exempel konvertera alla .txt-filer i katalogtr&auml;det under den aktuella katalogen skriv:</p>
 
-<pre><code>    find . -name &#39;*.txt&#39; -print0 |xargs -0 dos2unix</code></pre>
+<pre><code>find . -name &#39;*.txt&#39; -print0 |xargs -0 dos2unix</code></pre>
 
 <p>Flaggan <code>-print0</code> till find(1) och motsvarande flagga <code>-0</code> till xargs(1) beh&ouml;vs n&auml;r det finns filer med mellanslag eller citationstecken i namnet. Annars kan dessa flaggor utel&auml;mnas. Ett annat alternativ &auml;r att anv&auml;ndas find(1) med flaggan <code>-exec</code>:</p>
 
-<pre><code>    find . -name &#39;*.txt&#39; -exec dos2unix {} \;</code></pre>
+<pre><code>find . -name &#39;*.txt&#39; -exec dos2unix {} \;</code></pre>
 
 <p>I en Windows-kommandoprompt kan f&ouml;ljande kommando anv&auml;ndas:</p>
 
-<pre><code>    for /R %G in (*.txt) do dos2unix &quot;%G&quot;</code></pre>
+<pre><code>for /R %G in (*.txt) do dos2unix &quot;%G&quot;</code></pre>
 
 <p>PowerShell-anv&auml;ndare kan anv&auml;nda f&ouml;ljande kommando i Windows PowerShell:</p>
 
-<pre><code>    get-childitem -path . -filter &#39;*.txt&#39; -recurse | foreach-object {dos2unix $_.Fullname}</code></pre>
+<pre><code>get-childitem -path . -filter &#39;*.txt&#39; -recurse | foreach-object {dos2unix $_.Fullname}</code></pre>
 
 <h1 id="LOKALISERING">LOKALISERING</h1>
 
@@ -710,13 +734,13 @@
 
 <p>Det prim&auml;ra spr&aring;ket v&auml;ljs med milj&ouml;variabeln LANG. LANG-variabeln best&aring;r av flera delas. Den f&ouml;rsta delen &auml;r spr&aring;kkoden i gemener. Den andra delen &auml;r valfri och utg&ouml;r landskoden i versaler, f&ouml;reg&aring;ngen av ett understreck. Det finns ocks&aring; en valfri tredje del: teckenkodning, f&ouml;reg&aring;ngen av en punkt. Ett par exempel f&ouml;r skal av POSIX-standard-typ:</p>
 
-<pre><code>    export LANG=nl               Nederl&auml;ndska
-    export LANG=nl_NL            Nederl&auml;ndska, Nederl&auml;nderna
-    export LANG=nl_BE            Nederl&auml;ndska, Belgien
-    export LANG=es_ES            Spanska, Spanien
-    export LANG=es_MX            Spanska, Mexiko
-    export LANG=en_US.iso88591   Engelska, USA, Latin-1-kodning
-    export LANG=en_GB.UTF-8      Engelska, UK, UTF-8-kodning</code></pre>
+<pre><code>export LANG=nl               Nederl&auml;ndska
+export LANG=nl_NL            Nederl&auml;ndska, Nederl&auml;nderna
+export LANG=nl_BE            Nederl&auml;ndska, Belgien
+export LANG=es_ES            Spanska, Spanien
+export LANG=es_MX            Spanska, Mexiko
+export LANG=en_US.iso88591   Engelska, USA, Latin-1-kodning
+export LANG=en_GB.UTF-8      Engelska, UK, UTF-8-kodning</code></pre>
 
 <p>F&ouml;r en fullst&auml;ndig lista &ouml;ver spr&aring;k och landskoder se vidare i gettext-manualen: <a href="http://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html">http://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html</a></p>
 
@@ -738,7 +762,7 @@
 
 <p>Exempel (POSIX-skal):</p>
 
-<pre><code>    export DOS2UNIX_LOCALEDIR=$HOME/share/locale</code></pre>
+<pre><code>export DOS2UNIX_LOCALEDIR=$HOME/share/locale</code></pre>
 
 </dd>
 </dl>

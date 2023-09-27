@@ -239,6 +239,7 @@ typedef struct
   int Follow;                           /* 0: skip symlink, 1: follow symbolic link, 2: replace symlink. */
   int status;
   int stdio_mode;                       /* if TRUE, stdio mode */
+  int to_stdout;                        /* write output to stdout in old file mode */
   int error;                            /* an error occurred */
   int bomtype;                          /* byte order mark */
   int add_bom;                          /* 1: write BOM */
@@ -247,6 +248,7 @@ typedef struct
   int file_info;                        /* 1: print file information */
   int locale_target;                    /* locale conversion target. 0: UTF-8; 1: GB18030 */
   unsigned int line_nr;                 /* line number where UTF-16 error occurs */
+  int add_eol;                          /* Add End Of Line to last line */
 } CFlag;
 
 

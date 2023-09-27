@@ -60,13 +60,14 @@ OPTIONEN
     --allow-chown
         erlaubt die Änderung des Eigentümers der Datei im Alte-Datei-Modus.
 
-        When this option is used, the conversion will not be aborted when
-        the user and/or group ownership of the original file can't be
-        preserved in old file mode. Conversion will continue and the
-        converted file will get the same new ownership as if it was
-        converted in new file mode. See also options "-o" and "-n". This
-        option is only available if dos2unix has support for preserving the
-        user and group ownership of files.
+        Wenn diese Option verwendet wird, dann bricht die Umwandlung nicht
+        ab, wenn der Eigentümer und die Gruppe der Originaldatei im
+        Alte-Datei-Modus nicht erhalten werden kann. Die Umwandlung wird
+        fortgesetzt und die umgewandelte Datei erhält den gleichen neuen
+        Eigentümer, als wäre sie im Neue-Datei-Modus umgewandelt worden.
+        Siehe auch die Optionen "-o" und "-n". Diese Option ist nur
+        verfügbar, wenn dos2unix über Unterstützung für die Erhaltung des
+        Eigentümers und der Gruppe von Dateien verfügt.
 
     -ascii
         wandelt nur Zeilenumbrüche um. Dies ist der vorgegebene
@@ -183,6 +184,18 @@ OPTIONEN
         Die Standardkodierung kann durch Setzen der Umgebungsvariable
         DOS2UNIX_DISPLAY_ENC auf "unicode", "unicodebom", "utf8" oder "utf8"
         geändert werden.
+
+    -e, --add-eol
+        Add a line break to the last line if there isn't one. This works for
+        every conversion.
+
+        A file converted from DOS to Unix format may lack a line break on
+        the last line. There are text editors that write text files without
+        a line break on the last line. Some Unix programs have problems
+        processing these files, because the POSIX standard defines that
+        every line in a text file must end with a terminating newline
+        character. For instance concatenating files may not give the
+        expected result.
 
     -f, --force
         erzwingt die Umwandlung von Binärdateien.
@@ -323,12 +336,26 @@ OPTIONEN
         verhindert die Änderung des Eigentümers der Datei im
         Alte-Datei-Modus (Voreinstellung).
 
-        Abort conversion when the user and/or group ownership of the
-        original file can't be preserved in old file mode. See also options
-        "-o" and "-n". This option is only available if dos2unix has support
-        for preserving the user and group ownership of files.
+        bricht die Umwandlung ab, wenn der Eigentümer und/oder die Gruppe
+        der Originaldatei im Alte-Datei-Modus nicht erhalten werden kann.
+        Siehe auch die Optionen "-o" und "-n". Diese Option ist nur
+        verfügbar, wenn dos2unix über Unterstützung für die Erhaltung des
+        Eigentümers und der Gruppe von Dateien verfügt.
 
-    -o, --oldfile DATEI …
+    --no-add-eol
+        Do not add a line break to the last line if there isn't one.
+
+    -O, --to-stdout
+        Write to standard output, like a Unix filter. Use option "-o" to go
+        back to old file (in-place) mode.
+
+        Combined with option "-e" files can be properly concatenated. No
+        merged last and first lines, and no Unicode byte order marks in the
+        middle of the concatenated file. Example:
+
+            dos2unix -e -O file1.txt file2.txt > output.txt
+
+    -o, --oldfile FILE ...
         Alte-Datei-Modus. Die DATEI wird umgewandelt und durch die
         Ausgabedatei überschrieben. Per Vorgabe werden Umwandlungen in
         diesem Modus ausgeführt. Platzhalter sind verwendbar.

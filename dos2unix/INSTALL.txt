@@ -32,15 +32,15 @@ PREREQUISITES
 
     Using Watcom C:
         Required
-            * Open Watcom     : http://www.openwatcom.org/
-            * Open Watcom V2  : http://open-watcom.github.io/open-watcom/    (git repo)
-                                http://sourceforge.net/projects/openwatcom/  (binaries download)
+            * Open Watcom     : https://sourceforge.net/projects/openwatcom/
+                              : https://github.com/open-watcom/open-watcom-1.9
+            * Open Watcom V2  : https://github.com/open-watcom/open-watcom-v2
 
 
     Using Microsoft Visual C++:
         Required
             * Visual C++   : You can get a free community version via this web page:
-                             https://www.visualstudio.com/vs/community/
+                             https://visualstudio.microsoft.com/vs/community/
                              Download Visual Studio for Windows Desktop. Visual C++ is part
                              of Visual Studio. Out of the box compilation for 64-bit
                              applications is supported since version 2012.
@@ -184,8 +184,8 @@ LARGE FILE SUPPORT
         Disable LFS:
         make clean install LFS=
 
-    The gcc compiler from the mingw.org project does not support LFS.
-    It is advised to use the mingw-w64 compiler tool chain for LFS on
+    The gcc compiler from the MinGW project does not support LFS.
+    It is advised to use the MinGW-w64 compiler tool chain for LFS on
     32 bit Windows.
 
 
@@ -240,28 +240,28 @@ DOCUMENTATION
 
 WINDOWS 32 BIT PORT
 
-    Using Mingw <http://www.mingw.org>, or MinGW-w64
-    <http://mingw-w64.sourceforge.net>.
+    Using Mingw <https://osdn.net/projects/mingw/>,
+    or MinGW-w64 <https://www.mingw-w64.org/>.
 
-    I  advise to use mingw-w64, because mingw-w64 has support for
-    Large File Support (LFS), and mingw doesn't. LFS is the ability to
+    I  advise to use MinGW-w64, because MinGW-w64 has support for
+    Large File Support (LFS), and MinGW doesn't. LFS is the ability to
     read/write files larger than 2GB or 4GB on a 32 bit operation system.
     LFS also makes processing files on network drives more reliable. I have
     had a problem report that output files were not always written when files
     on a network drive were concurrently processed. By switching from
-    mingw to mingw-w64 the problem was solved.
+    MinGW to MinGW-w64 the problem was solved.
     Earlier I got a problem report of accessing small files on a Windows
     network drive from Debian Linux. Here also the solution was LFS.
     Since dos2unix 6.0.4 (2013-12-30) I build the binary win32 packages
-    with mingw-w64.
+    with MinGW-w64.
 
-    I am using the MSYS2 project <http://sourceforge.net/projects/msys2/>
+    I am using the MSYS2 project <https://www.msys2.org/>
     which includes the MinGW-w64 compiler.
 
     The MSYS(2) environment is required for building dos2unix with MinGW(-w64).
 
 
-    Type these commands to build with mingw(-w64):
+    Type these commands to build with MinGW(-w64):
 
         make clean
         make
@@ -283,16 +283,16 @@ WINDOWS 32 BIT PORT
 
     The win32 binaries built with MinGW32 are packed with a patched version of
     MinGW's libintl-8.dll that has builtin support for relocation. See also
-    http://waterlan.home.xs4all.nl/libintl.html and
-    http://sourceforge.net/p/mingw/bugs/1808/
+    https://waterlan.home.xs4all.nl/libintl.html and
+    https://sourceforge.net/p/mingw/bugs/1808/
     The MSYS2 project has the relocation patch already included.
 
 
 WINDOWS 64 BIT PORT
 
     To compile a version for 64 bit Windows, get the Mingw-w64 compiler
-    <http://mingw-w64.sourceforge.net>.
-    I am using the MSYS2 project <http://sourceforge.net/projects/msys2/>
+    <https://www.mingw-w64.org/>.
+    I am using the MSYS2 project <https://www.msys2.org/>
     which includes the MinGW-w64 compiler.
 
     The MSYS2 environment is required for building dos2unix with MinGW-w64.
@@ -315,7 +315,7 @@ WINDOWS 64 BIT PORT
 DOS PORT, 32 BIT
 
     To compile a version for DOS, get the DJGPP compiler
-    <http://www.delorie.com/djgpp/>, and use makefile djgpp.mak.
+    <https://www.delorie.com/djgpp/>, and use makefile djgpp.mak.
     DJGPP 2.03 gcc >= 4.6 seems to cause problems. Crashes of gcc itself,
     or crashing dos2unix binaries (seen in DOSBox and DOSEMU).
     Use DJGPP 2.03 gcc <= 4.5.3.

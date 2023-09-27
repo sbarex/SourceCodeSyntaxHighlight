@@ -1,0 +1,847 @@
+NUME
+    dos2unix - Convertor de format de fișier text din DOS/Mac în Unix și
+    viceversa
+
+REZUMAT
+        dos2unix [opțiuni] [FIȘIER ...] [-n FIȘIER_INTRARE FIȘIER_IEȘIRE ...]
+        unix2dos [opțiuni] [FIȘIER ...] [-n FIȘIER_INTRARE FIȘIER_IEȘIRE ...]
+
+DESCRIERE
+    Pachetul «dos2unix» include utilitarele "dos2unix" și "unix2dos" pentru
+    a converti fișierele text simplu din formatul DOS sau Mac în formatul
+    Unix și invers.
+
+    În fișierele text DOS/Windows, o întrerupere de linie, cunoscută și sub
+    numele de linie nouă, este o combinație de două caractere: un retur de
+    caret (CR) urmat de un salt de linie (LF). În fișierele text Unix, o
+    întrerupere de linie este un singur caracter: saltul de linie (LF). În
+    fișierele text Mac, înainte de Mac OS X, o întrerupere de linie era un
+    singur caracter retur de caret (CR). În prezent, Mac OS folosește
+    întreruperi de linie în stil Unix (LF).
+
+    Pe lângă întreruperile de linie, «dos2unix» poate converti și
+    codificarea fișierelor. Câteva pagini de cod DOS pot fi convertite în
+    Latin-1 Unix. Și fișierele Unicode Windows (UTF-16) pot fi convertite în
+    fișiere Unicode Unix (UTF-8).
+
+    Fișierele binare sunt omise automat, cu excepția cazului în care
+    conversia este forțată.
+
+    Fișierele care nu sunt obișnuite, cum ar fi directoarele și liniile de
+    conectare cu nume (FIFOs), sunt omise automat.
+
+    Legăturile simbolice și țintele lor sunt în mod implicit păstrate
+    neatinse. Legăturile simbolice pot fi înlocuite opțional sau rezultatul
+    poate fi scris în ținta legăturii simbolice, Scrierea la o țintă de
+    legătură simbolică nu este acceptată în Windows.
+
+    «dos2unix» a fost modelat după «dos2unix» din SunOS/Solaris. Există o
+    diferență importantă față de versiunea originală a SunOS/Solaris.
+    Această versiune efectuează în mod implicit conversia „în același loc”,
+    în cazul de față, în același fișier (mod-fișier_vechi), în timp ce
+    versiunea originală SunOS/Solaris acceptă doar conversia împerecheată
+    (mod-fișier_nou). A se vedea, de asemenea, opțiunile "-o" și "-n". O
+    altă diferență este că versiunea SunOS/Solaris utilizează implicit
+    conversia în modul *iso*, în timp ce această versiune utilizează
+    implicit conversia în modul *ascii*.
+
+OPȚIUNI
+    --  Tratează toate opțiunile următoare ca nume de fișiere. Utilizați
+        această opțiune dacă doriți să convertiți fișiere ale căror nume
+        încep cu o liniuță. De exemplu, pentru a converti un fișier numit
+        „-foo”, puteți folosi această comandă:
+
+            dos2unix -- -foo
+
+        Sau în modul-fișier_nou:
+
+            dos2unix -n -- -foo ieșire.txt
+
+    --allow-chown
+        Permite schimbarea proprietarului fișierului în modul-fișier_vechi.
+
+        Când este utilizată această opțiune, conversia nu va fi întreruptă
+        atunci când utilizatorul și/sau grupul proprietar al fișierului
+        original nu poate fi păstrat în modul-fișier_vechi. Conversia va
+        continua și fișierul convertit va primi același nou proprietar ca și
+        cum ar fi fost convertit în modul-fișier_nou. A se vedea, de
+        asemenea, opțiunile "-o" și "-n". Această opțiune este disponibilă
+        numai dacă «dos2unix» are suport pentru păstrarea utilizatorului și
+        grupului proprietar al fișierelor.
+
+    -ascii
+        Convertește numai întreruperile de linie. Acesta este modul de
+        conversie implicit.
+
+    -iso
+        Conversie între setul de caractere DOS și ISO-8859-1. Consultați, de
+        asemenea, secțiunea MODURI DE CONVERSIE.
+
+    -1252
+        Utilizează pagina de cod Windows 1252 (Europa de vest).
+
+    -437
+        Utilizează pagina de cod DOS 437 (SUA). Aceasta este pagina de cod
+        implicită utilizată pentru conversia ISO.
+
+    -850
+        Utilizează pagina de cod DOS 850 (Europa de vest).
+
+    -860
+        Utilizează pagina de cod DOS 860 (Portugalia).
+
+    -863
+        Utilizează pagina de cod DOS 863 (Franceza Canadiană).
+
+    -865
+        Utilizează pagina de cod DOS 865 (Scandinavia).
+
+    -7  Convertește caractere de 8 biți în spațiu de 7 biți.
+
+    -b, --keep-bom
+        Păstrează marcajul de ordine a octeților (BOM). Când fișierul de
+        intrare are un marcaj de ordine a octeților, scrie marcajul de
+        ordine a octeților în fișierul de ieșire. Acesta este comportamentul
+        implicit la conversia de întreruperi de linie DOS. A se vedea, de
+        asemenea, opțiunea "-r".
+
+    -c, --convmode MOD_CONVERSIE
+        Stabilește modul de conversie. Unde MOD_CONVERSIE este unul dintre:
+        *ascii*, *7bit*, *iso*, *mac* „ascii” fiind valoarea implicită.
+
+    -D, --display-enc COFIFICAREA
+        Stabilește codificarea textului afișat. Unde CODIFICAREA este una
+        dintre: *ansi*, *unicode*, *unicodebom*, *utf8*, *utf8bom*; „ascii”
+        fiind valoarea implicită.
+
+        Această opțiune este disponibilă numai în «dos2uni» pentru Windows
+        cu suport pentru numele fișierelor în Unicode. Această opțiune nu
+        are efect asupra numelor de fișiere citite și scrise, ci doar asupra
+        modului în care acestea sunt afișate.
+
+        Există mai multe metode de afișare a textului într-o consolă Windows
+        bazate pe codificarea textului. Toate acestea au propriile lor
+        avantaje și dezavantaje.
+
+        ansi
+            Metoda implicită a «dos2unix» este utilizarea textului codificat
+            ANSI. Avantajul este acela că este compatibilă cu versiunea
+            anterioară. Această opțiune funcționează cu fonturi bitmap și
+            TrueType. În unele regiuni, poate fi necesar să schimbați pagina
+            de coduri OEM DOS activă în pagina de coduri ANSI a sistemului
+            Windows folosind comanda "chcp", deoarece «dos2unix» utilizează
+            pagina de coduri a sistemului Windows.
+
+            Dezavantajul lui „ansi” este că numele fișierelor internaționale
+            cu caractere care nu sunt în interiorul paginii de cod implicite
+            a sistemului, nu sunt afișate corect. Veți vedea în schimb un
+            semn de întrebare sau un simbol greșit. Când nu lucrați cu nume
+            de fișiere străine, această metodă este OK.
+
+        unicode, unicodebom
+            Avantajul codificării Unicode (numele Windows pentru UTF-16)
+            este că textul este de obicei afișat corect. Nu este nevoie să
+            schimbați pagina de cod activă. Poate fi necesar să definiți
+            fontul consolei la un font TrueType pentru ca toate caracterele
+            internaționale să fie afișate corect. Când un caracter nu este
+            inclus în fontul TrueType, de obicei vedeți un pătrat mic,
+            uneori cu un semn de întrebare în el.
+
+            Când utilizați consola ConEmu, tot textul este afișat corect,
+            deoarece ConEmu selectează automat un font bun.
+
+            Dezavantajul unicode (UTF-16) este că nu este compatibil cu
+            ASCII. Ieșirea nu este ușor de gestionat atunci când o
+            redirecționați către alt program.
+
+            Când se folosește metoda "unicodebom", textul Unicode va fi
+            precedat de un BOM („Byte Order Mark” = marcaj de ordine a
+            octeților). Este necesar un marcaj de ordine a octeților pentru
+            redirecționarea corectă sau canalizarea în PowerShell.
+
+        utf8, utf8bom
+            Avantajul lui utf8 este faptul că este compatibil cu ASCII.
+            Trebuie să definiți fontul consolei la un font TrueType. Cu un
+            font TrueType, textul este afișat similar cu codificarea
+            "unicode".
+
+            Dezavantajul este că atunci când utilizați fontul bitmap
+            implicit, toate caracterele non-ASCII sunt afișate greșit. Nu
+            numai numele fișierelor Unicode, ci și mesajele traduse devin
+            imposibil de citit. În Windows configurat pentru o regiune din
+            Asia de Est, este posibil să observați o mulțime de pâlpâiri ale
+            consolei când mesajele sunt afișate.
+
+            Într-o consolă ConEmu, metoda de codificare utf8 funcționează
+            bine.
+
+            Când se folosește metoda "utf8bom", textul UTF-8 va fi precedat
+            de un BOM („Byte Order Mark” = marcaj de ordine a octeților).
+            Este necesar un marcaj de ordine a octeților pentru
+            redirecționarea corectă sau canalizarea în PowerShell.
+
+        Codificarea implicită poate fi schimbată cu variabila de mediu
+        DOS2UNIX_DISPLAY_ENC definindu-i valoarea: "unicode", "unicodebom",
+        "utf8" sau "utf8bom".
+
+    -e, --add-eol
+        Adaugă o întrerupere de linie la ultima linie, dacă nu există una.
+        Acest lucru funcționează pentru fiecare conversie.
+
+        Un fișier convertit din formatul DOS în formatul Unix poate să nu
+        aibă o întrerupere de linie pe ultima linie. Există editoare de text
+        care scriu fișiere de text fără o întrerupere de linie pe ultima
+        linie. Unele programe Unix au probleme în procesarea acestor
+        fișiere, deoarece standardul POSIX definește că fiecare linie
+        dintr-un fișier text trebuie să se încheie cu un caracter de sfârșit
+        de linie nouă. De exemplu, concatenarea fișierelor poate să nu dea
+        rezultatul așteptat.
+
+    -f, --force
+        Forțează conversia fișierelor binare.
+
+    -gb, --gb18030
+        În Windows, fișierele UTF-16 sunt convertite implicit în UTF-8,
+        indiferent de configurarea locală. Utilizați această opțiune pentru
+        a converti fișierele UTF-16 în GB18030. Această opțiune este
+        disponibilă numai în Windows. A se vedea, de asemenea, secțiunea
+        GB18030.
+
+    -h, --help
+        Afișează mesajul de ajutor și iese.
+
+    -i[FLAGS], --info[=FLAGS] FILE ...
+        Afișează informații despre fișier. Nu se face nicio conversie.
+
+        Sunt afișate următoarele informații, în această ordine: numărul de
+        întreruperi de linie DOS, numărul de întreruperi de linie Unix,
+        numărul de întreruperi de linie Mac, marcajul de ordine a octeților,
+        text sau binar, numele fișierului.
+
+        Exemplu de ieșire:
+
+             6       0       0  no_bom    text    dos.txt
+             0       6       0  no_bom    text    unix.txt
+             0       0       6  no_bom    text    mac.txt
+             6       6       6  no_bom    text    mixed.txt
+            50       0       0  UTF-16LE  text    utf16le.txt
+             0      50       0  no_bom    text    utf8unix.txt
+            50       0       0  UTF-8     text    utf8dos.txt
+             2     418     219  no_bom    binary  dos2unix.exe
+
+        Rețineți că, uneori, un fișier binar poate fi confundat cu un fișier
+        text. A se vedea, de asemenea, opțiunea "-s".
+
+        Opțional, pot fi adăugate fanioane suplimentare pentru a modifica
+        rezultatul. Se pot adăuga unul sau mai multe fanioane.
+
+        0   Afișează liniile de informații ale fișierului urmate de un
+            caracter null în loc de un caracter de linie nouă. Acest lucru
+            permite interpretarea corectă a numelor de fișiere cu spații sau
+            ghilimele atunci când este utilizat fanionul „c”. Utilizați
+            acest fanion în combinație cu opțiunea xargs(1) -0 sau "--null".
+
+        d   Afișează numărul de întreruperi de linie al formatului DOS.
+
+        u   Afișează numărul de întreruperi de linie al formatului Unix.
+
+        m   Afișează numărul de întreruperi de linie al formatului Mac.
+
+        b   Afișează marcajul de ordine a octeților.
+
+        t   Indică dacă fișierul este text sau binar.
+
+        c   Afișează numai fișierele care vor fi convertite.
+
+            Cu fanionul "c", «dos2unix» va afișa numai fișierele care conțin
+            întreruperi de linie DOS, «unix2dos» va afișa numai numele de
+            fișiere care au întreruperi de linie Unix.
+
+        h   Afișează titlul.
+
+        p   Afișează numele fișierelor fără cale.
+
+        Exemple:
+
+        Afișează informații pentru toate fișierele *.txt:
+
+            dos2unix -i *.txt
+
+        Afișează doar numărul de întreruperi de linie DOS și de întreruperi
+        de linie Unix:
+
+            dos2unix -idu *.txt
+
+        Afișează doar marcajul de ordine a octeților:
+
+            dos2unix --info=b *.txt
+
+        Listează fișierele care au întreruperi de linie DOS:
+
+            dos2unix -ic *.txt
+
+        Listează fișierele care au întreruperi de linie Unix:
+
+            unix2dos -ic *.txt
+
+        Convertește numai fișierele care au întreruperi de linie DOS și lasă
+        celelalte fișiere neatinse:
+
+            dos2unix -ic0 *.txt | xargs -0 dos2unix
+
+        Găsește fișiere text care au întreruperi de linie DOS:
+
+            find -name '*.txt' -print0 | xargs -0 dos2unix -ic
+
+    -k, --keepdate
+        Păstrează marcajul de dată al fișierului de ieșire la fel ca al
+        fișierului de intrare.
+
+    -L, --license
+        Afișează licența programului.
+
+    -l, --newline
+        Adaugă o linie nouă suplimentară.
+
+        dos2unix: Numai întreruperile de linie DOS sunt modificate în două
+        întreruperi de linie Unix. În modul Mac, numai întreruperile de
+        linie Mac sunt modificate în două întreruperi de linie Unix.
+
+        unix2dos: Numai întreruperile de linie Unix sunt modificate în două
+        întreruperi de linie DOS. În modul Mac, întreruperile de linie Unix
+        sunt modificate în două întreruperi de linie Mac.
+
+    -m, --add-bom
+        Scrie un marcaj de ordine a octeților (BOM) în fișierul de ieșire.
+        În mod implicit, este scris un marcaj de ordine a octeților UTF-8.
+
+        Când fișierul de intrare este UTF-16 și este utilizată opțiunea
+        "-u", va fi scris un marcaj de ordine a octeților UTF-16.
+
+        Nu utilizați niciodată această opțiune când codificarea de ieșire
+        este alta decât UTF-8, UTF-16 sau GB18030. Vedeți, de asemenea,
+        secțiunea UNICODE.
+
+    -n, --newfile FIȘIER_INTRARE FIȘIER_IEȘIRE ...
+        Modul de fișier nou. Convertiți fișierul FIȘIER_INTRARE și scrieți
+        rezultatul în fișierul FIȘIER_IEȘIRE. Numele fișierelor trebuie să
+        fie date în perechi, iar numele cu metacaractere ar trebui să *nu*
+        fi folosite sau v-ați puteai pierde fișierele.
+
+        Persoana care începe conversia în modul-fișier_nou (pereche) va fi
+        proprietarul fișierului convertit. Permisiunile de citire/scriere
+        ale noului fișier vor fi permisiunile fișierului original minus
+        umask(1) al persoanei care execută conversia.
+
+    --no-allow-chown
+        Nu permite schimbarea proprietarului fișierului în
+        modul-fișier_vechi (implicit).
+
+        Anulează conversia atunci când utilizatorul și/sau grupul proprietar
+        al fișierului original nu poate fi păstrat în modul-fișier_vechi. A
+        se vedea, de asemenea, opțiunile "-o" și "-n". Această opțiune este
+        disponibilă doar dacă «dos2unix» are suport pentru păstrarea
+        dreptului de proprietate asupra fișierelor de către utilizator și
+        grup.
+
+    --no-add-eol
+        Nu adaugă o întrerupere de linie la ultima linie, dacă nu există
+        una.
+
+    -O, --to-stdout
+        Scrie la ieșirea standard, ca un filtru Unix. Folosiți opțiunea "-o"
+        pentru a reveni la modul-fișier_vechi (în același loc / în același
+        fișier).
+
+        În combinație cu opțiunea "-e", fișierele pot fi concatenate în mod
+        corespunzător. Nu se fuzionează ultima și prima linie și nici
+        marcajele de ordine a octeților (BOM) Unicode în mijlocul fișierului
+        concatenat. Exemplu:
+
+            dos2unix -e -O fișier1.txt fișier2.txt > fișier_ieșire.txt
+
+    -o, --oldfile FIȘIER ...
+        Modul fișier vechi. Convertește fișierul FIȘIER și suprascrie
+        rezultatul în el. Programul rulează implicit în acest mod. Pot fi
+        folosite nume cu metacaractere.
+
+        În modul-fișier_vechi (în același loc / în același fișier), fișierul
+        convertit primește același proprietar, grup și permisiuni de
+        citire/scriere ca fișierul original. De asemenea, atunci când
+        fișierul este convertit de un alt utilizator care are permisiuni de
+        scriere în fișier (de exemplu, utilizatorul root). Conversia va fi
+        anulată atunci când nu este posibil să se păstreze valorile
+        originale. Schimbarea proprietarului ar putea însemna că
+        proprietarul inițial nu mai poate citi fișierul. Schimbarea grupului
+        ar putea reprezenta un risc de securitate, fișierul ar putea fi
+        făcut vizibil pentru persoanele cărora nu este destinat. Păstrarea
+        permisiunilor de proprietar, de grup și de citire/scriere este
+        acceptată numai în Unix.
+
+        Pentru a verifica dacă «dos2unix» are suport pentru păstrarea
+        proprietății utilizatorului și grupului de fișiere, tastați
+        "dos2unix -V".
+
+        Conversia se face întotdeauna printr-un fișier temporar. Când apare
+        o eroare la jumătatea conversiei, fișierul temporar este șters și
+        fișierul original rămâne intact. Când conversia are succes, fișierul
+        original este înlocuit cu fișierul temporar. Este posibil să aveți
+        permisiunea de scriere în fișierul original, dar nu aveți
+        permisiunea de a pune aceleași proprietăți de proprietate ale
+        utilizatorului și/sau grupului asupra fișierului temporar ca cele pe
+        care le are fișierul original. Aceasta înseamnă că nu puteți păstra
+        utilizatorul și/sau grupul proprietar al fișierului original. În
+        acest caz, puteți utiliza opțiunea "--allow-chown" pentru a continua
+        conversia:
+
+            dos2unix --allow-chown foo.txt
+
+        O altă opțiune este să utilizați modul-fișier_nou:
+
+            dos2unix -n foo.txt foo.txt
+
+        Avantajul opțiunii "--allow-chown" este că puteți folosi
+        metacaractere, iar proprietățile de proprietate vor fi păstrate
+        atunci când este posibil.
+
+    -q, --quiet
+        Modul silențios. Suprimă toate avertismentele și mesajele. Valoarea
+        returnată este zero. Cu excepția cazului în care sunt utilizate
+        opțiuni greșite în linia de comandă.
+
+    -r, --remove-bom
+        Elimină marcajul de ordine a octeților (BOM). Nu scrie un marcaj de
+        ordine a octeților în fișierul de ieșire. Acesta este comportamentul
+        implicit la conversia întreruperilor de linie Unix. A se vedea, de
+        asemenea, opțiunea "-b".
+
+    -s, --safe
+        Omite fișierele binare (implicit).
+
+        Omiterea fișierelor binare se face pentru a evita greșelile
+        accidentale. Rețineți că detectarea fișierelor binare nu este 100%
+        sigură. Fișierele de intrare sunt scanate pentru simboluri binare
+        care de obicei nu se găsesc în fișierele text. Este posibil ca un
+        fișier binar să conțină doar caractere de text normale. Un astfel de
+        fișier binar va fi văzut din greșeală ca un fișier text.
+
+    -u, --keep-utf16
+        Păstrează codificarea UTF-16 originală a fișierului de intrare.
+        Fișierul de ieșire va fi scris în aceeași codare UTF-16, little sau
+        big endian, ca și fișierul de intrare. Acest lucru previne
+        transformarea în UTF-8. Un marcaj de ordine a octeților UTF-16 va fi
+        scris în consecință. Această opțiune poate fi dezactivată cu
+        opțiunea "-ascii".
+
+    -ul, --assume-utf16le
+        Presupune că formatul fișierului de intrare este UTF-16LE.
+
+        Când există un marcaj de ordine a octeților în fișierul de intrare,
+        marcajul de ordine a octeților are prioritate față de această
+        opțiune.
+
+        Când ați făcut o presupunere greșită (fișierul de intrare nu era în
+        format UTF-16LE) și conversia a reușit, veți obține un fișier de
+        ieșire UTF-8 cu text greșit. Puteți anula conversia greșită cu
+        iconv(1) prin conversia fișierului de ieșire UTF-8 înapoi în
+        UTF-16LE. Acest lucru va reface fișierul original.
+
+        Presupunerea UTF-16LE funcționează ca un *mod de conversie*. Prin
+        trecerea la modul *ascii* implicit, presupunerea UTF-16LE este
+        dezactivată.
+
+    -ub, --assume-utf16be
+        Presupune că formatul fișierului de intrare este UTF-16BE.
+
+        Această opțiune funcționează la fel ca și opțiunea "-ul".
+
+    -v, --verbose
+        Afișează mesaje detaliate. Sunt afișate informații suplimentare
+        despre mărcile de ordine ale octeților și cantitatea de întreruperi
+        de linie convertite.
+
+    -F, --follow-symlink
+        Urmează legăturile simbolice și convertește țintele.
+
+    -R, --replace-symlink
+        Înlocuiește legăturile simbolice cu fișierele convertite (fișierele
+        țintă originale rămân neschimbate).
+
+    -S, --skip-symlink
+        Păstrează legăturile simbolice și țintele neschimbate (implicit).
+
+    -V, --version
+        Afișează informațiile despre versiune și iese.
+
+MODUL MAC
+    În modul normal, întreruperile de linie sunt convertite din DOS în Unix
+    și invers. Întreruperile de linie Mac nu sunt convertite.
+
+    În modul Mac, întreruperile de linie sunt convertite din Mac în Unix și
+    invers. Întreruperile de linie DOS nu sunt modificate.
+
+    Pentru a rula în modul Mac, utilizați opțiunea din linie de comandă "-c
+    mac" sau utilizați comenzile "mac2unix" sau "unix2mac".
+
+MODURI DE CONVERSIE
+    ascii
+        În modul "ascii" sunt convertite doar întreruperile de linie. Acesta
+        este modul de conversie implicit.
+
+        Deși numele acestui mod este ASCII, care este un standard de 7 biți,
+        modul actual este de 8 biți. Utilizați întotdeauna acest mod când
+        convertiți fișiere Unicode UTF-8.
+
+    7bit
+        În acest mod, toate caracterele de 8 biți non-ASCII (cu valori de la
+        128 la 255) sunt convertite într-un spațiu de 7 biți.
+
+    iso Caracterele sunt convertite între un set de caractere DOS (pagina de
+        cod) și un set de caractere ISO ISO-8859-1 (Latin-1) în Unix.
+        Caracterele DOS fără echivalent ISO-8859-1, pentru care conversia nu
+        este posibilă, sunt convertite într-un punct. Același lucru este
+        valabil și pentru caracterele ISO-8859-1 fără omolog în DOS.
+
+        Când este folosită numai opțiunea "-iso", «dos2unix» va încerca să
+        determine pagina de cod activă. Când acest lucru nu este posibil,
+        «dos2unix» va folosi pagina de cod implicită CP437, care este
+        folosită în principal în SUA. Pentru a forța o anumită pagină de
+        coduri, utilizați opțiunile -437 (SUA), -850 (Europa de Vest), -860
+        (Portugheză), -863 (Franceză Canadiană) sau "- 865" (Scandinavă).
+        Pagina de coduri CP1252 (Europa de Vest) Windows este, de asemenea,
+        acceptată cu opțiunea -1252. Pentru alte pagini de cod, utilizați
+        «dos2unix» în combinație cu iconv(1). «iconv» poate converti o listă
+        lungă de codificări de caractere. Puteți vizualiza această listă
+        rulând comanda: «iconv -l».
+
+        Nu utilizați niciodată conversia ISO pe fișiere text Unicode. Acesta
+        va deteriora fișierele codificate UTF-8.
+
+        Câteva exemple:
+
+        Convertește din pagina de cod implicită DOS în Latin-1 Unix:
+
+            dos2unix -iso -n fișier_intrare.txt fișier_ieșire.txt
+
+        Convertește din CP850 DOS în Latin-1 Unix:
+
+            dos2unix -850 -n fișier_intrare.txt fișier_ieșire.txt
+
+        Convertește din CP1252 Windows în Latin-1 Unix:
+
+            dos2unix -1252 -n fișier_intrare.txt fișier_ieșire.txt
+
+        Convertește din CP1252 Windows în UTF-8 (Unicode) Unix:
+
+            iconv -f CP1252 -t UTF-8 fișier_intrare.txt | dos2unix > fișier_ieșire.txt
+
+        Convertește din Latin-1 Unix la pagina de cod implicită DOS:
+
+            unix2dos -iso -n fișier_intrare.txt fișier_ieșire.txt
+
+        Convertește din Latin-1 Unix în CP850 DOS:
+
+            unix2dos -850 -n fișier_intrare.txt fișier_ieșire.txt
+
+        Convertește din Latin-1 Unix în CP1252 Windows:
+
+            unix2dos -1252 -n fișier_intrare.txt fișier_ieșire.txt
+
+        Convertește din UTF-8 (Unicode) Unix în CP1252 Windows:
+
+            unix2dos < fișier_intrare.txt | iconv -f UTF-8 -t CP1252 > fișier_ieșire.txt
+
+        Consultați de asemenea <http://czyborra.com/charsets/codepages.html>
+        și <http://czyborra.com/charsets/iso8859.html>.
+
+UNICODE
+  Codificări
+    Există diferite codificări Unicode. În Unix și Linux fișierele Unicode
+    sunt de obicei codificate în codificarea UTF-8. În Windows, fișierele
+    text Unicode pot fi codificate în UTF-8, UTF-16 sau UTF-16 big-endian,
+    dar sunt în mare parte codificate în formatul UTF-16.
+
+  Conversie
+    Fișierele text Unicode pot avea întreruperi de linie DOS, Unix sau Mac,
+    ca și fișierele text obișnuite.
+
+    Toate versiunile de «dos2unix» și «unix2dos» pot converti fișiere
+    codificate în formatul UTF-8, deoarece UTF-8 a fost conceput pentru
+    compatibilitate cu ASCII.
+
+    «dos2unix» și «unix2dos» cu suport Unicode UTF-16, pot citi fișiere text
+    codificate UTF-16 little și big endian. Pentru a vedea dacă «dos2unix» a
+    fost construit cu suport UTF-16, tastați: "dos2unix -V".
+
+    În Unix/Linux, fișierele codificate UTF-16 sunt convertite în
+    codificarea caracterelor locale. Utilizați comanda locale(1) pentru a
+    afla care este codificarea caracterelor stabilită de localizare. Atunci
+    când conversia nu este posibilă, va apărea o eroare de conversie și
+    fișierul va fi omis.
+
+    În Windows, fișierele UTF-16 sunt convertite în mod implicit în UTF-8.
+    Fișierele text formatate UTF-8 sunt bine acceptate atât în Windows, cât
+    și în Unix/Linux.
+
+    Codificările UTF-16 și UTF-8 sunt pe deplin compatibile, nu se va pierde
+    text în conversie. Când apare o eroare de conversie din UTF-16 în UTF-8,
+    de exemplu când fișierul de intrare UTF-16 conține o eroare, fișierul va
+    fi omis.
+
+    Când se utilizează opțiunea "-u", fișierul de ieșire va fi scris în
+    aceeași codificare UTF-16 ca și fișierul de intrare. Opțiunea "-u"
+    împiedică conversia în UTF-8.
+
+    «dos2unix» și «unix2dos» nu au nicio opțiune de a converti fișierele
+    UTF-8 în UTF-16.
+
+    Modurile de conversie ISO și 7 biți nu funcționează pe fișierele UTF-16.
+
+  Marcajul de ordine a octeților
+    În Windows, fișierele text Unicode au de obicei un marcaj de ordine a
+    octeților (BOM), deoarece multe programe Windows (inclusiv Notepad)
+    adaugă marcajul de ordine a octeților în mod implicit. A se vedea, de
+    asemenea, <http://en.wikipedia.org/wiki/Byte_order_mark>.
+
+    În Unix, fișierele Unicode nu au de obicei un marcaj de ordine a
+    octeților (BOM). Se presupune că fișierele text sunt codificate în
+    codificarea caracterelor stabilită de localizare.
+
+    «dos2unix» poate detecta dacă un fișier este în formatul UTF-16 numai
+    dacă fișierul are un marcaj de ordine a octeților (BOM). Când un fișier
+    UTF-16 nu are un marcaj de ordine a octeților, «dos2unix» va vedea
+    fișierul ca un fișier binar.
+
+    Utilizați opțiunea "-ul" sau "-ub" pentru a converti un fișier UTF-16
+    fără un marcaj de ordine a octeților (BOM).
+
+    «dos2unix» nu scrie în mod implicit niciun marcaj de ordine a octeților
+    (BOM) în fișierul de ieșire. Cu opțiunea "-b" «dos2unix» scrie un marcaj
+    de ordine a octeților atunci când fișierul de intrare are un marcaj de
+    ordine a octeților.
+
+    «unix2dos» scrie implicit un marcaj de ordine a octeților în fișierul de
+    ieșire când fișierul de intrare are un marcaj de ordine a octeților.
+    Utilizați opțiunea "-r" pentru a elimina un marcaj de ordine a
+    octeților.
+
+    «dos2unix» și «unix2dos» scriu întotdeauna un marcaj de ordine a
+    octeților atunci când se utilizează opțiunea "-m".
+
+  Nume de fișiere Unicode în Windows
+    «dos2unix» are suport opțional pentru citirea și scrierea numelor de
+    fișiere Unicode în linia de comandă Windows. Asta înseamnă că «dos2unix»
+    poate deschide fișiere care au caractere în nume care nu fac parte din
+    pagina de cod ANSI implicită a sistemului. Pentru a vedea dacă
+    «dos2unix» pentru Windows a fost construit cu suport pentru nume de
+    fișier Unicode, tastați: "dos2unix -V".
+
+    Există unele probleme cu afișarea numelor de fișiere Unicode într-o
+    consolă Windows. Vedeți opțiunea "-D", "--display-enc". Numele
+    fișierelor pot fi afișate greșit în consolă, dar fișierele vor fi scrise
+    cu numele corect.
+
+  Exemple Unicode
+    Convertește din UTF-16 Windows (fără BOM) în UTF-8 Unix:
+
+        dos2unix -n fișier_intrare.txt fișier_ieșire.txt
+
+    Convertește din UTF-16LE Windows (fără BOM) în UTF-8 Unix:
+
+        dos2unix -ul -n fișier_intrare.txt fișier_ieșire.txt
+
+    Convertește din UTF-8 Unix în Windows UTF-8 Windows cu BOM:
+
+        unix2dos -m -n fișier_intrare.txt fișier_ieșire.txt
+
+    Convertește din UTF-8 Unix în UTF-16 Windows:
+
+        unix2dos < fișier_intrare.txt | iconv -f UTF-8 -t UTF-16 > fișier_ieșire.txt
+
+GB18030
+    GB18030 este un standard guvernamental chinez. Un subset obligatoriu al
+    standardului GB18030 este obligatoriu oficial pentru toate produsele
+    software vândute în China. A se vedea, de asemenea,
+    <http://en.wikipedia.org/wiki/GB_18030>.
+
+    Standardul GB18030 este pe deplin compatibil cu Unicode și poate fi
+    considerat un format de transformare unicode. La fel ca UTF-8, GB18030
+    este compatibil cu ASCII. GB18030 este, de asemenea, compatibil cu
+    pagina de cod 936 Windows, cunoscută și sub numele de GBK.
+
+    În Unix/Linux, fișierele UTF-16 sunt convertite în GB18030 atunci când
+    codificarea locală este setată la GB18030. Rețineți că acest lucru va
+    funcționa numai dacă localizarea este acceptată de sistem. Utilizați
+    comanda "locale -a" pentru a obține lista localizărilor acceptate.
+
+    În Windows, trebuie să utilizați opțiunea "-gb" pentru a converti
+    fișierele UTF-16 în GB18030.
+
+    Fișierele codificate GB18030 pot avea un marcaj de ordine a octeților,
+    precum fișierele Unicode.
+
+EXEMPLE
+    Citește intrarea din „stdin” (intrarea standard) și scrie ieșirea la
+    „stdout” (ieșirea standard):
+
+        dos2unix < a.txt
+        cat a.txt | dos2unix
+
+    Convertește și înlocuiește a.txt. Convertește și înlocuiește b.txt:
+
+        dos2unix a.txt b.txt
+        dos2unix -o a.txt b.txt
+
+    Convertește și înlocuiește a.txt în modul de conversie ascii:
+
+        dos2unix a.txt
+
+    Convertește și înlocuiește a.txt în modul de conversie ascii,
+    convertește și înlocuiește b.txt în modul de conversie pe 7 biți:
+
+        dos2unix a.txt -c 7bit b.txt
+        dos2unix -c ascii a.txt -c 7bit b.txt
+        dos2unix -ascii a.txt -7 b.txt
+
+    Convertește a.txt din formatul Mac în formatul Unix:
+
+        dos2unix -c mac a.txt
+        mac2unix a.txt
+
+    Convertește a.txt din formatul Unix în formatul Mac:
+
+        unix2dos -c mac a.txt
+        unix2mac a.txt
+
+    Convertește și înlocuiește a.txt, păstrând marcajul original al datei:
+
+        dos2unix -k a.txt
+        dos2unix -k -o a.txt
+
+    Convertește a.txt și scrie în e.txt:
+
+        dos2unix -n a.txt e.txt
+
+    Convertește a.txt și scrie în e.txt, și face ca marcajul de dată al lui
+    e.txt să fie la fel cu cel al lui a.txt:
+
+        dos2unix -k -n a.txt e.txt
+
+    Convertește și înlocuiește a.txt, converteștei b.txt și scrie în e.txt:
+
+        dos2unix a.txt -n b.txt e.txt
+        dos2unix -o a.txt -n b.txt e.txt
+
+    Convertește c.txt și scrie în e.txt, convertește și înlocuiește a.txt,
+    convertește și înlocuiește b.txt, convertește d.txt și scrie în f.txt:
+
+        dos2unix -n c.txt e.txt -o a.txt b.txt -n d.txt f.txt
+
+CONVERSIE RECURSIVĂ
+    Într-un shell Unix, comenzile find(1) și xargs(1) pot să fie folosite
+    pentru a rula «dos2unix» în mod recursiv asupra tuturor fișierele text
+    dintr-un arbore de directoare. De exemplu, pentru a converti toate
+    fișierele .txt din arborele de directoare sub directorul curent,
+    tastați:
+
+        find . -name '*.txt' -print0 |xargs -0 dos2unix
+
+    Opțiunea find(1) "-print0" și opțiunea corespunzătoare xargs(1) -0 sunt
+    necesare atunci când există fișiere cu spații sau ghilimele în nume. În
+    caz contrar, aceste opțiuni pot fi omise. O altă opțiune este să
+    utilizați find(1) cu opțiunea "-exec":
+
+        find . -name '*.txt' -exec dos2unix {} \;
+
+    Într-un prompt de comandă Windows se poate folosi următoarea comandă:
+
+        for /R %G in (*.txt) do dos2unix "%G"
+
+    Utilizatorii de PowerShell pot folosi următoarea comandă a PowerShell de
+    Windows:
+
+        get-childitem -path . -filter '*.txt' -recurse | foreach-object {dos2unix $_.Fullname}
+
+LOCALIZAREA
+    LANG
+        Limba principală este selectată cu variabila de mediu LANG.
+        Variabila LANG constă din mai multe părți. Prima parte este codul
+        limbii cu litere mici. Al doilea este opțional și este codul țării
+        cu majuscule, precedat de un caracter de subliniere. Există, de
+        asemenea, o a treia parte opțională: codificarea caracterelor,
+        precedată de un punct. Câteva exemple pentru shell-uri de tip
+        standard POSIX:
+
+            export LANG=nl               Olandeză
+            export LANG=nl_NL            Olandeză, Olanda
+            export LANG=nl_BE            Olandeză, Belgia
+            export LANG=es_ES            Spaniolă, Spania
+            export LANG=es_MX            Spaniolă, Mexic
+            export LANG=en_US.iso88591   Engleză, SUA, codificarea Latin-1
+            export LANG=en_GB.UTF-8      Engleză, UK, codificarea UTF-8
+
+        Pentru o listă completă a codurilor de limbă și de țară, consultați
+        manualul «gettext»:
+        <http://www.gnu.org/software/gettext/manual/html_node/Usual-Language
+        -Codes.html>
+
+        În sistemele Unix, puteți utiliza comanda locale(1) pentru a obține
+        informații specifice despre localizare.
+
+    LANGUAGE
+        Cu variabila de mediu LANGUAGE puteți specifica o listă cu
+        prioritate de limbi, separate prin două puncte. «dos2unix» dă
+        preferință variabilei LANGUAGE în detrimentul variabilei LANG. De
+        exemplu, mai întâi olandeză și apoi germană: "LANGUAGE=nl:de". Mai
+        întâi trebuie să activați localizarea, definind LANG (sau LC_ALL) la
+        o altă valoare decât „C”, înainte de a putea utiliza o listă cu
+        prioritate de limbă prin variabila LANGUAGE. Consultați și manualul
+        «gettext»:
+        <http://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-v
+        ariable.html>
+
+        Dacă selectați o limbă care nu este disponibilă, veți primi mesajele
+        standard în limba engleză.
+
+    DOS2UNIX_LOCALEDIR
+        Cu variabila de mediu DOS2UNIX_LOCALEDIR, variabila LOCALEDIR
+        definită în timpul compilării poate fi înlocuită. LOCALEDIR este
+        folosită pentru a găsi fișierele de limbă. Valoarea implicită GNU
+        este "/usr/local/share/locale". Opțiunea --version va afișa valoarea
+        pe care LOCALEDIR o utilizează.
+
+        Exemplu (shell POSIX):
+
+            export DOS2UNIX_LOCALEDIR=$HOME/share/locale
+
+VALOAREA RETURNATĂ
+    La succes, se returnează zero. Când apare o eroare de sistem, va fi
+    returnată ultima eroare de sistem. Pentru alte erori se returnează 1.
+
+    Valoarea returnată este întotdeauna zero în modul silențios, cu excepția
+    cazului în care sunt utilizate opțiuni greșite ale liniei de comandă.
+
+STANDARDE
+    <https://ro.wikipedia.org/wiki/Fi%C8%99ier_text>
+
+    <http://en.wikipedia.org/wiki/Carriage_return>
+
+    <http://en.wikipedia.org/wiki/Newline>
+
+    <https://ro.wikipedia.org/wiki/Unicode>
+
+AUTORI
+    Benjamin Lin - <blin@socs.uts.edu.au>, Bernd Johannes Wuebben (modul
+    mac2unix) - <wuebben@kde.org>, Christian Wurll (adăugarea unei linii noi
+    suplimentare) - <wurll@ira.uka.de>, Erwin Waterlander -
+    <waterlan@xs4all.nl> (menținător)
+
+    Pagina principală a proiectului:
+    <http://waterlan.home.xs4all.nl/dos2unix.html>
+
+    Pagina SourceForge a proiectului:
+    <http://sourceforge.net/projects/dos2unix/>
+
+CONSULTAȚI ȘI
+    file(1) find(1) iconv(1) locale(1) xargs(1)
+

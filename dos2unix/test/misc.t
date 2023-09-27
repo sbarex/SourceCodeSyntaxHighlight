@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
 # Requires perl-Test-Simple installation.
-use Test::Simple tests => 15;
+use Test::Simple tests => 13;
 
 $suffix = "";
 if (-e "../dos2unix.exe") {
@@ -22,12 +22,6 @@ ok( $? == 0, '7bit disabled for utf8 with BOM');
 
 system("cmp out_d7.txt chard7.txt");
 ok( $? == 0, '7bit enabled again, unix2dos');
-
-system("$DOS2UNIX -v < dos.txt > out_unix.txt; cmp out_unix.txt unix.txt");
-ok( $? == 0, 'DOS to Unix conversion, stdin/out' );
-
-system("$UNIX2DOS -v < unix.txt > out_dos.txt; cmp out_dos.txt dos.txt");
-ok( $? == 0, 'Unix to DOS conversion, stdin/out' );
 
 system("$DOS2UNIX -v -n utf16len.txt out_bin.txt");
 # file out_bin.txt may not exist.

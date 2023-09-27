@@ -109,7 +109,7 @@ OPTIONS
         *ascii*, *7bit*, *iso*, *mac*. Ascii est la valeur par défaut.
 
     -D, --display-enc ENCODAGE
-        Choisi l'encodage des textes affichés. L'ENCODAGE peut être :
+        Choisi l'encodage des textes affichés. L'ENCODAGE peut être :
         *ansi*, *unicode*, *unicodebom*, *utf8*, *utf8bom*. La valeur par
         défaut est ansi.
 
@@ -184,6 +184,19 @@ OPTIONS
         L'encodage par défaut peut être changé en assignant la valeur
         "unicode", "unicodebom", "utf8" ou "utf8bom" à la variable
         d'environnement DOS2UNIX_DISPLAY_ENC.
+
+    -e, --add-eol
+        Ajoute un saut de ligne à la dernière ligne si elle n'en a pas déjà
+        un. Cela fonctionne avec toutes les conversions.
+
+        Un fichier converti de DOS vers le format Unix peut ne pas avoir de
+        saut de ligne à la dernière ligne. Il existe des éditeurs de texte
+        qui écrivent le fichier texte sans saut de ligne à la dernière
+        ligne. Certains programmes Unix ont des difficultés à traiter ces
+        fichiers car le standard POSIX défini que chaque ligne d'un fichier
+        texte doit être terminé par le caractère de nouvelle ligne. Par
+        exemple, concaténer des fichiers peut ne pas donner le résultat
+        attendu.
 
     -f, --force
         Force la conversion de fichiers binaires.
@@ -263,11 +276,11 @@ OPTIONS
 
             dos2unix --info=b *.txt
 
-        Liste les fichiers qui ont des sauts de ligne DOS :
+        Liste les fichiers qui ont des sauts de ligne DOS :
 
             dos2unix -ic *.txt
 
-        Liste les fichiers qui ont des sauts de ligne Unix :
+        Liste les fichiers qui ont des sauts de ligne Unix :
 
             unix2dos -ic *.txt
 
@@ -276,7 +289,7 @@ OPTIONS
 
             dos2unix -ic0 *.txt | xargs -0 dos2unix
 
-        Trouve les fichiers texte qui ont des sauts de ligne DOS :
+        Trouve les fichiers texte qui ont des sauts de ligne DOS :
 
             find -name '*.txt' -print0 | xargs -0 dos2unix -ic
 
@@ -331,6 +344,20 @@ OPTIONS
         de fichier. Voyez aussi les options "-o" et "-n". Cette option est
         uniquement présente si dos2unix dispose des fonctionnalités pour
         préserver l'utilisateur ou le groupe propriétaire des fichiers.
+
+    --no-add-eol
+        N'ajoute pas de saut de ligne à la dernière ligne s'il n'y en a pas.
+
+    -O, --to-stdout
+        Écrit vers la sortie standard, comme un filtre Unix. Utilisez
+        l'option "-o" pour revenir au mode de l'ancien fichier (en place).
+
+        Combiné avec l'option "-e", les fichiers peuvent être concaténés
+        correctement. Les première et dernière lignes ne sont pas fusionnées
+        et il n'y a pas de marque d'ordre des octets au milieu du fichier
+        concaténé. Exemple :
+
+            dos2unix -e -O fichier1.txt fichier2.txt > sortie.txt
 
     -o, --oldfile FICHIER …
         Ancien mode de fichiers. Convertit le fichier FICHIER et écrit la
@@ -490,35 +517,35 @@ MODES DE CONVERSION
 
         Quelques exemples:
 
-        Convertir du code page par défaut du DOS au Latin-1 Unix :
+        Convertir du code page par défaut du DOS au Latin-1 Unix :
 
             dos2unix -iso -n entrée.txt sortie.txt
 
-        Convertir du CP850 du DOS au Latin-1 Unix :
+        Convertir du CP850 du DOS au Latin-1 Unix :
 
             dos2unix -850 -n entrée.txt sortie.txt
 
-        Convertir du CP1252 de Windows au Latin-1 de Unix :
+        Convertir du CP1252 de Windows au Latin-1 de Unix :
 
             dos2unix -1252 -n entrée.txt sortie.txt
 
-        Convertir le CP1252 de Windows en UTF-8 de Unix (Unicode) :
+        Convertir le CP1252 de Windows en UTF-8 de Unix (Unicode) :
 
             iconv -f CP1252 -t UTF-8 entrée.txt | dos2unix > sortie.txt
 
-        Convertir du Latin-1 de Unix au code page par défaut de DOS :
+        Convertir du Latin-1 de Unix au code page par défaut de DOS :
 
             unix2dos -iso -n entrée.txt sortie.txt
 
-        Convertir le Latin-1 de Unix en CP850 du DOS :
+        Convertir le Latin-1 de Unix en CP850 du DOS :
 
             unix2dos -850 -n entrée.txt sortie.txt
 
-        Convertir le Latin-1 de Unix en CP1252 de Windows :
+        Convertir le Latin-1 de Unix en CP1252 de Windows :
 
             unix2dos -1252 -n entrée.txt sortie.txt
 
-        Convertir le UTF-8 de Unix (Unicode) en CP1252 de Windows :
+        Convertir le UTF-8 de Unix (Unicode) en CP1252 de Windows :
 
             unix2dos < entrée.txt | iconv -f UTF-8 -t CP1252 > sortie.txt
 
@@ -612,19 +639,19 @@ UNICODE
     seront écrits avec les bons noms.
 
   Exemples Unicode
-    Convertir de l'UTF-16 Windows (avec BOM) vers l'UTF-8 de Unix :
+    Convertir de l'UTF-16 Windows (avec BOM) vers l'UTF-8 de Unix :
 
         dos2unix -n entrée.txt sortie.txt
 
-    Convertir de l'UTF-16LE de Windows (sans BOM) vers l'UTF-8 de Unix :
+    Convertir de l'UTF-16LE de Windows (sans BOM) vers l'UTF-8 de Unix :
 
         dos2unix -ul -n entrée.txt sortie.txt
 
-    Convertir de l'UTF-8 de Unix vers l'UTF-8 de Windows avec BOM :
+    Convertir de l'UTF-8 de Unix vers l'UTF-8 de Windows avec BOM :
 
         unix2dos -m -n entrée.txt sortie.txt
 
-    Convertir de l'UTF-8 de Unix vers l'UTF-16 de Windows :
+    Convertir de l'UTF-8 de Unix vers l'UTF-16 de Windows :
 
         unix2dos < entrée.txt | iconv -f UTF-8 -t UTF-16 > sortie.txt
 
@@ -656,53 +683,53 @@ EXEMPLES
         dos2unix < a.txt
         cat a.txt | dos2unix
 
-    Convertir et remplacer a.txt. Convertir et remplace b.txt :
+    Convertir et remplacer a.txt. Convertir et remplace b.txt :
 
         dos2unix a.txt b.txt
         dos2unix -o a.txt b.txt
 
-    Convertir et remplacer a.txt en mode de conversion ascii :
+    Convertir et remplacer a.txt en mode de conversion ascii :
 
         dos2unix a.txt
 
     Convertir et remplacer a.txt en mode de conversion ascii. Convertir et
-    remplacer b.txt en mode de conversion 7 bits :
+    remplacer b.txt en mode de conversion 7 bits :
 
         dos2unix a.txt -c 7bit b.txt
         dos2unix -c ascii a.txt -c 7bit b.txt
         dos2unix -ascii a.txt -7 b.txt
 
-    Convertir a.txt depuis le format Mac vers le format Unix :
+    Convertir a.txt depuis le format Mac vers le format Unix :
 
         dos2unix -c mac a.txt
         mac2unix a.txt
 
-    Convertir a.txt du format Unix au format Mac :
+    Convertir a.txt du format Unix au format Mac :
 
         unix2dos -c mac a.txt
         unix2mac a.txt
 
-    Convertir et remplacer a.txt tout en conservant la date originale :
+    Convertir et remplacer a.txt tout en conservant la date originale :
 
         dos2unix -k a.txt
         dos2unix -k -o a.txt
 
-    Convertir a.txt et écrire dans e.txt :
+    Convertir a.txt et écrire dans e.txt :
 
         dos2unix -n a.txt e.txt
 
     Convertir a.txt et écrire dans e.txt. La date de e.txt est la même que
-    celle de a.txt :
+    celle de a.txt :
 
         dos2unix -k -n a.txt e.txt
 
-    Convertir et remplacer a.txt. Convertir b.txt et écrire dans e.txt :
+    Convertir et remplacer a.txt. Convertir b.txt et écrire dans e.txt :
 
         dos2unix a.txt -n b.txt e.txt
         dos2unix -o a.txt -n b.txt e.txt
 
     Convertir c.txt et écrire dans e.txt. Convertir et remplacer a.txt.
-    Convertir et remplacer b.txt. Convertir d.txt et écrire dans f.txt :
+    Convertir et remplacer b.txt. Convertir d.txt et écrire dans f.txt :
 
         dos2unix -n c.txt e.txt -o a.txt b.txt -n d.txt f.txt
 
@@ -723,13 +750,13 @@ CONVERSIONS RÉCURSIVES
         find . -name '*.txt' -exec dos2unix {} \;
 
     En ligne de commande sous Windows, la commande suivante peut être
-    utilisée :
+    utilisée :
 
         for /R %G in (*.txt) do dos2unix "%G"
         find /R %G in
 
     Les utilisateurs de PowerShell peuvent utiliser la commande suivante
-    dans le PowerShell de Windows :
+    dans le PowerShell de Windows :
 
         get-childitem -path . -filter '*.txt' -recurse | foreach-object {dos2unix $_.Fullname}
 

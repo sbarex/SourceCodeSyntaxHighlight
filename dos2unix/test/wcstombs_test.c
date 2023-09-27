@@ -27,7 +27,7 @@ int main() {
     fprintf(stdout,"PASS\n");
     return 0;
   } else {
-    char *errstr = strerror(errno);
+    const char *errstr = strerror(errno);
     fprintf(stdout,"%s\n",errstr);
     fprintf(stdout,"FAIL\n");
     return 1;

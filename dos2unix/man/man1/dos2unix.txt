@@ -167,6 +167,18 @@ OPTIONS
         DOS2UNIX_DISPLAY_ENC by setting it to "unicode", "unicodebom",
         "utf8", or "utf8bom".
 
+    -e, --add-eol
+        Add a line break to the last line if there isn't one. This works for
+        every conversion.
+
+        A file converted from DOS to Unix format may lack a line break on
+        the last line. There are text editors that write text files without
+        a line break on the last line. Some Unix programs have problems
+        processing these files, because the POSIX standard defines that
+        every line in a text file must end with a terminating newline
+        character. For instance concatenating files may not give the
+        expected result.
+
     -f, --force
         Force conversion of binary files.
 
@@ -303,6 +315,19 @@ OPTIONS
         original file can't be preserved in old file mode. See also options
         "-o" and "-n". This option is only available if dos2unix has support
         for preserving the user and group ownership of files.
+
+    --no-add-eol
+        Do not add a line break to the last line if there isn't one.
+
+    -O, --to-stdout
+        Write to standard output, like a Unix filter. Use option "-o" to go
+        back to old file (in-place) mode.
+
+        Combined with option "-e" files can be properly concatenated. No
+        merged last and first lines, and no Unicode byte order marks in the
+        middle of the concatenated file. Example:
+
+            dos2unix -e -O file1.txt file2.txt > output.txt
 
     -o, --oldfile FILE ...
         Old file mode. Convert file FILE and overwrite output to it. The

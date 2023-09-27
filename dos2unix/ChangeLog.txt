@@ -1,3 +1,65 @@
+2023-08-29 Erwin Waterlander <waterlan@xs4all.nl>
+	* Version 7.5.1
+
+2023-06-01 Erwin Waterlander <waterlan@xs4all.nl>
+	* Fixed problem of converting a symbolic link target that
+	  is on another file system. Thanks to report of fdamien12.
+
+2023-05-17 Erwin Waterlander <waterlan@xs4all.nl>
+	* Version 7.5.0
+
+2023-04-16 Erwin Waterlander <waterlan@xs4all.nl>
+	* New option -O, --to-stdout to write to standard output.
+	  Thanks to Victor.
+
+2023-04-06 Erwin Waterlander <waterlan@xs4all.nl>
+	* New option -e, --add-eol to add a line break to the last
+	  line if there isn't one. Option --no-add-eol disables the
+	  feature. Thanks to Anonymous.
+	  See https://sourceforge.net/p/dos2unix/feature-requests/6/
+
+2023-02-11 Erwin Waterlander <waterlan@xs4all.nl>
+	* Version 7.4.4
+
+2023-01-16 Temuri Doghonadze <temuri.doghonadze@gmail.com>
+	* New Georgian translations of UI messages.
+
+2022-12-20 Erwin Waterlander <waterlan@xs4all.nl>
+	* Updated manual translations.
+
+2022-12-12 Seong-ho Cho <darkcircle.0426@gmail.com>
+	* New Korean translation of the manual.
+
+2022-10-12 Remus-Gabriel Chelu <remusgabriel.chelu@disroot.org>
+	* New Romanian translations of UI messages and manual.
+
+2022-09-08 Seong-ho Cho <darkcircle.0426@gmail.com>
+	* New Korean translation of the UI messages.
+
+2022-08-13 Erwin Waterlander <waterlan@xs4all.nl>
+	* common.c, README.txt: Added link to homepage at sourceforge.
+	* Updated various web addresses.
+
+2022-08-13 Jordi Mas i Hernàndez <jmas@softcatala.org>
+	* New Catalan translation of the UI messages.
+
+2022-06-05 Erwin Waterlander <waterlan@xs4all.nl>
+	* Version 7.4.3
+
+2022-06-05 Erwin Waterlander <waterlan@xs4all.nl>
+	* test/Makefile: Disabled GB18030 tests for Darwin.
+	  GB18030 is not properly supported on Darwin.
+
+2021-03-17 Felipe Castro <fefcas@gmail.com>
+	* Updated Esperanto translation of messages.
+
+2020-12-29 Philipp Klaus Krause <spth@users.sourceforge.net>
+	* common.c: Assign strerror return value to const char.
+	  See https://sourceforge.net/p/dos2unix/patches/10/
+
+2020-11-09 Мирослав Николић <miroslavnikolic@rocketmail.com>
+	* New Serbian translation of the manual.
+
 2020-10-12 Erwin Waterlander <waterlan@xs4all.nl>
 	* Version 7.4.2
 
@@ -1112,7 +1174,7 @@
 	  chowning *to* the group is not - and this will make unix2dos fail when it
 	  tries to restore the permissions.
 	  Thanks to Wolf Geldmacher.
-	  See bug report 3444337, https://sourceforge.net/tracker/?func=detail&atid=1234808&aid=3444337&group_id=292083
+	  See bug report 3444337, https://sourceforge.net/p/dos2unix/bugs/8/
 
 2011-11-16 Erwin Waterlander <waterlan@xs4all.nl>
 	* README.txt, man/man1/dos2unix.pod: Freshmeat changed name to Freecode.
@@ -1143,7 +1205,7 @@
 	  on the input file, dos2unix changes owner, group and umask in old
 	  file mode to the other user's owner, group and umask who runs
 	  dos2unix. Fixed only for Unix. Thanks to Christopher Williams.
-	  See http://sourceforge.net/tracker/?func=detail&aid=3327171&group_id=292083&atid=1234808
+	  See https://sourceforge.net/p/dos2unix/bugs/7/
 	* Keep permissions also on Windows. Use chmod() i.s.o. fchmod().
 
 2011-06-16 Erwin Waterlander <waterlan@xs4all.nl>

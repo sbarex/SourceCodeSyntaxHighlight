@@ -2,9 +2,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>dos2unix 7.4.2 - konwerter formatu plik&#xf3;w tekstowych mi&#x119;dzy systemami DOS/Mac a Uniksem</title>
+<title>dos2unix 7.5.1 - konwerter formatu plik&#xf3;w tekstowych mi&#x119;dzy systemami DOS/Mac a Uniksem</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:root@localhost" />
+<link rev="made" href="mailto:ASSI@walter.nonet" />
 </head>
 
 <body>
@@ -43,8 +43,8 @@
 
 <h1 id="SKADNIA">SK&#x141;ADNIA</h1>
 
-<pre><code>    dos2unix [opcje] [PLIK ...] [-n PLIK_WEJ PLIK_WYJ ...]
-    unix2dos [opcje] [PLIK ...] [-n PLIK_WEJ PLIK_WYJ ...]</code></pre>
+<pre><code>dos2unix [opcje] [PLIK ...] [-n PLIK_WEJ PLIK_WYJ ...]
+unix2dos [opcje] [PLIK ...] [-n PLIK_WEJ PLIK_WYJ ...]</code></pre>
 
 <h1 id="OPIS">OPIS</h1>
 
@@ -71,11 +71,11 @@
 
 <p>Potraktowanie wszystkich kolejnych opcji jako nazw plik&oacute;w. Tej opcji nale&#x17C;y u&#x17C;y&#x107;, aby przekonwertowa&#x107; pliki, kt&oacute;rych nazwy zaczynaj&#x105; si&#x119; od minusa. Przyk&#x142;adowo, aby przekonwertowa&#x107; plik o nazwie &quot;-foo&quot;, mo&#x17C;na u&#x17C;y&#x107; polecenia:</p>
 
-<pre><code>    dos2unix -- -foo</code></pre>
+<pre><code>dos2unix -- -foo</code></pre>
 
 <p>Lub w trybie nowego pliku:</p>
 
-<pre><code>    dos2unix -n -- -foo out.txt</code></pre>
+<pre><code>dos2unix -n -- -foo wynik.txt</code></pre>
 
 </dd>
 <dt id="allow-chown"><b>--allow-chown</b></dt>
@@ -200,6 +200,14 @@
 <p>Domy&#x15B;lne kodowanie mo&#x17C;na zmieni&#x107; przy u&#x17C;yciu zmiennej &#x15B;rodowiskowej DOS2UNIX_DISPLAY_ENC, ustawiaj&#x105;c j&#x105; na <code>unicode</code>, <code>unicodebom</code>, <code>utf8</code> lub <code>utf8bom</code>.</p>
 
 </dd>
+<dt id="e---add-eol"><b>-e, --add-eol</b></dt>
+<dd>
+
+<p>Dodawanie znaku ko&#x144;ca linii do ostatniej linii, je&#x15B;li ta go nie zawiera. Dzia&#x142;a przy ka&#x17C;dej konwersji.</p>
+
+<p>Pliki przekszta&#x142;cone z formatu DOS do Uniksa mog&#x105; nie mie&#x107; w ostatnim wierszu znaku ko&#x144;ca linii. Istniej&#x105; edytory tekstu zapisuj&#x105;ce pliki tekstowe bez znaku ko&#x144;ca wiersza w ostatniej linii. Niekt&oacute;re programy uniksowe maj&#x105; problemy przy przetwarzaniu takich plik&oacute;w, poniewa&#x17C; standard POSIX okre&#x15B;la, &#x17C;e ka&#x17C;dy wiersz pliku tekstowego musi ko&#x144;czy&#x107; si&#x119; znakiem ko&#x144;ca linii. Na przyk&#x142;ad &#x142;&#x105;czenie plik&oacute;w mo&#x17C;e nie da&#x107; oczekiwanego wyniku.</p>
+
+</dd>
 <dt id="f---force"><b>-f, --force</b></dt>
 <dd>
 
@@ -227,14 +235,14 @@
 
 <p>Przyk&#x142;adowe wyj&#x15B;cie:</p>
 
-<pre><code>     6       0       0  no_bom    text    dos.txt
-     0       6       0  no_bom    text    unix.txt
-     0       0       6  no_bom    text    mac.txt
-     6       6       6  no_bom    text    mixed.txt
-    50       0       0  UTF-16LE  text    utf16le.txt
-     0      50       0  no_bom    text    utf8unix.txt
-    50       0       0  UTF-8     text    utf8dos.txt
-     2     418     219  no_bom    binary  dos2unix.exe</code></pre>
+<pre><code> 6       0       0  no_bom    text    dos.txt
+ 0       6       0  no_bom    text    unix.txt
+ 0       0       6  no_bom    text    mac.txt
+ 6       6       6  no_bom    text    mixed.txt
+50       0       0  UTF-16LE  text    utf16le.txt
+ 0      50       0  no_bom    text    utf8unix.txt
+50       0       0  UTF-8     text    utf8dos.txt
+ 2     418     219  no_bom    binary  dos2unix.exe</code></pre>
 
 <p>Uwaga: czasami plik binarny mo&#x17C;e by&#x107; b&#x142;&#x119;dnie rozpoznany jako tekstowy. P. tak&#x17C;e opcja <code>-s</code>.</p>
 
@@ -304,31 +312,31 @@
 
 <p>Pokazanie informacji o wszystkich plikach *.txt:</p>
 
-<pre><code>    dos2unix -i *.txt</code></pre>
+<pre><code>dos2unix -i *.txt</code></pre>
 
 <p>Pokazanie tylko liczby DOS-owych i uniksowych ko&#x144;c&oacute;w linii:</p>
 
-<pre><code>    dos2unix -idu *.txt</code></pre>
+<pre><code>dos2unix -idu *.txt</code></pre>
 
 <p>Pokazanie tylko znacznika BOM:</p>
 
-<pre><code>    dos2unix --info=b *.txt</code></pre>
+<pre><code>dos2unix --info=b *.txt</code></pre>
 
 <p>Wypisanie listy plik&oacute;w zawieraj&#x105;cych DOS-owe ko&#x144;ce linii:</p>
 
-<pre><code>    dos2unix -ic *.txt</code></pre>
+<pre><code>dos2unix -ic *.txt</code></pre>
 
 <p>Wypisanie listy plik&oacute;w zawieraj&#x105;cych uniksowe ko&#x144;ce linii:</p>
 
-<pre><code>    unix2dos -ic *.txt</code></pre>
+<pre><code>unix2dos -ic *.txt</code></pre>
 
 <p>Konwersja tylko plik&oacute;w maj&#x105;cych DOS-owe ko&#x144;ce linii, pozostawienie pozosta&#x142;ych bez zmian:</p>
 
-<pre><code>    dos2unix -ic0 *.txt | xargs -0 dos2unix</code></pre>
+<pre><code>dos2unix -ic0 *.txt | xargs -0 dos2unix</code></pre>
 
 <p>Wyszukanie plik&oacute;w tekstowych zawieraj&#x105;cych DOS-owe ko&#x144;ce linii:</p>
 
-<pre><code>    find -name &#39;*.txt&#39; -print0 | xargs -0 dos2unix -ic</code></pre>
+<pre><code>find -name &#39;*.txt&#39; -print0 | xargs -0 dos2unix -ic</code></pre>
 
 </dd>
 <dt id="k---keepdate"><b>-k, --keepdate</b></dt>
@@ -379,6 +387,22 @@
 <p>Przerwanie konwersji, je&#x17C;eli u&#x17C;ytkownik lub grupa oryginalnego pliku nie mo&#x17C;e by&#x107; zachowana w trybie starego pliku. P. tak&#x17C;e opcje <code>-o</code> oraz <code>-n</code>. Ta opcja jest dost&#x119;pna tylko je&#x15B;li dos2unix ma obs&#x142;ug&#x119; zachowywania u&#x17C;ytkownika i grupy plik&oacute;w.</p>
 
 </dd>
+<dt id="no-add-eol"><b>--no-add-eol</b></dt>
+<dd>
+
+<p>Bez dodawania znaku ko&#x144;ca linii do ostatniego wiersza, je&#x15B;li ten go nie zawiera.</p>
+
+</dd>
+<dt id="O---to-stdout"><b>-O, --to-stdout</b></dt>
+<dd>
+
+<p>Zapis na standardowe wyj&#x15B;cie, jak filtr uniksowy. Opcja <code>-o</code> przywr&oacute;ci tryb starego pliku (zamian&#x119; z miejscu).</p>
+
+<p>W po&#x142;&#x105;czeniu z opcj&#x105; <code>-e</code> pliki mog&#x105; by&#x107; w&#x142;a&#x15B;ciwie &#x142;&#x105;czone - bez po&#x142;&#x105;czonych ostatnich i pierwszych linii oraz znak&oacute;w unikodowych BOM w &#x15B;rodku po&#x142;&#x105;czonego pliku. Przyk&#x142;ad:</p>
+
+<pre><code>dos2unix -e -O plik1.txt plik2.txt &gt; wynik.txt</code></pre>
+
+</dd>
 <dt id="o---oldfile-PLIK"><b>-o, --oldfile PLIK ...</b></dt>
 <dd>
 
@@ -390,11 +414,11 @@
 
 <p>Konwersja jest wykonywana zawsze przy u&#x17C;yciu pliku tymczasowego. Je&#x15B;li w trakcie konwersji wyst&#x105;pi b&#x142;&#x105;d, plik tymczasowy jest usuwany, a plik oryginalny pozostaje nietkni&#x119;ty. Je&#x15B;li konwersja si&#x119; powiedzie, plik oryginalny jest zast&#x119;powany plikiem tymczasowym. Mo&#x17C;na mie&#x107; prawa zapisu do pliku oryginalnego, ale brak uprawnie&#x144;, aby nada&#x107; tego samego w&#x142;a&#x15B;ciciela i/lub grup&#x119;, co plik oryginalny, plikowi tymczasowemu. Oznacza to, &#x17C;e nie mo&#x17C;na zachowa&#x107; u&#x17C;ytkownika i/lub grupy oryginalnego pliku. W takim przypadku mo&#x17C;na u&#x17C;y&#x107; opcji <code>--allow-chown</code>, aby kontynuowa&#x107; konwersj&#x119;:</p>
 
-<pre><code>    dos2unix --allow-chown foo.txt</code></pre>
+<pre><code>dos2unix --allow-chown foo.txt</code></pre>
 
 <p>Inny spos&oacute;b to u&#x17C;ycie trybu nowego pliku:</p>
 
-<pre><code>    dos2unix -n foo.txt foo.txt</code></pre>
+<pre><code>dos2unix -n foo.txt foo.txt</code></pre>
 
 <p>Zalet&#x105; opcji <code>--allow-chown</code> jest mo&#x17C;liwo&#x15B;&#x107; u&#x17C;ycia masek oraz zachowanie w&#x142;a&#x15B;ciciela w miar&#x119; mo&#x17C;liwo&#x15B;ci.</p>
 
@@ -516,35 +540,35 @@
 
 <p>Konwersja z domy&#x15B;lnej strony kodowej DOS do uniksowego Latin-1:</p>
 
-<pre><code>    dos2unix -iso -n in.txt out.txt</code></pre>
+<pre><code>dos2unix -iso -n wej&#x15B;cie.txt wynik.txt</code></pre>
 
 <p>Konwersja ze strony kodowej DOS CP850 do uniksowego Latin-1:</p>
 
-<pre><code>    dos2unix -850 -n in.txt out.txt</code></pre>
+<pre><code>dos2unix -850 -n wej&#x15B;cie.txt wynik.txt</code></pre>
 
 <p>Konwersja ze strony kodowej Windows CP1252 do uniksowego Latin-1:</p>
 
-<pre><code>    dos2unix -1252 -n in.txt out.txt</code></pre>
+<pre><code>dos2unix -1252 -n wej&#x15B;cie.txt wynik.txt</code></pre>
 
 <p>Konwersja ze strony kodowej Windows CP1252 do uniksowego UTF-8 (Unicode):</p>
 
-<pre><code>    iconv -f CP1252 -t UTF-8 in.txt | dos2unix &gt; out.txt</code></pre>
+<pre><code>iconv -f CP1252 -t UTF-8 wej&#x15B;cie.txt | dos2unix &gt; wynik.txt</code></pre>
 
 <p>Konwersa z uniksowego Latin-1 do domy&#x15B;lnej strony kodowej DOS:</p>
 
-<pre><code>    unix2dos -iso -n in.txt out.txt</code></pre>
+<pre><code>unix2dos -iso -n wej&#x15B;cie.txt wynik.txt</code></pre>
 
 <p>Konwersja z uniksowego Latin-1 do strony kodowej DOS CP850:</p>
 
-<pre><code>    unix2dos -850 -n in.txt out.txt</code></pre>
+<pre><code>unix2dos -850 -n wej&#x15B;cie.txt wynik.txt</code></pre>
 
 <p>Konwersja z uniksowego Latin-1 do strony kodowej Windows CP1252:</p>
 
-<pre><code>    unix2dos -1252 -n in.txt out.txt</code></pre>
+<pre><code>unix2dos -1252 -n wej&#x15B;cie.txt wynik.txt</code></pre>
 
 <p>Konwersja z uniksowego UTF-8 (Unicode) do strony kodowej Windows CP1252:</p>
 
-<pre><code>    unix2dos &lt; in.txt | iconv -f UTF-8 -t CP1252 &gt; out.txt</code></pre>
+<pre><code>unix2dos &lt; wej&#x15B;cie.txt | iconv -f UTF-8 -t CP1252 &gt; wynik.txt</code></pre>
 
 <p>Wi&#x119;cej pod adresem <a href="http://czyborra.com/charsets/codepages.html">http://czyborra.com/charsets/codepages.html</a> oraz <a href="http://czyborra.com/charsets/iso8859.html">http://czyborra.com/charsets/iso8859.html</a>.</p>
 
@@ -603,19 +627,19 @@
 
 <p>Konwersja pliku UTF-16 (z BOM) z formatu Windows do uniksowego UTF-8:</p>
 
-<pre><code>    dos2unix -n in.txt out.txt</code></pre>
+<pre><code>dos2unix -n wej&#x15B;cie.txt wynik.txt</code></pre>
 
 <p>Konwersja pliku UTF-16LE (bez BOM) z formatu Windows do uniksowego UTF-8:</p>
 
-<pre><code>    dos2unix -ul -n in.txt out.txt</code></pre>
+<pre><code>dos2unix -ul -n wej&#x15B;cie.txt wynik.txt</code></pre>
 
 <p>Konwersja z uniksowego UTF-8 do UTF-8 z BOM dla Windows:</p>
 
-<pre><code>    unix2dos -m -n in.txt out.txt</code></pre>
+<pre><code>unix2dos -m -n wej&#x15B;cie.txt wynik.txt</code></pre>
 
 <p>Konwersja z uniksowego UTF-8 do UTF-16 dla Windows:</p>
 
-<pre><code>    unix2dos &lt; in.txt | iconv -f UTF-8 -t UTF-16 &gt; out.txt</code></pre>
+<pre><code>unix2dos &lt; wej&#x15B;cie.txt | iconv -f UTF-8 -t UTF-16 &gt; wynik.txt</code></pre>
 
 <h1 id="GB18030">GB18030</h1>
 
@@ -633,73 +657,73 @@
 
 <p>Odczyt ze standardowego wej&#x15B;cia i zapis na standardowe wyj&#x15B;cie:</p>
 
-<pre><code>    dos2unix &lt; a.txt
-    cat a.txt | dos2unix</code></pre>
+<pre><code>dos2unix &lt; a.txt
+cat a.txt | dos2unix</code></pre>
 
 <p>Konwersja i zast&#x105;pienie a.txt; konwersja i zast&#x105;pienie b.txt:</p>
 
-<pre><code>    dos2unix a.txt b.txt
-    dos2unix -o a.txt b.txt</code></pre>
+<pre><code>dos2unix a.txt b.txt
+dos2unix -o a.txt b.txt</code></pre>
 
 <p>Konwersja i zast&#x105;pienie a.txt w trybie ascii:</p>
 
-<pre><code>    dos2unix a.txt</code></pre>
+<pre><code>dos2unix a.txt</code></pre>
 
 <p>Konwersja i zast&#x105;pienie a.txt w trybie ascii; konwersja i zast&#x105;pienie b.txt w trybie 7-bitowym:</p>
 
-<pre><code>    dos2unix a.txt -c 7bit b.txt
-    dos2unix -c ascii a.txt -c 7bit b.txt
-    dos2unix -ascii a.txt -7 b.txt</code></pre>
+<pre><code>dos2unix a.txt -c 7bit b.txt
+dos2unix -c ascii a.txt -c 7bit b.txt
+dos2unix -ascii a.txt -7 b.txt</code></pre>
 
 <p>Konwersja a.txt z formatu Mac do formatu uniksowego:</p>
 
-<pre><code>    dos2unix -c mac a.txt
-    mac2unix a.txt</code></pre>
+<pre><code>dos2unix -c mac a.txt
+mac2unix a.txt</code></pre>
 
 <p>Konwersja a.txt z formatu uniksowego do formatu Mac:</p>
 
-<pre><code>    unix2dos -c mac a.txt
-    unix2mac a.txt</code></pre>
+<pre><code>unix2dos -c mac a.txt
+unix2mac a.txt</code></pre>
 
 <p>Konwersja i zast&#x105;pienie a.txt z zachowaniem oryginalnego znacznika czasu:</p>
 
-<pre><code>    dos2unix -k a.txt
-    dos2unix -k -o a.txt</code></pre>
+<pre><code>dos2unix -k a.txt
+dos2unix -k -o a.txt</code></pre>
 
 <p>Konwersja a.txt i zapis do e.txt:</p>
 
-<pre><code>    dos2unix -n a.txt e.txt</code></pre>
+<pre><code>dos2unix -n a.txt e.txt</code></pre>
 
 <p>Konwersja a.txt i zapis do e.txt z zachowaniem znacznika czasu e.txt takiego, jak a.txt:</p>
 
-<pre><code>    dos2unix -k -n a.txt e.txt</code></pre>
+<pre><code>dos2unix -k -n a.txt e.txt</code></pre>
 
 <p>Konwersja i zast&#x105;pienie a.txt; konwersja b.txt i zapis do e.txt:</p>
 
-<pre><code>    dos2unix a.txt -n b.txt e.txt
-    dos2unix -o a.txt -n b.txt e.txt</code></pre>
+<pre><code>dos2unix a.txt -n b.txt e.txt
+dos2unix -o a.txt -n b.txt e.txt</code></pre>
 
 <p>Konwersja c.txt i zapis do e.txt; konwersja i zast&#x105;pienie a.txt; konwersja i zast&#x105;pienie b.txt; konwersja d.txt i zapis do f.txt:</p>
 
-<pre><code>    dos2unix -n c.txt e.txt -o a.txt b.txt -n d.txt f.txt</code></pre>
+<pre><code>dos2unix -n c.txt e.txt -o a.txt b.txt -n d.txt f.txt</code></pre>
 
 <h1 id="KONWERSJA-REKURENCYJNA">KONWERSJA REKURENCYJNA</h1>
 
 <p>W pow&#x142;oce uniksowej mo&#x17C;na u&#x17C;y&#x107; polece&#x144; find(1) i xargs(1) do rekurencyjnego uruchomienia dos2unix na wszystkich plikach tekstowych w strukturze drzewa katalog&oacute;w. Na przyk&#x142;ad, aby przekonwertowa&#x107; wszystkie pliki .txt w drzewie katalog&oacute;w poni&#x17C;ej katalogu bie&#x17C;&#x105;cego, nale&#x17C;y napisa&#x107;:</p>
 
-<pre><code>    find . -name &#39;*.txt&#39; -print0 |xargs -0 dos2unix</code></pre>
+<pre><code>find . -name &#39;*.txt&#39; -print0 |xargs -0 dos2unix</code></pre>
 
 <p>Opcja <code>-print0</code> polecenia find(1) i odpowiadaj&#x105;ca jej opcja <code>-0</code> polecenia xargs(1) s&#x105; potrzebne, je&#x15B;li istniej&#x105; pliki ze spacjami lub cudzys&#x142;owami w nazwie. W przeciwnym wypadku opcje te mo&#x17C;na pomin&#x105;&#x107;. Inny spos&oacute;b to u&#x17C;ycie find(1) z opcj&#x105; <code>-exec</code>:</p>
 
-<pre><code>    find . -name &#39;*.txt&#39; -exec dos2unix {} \;</code></pre>
+<pre><code>find . -name &#39;*.txt&#39; -exec dos2unix {} \;</code></pre>
 
 <p>Z poziomu linii polece&#x144; Windows mo&#x17C;na u&#x17C;y&#x107; nast&#x119;puj&#x105;cego polecenia:</p>
 
-<pre><code>    for /R %G in (*.txt) do dos2unix &quot;%G&quot;</code></pre>
+<pre><code>for /R %G in (*.txt) do dos2unix &quot;%G&quot;</code></pre>
 
 <p>U&#x17C;ytkownicy pow&#x142;oki PowerShell mog&#x105; u&#x17C;y&#x107; nast&#x119;puj&#x105;cego polecenia w Windows PowerShell:</p>
 
-<pre><code>    get-childitem -path . -filter &#39;*.txt&#39; -recurse | foreach-object {dos2unix $_.Fullname}</code></pre>
+<pre><code>get-childitem -path . -filter &#39;*.txt&#39; -recurse | foreach-object {dos2unix $_.Fullname}</code></pre>
 
 <h1 id="LOKALIZACJA">LOKALIZACJA</h1>
 
@@ -710,13 +734,13 @@
 
 <p>G&#x142;&oacute;wny j&#x119;zyk wybiera si&#x119; zmienn&#x105; &#x15B;rodowiskow&#x105; LANG. Zmienna LANG sk&#x142;ada si&#x119; z kilku cz&#x119;&#x15B;ci. Pierwsza cz&#x119;&#x15B;&#x107; to ma&#x142;e litery oznaczaj&#x105;ce kod j&#x119;zyka. Druga cz&#x119;&#x15B;&#x107; jest opcjonalna i zawiera kod kraju pisany wielkimi literami, poprzedzony podkre&#x15B;leniem. Jest tak&#x17C;e opcjonalna trzecia cz&#x119;&#x15B;&#x107;: kodowanie znak&oacute;w, poprzedzone kropk&#x105;. Kilka przyk&#x142;ad&oacute;w dla pow&#x142;ok zgodnych ze standardem POSIX:</p>
 
-<pre><code>    export LANG=nl               holenderski
-    export LANG=nl_NL            holenderski, Holandia
-    export LANG=nl_BE            holenderski, Belgia
-    export LANG=es_ES            hiszpa&#x144;ski, Hiszpania
-    export LANG=es_MX            hiszpa&#x144;ski, Meksyk
-    export LANG=en_US.iso88591   angielski, USA, kodowanie Latin-1
-    export LANG=en_GB.UTF-8      angielski, Wlk. Brytania, kodowanie UTF-8</code></pre>
+<pre><code>export LANG=nl               holenderski
+export LANG=nl_NL            holenderski, Holandia
+export LANG=nl_BE            holenderski, Belgia
+export LANG=es_ES            hiszpa&#x144;ski, Hiszpania
+export LANG=es_MX            hiszpa&#x144;ski, Meksyk
+export LANG=en_US.iso88591   angielski, USA, kodowanie Latin-1
+export LANG=en_GB.UTF-8      angielski, Wlk. Brytania, kodowanie UTF-8</code></pre>
 
 <p>Pe&#x142;n&#x105; list&#x119; kod&oacute;w j&#x119;zyk&oacute;w i kraj&oacute;w mo&#x17C;na znale&#x17A;&#x107; w podr&#x119;czniku do gettexta: <a href="http://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html">http://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html</a></p>
 
@@ -738,7 +762,7 @@
 
 <p>Przyk&#x142;ad (dla pow&#x142;oki POSIX):</p>
 
-<pre><code>    export DOS2UNIX_LOCALEDIR=$HOME/share/locale</code></pre>
+<pre><code>export DOS2UNIX_LOCALEDIR=$HOME/share/locale</code></pre>
 
 </dd>
 </dl>

@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
 # Requires perl-Test-Simple installation.
-use Test::Simple tests => 32;
+use Test::Simple tests => 34;
 
 $suffix = "";
 if (-e "../dos2unix.exe") {
@@ -86,6 +86,12 @@ ok( $? == 0, 'UTF-16LE with BOM to UTF-8, stdin/out' );
 
 system("cat utf16u.txt | $UNIX2DOS -v -u > out_dos.txt; cmp out_dos.txt utf16.txt");
 ok( $? == 0, 'UTF-16LE with BOM to UTF-16LE, stdin/out' );
+
+system("$DOS2UNIX -v -O utf16le.txt > out_unix.txt; cmp out_unix.txt utf8unix.txt");
+ok( $? == 0, 'UTF-16LE with BOM to UTF-8, to stdout' );
+
+system("$UNIX2DOS -v -O -u utf16u.txt > out_dos.txt; cmp out_dos.txt utf16.txt");
+ok( $? == 0, 'UTF-16LE with BOM to UTF-16LE, to stdout' );
 
 system("$UNIX2DOS -v -u -m -n unix.txt out_dos.txt; cmp out_dos.txt dos_bom.txt");
 ok( $? == 0, 'Option -u must not disable -m on ASCII input');

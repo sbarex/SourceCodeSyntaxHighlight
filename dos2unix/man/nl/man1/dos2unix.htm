@@ -2,9 +2,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>dos2unix 7.4.2 - DOS/Mac naar Unix en vice versa tekstbestand formaat omzetter</title>
+<title>dos2unix 7.5.1 - DOS/Mac naar Unix en vice versa tekstbestand formaat omzetter</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:root@localhost" />
+<link rev="made" href="mailto:ASSI@walter.nonet" />
 </head>
 
 <body>
@@ -43,8 +43,8 @@
 
 <h1 id="OVERZICHT">OVERZICHT</h1>
 
-<pre><code>    dos2unix [opties] [BESTAND ...] [-n INVOERBESTAND UITVOERBESTAND ...]
-    unix2dos [opties] [BESTAND ...] [-n INVOERBESTAND UITVOERBESTAND ...]</code></pre>
+<pre><code>dos2unix [opties] [BESTAND ...] [-n INVOERBESTAND UITVOERBESTAND ...]
+unix2dos [opties] [BESTAND ...] [-n INVOERBESTAND UITVOERBESTAND ...]</code></pre>
 
 <h1 id="BESCHRIJVING">BESCHRIJVING</h1>
 
@@ -71,11 +71,11 @@
 
 <p>Alle volgende opties als bestandsnamen behandelen. Gebruik deze optie als u een bestand wilt converteren waarvan de naam met een streepje begint. Bijvoorbeeld, om een bestand genaamd &quot;-foo&quot; om te zetten, gebruikt u de volgende opdracht:</p>
 
-<pre><code>    dos2unix -- -foo</code></pre>
+<pre><code>dos2unix -- -foo</code></pre>
 
 <p>Of in nieuw-bestand-modus:</p>
 
-<pre><code>    dos2unix -n -- -foo uit.txt</code></pre>
+<pre><code>dos2unix -n -- -foo uit.txt</code></pre>
 
 </dd>
 <dt id="allow-chown"><b>--allow-chown</b></dt>
@@ -200,6 +200,14 @@
 <p>The default encoding can be changed with environment variable DOS2UNIX_DISPLAY_ENC by setting it to <code>unicode</code>, <code>unicodebom</code>, <code>utf8</code>, or <code>utf8bom</code>.</p>
 
 </dd>
+<dt id="e---add-eol"><b>-e, --add-eol</b></dt>
+<dd>
+
+<p>Add a line break to the last line if there isn&#39;t one. This works for every conversion.</p>
+
+<p>A file converted from DOS to Unix format may lack a line break on the last line. There are text editors that write text files without a line break on the last line. Some Unix programs have problems processing these files, because the POSIX standard defines that every line in a text file must end with a terminating newline character. For instance concatenating files may not give the expected result.</p>
+
+</dd>
 <dt id="f---force"><b>-f</b>, <b>--force</b></dt>
 <dd>
 
@@ -227,14 +235,14 @@
 
 <p>Voorbeelduitvoer:</p>
 
-<pre><code>     6       0       0  no_bom    text    dos.txt
-     0       6       0  no_bom    text    unix.txt
-     0       0       6  no_bom    text    mac.txt
-     6       6       6  no_bom    text    mixed.txt
-    50       0       0  UTF-16LE  text    utf16le.txt
-     0      50       0  no_bom    text    utf8unix.txt
-    50       0       0  UTF-8     text    utf8dos.txt
-     2     418     219  no_bom    binary  dos2unix.exe</code></pre>
+<pre><code> 6       0       0  no_bom    text    dos.txt
+ 0       6       0  no_bom    text    unix.txt
+ 0       0       6  no_bom    text    mac.txt
+ 6       6       6  no_bom    text    mixed.txt
+50       0       0  UTF-16LE  text    utf16le.txt
+ 0      50       0  no_bom    text    utf8unix.txt
+50       0       0  UTF-8     text    utf8dos.txt
+ 2     418     219  no_bom    binary  dos2unix.exe</code></pre>
 
 <p>Merk op dat een binair bestand soms voor een tekstbestand aangezien kan worden. Zie ook optie <code>-s</code>.</p>
 
@@ -304,31 +312,31 @@
 
 <p>Informatie weergeven voor alle bestanden met de extensie &#39;txt&#39;:</p>
 
-<pre><code>    dos2unix -i *.txt</code></pre>
+<pre><code>dos2unix -i *.txt</code></pre>
 
 <p>Alleen de aantallen DOS-regeleindes en Unix-regeleindes tonen:</p>
 
-<pre><code>    dos2unix -idu *.txt</code></pre>
+<pre><code>dos2unix -idu *.txt</code></pre>
 
 <p>Alleen de Byte-Order-Mark tonen:</p>
 
-<pre><code>    dos2unix --info=b *.txt</code></pre>
+<pre><code>dos2unix --info=b *.txt</code></pre>
 
 <p>De bestanden opsommen die DOS-regeleindes bevatten:</p>
 
-<pre><code>    dos2unix -ic *.txt</code></pre>
+<pre><code>dos2unix -ic *.txt</code></pre>
 
 <p>De bestanden opsommen die Unix-regeleindes bevatten:</p>
 
-<pre><code>    unix2dos -ic *.txt</code></pre>
+<pre><code>unix2dos -ic *.txt</code></pre>
 
 <p>Alleen bestanden die DOS-regeleindes bevatten converteren en andere bestanden ongemoeid laten:</p>
 
-<pre><code>    dos2unix -ic0 *.txt | xargs -0 dos2unix</code></pre>
+<pre><code>dos2unix -ic0 *.txt | xargs -0 dos2unix</code></pre>
 
 <p>De bestanden vinden die DOS-regeleindes bevatten:</p>
 
-<pre><code>    find -name &#39;*.txt&#39; -print0 | xargs -0 dos2unix -ic</code></pre>
+<pre><code>find -name &#39;*.txt&#39; -print0 | xargs -0 dos2unix -ic</code></pre>
 
 </dd>
 <dt id="k---keepdate"><b>-k</b>, <b>--keepdate</b></dt>
@@ -379,7 +387,23 @@
 <p>Abort conversion when the user and/or group ownership of the original file can&#39;t be preserved in old file mode. See also options <code>-o</code> and <code>-n</code>. This option is only available if dos2unix has support for preserving the user and group ownership of files.</p>
 
 </dd>
-<dt id="o---oldfile-BESTAND"><b>-o</b>, <b>--oldfile BESTAND</b> ...</dt>
+<dt id="no-add-eol"><b>--no-add-eol</b></dt>
+<dd>
+
+<p>Do not add a line break to the last line if there isn&#39;t one.</p>
+
+</dd>
+<dt id="O---to-stdout"><b>-O, --to-stdout</b></dt>
+<dd>
+
+<p>Write to standard output, like a Unix filter. Use option <code>-o</code> to go back to old file (in-place) mode.</p>
+
+<p>Combined with option <code>-e</code> files can be properly concatenated. No merged last and first lines, and no Unicode byte order marks in the middle of the concatenated file. Example:</p>
+
+<pre><code>dos2unix -e -O file1.txt file2.txt &gt; output.txt</code></pre>
+
+</dd>
+<dt id="o---oldfile-FILE"><b>-o, --oldfile FILE ...</b></dt>
 <dd>
 
 <p>Oud-bestand-modus. Het bestand BESTAND converteren en overschrijven. Dit is de standaard modus. Jokertekens kunnen gebruikt worden.</p>
@@ -390,11 +414,11 @@
 
 <p>Conversion is always done via a temporary file. When an error occurs halfway the conversion, the temporary file is deleted and the original file stays intact. When the conversion is successful, the original file is replaced with the temporary file. You may have write permission on the original file, but no permission to put the same user and/or group ownership properties on the temporary file as the original file has. This means you are not able to preserve the user and/or group ownership of the original file. In this case you can use option <code>--allow-chown</code> to continue with the conversion:</p>
 
-<pre><code>    dos2unix --allow-chown foo.txt</code></pre>
+<pre><code>dos2unix --allow-chown foo.txt</code></pre>
 
 <p>Een andere mogelijkheid is het gebruiken van nieuw-bestand-modus:</p>
 
-<pre><code>    dos2unix -n foo.txt foo.txt</code></pre>
+<pre><code>dos2unix -n foo.txt foo.txt</code></pre>
 
 <p>Het voordeel van optie <code>--allow-chown</code> is dat u jokertekens kunt gebruiken, en dat dan de eigenaarseigenschappen waar mogelijk behouden zullen blijven.</p>
 
@@ -516,35 +540,35 @@
 
 <p>Omzetten van de standaard DOS-codetabel naar Unix Latin-1:</p>
 
-<pre><code>    dos2unix -iso -n in.txt uit.txt</code></pre>
+<pre><code>dos2unix -iso -n in.txt uit.txt</code></pre>
 
 <p>Omzetten van DOS CP850 naar Unix Latin-1:</p>
 
-<pre><code>    dos2unix -850 -n in.txt uit.txt</code></pre>
+<pre><code>dos2unix -850 -n in.txt uit.txt</code></pre>
 
 <p>Omzetten van Windows CP1252 naar Unix Latin-1:</p>
 
-<pre><code>    dos2unix -1252 -n in.txt uit.txt</code></pre>
+<pre><code>dos2unix -1252 -n in.txt uit.txt</code></pre>
 
 <p>Omzetten van Windows CP1252 naar Unix UTF-8 (Unicode):</p>
 
-<pre><code>    iconv -f CP1252 -t UTF-8 in.txt | dos2unix &gt; uit.txt</code></pre>
+<pre><code>iconv -f CP1252 -t UTF-8 in.txt | dos2unix &gt; uit.txt</code></pre>
 
 <p>Omzetten van Unix Latin-1 naar de standaard DOS-codetabel:</p>
 
-<pre><code>    unix2dos -iso -n in.txt uit.txt</code></pre>
+<pre><code>unix2dos -iso -n in.txt uit.txt</code></pre>
 
 <p>Omzetten van Unix Latin-1 naar DOS CP850:</p>
 
-<pre><code>    unix2dos -850 -n in.txt uit.txt</code></pre>
+<pre><code>unix2dos -850 -n in.txt uit.txt</code></pre>
 
 <p>Omzetten van Unix Latin-1 naar Windows CP1252:</p>
 
-<pre><code>    unix2dos -1252 -n in.txt uit.txt</code></pre>
+<pre><code>unix2dos -1252 -n in.txt uit.txt</code></pre>
 
 <p>Omzetten van Unix UTF-8 (Unicode) naar Windows CP1252:</p>
 
-<pre><code>    unix2dos &lt; in.txt | iconv -f UTF-8 -t CP1252 &gt; uit.txt</code></pre>
+<pre><code>unix2dos &lt; in.txt | iconv -f UTF-8 -t CP1252 &gt; uit.txt</code></pre>
 
 <p>Zie ook <a href="http://czyborra.com/charsets/codepages.html">http://czyborra.com/charsets/codepages.html</a> en <a href="http://czyborra.com/charsets/iso8859.html">http://czyborra.com/charsets/iso8859.html</a>.</p>
 
@@ -603,19 +627,19 @@
 
 <p>Omzetten van Windows UTF-16 (met BOM) naar Unix UTF-8:</p>
 
-<pre><code>    dos2unix -n in.txt uit.txt</code></pre>
+<pre><code>dos2unix -n in.txt uit.txt</code></pre>
 
 <p>Omzetten van Windows UTF-16LE (zonder BOM) naar Unix UTF-8:</p>
 
-<pre><code>    dos2unix -ul -n in.txt uit.txt</code></pre>
+<pre><code>dos2unix -ul -n in.txt uit.txt</code></pre>
 
 <p>Omzetten van Unix UTF-8 naar Windows UTF-8 met BOM:</p>
 
-<pre><code>    unix2dos -m -n in.txt uit.txt</code></pre>
+<pre><code>unix2dos -m -n in.txt uit.txt</code></pre>
 
 <p>Omzetten van Unix UTF-8 naar Windows UTF-16:</p>
 
-<pre><code>    unix2dos &lt; in.txt | iconv -f UTF-8 -t UTF-16 &gt; uit.txt</code></pre>
+<pre><code>unix2dos &lt; in.txt | iconv -f UTF-8 -t UTF-16 &gt; uit.txt</code></pre>
 
 <h1 id="GB18030">GB18030</h1>
 
@@ -633,73 +657,73 @@
 
 <p>Invoer lezen van standaardinvoer en uitvoer schrijven naar standaarduitvoer:</p>
 
-<pre><code>    dos2unix &lt; a.txt
-    cat a.txt | dos2unix</code></pre>
+<pre><code>dos2unix &lt; a.txt
+cat a.txt | dos2unix</code></pre>
 
 <p>Omzetten en vervangen van a.txt; omzetten en vervangen van b.txt:</p>
 
-<pre><code>    dos2unix a.txt b.txt
-    dos2unix -o a.txt b.txt</code></pre>
+<pre><code>dos2unix a.txt b.txt
+dos2unix -o a.txt b.txt</code></pre>
 
 <p>Omzetten en vervangen van a.txt in ascii-conversiemodus:</p>
 
-<pre><code>    dos2unix a.txt</code></pre>
+<pre><code>dos2unix a.txt</code></pre>
 
 <p>Omzetten en vervangen van a.txt in ascii-conversiemodus; omzetten en vervangen van b.txt in 7-bits conversiemodus:</p>
 
-<pre><code>    dos2unix a.txt -c 7bit b.txt
-    dos2unix -c ascii a.txt -c 7bit b.txt
-    dos2unix -ascii a.txt -7 b.txt</code></pre>
+<pre><code>dos2unix a.txt -c 7bit b.txt
+dos2unix -c ascii a.txt -c 7bit b.txt
+dos2unix -ascii a.txt -7 b.txt</code></pre>
 
 <p>Omzetten van a.txt van Mac- naar Unix-indeling:</p>
 
-<pre><code>    dos2unix -c mac a.txt
-    mac2unix a.txt</code></pre>
+<pre><code>dos2unix -c mac a.txt
+mac2unix a.txt</code></pre>
 
 <p>Omzetten van a.txt van Unix- naar Mac-indeling:</p>
 
-<pre><code>    unix2dos -c mac a.txt
-    unix2mac a.txt</code></pre>
+<pre><code>unix2dos -c mac a.txt
+unix2mac a.txt</code></pre>
 
 <p>Omzetten en vervangen van a.txt met behoud van origineel tijdsstempel:</p>
 
-<pre><code>    dos2unix -k a.txt
-    dos2unix -k -o a.txt</code></pre>
+<pre><code>dos2unix -k a.txt
+dos2unix -k -o a.txt</code></pre>
 
 <p>Omzetten van a.txt en resultaat naar e.txt schrijven:</p>
 
-<pre><code>    dos2unix -n a.txt e.txt</code></pre>
+<pre><code>dos2unix -n a.txt e.txt</code></pre>
 
 <p>Omzetten van a.txt en naar e.txt schrijven, met tijdsstempel van e.txt gelijk aan die van a.txt:</p>
 
-<pre><code>    dos2unix -k -n a.txt e.txt</code></pre>
+<pre><code>dos2unix -k -n a.txt e.txt</code></pre>
 
 <p>Omzetten en vervangen van a.txt; omzetten van b.txt en naar e.txt schrijven:</p>
 
-<pre><code>    dos2unix a.txt -n b.txt e.txt
-    dos2unix -o a.txt -n b.txt e.txt</code></pre>
+<pre><code>dos2unix a.txt -n b.txt e.txt
+dos2unix -o a.txt -n b.txt e.txt</code></pre>
 
 <p>Omzetten van c.txt en naar e.txt schrijven; omzetten en vervangen van a.txt; omzetten en vervangen van b.txt; omzetten van d.txt en naar f.txt schrijven.</p>
 
-<pre><code>    dos2unix -n c.txt e.txt -o a.txt b.txt -n d.txt f.txt</code></pre>
+<pre><code>dos2unix -n c.txt e.txt -o a.txt b.txt -n d.txt f.txt</code></pre>
 
 <h1 id="RECURSIEVE-CONVERSIE">RECURSIEVE CONVERSIE</h1>
 
 <p>In a Unix shell the find(1) and xargs(1) commands can be used to run dos2unix recursively over all text files in a directory tree. For instance to convert all .txt files in the directory tree under the current directory type:</p>
 
-<pre><code>    find . -name &#39;*.txt&#39; -print0 | xargs -0 dos2unix</code></pre>
+<pre><code>find . -name &#39;*.txt&#39; -print0 | xargs -0 dos2unix</code></pre>
 
 <p>The find(1) option <code>-print0</code> and corresponding xargs(1) option <code>-0</code> are needed when there are files with spaces or quotes in the name. Otherwise these options can be omitted. Another option is to use find(1) with the <code>-exec</code> option:</p>
 
-<pre><code>    find . -name &#39;*.txt&#39; -exec dos2unix {} \;</code></pre>
+<pre><code>find . -name &#39;*.txt&#39; -exec dos2unix {} \;</code></pre>
 
 <p>In een Windows Opdrachtprompt kan de volgende opdracht gebruikt worden:</p>
 
-<pre><code>    for /R %G in (*.txt) do dos2unix &quot;%G&quot;</code></pre>
+<pre><code>for /R %G in (*.txt) do dos2unix &quot;%G&quot;</code></pre>
 
 <p>PowerShell users can use the following command in Windows PowerShell:</p>
 
-<pre><code>    get-childitem -path . -filter &#39;*.txt&#39; -recurse | foreach-object {dos2unix $_.Fullname}</code></pre>
+<pre><code>get-childitem -path . -filter &#39;*.txt&#39; -recurse | foreach-object {dos2unix $_.Fullname}</code></pre>
 
 <h1 id="LOKALISATIE">LOKALISATIE</h1>
 
@@ -710,13 +734,13 @@
 
 <p>De primaire taal wordt geselecteerd via de omgevingsvariabele LANG. De variabele LANG bestaat uit verschillende onderdelen. Het eerste deel is in kleine letters de taalcode. Het tweede deel is optioneel en is de landcode in hoofdletters, voorafgegaan door een liggend streepje. Er is ook een optioneel derde deel: de tekencodering, voorafgegaan door een punt. Enkele voorbeelden voor een POSIX-shell:</p>
 
-<pre><code>    export LANG=nl               Nederlands
-    export LANG=nl_NL            Nederlands, Nederland
-    export LANG=nl_BE            Nederlands, Belgi&euml;
-    export LANG=es_ES            Spaans, Spanje
-    export LANG=es_MX            Spaans, Mexico
-    export LANG=en_US.iso88591   Engels, VS, Latin-1-codering
-    export LANG=en_GB.UTF-8      Engels, GB, UTF-8-codering</code></pre>
+<pre><code>export LANG=nl               Nederlands
+export LANG=nl_NL            Nederlands, Nederland
+export LANG=nl_BE            Nederlands, Belgi&euml;
+export LANG=es_ES            Spaans, Spanje
+export LANG=es_MX            Spaans, Mexico
+export LANG=en_US.iso88591   Engels, VS, Latin-1-codering
+export LANG=en_GB.UTF-8      Engels, GB, UTF-8-codering</code></pre>
 
 <p>Voor een complete lijst van taal- en landcodes zie de gettext-handleiding: <a href="http://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html">http://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html</a></p>
 
@@ -738,7 +762,7 @@
 
 <p>Voorbeeld (POSIX-shell):</p>
 
-<pre><code>    export DOS2UNIX_LOCALEDIR=$HOME/share/locale</code></pre>
+<pre><code>export DOS2UNIX_LOCALEDIR=$HOME/share/locale</code></pre>
 
 </dd>
 </dl>

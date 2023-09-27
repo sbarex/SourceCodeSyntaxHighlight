@@ -171,6 +171,18 @@ FLAGGOR
         genom att sätta den till "unicode", "unicodebom", "utf8" or
         "utf8bom".
 
+    -e, --add-eol
+        Lägg till en radbrytning på sista raden om det inte finns någon.
+        Detta fungerar för alla konverteringar.
+
+        En fil konverterad från DOS- till Unix-format kan sakna en
+        radbrytning på sista raden. Det finns textredigerare som skriver
+        textfiler utan en radbrytning på den sista raden. Vissa Unix-program
+        har problem med att behandla dessa filer, då POSIX-standarden
+        definierar det som att varje rad i en textfil måste har ett
+        avslutande nyradstecken. Att konkatenera filer kan till exempel ge
+        oväntat resultat.
+
     -f, --force
         Tvinga konvertering av binära filer.
 
@@ -310,6 +322,21 @@ FLAGGOR
         originalfilen inte kan bevaras i gammalt filläge. Se också flaggorna
         "-o" och "-n". Denna flagga är endast tillgänglig om dos2unix har
         stöd för att bevara användar- och gruppägarskap för filer.
+
+    --no-add-eol
+        Lägg inte till en radbrytning på den sista raden om det inte finns
+        någon.
+
+    -O, --to-stdout
+        Skriv till standard ut som ett Unix-filter. Använd flaggan "-o" för
+        att återgå till det gamla (på-plats) filläget.
+
+        Kombinerat med flaggan "-e" kan filer konkateneras korrekt. Inga
+        sammanfogade sista och första rader, och inga Unicode
+        byteordningsmarkeringar i mitten på den konkatenerade filen.
+        Exempel:
+
+            dos2unix -e -O fil1.txt fil2.txt > ut.txt
 
     -o, --oldfile FIL …
         Gammalfilsläge. Konvertera filen FIL och skriv över den med

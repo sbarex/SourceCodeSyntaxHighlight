@@ -5,10 +5,10 @@
  *    combinations.
  *
  *  The dos2unix package is distributed under FreeBSD style license.
- *  See also http://www.freebsd.org/copyright/freebsd-license.html
+ *  See also https://www.freebsd.org/copyright/freebsd-license.html
  *  --------
  *
- *  Copyright (C) 2009-2018 Erwin Waterlander
+ *  Copyright (C) 2009-2023 Erwin Waterlander
  *  Copyright (C) 1994-1995 Benjamin Lin.
  *  All rights reserved.
  *
@@ -69,46 +69,60 @@ void PrintLicense(void)
   D2U_ANSI_FPRINTF(stdout,_("\
 Copyright (C) 2009-%d Erwin Waterlander\n\
 Copyright (C) 1994-1995 Benjamin Lin\n\
-All rights reserved.\n\n"),2016);
+All rights reserved.\n\n"),2023);
   PrintBSDLicense();
 }
 
 #ifdef D2U_UNICODE
-wint_t AddDOSNewLineW(FILE* ipOutF, CFlag *ipFlag, wint_t CurChar, wint_t PrevChar, const char *progname)
+wint_t PutDOSNewLineW(FILE *ipOutF, CFlag *ipFlag, const char *progname)
 {
-  if (ipFlag->NewLine) {  /* add additional CR-LF? */
-    /* Don't add line ending if it is a DOS line ending. Only in case of Unix line ending. */
-    if ((CurChar == 0x0a) && (PrevChar != 0x0d)) {
-      if (d2u_putwc(0x0d, ipOutF, ipFlag, progname) == WEOF) {
-          d2u_putwc_error(ipFlag,progname);
-          return WEOF;
-      }
-      if (d2u_putwc(0x0a, ipOutF, ipFlag, progname) == WEOF) {
-          d2u_putwc_error(ipFlag,progname);
-          return WEOF;
-      }
+  if (d2u_putwc(0x0d, ipOutF, ipFlag, progname) == WEOF) {
+    d2u_putwc_error(ipFlag, progname);
+    return WEOF;
+  }
+  if (d2u_putwc(0x0a, ipOutF, ipFlag, progname) == WEOF) {
+    d2u_putwc_error(ipFlag, progname);
+    return WEOF;
+  }
+  return 0x0a;
+}
+
+wint_t AddExtraDOSNewLineW(FILE* ipOutF, CFlag *ipFlag, wint_t CurChar, wint_t PrevChar, const char *progname)
+{
+  wint_t c = CurChar;
+  /* Don't add line ending if it is a DOS line ending. Only in case of Unix line ending. */
+  if ((CurChar == 0x0a) && (PrevChar != 0x0d)) {
+    if ((c = PutDOSNewLineW(ipOutF, ipFlag, progname)) == WEOF) {
+      return WEOF;
     }
   }
-  return CurChar;
+  return c;
 }
 #endif
 
-int AddDOSNewLine(FILE* ipOutF, CFlag *ipFlag, int CurChar, int PrevChar, const char *progname)
+int PutDOSNewLine(FILE *ipOutF, CFlag *ipFlag, const char *progname) 
 {
-  if (ipFlag->NewLine) {  /* add additional CR-LF? */
-    /* Don't add line ending if it is a DOS line ending. Only in case of Unix line ending. */
-    if ((CurChar == '\x0a') && (PrevChar != '\x0d')) {
-      if (fputc('\x0d', ipOutF) == EOF) {
-          d2u_putc_error(ipFlag,progname);
-          return EOF;
-      }
-      if (fputc('\x0a', ipOutF) == EOF) {
-          d2u_putc_error(ipFlag,progname);
-          return EOF;
-      }
+  if (fputc('\x0d', ipOutF) == EOF)  {
+    d2u_putc_error(ipFlag, progname);
+    return EOF;
+  }
+  if (fputc('\x0a', ipOutF) == EOF)  {
+    d2u_putc_error(ipFlag, progname);
+    return EOF;
+  }
+  return '\x0a';
+}
+
+int AddExtraDOSNewLine(FILE* ipOutF, CFlag *ipFlag, int CurChar, int PrevChar, const char *progname)
+{
+  int c = CurChar;
+  /* Don't add line ending if it is a DOS line ending. Only in case of Unix line ending. */
+  if ((CurChar == '\x0a') && (PrevChar != '\x0d')) {
+    if ((c = PutDOSNewLine(ipOutF, ipFlag, progname)) == EOF) {
+      return EOF;
     }
   }
-  return CurChar;
+  return c;
 }
 
 /* converts stream ipInF to DOS format text and write to stream ipOutF
@@ -120,7 +134,7 @@ int ConvertUnixToDosW(FILE* ipInF, FILE* ipOutF, CFlag *ipFlag, const char *prog
 {
     int RetVal = 0;
     wint_t TempChar;
-    wint_t PreviousChar = 0;
+    wint_t PreviousChar = WEOF;
     unsigned int line_nr = 1;
     unsigned int converted = 0;
 
@@ -180,13 +194,24 @@ int ConvertUnixToDosW(FILE* ipInF, FILE* ipOutF, CFlag *ipFlag, const char *prog
               RetVal = -1;
               d2u_putwc_error(ipFlag,progname);
               break;
-          } else {
-            if (AddDOSNewLineW( ipOutF, ipFlag, TempChar, PreviousChar, progname) == WEOF) {
+          }
+          if (ipFlag->NewLine) {  /* add additional CR-LF? */
+            if (AddExtraDOSNewLineW( ipOutF, ipFlag, TempChar, PreviousChar, progname) == WEOF) {
               RetVal = -1;
               break;
             }
           }
           PreviousChar = TempChar;
+        }
+        if (TempChar == WEOF && ipFlag->add_eol && PreviousChar != WEOF && PreviousChar != '\x0a') {
+          /* Add missing line break at the last line. */
+            if (ipFlag->verbose > 1) {
+              D2U_UTF8_FPRINTF(stderr, "%s: ", progname);
+              D2U_UTF8_FPRINTF(stderr, _("Added line break to last line.\n"));
+            }
+            if (PutDOSNewLineW(ipOutF, ipFlag, progname) == WEOF) {
+              RetVal = -1;
+            }
         }
         if ((TempChar == WEOF) && ferror(ipInF)) {
           RetVal = -1;
@@ -249,6 +274,17 @@ int ConvertUnixToDosW(FILE* ipInF, FILE* ipOutF, CFlag *ipFlag, const char *prog
             }
           }
         }
+        if (TempChar == WEOF && ipFlag->add_eol && PreviousChar != WEOF && !(PreviousChar == 0x0a || PreviousChar == 0x0d)) {
+          /* Add missing line break at the last line. */
+            if (ipFlag->verbose > 1) {
+              D2U_UTF8_FPRINTF(stderr, "%s: ", progname);
+              D2U_UTF8_FPRINTF(stderr, _("Added line break to last line.\n"));
+            }
+            if (d2u_putwc(0x0d, ipOutF, ipFlag, progname) == WEOF) {
+              RetVal = -1;
+              d2u_putwc_error(ipFlag,progname);
+            }
+        }
         if ((TempChar == WEOF) && ferror(ipInF)) {
           RetVal = -1;
           d2u_getc_error(ipFlag,progname);
@@ -280,7 +316,7 @@ int ConvertUnixToDos(FILE* ipInF, FILE* ipOutF, CFlag *ipFlag, const char *progn
 {
     int RetVal = 0;
     int TempChar;
-    int PreviousChar = 0;
+    int PreviousChar = EOF;
     int *ConvTable;
     unsigned int line_nr = 1;
     unsigned int converted = 0;
@@ -380,13 +416,24 @@ int ConvertUnixToDos(FILE* ipInF, FILE* ipOutF, CFlag *ipFlag, const char *progn
               RetVal = -1;
               d2u_putc_error(ipFlag,progname);
               break;
-          } else {
-            if (AddDOSNewLine( ipOutF, ipFlag, TempChar, PreviousChar, progname) == EOF) {
+          }
+          if (ipFlag->NewLine) {  /* add additional CR-LF? */
+            if (AddExtraDOSNewLine( ipOutF, ipFlag, TempChar, PreviousChar, progname) == EOF) {
               RetVal = -1;
               break;
             }
           }
           PreviousChar = TempChar;
+        }
+        if (TempChar == EOF && ipFlag->add_eol && PreviousChar != EOF && PreviousChar != '\x0a') {
+          /* Add missing line break at the last line. */
+            if (ipFlag->verbose > 1) {
+              D2U_UTF8_FPRINTF(stderr, "%s: ", progname);
+              D2U_UTF8_FPRINTF(stderr, _("Added line break to last line.\n"));
+            }
+            if (PutDOSNewLine(ipOutF, ipFlag, progname) == EOF) {
+              RetVal = -1;
+            }
         }
         if ((TempChar == EOF) && ferror(ipInF)) {
           RetVal = -1;
@@ -448,6 +495,17 @@ int ConvertUnixToDos(FILE* ipInF, FILE* ipOutF, CFlag *ipFlag, const char *progn
               }
             }
           }
+        }
+        if (TempChar == EOF && ipFlag->add_eol && PreviousChar != EOF && !(PreviousChar == '\x0a' || PreviousChar == '\x0d')) {
+          /* Add missing line break at the last line. */
+            if (ipFlag->verbose > 1) {
+              D2U_UTF8_FPRINTF(stderr, "%s: ", progname);
+              D2U_UTF8_FPRINTF(stderr, _("Added line break to last line.\n"));
+            }
+            if (fputc('\x0d', ipOutF) == EOF) {
+              RetVal = -1;
+              d2u_putc_error(ipFlag,progname);
+            }
         }
         if ((TempChar == EOF) && ferror(ipInF)) {
           RetVal = -1;
@@ -520,8 +578,8 @@ int main (int argc, char *argv[])
 #endif
 
 #ifdef ENABLE_NLS
-   bindtextdomain (PACKAGE, localedir);
-   textdomain (PACKAGE);
+  bindtextdomain (PACKAGE, localedir);
+  textdomain (PACKAGE);
 #endif
 
 
@@ -574,4 +632,3 @@ int main (int argc, char *argv[])
   free(pFlag);
   return ret;
 }
-

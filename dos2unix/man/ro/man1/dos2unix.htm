@@ -1,0 +1,803 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>dos2unix 7.5.1 - Convertor de format de fi&#x219;ier text din DOS/Mac &#xee;n Unix &#x219;i viceversa</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:ASSI@walter.nonet" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NUME">NUME</a></li>
+  <li><a href="#REZUMAT">REZUMAT</a></li>
+  <li><a href="#DESCRIERE">DESCRIERE</a></li>
+  <li><a href="#OPIUNI">OP&#x21A;IUNI</a></li>
+  <li><a href="#MODUL-MAC">MODUL MAC</a></li>
+  <li><a href="#MODURI-DE-CONVERSIE">MODURI DE CONVERSIE</a></li>
+  <li><a href="#UNICODE">UNICODE</a>
+    <ul>
+      <li><a href="#Codificri">Codific&#x103;ri</a></li>
+      <li><a href="#Conversie">Conversie</a></li>
+      <li><a href="#Marcajul-de-ordine-a-octeilor">Marcajul de ordine a octe&#x21B;ilor</a></li>
+      <li><a href="#Nume-de-fiiere-Unicode-n-Windows">Nume de fi&#x219;iere Unicode &icirc;n Windows</a></li>
+      <li><a href="#Exemple-Unicode">Exemple Unicode</a></li>
+    </ul>
+  </li>
+  <li><a href="#GB18030">GB18030</a></li>
+  <li><a href="#EXEMPLE">EXEMPLE</a></li>
+  <li><a href="#CONVERSIE-RECURSIV">CONVERSIE RECURSIV&#x102;</a></li>
+  <li><a href="#LOCALIZAREA">LOCALIZAREA</a></li>
+  <li><a href="#VALOAREA-RETURNAT">VALOAREA RETURNAT&#x102;</a></li>
+  <li><a href="#STANDARDE">STANDARDE</a></li>
+  <li><a href="#AUTORI">AUTORI</a></li>
+  <li><a href="#CONSULTAI-I">CONSULTA&#x21A;I &#x218;I</a></li>
+</ul>
+
+<h1 id="NUME">NUME</h1>
+
+<p>dos2unix - Convertor de format de fi&#x219;ier text din DOS/Mac &icirc;n Unix &#x219;i viceversa</p>
+
+<h1 id="REZUMAT">REZUMAT</h1>
+
+<pre><code>dos2unix [op&#x21B;iuni] [FI&#x218;IER ...] [-n FI&#x218;IER_INTRARE FI&#x218;IER_IE&#x218;IRE ...]
+unix2dos [op&#x21B;iuni] [FI&#x218;IER ...] [-n FI&#x218;IER_INTRARE FI&#x218;IER_IE&#x218;IRE ...]</code></pre>
+
+<h1 id="DESCRIERE">DESCRIERE</h1>
+
+<p>Pachetul &laquo;dos2unix&raquo; include utilitarele <code>dos2unix</code> &#x219;i <code>unix2dos</code> pentru a converti fi&#x219;ierele text simplu din formatul DOS sau Mac &icirc;n formatul Unix &#x219;i invers.</p>
+
+<p>&Icirc;n fi&#x219;ierele text DOS/Windows, o &icirc;ntrerupere de linie, cunoscut&#x103; &#x219;i sub numele de linie nou&#x103;, este o combina&#x21B;ie de dou&#x103; caractere: un retur de caret (CR) urmat de un salt de linie (LF). &Icirc;n fi&#x219;ierele text Unix, o &icirc;ntrerupere de linie este un singur caracter: saltul de linie (LF). &Icirc;n fi&#x219;ierele text Mac, &icirc;nainte de Mac OS X, o &icirc;ntrerupere de linie era un singur caracter retur de caret (CR). &Icirc;n prezent, Mac OS folose&#x219;te &icirc;ntreruperi de linie &icirc;n stil Unix (LF).</p>
+
+<p>Pe l&acirc;ng&#x103; &icirc;ntreruperile de linie, &laquo;dos2unix&raquo; poate converti &#x219;i codificarea fi&#x219;ierelor. C&acirc;teva pagini de cod DOS pot fi convertite &icirc;n Latin-1 Unix. &#x218;i fi&#x219;ierele Unicode Windows (UTF-16) pot fi convertite &icirc;n fi&#x219;iere Unicode Unix (UTF-8).</p>
+
+<p>Fi&#x219;ierele binare sunt omise automat, cu excep&#x21B;ia cazului &icirc;n care conversia este for&#x21B;at&#x103;.</p>
+
+<p>Fi&#x219;ierele care nu sunt obi&#x219;nuite, cum ar fi directoarele &#x219;i liniile de conectare cu nume (FIFOs), sunt omise automat.</p>
+
+<p>Leg&#x103;turile simbolice &#x219;i &#x21B;intele lor sunt &icirc;n mod implicit p&#x103;strate neatinse. Leg&#x103;turile simbolice pot fi &icirc;nlocuite op&#x21B;ional sau rezultatul poate fi scris &icirc;n &#x21B;inta leg&#x103;turii simbolice, Scrierea la o &#x21B;int&#x103; de leg&#x103;tur&#x103; simbolic&#x103; nu este acceptat&#x103; &icirc;n Windows.</p>
+
+<p>&laquo;dos2unix&raquo; a fost modelat dup&#x103; &laquo;dos2unix&raquo; din SunOS/Solaris. Exist&#x103; o diferen&#x21B;&#x103; important&#x103; fa&#x21B;&#x103; de versiunea original&#x103; a SunOS/Solaris. Aceast&#x103; versiune efectueaz&#x103; &icirc;n mod implicit conversia &bdquo;&icirc;n acela&#x219;i loc&rdquo;, &icirc;n cazul de fa&#x21B;&#x103;, &icirc;n acela&#x219;i fi&#x219;ier (mod-fi&#x219;ier_vechi), &icirc;n timp ce versiunea original&#x103; SunOS/Solaris accept&#x103; doar conversia &icirc;mperecheat&#x103; (mod-fi&#x219;ier_nou). A se vedea, de asemenea, op&#x21B;iunile <code>-o</code> &#x219;i <code>-n</code>. O alt&#x103; diferen&#x21B;&#x103; este c&#x103; versiunea SunOS/Solaris utilizeaz&#x103; implicit conversia &icirc;n modul <i>iso</i>, &icirc;n timp ce aceast&#x103; versiune utilizeaz&#x103; implicit conversia &icirc;n modul <i>ascii</i>.</p>
+
+<h1 id="OPIUNI">OP&#x21A;IUNI</h1>
+
+<dl>
+
+<dt id="pod"><b>--</b></dt>
+<dd>
+
+<p>Trateaz&#x103; toate op&#x21B;iunile urm&#x103;toare ca nume de fi&#x219;iere. Utiliza&#x21B;i aceast&#x103; op&#x21B;iune dac&#x103; dori&#x21B;i s&#x103; converti&#x21B;i fi&#x219;iere ale c&#x103;ror nume &icirc;ncep cu o liniu&#x21B;&#x103;. De exemplu, pentru a converti un fi&#x219;ier numit &bdquo;-foo&rdquo;, pute&#x21B;i folosi aceast&#x103; comand&#x103;:</p>
+
+<pre><code>dos2unix -- -foo</code></pre>
+
+<p>Sau &icirc;n modul-fi&#x219;ier_nou:</p>
+
+<pre><code>dos2unix -n -- -foo ie&#x219;ire.txt</code></pre>
+
+</dd>
+<dt id="allow-chown"><b>--allow-chown</b></dt>
+<dd>
+
+<p>Permite schimbarea proprietarului fi&#x219;ierului &icirc;n modul-fi&#x219;ier_vechi.</p>
+
+<p>C&acirc;nd este utilizat&#x103; aceast&#x103; op&#x21B;iune, conversia nu va fi &icirc;ntrerupt&#x103; atunci c&acirc;nd utilizatorul &#x219;i/sau grupul proprietar al fi&#x219;ierului original nu poate fi p&#x103;strat &icirc;n modul-fi&#x219;ier_vechi. Conversia va continua &#x219;i fi&#x219;ierul convertit va primi acela&#x219;i nou proprietar ca &#x219;i cum ar fi fost convertit &icirc;n modul-fi&#x219;ier_nou. A se vedea, de asemenea, op&#x21B;iunile <code>-o</code> &#x219;i <code>-n</code>. Aceast&#x103; op&#x21B;iune este disponibil&#x103; numai dac&#x103; &laquo;dos2unix&raquo; are suport pentru p&#x103;strarea utilizatorului &#x219;i grupului proprietar al fi&#x219;ierelor.</p>
+
+</dd>
+<dt id="ascii"><b>-ascii</b></dt>
+<dd>
+
+<p>Converte&#x219;te numai &icirc;ntreruperile de linie. Acesta este modul de conversie implicit.</p>
+
+</dd>
+<dt id="iso"><b>-iso</b></dt>
+<dd>
+
+<p>Conversie &icirc;ntre setul de caractere DOS &#x219;i ISO-8859-1. Consulta&#x21B;i, de asemenea, sec&#x21B;iunea MODURI DE CONVERSIE.</p>
+
+</dd>
+<dt id="pod-1252"><b>-1252</b></dt>
+<dd>
+
+<p>Utilizeaz&#x103; pagina de cod Windows 1252 (Europa de vest).</p>
+
+</dd>
+<dt id="pod-437"><b>-437</b></dt>
+<dd>
+
+<p>Utilizeaz&#x103; pagina de cod DOS 437 (SUA). Aceasta este pagina de cod implicit&#x103; utilizat&#x103; pentru conversia ISO.</p>
+
+</dd>
+<dt id="pod-850"><b>-850</b></dt>
+<dd>
+
+<p>Utilizeaz&#x103; pagina de cod DOS 850 (Europa de vest).</p>
+
+</dd>
+<dt id="pod-860"><b>-860</b></dt>
+<dd>
+
+<p>Utilizeaz&#x103; pagina de cod DOS 860 (Portugalia).</p>
+
+</dd>
+<dt id="pod-863"><b>-863</b></dt>
+<dd>
+
+<p>Utilizeaz&#x103; pagina de cod DOS 863 (Franceza Canadian&#x103;).</p>
+
+</dd>
+<dt id="pod-865"><b>-865</b></dt>
+<dd>
+
+<p>Utilizeaz&#x103; pagina de cod DOS 865 (Scandinavia).</p>
+
+</dd>
+<dt id="pod-7"><b>-7</b></dt>
+<dd>
+
+<p>Converte&#x219;te caractere de 8 bi&#x21B;i &icirc;n spa&#x21B;iu de 7 bi&#x21B;i.</p>
+
+</dd>
+<dt id="b---keep-bom"><b>-b, --keep-bom</b></dt>
+<dd>
+
+<p>P&#x103;streaz&#x103; marcajul de ordine a octe&#x21B;ilor (BOM). C&acirc;nd fi&#x219;ierul de intrare are un marcaj de ordine a octe&#x21B;ilor, scrie marcajul de ordine a octe&#x21B;ilor &icirc;n fi&#x219;ierul de ie&#x219;ire. Acesta este comportamentul implicit la conversia de &icirc;ntreruperi de linie DOS. A se vedea, de asemenea, op&#x21B;iunea <code>-r</code>.</p>
+
+</dd>
+<dt id="c---convmode-MOD_CONVERSIE"><b>-c, --convmode MOD_CONVERSIE</b></dt>
+<dd>
+
+<p>Stabile&#x219;te modul de conversie. Unde MOD_CONVERSIE este unul dintre: <i>ascii</i>, <i>7bit</i>, <i>iso</i>, <i>mac</i> &bdquo;ascii&rdquo; fiind valoarea implicit&#x103;.</p>
+
+</dd>
+<dt id="D---display-enc-COFIFICAREA"><b>-D, --display-enc COFIFICAREA</b></dt>
+<dd>
+
+<p>Stabile&#x219;te codificarea textului afi&#x219;at. Unde CODIFICAREA este una dintre: <i>ansi</i>, <i>unicode</i>, <i>unicodebom</i>, <i>utf8</i>, <i>utf8bom</i>; &bdquo;ascii&rdquo; fiind valoarea implicit&#x103;.</p>
+
+<p>Aceast&#x103; op&#x21B;iune este disponibil&#x103; numai &icirc;n &laquo;dos2uni&raquo; pentru Windows cu suport pentru numele fi&#x219;ierelor &icirc;n Unicode. Aceast&#x103; op&#x21B;iune nu are efect asupra numelor de fi&#x219;iere citite &#x219;i scrise, ci doar asupra modului &icirc;n care acestea sunt afi&#x219;ate.</p>
+
+<p>Exist&#x103; mai multe metode de afi&#x219;are a textului &icirc;ntr-o consol&#x103; Windows bazate pe codificarea textului. Toate acestea au propriile lor avantaje &#x219;i dezavantaje.</p>
+
+<dl>
+
+<dt id="ansi"><b>ansi</b></dt>
+<dd>
+
+<p>Metoda implicit&#x103; a &laquo;dos2unix&raquo; este utilizarea textului codificat ANSI. Avantajul este acela c&#x103; este compatibil&#x103; cu versiunea anterioar&#x103;. Aceast&#x103; op&#x21B;iune func&#x21B;ioneaz&#x103; cu fonturi bitmap &#x219;i TrueType. &Icirc;n unele regiuni, poate fi necesar s&#x103; schimba&#x21B;i pagina de coduri OEM DOS activ&#x103; &icirc;n pagina de coduri ANSI a sistemului Windows folosind comanda <code>chcp</code>, deoarece &laquo;dos2unix&raquo; utilizeaz&#x103; pagina de coduri a sistemului Windows.</p>
+
+<p>Dezavantajul lui &bdquo;ansi&rdquo; este c&#x103; numele fi&#x219;ierelor interna&#x21B;ionale cu caractere care nu sunt &icirc;n interiorul paginii de cod implicite a sistemului, nu sunt afi&#x219;ate corect. Ve&#x21B;i vedea &icirc;n schimb un semn de &icirc;ntrebare sau un simbol gre&#x219;it. C&acirc;nd nu lucra&#x21B;i cu nume de fi&#x219;iere str&#x103;ine, aceast&#x103; metod&#x103; este OK.</p>
+
+</dd>
+<dt id="unicode-unicodebom"><b>unicode, unicodebom</b></dt>
+<dd>
+
+<p>Avantajul codific&#x103;rii Unicode (numele Windows pentru UTF-16) este c&#x103; textul este de obicei afi&#x219;at corect. Nu este nevoie s&#x103; schimba&#x21B;i pagina de cod activ&#x103;. Poate fi necesar s&#x103; defini&#x21B;i fontul consolei la un font TrueType pentru ca toate caracterele interna&#x21B;ionale s&#x103; fie afi&#x219;ate corect. C&acirc;nd un caracter nu este inclus &icirc;n fontul TrueType, de obicei vede&#x21B;i un p&#x103;trat mic, uneori cu un semn de &icirc;ntrebare &icirc;n el.</p>
+
+<p>C&acirc;nd utiliza&#x21B;i consola ConEmu, tot textul este afi&#x219;at corect, deoarece ConEmu selecteaz&#x103; automat un font bun.</p>
+
+<p>Dezavantajul unicode (UTF-16) este c&#x103; nu este compatibil cu ASCII. Ie&#x219;irea nu este u&#x219;or de gestionat atunci c&acirc;nd o redirec&#x21B;iona&#x21B;i c&#x103;tre alt program.</p>
+
+<p>C&acirc;nd se folose&#x219;te metoda <code>unicodebom</code>, textul Unicode va fi precedat de un BOM (&bdquo;Byte Order Mark&rdquo; = marcaj de ordine a octe&#x21B;ilor). Este necesar un marcaj de ordine a octe&#x21B;ilor pentru redirec&#x21B;ionarea corect&#x103; sau canalizarea &icirc;n PowerShell.</p>
+
+</dd>
+<dt id="utf8-utf8bom"><b>utf8, utf8bom</b></dt>
+<dd>
+
+<p>Avantajul lui utf8 este faptul c&#x103; este compatibil cu ASCII. Trebuie s&#x103; defini&#x21B;i fontul consolei la un font TrueType. Cu un font TrueType, textul este afi&#x219;at similar cu codificarea <code>unicode</code>.</p>
+
+<p>Dezavantajul este c&#x103; atunci c&acirc;nd utiliza&#x21B;i fontul bitmap implicit, toate caracterele non-ASCII sunt afi&#x219;ate gre&#x219;it. Nu numai numele fi&#x219;ierelor Unicode, ci &#x219;i mesajele traduse devin imposibil de citit. &Icirc;n Windows configurat pentru o regiune din Asia de Est, este posibil s&#x103; observa&#x21B;i o mul&#x21B;ime de p&acirc;lp&acirc;iri ale consolei c&acirc;nd mesajele sunt afi&#x219;ate.</p>
+
+<p>&Icirc;ntr-o consol&#x103; ConEmu, metoda de codificare utf8 func&#x21B;ioneaz&#x103; bine.</p>
+
+<p>C&acirc;nd se folose&#x219;te metoda <code>utf8bom</code>, textul UTF-8 va fi precedat de un BOM (&bdquo;Byte Order Mark&rdquo; = marcaj de ordine a octe&#x21B;ilor). Este necesar un marcaj de ordine a octe&#x21B;ilor pentru redirec&#x21B;ionarea corect&#x103; sau canalizarea &icirc;n PowerShell.</p>
+
+</dd>
+</dl>
+
+<p>Codificarea implicit&#x103; poate fi schimbat&#x103; cu variabila de mediu DOS2UNIX_DISPLAY_ENC definindu-i valoarea: <code>unicode</code>, <code>unicodebom</code>, <code>utf8</code> sau <code>utf8bom</code>.</p>
+
+</dd>
+<dt id="e---add-eol"><b>-e, --add-eol</b></dt>
+<dd>
+
+<p>Adaug&#x103; o &icirc;ntrerupere de linie la ultima linie, dac&#x103; nu exist&#x103; una. Acest lucru func&#x21B;ioneaz&#x103; pentru fiecare conversie.</p>
+
+<p>Un fi&#x219;ier convertit din formatul DOS &icirc;n formatul Unix poate s&#x103; nu aib&#x103; o &icirc;ntrerupere de linie pe ultima linie. Exist&#x103; editoare de text care scriu fi&#x219;iere de text f&#x103;r&#x103; o &icirc;ntrerupere de linie pe ultima linie. Unele programe Unix au probleme &icirc;n procesarea acestor fi&#x219;iere, deoarece standardul POSIX define&#x219;te c&#x103; fiecare linie dintr-un fi&#x219;ier text trebuie s&#x103; se &icirc;ncheie cu un caracter de sf&acirc;r&#x219;it de linie nou&#x103;. De exemplu, concatenarea fi&#x219;ierelor poate s&#x103; nu dea rezultatul a&#x219;teptat.</p>
+
+</dd>
+<dt id="f---force"><b>-f, --force</b></dt>
+<dd>
+
+<p>For&#x21B;eaz&#x103; conversia fi&#x219;ierelor binare.</p>
+
+</dd>
+<dt id="gb---gb18030"><b>-gb, --gb18030</b></dt>
+<dd>
+
+<p>&Icirc;n Windows, fi&#x219;ierele UTF-16 sunt convertite implicit &icirc;n UTF-8, indiferent de configurarea local&#x103;. Utiliza&#x21B;i aceast&#x103; op&#x21B;iune pentru a converti fi&#x219;ierele UTF-16 &icirc;n GB18030. Aceast&#x103; op&#x21B;iune este disponibil&#x103; numai &icirc;n Windows. A se vedea, de asemenea, sec&#x21B;iunea GB18030.</p>
+
+</dd>
+<dt id="h---help"><b>-h, --help</b></dt>
+<dd>
+
+<p>Afi&#x219;eaz&#x103; mesajul de ajutor &#x219;i iese.</p>
+
+</dd>
+<dt id="i-FLAGS---info-FLAGS-FILE"><b>-i[FLAGS], --info[=FLAGS] FILE ...</b></dt>
+<dd>
+
+<p>Afi&#x219;eaz&#x103; informa&#x21B;ii despre fi&#x219;ier. Nu se face nicio conversie.</p>
+
+<p>Sunt afi&#x219;ate urm&#x103;toarele informa&#x21B;ii, &icirc;n aceast&#x103; ordine: num&#x103;rul de &icirc;ntreruperi de linie DOS, num&#x103;rul de &icirc;ntreruperi de linie Unix, num&#x103;rul de &icirc;ntreruperi de linie Mac, marcajul de ordine a octe&#x21B;ilor, text sau binar, numele fi&#x219;ierului.</p>
+
+<p>Exemplu de ie&#x219;ire:</p>
+
+<pre><code> 6       0       0  no_bom    text    dos.txt
+ 0       6       0  no_bom    text    unix.txt
+ 0       0       6  no_bom    text    mac.txt
+ 6       6       6  no_bom    text    mixed.txt
+50       0       0  UTF-16LE  text    utf16le.txt
+ 0      50       0  no_bom    text    utf8unix.txt
+50       0       0  UTF-8     text    utf8dos.txt
+ 2     418     219  no_bom    binary  dos2unix.exe</code></pre>
+
+<p>Re&#x21B;ine&#x21B;i c&#x103;, uneori, un fi&#x219;ier binar poate fi confundat cu un fi&#x219;ier text. A se vedea, de asemenea, op&#x21B;iunea <code>-s</code>.</p>
+
+<p>Op&#x21B;ional, pot fi ad&#x103;ugate fanioane suplimentare pentru a modifica rezultatul. Se pot ad&#x103;uga unul sau mai multe fanioane.</p>
+
+<dl>
+
+<dt id="pod0"><b>0</b></dt>
+<dd>
+
+<p>Afi&#x219;eaz&#x103; liniile de informa&#x21B;ii ale fi&#x219;ierului urmate de un caracter null &icirc;n loc de un caracter de linie nou&#x103;. Acest lucru permite interpretarea corect&#x103; a numelor de fi&#x219;iere cu spa&#x21B;ii sau ghilimele atunci c&acirc;nd este utilizat fanionul &bdquo;c&rdquo;. Utiliza&#x21B;i acest fanion &icirc;n combina&#x21B;ie cu op&#x21B;iunea xargs(1) <code>-0</code> sau <code>--null</code>.</p>
+
+</dd>
+<dt id="d"><b>d</b></dt>
+<dd>
+
+<p>Afi&#x219;eaz&#x103; num&#x103;rul de &icirc;ntreruperi de linie al formatului DOS.</p>
+
+</dd>
+<dt id="u"><b>u</b></dt>
+<dd>
+
+<p>Afi&#x219;eaz&#x103; num&#x103;rul de &icirc;ntreruperi de linie al formatului Unix.</p>
+
+</dd>
+<dt id="m"><b>m</b></dt>
+<dd>
+
+<p>Afi&#x219;eaz&#x103; num&#x103;rul de &icirc;ntreruperi de linie al formatului Mac.</p>
+
+</dd>
+<dt id="b"><b>b</b></dt>
+<dd>
+
+<p>Afi&#x219;eaz&#x103; marcajul de ordine a octe&#x21B;ilor.</p>
+
+</dd>
+<dt id="t"><b>t</b></dt>
+<dd>
+
+<p>Indic&#x103; dac&#x103; fi&#x219;ierul este text sau binar.</p>
+
+</dd>
+<dt id="c"><b>c</b></dt>
+<dd>
+
+<p>Afi&#x219;eaz&#x103; numai fi&#x219;ierele care vor fi convertite.</p>
+
+<p>Cu fanionul <code>c</code>, &laquo;dos2unix&raquo; va afi&#x219;a numai fi&#x219;ierele care con&#x21B;in &icirc;ntreruperi de linie DOS, &laquo;unix2dos&raquo; va afi&#x219;a numai numele de fi&#x219;iere care au &icirc;ntreruperi de linie Unix.</p>
+
+</dd>
+<dt id="h"><b>h</b></dt>
+<dd>
+
+<p>Afi&#x219;eaz&#x103; titlul.</p>
+
+</dd>
+<dt id="p"><b>p</b></dt>
+<dd>
+
+<p>Afi&#x219;eaz&#x103; numele fi&#x219;ierelor f&#x103;r&#x103; cale.</p>
+
+</dd>
+</dl>
+
+<p>Exemple:</p>
+
+<p>Afi&#x219;eaz&#x103; informa&#x21B;ii pentru toate fi&#x219;ierele *.txt:</p>
+
+<pre><code>dos2unix -i *.txt</code></pre>
+
+<p>Afi&#x219;eaz&#x103; doar num&#x103;rul de &icirc;ntreruperi de linie DOS &#x219;i de &icirc;ntreruperi de linie Unix:</p>
+
+<pre><code>dos2unix -idu *.txt</code></pre>
+
+<p>Afi&#x219;eaz&#x103; doar marcajul de ordine a octe&#x21B;ilor:</p>
+
+<pre><code>dos2unix --info=b *.txt</code></pre>
+
+<p>Listeaz&#x103; fi&#x219;ierele care au &icirc;ntreruperi de linie DOS:</p>
+
+<pre><code>dos2unix -ic *.txt</code></pre>
+
+<p>Listeaz&#x103; fi&#x219;ierele care au &icirc;ntreruperi de linie Unix:</p>
+
+<pre><code>unix2dos -ic *.txt</code></pre>
+
+<p>Converte&#x219;te numai fi&#x219;ierele care au &icirc;ntreruperi de linie DOS &#x219;i las&#x103; celelalte fi&#x219;iere neatinse:</p>
+
+<pre><code>dos2unix -ic0 *.txt | xargs -0 dos2unix</code></pre>
+
+<p>G&#x103;se&#x219;te fi&#x219;iere text care au &icirc;ntreruperi de linie DOS:</p>
+
+<pre><code>find -name &#39;*.txt&#39; -print0 | xargs -0 dos2unix -ic</code></pre>
+
+</dd>
+<dt id="k---keepdate"><b>-k, --keepdate</b></dt>
+<dd>
+
+<p>P&#x103;streaz&#x103; marcajul de dat&#x103; al fi&#x219;ierului de ie&#x219;ire la fel ca al fi&#x219;ierului de intrare.</p>
+
+</dd>
+<dt id="L---license"><b>-L, --license</b></dt>
+<dd>
+
+<p>Afi&#x219;eaz&#x103; licen&#x21B;a programului.</p>
+
+</dd>
+<dt id="l---newline"><b>-l, --newline</b></dt>
+<dd>
+
+<p>Adaug&#x103; o linie nou&#x103; suplimentar&#x103;.</p>
+
+<p><b>dos2unix</b>: Numai &icirc;ntreruperile de linie DOS sunt modificate &icirc;n dou&#x103; &icirc;ntreruperi de linie Unix. &Icirc;n modul Mac, numai &icirc;ntreruperile de linie Mac sunt modificate &icirc;n dou&#x103; &icirc;ntreruperi de linie Unix.</p>
+
+<p><b>unix2dos</b>: Numai &icirc;ntreruperile de linie Unix sunt modificate &icirc;n dou&#x103; &icirc;ntreruperi de linie DOS. &Icirc;n modul Mac, &icirc;ntreruperile de linie Unix sunt modificate &icirc;n dou&#x103; &icirc;ntreruperi de linie Mac.</p>
+
+</dd>
+<dt id="m---add-bom"><b>-m, --add-bom</b></dt>
+<dd>
+
+<p>Scrie un marcaj de ordine a octe&#x21B;ilor (BOM) &icirc;n fi&#x219;ierul de ie&#x219;ire. &Icirc;n mod implicit, este scris un marcaj de ordine a octe&#x21B;ilor UTF-8.</p>
+
+<p>C&acirc;nd fi&#x219;ierul de intrare este UTF-16 &#x219;i este utilizat&#x103; op&#x21B;iunea <code>-u</code>, va fi scris un marcaj de ordine a octe&#x21B;ilor UTF-16.</p>
+
+<p>Nu utiliza&#x21B;i niciodat&#x103; aceast&#x103; op&#x21B;iune c&acirc;nd codificarea de ie&#x219;ire este alta dec&acirc;t UTF-8, UTF-16 sau GB18030. Vede&#x21B;i, de asemenea, sec&#x21B;iunea UNICODE.</p>
+
+</dd>
+<dt id="n---newfile-FIIER_INTRARE-FIIER_IEIRE"><b>-n, --newfile FI&#x218;IER_INTRARE FI&#x218;IER_IE&#x218;IRE ...</b></dt>
+<dd>
+
+<p>Modul de fi&#x219;ier nou. Converti&#x21B;i fi&#x219;ierul FI&#x218;IER_INTRARE &#x219;i scrie&#x21B;i rezultatul &icirc;n fi&#x219;ierul FI&#x218;IER_IE&#x218;IRE. Numele fi&#x219;ierelor trebuie s&#x103; fie date &icirc;n perechi, iar numele cu metacaractere ar trebui s&#x103; <i>nu</i> fi folosite sau v-a&#x21B;i puteai pierde fi&#x219;ierele.</p>
+
+<p>Persoana care &icirc;ncepe conversia &icirc;n modul-fi&#x219;ier_nou (pereche) va fi proprietarul fi&#x219;ierului convertit. Permisiunile de citire/scriere ale noului fi&#x219;ier vor fi permisiunile fi&#x219;ierului original minus umask(1) al persoanei care execut&#x103; conversia.</p>
+
+</dd>
+<dt id="no-allow-chown"><b>--no-allow-chown</b></dt>
+<dd>
+
+<p>Nu permite schimbarea proprietarului fi&#x219;ierului &icirc;n modul-fi&#x219;ier_vechi (implicit).</p>
+
+<p>Anuleaz&#x103; conversia atunci c&acirc;nd utilizatorul &#x219;i/sau grupul proprietar al fi&#x219;ierului original nu poate fi p&#x103;strat &icirc;n modul-fi&#x219;ier_vechi. A se vedea, de asemenea, op&#x21B;iunile <code>-o</code> &#x219;i <code>-n</code>. Aceast&#x103; op&#x21B;iune este disponibil&#x103; doar dac&#x103; &laquo;dos2unix&raquo; are suport pentru p&#x103;strarea dreptului de proprietate asupra fi&#x219;ierelor de c&#x103;tre utilizator &#x219;i grup.</p>
+
+</dd>
+<dt id="no-add-eol"><b>--no-add-eol</b></dt>
+<dd>
+
+<p>Nu adaug&#x103; o &icirc;ntrerupere de linie la ultima linie, dac&#x103; nu exist&#x103; una.</p>
+
+</dd>
+<dt id="O---to-stdout"><b>-O, --to-stdout</b></dt>
+<dd>
+
+<p>Scrie la ie&#x219;irea standard, ca un filtru Unix. Folosi&#x21B;i op&#x21B;iunea <code>-o</code> pentru a reveni la modul-fi&#x219;ier_vechi (&icirc;n acela&#x219;i loc / &icirc;n acela&#x219;i fi&#x219;ier).</p>
+
+<p>&Icirc;n combina&#x21B;ie cu op&#x21B;iunea <code>-e</code>, fi&#x219;ierele pot fi concatenate &icirc;n mod corespunz&#x103;tor. Nu se fuzioneaz&#x103; ultima &#x219;i prima linie &#x219;i nici marcajele de ordine a octe&#x21B;ilor (BOM) Unicode &icirc;n mijlocul fi&#x219;ierului concatenat. Exemplu:</p>
+
+<pre><code>dos2unix -e -O fi&#x219;ier1.txt fi&#x219;ier2.txt &gt; fi&#x219;ier_ie&#x219;ire.txt</code></pre>
+
+</dd>
+<dt id="o---oldfile-FIIER"><b>-o, --oldfile FI&#x218;IER ...</b></dt>
+<dd>
+
+<p>Modul fi&#x219;ier vechi. Converte&#x219;te fi&#x219;ierul FI&#x218;IER &#x219;i suprascrie rezultatul &icirc;n el. Programul ruleaz&#x103; implicit &icirc;n acest mod. Pot fi folosite nume cu metacaractere.</p>
+
+<p>&Icirc;n modul-fi&#x219;ier_vechi (&icirc;n acela&#x219;i loc / &icirc;n acela&#x219;i fi&#x219;ier), fi&#x219;ierul convertit prime&#x219;te acela&#x219;i proprietar, grup &#x219;i permisiuni de citire/scriere ca fi&#x219;ierul original. De asemenea, atunci c&acirc;nd fi&#x219;ierul este convertit de un alt utilizator care are permisiuni de scriere &icirc;n fi&#x219;ier (de exemplu, utilizatorul root). Conversia va fi anulat&#x103; atunci c&acirc;nd nu este posibil s&#x103; se p&#x103;streze valorile originale. Schimbarea proprietarului ar putea &icirc;nsemna c&#x103; proprietarul ini&#x21B;ial nu mai poate citi fi&#x219;ierul. Schimbarea grupului ar putea reprezenta un risc de securitate, fi&#x219;ierul ar putea fi f&#x103;cut vizibil pentru persoanele c&#x103;rora nu este destinat. P&#x103;strarea permisiunilor de proprietar, de grup &#x219;i de citire/scriere este acceptat&#x103; numai &icirc;n Unix.</p>
+
+<p>Pentru a verifica dac&#x103; &laquo;dos2unix&raquo; are suport pentru p&#x103;strarea propriet&#x103;&#x21B;ii utilizatorului &#x219;i grupului de fi&#x219;iere, tasta&#x21B;i <code>dos2unix -V</code>.</p>
+
+<p>Conversia se face &icirc;ntotdeauna printr-un fi&#x219;ier temporar. C&acirc;nd apare o eroare la jum&#x103;tatea conversiei, fi&#x219;ierul temporar este &#x219;ters &#x219;i fi&#x219;ierul original r&#x103;m&acirc;ne intact. C&acirc;nd conversia are succes, fi&#x219;ierul original este &icirc;nlocuit cu fi&#x219;ierul temporar. Este posibil s&#x103; ave&#x21B;i permisiunea de scriere &icirc;n fi&#x219;ierul original, dar nu ave&#x21B;i permisiunea de a pune acelea&#x219;i propriet&#x103;&#x21B;i de proprietate ale utilizatorului &#x219;i/sau grupului asupra fi&#x219;ierului temporar ca cele pe care le are fi&#x219;ierul original. Aceasta &icirc;nseamn&#x103; c&#x103; nu pute&#x21B;i p&#x103;stra utilizatorul &#x219;i/sau grupul proprietar al fi&#x219;ierului original. &Icirc;n acest caz, pute&#x21B;i utiliza op&#x21B;iunea <code>--allow-chown</code> pentru a continua conversia:</p>
+
+<pre><code>dos2unix --allow-chown foo.txt</code></pre>
+
+<p>O alt&#x103; op&#x21B;iune este s&#x103; utiliza&#x21B;i modul-fi&#x219;ier_nou:</p>
+
+<pre><code>dos2unix -n foo.txt foo.txt</code></pre>
+
+<p>Avantajul op&#x21B;iunii <code>--allow-chown</code> este c&#x103; pute&#x21B;i folosi metacaractere, iar propriet&#x103;&#x21B;ile de proprietate vor fi p&#x103;strate atunci c&acirc;nd este posibil.</p>
+
+</dd>
+<dt id="q---quiet"><b>-q, --quiet</b></dt>
+<dd>
+
+<p>Modul silen&#x21B;ios. Suprim&#x103; toate avertismentele &#x219;i mesajele. Valoarea returnat&#x103; este zero. Cu excep&#x21B;ia cazului &icirc;n care sunt utilizate op&#x21B;iuni gre&#x219;ite &icirc;n linia de comand&#x103;.</p>
+
+</dd>
+<dt id="r---remove-bom"><b>-r, --remove-bom</b></dt>
+<dd>
+
+<p>Elimin&#x103; marcajul de ordine a octe&#x21B;ilor (BOM). Nu scrie un marcaj de ordine a octe&#x21B;ilor &icirc;n fi&#x219;ierul de ie&#x219;ire. Acesta este comportamentul implicit la conversia &icirc;ntreruperilor de linie Unix. A se vedea, de asemenea, op&#x21B;iunea <code>-b</code>.</p>
+
+</dd>
+<dt id="s---safe"><b>-s, --safe</b></dt>
+<dd>
+
+<p>Omite fi&#x219;ierele binare (implicit).</p>
+
+<p>Omiterea fi&#x219;ierelor binare se face pentru a evita gre&#x219;elile accidentale. Re&#x21B;ine&#x21B;i c&#x103; detectarea fi&#x219;ierelor binare nu este 100% sigur&#x103;. Fi&#x219;ierele de intrare sunt scanate pentru simboluri binare care de obicei nu se g&#x103;sesc &icirc;n fi&#x219;ierele text. Este posibil ca un fi&#x219;ier binar s&#x103; con&#x21B;in&#x103; doar caractere de text normale. Un astfel de fi&#x219;ier binar va fi v&#x103;zut din gre&#x219;eal&#x103; ca un fi&#x219;ier text.</p>
+
+</dd>
+<dt id="u---keep-utf16"><b>-u, --keep-utf16</b></dt>
+<dd>
+
+<p>P&#x103;streaz&#x103; codificarea UTF-16 original&#x103; a fi&#x219;ierului de intrare. Fi&#x219;ierul de ie&#x219;ire va fi scris &icirc;n aceea&#x219;i codare UTF-16, little sau big endian, ca &#x219;i fi&#x219;ierul de intrare. Acest lucru previne transformarea &icirc;n UTF-8. Un marcaj de ordine a octe&#x21B;ilor UTF-16 va fi scris &icirc;n consecin&#x21B;&#x103;. Aceast&#x103; op&#x21B;iune poate fi dezactivat&#x103; cu op&#x21B;iunea <code>-ascii</code>.</p>
+
+</dd>
+<dt id="ul---assume-utf16le"><b>-ul, --assume-utf16le</b></dt>
+<dd>
+
+<p>Presupune c&#x103; formatul fi&#x219;ierului de intrare este UTF-16LE.</p>
+
+<p>C&acirc;nd exist&#x103; un marcaj de ordine a octe&#x21B;ilor &icirc;n fi&#x219;ierul de intrare, marcajul de ordine a octe&#x21B;ilor are prioritate fa&#x21B;&#x103; de aceast&#x103; op&#x21B;iune.</p>
+
+<p>C&acirc;nd a&#x21B;i f&#x103;cut o presupunere gre&#x219;it&#x103; (fi&#x219;ierul de intrare nu era &icirc;n format UTF-16LE) &#x219;i conversia a reu&#x219;it, ve&#x21B;i ob&#x21B;ine un fi&#x219;ier de ie&#x219;ire UTF-8 cu text gre&#x219;it. Pute&#x21B;i anula conversia gre&#x219;it&#x103; cu iconv(1) prin conversia fi&#x219;ierului de ie&#x219;ire UTF-8 &icirc;napoi &icirc;n UTF-16LE. Acest lucru va reface fi&#x219;ierul original.</p>
+
+<p>Presupunerea UTF-16LE func&#x21B;ioneaz&#x103; ca un <i>mod de conversie</i>. Prin trecerea la modul <i>ascii</i> implicit, presupunerea UTF-16LE este dezactivat&#x103;.</p>
+
+</dd>
+<dt id="ub---assume-utf16be"><b>-ub, --assume-utf16be</b></dt>
+<dd>
+
+<p>Presupune c&#x103; formatul fi&#x219;ierului de intrare este UTF-16BE.</p>
+
+<p>Aceast&#x103; op&#x21B;iune func&#x21B;ioneaz&#x103; la fel ca &#x219;i op&#x21B;iunea <code>-ul</code>.</p>
+
+</dd>
+<dt id="v---verbose"><b>-v, --verbose</b></dt>
+<dd>
+
+<p>Afi&#x219;eaz&#x103; mesaje detaliate. Sunt afi&#x219;ate informa&#x21B;ii suplimentare despre m&#x103;rcile de ordine ale octe&#x21B;ilor &#x219;i cantitatea de &icirc;ntreruperi de linie convertite.</p>
+
+</dd>
+<dt id="F---follow-symlink"><b>-F, --follow-symlink</b></dt>
+<dd>
+
+<p>Urmeaz&#x103; leg&#x103;turile simbolice &#x219;i converte&#x219;te &#x21B;intele.</p>
+
+</dd>
+<dt id="R---replace-symlink"><b>-R, --replace-symlink</b></dt>
+<dd>
+
+<p>&Icirc;nlocuie&#x219;te leg&#x103;turile simbolice cu fi&#x219;ierele convertite (fi&#x219;ierele &#x21B;int&#x103; originale r&#x103;m&acirc;n neschimbate).</p>
+
+</dd>
+<dt id="S---skip-symlink"><b>-S, --skip-symlink</b></dt>
+<dd>
+
+<p>P&#x103;streaz&#x103; leg&#x103;turile simbolice &#x219;i &#x21B;intele neschimbate (implicit).</p>
+
+</dd>
+<dt id="V---version"><b>-V, --version</b></dt>
+<dd>
+
+<p>Afi&#x219;eaz&#x103; informa&#x21B;iile despre versiune &#x219;i iese.</p>
+
+</dd>
+</dl>
+
+<h1 id="MODUL-MAC">MODUL MAC</h1>
+
+<p>&Icirc;n modul normal, &icirc;ntreruperile de linie sunt convertite din DOS &icirc;n Unix &#x219;i invers. &Icirc;ntreruperile de linie Mac nu sunt convertite.</p>
+
+<p>&Icirc;n modul Mac, &icirc;ntreruperile de linie sunt convertite din Mac &icirc;n Unix &#x219;i invers. &Icirc;ntreruperile de linie DOS nu sunt modificate.</p>
+
+<p>Pentru a rula &icirc;n modul Mac, utiliza&#x21B;i op&#x21B;iunea din linie de comand&#x103; <code>-c mac</code> sau utiliza&#x21B;i comenzile <code>mac2unix</code> sau <code>unix2mac</code>.</p>
+
+<h1 id="MODURI-DE-CONVERSIE">MODURI DE CONVERSIE</h1>
+
+<dl>
+
+<dt id="ascii1"><b>ascii</b></dt>
+<dd>
+
+<p>&Icirc;n modul <code>ascii</code> sunt convertite doar &icirc;ntreruperile de linie. Acesta este modul de conversie implicit.</p>
+
+<p>De&#x219;i numele acestui mod este ASCII, care este un standard de 7 bi&#x21B;i, modul actual este de 8 bi&#x21B;i. Utiliza&#x21B;i &icirc;ntotdeauna acest mod c&acirc;nd converti&#x21B;i fi&#x219;iere Unicode UTF-8.</p>
+
+</dd>
+<dt id="bit"><b>7bit</b></dt>
+<dd>
+
+<p>&Icirc;n acest mod, toate caracterele de 8 bi&#x21B;i non-ASCII (cu valori de la 128 la 255) sunt convertite &icirc;ntr-un spa&#x21B;iu de 7 bi&#x21B;i.</p>
+
+</dd>
+<dt id="iso1"><b>iso</b></dt>
+<dd>
+
+<p>Caracterele sunt convertite &icirc;ntre un set de caractere DOS (pagina de cod) &#x219;i un set de caractere ISO ISO-8859-1 (Latin-1) &icirc;n Unix. Caracterele DOS f&#x103;r&#x103; echivalent ISO-8859-1, pentru care conversia nu este posibil&#x103;, sunt convertite &icirc;ntr-un punct. Acela&#x219;i lucru este valabil &#x219;i pentru caracterele ISO-8859-1 f&#x103;r&#x103; omolog &icirc;n DOS.</p>
+
+<p>C&acirc;nd este folosit&#x103; numai op&#x21B;iunea <code>-iso</code>, &laquo;dos2unix&raquo; va &icirc;ncerca s&#x103; determine pagina de cod activ&#x103;. C&acirc;nd acest lucru nu este posibil, &laquo;dos2unix&raquo; va folosi pagina de cod implicit&#x103; CP437, care este folosit&#x103; &icirc;n principal &icirc;n SUA. Pentru a for&#x21B;a o anumit&#x103; pagin&#x103; de coduri, utiliza&#x21B;i op&#x21B;iunile <code>-437</code> (SUA), <code>-850</code> (Europa de Vest), <code>-860</code> (Portughez&#x103;), <code>-863</code> (Francez&#x103; Canadian&#x103;) sau <code>- 865</code> (Scandinav&#x103;). Pagina de coduri CP1252 (Europa de Vest) Windows este, de asemenea, acceptat&#x103; cu op&#x21B;iunea <code>-1252</code>. Pentru alte pagini de cod, utiliza&#x21B;i &laquo;dos2unix&raquo; &icirc;n combina&#x21B;ie cu iconv(1). &laquo;iconv&raquo; poate converti o list&#x103; lung&#x103; de codific&#x103;ri de caractere. Pute&#x21B;i vizualiza aceast&#x103; list&#x103; rul&acirc;nd comanda: &laquo;iconv -l&raquo;.</p>
+
+<p>Nu utiliza&#x21B;i niciodat&#x103; conversia ISO pe fi&#x219;iere text Unicode. Acesta va deteriora fi&#x219;ierele codificate UTF-8.</p>
+
+<p>C&acirc;teva exemple:</p>
+
+<p>Converte&#x219;te din pagina de cod implicit&#x103; DOS &icirc;n Latin-1 Unix:</p>
+
+<pre><code>dos2unix -iso -n fi&#x219;ier_intrare.txt fi&#x219;ier_ie&#x219;ire.txt</code></pre>
+
+<p>Converte&#x219;te din CP850 DOS &icirc;n Latin-1 Unix:</p>
+
+<pre><code>dos2unix -850 -n fi&#x219;ier_intrare.txt fi&#x219;ier_ie&#x219;ire.txt</code></pre>
+
+<p>Converte&#x219;te din CP1252 Windows &icirc;n Latin-1 Unix:</p>
+
+<pre><code>dos2unix -1252 -n fi&#x219;ier_intrare.txt fi&#x219;ier_ie&#x219;ire.txt</code></pre>
+
+<p>Converte&#x219;te din CP1252 Windows &icirc;n UTF-8 (Unicode) Unix:</p>
+
+<pre><code>iconv -f CP1252 -t UTF-8 fi&#x219;ier_intrare.txt | dos2unix &gt; fi&#x219;ier_ie&#x219;ire.txt</code></pre>
+
+<p>Converte&#x219;te din Latin-1 Unix la pagina de cod implicit&#x103; DOS:</p>
+
+<pre><code>unix2dos -iso -n fi&#x219;ier_intrare.txt fi&#x219;ier_ie&#x219;ire.txt</code></pre>
+
+<p>Converte&#x219;te din Latin-1 Unix &icirc;n CP850 DOS:</p>
+
+<pre><code>unix2dos -850 -n fi&#x219;ier_intrare.txt fi&#x219;ier_ie&#x219;ire.txt</code></pre>
+
+<p>Converte&#x219;te din Latin-1 Unix &icirc;n CP1252 Windows:</p>
+
+<pre><code>unix2dos -1252 -n fi&#x219;ier_intrare.txt fi&#x219;ier_ie&#x219;ire.txt</code></pre>
+
+<p>Converte&#x219;te din UTF-8 (Unicode) Unix &icirc;n CP1252 Windows:</p>
+
+<pre><code>unix2dos &lt; fi&#x219;ier_intrare.txt | iconv -f UTF-8 -t CP1252 &gt; fi&#x219;ier_ie&#x219;ire.txt</code></pre>
+
+<p>Consulta&#x21B;i de asemenea <a href="http://czyborra.com/charsets/codepages.html">http://czyborra.com/charsets/codepages.html</a> &#x219;i <a href="http://czyborra.com/charsets/iso8859.html">http://czyborra.com/charsets/iso8859.html</a>.</p>
+
+</dd>
+</dl>
+
+<h1 id="UNICODE">UNICODE</h1>
+
+<h2 id="Codificri">Codific&#x103;ri</h2>
+
+<p>Exist&#x103; diferite codific&#x103;ri Unicode. &Icirc;n Unix &#x219;i Linux fi&#x219;ierele Unicode sunt de obicei codificate &icirc;n codificarea UTF-8. &Icirc;n Windows, fi&#x219;ierele text Unicode pot fi codificate &icirc;n UTF-8, UTF-16 sau UTF-16 big-endian, dar sunt &icirc;n mare parte codificate &icirc;n formatul UTF-16.</p>
+
+<h2 id="Conversie">Conversie</h2>
+
+<p>Fi&#x219;ierele text Unicode pot avea &icirc;ntreruperi de linie DOS, Unix sau Mac, ca &#x219;i fi&#x219;ierele text obi&#x219;nuite.</p>
+
+<p>Toate versiunile de &laquo;dos2unix&raquo; &#x219;i &laquo;unix2dos&raquo; pot converti fi&#x219;iere codificate &icirc;n formatul UTF-8, deoarece UTF-8 a fost conceput pentru compatibilitate cu ASCII.</p>
+
+<p>&laquo;dos2unix&raquo; &#x219;i &laquo;unix2dos&raquo; cu suport Unicode UTF-16, pot citi fi&#x219;iere text codificate UTF-16 little &#x219;i big endian. Pentru a vedea dac&#x103; &laquo;dos2unix&raquo; a fost construit cu suport UTF-16, tasta&#x21B;i: <code>dos2unix -V</code>.</p>
+
+<p>&Icirc;n Unix/Linux, fi&#x219;ierele codificate UTF-16 sunt convertite &icirc;n codificarea caracterelor locale. Utiliza&#x21B;i comanda locale(1) pentru a afla care este codificarea caracterelor stabilit&#x103; de localizare. Atunci c&acirc;nd conversia nu este posibil&#x103;, va ap&#x103;rea o eroare de conversie &#x219;i fi&#x219;ierul va fi omis.</p>
+
+<p>&Icirc;n Windows, fi&#x219;ierele UTF-16 sunt convertite &icirc;n mod implicit &icirc;n UTF-8. Fi&#x219;ierele text formatate UTF-8 sunt bine acceptate at&acirc;t &icirc;n Windows, c&acirc;t &#x219;i &icirc;n Unix/Linux.</p>
+
+<p>Codific&#x103;rile UTF-16 &#x219;i UTF-8 sunt pe deplin compatibile, nu se va pierde text &icirc;n conversie. C&acirc;nd apare o eroare de conversie din UTF-16 &icirc;n UTF-8, de exemplu c&acirc;nd fi&#x219;ierul de intrare UTF-16 con&#x21B;ine o eroare, fi&#x219;ierul va fi omis.</p>
+
+<p>C&acirc;nd se utilizeaz&#x103; op&#x21B;iunea <code>-u</code>, fi&#x219;ierul de ie&#x219;ire va fi scris &icirc;n aceea&#x219;i codificare UTF-16 ca &#x219;i fi&#x219;ierul de intrare. Op&#x21B;iunea <code>-u</code> &icirc;mpiedic&#x103; conversia &icirc;n UTF-8.</p>
+
+<p>&laquo;dos2unix&raquo; &#x219;i &laquo;unix2dos&raquo; nu au nicio op&#x21B;iune de a converti fi&#x219;ierele UTF-8 &icirc;n UTF-16.</p>
+
+<p>Modurile de conversie ISO &#x219;i 7 bi&#x21B;i nu func&#x21B;ioneaz&#x103; pe fi&#x219;ierele UTF-16.</p>
+
+<h2 id="Marcajul-de-ordine-a-octeilor">Marcajul de ordine a octe&#x21B;ilor</h2>
+
+<p>&Icirc;n Windows, fi&#x219;ierele text Unicode au de obicei un marcaj de ordine a octe&#x21B;ilor (BOM), deoarece multe programe Windows (inclusiv Notepad) adaug&#x103; marcajul de ordine a octe&#x21B;ilor &icirc;n mod implicit. A se vedea, de asemenea, <a href="http://en.wikipedia.org/wiki/Byte_order_mark">http://en.wikipedia.org/wiki/Byte_order_mark</a>.</p>
+
+<p>&Icirc;n Unix, fi&#x219;ierele Unicode nu au de obicei un marcaj de ordine a octe&#x21B;ilor (BOM). Se presupune c&#x103; fi&#x219;ierele text sunt codificate &icirc;n codificarea caracterelor stabilit&#x103; de localizare.</p>
+
+<p>&laquo;dos2unix&raquo; poate detecta dac&#x103; un fi&#x219;ier este &icirc;n formatul UTF-16 numai dac&#x103; fi&#x219;ierul are un marcaj de ordine a octe&#x21B;ilor (BOM). C&acirc;nd un fi&#x219;ier UTF-16 nu are un marcaj de ordine a octe&#x21B;ilor, &laquo;dos2unix&raquo; va vedea fi&#x219;ierul ca un fi&#x219;ier binar.</p>
+
+<p>Utiliza&#x21B;i op&#x21B;iunea <code>-ul</code> sau <code>-ub</code> pentru a converti un fi&#x219;ier UTF-16 f&#x103;r&#x103; un marcaj de ordine a octe&#x21B;ilor (BOM).</p>
+
+<p>&laquo;dos2unix&raquo; nu scrie &icirc;n mod implicit niciun marcaj de ordine a octe&#x21B;ilor (BOM) &icirc;n fi&#x219;ierul de ie&#x219;ire. Cu op&#x21B;iunea <code>-b</code> &laquo;dos2unix&raquo; scrie un marcaj de ordine a octe&#x21B;ilor atunci c&acirc;nd fi&#x219;ierul de intrare are un marcaj de ordine a octe&#x21B;ilor.</p>
+
+<p>&laquo;unix2dos&raquo; scrie implicit un marcaj de ordine a octe&#x21B;ilor &icirc;n fi&#x219;ierul de ie&#x219;ire c&acirc;nd fi&#x219;ierul de intrare are un marcaj de ordine a octe&#x21B;ilor. Utiliza&#x21B;i op&#x21B;iunea <code>-r</code> pentru a elimina un marcaj de ordine a octe&#x21B;ilor.</p>
+
+<p>&laquo;dos2unix&raquo; &#x219;i &laquo;unix2dos&raquo; scriu &icirc;ntotdeauna un marcaj de ordine a octe&#x21B;ilor atunci c&acirc;nd se utilizeaz&#x103; op&#x21B;iunea <code>-m</code>.</p>
+
+<h2 id="Nume-de-fiiere-Unicode-n-Windows">Nume de fi&#x219;iere Unicode &icirc;n Windows</h2>
+
+<p>&laquo;dos2unix&raquo; are suport op&#x21B;ional pentru citirea &#x219;i scrierea numelor de fi&#x219;iere Unicode &icirc;n linia de comand&#x103; Windows. Asta &icirc;nseamn&#x103; c&#x103; &laquo;dos2unix&raquo; poate deschide fi&#x219;iere care au caractere &icirc;n nume care nu fac parte din pagina de cod ANSI implicit&#x103; a sistemului. Pentru a vedea dac&#x103; &laquo;dos2unix&raquo; pentru Windows a fost construit cu suport pentru nume de fi&#x219;ier Unicode, tasta&#x21B;i: <code>dos2unix -V</code>.</p>
+
+<p>Exist&#x103; unele probleme cu afi&#x219;area numelor de fi&#x219;iere Unicode &icirc;ntr-o consol&#x103; Windows. Vede&#x21B;i op&#x21B;iunea <code>-D</code>, <code>--display-enc</code>. Numele fi&#x219;ierelor pot fi afi&#x219;ate gre&#x219;it &icirc;n consol&#x103;, dar fi&#x219;ierele vor fi scrise cu numele corect.</p>
+
+<h2 id="Exemple-Unicode">Exemple Unicode</h2>
+
+<p>Converte&#x219;te din UTF-16 Windows (f&#x103;r&#x103; BOM) &icirc;n UTF-8 Unix:</p>
+
+<pre><code>dos2unix -n fi&#x219;ier_intrare.txt fi&#x219;ier_ie&#x219;ire.txt</code></pre>
+
+<p>Converte&#x219;te din UTF-16LE Windows (f&#x103;r&#x103; BOM) &icirc;n UTF-8 Unix:</p>
+
+<pre><code>dos2unix -ul -n fi&#x219;ier_intrare.txt fi&#x219;ier_ie&#x219;ire.txt</code></pre>
+
+<p>Converte&#x219;te din UTF-8 Unix &icirc;n Windows UTF-8 Windows cu BOM:</p>
+
+<pre><code>unix2dos -m -n fi&#x219;ier_intrare.txt fi&#x219;ier_ie&#x219;ire.txt</code></pre>
+
+<p>Converte&#x219;te din UTF-8 Unix &icirc;n UTF-16 Windows:</p>
+
+<pre><code>unix2dos &lt; fi&#x219;ier_intrare.txt | iconv -f UTF-8 -t UTF-16 &gt; fi&#x219;ier_ie&#x219;ire.txt</code></pre>
+
+<h1 id="GB18030">GB18030</h1>
+
+<p>GB18030 este un standard guvernamental chinez. Un subset obligatoriu al standardului GB18030 este obligatoriu oficial pentru toate produsele software v&acirc;ndute &icirc;n China. A se vedea, de asemenea, <a href="http://en.wikipedia.org/wiki/GB_18030">http://en.wikipedia.org/wiki/GB_18030</a>.</p>
+
+<p>Standardul GB18030 este pe deplin compatibil cu Unicode &#x219;i poate fi considerat un format de transformare unicode. La fel ca UTF-8, GB18030 este compatibil cu ASCII. GB18030 este, de asemenea, compatibil cu pagina de cod 936 Windows, cunoscut&#x103; &#x219;i sub numele de GBK.</p>
+
+<p>&Icirc;n Unix/Linux, fi&#x219;ierele UTF-16 sunt convertite &icirc;n GB18030 atunci c&acirc;nd codificarea local&#x103; este setat&#x103; la GB18030. Re&#x21B;ine&#x21B;i c&#x103; acest lucru va func&#x21B;iona numai dac&#x103; localizarea este acceptat&#x103; de sistem. Utiliza&#x21B;i comanda <code>locale -a</code> pentru a ob&#x21B;ine lista localiz&#x103;rilor acceptate.</p>
+
+<p>&Icirc;n Windows, trebuie s&#x103; utiliza&#x21B;i op&#x21B;iunea <code>-gb</code> pentru a converti fi&#x219;ierele UTF-16 &icirc;n GB18030.</p>
+
+<p>Fi&#x219;ierele codificate GB18030 pot avea un marcaj de ordine a octe&#x21B;ilor, precum fi&#x219;ierele Unicode.</p>
+
+<h1 id="EXEMPLE">EXEMPLE</h1>
+
+<p>Cite&#x219;te intrarea din &bdquo;stdin&rdquo; (intrarea standard) &#x219;i scrie ie&#x219;irea la &bdquo;stdout&rdquo; (ie&#x219;irea standard):</p>
+
+<pre><code>dos2unix &lt; a.txt
+cat a.txt | dos2unix</code></pre>
+
+<p>Converte&#x219;te &#x219;i &icirc;nlocuie&#x219;te a.txt. Converte&#x219;te &#x219;i &icirc;nlocuie&#x219;te b.txt:</p>
+
+<pre><code>dos2unix a.txt b.txt
+dos2unix -o a.txt b.txt</code></pre>
+
+<p>Converte&#x219;te &#x219;i &icirc;nlocuie&#x219;te a.txt &icirc;n modul de conversie ascii:</p>
+
+<pre><code>dos2unix a.txt</code></pre>
+
+<p>Converte&#x219;te &#x219;i &icirc;nlocuie&#x219;te a.txt &icirc;n modul de conversie ascii, converte&#x219;te &#x219;i &icirc;nlocuie&#x219;te b.txt &icirc;n modul de conversie pe 7 bi&#x21B;i:</p>
+
+<pre><code>dos2unix a.txt -c 7bit b.txt
+dos2unix -c ascii a.txt -c 7bit b.txt
+dos2unix -ascii a.txt -7 b.txt</code></pre>
+
+<p>Converte&#x219;te a.txt din formatul Mac &icirc;n formatul Unix:</p>
+
+<pre><code>dos2unix -c mac a.txt
+mac2unix a.txt</code></pre>
+
+<p>Converte&#x219;te a.txt din formatul Unix &icirc;n formatul Mac:</p>
+
+<pre><code>unix2dos -c mac a.txt
+unix2mac a.txt</code></pre>
+
+<p>Converte&#x219;te &#x219;i &icirc;nlocuie&#x219;te a.txt, p&#x103;str&acirc;nd marcajul original al datei:</p>
+
+<pre><code>dos2unix -k a.txt
+dos2unix -k -o a.txt</code></pre>
+
+<p>Converte&#x219;te a.txt &#x219;i scrie &icirc;n e.txt:</p>
+
+<pre><code>dos2unix -n a.txt e.txt</code></pre>
+
+<p>Converte&#x219;te a.txt &#x219;i scrie &icirc;n e.txt, &#x219;i face ca marcajul de dat&#x103; al lui e.txt s&#x103; fie la fel cu cel al lui a.txt:</p>
+
+<pre><code>dos2unix -k -n a.txt e.txt</code></pre>
+
+<p>Converte&#x219;te &#x219;i &icirc;nlocuie&#x219;te a.txt, converte&#x219;tei b.txt &#x219;i scrie &icirc;n e.txt:</p>
+
+<pre><code>dos2unix a.txt -n b.txt e.txt
+dos2unix -o a.txt -n b.txt e.txt</code></pre>
+
+<p>Converte&#x219;te c.txt &#x219;i scrie &icirc;n e.txt, converte&#x219;te &#x219;i &icirc;nlocuie&#x219;te a.txt, converte&#x219;te &#x219;i &icirc;nlocuie&#x219;te b.txt, converte&#x219;te d.txt &#x219;i scrie &icirc;n f.txt:</p>
+
+<pre><code>dos2unix -n c.txt e.txt -o a.txt b.txt -n d.txt f.txt</code></pre>
+
+<h1 id="CONVERSIE-RECURSIV">CONVERSIE RECURSIV&#x102;</h1>
+
+<p>&Icirc;ntr-un shell Unix, comenzile find(1) &#x219;i xargs(1) pot s&#x103; fie folosite pentru a rula &laquo;dos2unix&raquo; &icirc;n mod recursiv asupra tuturor fi&#x219;ierele text dintr-un arbore de directoare. De exemplu, pentru a converti toate fi&#x219;ierele .txt din arborele de directoare sub directorul curent, tasta&#x21B;i:</p>
+
+<pre><code>find . -name &#39;*.txt&#39; -print0 |xargs -0 dos2unix</code></pre>
+
+<p>Op&#x21B;iunea find(1) <code>-print0</code> &#x219;i op&#x21B;iunea corespunz&#x103;toare xargs(1) <code>-0</code> sunt necesare atunci c&acirc;nd exist&#x103; fi&#x219;iere cu spa&#x21B;ii sau ghilimele &icirc;n nume. &Icirc;n caz contrar, aceste op&#x21B;iuni pot fi omise. O alt&#x103; op&#x21B;iune este s&#x103; utiliza&#x21B;i find(1) cu op&#x21B;iunea <code>-exec</code>:</p>
+
+<pre><code>find . -name &#39;*.txt&#39; -exec dos2unix {} \;</code></pre>
+
+<p>&Icirc;ntr-un prompt de comand&#x103; Windows se poate folosi urm&#x103;toarea comand&#x103;:</p>
+
+<pre><code>for /R %G in (*.txt) do dos2unix &quot;%G&quot;</code></pre>
+
+<p>Utilizatorii de PowerShell pot folosi urm&#x103;toarea comand&#x103; a PowerShell de Windows:</p>
+
+<pre><code>get-childitem -path . -filter &#39;*.txt&#39; -recurse | foreach-object {dos2unix $_.Fullname}</code></pre>
+
+<h1 id="LOCALIZAREA">LOCALIZAREA</h1>
+
+<dl>
+
+<dt id="LANG"><b>LANG</b></dt>
+<dd>
+
+<p>Limba principal&#x103; este selectat&#x103; cu variabila de mediu LANG. Variabila LANG const&#x103; din mai multe p&#x103;r&#x21B;i. Prima parte este codul limbii cu litere mici. Al doilea este op&#x21B;ional &#x219;i este codul &#x21B;&#x103;rii cu majuscule, precedat de un caracter de subliniere. Exist&#x103;, de asemenea, o a treia parte op&#x21B;ional&#x103;: codificarea caracterelor, precedat&#x103; de un punct. C&acirc;teva exemple pentru shell-uri de tip standard POSIX:</p>
+
+<pre><code>export LANG=nl               Olandez&#x103;
+export LANG=nl_NL            Olandez&#x103;, Olanda
+export LANG=nl_BE            Olandez&#x103;, Belgia
+export LANG=es_ES            Spaniol&#x103;, Spania
+export LANG=es_MX            Spaniol&#x103;, Mexic
+export LANG=en_US.iso88591   Englez&#x103;, SUA, codificarea Latin-1
+export LANG=en_GB.UTF-8      Englez&#x103;, UK, codificarea UTF-8</code></pre>
+
+<p>Pentru o list&#x103; complet&#x103; a codurilor de limb&#x103; &#x219;i de &#x21B;ar&#x103;, consulta&#x21B;i manualul &laquo;gettext&raquo;: <a href="http://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html">http://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html</a></p>
+
+<p>&Icirc;n sistemele Unix, pute&#x21B;i utiliza comanda locale(1) pentru a ob&#x21B;ine informa&#x21B;ii specifice despre localizare.</p>
+
+</dd>
+<dt id="LANGUAGE"><b>LANGUAGE</b></dt>
+<dd>
+
+<p>Cu variabila de mediu LANGUAGE pute&#x21B;i specifica o list&#x103; cu prioritate de limbi, separate prin dou&#x103; puncte. &laquo;dos2unix&raquo; d&#x103; preferin&#x21B;&#x103; variabilei LANGUAGE &icirc;n detrimentul variabilei LANG. De exemplu, mai &icirc;nt&acirc;i olandez&#x103; &#x219;i apoi german&#x103;: <code>LANGUAGE=nl:de</code>. Mai &icirc;nt&acirc;i trebuie s&#x103; activa&#x21B;i localizarea, definind LANG (sau LC_ALL) la o alt&#x103; valoare dec&acirc;t &bdquo;C&rdquo;, &icirc;nainte de a putea utiliza o list&#x103; cu prioritate de limb&#x103; prin variabila LANGUAGE. Consulta&#x21B;i &#x219;i manualul &laquo;gettext&raquo;: <a href="http://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-variable.html">http://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-variable.html</a></p>
+
+<p>Dac&#x103; selecta&#x21B;i o limb&#x103; care nu este disponibil&#x103;, ve&#x21B;i primi mesajele standard &icirc;n limba englez&#x103;.</p>
+
+</dd>
+<dt id="DOS2UNIX_LOCALEDIR"><b>DOS2UNIX_LOCALEDIR</b></dt>
+<dd>
+
+<p>Cu variabila de mediu DOS2UNIX_LOCALEDIR, variabila LOCALEDIR definit&#x103; &icirc;n timpul compil&#x103;rii poate fi &icirc;nlocuit&#x103;. LOCALEDIR este folosit&#x103; pentru a g&#x103;si fi&#x219;ierele de limb&#x103;. Valoarea implicit&#x103; GNU este <code>/usr/local/share/locale</code>. Op&#x21B;iunea <b>--version</b> va afi&#x219;a valoarea pe care LOCALEDIR o utilizeaz&#x103;.</p>
+
+<p>Exemplu (shell POSIX):</p>
+
+<pre><code>export DOS2UNIX_LOCALEDIR=$HOME/share/locale</code></pre>
+
+</dd>
+</dl>
+
+<h1 id="VALOAREA-RETURNAT">VALOAREA RETURNAT&#x102;</h1>
+
+<p>La succes, se returneaz&#x103; zero. C&acirc;nd apare o eroare de sistem, va fi returnat&#x103; ultima eroare de sistem. Pentru alte erori se returneaz&#x103; 1.</p>
+
+<p>Valoarea returnat&#x103; este &icirc;ntotdeauna zero &icirc;n modul silen&#x21B;ios, cu excep&#x21B;ia cazului &icirc;n care sunt utilizate op&#x21B;iuni gre&#x219;ite ale liniei de comand&#x103;.</p>
+
+<h1 id="STANDARDE">STANDARDE</h1>
+
+<p><a href="https://ro.wikipedia.org/wiki/Fi%C8%99ier_text">https://ro.wikipedia.org/wiki/Fi%C8%99ier_text</a></p>
+
+<p><a href="http://en.wikipedia.org/wiki/Carriage_return">http://en.wikipedia.org/wiki/Carriage_return</a></p>
+
+<p><a href="http://en.wikipedia.org/wiki/Newline">http://en.wikipedia.org/wiki/Newline</a></p>
+
+<p><a href="https://ro.wikipedia.org/wiki/Unicode">https://ro.wikipedia.org/wiki/Unicode</a></p>
+
+<h1 id="AUTORI">AUTORI</h1>
+
+<p>Benjamin Lin - &lt;blin@socs.uts.edu.au&gt;, Bernd Johannes Wuebben (modul mac2unix) - &lt;wuebben@kde.org&gt;, Christian Wurll (ad&#x103;ugarea unei linii noi suplimentare) - &lt;wurll@ira.uka.de&gt;, Erwin Waterlander - &lt;waterlan@xs4all.nl&gt; (men&#x21B;in&#x103;tor)</p>
+
+<p>Pagina principal&#x103; a proiectului: <a href="http://waterlan.home.xs4all.nl/dos2unix.html">http://waterlan.home.xs4all.nl/dos2unix.html</a></p>
+
+<p>Pagina SourceForge a proiectului: <a href="http://sourceforge.net/projects/dos2unix/">http://sourceforge.net/projects/dos2unix/</a></p>
+
+<h1 id="CONSULTAI-I">CONSULTA&#x21A;I &#x218;I</h1>
+
+<p>file(1) find(1) iconv(1) locale(1) xargs(1)</p>
+
+
+</body>
+
+</html>
+
+

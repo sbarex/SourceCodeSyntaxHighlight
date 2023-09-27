@@ -2,9 +2,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>dos2unix 7.4.2 - Convertit les fichiers textes du format DOS/Mac vers Unix et inversement</title>
+<title>dos2unix 7.5.1 - Convertit les fichiers textes du format DOS/Mac vers Unix et inversement</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:root@localhost" />
+<link rev="made" href="mailto:ASSI@walter.nonet" />
 </head>
 
 <body>
@@ -43,8 +43,8 @@
 
 <h1 id="SYNOPSIS">SYNOPSIS</h1>
 
-<pre><code>    dos2unix [options] [FICHIER &hellip;] [-n FICHIER_ENTR&Eacute;E FICHIER_SORTIE &hellip;]
-    unix2dos [options] [FICHIER &hellip;] [-n FICHIER_ENTR&Eacute;E FICHIER_SORTIE &hellip;]</code></pre>
+<pre><code>dos2unix [options] [FICHIER &hellip;] [-n FICHIER_ENTR&Eacute;E FICHIER_SORTIE &hellip;]
+unix2dos [options] [FICHIER &hellip;] [-n FICHIER_ENTR&Eacute;E FICHIER_SORTIE &hellip;]</code></pre>
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
@@ -71,11 +71,11 @@
 
 <p>Traites toutes les options &agrave; sa suite comme &eacute;tant des noms de fichiers. Utilisez cette option si vous voulez convertir des fichiers dont le nom commence par un tiret. Par exemple, pour convertir un fichier nomm&eacute; <span style="white-space: nowrap;">&laquo; -foo &raquo;,</span> vous pouvez utiliser cette commande:</p>
 
-<pre><code>    dos2unix -- -foo</code></pre>
+<pre><code>dos2unix -- -foo</code></pre>
 
 <p>Ou dans le style des nouveaux fichiers:</p>
 
-<pre><code>    dos2unix -n -- -foo sortie.txt</code></pre>
+<pre><code>dos2unix -n -- -foo sortie.txt</code></pre>
 
 </dd>
 <dt id="allow-chown"><b>--allow-chown</b></dt>
@@ -200,6 +200,14 @@
 <p>L&#39;encodage par d&eacute;faut peut &ecirc;tre chang&eacute; en assignant la valeur <code>unicode</code>, <code>unicodebom</code>, <code>utf8</code> ou <code>utf8bom</code> &agrave; la variable d&#39;environnement DOS2UNIX_DISPLAY_ENC.</p>
 
 </dd>
+<dt id="e---add-eol"><b>-e, --add-eol</b></dt>
+<dd>
+
+<p>Ajoute un saut de ligne &agrave; la derni&egrave;re ligne si elle n&#39;en a pas d&eacute;j&agrave; un. Cela fonctionne avec toutes les conversions.</p>
+
+<p>Un fichier converti de DOS vers le format Unix peut ne pas avoir de saut de ligne &agrave; la derni&egrave;re ligne. Il existe des &eacute;diteurs de texte qui &eacute;crivent le fichier texte sans saut de ligne &agrave; la derni&egrave;re ligne. Certains programmes Unix ont des difficult&eacute;s &agrave; traiter ces fichiers car le standard POSIX d&eacute;fini que chaque ligne d&#39;un fichier texte doit &ecirc;tre termin&eacute; par le caract&egrave;re de nouvelle ligne. Par exemple, concat&eacute;ner des fichiers peut ne pas donner le r&eacute;sultat attendu.</p>
+
+</dd>
 <dt id="f---force"><b>-f, --force</b></dt>
 <dd>
 
@@ -227,14 +235,14 @@
 
 <p>Exemple de <span style="white-space: nowrap;">sortie :</span></p>
 
-<pre><code>     6       0       0  no_bom    text    dos.txt
-     0       6       0  no_bom    text    unix.txt
-     0       0       6  no_bom    text    mac.txt
-     6       6       6  no_bom    text    mixed.txt
-    50       0       0  UTF-16LE  text    utf16le.txt
-     0      50       0  no_bom    text    utf8unix.txt
-    50       0       0  UTF-8     text    utf8dos.txt
-     2     418     219  no_bom    binary  dos2unix.exe</code></pre>
+<pre><code> 6       0       0  no_bom    text    dos.txt
+ 0       6       0  no_bom    text    unix.txt
+ 0       0       6  no_bom    text    mac.txt
+ 6       6       6  no_bom    text    mixed.txt
+50       0       0  UTF-16LE  text    utf16le.txt
+ 0      50       0  no_bom    text    utf8unix.txt
+50       0       0  UTF-8     text    utf8dos.txt
+ 2     418     219  no_bom    binary  dos2unix.exe</code></pre>
 
 <p>Notez qu&#39;un fichier binaire peut parfois &ecirc;tre consid&eacute;r&eacute; &agrave; tord comme un fichier texte. Voyez aussi l&#39;option <code>-s</code>.</p>
 
@@ -304,31 +312,31 @@
 
 <p>Afficher les informations pour tous les fichier <span style="white-space: nowrap;">*.txt :</span></p>
 
-<pre><code>    dos2unix -i *.txt</code></pre>
+<pre><code>dos2unix -i *.txt</code></pre>
 
 <p>Afficher uniquement le nombre de sauts de ligne DOS et <span style="white-space: nowrap;">Unix :</span></p>
 
-<pre><code>    dos2unix -idu *.txt</code></pre>
+<pre><code>dos2unix -idu *.txt</code></pre>
 
 <p>Montrer uniquement la marque d&#39;ordre des <span style="white-space: nowrap;">octets :</span></p>
 
-<pre><code>    dos2unix --info=b *.txt</code></pre>
+<pre><code>dos2unix --info=b *.txt</code></pre>
 
 <p>Liste les fichiers qui ont des sauts de ligne DOS :</p>
 
-<pre><code>    dos2unix -ic *.txt</code></pre>
+<pre><code>dos2unix -ic *.txt</code></pre>
 
 <p>Liste les fichiers qui ont des sauts de ligne Unix :</p>
 
-<pre><code>    unix2dos -ic *.txt</code></pre>
+<pre><code>unix2dos -ic *.txt</code></pre>
 
 <p>Ne converti que les fichiers qui ont des sauts de lignes DOS et laisse les autres fichiers inchang&eacute;s:</p>
 
-<pre><code>    dos2unix -ic0 *.txt | xargs -0 dos2unix</code></pre>
+<pre><code>dos2unix -ic0 *.txt | xargs -0 dos2unix</code></pre>
 
 <p>Trouve les fichiers texte qui ont des sauts de ligne DOS :</p>
 
-<pre><code>    find -name &#39;*.txt&#39; -print0 | xargs -0 dos2unix -ic</code></pre>
+<pre><code>find -name &#39;*.txt&#39; -print0 | xargs -0 dos2unix -ic</code></pre>
 
 </dd>
 <dt id="k---keepdate"><b>-k, --keepdate</b></dt>
@@ -379,6 +387,22 @@
 <p>Interrompt la conversion si l&#39;utilisateur ou le groupe propri&eacute;taire du fichier original ne peuvent pas &ecirc;tre pr&eacute;serv&eacute;s dans l&#39;ancien mode de fichier. Voyez aussi les options <code>-o</code> et <code>-n</code>. Cette option est uniquement pr&eacute;sente si dos2unix dispose des fonctionnalit&eacute;s pour pr&eacute;server l&#39;utilisateur ou le groupe propri&eacute;taire des fichiers.</p>
 
 </dd>
+<dt id="no-add-eol"><b>--no-add-eol</b></dt>
+<dd>
+
+<p>N&#39;ajoute pas de saut de ligne &agrave; la derni&egrave;re ligne s&#39;il n&#39;y en a pas.</p>
+
+</dd>
+<dt id="O---to-stdout"><b>-O, --to-stdout</b></dt>
+<dd>
+
+<p>&Eacute;crit vers la sortie standard, comme un filtre Unix. Utilisez l&#39;option <code>-o</code> pour revenir au mode de l&#39;ancien fichier (en place).</p>
+
+<p>Combin&eacute; avec l&#39;option <code>-e</code>, les fichiers peuvent &ecirc;tre concat&eacute;n&eacute;s correctement. Les premi&egrave;re et derni&egrave;re lignes ne sont pas fusionn&eacute;es et il n&#39;y a pas de marque d&#39;ordre des octets au milieu du fichier concat&eacute;n&eacute;. <span style="white-space: nowrap;">Exemple :</span></p>
+
+<pre><code>dos2unix -e -O fichier1.txt fichier2.txt &gt; sortie.txt</code></pre>
+
+</dd>
 <dt id="o---oldfile-FICHIER"><b>-o, --oldfile FICHIER &hellip;</b></dt>
 <dd>
 
@@ -390,11 +414,11 @@
 
 <p>La conversion est toujours r&eacute;alis&eacute;e via un fichier temporaire. Quand une erreur survient au milieu de la conversion, le fichier temporaire est effac&eacute; et le fichier original reste inchang&eacute;. Quand la conversion r&eacute;ussi, le fichier original est remplac&eacute; par le fichier temporaire. Vous pourriez avoir la permission d&#39;&eacute;crire dans le fichier original mais ne pas avoir la permission de remplacer les propri&eacute;t&eacute;s de l&#39;utilisateur et du groupe propri&eacute;taires sur le fichier temporaire telles qu&#39;elles sont d&eacute;finies sur le fichier original. Cela signifie que vous n&#39;&ecirc;tes pas en mesure de pr&eacute;server l&#39;utilisateur ou le groupe propri&eacute;taire du fichier original. Dans ce cas, vous pouvez utiliser l&#39;option <code>--allow-chown</code> pour continuer la conversion.</p>
 
-<pre><code>    dos2unix --allow-chown toto.txt</code></pre>
+<pre><code>dos2unix --allow-chown toto.txt</code></pre>
 
 <p>Une autre option consiste &agrave; utiliser le nouveau mode de fichier:</p>
 
-<pre><code>    dos2unix -n toto.txt toto.txt</code></pre>
+<pre><code>dos2unix -n toto.txt toto.txt</code></pre>
 
 <p>L&#39;avantage de l&#39;option <code>--allow-chown</code> est que vous pouvez utiliser des caract&egrave;res de remplacement et les propri&eacute;taires seront pr&eacute;serv&eacute;s dans la mesure du possible.</p>
 
@@ -516,35 +540,35 @@
 
 <p>Convertir du code page par d&eacute;faut du DOS au Latin-1 Unix :</p>
 
-<pre><code>    dos2unix -iso -n entr&eacute;e.txt sortie.txt</code></pre>
+<pre><code>dos2unix -iso -n entr&eacute;e.txt sortie.txt</code></pre>
 
 <p>Convertir du CP850 du DOS au Latin-1 Unix :</p>
 
-<pre><code>    dos2unix -850 -n entr&eacute;e.txt sortie.txt</code></pre>
+<pre><code>dos2unix -850 -n entr&eacute;e.txt sortie.txt</code></pre>
 
 <p>Convertir du CP1252 de Windows au Latin-1 de Unix :</p>
 
-<pre><code>    dos2unix -1252 -n entr&eacute;e.txt sortie.txt</code></pre>
+<pre><code>dos2unix -1252 -n entr&eacute;e.txt sortie.txt</code></pre>
 
 <p>Convertir le CP1252 de Windows en UTF-8 de Unix (Unicode) :</p>
 
-<pre><code>    iconv -f CP1252 -t UTF-8 entr&eacute;e.txt | dos2unix &gt; sortie.txt</code></pre>
+<pre><code>iconv -f CP1252 -t UTF-8 entr&eacute;e.txt | dos2unix &gt; sortie.txt</code></pre>
 
 <p>Convertir du Latin-1 de Unix au code page par d&eacute;faut de DOS :</p>
 
-<pre><code>    unix2dos -iso -n entr&eacute;e.txt sortie.txt</code></pre>
+<pre><code>unix2dos -iso -n entr&eacute;e.txt sortie.txt</code></pre>
 
 <p>Convertir le Latin-1 de Unix en CP850 du DOS :</p>
 
-<pre><code>    unix2dos -850 -n entr&eacute;e.txt sortie.txt</code></pre>
+<pre><code>unix2dos -850 -n entr&eacute;e.txt sortie.txt</code></pre>
 
 <p>Convertir le Latin-1 de Unix en CP1252 de Windows :</p>
 
-<pre><code>    unix2dos -1252 -n entr&eacute;e.txt sortie.txt</code></pre>
+<pre><code>unix2dos -1252 -n entr&eacute;e.txt sortie.txt</code></pre>
 
 <p>Convertir le UTF-8 de Unix (Unicode) en CP1252 de Windows :</p>
 
-<pre><code>    unix2dos &lt; entr&eacute;e.txt | iconv -f UTF-8 -t CP1252 &gt; sortie.txt</code></pre>
+<pre><code>unix2dos &lt; entr&eacute;e.txt | iconv -f UTF-8 -t CP1252 &gt; sortie.txt</code></pre>
 
 <p>Consultez aussi <a href="http://czyborra.com/charsets/codepages.html">http://czyborra.com/charsets/codepages.html</a> et <a href="http://czyborra.com/charsets/iso8859.html">http://czyborra.com/charsets/iso8859.html</a>.</p>
 
@@ -603,19 +627,19 @@
 
 <p>Convertir de l&#39;UTF-16 Windows (avec BOM) vers l&#39;UTF-8 de Unix :</p>
 
-<pre><code>    dos2unix -n entr&eacute;e.txt sortie.txt</code></pre>
+<pre><code>dos2unix -n entr&eacute;e.txt sortie.txt</code></pre>
 
 <p>Convertir de l&#39;UTF-16LE de Windows (sans BOM) vers l&#39;UTF-8 de Unix :</p>
 
-<pre><code>    dos2unix -ul -n entr&eacute;e.txt sortie.txt</code></pre>
+<pre><code>dos2unix -ul -n entr&eacute;e.txt sortie.txt</code></pre>
 
 <p>Convertir de l&#39;UTF-8 de Unix vers l&#39;UTF-8 de Windows avec BOM :</p>
 
-<pre><code>    unix2dos -m -n entr&eacute;e.txt sortie.txt</code></pre>
+<pre><code>unix2dos -m -n entr&eacute;e.txt sortie.txt</code></pre>
 
 <p>Convertir de l&#39;UTF-8 de Unix vers l&#39;UTF-16 de Windows :</p>
 
-<pre><code>    unix2dos &lt; entr&eacute;e.txt | iconv -f UTF-8 -t UTF-16 &gt; sortie.txt</code></pre>
+<pre><code>unix2dos &lt; entr&eacute;e.txt | iconv -f UTF-8 -t UTF-16 &gt; sortie.txt</code></pre>
 
 <h1 id="GB18030">GB18030</h1>
 
@@ -633,74 +657,74 @@
 
 <p>Lire l&#39;entr&eacute;e depuis <span style="white-space: nowrap;">&laquo; stdin &raquo;</span> et &eacute;crire la sortie vers <span style="white-space: nowrap;">&laquo; stdout &raquo; :</span></p>
 
-<pre><code>    dos2unix &lt; a.txt
-    cat a.txt | dos2unix</code></pre>
+<pre><code>dos2unix &lt; a.txt
+cat a.txt | dos2unix</code></pre>
 
 <p>Convertir et remplacer a.txt. Convertir et remplace b.txt :</p>
 
-<pre><code>    dos2unix a.txt b.txt
-    dos2unix -o a.txt b.txt</code></pre>
+<pre><code>dos2unix a.txt b.txt
+dos2unix -o a.txt b.txt</code></pre>
 
 <p>Convertir et remplacer a.txt en mode de conversion ascii :</p>
 
-<pre><code>    dos2unix a.txt</code></pre>
+<pre><code>dos2unix a.txt</code></pre>
 
 <p>Convertir et remplacer a.txt en mode de conversion ascii. Convertir et remplacer b.txt en mode de conversion 7 bits :</p>
 
-<pre><code>    dos2unix a.txt -c 7bit b.txt
-    dos2unix -c ascii a.txt -c 7bit b.txt
-    dos2unix -ascii a.txt -7 b.txt</code></pre>
+<pre><code>dos2unix a.txt -c 7bit b.txt
+dos2unix -c ascii a.txt -c 7bit b.txt
+dos2unix -ascii a.txt -7 b.txt</code></pre>
 
 <p>Convertir a.txt depuis le format Mac vers le format Unix :</p>
 
-<pre><code>    dos2unix -c mac a.txt
-    mac2unix a.txt</code></pre>
+<pre><code>dos2unix -c mac a.txt
+mac2unix a.txt</code></pre>
 
 <p>Convertir a.txt du format Unix au format Mac :</p>
 
-<pre><code>    unix2dos -c mac a.txt
-    unix2mac a.txt</code></pre>
+<pre><code>unix2dos -c mac a.txt
+unix2mac a.txt</code></pre>
 
 <p>Convertir et remplacer a.txt tout en conservant la date originale :</p>
 
-<pre><code>    dos2unix -k a.txt
-    dos2unix -k -o a.txt</code></pre>
+<pre><code>dos2unix -k a.txt
+dos2unix -k -o a.txt</code></pre>
 
 <p>Convertir a.txt et &eacute;crire dans e.txt :</p>
 
-<pre><code>    dos2unix -n a.txt e.txt</code></pre>
+<pre><code>dos2unix -n a.txt e.txt</code></pre>
 
 <p>Convertir a.txt et &eacute;crire dans e.txt. La date de e.txt est la m&ecirc;me que celle de a.txt :</p>
 
-<pre><code>    dos2unix -k -n a.txt e.txt</code></pre>
+<pre><code>dos2unix -k -n a.txt e.txt</code></pre>
 
 <p>Convertir et remplacer a.txt. Convertir b.txt et &eacute;crire dans e.txt :</p>
 
-<pre><code>    dos2unix a.txt -n b.txt e.txt
-    dos2unix -o a.txt -n b.txt e.txt</code></pre>
+<pre><code>dos2unix a.txt -n b.txt e.txt
+dos2unix -o a.txt -n b.txt e.txt</code></pre>
 
 <p>Convertir c.txt et &eacute;crire dans e.txt. Convertir et remplacer a.txt. Convertir et remplacer b.txt. Convertir d.txt et &eacute;crire dans f.txt :</p>
 
-<pre><code>    dos2unix -n c.txt e.txt -o a.txt b.txt -n d.txt f.txt</code></pre>
+<pre><code>dos2unix -n c.txt e.txt -o a.txt b.txt -n d.txt f.txt</code></pre>
 
 <h1 id="CONVERSIONS-RCURSIVES">CONVERSIONS R&Eacute;CURSIVES</h1>
 
 <p>Dans un shell Unix, les commandes find(1) et xargs(1) peuvent &ecirc;tre utilis&eacute;es pour ex&eacute;cuter dos2unix r&eacute;cursivement sur tous les fichiers textes dans une arborescence de r&eacute;pertoires. Par exemple, pour convertir tous les fichiers .txt dans les r&eacute;pertoires sous le r&eacute;pertoire courant, tapez:</p>
 
-<pre><code>    find . -name &#39;*.txt&#39; -print0 |xargs -0 dos2unix</code></pre>
+<pre><code>find . -name &#39;*.txt&#39; -print0 |xargs -0 dos2unix</code></pre>
 
 <p>L&#39;option <code>-print0</code> de find(1) et l&#39;option correspondante <code>-0</code> de xargs(1) sont n&eacute;cessaires quand il y a des fichiers avec des espaces ou des guillemets dans leur nom. Sinon, ces options peuvent &ecirc;tre omises. Une autre possibilit&eacute; est d&#39;utiliser find(1) avec l&#39;option <code>-exec</code>:</p>
 
-<pre><code>    find . -name &#39;*.txt&#39; -exec dos2unix {} \;</code></pre>
+<pre><code>find . -name &#39;*.txt&#39; -exec dos2unix {} \;</code></pre>
 
 <p>En ligne de commande sous Windows, la commande suivante peut &ecirc;tre utilis&eacute;e :</p>
 
-<pre><code>    for /R %G in (*.txt) do dos2unix &quot;%G&quot;
-    find /R %G in </code></pre>
+<pre><code>for /R %G in (*.txt) do dos2unix &quot;%G&quot;
+find /R %G in </code></pre>
 
 <p>Les utilisateurs de PowerShell peuvent utiliser la commande suivante dans le PowerShell de Windows :</p>
 
-<pre><code>    get-childitem -path . -filter &#39;*.txt&#39; -recurse | foreach-object {dos2unix $_.Fullname}</code></pre>
+<pre><code>get-childitem -path . -filter &#39;*.txt&#39; -recurse | foreach-object {dos2unix $_.Fullname}</code></pre>
 
 <h1 id="PARAMTRES-LINGUISTIQUES">PARAM&Egrave;TRES LINGUISTIQUES</h1>
 
@@ -711,13 +735,13 @@
 
 <p>La langue principale est s&eacute;lectionn&eacute;e par la variable d&#39;environnement LANG. La variable LANG est compos&eacute;e de plusieurs parties. La premi&egrave;re partie est le code de la langue en minuscules. La deuxi&egrave;me partie est le code du pays en majuscules pr&eacute;c&eacute;d&eacute; d&#39;un soulign&eacute;. Elle est facultative. Il y a aussi une troisi&egrave;me partie facultative qui est le codage des caract&egrave;res pr&eacute;c&eacute;d&eacute; par un point. Voici quelques exemples pour un shell au standard POSIX:</p>
 
-<pre><code>    export LANG=fr               Fran&ccedil;ais
-    export LANG=fr_CA            Fran&ccedil;ais, Canada
-    export LANG=fr_BE            Fran&ccedil;ais, Belgique
-    export LANG=es_ES            Espagnol, Espagne
-    export LANG=es_MX            Espagnol, Mexique
-    export LANG=en_US.iso88591   Anglais, USA, codage Latin-1
-    export LANG=en_GB.UTF-8      Anglais, UK, codage UTF-8</code></pre>
+<pre><code>export LANG=fr               Fran&ccedil;ais
+export LANG=fr_CA            Fran&ccedil;ais, Canada
+export LANG=fr_BE            Fran&ccedil;ais, Belgique
+export LANG=es_ES            Espagnol, Espagne
+export LANG=es_MX            Espagnol, Mexique
+export LANG=en_US.iso88591   Anglais, USA, codage Latin-1
+export LANG=en_GB.UTF-8      Anglais, UK, codage UTF-8</code></pre>
 
 <p>La liste compl&egrave;te des codes de langues et de pays est dans le manuel de gettext: <a href="http://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html">http://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html</a></p>
 
@@ -739,7 +763,7 @@
 
 <p>Exemple (shell POSIX):</p>
 
-<pre><code>    export DOS2UNIX_LOCALEDIR=$HOME/share/locale</code></pre>
+<pre><code>export DOS2UNIX_LOCALEDIR=$HOME/share/locale</code></pre>
 
 </dd>
 </dl>

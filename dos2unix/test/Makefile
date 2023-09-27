@@ -1,4 +1,4 @@
-TESTS = ascii.t iso.t misc.t bom.t
+TESTS = ascii.t iso.t misc.t bom.t noeol.t stdio.t
 
 d2u_os=$(shell uname -s)
 UCS = 1
@@ -8,9 +8,11 @@ ifeq ($(findstring MINGW,$(d2u_os)),MINGW)
 TESTS += gb18030.t
 else
 ifneq ($(findstring FreeBSD,$(d2u_os)),FreeBSD)
+ifneq ($(findstring Darwin,$(d2u_os)),Darwin)
 # Unix/Linux/Cygwin. Check if zh_CN.gb18030 locale is supported.
 ifeq ($(shell ./chk_loc.sh zh_CN.gb18030),yes)
 TESTS += gb18030.t
+endif
 endif
 endif
 endif
@@ -40,9 +42,11 @@ ifeq ($(findstring MINGW,$(d2u_os)),MINGW)
 TESTS += utf16_gb.t
 else
 ifneq ($(findstring FreeBSD,$(d2u_os)),FreeBSD)
+ifneq ($(findstring Darwin,$(d2u_os)),Darwin)
 # Unix/Linux/Cygwin. Check if zh_CN.gb18030 locale is supported.
 ifeq ($(shell ./chk_loc.sh zh_CN.gb18030),yes)
 TESTS += utf16_gb.t
+endif
 endif
 endif
 endif
@@ -84,6 +88,12 @@ utf16_gb:
 	prove -v $(PROVE_OPT) $@.t
 
 symlink:
+	prove -v $(PROVE_OPT) $@.t
+
+noeol:
+	prove -v $(PROVE_OPT) $@.t
+
+stdio:
 	prove -v $(PROVE_OPT) $@.t
 
 wcstombs:
