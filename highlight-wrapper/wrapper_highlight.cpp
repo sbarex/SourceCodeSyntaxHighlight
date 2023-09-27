@@ -55,12 +55,11 @@ __unused char *get_highlight_email() {
 __unused char *get_highlight_about() {
     string about =
             "highlight version " + highlight::Info::getVersion() +
-            "\n Copyright (C) 2002-2022 Andre Simon <a dot simon at mailbox.org>" +
+            "\n Copyright (C) 2002-2023 Andre Simon <a dot simon at mailbox.org>" +
             "\n\n Argparser class" +
             "\n Copyright (C) 2006-2008 Antonio Diaz Diaz <ant_diaz at teleline.es>" +
-            "\n\n Artistic Style Classes (3.1 rev. 672)" +
-            "\n Copyright (C) 2006-2018 by Jim Pattee <jimp03 at email.com>" +
-            "\n Copyright (C) 1998-2002 by Tal Davidson" +
+            "\n\n Artistic Style Classes (3.4.6)" +
+            "\n Copyright (C) 1998-2023 The Artistic Style Authors" +
             "\n\n Diluculum Lua wrapper (1.0)" +
             "\n Copyright (C) 2005-2013 by Leandro Motta Barros" +
             "\n\n xterm 256 color matching functions" +
@@ -69,9 +68,7 @@ __unused char *get_highlight_about() {
             "\n Copyright (C) 2009-2010 Cybozu Labs, Inc." +
             "\n Copyright (C) 2011-2014 Kazuho Oku" +
             "\n\n This software is released under the terms of the GNU General " +
-            "Public License." +
-            "\n For more information about these matters, see the file named " +
-            "COPYING.\n\n";
+            "Public License.";
     return strdup(about.c_str());
 }
 

@@ -113,7 +113,7 @@ cli: $(BUILD_DIR) $(BUILD_DIR)/libhighlight.a ${CLI_OBJECTS}
 lib-static $(BUILD_DIR)/libhighlight.a: $(BUILD_DIR) ${CORE_OBJECTS}
 	${AR} ${ARFLAGS} ${BUILD_DIR}/libhighlight.a ${CORE_OBJECTS} ${DILU_OBJECTS}
 
-lib-shared ${BUILD_DIR}/libhighlight.dylib: $(BUILD_DIR) $(BUILD_DIR) ${CORE_OBJECTS}
+lib-shared ${BUILD_DIR}/libhighlight.dylib: $(BUILD_DIR) ${CORE_OBJECTS}
 	${CXX} -dynamiclib -Wl,-install_name,@loader_path/libhighlight.dylib ${LUA_LIBS} -o ${BUILD_DIR}/libhighlight.dylib -lc ${CORE_OBJECTS} ${DILU_OBJECTS} ${LDFLAGS}
 
 gui-qt: highlight-gui
