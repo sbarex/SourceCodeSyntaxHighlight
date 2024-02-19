@@ -63,7 +63,7 @@ Quand cette option est utilisée, la conversion n'est pas interrompue si l'utili
 
 =item B<-ascii>
 
-Convertit uniquement les sauts de lignes. C'est le mode de conversion par défaut.
+Mode de conversion par défaut. Voyez aussi la section des MODES DE CONVERSION.
 
 =item B<-iso>
 
@@ -188,6 +188,15 @@ Exemple de S<sortie :>
 
 Notez qu'un fichier binaire peut parfois être considéré à tord comme un fichier texte. Voyez aussi l'option C<-s>.
 
+Si l'option C<-e> ou C<--add-eol> est également utilisée, le type du saut de ligne de la dernière ligne est affiché ou C<noeol> est affiché s'il n'y en a pas.
+
+Exemple de S<sortie :>
+
+     6       0       0  no_bom    text   dos     dos.txt
+     0       6       0  no_bom    text   unix    unix.txt
+     0       0       6  no_bom    text   mac     mac.txt
+     1       0       0  no_bom    text   noeol   noeol_dos.txt
+
 Des fanions facultatifs peuvent être ajoutés pour changer la sortie. Un ou plusieurs fanions peuvent être ajoutés.
 
 =over 4
@@ -216,11 +225,17 @@ Afficher la marque d'ordre des octets.
 
 Affiche si le fichier est texte ou binaire.
 
+=item B<e>
+
+Affiche le type du saut de ligne de la dernière ligne ou C<noeol> s'il n'y en a pas.
+
 =item B<c>
 
 Affiche uniquement les fichiers qui seraient convertis.
 
 Avec le fanion C<c>, dos2unix n'affichera que les fichiers contenant des sauts de ligne DOS alors que unix2dos n'affichera que les noms des fichiers aillant des sauts de ligne Unix.
+
+Si l'option C<-e> ou C<--add-eol> est également utilisée, les fichiers qui n'ont pas de saut de ligne à la dernière ligne seront affichés.
 
 =item B<h>
 
@@ -253,6 +268,10 @@ Liste les fichiers qui ont des sauts de ligne DOS :
 Liste les fichiers qui ont des sauts de ligne Unix :
 
     unix2dos -ic *.txt
+
+Liste les fichiers qui ont des sauts de ligne DOS ou qui n'ont pas de saut de ligne à la dernière ligne.
+
+    dos2unix -e -ic *.txt
 
 Ne converti que les fichiers qui ont des sauts de lignes DOS et laisse les autres fichiers inchangés:
 
@@ -388,7 +407,7 @@ Affiche les informations de version puis arrête.
 
 =head1 MODE MAC
 
-En mode normal, les sauts de lignes sont convertis du DOS vers Unix et inversement. Les sauts de lignes Mac ne sont pas convertis.
+Par défaut, les sauts de lignes sont convertis du DOS vers Unix et inversement. Les sauts de lignes Mac ne sont pas convertis.
 
 En mode Mac, les sauts de lignes sont convertis du format Mac au format Unix et inversement. Les sauts de lignes DOS ne sont pas changés.
 
@@ -400,9 +419,9 @@ Pour fonctionner en mode Mac, utilisez l'option en ligne de commande C<-c mac> o
 
 =item B<ascii>
 
-En mode C<ascii>, seuls les sauts de lignes sont convertis. Ceci est le mode de conversion par défaut.
+Ceci est le mode de conversion par défaut. Ce mode convertit les fichiers ASCII en fichiers compatibles avec l'ASCII tel que UTF-9. Activer le mode B<ascii> désactive les modes B<7bit> et B<iso>.
 
-Bien que le nom de ce mode soit ASCII, qui est un standard 7 bits, ce mode travail en réalité sur 8 bits. Utilisez toujours ce mode lorsque vous convertissez des fichiers Unicode UTF-8.
+Si dos2unix supporte UTF-16, les fichiers encodés en UTF-16 sont convertis vers l'encodage des caractères des paramètres linguistiques courants sur les systèmes POSIX et vers UTF-8 sous Windows. Activer le mode B<ascii> désactive l'option pour garder l'encodage UTF-8 (C<-u>) et les options qui supposent une entrée en UTF-16 (C<-ul> et C<-ub>). Pour voir si dos2unix supporte UTF-16, tapez C<dos2unix -V>. Consultez aussi la section UNICODE.
 
 =item B<7bit>
 
@@ -462,7 +481,7 @@ Il existe plusieurs codages Unicode. Sous Unix et Linux, les fichiers sont gén�
 
 =head2 Conversion
 
-Les fichiers textes Unicode peuvent avoir des sauts de lignes DOS, Unix ou Mac, tout comme les fichiers textes normaux.
+Les fichiers textes Unicode peuvent avoir des sauts de lignes DOS, Unix ou Mac, tout comme les fichiers textes ASCII.
 
 Toutes les versions de dos2unix et unix2dos peuvent convertir des fichiers codés en UTF-8 car UTF-8 a été conçu pour être rétro-compatible avec l'ASCII.
 
@@ -482,7 +501,7 @@ Les modes de conversion ISO et 7 bits ne fonctionnent pas sur des fichiers UTF-1
 
 =head2 Marque d'ordre des octets
 
-Les fichiers textes Unicode sous Windows on généralement un indicateur d'ordre des octets (BOM) car de nombreux programmes Windows (y compris Notepad) ajoutent cet indicateur par défaut. Consultez aussi L<http://fr.wikipedia.org/wiki/Indicateur_d%27ordre_des_octets>.
+Les fichiers textes Unicode sous Windows on généralement un indicateur d'ordre des octets (BOM) car de nombreux programmes Windows (y compris Notepad) ajoutent cet indicateur par défaut. Consultez aussi L<https://fr.wikipedia.org/wiki/Indicateur_d%27ordre_des_octets>.
 
 Sous Unix, les fichiers Unicodes n'ont habituellement pas de BOM. Il est supposé que les fichiers textes sont codés selon le codage de l'environnement linguistique.
 
@@ -522,7 +541,7 @@ Convertir de l'UTF-8 de Unix vers l'UTF-16 de Windows :
 
 =head1 GB18030
 
-GB18030 est un standard du gouvernement chinois. Tout logiciel vendu en Chine doit officiellement supporter un sous ensemble obligatoire du standard GB18030. Consultez L<http://fr.wikipedia.org/wiki/GB_18030>.
+GB18030 est un standard du gouvernement chinois. Tout logiciel vendu en Chine doit officiellement supporter un sous ensemble obligatoire du standard GB18030. Consultez L<https://fr.wikipedia.org/wiki/GB_18030>.
 
 GB18030 est entièrement compatible avec Unicode et peut être considéré comme étant un format de transformation unicode. Comme UTF-8, GB18030 est compatible avec ASCII. GB18030 est aussi compatible avec le code page 936 de Windows aussi connu comme GBK.
 
@@ -624,13 +643,13 @@ La langue principale est sélectionnée par la variable d'environnement LANG. La
     export LANG=en_US.iso88591   Anglais, USA, codage Latin-1
     export LANG=en_GB.UTF-8      Anglais, UK, codage UTF-8
 
-La liste complète des codes de langues et de pays est dans le manuel de gettext: L<http://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html>
+La liste complète des codes de langues et de pays est dans le manuel de gettext: L<https://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html>
 
 Sur les systèmes Unix, vous pouvez utiliser la commande locale(1) pour obtenir des informations sur l'environnement linguistique.
 
 =item B<LANGUE>
 
-Avec la variable d'environnement LANGUAGE, vous pouvez spécifier une liste de langues prioritaires séparées par des deux-points. Dos2unix fait passer LANGUAGE avant LANG. Par exemple, pour utiliser le français avant l'anglais: C<LANGUAGE=fr:en>. Vous devez d'abord activer l'environnement linguistique en assignant une valeur autre que S<« C »> à LANG (ou LC_ALL). Ensuite, vous pourrez utiliser la liste de priorité avec la variable LANGUAGE. Voyez également le manuel de gettext: L<http://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-variable.html>
+Avec la variable d'environnement LANGUAGE, vous pouvez spécifier une liste de langues prioritaires séparées par des deux-points. Dos2unix fait passer LANGUAGE avant LANG. Par exemple, pour utiliser le français avant l'anglais: C<LANGUAGE=fr:en>. Vous devez d'abord activer l'environnement linguistique en assignant une valeur autre que S<« C »> à LANG (ou LC_ALL). Ensuite, vous pourrez utiliser la liste de priorité avec la variable LANGUAGE. Voyez également le manuel de gettext: L<https://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-variable.html>
 
 Si vous sélectionnez une langue qui n'est pas disponible, vous obtiendrez des messages en anglais standard.
 
@@ -656,21 +675,21 @@ La valeur de sortie est toujours zéro en mode silencieux sauf quand de mauvaise
 
 =head1 STANDARDS
 
-L<http://fr.wikipedia.org/wiki/Fichier_texte>
+L<https://fr.wikipedia.org/wiki/Fichier_texte>
 
-L<http://fr.wikipedia.org/wiki/Retour_chariot>
+L<https://fr.wikipedia.org/wiki/Retour_chariot>
 
-L<http://fr.wikipedia.org/wiki/Fin_de_ligne>
+L<https://fr.wikipedia.org/wiki/Fin_de_ligne>
 
-L<http://fr.wikipedia.org/wiki/Unicode>
+L<https://fr.wikipedia.org/wiki/Unicode>
 
 =head1 AUTEURS
 
 Benjamin Lin - <blin@socs.uts.edu.au>, Bernd Johannes Wuebben (mode mac2unix) - <wuebben@kde.org>, Christian Wurll (ajout de saut de ligne supplémentaire) - <wurll@ira.uka.de>, Erwin Waterlander - <waterlan@xs4all.nl> (Mainteneur)
 
-Page du projet: L<http://waterlan.home.xs4all.nl/dos2unix.html>
+Page du projet: L<https://waterlan.home.xs4all.nl/dos2unix.html>
 
-Page SourceForge: L<http://sourceforge.net/projects/dos2unix/>
+Page SourceForge: L<https://sourceforge.net/projects/dos2unix/>
 
 =head1 VOIR AUSSI
 

@@ -71,7 +71,7 @@
 .\" ========================================================================
 .\"
 .IX Title "dos2unix 1"
-.TH dos2unix 1 "2023-08-29" "dos2unix" "2023-08-29"
+.TH dos2unix 1 "2024-01-22" "dos2unix" "2024-01-22"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -122,7 +122,7 @@ Tillåt ändring av ägarskap för fil i gammalt filläge.
 När denna flagga används, kommer konverteringen inte att avbrytas när användar\- och/eller gruppägarskap för originalfilen inte kan bevaras i gammalt filläget. Konverteringen kommer att fortsätta och den konverterade filen kommer att få samma nya ägarskap som om den konverterades i nyfilsläge. Se också flaggorna \f(CW\*(C`\-o\*(C'\fR och \f(CW\*(C`\-n\*(C'\fR. Denna flagga är endast tillgänglig om dos2unix har stöd för att bevara användar\- och gruppägarskap för filer.
 .IP "\fB\-ascii\fR" 4
 .IX Item "-ascii"
-Konvertera enbart radbrytningar. Detta är standardkonverteringsläget.
+Standardkonverteringsläge. Se vidare stycket KONVERTERINGSLÄGEN.
 .IP "\fB\-iso\fR" 4
 .IX Item "-iso"
 Konvertering mellan \s-1DOS\-\s0 och ISO\-8859\-1\-teckentabeller. Se vidare stycket KONVERTERINGSLÄGEN.
@@ -224,6 +224,17 @@ Exempelutmatning:
 .Sp
 Notera att en binärfil ibland kan misstas för en textfil. Se vidare flaggan \f(CW\*(C`\-s\*(C'\fR.
 .Sp
+Om dessutom flaggan \f(CW\*(C`\-e\*(C'\fR eller \f(CW\*(C`\-\-add\-eol\*(C'\fR används så kommer även den radbrytning som används på sista raden att skrivas ut, eller \f(CW\*(C`noeol\*(C'\fR om det inte finns någon.
+.Sp
+Exempelutmatning:
+.Sp
+.Vb 4
+\&     6       0       0  no_bom    text   dos     dos.txt
+\&     0       6       0  no_bom    text   unix    unix.txt
+\&     0       0       6  no_bom    text   mac     mac.txt
+\&     1       0       0  no_bom    text   noeol   noeol_dos.txt
+.Ve
+.Sp
 Extra flaggor kan användas valfritt för att ändra utmatningen. En eller fler flaggor kan läggas till.
 .RS 4
 .IP "\fB0\fR" 4
@@ -244,11 +255,16 @@ Skriv ut byteordningsmarkeringen.
 .IP "\fBt\fR" 4
 .IX Item "t"
 Skriv ut om filen är text eller binär.
+.IP "\fBe\fR" 4
+.IX Item "e"
+Skriv ut radbrytningstypen på sista raden, eller \f(CW\*(C`noeol\*(C'\fR om det inte finns någon.
 .IP "\fBc\fR" 4
 .IX Item "c"
 Skriv bara ut filerna som skulle ha konverterats.
 .Sp
 Med \f(CW\*(C`c\*(C'\fR\-flaggan kommer dos2unix att skriva ut filerna som innehåller DOS-radbrytningar, unix2dos kommer bara att skriva ut filnamn som har Unix-radbrytningar.
+.Sp
+Om dessutom flaggan \f(CW\*(C`\-e\*(C'\fR eller \f(CW\*(C`\-\-add\-eol\*(C'\fR används så kommer även filer som saknar en radbrytning på sista raden att skrivas ut.
 .IP "\fBh\fR" 4
 .IX Item "h"
 Skriv ut rubrik.
@@ -288,6 +304,12 @@ Lista filerna som har Unix-radbrytningar:
 .Sp
 .Vb 1
 \&    unix2dos \-ic *.txt
+.Ve
+.Sp
+Lista filerna som har DOS-radbrytningar eller saknar en radbrytning på sista raden:
+.Sp
+.Vb 1
+\&    dos2unix \-e \-ic *.txt
 .Ve
 .Sp
 Konvertera endast filer som har DOS-radbrytningar och lämna övriga filer orörda:
@@ -410,7 +432,7 @@ Behåll symboliska länkar och mål oförändrade (standard).
 Visa versionsinformation och avsluta.
 .SH "MAC\-LÄGE"
 .IX Header "MAC-LÄGE"
-I normalläge konverteras radbrytningar från \s-1DOS\s0 till Unix och vice versa. Mac-radbrytningar konverteras inte.
+Som standard konverteras radbrytningar från \s-1DOS\s0 till Unix och vice versa. Mac-radbrytningar konverteras inte.
 .PP
 I Mac\-läge konverteras radbrytningar från Mac till Unix och vice versa. DOS-radbrytningar ändras ej.
 .PP
@@ -419,9 +441,9 @@ För att köra i Mac\-läge använd kommandoradsflaggan \f(CW\*(C`\-c mac\*(C'\f
 .IX Header "KONVERTERINGSLÄGEN"
 .IP "\fBascii\fR" 4
 .IX Item "ascii"
-I läget \f(CW\*(C`ascii\*(C'\fR konverteras enbart radbrytningar. Detta är standardkonverteringsläget.
+Detta är standardkonverteringsläget. Detta läge används för att konvertera \s-1ASCII\s0 och ASCII-kompatibla kodade filer, så som \s-1UTF\-8.\s0 Att aktiveras \fBascii\fR\-läge inaktiverar \fB7bit\fR\- och \fBiso\fR\-läge.
 .Sp
-Även om namnet på detta läge är \s-1ASCII,\s0 vilket är en 7\-bitarsstandard, så är det läget egentligen ett 8\-bitarsläge. Använd alltid detta läge vid konvertering av Unicode UTF\-8\-filer.
+Om dos2unix har \s-1UTF\-16\s0 stöd kommer UTF\-16\-kodade filer att konverteras till kodningen för den aktuella lokalen på POSIX-sytstem och till \s-1UTF\-8\s0 på Windows. Aktivering av \fBascii\fR\-läget inaktiverar flaggan för att behålla UTF\-16\-kodning (\f(CW\*(C`\-u\*(C'\fR) och flaggorna för att anta \s-1UTF\-16\s0 indata (\f(CW\*(C`\-ul\*(C'\fR och \f(CW\*(C`\-ub\*(C'\fR). För att se om dos2unix har UTF\-16\-stöd skriv \f(CW\*(C`dox2unix \-V\*(C'\fR, se också avsnittet \s-1UNICODE.\s0
 .IP "\fB7bit\fR" 4
 .IX Item "7bit"
 I detta läge konverteras alla 8\-bitars icke-ASCII tecken (med värden från 128 till 255) till ett 7\-bitars blanksteg.
@@ -491,7 +513,7 @@ Se även <http://czyborra.com/charsets/codepages.html> och <http://czyborra.com/
 Det finns flera olika Unicode kodningar. I Unix och Linux kodas filer vanligtvis med UTF\-8\-kodning. I Windows kan Unicode-textfiler kodas i \s-1UTF\-8, UTF\-16\s0 eller \s-1UTF\-16\s0 rak byteordning (big endian), men kodas mestadels i UTF\-16\-format.
 .SS "Konvertering"
 .IX Subsection "Konvertering"
-Unicode-textfiler kan ha \s-1DOS,\s0 Unix eller Mac-radbrytningar precis som vanliga textfiler.
+Unicode-textfiler kan ha \s-1DOS,\s0 Unix eller Mac-radbrytningar precis som ASCII-textfiler.
 .PP
 Alla versioner av dos2unix och unix2dos kan konvertera UTF\-8\-kodade filer, eftersom \s-1UTF\-8\s0 designades för bakåtkompatibilitet med \s-1ASCII.\s0
 .PP
@@ -510,7 +532,7 @@ Dos2unix och unix2dos har ingen flagga för att konvertera UTF\-8\-filer till \s
 \&\s-1ISO\-\s0 och 7\-bitarslägeskonvertering fungerar inte på UTF\-16\-filer.
 .SS "Byteordningsmarkering (Byte Order Mark)"
 .IX Subsection "Byteordningsmarkering (Byte Order Mark)"
-I Windows har Unicode-textfiler typiskt en byteordningsmarkering (Byte Order Mark, \s-1BOM\s0) eftersom många Windows-program (inklusive Notepad) lägger till BOM:ar som standard. Se även <http://en.wikipedia.org/wiki/Byte_order_mark>.
+I Windows har Unicode-textfiler typiskt en byteordningsmarkering (Byte Order Mark, \s-1BOM\s0) eftersom många Windows-program (inklusive Notepad) lägger till BOM:ar som standard. Se även <https://en.wikipedia.org/wiki/Byte_order_mark>.
 .PP
 I Unix har Unicode-textfiler typiskt ingen \s-1BOM.\s0 Filer antas vara kodade i den lokala teckenuppsättningen.
 .PP
@@ -555,7 +577,7 @@ Konvertera från Unix \s-1UTF\-8\s0 till Windows \s-1UTF\-16:\s0
 .Ve
 .SH "GB18030"
 .IX Header "GB18030"
-\&\s-1GB18030\s0 är en standard från Kinesiska regeringen. En obligatorisk delmängd av standarden \s-1GB18030\s0 krävs officiellt för alla programvaruprodukter som säljs i Kina. Se vidare <http://en.wikipedia.org/wiki/GB_18030>.
+\&\s-1GB18030\s0 är en standard från Kinesiska regeringen. En obligatorisk delmängd av standarden \s-1GB18030\s0 krävs officiellt för alla programvaruprodukter som säljs i Kina. Se vidare <https://en.wikipedia.org/wiki/GB_18030>.
 .PP
 \&\s-1GB18030\s0 är fullständigt kompatibel med Unicode och kan anses vara ett överföringsformat för unicode. Precis som \s-1UTF\-8\s0 är \s-1GB18030\s0 kompatibel med \s-1ASCII. GB18030\s0 är också kompatibel med Windows-teckentabell 936, också känd som \s-1GBK.\s0
 .PP
@@ -680,12 +702,12 @@ Det primära språket väljs med miljövariabeln \s-1LANG.\s0 LANG-variabeln bes
 \&    export LANG=en_GB.UTF\-8      Engelska, UK, UTF\-8\-kodning
 .Ve
 .Sp
-För en fullständig lista över språk och landskoder se vidare i gettext-manualen: <http://www.gnu.org/software/gettext/manual/html_node/Usual\-Language\-Codes.html>
+För en fullständig lista över språk och landskoder se vidare i gettext-manualen: <https://www.gnu.org/software/gettext/manual/html_node/Usual\-Language\-Codes.html>
 .Sp
 På Unix-system kan du använda kommando \fBlocale\fR\|(1) för att få lokal-specifik information.
 .IP "\fB\s-1LANGUAGE\s0\fR" 4
 .IX Item "LANGUAGE"
-Med miljövariabeln \s-1LANGUAGE\s0 kan du ange en prioritetslista över språk, separerade med kolon. Dos2unix kommer att ge företräde till \s-1LANGAUGE\s0 över \s-1LANG.\s0 Exempelvis först nederländska och sedan tyska: \f(CW\*(C`LANGUAGE=nl:de\*(C'\fR. Du måste först ha aktiverat lokalisering, genom att sätta \s-1LANG\s0 (eller \s-1LC_ALL\s0) till ett värde annat än “C“, innan du kan använda en prioritetslista för språk via LANGUAGE-variabeln. Se vidare i gettext-manualen: <http://www.gnu.org/software/gettext/manual/html_node/The\-LANGUAGE\-variable.html>
+Med miljövariabeln \s-1LANGUAGE\s0 kan du ange en prioritetslista över språk, separerade med kolon. Dos2unix kommer att ge företräde till \s-1LANGAUGE\s0 över \s-1LANG.\s0 Exempelvis först nederländska och sedan tyska: \f(CW\*(C`LANGUAGE=nl:de\*(C'\fR. Du måste först ha aktiverat lokalisering, genom att sätta \s-1LANG\s0 (eller \s-1LC_ALL\s0) till ett värde annat än “C“, innan du kan använda en prioritetslista för språk via LANGUAGE-variabeln. Se vidare i gettext-manualen: <https://www.gnu.org/software/gettext/manual/html_node/The\-LANGUAGE\-variable.html>
 .Sp
 Om du väljer ett språk som inte är tillgänglig kommer du att få engelska meddelanden som standard.
 .IP "\fB\s-1DOS2UNIX_LOCALEDIR\s0\fR" 4
@@ -704,20 +726,20 @@ Om allt går bra kommer noll att returneras. När ett systemfel uppstår kommer 
 Returvärdet är alltid noll i tyst läge, utom när felaktiga kommandoradsflaggor används.
 .SH "STANDARDER"
 .IX Header "STANDARDER"
-<http://en.wikipedia.org/wiki/Text_file>
+<https://en.wikipedia.org/wiki/Text_file>
 .PP
-<http://en.wikipedia.org/wiki/Carriage_return>
+<https://en.wikipedia.org/wiki/Carriage_return>
 .PP
-<http://en.wikipedia.org/wiki/Newline>
+<https://en.wikipedia.org/wiki/Newline>
 .PP
-<http://en.wikipedia.org/wiki/Unicode>
+<https://en.wikipedia.org/wiki/Unicode>
 .SH "FÖRFATTARE"
 .IX Header "FÖRFATTARE"
 Benjamin Lin \- <blin@socs.uts.edu.au>, Bernd Johannes Wuebben (mac2unix\-läge) \- <wuebben@kde.org>, Christian Wurll (lägg till en extra radbrytning) \- <wurll@ira.uka.de>, Erwin Waterlander \- <waterlan@xs4all.nl> (upphovsman)
 .PP
-Projektsida: <http://waterlan.home.xs4all.nl/dos2unix.html>
+Projektsida: <https://waterlan.home.xs4all.nl/dos2unix.html>
 .PP
-SourceForge-sida: <http://sourceforge.net/projects/dos2unix/>
+SourceForge-sida: <https://sourceforge.net/projects/dos2unix/>
 .SH "SE ÄVEN"
 .IX Header "SE ÄVEN"
 \&\fBfile\fR\|(1)  \fBfind\fR\|(1)  \fBiconv\fR\|(1)  \fBlocale\fR\|(1)  \fBxargs\fR\|(1)

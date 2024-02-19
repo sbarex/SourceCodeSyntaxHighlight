@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>dos2unix 7.5.1 - DOS/Mac naar Unix en vice versa tekstbestand formaat omzetter</title>
+<title>dos2unix 7.5.2 - DOS/Mac naar Unix en vice versa tekstbestand formaat omzetter</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rev="made" href="mailto:ASSI@walter.nonet" />
 </head>
@@ -89,7 +89,7 @@ unix2dos [opties] [BESTAND ...] [-n INVOERBESTAND UITVOERBESTAND ...]</code></pr
 <dt id="ascii"><b>-ascii</b></dt>
 <dd>
 
-<p>Alleen regeleindes converteren. Dit is de standaardconversiemodus.</p>
+<p>Default conversion mode. See also section CONVERSION MODES.</p>
 
 </dd>
 <dt id="iso"><b>-iso</b></dt>
@@ -246,6 +246,15 @@ unix2dos [opties] [BESTAND ...] [-n INVOERBESTAND UITVOERBESTAND ...]</code></pr
 
 <p>Merk op dat een binair bestand soms voor een tekstbestand aangezien kan worden. Zie ook optie <code>-s</code>.</p>
 
+<p>If in addition option <code>-e</code> or <code>--add-eol</code> is used also the type of the line break of the last line is printed, or <code>noeol</code> if there is none.</p>
+
+<p>Voorbeelduitvoer:</p>
+
+<pre><code>6       0       0  no_bom    text   dos     dos.txt
+0       6       0  no_bom    text   unix    unix.txt
+0       0       6  no_bom    text   mac     mac.txt
+1       0       0  no_bom    text   noeol   noeol_dos.txt</code></pre>
+
 <p>Bij de optie kunnen &eacute;&eacute;n of meer vlaggen meegegeven worden om de uitvoer te beperken.</p>
 
 <dl>
@@ -286,12 +295,20 @@ unix2dos [opties] [BESTAND ...] [-n INVOERBESTAND UITVOERBESTAND ...]</code></pr
 <p>Tonen of het bestand tekst is of binair.</p>
 
 </dd>
+<dt id="e"><b>e</b></dt>
+<dd>
+
+<p>Print the type of the line break of the last line, or <code>noeol</code> if there is none.</p>
+
+</dd>
 <dt id="c"><b>c</b></dt>
 <dd>
 
 <p>Alleen de namen tonen van de bestanden die geconverteerd zouden worden.</p>
 
 <p>Met de vlag <code>c</code> toont dos2unix alleen de bestanden die DOS-regeleindes bevatten, en unix2dos alleen de bestanden die Unix-regeleindes bevatten.</p>
+
+<p>If in addition option <code>-e</code> or <code>--add-eol</code> is used also the files that lack a line break on the last line will be printed.</p>
 
 </dd>
 <dt id="h"><b>h</b></dt>
@@ -329,6 +346,10 @@ unix2dos [opties] [BESTAND ...] [-n INVOERBESTAND UITVOERBESTAND ...]</code></pr
 <p>De bestanden opsommen die Unix-regeleindes bevatten:</p>
 
 <pre><code>unix2dos -ic *.txt</code></pre>
+
+<p>List the files that have DOS line breaks or lack a line break on the last line:</p>
+
+<pre><code>dos2unix -e -ic *.txt</code></pre>
 
 <p>Alleen bestanden die DOS-regeleindes bevatten converteren en andere bestanden ongemoeid laten:</p>
 
@@ -503,7 +524,7 @@ unix2dos [opties] [BESTAND ...] [-n INVOERBESTAND UITVOERBESTAND ...]</code></pr
 
 <h1 id="MAC-MODUS">MAC-MODUS</h1>
 
-<p>In normale modus worden DOS-regeleindes naar Unix omgezet en vice versa. Mac-regeleindes worden niet omgezet.</p>
+<p>By default line breaks are converted from DOS to Unix and vice versa. Mac line breaks are not converted.</p>
 
 <p>In Mac-modus worden Mac-regeleindes naar Unix omgezet en vice versa. DOS-regeleindes blijven ongewijzigd.</p>
 
@@ -516,9 +537,9 @@ unix2dos [opties] [BESTAND ...] [-n INVOERBESTAND UITVOERBESTAND ...]</code></pr
 <dt id="ascii1"><b>ascii</b></dt>
 <dd>
 
-<p>In modus <code>ascii</code> worden alleen regeleindes omgezet. Dit is de standaardmodus.</p>
+<p>This is the default conversion mode. This mode is for converting ASCII and ASCII-compatible encoded files, like UTF-8. Enabling <b>ascii</b> mode disables <b>7bit</b> and <b>iso</b> mode.</p>
 
-<p>Hoewel de naam van deze modus ASCII is, wat een 7-bits standaard is, is de werkelijke modus 8-bits. Gebruik altijd deze modus wanneer u Unicode UTF-8-bestanden omzet.</p>
+<p>If dos2unix has UTF-16 support, UTF-16 encoded files are converted to the current locale character encoding on POSIX systems and to UTF-8 on Windows. Enabling <b>ascii</b> mode disables the option to keep UTF-16 encoding (<code>-u</code>) and the options to assume UTF-16 input (<code>-ul</code> and <code>-ub</code>). To see if dos2unix has UTF-16 support type <code>dos2unix -V</code>. See also section UNICODE.</p>
 
 </dd>
 <dt id="bit"><b>7bit</b></dt>
@@ -583,7 +604,7 @@ unix2dos [opties] [BESTAND ...] [-n INVOERBESTAND UITVOERBESTAND ...]</code></pr
 
 <h2 id="Conversie">Conversie</h2>
 
-<p>Unicode-tekstbestanden kunnen DOS-, Unix- of Mac-regeleindes hebben, net als reguliere tekstbestanden.</p>
+<p>Unicode text files can have DOS, Unix or Mac line breaks, like ASCII text files.</p>
 
 <p>Alle versies van dos2unix en unix2dos kunnen UTF-8-gecodeerde bestanden omzetten, want UTF-8 is ontworpen op compatibiliteit met ASCII.</p>
 
@@ -603,7 +624,7 @@ unix2dos [opties] [BESTAND ...] [-n INVOERBESTAND UITVOERBESTAND ...]</code></pr
 
 <h2 id="Byte-Order-Mark">Byte-Order-Mark</h2>
 
-<p>Op Windows bevatten Unicode-tekstbestanden gewoonlijk een Byte-Order-Mark (BOM), omdat veel Windows-programma&#39;s (inclusief Kladblok) standaard een BOM toevoegen. Zie ook <a href="http://en.wikipedia.org/wiki/Byte_order_mark">http://en.wikipedia.org/wiki/Byte_order_mark</a>.</p>
+<p>On Windows Unicode text files typically have a Byte Order Mark (BOM), because many Windows programs (including Notepad) add BOMs by default. See also <a href="https://en.wikipedia.org/wiki/Byte_order_mark">https://en.wikipedia.org/wiki/Byte_order_mark</a>.</p>
 
 <p>Op Unix hebben Unicode-tekstbestanden meestal geen BOM. Er wordt aangenomen dat de codering van tekstbestanden gelijk is aan de tekencodering van de ingestelde taalregio.</p>
 
@@ -643,7 +664,7 @@ unix2dos [opties] [BESTAND ...] [-n INVOERBESTAND UITVOERBESTAND ...]</code></pr
 
 <h1 id="GB18030">GB18030</h1>
 
-<p>GB18030 is een standaard van de Chinese overheid. Een subset van de GB18030-standaard is officieel verplicht voor alle softwareproducten die in China verkocht worden. Zie ook <a href="http://en.wikipedia.org/wiki/GB_18030">http://en.wikipedia.org/wiki/GB_18030</a>.</p>
+<p>GB18030 is a Chinese government standard. A mandatory subset of the GB18030 standard is officially required for all software products sold in China. See also <a href="https://en.wikipedia.org/wiki/GB_18030">https://en.wikipedia.org/wiki/GB_18030</a>.</p>
 
 <p>GB18030 is volledig compatibel met Unicode, en kan als een Unicodetransformatie beschouwd worden. Net als UTF-8 is GB18030 compatibel met ASCII. GB18030 is ook compatibel met Windows-codetabel 936 (ook wel GBK genoemd).</p>
 
@@ -742,7 +763,7 @@ export LANG=es_MX            Spaans, Mexico
 export LANG=en_US.iso88591   Engels, VS, Latin-1-codering
 export LANG=en_GB.UTF-8      Engels, GB, UTF-8-codering</code></pre>
 
-<p>Voor een complete lijst van taal- en landcodes zie de gettext-handleiding: <a href="http://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html">http://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html</a></p>
+<p>For a complete list of language and country codes see the gettext manual: <a href="https://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html">https://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html</a></p>
 
 <p>Op Unix-systemen kunt u de opdracht <b>locale</b>(1) gebruiken om specifieke taalregio-informatie te verkrijgen.</p>
 
@@ -750,7 +771,7 @@ export LANG=en_GB.UTF-8      Engels, GB, UTF-8-codering</code></pre>
 <dt id="LANGUAGE"><b>LANGUAGE</b></dt>
 <dd>
 
-<p>Met de omgevingsvariabele LANGUAGE kunt u een prioriteitenlijst specificeren van talen, gescheiden door dubbele punten. Dos2unix geeft voorrang aan LANGUAGE boven LANG. Bijvoorbeeld, eerst Nederlands en dan Duits: <code>LANGUAGE=nl:de</code>. U moet eerst lokalisatie in werking stellen, door het instellen van LANG (of LC_ALL) op een waarde ongelijk aan &quot;C&quot;, voordat u een talen-prioriteitenlijst kunt gebruiken via de variabele LANGUAGE. Zie ook de gettext-handleiding: <a href="http://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-variable.html">http://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-variable.html</a></p>
+<p>With the LANGUAGE environment variable you can specify a priority list of languages, separated by colons. Dos2unix gives preference to LANGUAGE over LANG. For instance, first Dutch and then German: <code>LANGUAGE=nl:de</code>. You have to first enable localization, by setting LANG (or LC_ALL) to a value other than &quot;C&quot;, before you can use a language priority list through the LANGUAGE variable. See also the gettext manual: <a href="https://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-variable.html">https://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-variable.html</a></p>
 
 <p>Als u een taal kiest die niet beschikbaar is, worden de standaard Engelse berichten gebruikt.</p>
 
@@ -775,21 +796,21 @@ export LANG=en_GB.UTF-8      Engels, GB, UTF-8-codering</code></pre>
 
 <h1 id="STANDAARDEN">STANDAARDEN</h1>
 
-<p><a href="http://nl.wikipedia.org/wiki/Tekstbestand">http://nl.wikipedia.org/wiki/Tekstbestand</a></p>
+<p><a href="https://en.wikipedia.org/wiki/Text_file">https://en.wikipedia.org/wiki/Text_file</a></p>
 
-<p><a href="http://nl.wikipedia.org/wiki/Carriage_Return">http://nl.wikipedia.org/wiki/Carriage_Return</a></p>
+<p><a href="https://en.wikipedia.org/wiki/Carriage_return">https://en.wikipedia.org/wiki/Carriage_return</a></p>
 
-<p><a href="http://nl.wikipedia.org/wiki/Linefeed">http://nl.wikipedia.org/wiki/Linefeed</a></p>
+<p><a href="https://en.wikipedia.org/wiki/Newline">https://en.wikipedia.org/wiki/Newline</a></p>
 
-<p>&lt;http://nl.wikipedia.org/wiki/Unicode&gt;</p>
+<p><a href="https://en.wikipedia.org/wiki/Unicode">https://en.wikipedia.org/wiki/Unicode</a></p>
 
 <h1 id="AUTEURS">AUTEURS</h1>
 
 <p>Benjamin Lin - &lt;blin@socs.uts.edu.au&gt;, Bernd Johannes Wuebben (mac2unix-modus) - &lt;wuebben@kde.org&gt;, Christian Wurll (toevoegen van extra regeleindes) - &lt;wurll@ira.uka.de&gt;, Erwin Waterlander - &lt;waterlan@xs4all.nl&gt; (beheerder)</p>
 
-<p>Projectpagina: <a href="http://waterlan.home.xs4all.nl/dos2unix.html">http://waterlan.home.xs4all.nl/dos2unix.html</a></p>
+<p>Project page: <a href="https://waterlan.home.xs4all.nl/dos2unix.html">https://waterlan.home.xs4all.nl/dos2unix.html</a></p>
 
-<p>SourceForge-pagina: <a href="http://sourceforge.net/projects/dos2unix/">http://sourceforge.net/projects/dos2unix/</a></p>
+<p>SourceForge page: <a href="https://sourceforge.net/projects/dos2unix/">https://sourceforge.net/projects/dos2unix/</a></p>
 
 <h1 id="ZIE-OOK">ZIE OOK</h1>
 

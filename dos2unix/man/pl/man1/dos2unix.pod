@@ -63,7 +63,7 @@ W przypadku użycia tej opcji, konwersja nie zostanie przerwana, jeśli nie ma m
 
 =item B<-ascii>
 
-Konwersja tylko znaków końca linii. Jest to domyślny tryb konwersji.
+Domyślny tryb konwersji. Więcej w sekcji TRYBY KONWERSJI.
 
 =item B<-iso>
 
@@ -188,6 +188,14 @@ Przykładowe wyjście:
 
 Uwaga: czasami plik binarny może być błędnie rozpoznany jako tekstowy. P. także opcja C<-s>.
 
+Jeśli dodatkowo użyta jest opcja C<-e> lub C<--add-eol>, wypisywany jest także rodzaj końca linii z ostatniej linii, lub C<noeol>, jeśli nie ma żadnego.
+
+Przykładowe wyjście:
+
+     6       0       0  no_bom    text   dos     dos.txt
+     0       6       0  no_bom    text   unix    unix.txt
+     0       0       6  no_bom    text   mac     mac.txt
+     1       0       0  no_bom    text   noeol   noeol_dos.txt
 Opcjonalnie można ustawić dodatkowe flagi, aby zmienić wyjście. Można dodać jedną lub więcej flag.
 
 =over 4
@@ -216,11 +224,17 @@ Wypisanie znacznika BOM.
 
 Wypisanie, czy plik jest tekstowy, czy binarny.
 
+=item B<e>
+
+Wypisanie rodzaju końca wiersza w ostatnim wierszu, lub C<noeol>, jeśli nie ma żadnego.
+
 =item B<c>
 
 Wypisanie tylko plików, które zostałyby przekonwertowane.
 
 Z flagą C<c> dos2unix wypisze tylko pliki zawierające DOS-owe końce linii, a unix2dos wypisze tylko nazwy plików zawierających uniksowe końce linii.
+
+Jeśli dodatkowo użyta jest opcja C<-e> lub C<--add-eol>, wypisywane są także pliki bez zakończenia ostatniej linii.
 
 =item B<h>
 
@@ -253,6 +267,10 @@ Wypisanie listy plików zawierających DOS-owe końce linii:
 Wypisanie listy plików zawierających uniksowe końce linii:
 
     unix2dos -ic *.txt
+
+Wypisanie listy plików zawierających DOS-owe końce linii lub bez znaku końca w ostatniej linii:
+
+    dos2unix -e -ic *.txt
 
 Konwersja tylko plików mających DOS-owe końce linii, pozostawienie pozostałych bez zmian:
 
@@ -388,7 +406,7 @@ Wyświetlenie informacji o wersji i zakończenie.
 
 =head1 TRYB MAC
 
-W zwykłym trybie znaki końca linii są konwertowane z DOS-a do Uniksa i odwrotnie. Znaki końca linii systemu Mac nie są konwertowane.
+Domyślnie znaki końca linii są konwertowane z DOS-a do Uniksa i odwrotnie. Znaki końca linii systemu Mac nie są konwertowane.
 
 W trybie Mac znaki końca linii są konwertowane z formatu Maca do Uniksa i odwrotnie. Znaki końca linii systemu DOS nie są zmieniane.
 
@@ -400,9 +418,9 @@ Aby uruchomić program w trybie Mac, należy użyć opcji linii poleceń C<-c ma
 
 =item B<ascii>
 
-W trybie C<ascii> konwertowane są tylko końce linii. Jest to domyślny tryb konwersji.
+To jest domyślny tryb konwersji. Służy do konwersji plików kodowanych ASCII lub zgodnie z ASCII, np. UTF-8. Włączenie trybu B<ascii> wyłącza tryby B<7bit> i B<iso>.
 
-Mimo że nazwa tego trybu to ASCII, które jest standardem 7-bitowym, jest to tryb 8-bitowy. Należy zawsze używać tego trybu przy konwersji plików Unicode UTF-8.
+Jeśli dos2unix ma obsługę UTF-16, pliki kodowane UTF-16 są konwertowane do bieżącego kodowania w systamach zgodnych z POSIX lub do UTF-8 na Windows. Włączenie trybu B<ascii> wyłącza opcję zachowywania kodowania UTF-16 (C<-u>) oraz opcje zakładające wejście UTF-16 (C<-ul> oraz C<-ub>). Aby sprawdzić, czy dos2unix ma obsługę UTF-16, można wywołać C<dos2unix -V>. Więcej w sekcji UNICODE.
 
 =item B<7bit>
 
@@ -462,7 +480,7 @@ Istnieją różne kodowania Unicode. Pod Uniksem i Linuksem pliki Unicode są zw
 
 =head2 Konwersje
 
-Pliki tekstowe Unicode mogą mieć znaki końca linii systemu DOS, Unix lub Mac, podobnie jak zwykłe pliki tekstowe.
+Pliki tekstowe Unicode mogą mieć znaki końca linii systemu DOS, Unix lub Mac, podobnie jak pliki tekstowe ASCII.
 
 Wszystkie wersje dos2unix i unix2dos potrafią konwertować pliki kodowane UTF-8, ponieważ UTF-8 jest wstecznie zgodne z ASCII.
 
@@ -482,7 +500,7 @@ Tryby konwersji ISO i 7-bit nie działają na plikach UTF-16.
 
 =head2 Znacznik BOM
 
-W systemie Windows pliki tekstowe zwykle zawierają znacznik BOM (Byte Order Mark), ponieważ wiele programów dla Windows (w tym Notepad) dodaje domyślnie znaczniki BOM. Więcej informacji można znaleźć pod adresem L<http://pl.wikipedia.org/wiki/BOM_(informatyka)>.
+W systemie Windows pliki tekstowe zwykle zawierają znacznik BOM (Byte Order Mark), ponieważ wiele programów dla Windows (w tym Notepad) dodaje domyślnie znaczniki BOM. Więcej informacji można znaleźć pod adresem L<https://pl.wikipedia.org/wiki/BOM_(informatyka)>.
 
 Pod Uniksem pliki Unicode zwykle nie mają znacznika BOM. Pliki tekstowe są traktowane jako kodowane zgodnie z kodowaniem znaków ustawionej lokalizacji.
 
@@ -522,7 +540,7 @@ Konwersja z uniksowego UTF-8 do UTF-16 dla Windows:
 
 =head1 GB18030
 
-GB18030 to standard urzędowy w Chinach. Obowiązkowy podzbiór standardu GB18030 jest oficjalnym wymaganiem każdego oprogramowania sprzedawanego w Chinach. Więcej pod adresem L<http://en.wikipedia.org/wiki/GB_18030>.
+GB18030 to standard urzędowy w Chinach. Obowiązkowy podzbiór standardu GB18030 jest oficjalnym wymaganiem każdego oprogramowania sprzedawanego w Chinach. Więcej pod adresem L<https://en.wikipedia.org/wiki/GB_18030>.
 
 GB18030 jest w pełni zgodny z Unicode i może być uważany za format transformacji unikodu. Podobnie jak UTF-8, GB18030 jest zgodny z ASCII. Jest także zgodny ze stroną kodową Windows 936, znaną też jako GBK.
 
@@ -622,13 +640,13 @@ Główny język wybiera się zmienną środowiskową LANG. Zmienna LANG składa 
     export LANG=en_US.iso88591   angielski, USA, kodowanie Latin-1
     export LANG=en_GB.UTF-8      angielski, Wlk. Brytania, kodowanie UTF-8
 
-Pełną listę kodów języków i krajów można znaleźć w podręczniku do gettexta: L<http://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html>
+Pełną listę kodów języków i krajów można znaleźć w podręczniku do gettexta: L<https://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html>
 
 W systemach uniksowych do uzyskania informacji dotyczących lokalizacji można użyć polecenia locale(1).
 
 =item B<LANGUAGE>
 
-Przy użyciu zmiennej środowiskowej LANGUAGE można określić listę języków wg priorytetu, oddzielonych dwukropkami. Dos2unix przyjmuje pierwszeństwo zmiennej LANGUAGE nad LANG. Na przykład, najpierw holenderski, następnie niemiecki: C<LANGUAGE=nl:de>. Aby skorzystać z listy wg priorytetów ze zmiennej LANGUAGE, trzeba najpierw włączyć lokalizację przez ustawienie zmiennej LANG (lub LC_ALL) na wartość inną niż "C". Więcej informacji znajduje się w podręczniku do gettexta: L<http://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-variable.html>
+Przy użyciu zmiennej środowiskowej LANGUAGE można określić listę języków wg priorytetu, oddzielonych dwukropkami. Dos2unix przyjmuje pierwszeństwo zmiennej LANGUAGE nad LANG. Na przykład, najpierw holenderski, następnie niemiecki: C<LANGUAGE=nl:de>. Aby skorzystać z listy wg priorytetów ze zmiennej LANGUAGE, trzeba najpierw włączyć lokalizację przez ustawienie zmiennej LANG (lub LC_ALL) na wartość inną niż "C". Więcej informacji znajduje się w podręczniku do gettexta: L<https://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-variable.html>
 
 W przypadku wybrania niedostępnego języka, otrzymamy standardowe, angielskie komunikaty.
 
@@ -654,21 +672,21 @@ Wartość zwracana w trybie cichym to zawsze zero, z wyjątkiem sytuacji podania
 
 =head1 STANDARDY
 
-L<http://pl.wikipedia.org/wiki/Plik_tekstowy>
+L<https://pl.wikipedia.org/wiki/Plik_tekstowy>
 
-L<http://en.wikipedia.org/wiki/Carriage_return>
+L<https://en.wikipedia.org/wiki/Carriage_return>
 
-L<http://pl.wikipedia.org/wiki/End-of-line>
+L<https://pl.wikipedia.org/wiki/Koniec_linii>
 
-L<http://pl.wikipedia.org/wiki/Unicode>
+L<https://pl.wikipedia.org/wiki/Unicode>
 
 =head1 AUTORZY
 
 Benjamin Lin <blin@socs.uts.edu.au>; Bernd Johannes Wuebben (tryb mac2unix) <wuebben@kde.org>; Christian Wurll (dodawanie dodatkowej nowej linii) <wurll@ira.uka.de>; Erwin Waterlander <waterlan@xs4all.nl> (prowadzący)
 
-Strona projektu: L<http://waterlan.home.xs4all.nl/dos2unix.html>
+Strona projektu: L<https://waterlan.home.xs4all.nl/dos2unix.html>
 
-Strona SourceForge: L<http://sourceforge.net/projects/dos2unix/>
+Strona SourceForge: L<https://sourceforge.net/projects/dos2unix/>
 
 =head1 ZOBACZ TAKŻE
 

@@ -29,10 +29,10 @@
 #
 #       To learn what TOP LEVEL section to use in manual pages,
 #       see POSIX/Susv standard and "Utility Description Defaults" at
-#       http://www.opengroup.org/onlinepubs/009695399/utilities/xcu_chap01.html#tag_01_11
+#       https://www.opengroup.org/onlinepubs/009695399/utilities/xcu_chap01.html#tag_01_11
 #
 #       This is manual page in Perl POD format. Read more at
-#       http://perldoc.perl.org/perlpod.html or run command:
+#       https://perldoc.perl.org/perlpod.html or run command:
 #
 #           perldoc perlpod | less
 #
@@ -118,7 +118,7 @@ the user and group ownership of files.
 
 =item B<-ascii>
 
-Convert only line breaks. This is the default conversion mode.
+Default conversion mode. See also section CONVERSION MODES.
 
 =item B<-iso>
 
@@ -284,6 +284,16 @@ Example output:
 
 Note that sometimes a binary file can be mistaken for a text file. See also option C<-s>.
 
+If in addition option C<-e> or C<--add-eol> is used also the type of the
+line break of the last line is printed, or C<noeol> if there is none.
+
+Example output:
+
+     6       0       0  no_bom    text   dos     dos.txt
+     0       6       0  no_bom    text   unix    unix.txt
+     0       0       6  no_bom    text   mac     mac.txt
+     1       0       0  no_bom    text   noeol   noeol_dos.txt
+
 Optionally extra flags can be set to change the output. One or more flags
 can be added.
 
@@ -316,12 +326,19 @@ Print the byte order mark.
 
 Print if file is text or binary.
 
+=item B<e>
+
+Print the type of the line break of the last line, or C<noeol> if there is none.
+
 =item B<c>
 
 Print only the files that would be converted.
 
 With the C<c> flag dos2unix will print only the files that contain DOS line breaks,
 unix2dos will print only file names that have Unix line breaks.
+
+If in addition option C<-e> or C<--add-eol> is used also the files that lack a
+line break on the last line will be printed.
 
 =item B<h>
 
@@ -354,6 +371,10 @@ List the files that have DOS line breaks:
 List the files that have Unix line breaks:
 
     unix2dos -ic *.txt
+
+List the files that have DOS line breaks or lack a line break on the last line:
+
+    dos2unix -e -ic *.txt
 
 Convert only files that have DOS line breaks and leave the other files untouched:
 
@@ -539,7 +560,7 @@ Display version information and exit.
 
 =head1 MAC MODE
 
-In normal mode line breaks are converted from DOS to Unix and vice versa.
+By default line breaks are converted from DOS to Unix and vice versa.
 Mac line breaks are not converted.
 
 In Mac mode line breaks are converted from Mac to Unix and vice versa. DOS
@@ -554,12 +575,15 @@ commands C<mac2unix> or C<unix2mac>.
 
 =item B<ascii>
 
-In mode C<ascii> only line breaks are converted. This is the default conversion
-mode.
+This is the default conversion mode. This mode is for converting ASCII and
+ASCII-compatible encoded files, like UTF-8. Enabling B<ascii> mode disables
+B<7bit> and B<iso> mode.
 
-Although the name of this mode is ASCII, which is a 7 bit standard, the
-actual mode is 8 bit. Use always this mode when converting Unicode UTF-8
-files.
+If dos2unix has UTF-16 support, UTF-16 encoded files are converted to the
+current locale character encoding on POSIX systems and to UTF-8 on Windows.
+Enabling B<ascii> mode disables the option to keep UTF-16 encoding (C<-u>) and
+the options to assume UTF-16 input (C<-ul> and C<-ub>).  To see if dos2unix has
+UTF-16 support type C<dos2unix -V>. See also section UNICODE.
 
 =item B<7bit>
 
@@ -634,7 +658,7 @@ UTF-16 format.
 
 =head2 Conversion
 
-Unicode text files can have DOS, Unix or Mac line breaks, like regular text
+Unicode text files can have DOS, Unix or Mac line breaks, like ASCII text
 files.
 
 All versions of dos2unix and unix2dos can convert UTF-8 encoded files, because
@@ -667,7 +691,7 @@ ISO and 7-bit mode conversion do not work on UTF-16 files.
 
 On Windows Unicode text files typically have a Byte Order Mark (BOM), because
 many Windows programs (including Notepad) add BOMs by default. See also
-L<http://en.wikipedia.org/wiki/Byte_order_mark>.
+L<https://en.wikipedia.org/wiki/Byte_order_mark>.
 
 On Unix Unicode files typically don't have a BOM. It is assumed that text files
 are encoded in the locale character encoding.
@@ -720,7 +744,7 @@ Convert from Unix UTF-8 to Windows UTF-16:
 
 GB18030 is a Chinese government standard. A mandatory subset of the GB18030
 standard is officially required for all software products sold in China. See
-also L<http://en.wikipedia.org/wiki/GB_18030>.
+also L<https://en.wikipedia.org/wiki/GB_18030>.
 
 GB18030 is fully compatible with Unicode, and can be considered an unicode
 transformation format. Like UTF-8, GB18030 is compatible with ASCII. GB18030
@@ -835,7 +859,7 @@ shells:
     export LANG=en_GB.UTF-8      English, UK, UTF-8 encoding
 
 For a complete list of language and country codes see the gettext manual:
-L<http://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html>
+L<https://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html>
 
 On Unix systems you can use the command locale(1) to get locale specific
 information.
@@ -848,7 +872,7 @@ For instance, first Dutch and then German: C<LANGUAGE=nl:de>. You have to first
 enable localization, by setting LANG (or LC_ALL) to a value other than
 "C", before you can use a language priority list through the LANGUAGE
 variable. See also the gettext manual:
-L<http://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-variable.html>
+L<https://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-variable.html>
 
 If you select a language which is not available you will get the
 standard English messages.
@@ -878,13 +902,13 @@ are used.
 
 =head1 STANDARDS
 
-L<http://en.wikipedia.org/wiki/Text_file>
+L<https://en.wikipedia.org/wiki/Text_file>
 
-L<http://en.wikipedia.org/wiki/Carriage_return>
+L<https://en.wikipedia.org/wiki/Carriage_return>
 
-L<http://en.wikipedia.org/wiki/Newline>
+L<https://en.wikipedia.org/wiki/Newline>
 
-L<http://en.wikipedia.org/wiki/Unicode>
+L<https://en.wikipedia.org/wiki/Unicode>
 
 =head1 AUTHORS
 
@@ -893,9 +917,9 @@ Bernd Johannes Wuebben (mac2unix mode) - <wuebben@kde.org>,
 Christian Wurll (add extra newline) - <wurll@ira.uka.de>,
 Erwin Waterlander - <waterlan@xs4all.nl> (maintainer)
 
-Project page: L<http://waterlan.home.xs4all.nl/dos2unix.html>
+Project page: L<https://waterlan.home.xs4all.nl/dos2unix.html>
 
-SourceForge page: L<http://sourceforge.net/projects/dos2unix/>
+SourceForge page: L<https://sourceforge.net/projects/dos2unix/>
 
 =head1 SEE ALSO
 

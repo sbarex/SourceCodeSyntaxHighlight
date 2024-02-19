@@ -1,3 +1,27 @@
+2024-01-22 Erwin Waterlander <waterlan@xs4all.nl>
+	* Version 7.5.2
+
+2024-01-16 Erwin Waterlander <waterlan@xs4all.nl>
+	* common.c: Fixed use of uninitialized local variable 'TempPath'
+	  in verbose mode. See https://sourceforge.net/p/dos2unix/bugs/20/
+	  Thanks to anonymous.
+
+2023-11-05 Erwin Waterlander <waterlan@xs4all.nl>
+	* Updated documentation about ASCII mode conversion.
+	  Resolves https://sourceforge.net/p/dos2unix/feature-requests/8/
+	  Thanks to Tony Mancill.
+
+2023-10-25 Erwin Waterlander <waterlan@xs4all.nl>
+	* New flag 'e' for option -i, --info to print the line break
+	  type of the last line.
+
+2023-10-11 Erwin Waterlander <waterlan@xs4all.nl>
+	* If option -i is used in combination with -e the line break
+	  type of the last line is printed, or "noeol" if there is none.
+
+2023-09-26 Erwin Waterlander <waterlan@xs4all.nl>
+	* Changed URLs in manpages from http to https.
+
 2023-08-29 Erwin Waterlander <waterlan@xs4all.nl>
 	* Version 7.5.1
 

@@ -68,7 +68,7 @@ OPTIES
         user and group ownership of files.
 
     -ascii
-        Alleen regeleindes converteren. Dit is de standaardconversiemodus.
+        Default conversion mode. See also section CONVERSION MODES.
 
     -iso
         Conversie tussen de tekensets DOS en ISO-8859-1. Zie ook de sectie
@@ -220,6 +220,17 @@ OPTIES
         Merk op dat een binair bestand soms voor een tekstbestand aangezien
         kan worden. Zie ook optie "-s".
 
+        If in addition option "-e" or "--add-eol" is used also the type of
+        the line break of the last line is printed, or "noeol" if there is
+        none.
+
+        Voorbeelduitvoer:
+
+             6       0       0  no_bom    text   dos     dos.txt
+             0       6       0  no_bom    text   unix    unix.txt
+             0       0       6  no_bom    text   mac     mac.txt
+             1       0       0  no_bom    text   noeol   noeol_dos.txt
+
         Bij de optie kunnen één of meer vlaggen meegegeven worden om de
         uitvoer te beperken.
 
@@ -239,12 +250,18 @@ OPTIES
 
         t   Tonen of het bestand tekst is of binair.
 
+        e   Print the type of the line break of the last line, or "noeol" if
+            there is none.
+
         c   Alleen de namen tonen van de bestanden die geconverteerd zouden
             worden.
 
             Met de vlag "c" toont dos2unix alleen de bestanden die
             DOS-regeleindes bevatten, en unix2dos alleen de bestanden die
             Unix-regeleindes bevatten.
+
+            If in addition option "-e" or "--add-eol" is used also the files
+            that lack a line break on the last line will be printed.
 
         h   Een kopregel printen.
 
@@ -271,6 +288,11 @@ OPTIES
         De bestanden opsommen die Unix-regeleindes bevatten:
 
             unix2dos -ic *.txt
+
+        List the files that have DOS line breaks or lack a line break on the
+        last line:
+
+            dos2unix -e -ic *.txt
 
         Alleen bestanden die DOS-regeleindes bevatten converteren en andere
         bestanden ongemoeid laten:
@@ -448,8 +470,8 @@ OPTIES
         Versie-informatie tonen.
 
 MAC-MODUS
-    In normale modus worden DOS-regeleindes naar Unix omgezet en vice versa.
-    Mac-regeleindes worden niet omgezet.
+    By default line breaks are converted from DOS to Unix and vice versa.
+    Mac line breaks are not converted.
 
     In Mac-modus worden Mac-regeleindes naar Unix omgezet en vice versa.
     DOS-regeleindes blijven ongewijzigd.
@@ -459,12 +481,16 @@ MAC-MODUS
 
 CONVERSIEMODI
     ascii
-        In modus "ascii" worden alleen regeleindes omgezet. Dit is de
-        standaardmodus.
+        This is the default conversion mode. This mode is for converting
+        ASCII and ASCII-compatible encoded files, like UTF-8. Enabling ascii
+        mode disables 7bit and iso mode.
 
-        Hoewel de naam van deze modus ASCII is, wat een 7-bits standaard is,
-        is de werkelijke modus 8-bits. Gebruik altijd deze modus wanneer u
-        Unicode UTF-8-bestanden omzet.
+        If dos2unix has UTF-16 support, UTF-16 encoded files are converted
+        to the current locale character encoding on POSIX systems and to
+        UTF-8 on Windows. Enabling ascii mode disables the option to keep
+        UTF-16 encoding ("-u") and the options to assume UTF-16 input ("-ul"
+        and "-ub"). To see if dos2unix has UTF-16 support type "dos2unix
+        -V". See also section UNICODE.
 
     7bit
         Alle 8-bits niet-ASCII lettertekens (met waardes van 128 t/m 255)
@@ -534,8 +560,8 @@ UNICODE
     endian, maar ze zijn meestal gecodeerd in UTF-16.
 
   Conversie
-    Unicode-tekstbestanden kunnen DOS-, Unix- of Mac-regeleindes hebben, net
-    als reguliere tekstbestanden.
+    Unicode text files can have DOS, Unix or Mac line breaks, like ASCII
+    text files.
 
     Alle versies van dos2unix en unix2dos kunnen UTF-8-gecodeerde bestanden
     omzetten, want UTF-8 is ontworpen op compatibiliteit met ASCII.
@@ -568,10 +594,9 @@ UNICODE
     ISO- en 7-bits-conversie werken niet op UTF-16-bestanden.
 
   Byte-Order-Mark
-    Op Windows bevatten Unicode-tekstbestanden gewoonlijk een
-    Byte-Order-Mark (BOM), omdat veel Windows-programma's (inclusief
-    Kladblok) standaard een BOM toevoegen. Zie ook
-    <http://en.wikipedia.org/wiki/Byte_order_mark>.
+    On Windows Unicode text files typically have a Byte Order Mark (BOM),
+    because many Windows programs (including Notepad) add BOMs by default.
+    See also <https://en.wikipedia.org/wiki/Byte_order_mark>.
 
     Op Unix hebben Unicode-tekstbestanden meestal geen BOM. Er wordt
     aangenomen dat de codering van tekstbestanden gelijk is aan de
@@ -625,10 +650,9 @@ UNICODE
         unix2dos < in.txt | iconv -f UTF-8 -t UTF-16 > uit.txt
 
 GB18030
-    GB18030 is een standaard van de Chinese overheid. Een subset van de
-    GB18030-standaard is officieel verplicht voor alle softwareproducten die
-    in China verkocht worden. Zie ook
-    <http://en.wikipedia.org/wiki/GB_18030>.
+    GB18030 is a Chinese government standard. A mandatory subset of the
+    GB18030 standard is officially required for all software products sold
+    in China. See also <https://en.wikipedia.org/wiki/GB_18030>.
 
     GB18030 is volledig compatibel met Unicode, en kan als een
     Unicodetransformatie beschouwd worden. Net als UTF-8 is GB18030
@@ -745,24 +769,24 @@ LOKALISATIE
             export LANG=en_US.iso88591   Engels, VS, Latin-1-codering
             export LANG=en_GB.UTF-8      Engels, GB, UTF-8-codering
 
-        Voor een complete lijst van taal- en landcodes zie de
-        gettext-handleiding:
-        <http://www.gnu.org/software/gettext/manual/html_node/Usual-Language
-        -Codes.html>
+        For a complete list of language and country codes see the gettext
+        manual:
+        <https://www.gnu.org/software/gettext/manual/html_node/Usual-Languag
+        e-Codes.html>
 
         Op Unix-systemen kunt u de opdracht locale(1) gebruiken om
         specifieke taalregio-informatie te verkrijgen.
 
     LANGUAGE
-        Met de omgevingsvariabele LANGUAGE kunt u een prioriteitenlijst
-        specificeren van talen, gescheiden door dubbele punten. Dos2unix
-        geeft voorrang aan LANGUAGE boven LANG. Bijvoorbeeld, eerst
-        Nederlands en dan Duits: "LANGUAGE=nl:de". U moet eerst lokalisatie
-        in werking stellen, door het instellen van LANG (of LC_ALL) op een
-        waarde ongelijk aan "C", voordat u een talen-prioriteitenlijst kunt
-        gebruiken via de variabele LANGUAGE. Zie ook de gettext-handleiding:
-        <http://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-v
-        ariable.html>
+        With the LANGUAGE environment variable you can specify a priority
+        list of languages, separated by colons. Dos2unix gives preference to
+        LANGUAGE over LANG. For instance, first Dutch and then German:
+        "LANGUAGE=nl:de". You have to first enable localization, by setting
+        LANG (or LC_ALL) to a value other than "C", before you can use a
+        language priority list through the LANGUAGE variable. See also the
+        gettext manual:
+        <https://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-
+        variable.html>
 
         Als u een taal kiest die niet beschikbaar is, worden de standaard
         Engelse berichten gebruikt.
@@ -787,13 +811,13 @@ AFSLUITWAARDE
     wanneer verkeerde opties worden gegeven.
 
 STANDAARDEN
-    <http://nl.wikipedia.org/wiki/Tekstbestand>
+    <https://en.wikipedia.org/wiki/Text_file>
 
-    <http://nl.wikipedia.org/wiki/Carriage_Return>
+    <https://en.wikipedia.org/wiki/Carriage_return>
 
-    <http://nl.wikipedia.org/wiki/Linefeed>
+    <https://en.wikipedia.org/wiki/Newline>
 
-    <http://nl.wikipedia.org/wiki/Unicode>
+    <https://en.wikipedia.org/wiki/Unicode>
 
 AUTEURS
     Benjamin Lin - <blin@socs.uts.edu.au>, Bernd Johannes Wuebben
@@ -801,9 +825,9 @@ AUTEURS
     extra regeleindes) - <wurll@ira.uka.de>, Erwin Waterlander -
     <waterlan@xs4all.nl> (beheerder)
 
-    Projectpagina: <http://waterlan.home.xs4all.nl/dos2unix.html>
+    Project page: <https://waterlan.home.xs4all.nl/dos2unix.html>
 
-    SourceForge-pagina: <http://sourceforge.net/projects/dos2unix/>
+    SourceForge page: <https://sourceforge.net/projects/dos2unix/>
 
 ZIE OOK
     file(1) find(1) iconv(1) locale(1) xargs(1)

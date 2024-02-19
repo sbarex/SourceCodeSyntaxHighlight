@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>dos2unix 7.5.1 - Convertor de format de fi&#x219;ier text din DOS/Mac &#xee;n Unix &#x219;i viceversa</title>
+<title>dos2unix 7.5.2 - Convertor de format de fi&#x219;ier text din DOS/Mac &#xee;n Unix &#x219;i viceversa</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rev="made" href="mailto:ASSI@walter.nonet" />
 </head>
@@ -89,7 +89,7 @@ unix2dos [op&#x21B;iuni] [FI&#x218;IER ...] [-n FI&#x218;IER_INTRARE FI&#x218;IE
 <dt id="ascii"><b>-ascii</b></dt>
 <dd>
 
-<p>Converte&#x219;te numai &icirc;ntreruperile de linie. Acesta este modul de conversie implicit.</p>
+<p>Modul de conversie implicit (&icirc;ntre setul de caractere DOS &#x219;i ISO-8859-1). Consulta&#x21B;i, de asemenea, sec&#x21B;iunea MODURI DE CONVERSIE.</p>
 
 </dd>
 <dt id="iso"><b>-iso</b></dt>
@@ -246,6 +246,15 @@ unix2dos [op&#x21B;iuni] [FI&#x218;IER ...] [-n FI&#x218;IER_INTRARE FI&#x218;IE
 
 <p>Re&#x21B;ine&#x21B;i c&#x103;, uneori, un fi&#x219;ier binar poate fi confundat cu un fi&#x219;ier text. A se vedea, de asemenea, op&#x21B;iunea <code>-s</code>.</p>
 
+<p>Dac&#x103;, &icirc;n plus, se utilizeaz&#x103; op&#x21B;iunea <code>-e</code> sau <code>--add-eol</code>, se imprim&#x103;, de asemenea, tipul &icirc;ntreruperii de linie de pe ultima linie sau <code>noeol</code>, dac&#x103; nu exist&#x103;.</p>
+
+<p>Exemplu de ie&#x219;ire:</p>
+
+<pre><code>6       0       0  no_bom    text   dos     dos.txt
+0       6       0  no_bom    text   unix    unix.txt
+0       0       6  no_bom    text   mac     mac.txt
+1       0       0  no_bom    text   noeol   noeol_dos.txt</code></pre>
+
 <p>Op&#x21B;ional, pot fi ad&#x103;ugate fanioane suplimentare pentru a modifica rezultatul. Se pot ad&#x103;uga unul sau mai multe fanioane.</p>
 
 <dl>
@@ -286,12 +295,20 @@ unix2dos [op&#x21B;iuni] [FI&#x218;IER ...] [-n FI&#x218;IER_INTRARE FI&#x218;IE
 <p>Indic&#x103; dac&#x103; fi&#x219;ierul este text sau binar.</p>
 
 </dd>
+<dt id="e"><b>e</b></dt>
+<dd>
+
+<p>Imprim&#x103; tipul &icirc;ntreruperii de linie de pe ultima linie sau <code>noeol</code> dac&#x103; nu exist&#x103;.</p>
+
+</dd>
 <dt id="c"><b>c</b></dt>
 <dd>
 
 <p>Afi&#x219;eaz&#x103; numai fi&#x219;ierele care vor fi convertite.</p>
 
 <p>Cu fanionul <code>c</code>, &laquo;dos2unix&raquo; va afi&#x219;a numai fi&#x219;ierele care con&#x21B;in &icirc;ntreruperi de linie DOS, &laquo;unix2dos&raquo; va afi&#x219;a numai numele de fi&#x219;iere care au &icirc;ntreruperi de linie Unix.</p>
+
+<p>Dac&#x103;, &icirc;n plus, se utilizeaz&#x103; op&#x21B;iunea <code>-e</code> sau <code>--add-eol</code>, vor fi afi&#x219;ate &#x219;i fi&#x219;ierele c&#x103;rora le lipse&#x219;te o &icirc;ntrerupere de linie pe ultima linie.</p>
 
 </dd>
 <dt id="h"><b>h</b></dt>
@@ -303,7 +320,7 @@ unix2dos [op&#x21B;iuni] [FI&#x218;IER ...] [-n FI&#x218;IER_INTRARE FI&#x218;IE
 <dt id="p"><b>p</b></dt>
 <dd>
 
-<p>Afi&#x219;eaz&#x103; numele fi&#x219;ierelor f&#x103;r&#x103; cale.</p>
+<p>Afi&#x219;eaz&#x103; (doar) numele fi&#x219;ierelor, f&#x103;r&#x103; ruta c&#x103;tre ele.</p>
 
 </dd>
 </dl>
@@ -329,6 +346,10 @@ unix2dos [op&#x21B;iuni] [FI&#x218;IER ...] [-n FI&#x218;IER_INTRARE FI&#x218;IE
 <p>Listeaz&#x103; fi&#x219;ierele care au &icirc;ntreruperi de linie Unix:</p>
 
 <pre><code>unix2dos -ic *.txt</code></pre>
+
+<p>Listeaz&#x103; fi&#x219;ierele care au &icirc;ntreruperi de linie DOS sau care nu au &icirc;ntreruperi de linie pe ultima linie:</p>
+
+<pre><code>dos2unix -e -ic *.txt</code></pre>
 
 <p>Converte&#x219;te numai fi&#x219;ierele care au &icirc;ntreruperi de linie DOS &#x219;i las&#x103; celelalte fi&#x219;iere neatinse:</p>
 
@@ -503,7 +524,7 @@ unix2dos [op&#x21B;iuni] [FI&#x218;IER ...] [-n FI&#x218;IER_INTRARE FI&#x218;IE
 
 <h1 id="MODUL-MAC">MODUL MAC</h1>
 
-<p>&Icirc;n modul normal, &icirc;ntreruperile de linie sunt convertite din DOS &icirc;n Unix &#x219;i invers. &Icirc;ntreruperile de linie Mac nu sunt convertite.</p>
+<p>&Icirc;n mod implicit, salturile (&icirc;ntreruperile) de linie sunt convertite din DOS &icirc;n Unix &#x219;i invers. &Icirc;ntreruperile de linie Mac nu sunt convertite.</p>
 
 <p>&Icirc;n modul Mac, &icirc;ntreruperile de linie sunt convertite din Mac &icirc;n Unix &#x219;i invers. &Icirc;ntreruperile de linie DOS nu sunt modificate.</p>
 
@@ -516,9 +537,9 @@ unix2dos [op&#x21B;iuni] [FI&#x218;IER ...] [-n FI&#x218;IER_INTRARE FI&#x218;IE
 <dt id="ascii1"><b>ascii</b></dt>
 <dd>
 
-<p>&Icirc;n modul <code>ascii</code> sunt convertite doar &icirc;ntreruperile de linie. Acesta este modul de conversie implicit.</p>
+<p>Acesta este modul de conversie implicit. Acest mod este destinat conversiei fi&#x219;ierelor codificate ASCII &#x219;i compatibile cu ASCII, cum ar fi UTF-8. Activarea modului <b>ascii</b> dezactiveaz&#x103; modurile <b>7bit</b> &#x219;i <b>iso</b>.</p>
 
-<p>De&#x219;i numele acestui mod este ASCII, care este un standard de 7 bi&#x21B;i, modul actual este de 8 bi&#x21B;i. Utiliza&#x21B;i &icirc;ntotdeauna acest mod c&acirc;nd converti&#x21B;i fi&#x219;iere Unicode UTF-8.</p>
+<p>Dac&#x103; &laquo;dos2unix&raquo; are suport UTF-16, fi&#x219;ierele codificate UTF-16 sunt convertite la codificarea caracterelor locale curente pe sistemele POSIX &#x219;i la UTF-8 pe Windows. Activarea modului <b>ascii</b> dezactiveaz&#x103; op&#x21B;iunea de p&#x103;strare a codific&#x103;rii UTF-16 (<code>-u</code>) &#x219;i op&#x21B;iunile de asumare a intr&#x103;rii UTF-16 (<code>-ul</code> &#x219;i <code>-ub</code>). Pentru a vedea dac&#x103; &laquo;dos2unix&raquo; are suport UTF-16, tasta&#x21B;i <code>dos2unix -V</code>. A se vedea &#x219;i sec&#x21B;iunea UNICODE.</p>
 
 </dd>
 <dt id="bit"><b>7bit</b></dt>
@@ -583,7 +604,7 @@ unix2dos [op&#x21B;iuni] [FI&#x218;IER ...] [-n FI&#x218;IER_INTRARE FI&#x218;IE
 
 <h2 id="Conversie">Conversie</h2>
 
-<p>Fi&#x219;ierele text Unicode pot avea &icirc;ntreruperi de linie DOS, Unix sau Mac, ca &#x219;i fi&#x219;ierele text obi&#x219;nuite.</p>
+<p>Fi&#x219;ierele text Unicode pot avea &icirc;ntreruperi de linie DOS, Unix sau Mac, ca &#x219;i fi&#x219;ierele text ASCII.</p>
 
 <p>Toate versiunile de &laquo;dos2unix&raquo; &#x219;i &laquo;unix2dos&raquo; pot converti fi&#x219;iere codificate &icirc;n formatul UTF-8, deoarece UTF-8 a fost conceput pentru compatibilitate cu ASCII.</p>
 
@@ -603,7 +624,7 @@ unix2dos [op&#x21B;iuni] [FI&#x218;IER ...] [-n FI&#x218;IER_INTRARE FI&#x218;IE
 
 <h2 id="Marcajul-de-ordine-a-octeilor">Marcajul de ordine a octe&#x21B;ilor</h2>
 
-<p>&Icirc;n Windows, fi&#x219;ierele text Unicode au de obicei un marcaj de ordine a octe&#x21B;ilor (BOM), deoarece multe programe Windows (inclusiv Notepad) adaug&#x103; marcajul de ordine a octe&#x21B;ilor &icirc;n mod implicit. A se vedea, de asemenea, <a href="http://en.wikipedia.org/wiki/Byte_order_mark">http://en.wikipedia.org/wiki/Byte_order_mark</a>.</p>
+<p>&Icirc;n Windows, fi&#x219;ierele text Unicode au de obicei un marcaj de ordine a octe&#x21B;ilor (BOM), deoarece multe programe Windows (inclusiv Notepad) adaug&#x103; marcajul de ordine a octe&#x21B;ilor &icirc;n mod implicit. A se vedea, de asemenea, <a href="https://en.wikipedia.org/wiki/Byte_order_mark">https://en.wikipedia.org/wiki/Byte_order_mark</a>.</p>
 
 <p>&Icirc;n Unix, fi&#x219;ierele Unicode nu au de obicei un marcaj de ordine a octe&#x21B;ilor (BOM). Se presupune c&#x103; fi&#x219;ierele text sunt codificate &icirc;n codificarea caracterelor stabilit&#x103; de localizare.</p>
 
@@ -643,7 +664,7 @@ unix2dos [op&#x21B;iuni] [FI&#x218;IER ...] [-n FI&#x218;IER_INTRARE FI&#x218;IE
 
 <h1 id="GB18030">GB18030</h1>
 
-<p>GB18030 este un standard guvernamental chinez. Un subset obligatoriu al standardului GB18030 este obligatoriu oficial pentru toate produsele software v&acirc;ndute &icirc;n China. A se vedea, de asemenea, <a href="http://en.wikipedia.org/wiki/GB_18030">http://en.wikipedia.org/wiki/GB_18030</a>.</p>
+<p>GB18030 este un standard guvernamental chinez. Un subset obligatoriu al standardului GB18030 este obligatoriu oficial pentru toate produsele software v&acirc;ndute &icirc;n China. A se vedea, de asemenea, <a href="https://en.wikipedia.org/wiki/GB_18030">https://en.wikipedia.org/wiki/GB_18030</a>.</p>
 
 <p>Standardul GB18030 este pe deplin compatibil cu Unicode &#x219;i poate fi considerat un format de transformare unicode. La fel ca UTF-8, GB18030 este compatibil cu ASCII. GB18030 este, de asemenea, compatibil cu pagina de cod 936 Windows, cunoscut&#x103; &#x219;i sub numele de GBK.</p>
 
@@ -742,7 +763,7 @@ export LANG=es_MX            Spaniol&#x103;, Mexic
 export LANG=en_US.iso88591   Englez&#x103;, SUA, codificarea Latin-1
 export LANG=en_GB.UTF-8      Englez&#x103;, UK, codificarea UTF-8</code></pre>
 
-<p>Pentru o list&#x103; complet&#x103; a codurilor de limb&#x103; &#x219;i de &#x21B;ar&#x103;, consulta&#x21B;i manualul &laquo;gettext&raquo;: <a href="http://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html">http://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html</a></p>
+<p>Pentru o list&#x103; complet&#x103; a codurilor de limb&#x103; &#x219;i de &#x21B;ar&#x103;, consulta&#x21B;i manualul &laquo;gettext&raquo;: <a href="https://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html">https://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html</a></p>
 
 <p>&Icirc;n sistemele Unix, pute&#x21B;i utiliza comanda locale(1) pentru a ob&#x21B;ine informa&#x21B;ii specifice despre localizare.</p>
 
@@ -750,7 +771,7 @@ export LANG=en_GB.UTF-8      Englez&#x103;, UK, codificarea UTF-8</code></pre>
 <dt id="LANGUAGE"><b>LANGUAGE</b></dt>
 <dd>
 
-<p>Cu variabila de mediu LANGUAGE pute&#x21B;i specifica o list&#x103; cu prioritate de limbi, separate prin dou&#x103; puncte. &laquo;dos2unix&raquo; d&#x103; preferin&#x21B;&#x103; variabilei LANGUAGE &icirc;n detrimentul variabilei LANG. De exemplu, mai &icirc;nt&acirc;i olandez&#x103; &#x219;i apoi german&#x103;: <code>LANGUAGE=nl:de</code>. Mai &icirc;nt&acirc;i trebuie s&#x103; activa&#x21B;i localizarea, definind LANG (sau LC_ALL) la o alt&#x103; valoare dec&acirc;t &bdquo;C&rdquo;, &icirc;nainte de a putea utiliza o list&#x103; cu prioritate de limb&#x103; prin variabila LANGUAGE. Consulta&#x21B;i &#x219;i manualul &laquo;gettext&raquo;: <a href="http://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-variable.html">http://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-variable.html</a></p>
+<p>Cu variabila de mediu LANGUAGE pute&#x21B;i specifica o list&#x103; cu prioritate de limbi, separate prin dou&#x103; puncte. &laquo;dos2unix&raquo; d&#x103; preferin&#x21B;&#x103; variabilei LANGUAGE &icirc;n detrimentul variabilei LANG. De exemplu, mai &icirc;nt&acirc;i olandez&#x103; &#x219;i apoi german&#x103;: <code>LANGUAGE=nl:de</code>. Mai &icirc;nt&acirc;i trebuie s&#x103; activa&#x21B;i localizarea, definind LANG (sau LC_ALL) la o alt&#x103; valoare dec&acirc;t &bdquo;C&rdquo;, &icirc;nainte de a putea utiliza o list&#x103; cu prioritate de limb&#x103; prin variabila LANGUAGE. Consulta&#x21B;i &#x219;i manualul &laquo;gettext&raquo;: <a href="https://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-variable.html">https://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-variable.html</a></p>
 
 <p>Dac&#x103; selecta&#x21B;i o limb&#x103; care nu este disponibil&#x103;, ve&#x21B;i primi mesajele standard &icirc;n limba englez&#x103;.</p>
 
@@ -777,9 +798,9 @@ export LANG=en_GB.UTF-8      Englez&#x103;, UK, codificarea UTF-8</code></pre>
 
 <p><a href="https://ro.wikipedia.org/wiki/Fi%C8%99ier_text">https://ro.wikipedia.org/wiki/Fi%C8%99ier_text</a></p>
 
-<p><a href="http://en.wikipedia.org/wiki/Carriage_return">http://en.wikipedia.org/wiki/Carriage_return</a></p>
+<p><a href="https://en.wikipedia.org/wiki/Carriage_return">https://en.wikipedia.org/wiki/Carriage_return</a></p>
 
-<p><a href="http://en.wikipedia.org/wiki/Newline">http://en.wikipedia.org/wiki/Newline</a></p>
+<p><a href="https://en.wikipedia.org/wiki/Newline">https://en.wikipedia.org/wiki/Newline</a></p>
 
 <p><a href="https://ro.wikipedia.org/wiki/Unicode">https://ro.wikipedia.org/wiki/Unicode</a></p>
 
@@ -787,9 +808,9 @@ export LANG=en_GB.UTF-8      Englez&#x103;, UK, codificarea UTF-8</code></pre>
 
 <p>Benjamin Lin - &lt;blin@socs.uts.edu.au&gt;, Bernd Johannes Wuebben (modul mac2unix) - &lt;wuebben@kde.org&gt;, Christian Wurll (ad&#x103;ugarea unei linii noi suplimentare) - &lt;wurll@ira.uka.de&gt;, Erwin Waterlander - &lt;waterlan@xs4all.nl&gt; (men&#x21B;in&#x103;tor)</p>
 
-<p>Pagina principal&#x103; a proiectului: <a href="http://waterlan.home.xs4all.nl/dos2unix.html">http://waterlan.home.xs4all.nl/dos2unix.html</a></p>
+<p>Pagina principal&#x103; a proiectului: <a href="https://waterlan.home.xs4all.nl/dos2unix.html">https://waterlan.home.xs4all.nl/dos2unix.html</a></p>
 
-<p>Pagina SourceForge a proiectului: <a href="http://sourceforge.net/projects/dos2unix/">http://sourceforge.net/projects/dos2unix/</a></p>
+<p>Pagina din SourceForge a proiectului: <a href="https://sourceforge.net/projects/dos2unix/">https://sourceforge.net/projects/dos2unix/</a></p>
 
 <h1 id="CONSULTAI-I">CONSULTA&#x21A;I &#x218;I</h1>
 

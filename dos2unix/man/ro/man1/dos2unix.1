@@ -71,7 +71,7 @@
 .\" ========================================================================
 .\"
 .IX Title "dos2unix 1"
-.TH dos2unix 1 "2023-08-29" "dos2unix" "2023-08-29"
+.TH dos2unix 1 "2024-01-22" "dos2unix" "2024-01-22"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -122,7 +122,7 @@ Permite schimbarea proprietarului fișierului în modul\-fișier_vechi.
 Când este utilizată această opțiune, conversia nu va fi întreruptă atunci când utilizatorul și/sau grupul proprietar al fișierului original nu poate fi păstrat în modul\-fișier_vechi. Conversia va continua și fișierul convertit va primi același nou proprietar ca și cum ar fi fost convertit în modul\-fișier_nou. A se vedea, de asemenea, opțiunile \f(CW\*(C`\-o\*(C'\fR și \f(CW\*(C`\-n\*(C'\fR. Această opțiune este disponibilă numai dacă «dos2unix» are suport pentru păstrarea utilizatorului și grupului proprietar al fișierelor.
 .IP "\fB\-ascii\fR" 4
 .IX Item "-ascii"
-Convertește numai întreruperile de linie. Acesta este modul de conversie implicit.
+Modul de conversie implicit (între setul de caractere \s-1DOS\s0 și \s-1ISO\-8859\-1\s0). Consultați, de asemenea, secțiunea \s-1MODURI DE CONVERSIE.\s0
 .IP "\fB\-iso\fR" 4
 .IX Item "-iso"
 Conversie între setul de caractere \s-1DOS\s0 și \s-1ISO\-8859\-1.\s0 Consultați, de asemenea, secțiunea \s-1MODURI DE CONVERSIE.\s0
@@ -224,6 +224,17 @@ Exemplu de ieșire:
 .Sp
 Rețineți că, uneori, un fișier binar poate fi confundat cu un fișier text. A se vedea, de asemenea, opțiunea \f(CW\*(C`\-s\*(C'\fR.
 .Sp
+Dacă, în plus, se utilizează opțiunea \f(CW\*(C`\-e\*(C'\fR sau \f(CW\*(C`\-\-add\-eol\*(C'\fR, se imprimă, de asemenea, tipul întreruperii de linie de pe ultima linie sau \f(CW\*(C`noeol\*(C'\fR, dacă nu există.
+.Sp
+Exemplu de ieșire:
+.Sp
+.Vb 4
+\&     6       0       0  no_bom    text   dos     dos.txt
+\&     0       6       0  no_bom    text   unix    unix.txt
+\&     0       0       6  no_bom    text   mac     mac.txt
+\&     1       0       0  no_bom    text   noeol   noeol_dos.txt
+.Ve
+.Sp
 Opțional, pot fi adăugate fanioane suplimentare pentru a modifica rezultatul. Se pot adăuga unul sau mai multe fanioane.
 .RS 4
 .IP "\fB0\fR" 4
@@ -244,17 +255,22 @@ Afișează marcajul de ordine a octeților.
 .IP "\fBt\fR" 4
 .IX Item "t"
 Indică dacă fișierul este text sau binar.
+.IP "\fBe\fR" 4
+.IX Item "e"
+Imprimă tipul întreruperii de linie de pe ultima linie sau \f(CW\*(C`noeol\*(C'\fR dacă nu există.
 .IP "\fBc\fR" 4
 .IX Item "c"
 Afișează numai fișierele care vor fi convertite.
 .Sp
 Cu fanionul \f(CW\*(C`c\*(C'\fR, «dos2unix» va afișa numai fișierele care conțin întreruperi de linie \s-1DOS,\s0 «unix2dos» va afișa numai numele de fișiere care au întreruperi de linie Unix.
+.Sp
+Dacă, în plus, se utilizează opțiunea \f(CW\*(C`\-e\*(C'\fR sau \f(CW\*(C`\-\-add\-eol\*(C'\fR, vor fi afișate și fișierele cărora le lipsește o întrerupere de linie pe ultima linie.
 .IP "\fBh\fR" 4
 .IX Item "h"
 Afișează titlul.
 .IP "\fBp\fR" 4
 .IX Item "p"
-Afișează numele fișierelor fără cale.
+Afișează (doar) numele fișierelor, fără ruta către ele.
 .RE
 .RS 4
 .Sp
@@ -288,6 +304,12 @@ Listează fișierele care au întreruperi de linie Unix:
 .Sp
 .Vb 1
 \&    unix2dos \-ic *.txt
+.Ve
+.Sp
+Listează fișierele care au întreruperi de linie \s-1DOS\s0 sau care nu au întreruperi de linie pe ultima linie:
+.Sp
+.Vb 1
+\&    dos2unix \-e \-ic *.txt
 .Ve
 .Sp
 Convertește numai fișierele care au întreruperi de linie \s-1DOS\s0 și lasă celelalte fișiere neatinse:
@@ -410,7 +432,7 @@ Păstrează legăturile simbolice și țintele neschimbate (implicit).
 Afișează informațiile despre versiune și iese.
 .SH "MODUL MAC"
 .IX Header "MODUL MAC"
-În modul normal, întreruperile de linie sunt convertite din \s-1DOS\s0 în Unix și invers. Întreruperile de linie Mac nu sunt convertite.
+În mod implicit, salturile (întreruperile) de linie sunt convertite din \s-1DOS\s0 în Unix și invers. Întreruperile de linie Mac nu sunt convertite.
 .PP
 În modul Mac, întreruperile de linie sunt convertite din Mac în Unix și invers. Întreruperile de linie \s-1DOS\s0 nu sunt modificate.
 .PP
@@ -419,9 +441,9 @@ Pentru a rula în modul Mac, utilizați opțiunea din linie de comandă \f(CW\*(
 .IX Header "MODURI DE CONVERSIE"
 .IP "\fBascii\fR" 4
 .IX Item "ascii"
-În modul \f(CW\*(C`ascii\*(C'\fR sunt convertite doar întreruperile de linie. Acesta este modul de conversie implicit.
+Acesta este modul de conversie implicit. Acest mod este destinat conversiei fișierelor codificate \s-1ASCII\s0 și compatibile cu \s-1ASCII,\s0 cum ar fi \s-1UTF\-8.\s0 Activarea modului \fBascii\fR dezactivează modurile \fB7bit\fR și \fBiso\fR.
 .Sp
-Deși numele acestui mod este \s-1ASCII,\s0 care este un standard de 7 biți, modul actual este de 8 biți. Utilizați întotdeauna acest mod când convertiți fișiere Unicode \s-1UTF\-8.\s0
+Dacă «dos2unix» are suport \s-1UTF\-16,\s0 fișierele codificate \s-1UTF\-16\s0 sunt convertite la codificarea caracterelor locale curente pe sistemele \s-1POSIX\s0 și la \s-1UTF\-8\s0 pe Windows. Activarea modului \fBascii\fR dezactivează opțiunea de păstrare a codificării \s-1UTF\-16\s0 (\f(CW\*(C`\-u\*(C'\fR) și opțiunile de asumare a intrării \s-1UTF\-16\s0 (\f(CW\*(C`\-ul\*(C'\fR și \f(CW\*(C`\-ub\*(C'\fR).  Pentru a vedea dacă «dos2unix» are suport \s-1UTF\-16,\s0 tastați \f(CW\*(C`dos2unix \-V\*(C'\fR. A se vedea și secțiunea \s-1UNICODE.\s0
 .IP "\fB7bit\fR" 4
 .IX Item "7bit"
 În acest mod, toate caracterele de 8 biți non-ASCII (cu valori de la 128 la 255) sunt convertite într\-un spațiu de 7 biți.
@@ -491,7 +513,7 @@ Consultați de asemenea <http://czyborra.com/charsets/codepages.html> și <http:
 Există diferite codificări Unicode. În Unix și Linux fișierele Unicode sunt de obicei codificate în codificarea \s-1UTF\-8.\s0 În Windows, fișierele text Unicode pot fi codificate în \s-1UTF\-8, UTF\-16\s0 sau \s-1UTF\-16\s0 big-endian, dar sunt în mare parte codificate în formatul \s-1UTF\-16.\s0
 .SS "Conversie"
 .IX Subsection "Conversie"
-Fișierele text Unicode pot avea întreruperi de linie \s-1DOS,\s0 Unix sau Mac, ca și fișierele text obișnuite.
+Fișierele text Unicode pot avea întreruperi de linie \s-1DOS,\s0 Unix sau Mac, ca și fișierele text \s-1ASCII.\s0
 .PP
 Toate versiunile de «dos2unix» și «unix2dos» pot converti fișiere codificate în formatul \s-1UTF\-8,\s0 deoarece \s-1UTF\-8\s0 a fost conceput pentru compatibilitate cu \s-1ASCII.\s0
 .PP
@@ -510,7 +532,7 @@ Când se utilizează opțiunea \f(CW\*(C`\-u\*(C'\fR, fișierul de ieșire va fi
 Modurile de conversie \s-1ISO\s0 și 7 biți nu funcționează pe fișierele \s-1UTF\-16.\s0
 .SS "Marcajul de ordine a octeților"
 .IX Subsection "Marcajul de ordine a octeților"
-În Windows, fișierele text Unicode au de obicei un marcaj de ordine a octeților (\s-1BOM\s0), deoarece multe programe Windows (inclusiv Notepad) adaugă marcajul de ordine a octeților în mod implicit. A se vedea, de asemenea, <http://en.wikipedia.org/wiki/Byte_order_mark>.
+În Windows, fișierele text Unicode au de obicei un marcaj de ordine a octeților (\s-1BOM\s0), deoarece multe programe Windows (inclusiv Notepad) adaugă marcajul de ordine a octeților în mod implicit. A se vedea, de asemenea, <https://en.wikipedia.org/wiki/Byte_order_mark>.
 .PP
 În Unix, fișierele Unicode nu au de obicei un marcaj de ordine a octeților (\s-1BOM\s0). Se presupune că fișierele text sunt codificate în codificarea caracterelor stabilită de localizare.
 .PP
@@ -555,7 +577,7 @@ Convertește din \s-1UTF\-8\s0 Unix în \s-1UTF\-16\s0 Windows:
 .Ve
 .SH "GB18030"
 .IX Header "GB18030"
-\&\s-1GB18030\s0 este un standard guvernamental chinez. Un subset obligatoriu al standardului \s-1GB18030\s0 este obligatoriu oficial pentru toate produsele software vândute în China. A se vedea, de asemenea, <http://en.wikipedia.org/wiki/GB_18030>.
+\&\s-1GB18030\s0 este un standard guvernamental chinez. Un subset obligatoriu al standardului \s-1GB18030\s0 este obligatoriu oficial pentru toate produsele software vândute în China. A se vedea, de asemenea, <https://en.wikipedia.org/wiki/GB_18030>.
 .PP
 Standardul \s-1GB18030\s0 este pe deplin compatibil cu Unicode și poate fi considerat un format de transformare unicode. La fel ca \s-1UTF\-8, GB18030\s0 este compatibil cu \s-1ASCII. GB18030\s0 este, de asemenea, compatibil cu pagina de cod 936 Windows, cunoscută și sub numele de \s-1GBK.\s0
 .PP
@@ -680,12 +702,12 @@ Limba principală este selectată cu variabila de mediu \s-1LANG.\s0 Variabila \
 \&    export LANG=en_GB.UTF\-8      Engleză, UK, codificarea UTF\-8
 .Ve
 .Sp
-Pentru o listă completă a codurilor de limbă și de țară, consultați manualul «gettext»: <http://www.gnu.org/software/gettext/manual/html_node/Usual\-Language\-Codes.html>
+Pentru o listă completă a codurilor de limbă și de țară, consultați manualul «gettext»: <https://www.gnu.org/software/gettext/manual/html_node/Usual\-Language\-Codes.html>
 .Sp
 În sistemele Unix, puteți utiliza comanda \fBlocale\fR\|(1) pentru a obține informații specifice despre localizare.
 .IP "\fB\s-1LANGUAGE\s0\fR" 4
 .IX Item "LANGUAGE"
-Cu variabila de mediu \s-1LANGUAGE\s0 puteți specifica o listă cu prioritate de limbi, separate prin două puncte. «dos2unix» dă preferință variabilei \s-1LANGUAGE\s0 în detrimentul variabilei \s-1LANG.\s0 De exemplu, mai întâi olandeză și apoi germană: \f(CW\*(C`LANGUAGE=nl:de\*(C'\fR. Mai întâi trebuie să activați localizarea, definind \s-1LANG\s0 (sau \s-1LC_ALL\s0) la o altă valoare decât „C”, înainte de a putea utiliza o listă cu prioritate de limbă prin variabila \s-1LANGUAGE.\s0 Consultați și manualul «gettext»: <http://www.gnu.org/software/gettext/manual/html_node/The\-LANGUAGE\-variable.html>
+Cu variabila de mediu \s-1LANGUAGE\s0 puteți specifica o listă cu prioritate de limbi, separate prin două puncte. «dos2unix» dă preferință variabilei \s-1LANGUAGE\s0 în detrimentul variabilei \s-1LANG.\s0 De exemplu, mai întâi olandeză și apoi germană: \f(CW\*(C`LANGUAGE=nl:de\*(C'\fR. Mai întâi trebuie să activați localizarea, definind \s-1LANG\s0 (sau \s-1LC_ALL\s0) la o altă valoare decât „C”, înainte de a putea utiliza o listă cu prioritate de limbă prin variabila \s-1LANGUAGE.\s0 Consultați și manualul «gettext»: <https://www.gnu.org/software/gettext/manual/html_node/The\-LANGUAGE\-variable.html>
 .Sp
 Dacă selectați o limbă care nu este disponibilă, veți primi mesajele standard în limba engleză.
 .IP "\fB\s-1DOS2UNIX_LOCALEDIR\s0\fR" 4
@@ -706,18 +728,18 @@ Valoarea returnată este întotdeauna zero în modul silențios, cu excepția ca
 .IX Header "STANDARDE"
 <https://ro.wikipedia.org/wiki/Fi%C8%99ier_text>
 .PP
-<http://en.wikipedia.org/wiki/Carriage_return>
+<https://en.wikipedia.org/wiki/Carriage_return>
 .PP
-<http://en.wikipedia.org/wiki/Newline>
+<https://en.wikipedia.org/wiki/Newline>
 .PP
 <https://ro.wikipedia.org/wiki/Unicode>
 .SH "AUTORI"
 .IX Header "AUTORI"
 Benjamin Lin \- <blin@socs.uts.edu.au>, Bernd Johannes Wuebben (modul mac2unix) \- <wuebben@kde.org>, Christian Wurll (adăugarea unei linii noi suplimentare) \- <wurll@ira.uka.de>, Erwin Waterlander \- <waterlan@xs4all.nl> (menținător)
 .PP
-Pagina principală a proiectului: <http://waterlan.home.xs4all.nl/dos2unix.html>
+Pagina principală a proiectului: <https://waterlan.home.xs4all.nl/dos2unix.html>
 .PP
-Pagina SourceForge a proiectului: <http://sourceforge.net/projects/dos2unix/>
+Pagina din SourceForge a proiectului: <https://sourceforge.net/projects/dos2unix/>
 .SH "CONSULTAȚI ȘI"
 .IX Header "CONSULTAȚI ȘI"
 \&\fBfile\fR\|(1)  \fBfind\fR\|(1)  \fBiconv\fR\|(1)  \fBlocale\fR\|(1)  \fBxargs\fR\|(1)

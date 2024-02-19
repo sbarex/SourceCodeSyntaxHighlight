@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>dos2unix 7.5.1 - Convertit les fichiers textes du format DOS/Mac vers Unix et inversement</title>
+<title>dos2unix 7.5.2 - Convertit les fichiers textes du format DOS/Mac vers Unix et inversement</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rev="made" href="mailto:ASSI@walter.nonet" />
 </head>
@@ -89,7 +89,7 @@ unix2dos [options] [FICHIER &hellip;] [-n FICHIER_ENTR&Eacute;E FICHIER_SORTIE &
 <dt id="ascii"><b>-ascii</b></dt>
 <dd>
 
-<p>Convertit uniquement les sauts de lignes. C&#39;est le mode de conversion par d&eacute;faut.</p>
+<p>Mode de conversion par d&eacute;faut. Voyez aussi la section des MODES DE CONVERSION.</p>
 
 </dd>
 <dt id="iso"><b>-iso</b></dt>
@@ -246,6 +246,15 @@ unix2dos [options] [FICHIER &hellip;] [-n FICHIER_ENTR&Eacute;E FICHIER_SORTIE &
 
 <p>Notez qu&#39;un fichier binaire peut parfois &ecirc;tre consid&eacute;r&eacute; &agrave; tord comme un fichier texte. Voyez aussi l&#39;option <code>-s</code>.</p>
 
+<p>Si l&#39;option <code>-e</code> ou <code>--add-eol</code> est &eacute;galement utilis&eacute;e, le type du saut de ligne de la derni&egrave;re ligne est affich&eacute; ou <code>noeol</code> est affich&eacute; s&#39;il n&#39;y en a pas.</p>
+
+<p>Exemple de <span style="white-space: nowrap;">sortie :</span></p>
+
+<pre><code>6       0       0  no_bom    text   dos     dos.txt
+0       6       0  no_bom    text   unix    unix.txt
+0       0       6  no_bom    text   mac     mac.txt
+1       0       0  no_bom    text   noeol   noeol_dos.txt</code></pre>
+
 <p>Des fanions facultatifs peuvent &ecirc;tre ajout&eacute;s pour changer la sortie. Un ou plusieurs fanions peuvent &ecirc;tre ajout&eacute;s.</p>
 
 <dl>
@@ -286,12 +295,20 @@ unix2dos [options] [FICHIER &hellip;] [-n FICHIER_ENTR&Eacute;E FICHIER_SORTIE &
 <p>Affiche si le fichier est texte ou binaire.</p>
 
 </dd>
+<dt id="e"><b>e</b></dt>
+<dd>
+
+<p>Affiche le type du saut de ligne de la derni&egrave;re ligne ou <code>noeol</code> s&#39;il n&#39;y en a pas.</p>
+
+</dd>
 <dt id="c"><b>c</b></dt>
 <dd>
 
 <p>Affiche uniquement les fichiers qui seraient convertis.</p>
 
 <p>Avec le fanion <code>c</code>, dos2unix n&#39;affichera que les fichiers contenant des sauts de ligne DOS alors que unix2dos n&#39;affichera que les noms des fichiers aillant des sauts de ligne Unix.</p>
+
+<p>Si l&#39;option <code>-e</code> ou <code>--add-eol</code> est &eacute;galement utilis&eacute;e, les fichiers qui n&#39;ont pas de saut de ligne &agrave; la derni&egrave;re ligne seront affich&eacute;s.</p>
 
 </dd>
 <dt id="h"><b>h</b></dt>
@@ -329,6 +346,10 @@ unix2dos [options] [FICHIER &hellip;] [-n FICHIER_ENTR&Eacute;E FICHIER_SORTIE &
 <p>Liste les fichiers qui ont des sauts de ligne Unix :</p>
 
 <pre><code>unix2dos -ic *.txt</code></pre>
+
+<p>Liste les fichiers qui ont des sauts de ligne DOS ou qui n&#39;ont pas de saut de ligne &agrave; la derni&egrave;re ligne.</p>
+
+<pre><code>dos2unix -e -ic *.txt</code></pre>
 
 <p>Ne converti que les fichiers qui ont des sauts de lignes DOS et laisse les autres fichiers inchang&eacute;s:</p>
 
@@ -503,7 +524,7 @@ unix2dos [options] [FICHIER &hellip;] [-n FICHIER_ENTR&Eacute;E FICHIER_SORTIE &
 
 <h1 id="MODE-MAC">MODE MAC</h1>
 
-<p>En mode normal, les sauts de lignes sont convertis du DOS vers Unix et inversement. Les sauts de lignes Mac ne sont pas convertis.</p>
+<p>Par d&eacute;faut, les sauts de lignes sont convertis du DOS vers Unix et inversement. Les sauts de lignes Mac ne sont pas convertis.</p>
 
 <p>En mode Mac, les sauts de lignes sont convertis du format Mac au format Unix et inversement. Les sauts de lignes DOS ne sont pas chang&eacute;s.</p>
 
@@ -516,9 +537,9 @@ unix2dos [options] [FICHIER &hellip;] [-n FICHIER_ENTR&Eacute;E FICHIER_SORTIE &
 <dt id="ascii1"><b>ascii</b></dt>
 <dd>
 
-<p>En mode <code>ascii</code>, seuls les sauts de lignes sont convertis. Ceci est le mode de conversion par d&eacute;faut.</p>
+<p>Ceci est le mode de conversion par d&eacute;faut. Ce mode convertit les fichiers ASCII en fichiers compatibles avec l&#39;ASCII tel que UTF-9. Activer le mode <b>ascii</b> d&eacute;sactive les modes <b>7bit</b> et <b>iso</b>.</p>
 
-<p>Bien que le nom de ce mode soit ASCII, qui est un standard 7 bits, ce mode travail en r&eacute;alit&eacute; sur 8 bits. Utilisez toujours ce mode lorsque vous convertissez des fichiers Unicode UTF-8.</p>
+<p>Si dos2unix supporte UTF-16, les fichiers encod&eacute;s en UTF-16 sont convertis vers l&#39;encodage des caract&egrave;res des param&egrave;tres linguistiques courants sur les syst&egrave;mes POSIX et vers UTF-8 sous Windows. Activer le mode <b>ascii</b> d&eacute;sactive l&#39;option pour garder l&#39;encodage UTF-8 (<code>-u</code>) et les options qui supposent une entr&eacute;e en UTF-16 (<code>-ul</code> et <code>-ub</code>). Pour voir si dos2unix supporte UTF-16, tapez <code>dos2unix -V</code>. Consultez aussi la section UNICODE.</p>
 
 </dd>
 <dt id="bit"><b>7bit</b></dt>
@@ -583,7 +604,7 @@ unix2dos [options] [FICHIER &hellip;] [-n FICHIER_ENTR&Eacute;E FICHIER_SORTIE &
 
 <h2 id="Conversion">Conversion</h2>
 
-<p>Les fichiers textes Unicode peuvent avoir des sauts de lignes DOS, Unix ou Mac, tout comme les fichiers textes normaux.</p>
+<p>Les fichiers textes Unicode peuvent avoir des sauts de lignes DOS, Unix ou Mac, tout comme les fichiers textes ASCII.</p>
 
 <p>Toutes les versions de dos2unix et unix2dos peuvent convertir des fichiers cod&eacute;s en UTF-8 car UTF-8 a &eacute;t&eacute; con&ccedil;u pour &ecirc;tre r&eacute;tro-compatible avec l&#39;ASCII.</p>
 
@@ -603,7 +624,7 @@ unix2dos [options] [FICHIER &hellip;] [-n FICHIER_ENTR&Eacute;E FICHIER_SORTIE &
 
 <h2 id="Marque-dordre-des-octets">Marque d&#39;ordre des octets</h2>
 
-<p>Les fichiers textes Unicode sous Windows on g&eacute;n&eacute;ralement un indicateur d&#39;ordre des octets (BOM) car de nombreux programmes Windows (y compris Notepad) ajoutent cet indicateur par d&eacute;faut. Consultez aussi <a href="http://fr.wikipedia.org/wiki/Indicateur_d%27ordre_des_octets">http://fr.wikipedia.org/wiki/Indicateur_d%27ordre_des_octets</a>.</p>
+<p>Les fichiers textes Unicode sous Windows on g&eacute;n&eacute;ralement un indicateur d&#39;ordre des octets (BOM) car de nombreux programmes Windows (y compris Notepad) ajoutent cet indicateur par d&eacute;faut. Consultez aussi <a href="https://fr.wikipedia.org/wiki/Indicateur_d%27ordre_des_octets">https://fr.wikipedia.org/wiki/Indicateur_d%27ordre_des_octets</a>.</p>
 
 <p>Sous Unix, les fichiers Unicodes n&#39;ont habituellement pas de BOM. Il est suppos&eacute; que les fichiers textes sont cod&eacute;s selon le codage de l&#39;environnement linguistique.</p>
 
@@ -643,7 +664,7 @@ unix2dos [options] [FICHIER &hellip;] [-n FICHIER_ENTR&Eacute;E FICHIER_SORTIE &
 
 <h1 id="GB18030">GB18030</h1>
 
-<p>GB18030 est un standard du gouvernement chinois. Tout logiciel vendu en Chine doit officiellement supporter un sous ensemble obligatoire du standard GB18030. Consultez <a href="http://fr.wikipedia.org/wiki/GB_18030">http://fr.wikipedia.org/wiki/GB_18030</a>.</p>
+<p>GB18030 est un standard du gouvernement chinois. Tout logiciel vendu en Chine doit officiellement supporter un sous ensemble obligatoire du standard GB18030. Consultez <a href="https://fr.wikipedia.org/wiki/GB_18030">https://fr.wikipedia.org/wiki/GB_18030</a>.</p>
 
 <p>GB18030 est enti&egrave;rement compatible avec Unicode et peut &ecirc;tre consid&eacute;r&eacute; comme &eacute;tant un format de transformation unicode. Comme UTF-8, GB18030 est compatible avec ASCII. GB18030 est aussi compatible avec le code page 936 de Windows aussi connu comme GBK.</p>
 
@@ -743,7 +764,7 @@ export LANG=es_MX            Espagnol, Mexique
 export LANG=en_US.iso88591   Anglais, USA, codage Latin-1
 export LANG=en_GB.UTF-8      Anglais, UK, codage UTF-8</code></pre>
 
-<p>La liste compl&egrave;te des codes de langues et de pays est dans le manuel de gettext: <a href="http://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html">http://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html</a></p>
+<p>La liste compl&egrave;te des codes de langues et de pays est dans le manuel de gettext: <a href="https://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html">https://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html</a></p>
 
 <p>Sur les syst&egrave;mes Unix, vous pouvez utiliser la commande locale(1) pour obtenir des informations sur l&#39;environnement linguistique.</p>
 
@@ -751,7 +772,7 @@ export LANG=en_GB.UTF-8      Anglais, UK, codage UTF-8</code></pre>
 <dt id="LANGUE"><b>LANGUE</b></dt>
 <dd>
 
-<p>Avec la variable d&#39;environnement LANGUAGE, vous pouvez sp&eacute;cifier une liste de langues prioritaires s&eacute;par&eacute;es par des deux-points. Dos2unix fait passer LANGUAGE avant LANG. Par exemple, pour utiliser le fran&ccedil;ais avant l&#39;anglais: <code>LANGUAGE=fr:en</code>. Vous devez d&#39;abord activer l&#39;environnement linguistique en assignant une valeur autre que <span style="white-space: nowrap;">&laquo; C &raquo;</span> &agrave; LANG (ou LC_ALL). Ensuite, vous pourrez utiliser la liste de priorit&eacute; avec la variable LANGUAGE. Voyez &eacute;galement le manuel de gettext: <a href="http://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-variable.html">http://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-variable.html</a></p>
+<p>Avec la variable d&#39;environnement LANGUAGE, vous pouvez sp&eacute;cifier une liste de langues prioritaires s&eacute;par&eacute;es par des deux-points. Dos2unix fait passer LANGUAGE avant LANG. Par exemple, pour utiliser le fran&ccedil;ais avant l&#39;anglais: <code>LANGUAGE=fr:en</code>. Vous devez d&#39;abord activer l&#39;environnement linguistique en assignant une valeur autre que <span style="white-space: nowrap;">&laquo; C &raquo;</span> &agrave; LANG (ou LC_ALL). Ensuite, vous pourrez utiliser la liste de priorit&eacute; avec la variable LANGUAGE. Voyez &eacute;galement le manuel de gettext: <a href="https://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-variable.html">https://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-variable.html</a></p>
 
 <p>Si vous s&eacute;lectionnez une langue qui n&#39;est pas disponible, vous obtiendrez des messages en anglais standard.</p>
 
@@ -776,21 +797,21 @@ export LANG=en_GB.UTF-8      Anglais, UK, codage UTF-8</code></pre>
 
 <h1 id="STANDARDS">STANDARDS</h1>
 
-<p><a href="http://fr.wikipedia.org/wiki/Fichier_texte">http://fr.wikipedia.org/wiki/Fichier_texte</a></p>
+<p><a href="https://fr.wikipedia.org/wiki/Fichier_texte">https://fr.wikipedia.org/wiki/Fichier_texte</a></p>
 
-<p><a href="http://fr.wikipedia.org/wiki/Retour_chariot">http://fr.wikipedia.org/wiki/Retour_chariot</a></p>
+<p><a href="https://fr.wikipedia.org/wiki/Retour_chariot">https://fr.wikipedia.org/wiki/Retour_chariot</a></p>
 
-<p><a href="http://fr.wikipedia.org/wiki/Fin_de_ligne">http://fr.wikipedia.org/wiki/Fin_de_ligne</a></p>
+<p><a href="https://fr.wikipedia.org/wiki/Fin_de_ligne">https://fr.wikipedia.org/wiki/Fin_de_ligne</a></p>
 
-<p><a href="http://fr.wikipedia.org/wiki/Unicode">http://fr.wikipedia.org/wiki/Unicode</a></p>
+<p><a href="https://fr.wikipedia.org/wiki/Unicode">https://fr.wikipedia.org/wiki/Unicode</a></p>
 
 <h1 id="AUTEURS">AUTEURS</h1>
 
 <p>Benjamin Lin - &lt;blin@socs.uts.edu.au&gt;, Bernd Johannes Wuebben (mode mac2unix) - &lt;wuebben@kde.org&gt;, Christian Wurll (ajout de saut de ligne suppl&eacute;mentaire) - &lt;wurll@ira.uka.de&gt;, Erwin Waterlander - &lt;waterlan@xs4all.nl&gt; (Mainteneur)</p>
 
-<p>Page du projet: <a href="http://waterlan.home.xs4all.nl/dos2unix.html">http://waterlan.home.xs4all.nl/dos2unix.html</a></p>
+<p>Page du projet: <a href="https://waterlan.home.xs4all.nl/dos2unix.html">https://waterlan.home.xs4all.nl/dos2unix.html</a></p>
 
-<p>Page SourceForge: <a href="http://sourceforge.net/projects/dos2unix/">http://sourceforge.net/projects/dos2unix/</a></p>
+<p>Page SourceForge: <a href="https://sourceforge.net/projects/dos2unix/">https://sourceforge.net/projects/dos2unix/</a></p>
 
 <h1 id="VOIR-AUSSI">VOIR AUSSI</h1>
 

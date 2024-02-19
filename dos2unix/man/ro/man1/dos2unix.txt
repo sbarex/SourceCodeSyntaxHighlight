@@ -70,8 +70,8 @@ OPȚIUNI
         grupului proprietar al fișierelor.
 
     -ascii
-        Convertește numai întreruperile de linie. Acesta este modul de
-        conversie implicit.
+        Modul de conversie implicit (între setul de caractere DOS și
+        ISO-8859-1). Consultați, de asemenea, secțiunea MODURI DE CONVERSIE.
 
     -iso
         Conversie între setul de caractere DOS și ISO-8859-1. Consultați, de
@@ -232,6 +232,17 @@ OPȚIUNI
         Rețineți că, uneori, un fișier binar poate fi confundat cu un fișier
         text. A se vedea, de asemenea, opțiunea "-s".
 
+        Dacă, în plus, se utilizează opțiunea "-e" sau "--add-eol", se
+        imprimă, de asemenea, tipul întreruperii de linie de pe ultima linie
+        sau "noeol", dacă nu există.
+
+        Exemplu de ieșire:
+
+             6       0       0  no_bom    text   dos     dos.txt
+             0       6       0  no_bom    text   unix    unix.txt
+             0       0       6  no_bom    text   mac     mac.txt
+             1       0       0  no_bom    text   noeol   noeol_dos.txt
+
         Opțional, pot fi adăugate fanioane suplimentare pentru a modifica
         rezultatul. Se pot adăuga unul sau mai multe fanioane.
 
@@ -251,15 +262,22 @@ OPȚIUNI
 
         t   Indică dacă fișierul este text sau binar.
 
+        e   Imprimă tipul întreruperii de linie de pe ultima linie sau
+            "noeol" dacă nu există.
+
         c   Afișează numai fișierele care vor fi convertite.
 
             Cu fanionul "c", «dos2unix» va afișa numai fișierele care conțin
             întreruperi de linie DOS, «unix2dos» va afișa numai numele de
             fișiere care au întreruperi de linie Unix.
 
+            Dacă, în plus, se utilizează opțiunea "-e" sau "--add-eol", vor
+            fi afișate și fișierele cărora le lipsește o întrerupere de
+            linie pe ultima linie.
+
         h   Afișează titlul.
 
-        p   Afișează numele fișierelor fără cale.
+        p   Afișează (doar) numele fișierelor, fără ruta către ele.
 
         Exemple:
 
@@ -283,6 +301,11 @@ OPȚIUNI
         Listează fișierele care au întreruperi de linie Unix:
 
             unix2dos -ic *.txt
+
+        Listează fișierele care au întreruperi de linie DOS sau care nu au
+        întreruperi de linie pe ultima linie:
+
+            dos2unix -e -ic *.txt
 
         Convertește numai fișierele care au întreruperi de linie DOS și lasă
         celelalte fișiere neatinse:
@@ -474,8 +497,8 @@ OPȚIUNI
         Afișează informațiile despre versiune și iese.
 
 MODUL MAC
-    În modul normal, întreruperile de linie sunt convertite din DOS în Unix
-    și invers. Întreruperile de linie Mac nu sunt convertite.
+    În mod implicit, salturile (întreruperile) de linie sunt convertite din
+    DOS în Unix și invers. Întreruperile de linie Mac nu sunt convertite.
 
     În modul Mac, întreruperile de linie sunt convertite din Mac în Unix și
     invers. Întreruperile de linie DOS nu sunt modificate.
@@ -485,12 +508,18 @@ MODUL MAC
 
 MODURI DE CONVERSIE
     ascii
-        În modul "ascii" sunt convertite doar întreruperile de linie. Acesta
-        este modul de conversie implicit.
+        Acesta este modul de conversie implicit. Acest mod este destinat
+        conversiei fișierelor codificate ASCII și compatibile cu ASCII, cum
+        ar fi UTF-8. Activarea modului ascii dezactivează modurile 7bit și
+        iso.
 
-        Deși numele acestui mod este ASCII, care este un standard de 7 biți,
-        modul actual este de 8 biți. Utilizați întotdeauna acest mod când
-        convertiți fișiere Unicode UTF-8.
+        Dacă «dos2unix» are suport UTF-16, fișierele codificate UTF-16 sunt
+        convertite la codificarea caracterelor locale curente pe sistemele
+        POSIX și la UTF-8 pe Windows. Activarea modului ascii dezactivează
+        opțiunea de păstrare a codificării UTF-16 ("-u") și opțiunile de
+        asumare a intrării UTF-16 ("-ul" și "-ub"). Pentru a vedea dacă
+        «dos2unix» are suport UTF-16, tastați "dos2unix -V". A se vedea și
+        secțiunea UNICODE.
 
     7bit
         În acest mod, toate caracterele de 8 biți non-ASCII (cu valori de la
@@ -563,7 +592,7 @@ UNICODE
 
   Conversie
     Fișierele text Unicode pot avea întreruperi de linie DOS, Unix sau Mac,
-    ca și fișierele text obișnuite.
+    ca și fișierele text ASCII.
 
     Toate versiunile de «dos2unix» și «unix2dos» pot converti fișiere
     codificate în formatul UTF-8, deoarece UTF-8 a fost conceput pentru
@@ -601,7 +630,7 @@ UNICODE
     În Windows, fișierele text Unicode au de obicei un marcaj de ordine a
     octeților (BOM), deoarece multe programe Windows (inclusiv Notepad)
     adaugă marcajul de ordine a octeților în mod implicit. A se vedea, de
-    asemenea, <http://en.wikipedia.org/wiki/Byte_order_mark>.
+    asemenea, <https://en.wikipedia.org/wiki/Byte_order_mark>.
 
     În Unix, fișierele Unicode nu au de obicei un marcaj de ordine a
     octeților (BOM). Se presupune că fișierele text sunt codificate în
@@ -662,7 +691,7 @@ GB18030
     GB18030 este un standard guvernamental chinez. Un subset obligatoriu al
     standardului GB18030 este obligatoriu oficial pentru toate produsele
     software vândute în China. A se vedea, de asemenea,
-    <http://en.wikipedia.org/wiki/GB_18030>.
+    <https://en.wikipedia.org/wiki/GB_18030>.
 
     Standardul GB18030 este pe deplin compatibil cu Unicode și poate fi
     considerat un format de transformare unicode. La fel ca UTF-8, GB18030
@@ -782,8 +811,8 @@ LOCALIZAREA
 
         Pentru o listă completă a codurilor de limbă și de țară, consultați
         manualul «gettext»:
-        <http://www.gnu.org/software/gettext/manual/html_node/Usual-Language
-        -Codes.html>
+        <https://www.gnu.org/software/gettext/manual/html_node/Usual-Languag
+        e-Codes.html>
 
         În sistemele Unix, puteți utiliza comanda locale(1) pentru a obține
         informații specifice despre localizare.
@@ -797,8 +826,8 @@ LOCALIZAREA
         o altă valoare decât „C”, înainte de a putea utiliza o listă cu
         prioritate de limbă prin variabila LANGUAGE. Consultați și manualul
         «gettext»:
-        <http://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-v
-        ariable.html>
+        <https://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-
+        variable.html>
 
         Dacă selectați o limbă care nu este disponibilă, veți primi mesajele
         standard în limba engleză.
@@ -824,9 +853,9 @@ VALOAREA RETURNATĂ
 STANDARDE
     <https://ro.wikipedia.org/wiki/Fi%C8%99ier_text>
 
-    <http://en.wikipedia.org/wiki/Carriage_return>
+    <https://en.wikipedia.org/wiki/Carriage_return>
 
-    <http://en.wikipedia.org/wiki/Newline>
+    <https://en.wikipedia.org/wiki/Newline>
 
     <https://ro.wikipedia.org/wiki/Unicode>
 
@@ -837,10 +866,10 @@ AUTORI
     <waterlan@xs4all.nl> (menținător)
 
     Pagina principală a proiectului:
-    <http://waterlan.home.xs4all.nl/dos2unix.html>
+    <https://waterlan.home.xs4all.nl/dos2unix.html>
 
-    Pagina SourceForge a proiectului:
-    <http://sourceforge.net/projects/dos2unix/>
+    Pagina din SourceForge a proiectului:
+    <https://sourceforge.net/projects/dos2unix/>
 
 CONSULTAȚI ȘI
     file(1) find(1) iconv(1) locale(1) xargs(1)

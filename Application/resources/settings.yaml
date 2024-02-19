@@ -10,6 +10,12 @@ UTIs:
     com.adobe.acrobat.sequ: *xml
     dyn.ah62d4rv4ge81g3pvsy: *xml
     
+    # .acf
+    com.steampowered.appmanifest:
+        syntax: txt
+    dyn.ah62d4rv4ge80c25g:
+        syntax: txt
+    
     com.adobe.edn:
         syntax: clojure
     
@@ -43,6 +49,9 @@ UTIs:
         
     com.google.earth.kml: *xml
     com.jetbrain.source: *xml
+    
+    com.nutstore.down:
+        syntax: md
     
     com.microsoft.typescript:
         syntax: typescript
@@ -283,6 +292,9 @@ UTIs:
     # .bazel
     dyn.ah62d4rv4ge80e2p4qz0a:
         syntax: txt
+    # .bzl
+    dyn.ah62d4rv4ge80e8xq:
+        syntax: txr
     
     # .code-workspace
     dyn.ah62d4rv4ge80g55eqy01s55wrr31a2pdqy:
@@ -341,6 +353,9 @@ UTIs:
     # .tf
     dyn.ah62d4rv4ge81k3u:
         syntax: yaml
+    # .hcl
+    dyn.ah62d4rv4ge80u25q:
+        syntax: yaml
     
     # .sage
     dyn.ah62d4rv4ge81g2phqy:
@@ -360,6 +375,18 @@ UTIs:
     dyn.ah62d4rv4ge80k52:
         syntax: txt
         
+    #.astro
+    build.astro.files:
+        syntax: jsx
+    dyn.ah62d4rv4ge80c65ysm1u:
+        syntax: jsx
+        
+    # lilypond .ly
+    org.lilypond.files:
+        syntax: ly
+    dyn.ah62d4rv4ge8028k:
+        syntax: ly
+        
 extensions:
     _plist*: &plist
         syntax: xml
@@ -371,6 +398,9 @@ extensions:
     _typescript*: &typescript
         syntax: typescript
     
+    acf:
+        syntax: txt
+        
     ado:
         syntax: txt
     
@@ -378,8 +408,13 @@ extensions:
         syntax: autoit
     a3x:
         syntax: autoit
+        
+    astro:
+        syntax: jsx
     
     bazel:
+        syntax: txt
+    bzl:
         syntax: txt
         
     code-workspace:
@@ -552,4 +587,6 @@ extensions:
     tfvars:
         syntax: yaml
     tf:
+        syntax: yaml
+    hcl:
         syntax: yaml

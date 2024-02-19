@@ -32,6 +32,7 @@
 			<true/>
 			<key>QLSupportedContentTypes</key>
 			<array>
+				<string>build.astro.files</string>
 				<string>com.adobe.acrobat.sequ</string>
 				<string>com.adobe.actionscript</string>
 				<string>com.adobe.coldfusion</string>
@@ -88,6 +89,7 @@
 				<string>com.microsoft.visual-basic</string>
 				<string>com.microsoft.xaml</string>
 				<string>com.netscape.javascript-source</string>
+				<string>com.nutstore.down</string>
 				<string>com.oracle.sql</string>
 				<string>com.sas.source</string>
 				<string>com.sass-lang.sass</string>
@@ -119,7 +121,7 @@
 				<string>org.bash.source</string>
 				<string>org.bazel.source</string>
 				<string>org.clojure</string>
-				<string>org.cmake.makefile</string>
+				<string>org.cmake.cmake</string>
 				<string>org.clojure.script</string>
 				<string>org.cocoapods.podspec</string>
 				<string>org.codehaus.groovy-source</string>
@@ -152,6 +154,7 @@
 				<string>org.kotlinlang.source</string>
 				<string>org.latex-project.latex</string>
 				<string>org.lesscss.less</string>
+				<string>org.lilypond.files</string>
 				<string>org.lua.lua</string>
 				<string>org.lua.lua-source</string>
 				<string>org.microsoft.inf</string>
@@ -263,6 +266,7 @@
 				<string>public.java</string>
 				<string>public.json</string>
 				<string>public.ksh-script</string>
+				<string>public.lua-source</string>
 				<string>public.make-source</string>
 				<string>public.objective-c-source</string>
 				<string>public.objective-c-plus-plus-source</string>
@@ -366,6 +370,11 @@
 				<string>dyn.ah62d4rv4ge8042ppqzxgw5df</string>
 				<string>dyn.ah62d4rv4ge8046de</string>
 				<string>dyn.ah62d4rv4ge80y65r</string>
+				<string>dyn.ah62d4rv4ge80e8xq</string>
+				<string>dyn.ah62d4rv4ge80c25g</string>
+				<string>dyn.ah62d4rv4ge80u25q</string>
+				<string>dyn.ah62d4rv4ge80c65ysm1u</string>
+				<string>dyn.ah62d4rv4ge8028k</string>
 			</array>
 			<key>QLSupportsSearchableItems</key>
 			<false/>
@@ -376,6 +385,6 @@
 		<string>$(PRODUCT_MODULE_NAME).PreviewViewController</string>
 	</dict>
 	<key>NSHumanReadableCopyright</key>
-	<string>Developed by SBAREX (2019-2023).</string>
+	<string>Developed by SBAREX (2019-2024).</string>
 </dict>
 </plist>

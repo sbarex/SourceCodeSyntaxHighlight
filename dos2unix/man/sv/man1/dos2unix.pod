@@ -63,7 +63,7 @@ När denna flagga används, kommer konverteringen inte att avbrytas när använd
 
 =item B<-ascii>
 
-Konvertera enbart radbrytningar. Detta är standardkonverteringsläget.
+Standardkonverteringsläge. Se vidare stycket KONVERTERINGSLÄGEN.
 
 =item B<-iso>
 
@@ -188,6 +188,15 @@ Exempelutmatning:
 
 Notera att en binärfil ibland kan misstas för en textfil. Se vidare flaggan C<-s>.
 
+Om dessutom flaggan C<-e> eller C<--add-eol> används så kommer även den radbrytning som används på sista raden att skrivas ut, eller C<noeol> om det inte finns någon.
+
+Exempelutmatning:
+
+     6       0       0  no_bom    text   dos     dos.txt
+     0       6       0  no_bom    text   unix    unix.txt
+     0       0       6  no_bom    text   mac     mac.txt
+     1       0       0  no_bom    text   noeol   noeol_dos.txt
+
 Extra flaggor kan användas valfritt för att ändra utmatningen. En eller fler flaggor kan läggas till.
 
 =over 4
@@ -216,11 +225,17 @@ Skriv ut byteordningsmarkeringen.
 
 Skriv ut om filen är text eller binär.
 
+=item B<e>
+
+Skriv ut radbrytningstypen på sista raden, eller C<noeol> om det inte finns någon.
+
 =item B<c>
 
 Skriv bara ut filerna som skulle ha konverterats.
 
 Med C<c>-flaggan kommer dos2unix att skriva ut filerna som innehåller DOS-radbrytningar, unix2dos kommer bara att skriva ut filnamn som har Unix-radbrytningar.
+
+Om dessutom flaggan C<-e> eller C<--add-eol> används så kommer även filer som saknar en radbrytning på sista raden att skrivas ut.
 
 =item B<h>
 
@@ -253,6 +268,10 @@ Lista filerna som har DOS-radbrytningar:
 Lista filerna som har Unix-radbrytningar:
 
     unix2dos -ic *.txt
+
+Lista filerna som har DOS-radbrytningar eller saknar en radbrytning på sista raden:
+
+    dos2unix -e -ic *.txt
 
 Konvertera endast filer som har DOS-radbrytningar och lämna övriga filer orörda:
 
@@ -388,7 +407,7 @@ Visa versionsinformation och avsluta.
 
 =head1 MAC-LÄGE
 
-I normalläge konverteras radbrytningar från DOS till Unix och vice versa. Mac-radbrytningar konverteras inte.
+Som standard konverteras radbrytningar från DOS till Unix och vice versa. Mac-radbrytningar konverteras inte.
 
 I Mac-läge konverteras radbrytningar från Mac till Unix och vice versa. DOS-radbrytningar ändras ej.
 
@@ -400,9 +419,9 @@ För att köra i Mac-läge använd kommandoradsflaggan C<-c mac> eller använd k
 
 =item B<ascii>
 
-I läget C<ascii> konverteras enbart radbrytningar. Detta är standardkonverteringsläget.
+Detta är standardkonverteringsläget. Detta läge används för att konvertera ASCII och ASCII-kompatibla kodade filer, så som UTF-8. Att aktiveras B<ascii>-läge inaktiverar B<7bit>- och B<iso>-läge.
 
-Även om namnet på detta läge är ASCII, vilket är en 7-bitarsstandard, så är det läget egentligen ett 8-bitarsläge. Använd alltid detta läge vid konvertering av Unicode UTF-8-filer.
+Om dos2unix har UTF-16 stöd kommer UTF-16-kodade filer att konverteras till kodningen för den aktuella lokalen på POSIX-sytstem och till UTF-8 på Windows. Aktivering av B<ascii>-läget inaktiverar flaggan för att behålla UTF-16-kodning (C<-u>) och flaggorna för att anta UTF-16 indata (C<-ul> och C<-ub>). För att se om dos2unix har UTF-16-stöd skriv C<dox2unix -V>, se också avsnittet UNICODE.
 
 =item B<7bit>
 
@@ -462,7 +481,7 @@ Det finns flera olika Unicode kodningar. I Unix och Linux kodas filer vanligtvis
 
 =head2 Konvertering
 
-Unicode-textfiler kan ha DOS, Unix eller Mac-radbrytningar precis som vanliga textfiler.
+Unicode-textfiler kan ha DOS, Unix eller Mac-radbrytningar precis som ASCII-textfiler.
 
 Alla versioner av dos2unix och unix2dos kan konvertera UTF-8-kodade filer, eftersom UTF-8 designades för bakåtkompatibilitet med ASCII.
 
@@ -482,7 +501,7 @@ ISO- och 7-bitarslägeskonvertering fungerar inte på UTF-16-filer.
 
 =head2 Byteordningsmarkering (Byte Order Mark)
 
-I Windows har Unicode-textfiler typiskt en byteordningsmarkering (Byte Order Mark, BOM) eftersom många Windows-program (inklusive Notepad) lägger till BOM:ar som standard. Se även L<http://en.wikipedia.org/wiki/Byte_order_mark>.
+I Windows har Unicode-textfiler typiskt en byteordningsmarkering (Byte Order Mark, BOM) eftersom många Windows-program (inklusive Notepad) lägger till BOM:ar som standard. Se även L<https://en.wikipedia.org/wiki/Byte_order_mark>.
 
 I Unix har Unicode-textfiler typiskt ingen BOM. Filer antas vara kodade i den lokala teckenuppsättningen.
 
@@ -522,7 +541,7 @@ Konvertera från Unix UTF-8 till Windows UTF-16:
 
 =head1 GB18030
 
-GB18030 är en standard från Kinesiska regeringen. En obligatorisk delmängd av standarden GB18030 krävs officiellt för alla programvaruprodukter som säljs i Kina. Se vidare L<http://en.wikipedia.org/wiki/GB_18030>.
+GB18030 är en standard från Kinesiska regeringen. En obligatorisk delmängd av standarden GB18030 krävs officiellt för alla programvaruprodukter som säljs i Kina. Se vidare L<https://en.wikipedia.org/wiki/GB_18030>.
 
 GB18030 är fullständigt kompatibel med Unicode och kan anses vara ett överföringsformat för unicode. Precis som UTF-8 är GB18030 kompatibel med ASCII. GB18030 är också kompatibel med Windows-teckentabell 936, också känd som GBK.
 
@@ -622,13 +641,13 @@ Det primära språket väljs med miljövariabeln LANG. LANG-variabeln består av
     export LANG=en_US.iso88591   Engelska, USA, Latin-1-kodning
     export LANG=en_GB.UTF-8      Engelska, UK, UTF-8-kodning
 
-För en fullständig lista över språk och landskoder se vidare i gettext-manualen: L<http://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html>
+För en fullständig lista över språk och landskoder se vidare i gettext-manualen: L<https://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html>
 
 På Unix-system kan du använda kommando locale(1) för att få lokal-specifik information.
 
 =item B<LANGUAGE>
 
-Med miljövariabeln LANGUAGE kan du ange en prioritetslista över språk, separerade med kolon. Dos2unix kommer att ge företräde till LANGAUGE över LANG. Exempelvis först nederländska och sedan tyska: C<LANGUAGE=nl:de>. Du måste först ha aktiverat lokalisering, genom att sätta LANG (eller LC_ALL) till ett värde annat än “C“, innan du kan använda en prioritetslista för språk via LANGUAGE-variabeln. Se vidare i gettext-manualen: L<http://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-variable.html>
+Med miljövariabeln LANGUAGE kan du ange en prioritetslista över språk, separerade med kolon. Dos2unix kommer att ge företräde till LANGAUGE över LANG. Exempelvis först nederländska och sedan tyska: C<LANGUAGE=nl:de>. Du måste först ha aktiverat lokalisering, genom att sätta LANG (eller LC_ALL) till ett värde annat än “C“, innan du kan använda en prioritetslista för språk via LANGUAGE-variabeln. Se vidare i gettext-manualen: L<https://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-variable.html>
 
 Om du väljer ett språk som inte är tillgänglig kommer du att få engelska meddelanden som standard.
 
@@ -654,21 +673,21 @@ Returvärdet är alltid noll i tyst läge, utom när felaktiga kommandoradsflagg
 
 =head1 STANDARDER
 
-L<http://en.wikipedia.org/wiki/Text_file>
+L<https://en.wikipedia.org/wiki/Text_file>
 
-L<http://en.wikipedia.org/wiki/Carriage_return>
+L<https://en.wikipedia.org/wiki/Carriage_return>
 
-L<http://en.wikipedia.org/wiki/Newline>
+L<https://en.wikipedia.org/wiki/Newline>
 
-L<http://en.wikipedia.org/wiki/Unicode>
+L<https://en.wikipedia.org/wiki/Unicode>
 
 =head1 FÖRFATTARE
 
 Benjamin Lin - <blin@socs.uts.edu.au>, Bernd Johannes Wuebben (mac2unix-läge) - <wuebben@kde.org>, Christian Wurll (lägg till en extra radbrytning) - <wurll@ira.uka.de>, Erwin Waterlander - <waterlan@xs4all.nl> (upphovsman)
 
-Projektsida: L<http://waterlan.home.xs4all.nl/dos2unix.html>
+Projektsida: L<https://waterlan.home.xs4all.nl/dos2unix.html>
 
-SourceForge-sida: L<http://sourceforge.net/projects/dos2unix/>
+SourceForge-sida: L<https://sourceforge.net/projects/dos2unix/>
 
 =head1 SE ÄVEN
 

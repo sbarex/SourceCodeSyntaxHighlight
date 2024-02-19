@@ -2,20 +2,21 @@
 # Copyright (C) 2014 Erwin Waterlander (msgids)
 # This file is distributed under the same license as the dos2unix package.
 # Tianze Wang <zwpwjwtz@126.com>, 2015, 2016.
+# Boyuan Yang <073plan@gmail.com>, 2023.
 msgid ""
 msgstr ""
-"Project-Id-Version: dos2unix-man-7.5.0-beta5\n"
-"POT-Creation-Date: 2023-04-23 10:34+0200\n"
-"PO-Revision-Date: 2023-06-02 15:43+0800\n"
-"Last-Translator: Tianze Wang <zwpwjwtz@126.com>\n"
+"Project-Id-Version: dos2unix-man-7.5.2-beta3\n"
+"POT-Creation-Date: 2023-11-27 22:01+0100\n"
+"PO-Revision-Date: 2023-11-29 11:06-0500\n"
+"Last-Translator: Boyuan Yang <073plan@gmail.com>\n"
 "Language-Team: Chinese (simplified) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Bugs: Report translation errors to the Language-Team address.\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Bugs: Report translation errors to the Language-Team address.\n"
+"X-Generator: Poedit 3.4.1\n"
 
 #. type: =head1
 #: dos2unix.pod:52
@@ -146,8 +147,8 @@ msgstr "B<-ascii>"
 
 #. type: textblock
 #: dos2unix.pod:121
-msgid "Convert only line breaks. This is the default conversion mode."
-msgstr "只转换断行符。这是默认的转换模式。"
+msgid "Default conversion mode. See also section CONVERSION MODES."
+msgstr "默认转换模式。。参见 CONVERSION MODES 一节。"
 
 #. type: =item
 #: dos2unix.pod:123
@@ -400,7 +401,7 @@ msgid "The following information is printed, in this order: number of DOS line b
 msgstr "将会显示下列信息（按顺序）：DOS断行符的数量、Unix断行符的数量、Mac断行符的数量、是否有BOM、文本/二进制、文件名。"
 
 #. type: textblock
-#: dos2unix.pod:274
+#: dos2unix.pod:274 dos2unix.pod:290
 msgid "Example output:"
 msgstr "输出示例："
 
@@ -435,116 +436,152 @@ msgstr "注意，二进制文件有时会被误判为文本文件。参见选项
 
 #. type: textblock
 #: dos2unix.pod:287
+msgid "If in addition option C<-e> or C<--add-eol> is used also the type of the line break of the last line is printed, or C<noeol> if there is none."
+msgstr "如果额外使用了 C<-e> 或 C<--add-eol> 选项，则最后一行的断行符类型也会被显示，或者在缺失的情况下显示 C<noeol>。"
+
+#. type: verbatim
+#: dos2unix.pod:292
+#, no-wrap
+msgid ""
+"     6       0       0  no_bom    text   dos     dos.txt\n"
+"     0       6       0  no_bom    text   unix    unix.txt\n"
+"     0       0       6  no_bom    text   mac     mac.txt\n"
+"     1       0       0  no_bom    text   noeol   noeol_dos.txt\n"
+"\n"
+msgstr ""
+"     6       0       0  no_bom    text   dos     dos.txt\n"
+"     0       6       0  no_bom    text   unix    unix.txt\n"
+"     0       0       6  no_bom    text   mac     mac.txt\n"
+"     1       0       0  no_bom    text   noeol   noeol_dos.txt\n"
+"\n"
+
+#. type: textblock
+#: dos2unix.pod:297
 msgid "Optionally extra flags can be set to change the output. One or more flags can be added."
 msgstr "可以为输出设置额外的标志（一个或多个）。"
 
 #. type: =item
-#: dos2unix.pod:292
+#: dos2unix.pod:302
 msgid "B<0>"
 msgstr "B<0>"
 
 #. type: textblock
-#: dos2unix.pod:294
+#: dos2unix.pod:304
 msgid "Print the file information lines followed by a null character instead of a newline character. This enables correct interpretation of file names with spaces or quotes when flag c is used. Use this flag in combination with xargs(1) option C<-0> or C<--null>."
 msgstr "使用零字符（\"\\0\"）而非换行符来分割文件信息行。用于在指定了 c 选项的情况下，正确解析含有空格或引号的文件名。请结合 xargs(1) 的选项 C<-0> 或 C<--null> 来使用。"
 
 #. type: =item
-#: dos2unix.pod:299
+#: dos2unix.pod:309
 msgid "B<d>"
 msgstr "B<d>"
 
 #. type: textblock
-#: dos2unix.pod:301
+#: dos2unix.pod:311
 msgid "Print number of DOS line breaks."
 msgstr "显示DOS断行符的数量。"
 
 #. type: =item
-#: dos2unix.pod:303
+#: dos2unix.pod:313
 msgid "B<u>"
 msgstr "B<u>"
 
 #. type: textblock
-#: dos2unix.pod:305
+#: dos2unix.pod:315
 msgid "Print number of Unix line breaks."
 msgstr "显示Unix断行符的数量。"
 
 #. type: =item
-#: dos2unix.pod:307
+#: dos2unix.pod:317
 msgid "B<m>"
 msgstr "B<m>"
 
 #. type: textblock
-#: dos2unix.pod:309
+#: dos2unix.pod:319
 msgid "Print number of Mac line breaks."
 msgstr "显示Mac断行符的数量。"
 
 #. type: =item
-#: dos2unix.pod:311
+#: dos2unix.pod:321
 msgid "B<b>"
 msgstr "B<b>"
 
 #. type: textblock
-#: dos2unix.pod:313
+#: dos2unix.pod:323
 msgid "Print the byte order mark."
 msgstr "显示BOM状况。"
 
 #. type: =item
-#: dos2unix.pod:315
+#: dos2unix.pod:325
 msgid "B<t>"
 msgstr "B<t>"
 
 #. type: textblock
-#: dos2unix.pod:317
+#: dos2unix.pod:327
 msgid "Print if file is text or binary."
 msgstr "显示文件为文本或二进制。"
 
 #. type: =item
-#: dos2unix.pod:319
+#: dos2unix.pod:329
+msgid "B<e>"
+msgstr "B<e>"
+
+#. type: textblock
+#: dos2unix.pod:331
+msgid "Print the type of the line break of the last line, or C<noeol> if there is none."
+msgstr "显示最后一行的断行符类型，如果不存在则显示 C<noeol>。"
+
+#. type: =item
+#: dos2unix.pod:333
 msgid "B<c>"
 msgstr "B<c>"
 
 #. type: textblock
-#: dos2unix.pod:321
+#: dos2unix.pod:335
 msgid "Print only the files that would be converted."
 msgstr "只显示将会被转换的文件。"
 
 #. type: textblock
-#: dos2unix.pod:323
+#: dos2unix.pod:337
 msgid "With the C<c> flag dos2unix will print only the files that contain DOS line breaks, unix2dos will print only file names that have Unix line breaks."
 msgstr "若设置了 C<c>标志，dos2unix将只显示含有DOS断行符的文件，unix2dos将只显示含有Unix断行符的文件。"
 
+#. type: textblock
+#: dos2unix.pod:340
+msgid "If in addition option C<-e> or C<--add-eol> is used also the files that lack a line break on the last line will be printed."
+msgstr "如果额外使用了 C<-e> 或 C<--add-eol> 选项，则最后一行缺失断行符的文件将被显示。"
+
 #. type: =item
-#: dos2unix.pod:326
+#: dos2unix.pod:343
 msgid "B<h>"
 msgstr "B<h>"
 
 #. type: textblock
-#: dos2unix.pod:328
+#: dos2unix.pod:345
 msgid "Print a header."
 msgstr "显示头部。"
 
 #. type: =item
-#: dos2unix.pod:330
+#: dos2unix.pod:347
 msgid "B<p>"
 msgstr "B<p>"
 
 #. type: textblock
-#: dos2unix.pod:332
+#: dos2unix.pod:349
 msgid "Show file names without path."
 msgstr "显示不含路径的文件名。"
 
 #. type: textblock
-#: dos2unix.pod:336
+#: dos2unix.pod:353
 msgid "Examples:"
 msgstr "示例："
 
 #. type: textblock
-#: dos2unix.pod:338
+#: dos2unix.pod:355
 msgid "Show information for all *.txt files:"
 msgstr "显示所有 *.txt 文件的信息："
 
 #. type: verbatim
-#: dos2unix.pod:340
+#: dos2unix.pod:357
 #, no-wrap
 msgid ""
 "    dos2unix -i *.txt\n"
@@ -554,12 +591,12 @@ msgstr ""
 "\n"
 
 #. type: textblock
-#: dos2unix.pod:342
+#: dos2unix.pod:359
 msgid "Show only the number of DOS line breaks and Unix line breaks:"
 msgstr "只显示DOS断行符和Unix断行符的数量："
 
 #. type: verbatim
-#: dos2unix.pod:344
+#: dos2unix.pod:361
 #, no-wrap
 msgid ""
 "    dos2unix -idu *.txt\n"
@@ -569,12 +606,12 @@ msgstr ""
 "\n"
 
 #. type: textblock
-#: dos2unix.pod:346
+#: dos2unix.pod:363
 msgid "Show only the byte order mark:"
 msgstr "只显示BOM状况："
 
 #. type: verbatim
-#: dos2unix.pod:348
+#: dos2unix.pod:365
 #, no-wrap
 msgid ""
 "    dos2unix --info=b *.txt\n"
@@ -584,12 +621,12 @@ msgstr ""
 "\n"
 
 #. type: textblock
-#: dos2unix.pod:350
+#: dos2unix.pod:367
 msgid "List the files that have DOS line breaks:"
 msgstr "列出含有DOS断行符的文件："
 
 #. type: verbatim
-#: dos2unix.pod:352
+#: dos2unix.pod:369
 #, no-wrap
 msgid ""
 "    dos2unix -ic *.txt\n"
@@ -599,12 +636,12 @@ msgstr ""
 "\n"
 
 #. type: textblock
-#: dos2unix.pod:354
+#: dos2unix.pod:371
 msgid "List the files that have Unix line breaks:"
 msgstr "列出含有Unix断行符的文件："
 
 #. type: verbatim
-#: dos2unix.pod:356
+#: dos2unix.pod:373
 #, no-wrap
 msgid ""
 "    unix2dos -ic *.txt\n"
@@ -614,12 +651,27 @@ msgstr ""
 "\n"
 
 #. type: textblock
-#: dos2unix.pod:358
+#: dos2unix.pod:375
+msgid "List the files that have DOS line breaks or lack a line break on the last line:"
+msgstr "列出含有DOS断行符或最后一行缺少断行符的文件："
+
+#. type: verbatim
+#: dos2unix.pod:377
+#, no-wrap
+msgid ""
+"    dos2unix -e -ic *.txt\n"
+"\n"
+msgstr ""
+"    dos2unix -e -ic *.txt\n"
+"\n"
+
+#. type: textblock
+#: dos2unix.pod:379
 msgid "Convert only files that have DOS line breaks and leave the other files untouched:"
 msgstr "只转换含有DOS断行符的文件，保持其他文件不变："
 
 #. type: verbatim
-#: dos2unix.pod:360
+#: dos2unix.pod:381
 #, no-wrap
 msgid ""
 "    dos2unix -ic0 *.txt | xargs -0 dos2unix\n"
@@ -629,12 +681,12 @@ msgstr ""
 "\n"
 
 #. type: textblock
-#: dos2unix.pod:362
+#: dos2unix.pod:383
 msgid "Find text files that have DOS line breaks:"
 msgstr "查找含有DOS断行符的文本文件："
 
 #. type: verbatim
-#: dos2unix.pod:364
+#: dos2unix.pod:385
 #, no-wrap
 msgid ""
 "    find -name '*.txt' -print0 | xargs -0 dos2unix -ic\n"
@@ -644,122 +696,122 @@ msgstr ""
 "\n"
 
 #. type: =item
-#: dos2unix.pod:366
+#: dos2unix.pod:387
 msgid "B<-k, --keepdate>"
 msgstr "B<-k, --keepdate>"
 
 #. type: textblock
-#: dos2unix.pod:368
+#: dos2unix.pod:389
 msgid "Keep the date stamp of output file same as input file."
 msgstr "将输入文件的时间戳应用到输出文件。"
 
 #. type: =item
-#: dos2unix.pod:370
+#: dos2unix.pod:391
 msgid "B<-L, --license>"
 msgstr "B<-L, --license>"
 
 #. type: textblock
-#: dos2unix.pod:372
+#: dos2unix.pod:393
 msgid "Display program's license."
 msgstr "显示程序许可证。"
 
 #. type: =item
-#: dos2unix.pod:374
+#: dos2unix.pod:395
 msgid "B<-l, --newline>"
 msgstr "B<-l, --newline>"
 
 #. type: textblock
-#: dos2unix.pod:376
+#: dos2unix.pod:397
 msgid "Add additional newline."
 msgstr "添加额外的新行。"
 
 #. type: textblock
-#: dos2unix.pod:378
+#: dos2unix.pod:399
 msgid "B<dos2unix>: Only DOS line breaks are changed to two Unix line breaks.  In Mac mode only Mac line breaks are changed to two Unix line breaks."
 msgstr "B<dos2unix>：只有DOS断行符会被转换为两个Unix断行符。在Mac模式下，只有Mac断行符会被转换为Unix断行符。"
 
 #. type: textblock
-#: dos2unix.pod:382
+#: dos2unix.pod:403
 msgid "B<unix2dos>: Only Unix line breaks are changed to two DOS line breaks.  In Mac mode Unix line breaks are changed to two Mac line breaks."
 msgstr "B<unix2dos>：只有Unix断行符会被转换为两个DOS断行符。在Mac模式下，Unix断行符会被转换为两个Mac断行符。"
 
 #. type: =item
-#: dos2unix.pod:385
+#: dos2unix.pod:406
 msgid "B<-m, --add-bom>"
 msgstr "B<-m, --add-bom>"
 
 #. type: textblock
-#: dos2unix.pod:387
+#: dos2unix.pod:408
 msgid "Write a Byte Order Mark (BOM) in the output file. By default an UTF-8 BOM is written."
 msgstr "将字节序标记（BOM）写入到输出文件。默认情况下将写入UTF-8 BOM。"
 
 #. type: textblock
-#: dos2unix.pod:390
+#: dos2unix.pod:411
 msgid "When the input file is UTF-16, and the option C<-u> is used, an UTF-16 BOM will be written."
 msgstr "当输入文件为UTF-16格式，并且使用了 C<-u>选项，将写入UTF-16 BOM。"
 
 #. type: textblock
-#: dos2unix.pod:393
+#: dos2unix.pod:414
 msgid "Never use this option when the output encoding is other than UTF-8, UTF-16, or GB18030. See also section UNICODE."
 msgstr "当输出文件不是UTF-8、UTF-16或GB18030格式时，请不要使用此选项。参加 UNICODE 一节。"
 
 #. type: =item
-#: dos2unix.pod:397
+#: dos2unix.pod:418
 msgid "B<-n, --newfile INFILE OUTFILE ...>"
 msgstr "B<-n, --newline 输入文件 输出文件 ...>"
 
 #. type: textblock
-#: dos2unix.pod:399
+#: dos2unix.pod:420
 msgid "New file mode. Convert file INFILE and write output to file OUTFILE.  File names must be given in pairs and wildcard names should I<not> be used or you I<will> lose your files."
 msgstr "新文件模式。转换输入文件并写入到输出文件。文件名必须成对给出，并且 I<不能> 使用通配符，否则你 I<将会>丢失文件。"
 
 #. type: textblock
-#: dos2unix.pod:403
+#: dos2unix.pod:424
 msgid "The person who starts the conversion in new file (paired) mode will be the owner of the converted file. The read/write permissions of the new file will be the permissions of the original file minus the umask(1) of the person who runs the conversion."
 msgstr "使用新文件（配对）模式转换时，命令执行者必须为文件的所有者。新文件的读/写权限将由源文件的权限减去命令执行者的 umask(1) 得到。"
 
 #. type: =item
-#: dos2unix.pod:408
+#: dos2unix.pod:429
 msgid "B<--no-allow-chown>"
 msgstr "B<--no-allow-chown>"
 
 #. type: textblock
-#: dos2unix.pod:410
+#: dos2unix.pod:431
 msgid "Don't allow file ownership change in old file mode (default)."
 msgstr "在旧文件模式下，不允许修改文件的所有者（默认选项）。"
 
 #. type: textblock
-#: dos2unix.pod:412
+#: dos2unix.pod:433
 msgid "Abort conversion when the user and/or group ownership of the original file can't be preserved in old file mode. See also options C<-o> and C<-n>. This option is only available if dos2unix has support for preserving the user and group ownership of files."
 msgstr "当原始文件的属主/属组无法保持不变时，停止格式转换。另请参见C<-o> 和 C<-n>选项。仅当 dos2unix 支持保护文件的属主/属组时才能使用该选项。"
 
 #. type: =item
-#: dos2unix.pod:417
+#: dos2unix.pod:438
 msgid "B<--no-add-eol>"
 msgstr "B<--no-add-eol>"
 
 #. type: textblock
-#: dos2unix.pod:419
+#: dos2unix.pod:440
 msgid "Do not add a line break to the last line if there isn't one."
 msgstr "即使文件末尾缺少换行符，也不要追加换行符。"
 
 #. type: =item
-#: dos2unix.pod:421
+#: dos2unix.pod:442
 msgid "B<-O, --to-stdout>"
 msgstr "B<-O, --to-stdout>"
 
 #. type: textblock
-#: dos2unix.pod:423
+#: dos2unix.pod:444
 msgid "Write to standard output, like a Unix filter. Use option C<-o> to go back to old file (in-place) mode."
 msgstr "将结果重定向至标准输出（类似Unix过滤器）。可以使用选项 C<-o> 来切换回旧文件（原位修改）模式。"
 
 #. type: textblock
-#: dos2unix.pod:426
+#: dos2unix.pod:447
 msgid "Combined with option C<-e> files can be properly concatenated. No merged last and first lines, and no Unicode byte order marks in the middle of the concatenated file. Example:"
 msgstr "与选项 C<-e>一起使用时，可以确保拼接文件时上一个文件的最后一行不会错误地与下一个文件的第一行合并，且不会受到Unicode字节序记号的干扰。例如："
 
 #. type: verbatim
-#: dos2unix.pod:430
+#: dos2unix.pod:451
 #, no-wrap
 msgid ""
 "    dos2unix -e -O file1.txt file2.txt > output.txt\n"
@@ -769,32 +821,32 @@ msgstr ""
 "\n"
 
 #. type: =item
-#: dos2unix.pod:432
+#: dos2unix.pod:453
 msgid "B<-o, --oldfile FILE ...>"
 msgstr "B<-o, --oldfile 文件 ...>"
 
 #. type: textblock
-#: dos2unix.pod:434
+#: dos2unix.pod:455
 msgid "Old file mode. Convert file FILE and overwrite output to it. The program defaults to run in this mode. Wildcard names may be used."
 msgstr "旧文件模式。转换并将输出覆盖到源文件。程序默认使用此模式，允许使用通配符。"
 
 #. type: textblock
-#: dos2unix.pod:437
+#: dos2unix.pod:458
 msgid "In old file (in-place) mode the converted file gets the same owner, group, and read/write permissions as the original file. Also when the file is converted by another user who has write permissions on the file (e.g. user root).  The conversion will be aborted when it is not possible to preserve the original values.  Change of owner could mean that the original owner is not able to read the file any more. Change of group could be a security risk, the file could be made readable for persons for whom it is not intended.  Preservation of owner, group, and read/write permissions is only supported on Unix."
 msgstr "在旧文件（替换）模式下，被转换的文件的所有者、组和读/写权限保持不变。当文件被其他具有写权限的用户（如root）转换时，情况也是如此。如果无法保持这些值不变，转换将会终止。改变源文件的所有者可能造成其无法读取该文件，而改变组则可能带来安全隐患，使文件被不法分子读取。只有Unix才支持转换时保留所有者、组和读/写权限。"
 
 #. type: textblock
-#: dos2unix.pod:446
+#: dos2unix.pod:467
 msgid "To check if dos2unix has support for preserving the user and group ownership of files type C<dos2unix -V>."
 msgstr "若要查看 dos2unix 是否支持保护文件的所有者，请输入C<dos2unix -V>。"
 
 #. type: textblock
-#: dos2unix.pod:449
+#: dos2unix.pod:470
 msgid "Conversion is always done via a temporary file. When an error occurs halfway the conversion, the temporary file is deleted and the original file stays intact. When the conversion is successful, the original file is replaced with the temporary file. You may have write permission on the original file, but no permission to put the same user and/or group ownership properties on the temporary file as the original file has. This means you are not able to preserve the user and/or group ownership of the original file. In this case you can use option C<--allow-chown> to continue with the conversion:"
 msgstr "dos2unix 在转换格式时会生成一个临时文件。如果在转换时出错，它会删除临时文件，从而保证原始文件不被更改；如果转换成功，将用临时文件替换原始文件。在这一过程中，如果 dos2unix 无法将临时文件的所有者设置为原始文件的所有者，那么新生成的文件也无法保留原始文件的属主/属组属性（即便您对原始文件有写入权限）。在这种情况下，可以使用C<--allow-chown>选项来继续进行转换："
 
 #. type: verbatim
-#: dos2unix.pod:458
+#: dos2unix.pod:479
 #, no-wrap
 msgid ""
 "    dos2unix --allow-chown foo.txt\n"
@@ -804,12 +856,12 @@ msgstr ""
 "\n"
 
 #. type: textblock
-#: dos2unix.pod:460
+#: dos2unix.pod:481
 msgid "Another option is to use new file mode:"
 msgstr "或者在新文件模式下："
 
 #. type: verbatim
-#: dos2unix.pod:462
+#: dos2unix.pod:483
 #, no-wrap
 msgid ""
 "    dos2unix -n foo.txt foo.txt\n"
@@ -819,479 +871,479 @@ msgstr ""
 "\n"
 
 #. type: textblock
-#: dos2unix.pod:464
+#: dos2unix.pod:485
 msgid "The advantage of the C<--allow-chown> option is that you can use wildcards, and the ownership properties will be preserved when possible."
 msgstr "使用C<--allow-chown>选项的好处在于：您可以使用通配符来操作文件，同时尽可能保持文件的所有者不变。"
 
 #. type: =item
-#: dos2unix.pod:467
+#: dos2unix.pod:488
 msgid "B<-q, --quiet>"
 msgstr "B<-q, --quiet>"
 
 #. type: textblock
-#: dos2unix.pod:469
+#: dos2unix.pod:490
 msgid "Quiet mode. Suppress all warnings and messages. The return value is zero.  Except when wrong command-line options are used."
 msgstr "安静模式。不显示任何警告或信息。返回值为0，除非命令行选项有误。"
 
 #. type: =item
-#: dos2unix.pod:472
+#: dos2unix.pod:493
 msgid "B<-r, --remove-bom>"
 msgstr "B<-r, --remove-bom>"
 
 #. type: textblock
-#: dos2unix.pod:474
+#: dos2unix.pod:495
 msgid "Remove Byte Order Mark (BOM). Do not write a BOM in the output file.  This is the default behavior when converting to Unix line breaks.  See also option C<-b>."
 msgstr "移除字节序标记（BOM），不写入BOM到输出文件。这是转换到Unix断行符时的默认行为。参见选项 C<-b>。"
 
 #. type: =item
-#: dos2unix.pod:478
+#: dos2unix.pod:499
 msgid "B<-s, --safe>"
 msgstr "B<-s, --safe>"
 
 #. type: textblock
-#: dos2unix.pod:480
+#: dos2unix.pod:501
 msgid "Skip binary files (default)."
 msgstr "跳过二进制文件（默认）。"
 
 #. type: textblock
-#: dos2unix.pod:482
+#: dos2unix.pod:503
 msgid "The skipping of binary files is done to avoid accidental mistakes. Be aware that the detection of binary files is not 100% foolproof. Input files are scanned for binary symbols which are typically not found in text files. It is possible that a binary file contains only normal text characters. Such a binary file will mistakenly be seen as a text file."
 msgstr "跳过二进制文件是为了避免可能的错误。请注意，对二进制文件的探测并不能做到100%准确。程序通过扫描二进制文件所特有的标记来将其与文本文件区分开来，但有的二进制文件可能只包含普通的文本字符，这样的文件就会被误判为文本文件。"
 
 #. type: =item
-#: dos2unix.pod:488
+#: dos2unix.pod:509
 msgid "B<-u, --keep-utf16>"
 msgstr "B<-u, --keep-utf16>"
 
 #. type: textblock
-#: dos2unix.pod:490
+#: dos2unix.pod:511
 msgid "Keep the original UTF-16 encoding of the input file. The output file will be written in the same UTF-16 encoding, little or big endian, as the input file.  This prevents transformation to UTF-8. An UTF-16 BOM will be written accordingly. This option can be disabled with the C<-ascii> option."
 msgstr "保留输入文件的UTF-16编码。输出文件也使用UTF-16编码和相同的尾序。这将阻止转换到UTF-8。相应也会写入UTF-16 BOM。可以用 C<-ascii>选项来禁止。"
 
 #. type: =item
-#: dos2unix.pod:495
+#: dos2unix.pod:516
 msgid "B<-ul, --assume-utf16le>"
 msgstr "B<-ul, --assume-utf16le>"
 
 #. type: textblock
-#: dos2unix.pod:497
+#: dos2unix.pod:518
 msgid "Assume that the input file format is UTF-16LE."
 msgstr "假定输入文件格式为UTF-16LE。"
 
 #. type: textblock
-#: dos2unix.pod:499
+#: dos2unix.pod:520
 msgid "When there is a Byte Order Mark in the input file the BOM has priority over this option."
 msgstr "输入文件中有BOM时，将会覆盖此选项。"
 
 #. type: textblock
-#: dos2unix.pod:502
+#: dos2unix.pod:523
 msgid "When you made a wrong assumption (the input file was not in UTF-16LE format) and the conversion succeeded, you will get an UTF-8 output file with wrong text.  You can undo the wrong conversion with iconv(1) by converting the UTF-8 output file back to UTF-16LE. This will bring back the original file."
 msgstr "如果你做了错误的假设（输入文件不为UTF-16LE格式），并且转换成功，你将会得到一个错误的UTF-8格式的文件。你可以用 iconv(1) 来撤销转换，将其从UTF-8转换回UTF-16LE。这样做可以恢复源文件。"
 
 #. type: textblock
-#: dos2unix.pod:507
+#: dos2unix.pod:528
 msgid "The assumption of UTF-16LE works as a I<conversion mode>. By switching to the default I<ascii> mode the UTF-16LE assumption is turned off."
 msgstr "对UTF-16LE的假定将根据 l<转换模式> 来工作。若改变了默认的 l<ascii> 模式，则这一假定将会被关闭。"
 
 #. type: =item
-#: dos2unix.pod:510
+#: dos2unix.pod:531
 msgid "B<-ub, --assume-utf16be>"
 msgstr "B<-ub, --assume-utf16be>"
 
 #. type: textblock
-#: dos2unix.pod:512
+#: dos2unix.pod:533
 msgid "Assume that the input file format is UTF-16BE."
 msgstr "假定输入文件格式为UTF-16BE。"
 
 #. type: textblock
-#: dos2unix.pod:514
+#: dos2unix.pod:535
 msgid "This option works the same as option C<-ul>."
 msgstr "这一选项与 C<-ul> 类似。"
 
 #. type: =item
-#: dos2unix.pod:516
+#: dos2unix.pod:537
 msgid "B<-v, --verbose>"
 msgstr "B<-v, --verbose>"
 
 #. type: textblock
-#: dos2unix.pod:518
+#: dos2unix.pod:539
 msgid "Display verbose messages. Extra information is displayed about Byte Order Marks and the amount of converted line breaks."
 msgstr "显示更多信息。将会显示有关BOM和转换统计的额外信息。"
 
 #. type: =item
-#: dos2unix.pod:521
+#: dos2unix.pod:542
 msgid "B<-F, --follow-symlink>"
 msgstr "B<-F, --follow-symlink>"
 
 #. type: textblock
-#: dos2unix.pod:523
+#: dos2unix.pod:544
 msgid "Follow symbolic links and convert the targets."
 msgstr "追踪符号链接并转换其目标。"
 
 #. type: =item
-#: dos2unix.pod:525
+#: dos2unix.pod:546
 msgid "B<-R, --replace-symlink>"
 msgstr "B<-R, --replace-symlink>"
 
 #. type: textblock
-#: dos2unix.pod:527
+#: dos2unix.pod:548
 msgid "Replace symbolic links with converted files (original target files remain unchanged)."
 msgstr "将符号链接的目标替换为转换后的文件（原来的目标文件保持不变）。"
 
 #. type: =item
-#: dos2unix.pod:530
+#: dos2unix.pod:551
 msgid "B<-S, --skip-symlink>"
 msgstr "B<-S, --skip-symlink>"
 
 #. type: textblock
-#: dos2unix.pod:532
+#: dos2unix.pod:553
 msgid "Keep symbolic links and targets unchanged (default)."
 msgstr "保持符号链接和其目标文件不变（默认）。"
 
 #. type: =item
-#: dos2unix.pod:534
+#: dos2unix.pod:555
 msgid "B<-V, --version>"
 msgstr "B<-V, --version>"
 
 #. type: textblock
-#: dos2unix.pod:536
+#: dos2unix.pod:557
 msgid "Display version information and exit."
 msgstr "显示版本信息，然后退出。"
 
 #. type: =head1
-#: dos2unix.pod:540
+#: dos2unix.pod:561
 msgid "MAC MODE"
 msgstr "Mac模式"
 
 #. type: textblock
-#: dos2unix.pod:542
-msgid "In normal mode line breaks are converted from DOS to Unix and vice versa.  Mac line breaks are not converted."
-msgstr "普通模式下，断行符将被转换为DOS格式，或相反。Mac格式的断行符将不会被转换。"
+#: dos2unix.pod:563
+msgid "By default line breaks are converted from DOS to Unix and vice versa.  Mac line breaks are not converted."
+msgstr "默认情况下断行符将从DOS格式转换为Unix格式，或相反。Mac格式的断行符将不会被转换。"
 
 #. type: textblock
-#: dos2unix.pod:545
+#: dos2unix.pod:566
 msgid "In Mac mode line breaks are converted from Mac to Unix and vice versa. DOS line breaks are not changed."
 msgstr "Mac模式下，Mac断行符将被转换为Unix格式，或相反。DOS断行符将不会被转换。"
 
 #. type: textblock
-#: dos2unix.pod:548
+#: dos2unix.pod:569
 msgid "To run in Mac mode use the command-line option C<-c mac> or use the commands C<mac2unix> or C<unix2mac>."
 msgstr "若要以Mac模式运行，请使用命令行选项 C<-c mac>，或使用命令 C<mac2unix> 或 C<unix2mac>。"
 
 #. type: =head1
-#: dos2unix.pod:551
+#: dos2unix.pod:572
 msgid "CONVERSION MODES"
 msgstr "转换模式"
 
 #. type: =item
-#: dos2unix.pod:555
+#: dos2unix.pod:576
 msgid "B<ascii>"
 msgstr "B<ascii>"
 
 #. type: textblock
-#: dos2unix.pod:557
-msgid "In mode C<ascii> only line breaks are converted. This is the default conversion mode."
-msgstr "在 C<ascii> 模式下，只转换断行符。 这是默认的转换模式。"
+#: dos2unix.pod:578
+msgid "This is the default conversion mode. This mode is for converting ASCII and ASCII-compatible encoded files, like UTF-8. Enabling B<ascii> mode disables B<7bit> and B<iso> mode."
+msgstr "这是默认转换模式。该模式用于转换ASCII和ASCII兼容编码的文件，例如UTF-8。启用B<ascii>模式会禁用B<7bit>和B<iso>模式。"
 
 #. type: textblock
-#: dos2unix.pod:560
-msgid "Although the name of this mode is ASCII, which is a 7 bit standard, the actual mode is 8 bit. Use always this mode when converting Unicode UTF-8 files."
-msgstr "尽管此模式名叫“ASCII”（7位编码标准），实际上转换按照8位编码进行。转换UTF-8编码文件时请务必使用此模式。"
+#: dos2unix.pod:582
+msgid "If dos2unix has UTF-16 support, UTF-16 encoded files are converted to the current locale character encoding on POSIX systems and to UTF-8 on Windows.  Enabling B<ascii> mode disables the option to keep UTF-16 encoding (C<-u>) and the options to assume UTF-16 input (C<-ul> and C<-ub>).  To see if dos2unix has UTF-16 support type C<dos2unix -V>. See also section UNICODE."
+msgstr "如果dos2unix带有UTF-16支持，则UTF-16编码的文件在POSIX系统上将被转换为当前语区对应的字符编码，在Windows上则会被转换为UTF-8。启用 B<ascii> 模式将禁用维持UTF-16编码的选项（C<-u>）和假定输入为UTF-16的选项（C<-ul> 和 C<-ub>）。如需查看dos2unix是否带有UTF-16支持，请运行 C<dos2unix -V>。更多信息另请参见 UNICODE 章节。"
 
 #. type: =item
-#: dos2unix.pod:564
+#: dos2unix.pod:588
 msgid "B<7bit>"
 msgstr "B<7bit>"
 
 #. type: textblock
-#: dos2unix.pod:566
+#: dos2unix.pod:590
 msgid "In this mode all 8 bit non-ASCII characters (with values from 128 to 255)  are converted to a 7 bit space."
 msgstr "在此模式下，所以的8位非ASCII字符（取值范围128-255）将被转换到7位编码空间。"
 
 #. type: =item
-#: dos2unix.pod:569
+#: dos2unix.pod:593
 msgid "B<iso>"
 msgstr "B<iso>"
 
 #. type: textblock
-#: dos2unix.pod:571
+#: dos2unix.pod:595
 msgid "Characters are converted between a DOS character set (code page) and ISO character set ISO-8859-1 (Latin-1) on Unix. DOS characters without ISO-8859-1 equivalent, for which conversion is not possible, are converted to a dot. The same counts for ISO-8859-1 characters without DOS counterpart."
 msgstr "Unix下，将在DOS字符集（编码页）和ISO字符集 ISO-8859-1（Latin-1）之间进行转换。不具有 ISO-8859-1 中对等字符的DOS字符将会被转换为点号（“.”）。当 ISO-8859-1 字符集中没有DOS中的对等字符时也是如此。"
 
 #. type: textblock
-#: dos2unix.pod:576
+#: dos2unix.pod:600
 msgid "When only option C<-iso> is used dos2unix will try to determine the active code page. When this is not possible dos2unix will use default code page CP437, which is mainly used in the USA.  To force a specific code page use options C<-437> (US), C<-850> (Western European), C<-860> (Portuguese), C<-863> (French Canadian), or C<-865> (Nordic).  Windows code page CP1252 (Western European) is also supported with option C<-1252>. For other code pages use dos2unix in combination with iconv(1).  Iconv can convert between a long list of character encodings."
 msgstr ""
 "当只指定了 C<-iso> 选项时，dos2unix将尝试确定当前活动代码页。若无法确定，则使用默认代码页 CP437（普遍用于美国）。若要强制指定代码页，请使用选项 C<-437>（美国）、C<-850>（西欧）、C<-860>（葡萄牙）、C<-863>（法国、加拿大）或C<-865>（北欧）。\n"
 "Windows CP1252代码页（西欧）也可以通过选项 C<-1252> 获得支持。若要使用其他代码页，可以结合 iconv(1) 使用dos2unix。iconv可以在很多字符编码间进行转换。"
 
 #. type: textblock
-#: dos2unix.pod:585
+#: dos2unix.pod:609
 msgid "Never use ISO conversion on Unicode text files. It will corrupt UTF-8 encoded files."
 msgstr "不对Unicode编码文本使用ISO转换。因这一转换会导致UTF-8编码文件损坏。"
 
 #. type: textblock
-#: dos2unix.pod:587
+#: dos2unix.pod:611
 msgid "Some examples:"
 msgstr "一些示例："
 
 #. type: textblock
-#: dos2unix.pod:589
+#: dos2unix.pod:613
 msgid "Convert from DOS default code page to Unix Latin-1:"
 msgstr "从DOS默认编码页转换到Unix Latin-1："
-
-#. type: verbatim
-#: dos2unix.pod:591
-#, no-wrap
-msgid ""
-"    dos2unix -iso -n in.txt out.txt\n"
-"\n"
-msgstr ""
-"    dos2unix -iso -n in.txt out.txt\n"
-"\n"
-
-#. type: textblock
-#: dos2unix.pod:593
-msgid "Convert from DOS CP850 to Unix Latin-1:"
-msgstr "从DOS CP850转换到Unix Latin-1："
-
-#. type: verbatim
-#: dos2unix.pod:595
-#, no-wrap
-msgid ""
-"    dos2unix -850 -n in.txt out.txt\n"
-"\n"
-msgstr ""
-"    dos2unix -850 -n in.txt out.txt\n"
-"\n"
-
-#. type: textblock
-#: dos2unix.pod:597
-msgid "Convert from Windows CP1252 to Unix Latin-1:"
-msgstr "从Windows CP1252转换到Unix Latin-1："
-
-#. type: verbatim
-#: dos2unix.pod:599
-#, no-wrap
-msgid ""
-"    dos2unix -1252 -n in.txt out.txt\n"
-"\n"
-msgstr ""
-"    dos2unix -1252 -n in.txt out.txt\n"
-"\n"
-
-#. type: textblock
-#: dos2unix.pod:601
-msgid "Convert from Windows CP1252 to Unix UTF-8 (Unicode):"
-msgstr "从WIndows CP1252转换到Unix UTF-8（Unicode）："
-
-#. type: verbatim
-#: dos2unix.pod:603
-#, no-wrap
-msgid ""
-"    iconv -f CP1252 -t UTF-8 in.txt | dos2unix > out.txt\n"
-"\n"
-msgstr ""
-"    iconv -f CP1252 -t UTF-8 in.txt | dos2unix > out.txt\n"
-"\n"
-
-#. type: textblock
-#: dos2unix.pod:605
-msgid "Convert from Unix Latin-1 to DOS default code page:"
-msgstr "从Unix Latin-1转换到DOS默认编码页："
-
-#. type: verbatim
-#: dos2unix.pod:607
-#, no-wrap
-msgid ""
-"    unix2dos -iso -n in.txt out.txt\n"
-"\n"
-msgstr ""
-"    unix2dos -iso -n in.txt out.txt\n"
-"\n"
-
-#. type: textblock
-#: dos2unix.pod:609
-msgid "Convert from Unix Latin-1 to DOS CP850:"
-msgstr "从Unix Latin-1转换到DOS CP850："
-
-#. type: verbatim
-#: dos2unix.pod:611
-#, no-wrap
-msgid ""
-"    unix2dos -850 -n in.txt out.txt\n"
-"\n"
-msgstr ""
-"    unix2dos -850 -n in.txt out.txt\n"
-"\n"
-
-#. type: textblock
-#: dos2unix.pod:613
-msgid "Convert from Unix Latin-1 to Windows CP1252:"
-msgstr "从Unix Latin-1转换到Windows CP1252："
 
 #. type: verbatim
 #: dos2unix.pod:615
 #, no-wrap
 msgid ""
-"    unix2dos -1252 -n in.txt out.txt\n"
+"    dos2unix -iso -n in.txt out.txt\n"
 "\n"
 msgstr ""
-"    unix2dos -1252 -n in.txt out.txt\n"
+"    dos2unix -iso -n in.txt out.txt\n"
 "\n"
 
 #. type: textblock
 #: dos2unix.pod:617
-msgid "Convert from Unix UTF-8 (Unicode) to Windows CP1252:"
-msgstr "从Unix UTF-8（Unicode）转换到Windows CP1252："
+msgid "Convert from DOS CP850 to Unix Latin-1:"
+msgstr "从DOS CP850转换到Unix Latin-1："
 
 #. type: verbatim
 #: dos2unix.pod:619
 #, no-wrap
 msgid ""
-"    unix2dos < in.txt | iconv -f UTF-8 -t CP1252 > out.txt\n"
+"    dos2unix -850 -n in.txt out.txt\n"
 "\n"
 msgstr ""
-"    unix2dos < in.txt | iconv -f UTF-8 -t CP1252 > out.txt\n"
+"    dos2unix -850 -n in.txt out.txt\n"
 "\n"
 
 #. type: textblock
 #: dos2unix.pod:621
+msgid "Convert from Windows CP1252 to Unix Latin-1:"
+msgstr "从Windows CP1252转换到Unix Latin-1："
+
+#. type: verbatim
+#: dos2unix.pod:623
+#, no-wrap
+msgid ""
+"    dos2unix -1252 -n in.txt out.txt\n"
+"\n"
+msgstr ""
+"    dos2unix -1252 -n in.txt out.txt\n"
+"\n"
+
+#. type: textblock
+#: dos2unix.pod:625
+msgid "Convert from Windows CP1252 to Unix UTF-8 (Unicode):"
+msgstr "从WIndows CP1252转换到Unix UTF-8（Unicode）："
+
+#. type: verbatim
+#: dos2unix.pod:627
+#, no-wrap
+msgid ""
+"    iconv -f CP1252 -t UTF-8 in.txt | dos2unix > out.txt\n"
+"\n"
+msgstr ""
+"    iconv -f CP1252 -t UTF-8 in.txt | dos2unix > out.txt\n"
+"\n"
+
+#. type: textblock
+#: dos2unix.pod:629
+msgid "Convert from Unix Latin-1 to DOS default code page:"
+msgstr "从Unix Latin-1转换到DOS默认编码页："
+
+#. type: verbatim
+#: dos2unix.pod:631
+#, no-wrap
+msgid ""
+"    unix2dos -iso -n in.txt out.txt\n"
+"\n"
+msgstr ""
+"    unix2dos -iso -n in.txt out.txt\n"
+"\n"
+
+#. type: textblock
+#: dos2unix.pod:633
+msgid "Convert from Unix Latin-1 to DOS CP850:"
+msgstr "从Unix Latin-1转换到DOS CP850："
+
+#. type: verbatim
+#: dos2unix.pod:635
+#, no-wrap
+msgid ""
+"    unix2dos -850 -n in.txt out.txt\n"
+"\n"
+msgstr ""
+"    unix2dos -850 -n in.txt out.txt\n"
+"\n"
+
+#. type: textblock
+#: dos2unix.pod:637
+msgid "Convert from Unix Latin-1 to Windows CP1252:"
+msgstr "从Unix Latin-1转换到Windows CP1252："
+
+#. type: verbatim
+#: dos2unix.pod:639
+#, no-wrap
+msgid ""
+"    unix2dos -1252 -n in.txt out.txt\n"
+"\n"
+msgstr ""
+"    unix2dos -1252 -n in.txt out.txt\n"
+"\n"
+
+#. type: textblock
+#: dos2unix.pod:641
+msgid "Convert from Unix UTF-8 (Unicode) to Windows CP1252:"
+msgstr "从Unix UTF-8（Unicode）转换到Windows CP1252："
+
+#. type: verbatim
+#: dos2unix.pod:643
+#, no-wrap
+msgid ""
+"    unix2dos < in.txt | iconv -f UTF-8 -t CP1252 > out.txt\n"
+"\n"
+msgstr ""
+"    unix2dos < in.txt | iconv -f UTF-8 -t CP1252 > out.txt\n"
+"\n"
+
+#. type: textblock
+#: dos2unix.pod:645
 msgid "See also L<http://czyborra.com/charsets/codepages.html> and L<http://czyborra.com/charsets/iso8859.html>."
 msgstr "参见 L<http://czyborra.com/charsets/codepages.html> et L<http://czyborra.com/charsets/iso8859.html>。"
 
 #. type: =head1
-#: dos2unix.pod:626
+#: dos2unix.pod:650
 msgid "UNICODE"
 msgstr "UNICODE"
 
 #. type: =head2
-#: dos2unix.pod:628
+#: dos2unix.pod:652
 msgid "Encodings"
 msgstr "编码"
 
 #. type: textblock
-#: dos2unix.pod:630
+#: dos2unix.pod:654
 msgid "There exist different Unicode encodings. On Unix and Linux Unicode files are typically encoded in UTF-8 encoding. On Windows Unicode text files can be encoded in UTF-8, UTF-16, or UTF-16 big endian, but are mostly encoded in UTF-16 format."
 msgstr "有几种不同的Unicode编码。对于Unix和Linux中的Unicode文件，通常为UTF-8编码。Windows中的文本文件可以是UTF-8、UTF-16或UTF-16BE编码，但大多采用UTF-16格式。"
 
 #. type: =head2
-#: dos2unix.pod:635
+#: dos2unix.pod:659
 msgid "Conversion"
 msgstr "转换"
 
 #. type: textblock
-#: dos2unix.pod:637
-msgid "Unicode text files can have DOS, Unix or Mac line breaks, like regular text files."
-msgstr "Unicode文本文件可以含有DOS、Unix或Mac断行符，就像普通文本文件一样。"
+#: dos2unix.pod:661
+msgid "Unicode text files can have DOS, Unix or Mac line breaks, like ASCII text files."
+msgstr "Unicode文本文件可以含有DOS、Unix或Mac断行符，就像ASCII文本文件一样。"
 
 #. type: textblock
-#: dos2unix.pod:640
+#: dos2unix.pod:664
 msgid "All versions of dos2unix and unix2dos can convert UTF-8 encoded files, because UTF-8 was designed for backward compatibility with ASCII."
 msgstr "所有版本的dos2unix和unix2dos都可以转换UTF-8文件，因为UTF-8向后兼容ASCII。"
 
 #. type: textblock
-#: dos2unix.pod:643
+#: dos2unix.pod:667
 msgid "Dos2unix and unix2dos with Unicode UTF-16 support, can read little and big endian UTF-16 encoded text files. To see if dos2unix was built with UTF-16 support type C<dos2unix -V>."
 msgstr "含有Unicode UTF-16支持的dos2unix和unix2dos可以读取小尾序或大尾序的UTF-16编码文本。输入 C<dos2unix -V> 来确定dos2unix在编译是是否启用了UTF-16支持。"
 
 #. type: textblock
-#: dos2unix.pod:647
+#: dos2unix.pod:671
 msgid "On Unix/Linux UTF-16 encoded files are converted to the locale character encoding. Use the locale(1) command to find out what the locale character encoding is. When conversion is not possible a conversion error will occur and the file will be skipped."
 msgstr "在Unix/Linux中，UTF-16编码文件将被转换为区域字符编码所指定的编码。可以使用 locale(1) 命令来查看当前的区域字符编码。若无法转换，程序将报告转换错误并跳过此文件。"
 
 #. type: textblock
-#: dos2unix.pod:652
+#: dos2unix.pod:676
 msgid "On Windows UTF-16 files are by default converted to UTF-8. UTF-8 formatted text files are well supported on both Windows and Unix/Linux."
 msgstr "在Windows中，UTF-16文件被默认转换为UTF-8格式。Windows和Unix/Linux均支持UTF-8格式的文本文件。"
 
 #. type: textblock
-#: dos2unix.pod:655
+#: dos2unix.pod:679
 msgid "UTF-16 and UTF-8 encoding are fully compatible, there will no text be lost in the conversion. When an UTF-16 to UTF-8 conversion error occurs, for instance when the UTF-16 input file contains an error, the file will be skipped."
 msgstr "UTF-16和UTF-8编码相互兼容，所以彼此转换时不会丢失文本。倘若转换中出错，比如UTF-16格式的输入文件含有错误，那么该文件将被跳过。"
 
 #. type: textblock
-#: dos2unix.pod:659
+#: dos2unix.pod:683
 msgid "When option C<-u> is used, the output file will be written in the same UTF-16 encoding as the input file. Option C<-u> prevents conversion to UTF-8."
 msgstr "若使用了 C<-u> 选项，输出文件将会使用和输入文件相同的UTF-16编码。C<-u>选项将阻止程序转换到UTF-8。"
 
 #. type: textblock
-#: dos2unix.pod:662
+#: dos2unix.pod:686
 msgid "Dos2unix and unix2dos have no option to convert UTF-8 files to UTF-16."
 msgstr "dos2unix和unix2dos没有用于转换UTF-8到UTF-16的选项。"
 
 #. type: textblock
-#: dos2unix.pod:664
+#: dos2unix.pod:688
 msgid "ISO and 7-bit mode conversion do not work on UTF-16 files."
 msgstr "ISO和7位编码模式的转换无法用于UTF-16文件。"
 
 #. type: =head2
-#: dos2unix.pod:666
+#: dos2unix.pod:690
 msgid "Byte Order Mark"
 msgstr "字节序标记"
 
 #. type: textblock
-#: dos2unix.pod:668
-msgid "On Windows Unicode text files typically have a Byte Order Mark (BOM), because many Windows programs (including Notepad) add BOMs by default. See also L<http://en.wikipedia.org/wiki/Byte_order_mark>."
-msgstr "在Windows中，文本文件一般含有字节序标记（BOM），因为很多Windows程序（包括记事本）默认添加BOM。参见 L<http://en.wikipedia.org/wiki/Byte_order_mark>。"
+#: dos2unix.pod:692
+msgid "On Windows Unicode text files typically have a Byte Order Mark (BOM), because many Windows programs (including Notepad) add BOMs by default. See also L<https://en.wikipedia.org/wiki/Byte_order_mark>."
+msgstr "在Windows中，文本文件一般含有字节序标记（BOM），因为很多Windows程序（包括记事本）默认添加BOM。参见 L<https://en.wikipedia.org/wiki/Byte_order_mark>。"
 
 #. type: textblock
-#: dos2unix.pod:672
+#: dos2unix.pod:696
 msgid "On Unix Unicode files typically don't have a BOM. It is assumed that text files are encoded in the locale character encoding."
 msgstr "在Unix中，Unicode文件一般不含BOM。假定文本文件使用区域字符编码设置所指定的编码。"
 
 #. type: textblock
-#: dos2unix.pod:675
+#: dos2unix.pod:699
 msgid "Dos2unix can only detect if a file is in UTF-16 format if the file has a BOM.  When an UTF-16 file doesn't have a BOM, dos2unix will see the file as a binary file."
 msgstr "dos2unix只能检测含有BOM文件的UTF-16格式。若UTF-16文件不含BOM，dos2unix会将其视作二进制文件。"
 
 #. type: textblock
-#: dos2unix.pod:679
+#: dos2unix.pod:703
 msgid "Use option C<-ul> or C<-ub> to convert an UTF-16 file without BOM."
 msgstr "请使用选项 C<-ul> 或 C<-ub> 来转换不含BOM的UTF-16文件。"
 
 #. type: textblock
-#: dos2unix.pod:681
+#: dos2unix.pod:705
 msgid "Dos2unix writes by default no BOM in the output file. With option C<-b> Dos2unix writes a BOM when the input file has a BOM."
 msgstr "dos2unix默认不输出BOM。使用 C<-b> 选项可以让dos2unix将BOM添加到输出文件，如果输入文件也含有BOM的话。"
 
 #. type: textblock
-#: dos2unix.pod:684
+#: dos2unix.pod:708
 msgid "Unix2dos writes by default a BOM in the output file when the input file has a BOM. Use option C<-r> to remove the BOM."
 msgstr "unix2dos默认输出BOM，如果输入文件也含有BOM的话。使用 C<-r> 可以移除BOM。"
 
 #. type: textblock
-#: dos2unix.pod:687
+#: dos2unix.pod:711
 msgid "Dos2unix and unix2dos write always a BOM when option C<-m> is used."
 msgstr "若使用了 C<-m> 选项，dos2unix和unix2dos将总是输出BOM。"
 
 #. type: =head2
-#: dos2unix.pod:689
+#: dos2unix.pod:713
 msgid "Unicode file names on Windows"
 msgstr "Windows中Unicode文件的文件名"
 
 #. type: textblock
-#: dos2unix.pod:691
+#: dos2unix.pod:715
 msgid "Dos2unix has optional support for reading and writing Unicode file names in the Windows Command Prompt. That means that dos2unix can open files that have characters in the name that are not part of the default system ANSI code page.  To see if dos2unix for Windows was built with Unicode file name support type C<dos2unix -V>."
 msgstr "dos2unix对于Windows命令提示符中读取和写入Unicode文件名有额外的支持。这意味着dos2unix可以打开那些包含非默认系统ANSI编码页字符的文件。若要查看Windows版dos2unix在编译时是否加入了Unicode文件名支持，请输入 C<dos2unix -V>。"
 
 #. type: textblock
-#: dos2unix.pod:697
+#: dos2unix.pod:721
 msgid "There are some issues with displaying Unicode file names in a Windows console.  See option C<-D>, C<--display-enc>. The file names may be displayed wrongly in the console, but the files will be written with the correct name."
 msgstr "在Windows终端中显示Unicode文件名有一些需要注意的问题。请参见 C<-D> 和 C<--display-enc> 选项。文件名在终端中可能无法被正确显示，但写入文件时文件名仍然是正确的。"
 
 #. type: =head2
-#: dos2unix.pod:701
+#: dos2unix.pod:725
 msgid "Unicode examples"
 msgstr "Unicode示例"
 
 #. type: textblock
-#: dos2unix.pod:703
+#: dos2unix.pod:727
 msgid "Convert from Windows UTF-16 (with BOM) to Unix UTF-8:"
 msgstr "转换Windows UTF-16到Unix UTF-8："
 
 #. type: verbatim
-#: dos2unix.pod:705
+#: dos2unix.pod:729
 #, no-wrap
 msgid ""
 "    dos2unix -n in.txt out.txt\n"
@@ -1301,12 +1353,12 @@ msgstr ""
 "\n"
 
 #. type: textblock
-#: dos2unix.pod:707
+#: dos2unix.pod:731
 msgid "Convert from Windows UTF-16LE (without BOM) to Unix UTF-8:"
 msgstr "转换Windows UTF-16LE（不含BOM）到Unix UTF-8："
 
 #. type: verbatim
-#: dos2unix.pod:709
+#: dos2unix.pod:733
 #, no-wrap
 msgid ""
 "    dos2unix -ul -n in.txt out.txt\n"
@@ -1316,79 +1368,79 @@ msgstr ""
 "\n"
 
 #. type: textblock
-#: dos2unix.pod:711
+#: dos2unix.pod:735
 msgid "Convert from Unix UTF-8 to Windows UTF-8 with BOM:"
 msgstr "转换Unix UTF-8到Windows UTF-8（并添加BOM）："
 
 #. type: verbatim
-#: dos2unix.pod:713
-#, no-wrap
-msgid ""
-"    unix2dos -m -n in.txt out.txt\n"
-"\n"
-msgstr ""
-"    unix2dos -m -n in.txt out.txt\n"
-"\n"
-
-#. type: textblock
-#: dos2unix.pod:715
-msgid "Convert from Unix UTF-8 to Windows UTF-16:"
-msgstr "转换Unix UTF-8到Windows UTF-16："
-
-#. type: verbatim
-#: dos2unix.pod:717
-#, no-wrap
-msgid ""
-"    unix2dos < in.txt | iconv -f UTF-8 -t UTF-16 > out.txt\n"
-"\n"
-msgstr ""
-"    unix2dos < in.txt | iconv -f UTF-8 -t UTF-16 > out.txt\n"
-"\n"
-
-#. type: =head1
-#: dos2unix.pod:719
-msgid "GB18030"
-msgstr "GB18030"
-
-#. type: textblock
-#: dos2unix.pod:721
-msgid "GB18030 is a Chinese government standard. A mandatory subset of the GB18030 standard is officially required for all software products sold in China. See also L<http://en.wikipedia.org/wiki/GB_18030>."
-msgstr "GB18030是中国国家标准。GB18030标准的一系列子集被强制应用于中国销售的软件产品。参见 L<http://en.wikipedia.org/wiki/GB_18030>。"
-
-#. type: textblock
-#: dos2unix.pod:725
-msgid "GB18030 is fully compatible with Unicode, and can be considered an unicode transformation format. Like UTF-8, GB18030 is compatible with ASCII. GB18030 is also compatible with Windows code page 936, also known as GBK."
-msgstr "GB18030与Unicode完全兼容，并且可以被认为是Unicode格式的变体。和UTF-8一样，GB18030也兼容ASCII。GB18030也兼容Windows 936代码页（GBK）。"
-
-#. type: textblock
-#: dos2unix.pod:729
-msgid "On Unix/Linux UTF-16 files are converted to GB18030 when the locale encoding is set to GB18030. Note that this will only work if the locale is supported by the system. Use command C<locale -a> to get the list of supported locales."
-msgstr "在Unix/Linux中，若区域编码被设置为GB18030，UTF-16文件将被转换为GB18030格式。注意只有当系统支持区域设置时这一才会进行这一转换。可以使用 C<locale -a> 命令来获取受支持的区域。"
-
-#. type: textblock
-#: dos2unix.pod:733
-msgid "On Windows you need to use option C<-gb> to convert UTF-16 files to GB18030."
-msgstr "在Windows中，你需要使用 C<-gb> 选项来转换UTF-16文件到GB18030编码。"
-
-#. type: textblock
-#: dos2unix.pod:735
-msgid "GB18030 encoded files can have a Byte Order Mark, like Unicode files."
-msgstr "GB18030编码的文件和Unicode文件一样可以含有BOM。"
-
-#. type: =head1
 #: dos2unix.pod:737
-msgid "EXAMPLES"
-msgstr "示例"
+#, no-wrap
+msgid ""
+"    unix2dos -m -n in.txt out.txt\n"
+"\n"
+msgstr ""
+"    unix2dos -m -n in.txt out.txt\n"
+"\n"
 
 #. type: textblock
 #: dos2unix.pod:739
-msgid "Read input from 'stdin' and write output to 'stdout':"
-msgstr "从标准输入读取，并输出到标准输出："
+msgid "Convert from Unix UTF-8 to Windows UTF-16:"
+msgstr "转换Unix UTF-8到Windows UTF-16："
 
 #. type: verbatim
 #: dos2unix.pod:741
 #, no-wrap
 msgid ""
+"    unix2dos < in.txt | iconv -f UTF-8 -t UTF-16 > out.txt\n"
+"\n"
+msgstr ""
+"    unix2dos < in.txt | iconv -f UTF-8 -t UTF-16 > out.txt\n"
+"\n"
+
+#. type: =head1
+#: dos2unix.pod:743
+msgid "GB18030"
+msgstr "GB18030"
+
+#. type: textblock
+#: dos2unix.pod:745
+msgid "GB18030 is a Chinese government standard. A mandatory subset of the GB18030 standard is officially required for all software products sold in China. See also L<https://en.wikipedia.org/wiki/GB_18030>."
+msgstr "GB18030是中国国家标准。GB18030标准的一系列子集被强制应用于中国销售的软件产品。参见 L<https://en.wikipedia.org/wiki/GB_18030>。"
+
+#. type: textblock
+#: dos2unix.pod:749
+msgid "GB18030 is fully compatible with Unicode, and can be considered an unicode transformation format. Like UTF-8, GB18030 is compatible with ASCII. GB18030 is also compatible with Windows code page 936, also known as GBK."
+msgstr "GB18030与Unicode完全兼容，并且可以被认为是Unicode格式的变体。和UTF-8一样，GB18030也兼容ASCII。GB18030也兼容Windows 936代码页（GBK）。"
+
+#. type: textblock
+#: dos2unix.pod:753
+msgid "On Unix/Linux UTF-16 files are converted to GB18030 when the locale encoding is set to GB18030. Note that this will only work if the locale is supported by the system. Use command C<locale -a> to get the list of supported locales."
+msgstr "在Unix/Linux中，若区域编码被设置为GB18030，UTF-16文件将被转换为GB18030格式。注意只有当系统支持区域设置时这一才会进行这一转换。可以使用 C<locale -a> 命令来获取受支持的区域。"
+
+#. type: textblock
+#: dos2unix.pod:757
+msgid "On Windows you need to use option C<-gb> to convert UTF-16 files to GB18030."
+msgstr "在Windows中，你需要使用 C<-gb> 选项来转换UTF-16文件到GB18030编码。"
+
+#. type: textblock
+#: dos2unix.pod:759
+msgid "GB18030 encoded files can have a Byte Order Mark, like Unicode files."
+msgstr "GB18030编码的文件和Unicode文件一样可以含有BOM。"
+
+#. type: =head1
+#: dos2unix.pod:761
+msgid "EXAMPLES"
+msgstr "示例"
+
+#. type: textblock
+#: dos2unix.pod:763
+msgid "Read input from 'stdin' and write output to 'stdout':"
+msgstr "从标准输入读取，并输出到标准输出："
+
+#. type: verbatim
+#: dos2unix.pod:765
+#, no-wrap
+msgid ""
 "    dos2unix < a.txt\n"
 "    cat a.txt | dos2unix\n"
 "\n"
@@ -1398,12 +1450,12 @@ msgstr ""
 "\n"
 
 #. type: textblock
-#: dos2unix.pod:744
+#: dos2unix.pod:768
 msgid "Convert and replace a.txt. Convert and replace b.txt:"
 msgstr "转换并覆盖a.txt和b.txt："
 
 #. type: verbatim
-#: dos2unix.pod:746
+#: dos2unix.pod:770
 #, no-wrap
 msgid ""
 "    dos2unix a.txt b.txt\n"
@@ -1415,12 +1467,12 @@ msgstr ""
 "\n"
 
 #. type: textblock
-#: dos2unix.pod:749
+#: dos2unix.pod:773
 msgid "Convert and replace a.txt in ascii conversion mode:"
 msgstr "转换并覆盖a.txt，使用ascii模式："
 
 #. type: verbatim
-#: dos2unix.pod:751
+#: dos2unix.pod:775
 #, no-wrap
 msgid ""
 "    dos2unix a.txt\n"
@@ -1430,12 +1482,12 @@ msgstr ""
 "\n"
 
 #. type: textblock
-#: dos2unix.pod:753
+#: dos2unix.pod:777
 msgid "Convert and replace a.txt in ascii conversion mode, convert and replace b.txt in 7bit conversion mode:"
 msgstr "转换并覆盖a.txt，使用ascii模式；转换并覆盖b.txt，使用7位编码模式："
 
 #. type: verbatim
-#: dos2unix.pod:756
+#: dos2unix.pod:780
 #, no-wrap
 msgid ""
 "    dos2unix a.txt -c 7bit b.txt\n"
@@ -1449,12 +1501,12 @@ msgstr ""
 "\n"
 
 #. type: textblock
-#: dos2unix.pod:760
+#: dos2unix.pod:784
 msgid "Convert a.txt from Mac to Unix format:"
 msgstr "将a.txt从Mac格式转换到Unix格式："
 
 #. type: verbatim
-#: dos2unix.pod:762
+#: dos2unix.pod:786
 #, no-wrap
 msgid ""
 "    dos2unix -c mac a.txt\n"
@@ -1466,12 +1518,12 @@ msgstr ""
 "\n"
 
 #. type: textblock
-#: dos2unix.pod:765
+#: dos2unix.pod:789
 msgid "Convert a.txt from Unix to Mac format:"
 msgstr "将a.txt从Unix格式转换到Mac格式："
 
 #. type: verbatim
-#: dos2unix.pod:767
+#: dos2unix.pod:791
 #, no-wrap
 msgid ""
 "    unix2dos -c mac a.txt\n"
@@ -1483,12 +1535,12 @@ msgstr ""
 "\n"
 
 #. type: textblock
-#: dos2unix.pod:770
+#: dos2unix.pod:794
 msgid "Convert and replace a.txt while keeping original date stamp:"
 msgstr "转换并覆盖a.txt，保留原始时间戳："
 
 #. type: verbatim
-#: dos2unix.pod:772
+#: dos2unix.pod:796
 #, no-wrap
 msgid ""
 "    dos2unix -k a.txt\n"
@@ -1500,12 +1552,12 @@ msgstr ""
 "\n"
 
 #. type: textblock
-#: dos2unix.pod:775
+#: dos2unix.pod:799
 msgid "Convert a.txt and write to e.txt:"
 msgstr "转换a.txt，并输出到e.txt："
 
 #. type: verbatim
-#: dos2unix.pod:777
+#: dos2unix.pod:801
 #, no-wrap
 msgid ""
 "    dos2unix -n a.txt e.txt\n"
@@ -1515,12 +1567,12 @@ msgstr ""
 "\n"
 
 #. type: textblock
-#: dos2unix.pod:779
+#: dos2unix.pod:803
 msgid "Convert a.txt and write to e.txt, keep date stamp of e.txt same as a.txt:"
 msgstr "转换a.txt，并输出到e.txt，同时使e.txt的时间戳和a.txt一致："
 
 #. type: verbatim
-#: dos2unix.pod:781
+#: dos2unix.pod:805
 #, no-wrap
 msgid ""
 "    dos2unix -k -n a.txt e.txt\n"
@@ -1530,12 +1582,12 @@ msgstr ""
 "\n"
 
 #. type: textblock
-#: dos2unix.pod:783
+#: dos2unix.pod:807
 msgid "Convert and replace a.txt, convert b.txt and write to e.txt:"
 msgstr "转换并覆盖a.txt；转换b.txt并输出到e.txt："
 
 #. type: verbatim
-#: dos2unix.pod:785
+#: dos2unix.pod:809
 #, no-wrap
 msgid ""
 "    dos2unix a.txt -n b.txt e.txt\n"
@@ -1547,12 +1599,12 @@ msgstr ""
 "\n"
 
 #. type: textblock
-#: dos2unix.pod:788
+#: dos2unix.pod:812
 msgid "Convert c.txt and write to e.txt, convert and replace a.txt, convert and replace b.txt, convert d.txt and write to f.txt:"
 msgstr "转换c.txt并输出到e.txt；转换并覆盖a.txt和b.txt；转换d.txt并输出到f.txt："
 
 #. type: verbatim
-#: dos2unix.pod:791
+#: dos2unix.pod:815
 #, no-wrap
 msgid ""
 "    dos2unix -n c.txt e.txt -o a.txt b.txt -n d.txt f.txt\n"
@@ -1562,17 +1614,17 @@ msgstr ""
 "\n"
 
 #. type: =head1
-#: dos2unix.pod:793
+#: dos2unix.pod:817
 msgid "RECURSIVE CONVERSION"
 msgstr "递归转换"
 
 #. type: textblock
-#: dos2unix.pod:795
+#: dos2unix.pod:819
 msgid "In a Unix shell the find(1) and xargs(1) commands can be used to run dos2unix recursively over all text files in a directory tree. For instance to convert all .txt files in the directory tree under the current directory type:"
 msgstr "结合 find(1) 和 xargs(1) 使用 dos2unix 可以递归地转换目录树中的文本文件。例如，转换当前目录的目录树中所有的 .txt 文件："
 
 #. type: verbatim
-#: dos2unix.pod:799
+#: dos2unix.pod:823
 #, no-wrap
 msgid ""
 "    find . -name '*.txt' -print0 |xargs -0 dos2unix\n"
@@ -1583,12 +1635,12 @@ msgstr ""
 "\n"
 
 #. type: textblock
-#: dos2unix.pod:801
+#: dos2unix.pod:825
 msgid "The find(1) option C<-print0> and corresponding xargs(1) option C<-0> are needed when there are files with spaces or quotes in the name. Otherwise these options can be omitted. Another option is to use find(1) with the C<-exec> option:"
 msgstr "若文件名中有空格或引号，则需要使用 find(1) 选项 C<-print0> 及相应的 xargs(1) 选项 C<-0>；其他情况下则可以省略它们。也可以结合 C<-exec> 选项来使用 find(1)："
 
 #. type: verbatim
-#: dos2unix.pod:805
+#: dos2unix.pod:829
 #, no-wrap
 msgid ""
 "    find . -name '*.txt' -exec dos2unix {} \\;\n"
@@ -1598,12 +1650,12 @@ msgstr ""
 "\n"
 
 #. type: textblock
-#: dos2unix.pod:807
+#: dos2unix.pod:831
 msgid "In a Windows Command Prompt the following command can be used:"
 msgstr "在Windows命令提示符中，可以使用下列命令："
 
 #. type: verbatim
-#: dos2unix.pod:809
+#: dos2unix.pod:833
 #, no-wrap
 msgid ""
 "    for /R %G in (*.txt) do dos2unix \"%G\"\n"
@@ -1613,12 +1665,12 @@ msgstr ""
 "\n"
 
 #. type: textblock
-#: dos2unix.pod:811
+#: dos2unix.pod:835
 msgid "PowerShell users can use the following command in Windows PowerShell:"
 msgstr "PowerShell用户可以在Windows PowerShell中使用如下命令："
 
 #. type: verbatim
-#: dos2unix.pod:813
+#: dos2unix.pod:837
 #, no-wrap
 msgid ""
 "    get-childitem -path . -filter '*.txt' -recurse | foreach-object {dos2unix $_.Fullname}\n"
@@ -1628,22 +1680,22 @@ msgstr ""
 "\n"
 
 #. type: =head1
-#: dos2unix.pod:816
+#: dos2unix.pod:840
 msgid "LOCALIZATION"
 msgstr "区域"
 
 #. type: =item
-#: dos2unix.pod:820
+#: dos2unix.pod:844
 msgid "B<LANG>"
 msgstr "B<LANG>"
 
 #. type: textblock
-#: dos2unix.pod:822
+#: dos2unix.pod:846
 msgid "The primary language is selected with the environment variable LANG. The LANG variable consists out of several parts. The first part is in small letters the language code. The second is optional and is the country code in capital letters, preceded with an underscore. There is also an optional third part: character encoding, preceded with a dot. A few examples for POSIX standard type shells:"
 msgstr "LANG环境变量指定了程序所使用的首选语言。它包括几个部分：第一部分是小写的语言编码，第二部分是（可选的）大写的国家/地区代码，前面用下划线连接；第三部分也是可选的，即字符编码，前面用点连接。一些POSIX规范的示例如下："
 
 #. type: verbatim
-#: dos2unix.pod:829
+#: dos2unix.pod:853
 #, no-wrap
 msgid ""
 "    export LANG=nl               Dutch\n"
@@ -1665,47 +1717,47 @@ msgstr ""
 "\n"
 
 #. type: textblock
-#: dos2unix.pod:837
-msgid "For a complete list of language and country codes see the gettext manual: L<http://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html>"
-msgstr "完整的语言和国家/地区编码可以在gettext手册中找到：L<http://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html>"
+#: dos2unix.pod:861
+msgid "For a complete list of language and country codes see the gettext manual: L<https://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html>"
+msgstr "完整的语言和国家/地区编码可以在gettext手册中找到：L<https://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html>"
 
 #. type: textblock
-#: dos2unix.pod:840
+#: dos2unix.pod:864
 msgid "On Unix systems you can use the command locale(1) to get locale specific information."
 msgstr "在Unix系统中，你可以使用 locale(1) 命令获取特定区域的信息。"
 
 #. type: =item
-#: dos2unix.pod:843
+#: dos2unix.pod:867
 msgid "B<LANGUAGE>"
 msgstr "B<LANGUAGE>"
 
 #. type: textblock
-#: dos2unix.pod:845
-msgid "With the LANGUAGE environment variable you can specify a priority list of languages, separated by colons. Dos2unix gives preference to LANGUAGE over LANG.  For instance, first Dutch and then German: C<LANGUAGE=nl:de>. You have to first enable localization, by setting LANG (or LC_ALL) to a value other than \"C\", before you can use a language priority list through the LANGUAGE variable. See also the gettext manual: L<http://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-variable.html>"
-msgstr "可以使用LANGUAGE变量指定一系列语言的优先级，各项之间由冒号分割。dos2unix首先使用LANGUAGE变量，其次才是LANG。例如，首选中文、其次英文：C<LANGUAGE=<zh:en>。在使用语言优先级之前，必须先启用区域化功能，即将LANG（或LC_ALL）变量设置为除了“C”以外的其他值。参见gettext手册：L<http://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-variable.html>"
+#: dos2unix.pod:869
+msgid "With the LANGUAGE environment variable you can specify a priority list of languages, separated by colons. Dos2unix gives preference to LANGUAGE over LANG.  For instance, first Dutch and then German: C<LANGUAGE=nl:de>. You have to first enable localization, by setting LANG (or LC_ALL) to a value other than \"C\", before you can use a language priority list through the LANGUAGE variable. See also the gettext manual: L<https://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-variable.html>"
+msgstr "可以使用LANGUAGE变量指定一系列语言的优先级，各项之间由冒号分割。dos2unix首先使用LANGUAGE变量，其次才是LANG。例如，首选中文、其次英文：C<LANGUAGE=<zh:en>。在使用语言优先级之前，必须先启用区域化功能，即将LANG（或LC_ALL）变量设置为除了“C”以外的其他值。参见gettext手册：L<https://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-variable.html>"
 
 #. type: textblock
-#: dos2unix.pod:853
+#: dos2unix.pod:877
 msgid "If you select a language which is not available you will get the standard English messages."
 msgstr "如果你选择了一个不可用的语言，程序将会输出标准的英语信息。"
 
 #. type: =item
-#: dos2unix.pod:857
+#: dos2unix.pod:881
 msgid "B<DOS2UNIX_LOCALEDIR>"
 msgstr "B<DOS2UNIX_LOCALEDIR>"
 
 #. type: textblock
-#: dos2unix.pod:859
+#: dos2unix.pod:883
 msgid "With the environment variable DOS2UNIX_LOCALEDIR the LOCALEDIR set during compilation can be overruled. LOCALEDIR is used to find the language files. The GNU default value is C</usr/local/share/locale>.  Option B<--version> will display the LOCALEDIR that is used."
 msgstr "DOS2UNIX_LOCALEDIR环境变量将覆盖编译时设置的LOCALEDIR变量。LOCALEDIR被用于查找语言文件。GNU程序的默认值为 C</usr/local/share/locale>。可以使用 B<--version> 查看当前的LOCALEDIR。"
 
 #. type: textblock
-#: dos2unix.pod:864
+#: dos2unix.pod:888
 msgid "Example (POSIX shell):"
 msgstr "示例（POSIX shell）："
 
 #. type: verbatim
-#: dos2unix.pod:866
+#: dos2unix.pod:890
 #, no-wrap
 msgid ""
 "    export DOS2UNIX_LOCALEDIR=$HOME/share/locale\n"
@@ -1715,74 +1767,83 @@ msgstr ""
 "\n"
 
 #. type: =head1
-#: dos2unix.pod:871
+#: dos2unix.pod:895
 msgid "RETURN VALUE"
 msgstr "返回值"
 
 #. type: textblock
-#: dos2unix.pod:873
+#: dos2unix.pod:897
 msgid "On success, zero is returned.  When a system error occurs the last system error will be returned. For other errors 1 is returned."
 msgstr "若成功，返回0。若出现系统错误，则返回最近一次系统错误号。若发生其他错误，返回1。"
 
 #. type: textblock
-#: dos2unix.pod:876
+#: dos2unix.pod:900
 msgid "The return value is always zero in quiet mode, except when wrong command-line options are used."
 msgstr "在安静模式下，返回值总是为0，除非命令行选项有误。"
 
 #. type: =head1
-#: dos2unix.pod:879
+#: dos2unix.pod:903
 msgid "STANDARDS"
 msgstr "遵循规范"
 
 #. type: textblock
-#: dos2unix.pod:881
-msgid "L<http://en.wikipedia.org/wiki/Text_file>"
-msgstr "L<http://en.wikipedia.org/wiki/Text_file>"
+#: dos2unix.pod:905
+msgid "L<https://en.wikipedia.org/wiki/Text_file>"
+msgstr "L<https://en.wikipedia.org/wiki/Text_file>"
 
 #. type: textblock
-#: dos2unix.pod:883
-msgid "L<http://en.wikipedia.org/wiki/Carriage_return>"
-msgstr "L<http://en.wikipedia.org/wiki/Carriage_return>"
+#: dos2unix.pod:907
+msgid "L<https://en.wikipedia.org/wiki/Carriage_return>"
+msgstr "L<https://en.wikipedia.org/wiki/Carriage_return>"
 
 #. type: textblock
-#: dos2unix.pod:885
-msgid "L<http://en.wikipedia.org/wiki/Newline>"
-msgstr "L<http://en.wikipedia.org/wiki/Newline>"
+#: dos2unix.pod:909
+msgid "L<https://en.wikipedia.org/wiki/Newline>"
+msgstr "L<https://en.wikipedia.org/wiki/Newline>"
 
 #. type: textblock
-#: dos2unix.pod:887
-msgid "L<http://en.wikipedia.org/wiki/Unicode>"
-msgstr "L<http://en.wikipedia.org/wiki/Unicode>"
+#: dos2unix.pod:911
+msgid "L<https://en.wikipedia.org/wiki/Unicode>"
+msgstr "L<https://en.wikipedia.org/wiki/Unicode>"
 
 #. type: =head1
-#: dos2unix.pod:889
+#: dos2unix.pod:913
 msgid "AUTHORS"
 msgstr "作者"
 
 #. type: textblock
-#: dos2unix.pod:891
+#: dos2unix.pod:915
 msgid "Benjamin Lin - <blin@socs.uts.edu.au>, Bernd Johannes Wuebben (mac2unix mode) - <wuebben@kde.org>, Christian Wurll (add extra newline) - <wurll@ira.uka.de>, Erwin Waterlander - <waterlan@xs4all.nl> (maintainer)"
 msgstr "Benjamin Lin - <blin@socs.uts.edu.au> Bernd Johannes Wuebben（mac2unix模式） - <wuebben@kde.org>，Christian Wurll（添加额外新行） - <wurll@ira.uka.de>，Erwin Waterlander - <waterlan@xs4all.nl>（维护者）"
 
 #. type: textblock
-#: dos2unix.pod:896
-msgid "Project page: L<http://waterlan.home.xs4all.nl/dos2unix.html>"
-msgstr "项目主页：L<http://waterlan.home.xs4all.nl/dos2unix.html>"
+#: dos2unix.pod:920
+msgid "Project page: L<https://waterlan.home.xs4all.nl/dos2unix.html>"
+msgstr "项目主页：L<https://waterlan.home.xs4all.nl/dos2unix.html>"
 
 #. type: textblock
-#: dos2unix.pod:898
-msgid "SourceForge page: L<http://sourceforge.net/projects/dos2unix/>"
-msgstr "SourceForge主页：L<http://sourceforge.net/projects/dos2unix/>"
+#: dos2unix.pod:922
+msgid "SourceForge page: L<https://sourceforge.net/projects/dos2unix/>"
+msgstr "SourceForge主页：L<https://sourceforge.net/projects/dos2unix/>"
 
 #. type: =head1
-#: dos2unix.pod:900
+#: dos2unix.pod:924
 msgid "SEE ALSO"
 msgstr "参见"
 
 #. type: textblock
-#: dos2unix.pod:902
+#: dos2unix.pod:926
 msgid "file(1)  find(1)  iconv(1)  locale(1)  xargs(1)"
 msgstr "file(1)  find(1)  iconv(1)  locale(1)  xargs(1)"
+
+#~ msgid "Convert only line breaks. This is the default conversion mode."
+#~ msgstr "只转换断行符。这是默认的转换模式。"
+
+#~ msgid "In mode C<ascii> only line breaks are converted. This is the default conversion mode."
+#~ msgstr "在 C<ascii> 模式下，只转换断行符。 这是默认的转换模式。"
+
+#~ msgid "Although the name of this mode is ASCII, which is a 7 bit standard, the actual mode is 8 bit. Use always this mode when converting Unicode UTF-8 files."
+#~ msgstr "尽管此模式名叫“ASCII”（7位编码标准），实际上转换按照8位编码进行。转换UTF-8编码文件时请务必使用此模式。"
 
 #~ msgid ""
 #~ "    find -name '*.txt' | xargs dos2unix -ic\n"

@@ -71,7 +71,7 @@
 .\" ========================================================================
 .\"
 .IX Title "dos2unix 1"
-.TH dos2unix 1 "2023-08-29" "dos2unix" "2023-08-29"
+.TH dos2unix 1 "2024-01-22" "dos2unix" "2024-01-22"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -122,7 +122,7 @@ Zezwolenie na zmianę właściciela w trybie starego pliku.
 W przypadku użycia tej opcji, konwersja nie zostanie przerwana, jeśli nie ma możliwości zachowania właściciela i/lub grupy oryginalnego pliku w trybie starego pliku. Konwersja będzie kontynuowana, a przekonwertowany plik będzie miał tego samego właściciela, jakiego by miał w trybie nowego pliku. P. także opcje \f(CW\*(C`\-o\*(C'\fR i \f(CW\*(C`\-n\*(C'\fR. Opcja jest dostępna tylko wtedy, gdy dos2unix ma obsługę zachowywania użytkownika i grupy plików.
 .IP "\fB\-ascii\fR" 4
 .IX Item "-ascii"
-Konwersja tylko znaków końca linii. Jest to domyślny tryb konwersji.
+Domyślny tryb konwersji. Więcej w sekcji \s-1TRYBY KONWERSJI.\s0
 .IP "\fB\-iso\fR" 4
 .IX Item "-iso"
 Konwersja między zestawami znaków \s-1DOS\s0 i \s-1ISO\-8859\-1.\s0 Więcej w sekcji \s-1TRYBY KONWERSJI.\s0
@@ -224,7 +224,17 @@ Przykładowe wyjście:
 .Sp
 Uwaga: czasami plik binarny może być błędnie rozpoznany jako tekstowy. P. także opcja \f(CW\*(C`\-s\*(C'\fR.
 .Sp
-Opcjonalnie można ustawić dodatkowe flagi, aby zmienić wyjście. Można dodać jedną lub więcej flag.
+Jeśli dodatkowo użyta jest opcja \f(CW\*(C`\-e\*(C'\fR lub \f(CW\*(C`\-\-add\-eol\*(C'\fR, wypisywany jest także rodzaj końca linii z ostatniej linii, lub \f(CW\*(C`noeol\*(C'\fR, jeśli nie ma żadnego.
+.Sp
+Przykładowe wyjście:
+.Sp
+.Vb 5
+\&     6       0       0  no_bom    text   dos     dos.txt
+\&     0       6       0  no_bom    text   unix    unix.txt
+\&     0       0       6  no_bom    text   mac     mac.txt
+\&     1       0       0  no_bom    text   noeol   noeol_dos.txt
+\&Opcjonalnie można ustawić dodatkowe flagi, aby zmienić wyjście. Można dodać jedną lub więcej flag.
+.Ve
 .RS 4
 .IP "\fB0\fR" 4
 .IX Item "0"
@@ -244,11 +254,16 @@ Wypisanie znacznika \s-1BOM.\s0
 .IP "\fBt\fR" 4
 .IX Item "t"
 Wypisanie, czy plik jest tekstowy, czy binarny.
+.IP "\fBe\fR" 4
+.IX Item "e"
+Wypisanie rodzaju końca wiersza w ostatnim wierszu, lub \f(CW\*(C`noeol\*(C'\fR, jeśli nie ma żadnego.
 .IP "\fBc\fR" 4
 .IX Item "c"
 Wypisanie tylko plików, które zostałyby przekonwertowane.
 .Sp
 Z flagą \f(CW\*(C`c\*(C'\fR dos2unix wypisze tylko pliki zawierające DOS-owe końce linii, a unix2dos wypisze tylko nazwy plików zawierających uniksowe końce linii.
+.Sp
+Jeśli dodatkowo użyta jest opcja \f(CW\*(C`\-e\*(C'\fR lub \f(CW\*(C`\-\-add\-eol\*(C'\fR, wypisywane są także pliki bez zakończenia ostatniej linii.
 .IP "\fBh\fR" 4
 .IX Item "h"
 Wypisanie nagłówka.
@@ -288,6 +303,12 @@ Wypisanie listy plików zawierających uniksowe końce linii:
 .Sp
 .Vb 1
 \&    unix2dos \-ic *.txt
+.Ve
+.Sp
+Wypisanie listy plików zawierających DOS-owe końce linii lub bez znaku końca w ostatniej linii:
+.Sp
+.Vb 1
+\&    dos2unix \-e \-ic *.txt
 .Ve
 .Sp
 Konwersja tylko plików mających DOS-owe końce linii, pozostawienie pozostałych bez zmian:
@@ -410,7 +431,7 @@ Pozostawienie dowiązań symbolicznych i celów bez zmian (domyślne).
 Wyświetlenie informacji o wersji i zakończenie.
 .SH "TRYB MAC"
 .IX Header "TRYB MAC"
-W zwykłym trybie znaki końca linii są konwertowane z DOS-a do Uniksa i odwrotnie. Znaki końca linii systemu Mac nie są konwertowane.
+Domyślnie znaki końca linii są konwertowane z DOS-a do Uniksa i odwrotnie. Znaki końca linii systemu Mac nie są konwertowane.
 .PP
 W trybie Mac znaki końca linii są konwertowane z formatu Maca do Uniksa i odwrotnie. Znaki końca linii systemu \s-1DOS\s0 nie są zmieniane.
 .PP
@@ -419,9 +440,9 @@ Aby uruchomić program w trybie Mac, należy użyć opcji linii poleceń \f(CW\*
 .IX Header "TRYBY KONWERSJI"
 .IP "\fBascii\fR" 4
 .IX Item "ascii"
-W trybie \f(CW\*(C`ascii\*(C'\fR konwertowane są tylko końce linii. Jest to domyślny tryb konwersji.
+To jest domyślny tryb konwersji. Służy do konwersji plików kodowanych \s-1ASCII\s0 lub zgodnie z \s-1ASCII,\s0 np. \s-1UTF\-8.\s0 Włączenie trybu \fBascii\fR wyłącza tryby \fB7bit\fR i \fBiso\fR.
 .Sp
-Mimo że nazwa tego trybu to \s-1ASCII,\s0 które jest standardem 7\-bitowym, jest to tryb 8\-bitowy. Należy zawsze używać tego trybu przy konwersji plików Unicode \s-1UTF\-8.\s0
+Jeśli dos2unix ma obsługę \s-1UTF\-16,\s0 pliki kodowane \s-1UTF\-16\s0 są konwertowane do bieżącego kodowania w systamach zgodnych z \s-1POSIX\s0 lub do \s-1UTF\-8\s0 na Windows. Włączenie trybu \fBascii\fR wyłącza opcję zachowywania kodowania \s-1UTF\-16\s0 (\f(CW\*(C`\-u\*(C'\fR) oraz opcje zakładające wejście \s-1UTF\-16\s0 (\f(CW\*(C`\-ul\*(C'\fR oraz \f(CW\*(C`\-ub\*(C'\fR). Aby sprawdzić, czy dos2unix ma obsługę \s-1UTF\-16,\s0 można wywołać \f(CW\*(C`dos2unix \-V\*(C'\fR. Więcej w sekcji \s-1UNICODE.\s0
 .IP "\fB7bit\fR" 4
 .IX Item "7bit"
 W tym trybie wszystkie znaki 8\-bitowe spoza \s-1ASCII\s0 (o wartościach od 128 do 255) są konwertowane do przestrzeni 7\-bitowej.
@@ -491,7 +512,7 @@ Więcej pod adresem <http://czyborra.com/charsets/codepages.html> oraz <http://c
 Istnieją różne kodowania Unicode. Pod Uniksem i Linuksem pliki Unicode są zwykle kodowane z użyciem \s-1UTF\-8.\s0 Pod Windows pliki tekstowe Unicode mogą być kodowane w \s-1UTF\-8, UTF\-16, UTF\-16\s0 big-endian, ale przeważnie są kodowane w \s-1UTF\-16.\s0
 .SS "Konwersje"
 .IX Subsection "Konwersje"
-Pliki tekstowe Unicode mogą mieć znaki końca linii systemu \s-1DOS,\s0 Unix lub Mac, podobnie jak zwykłe pliki tekstowe.
+Pliki tekstowe Unicode mogą mieć znaki końca linii systemu \s-1DOS,\s0 Unix lub Mac, podobnie jak pliki tekstowe \s-1ASCII.\s0
 .PP
 Wszystkie wersje dos2unix i unix2dos potrafią konwertować pliki kodowane \s-1UTF\-8,\s0 ponieważ \s-1UTF\-8\s0 jest wstecznie zgodne z \s-1ASCII.\s0
 .PP
@@ -510,7 +531,7 @@ Dos2unix oraz unix2dos nie mają opcji pozwalającej na konwersję plików \s-1U
 Tryby konwersji \s-1ISO\s0 i 7\-bit nie działają na plikach \s-1UTF\-16.\s0
 .SS "Znacznik \s-1BOM\s0"
 .IX Subsection "Znacznik BOM"
-W systemie Windows pliki tekstowe zwykle zawierają znacznik \s-1BOM\s0 (Byte Order Mark), ponieważ wiele programów dla Windows (w tym Notepad) dodaje domyślnie znaczniki \s-1BOM.\s0 Więcej informacji można znaleźć pod adresem <http://pl.wikipedia.org/wiki/BOM_(informatyka)>.
+W systemie Windows pliki tekstowe zwykle zawierają znacznik \s-1BOM\s0 (Byte Order Mark), ponieważ wiele programów dla Windows (w tym Notepad) dodaje domyślnie znaczniki \s-1BOM.\s0 Więcej informacji można znaleźć pod adresem <https://pl.wikipedia.org/wiki/BOM_(informatyka)>.
 .PP
 Pod Uniksem pliki Unicode zwykle nie mają znacznika \s-1BOM.\s0 Pliki tekstowe są traktowane jako kodowane zgodnie z kodowaniem znaków ustawionej lokalizacji.
 .PP
@@ -555,7 +576,7 @@ Konwersja z uniksowego \s-1UTF\-8\s0 do \s-1UTF\-16\s0 dla Windows:
 .Ve
 .SH "GB18030"
 .IX Header "GB18030"
-\&\s-1GB18030\s0 to standard urzędowy w Chinach. Obowiązkowy podzbiór standardu \s-1GB18030\s0 jest oficjalnym wymaganiem każdego oprogramowania sprzedawanego w Chinach. Więcej pod adresem <http://en.wikipedia.org/wiki/GB_18030>.
+\&\s-1GB18030\s0 to standard urzędowy w Chinach. Obowiązkowy podzbiór standardu \s-1GB18030\s0 jest oficjalnym wymaganiem każdego oprogramowania sprzedawanego w Chinach. Więcej pod adresem <https://en.wikipedia.org/wiki/GB_18030>.
 .PP
 \&\s-1GB18030\s0 jest w pełni zgodny z Unicode i może być uważany za format transformacji unikodu. Podobnie jak \s-1UTF\-8, GB18030\s0 jest zgodny z \s-1ASCII.\s0 Jest także zgodny ze stroną kodową Windows 936, znaną też jako \s-1GBK.\s0
 .PP
@@ -680,12 +701,12 @@ Główny język wybiera się zmienną środowiskową \s-1LANG.\s0 Zmienna \s-1LA
 \&    export LANG=en_GB.UTF\-8      angielski, Wlk. Brytania, kodowanie UTF\-8
 .Ve
 .Sp
-Pełną listę kodów języków i krajów można znaleźć w podręczniku do gettexta: <http://www.gnu.org/software/gettext/manual/html_node/Usual\-Language\-Codes.html>
+Pełną listę kodów języków i krajów można znaleźć w podręczniku do gettexta: <https://www.gnu.org/software/gettext/manual/html_node/Usual\-Language\-Codes.html>
 .Sp
 W systemach uniksowych do uzyskania informacji dotyczących lokalizacji można użyć polecenia \fBlocale\fR\|(1).
 .IP "\fB\s-1LANGUAGE\s0\fR" 4
 .IX Item "LANGUAGE"
-Przy użyciu zmiennej środowiskowej \s-1LANGUAGE\s0 można określić listę języków wg priorytetu, oddzielonych dwukropkami. Dos2unix przyjmuje pierwszeństwo zmiennej \s-1LANGUAGE\s0 nad \s-1LANG.\s0 Na przykład, najpierw holenderski, następnie niemiecki: \f(CW\*(C`LANGUAGE=nl:de\*(C'\fR. Aby skorzystać z listy wg priorytetów ze zmiennej \s-1LANGUAGE,\s0 trzeba najpierw włączyć lokalizację przez ustawienie zmiennej \s-1LANG\s0 (lub \s-1LC_ALL\s0) na wartość inną niż \*(L"C\*(R". Więcej informacji znajduje się w podręczniku do gettexta: <http://www.gnu.org/software/gettext/manual/html_node/The\-LANGUAGE\-variable.html>
+Przy użyciu zmiennej środowiskowej \s-1LANGUAGE\s0 można określić listę języków wg priorytetu, oddzielonych dwukropkami. Dos2unix przyjmuje pierwszeństwo zmiennej \s-1LANGUAGE\s0 nad \s-1LANG.\s0 Na przykład, najpierw holenderski, następnie niemiecki: \f(CW\*(C`LANGUAGE=nl:de\*(C'\fR. Aby skorzystać z listy wg priorytetów ze zmiennej \s-1LANGUAGE,\s0 trzeba najpierw włączyć lokalizację przez ustawienie zmiennej \s-1LANG\s0 (lub \s-1LC_ALL\s0) na wartość inną niż \*(L"C\*(R". Więcej informacji znajduje się w podręczniku do gettexta: <https://www.gnu.org/software/gettext/manual/html_node/The\-LANGUAGE\-variable.html>
 .Sp
 W przypadku wybrania niedostępnego języka, otrzymamy standardowe, angielskie komunikaty.
 .IP "\fB\s-1DOS2UNIX_LOCALEDIR\s0\fR" 4
@@ -704,20 +725,20 @@ W przypadku powodzenia zwracane jest zero. Jeśli wystąpi błąd systemowy, zwr
 Wartość zwracana w trybie cichym to zawsze zero, z wyjątkiem sytuacji podania błędnych opcji linii poleceń.
 .SH "STANDARDY"
 .IX Header "STANDARDY"
-<http://pl.wikipedia.org/wiki/Plik_tekstowy>
+<https://pl.wikipedia.org/wiki/Plik_tekstowy>
 .PP
-<http://en.wikipedia.org/wiki/Carriage_return>
+<https://en.wikipedia.org/wiki/Carriage_return>
 .PP
-<http://pl.wikipedia.org/wiki/End\-of\-line>
+<https://pl.wikipedia.org/wiki/Koniec_linii>
 .PP
-<http://pl.wikipedia.org/wiki/Unicode>
+<https://pl.wikipedia.org/wiki/Unicode>
 .SH "AUTORZY"
 .IX Header "AUTORZY"
 Benjamin Lin <blin@socs.uts.edu.au>; Bernd Johannes Wuebben (tryb mac2unix) <wuebben@kde.org>; Christian Wurll (dodawanie dodatkowej nowej linii) <wurll@ira.uka.de>; Erwin Waterlander <waterlan@xs4all.nl> (prowadzący)
 .PP
-Strona projektu: <http://waterlan.home.xs4all.nl/dos2unix.html>
+Strona projektu: <https://waterlan.home.xs4all.nl/dos2unix.html>
 .PP
-Strona SourceForge: <http://sourceforge.net/projects/dos2unix/>
+Strona SourceForge: <https://sourceforge.net/projects/dos2unix/>
 .SH "ZOBACZ TAKŻE"
 .IX Header "ZOBACZ TAKŻE"
 \&\fBfile\fR\|(1)  \fBfind\fR\|(1)  \fBiconv\fR\|(1)  \fBlocale\fR\|(1)  \fBxargs\fR\|(1)

@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>dos2unix 7.5.1 - textfilsformatskonverterare fr&#xe5;n DOS/Mac till Unix och vice versa</title>
+<title>dos2unix 7.5.2 - textfilsformatskonverterare fr&#xe5;n DOS/Mac till Unix och vice versa</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rev="made" href="mailto:ASSI@walter.nonet" />
 </head>
@@ -89,7 +89,7 @@ unix2dos [flaggor] [FIL &hellip;] [-n INFIL UTFIL &hellip;]</code></pre>
 <dt id="ascii"><b>-ascii</b></dt>
 <dd>
 
-<p>Konvertera enbart radbrytningar. Detta &auml;r standardkonverteringsl&auml;get.</p>
+<p>Standardkonverteringsl&auml;ge. Se vidare stycket KONVERTERINGSL&Auml;GEN.</p>
 
 </dd>
 <dt id="iso"><b>-iso</b></dt>
@@ -246,6 +246,15 @@ unix2dos [flaggor] [FIL &hellip;] [-n INFIL UTFIL &hellip;]</code></pre>
 
 <p>Notera att en bin&auml;rfil ibland kan misstas f&ouml;r en textfil. Se vidare flaggan <code>-s</code>.</p>
 
+<p>Om dessutom flaggan <code>-e</code> eller <code>--add-eol</code> anv&auml;nds s&aring; kommer &auml;ven den radbrytning som anv&auml;nds p&aring; sista raden att skrivas ut, eller <code>noeol</code> om det inte finns n&aring;gon.</p>
+
+<p>Exempelutmatning:</p>
+
+<pre><code>6       0       0  no_bom    text   dos     dos.txt
+0       6       0  no_bom    text   unix    unix.txt
+0       0       6  no_bom    text   mac     mac.txt
+1       0       0  no_bom    text   noeol   noeol_dos.txt</code></pre>
+
 <p>Extra flaggor kan anv&auml;ndas valfritt f&ouml;r att &auml;ndra utmatningen. En eller fler flaggor kan l&auml;ggas till.</p>
 
 <dl>
@@ -286,12 +295,20 @@ unix2dos [flaggor] [FIL &hellip;] [-n INFIL UTFIL &hellip;]</code></pre>
 <p>Skriv ut om filen &auml;r text eller bin&auml;r.</p>
 
 </dd>
+<dt id="e"><b>e</b></dt>
+<dd>
+
+<p>Skriv ut radbrytningstypen p&aring; sista raden, eller <code>noeol</code> om det inte finns n&aring;gon.</p>
+
+</dd>
 <dt id="c"><b>c</b></dt>
 <dd>
 
 <p>Skriv bara ut filerna som skulle ha konverterats.</p>
 
 <p>Med <code>c</code>-flaggan kommer dos2unix att skriva ut filerna som inneh&aring;ller DOS-radbrytningar, unix2dos kommer bara att skriva ut filnamn som har Unix-radbrytningar.</p>
+
+<p>Om dessutom flaggan <code>-e</code> eller <code>--add-eol</code> anv&auml;nds s&aring; kommer &auml;ven filer som saknar en radbrytning p&aring; sista raden att skrivas ut.</p>
 
 </dd>
 <dt id="h"><b>h</b></dt>
@@ -329,6 +346,10 @@ unix2dos [flaggor] [FIL &hellip;] [-n INFIL UTFIL &hellip;]</code></pre>
 <p>Lista filerna som har Unix-radbrytningar:</p>
 
 <pre><code>unix2dos -ic *.txt</code></pre>
+
+<p>Lista filerna som har DOS-radbrytningar eller saknar en radbrytning p&aring; sista raden:</p>
+
+<pre><code>dos2unix -e -ic *.txt</code></pre>
 
 <p>Konvertera endast filer som har DOS-radbrytningar och l&auml;mna &ouml;vriga filer or&ouml;rda:</p>
 
@@ -503,7 +524,7 @@ unix2dos [flaggor] [FIL &hellip;] [-n INFIL UTFIL &hellip;]</code></pre>
 
 <h1 id="MAC-LGE">MAC-L&Auml;GE</h1>
 
-<p>I normall&auml;ge konverteras radbrytningar fr&aring;n DOS till Unix och vice versa. Mac-radbrytningar konverteras inte.</p>
+<p>Som standard konverteras radbrytningar fr&aring;n DOS till Unix och vice versa. Mac-radbrytningar konverteras inte.</p>
 
 <p>I Mac-l&auml;ge konverteras radbrytningar fr&aring;n Mac till Unix och vice versa. DOS-radbrytningar &auml;ndras ej.</p>
 
@@ -516,9 +537,9 @@ unix2dos [flaggor] [FIL &hellip;] [-n INFIL UTFIL &hellip;]</code></pre>
 <dt id="ascii1"><b>ascii</b></dt>
 <dd>
 
-<p>I l&auml;get <code>ascii</code> konverteras enbart radbrytningar. Detta &auml;r standardkonverteringsl&auml;get.</p>
+<p>Detta &auml;r standardkonverteringsl&auml;get. Detta l&auml;ge anv&auml;nds f&ouml;r att konvertera ASCII och ASCII-kompatibla kodade filer, s&aring; som UTF-8. Att aktiveras <b>ascii</b>-l&auml;ge inaktiverar <b>7bit</b>- och <b>iso</b>-l&auml;ge.</p>
 
-<p>&Auml;ven om namnet p&aring; detta l&auml;ge &auml;r ASCII, vilket &auml;r en 7-bitarsstandard, s&aring; &auml;r det l&auml;get egentligen ett 8-bitarsl&auml;ge. Anv&auml;nd alltid detta l&auml;ge vid konvertering av Unicode UTF-8-filer.</p>
+<p>Om dos2unix har UTF-16 st&ouml;d kommer UTF-16-kodade filer att konverteras till kodningen f&ouml;r den aktuella lokalen p&aring; POSIX-sytstem och till UTF-8 p&aring; Windows. Aktivering av <b>ascii</b>-l&auml;get inaktiverar flaggan f&ouml;r att beh&aring;lla UTF-16-kodning (<code>-u</code>) och flaggorna f&ouml;r att anta UTF-16 indata (<code>-ul</code> och <code>-ub</code>). F&ouml;r att se om dos2unix har UTF-16-st&ouml;d skriv <code>dox2unix -V</code>, se ocks&aring; avsnittet UNICODE.</p>
 
 </dd>
 <dt id="bit"><b>7bit</b></dt>
@@ -583,7 +604,7 @@ unix2dos [flaggor] [FIL &hellip;] [-n INFIL UTFIL &hellip;]</code></pre>
 
 <h2 id="Konvertering">Konvertering</h2>
 
-<p>Unicode-textfiler kan ha DOS, Unix eller Mac-radbrytningar precis som vanliga textfiler.</p>
+<p>Unicode-textfiler kan ha DOS, Unix eller Mac-radbrytningar precis som ASCII-textfiler.</p>
 
 <p>Alla versioner av dos2unix och unix2dos kan konvertera UTF-8-kodade filer, eftersom UTF-8 designades f&ouml;r bak&aring;tkompatibilitet med ASCII.</p>
 
@@ -603,7 +624,7 @@ unix2dos [flaggor] [FIL &hellip;] [-n INFIL UTFIL &hellip;]</code></pre>
 
 <h2 id="Byteordningsmarkering-Byte-Order-Mark">Byteordningsmarkering (Byte Order Mark)</h2>
 
-<p>I Windows har Unicode-textfiler typiskt en byteordningsmarkering (Byte Order Mark, BOM) eftersom m&aring;nga Windows-program (inklusive Notepad) l&auml;gger till BOM:ar som standard. Se &auml;ven <a href="http://en.wikipedia.org/wiki/Byte_order_mark">http://en.wikipedia.org/wiki/Byte_order_mark</a>.</p>
+<p>I Windows har Unicode-textfiler typiskt en byteordningsmarkering (Byte Order Mark, BOM) eftersom m&aring;nga Windows-program (inklusive Notepad) l&auml;gger till BOM:ar som standard. Se &auml;ven <a href="https://en.wikipedia.org/wiki/Byte_order_mark">https://en.wikipedia.org/wiki/Byte_order_mark</a>.</p>
 
 <p>I Unix har Unicode-textfiler typiskt ingen BOM. Filer antas vara kodade i den lokala teckenupps&auml;ttningen.</p>
 
@@ -643,7 +664,7 @@ unix2dos [flaggor] [FIL &hellip;] [-n INFIL UTFIL &hellip;]</code></pre>
 
 <h1 id="GB18030">GB18030</h1>
 
-<p>GB18030 &auml;r en standard fr&aring;n Kinesiska regeringen. En obligatorisk delm&auml;ngd av standarden GB18030 kr&auml;vs officiellt f&ouml;r alla programvaruprodukter som s&auml;ljs i Kina. Se vidare <a href="http://en.wikipedia.org/wiki/GB_18030">http://en.wikipedia.org/wiki/GB_18030</a>.</p>
+<p>GB18030 &auml;r en standard fr&aring;n Kinesiska regeringen. En obligatorisk delm&auml;ngd av standarden GB18030 kr&auml;vs officiellt f&ouml;r alla programvaruprodukter som s&auml;ljs i Kina. Se vidare <a href="https://en.wikipedia.org/wiki/GB_18030">https://en.wikipedia.org/wiki/GB_18030</a>.</p>
 
 <p>GB18030 &auml;r fullst&auml;ndigt kompatibel med Unicode och kan anses vara ett &ouml;verf&ouml;ringsformat f&ouml;r unicode. Precis som UTF-8 &auml;r GB18030 kompatibel med ASCII. GB18030 &auml;r ocks&aring; kompatibel med Windows-teckentabell 936, ocks&aring; k&auml;nd som GBK.</p>
 
@@ -742,7 +763,7 @@ export LANG=es_MX            Spanska, Mexiko
 export LANG=en_US.iso88591   Engelska, USA, Latin-1-kodning
 export LANG=en_GB.UTF-8      Engelska, UK, UTF-8-kodning</code></pre>
 
-<p>F&ouml;r en fullst&auml;ndig lista &ouml;ver spr&aring;k och landskoder se vidare i gettext-manualen: <a href="http://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html">http://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html</a></p>
+<p>F&ouml;r en fullst&auml;ndig lista &ouml;ver spr&aring;k och landskoder se vidare i gettext-manualen: <a href="https://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html">https://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html</a></p>
 
 <p>P&aring; Unix-system kan du anv&auml;nda kommando locale(1) f&ouml;r att f&aring; lokal-specifik information.</p>
 
@@ -750,7 +771,7 @@ export LANG=en_GB.UTF-8      Engelska, UK, UTF-8-kodning</code></pre>
 <dt id="LANGUAGE"><b>LANGUAGE</b></dt>
 <dd>
 
-<p>Med milj&ouml;variabeln LANGUAGE kan du ange en prioritetslista &ouml;ver spr&aring;k, separerade med kolon. Dos2unix kommer att ge f&ouml;retr&auml;de till LANGAUGE &ouml;ver LANG. Exempelvis f&ouml;rst nederl&auml;ndska och sedan tyska: <code>LANGUAGE=nl:de</code>. Du m&aring;ste f&ouml;rst ha aktiverat lokalisering, genom att s&auml;tta LANG (eller LC_ALL) till ett v&auml;rde annat &auml;n &ldquo;C&ldquo;, innan du kan anv&auml;nda en prioritetslista f&ouml;r spr&aring;k via LANGUAGE-variabeln. Se vidare i gettext-manualen: <a href="http://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-variable.html">http://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-variable.html</a></p>
+<p>Med milj&ouml;variabeln LANGUAGE kan du ange en prioritetslista &ouml;ver spr&aring;k, separerade med kolon. Dos2unix kommer att ge f&ouml;retr&auml;de till LANGAUGE &ouml;ver LANG. Exempelvis f&ouml;rst nederl&auml;ndska och sedan tyska: <code>LANGUAGE=nl:de</code>. Du m&aring;ste f&ouml;rst ha aktiverat lokalisering, genom att s&auml;tta LANG (eller LC_ALL) till ett v&auml;rde annat &auml;n &ldquo;C&ldquo;, innan du kan anv&auml;nda en prioritetslista f&ouml;r spr&aring;k via LANGUAGE-variabeln. Se vidare i gettext-manualen: <a href="https://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-variable.html">https://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-variable.html</a></p>
 
 <p>Om du v&auml;ljer ett spr&aring;k som inte &auml;r tillg&auml;nglig kommer du att f&aring; engelska meddelanden som standard.</p>
 
@@ -775,21 +796,21 @@ export LANG=en_GB.UTF-8      Engelska, UK, UTF-8-kodning</code></pre>
 
 <h1 id="STANDARDER">STANDARDER</h1>
 
-<p><a href="http://en.wikipedia.org/wiki/Text_file">http://en.wikipedia.org/wiki/Text_file</a></p>
+<p><a href="https://en.wikipedia.org/wiki/Text_file">https://en.wikipedia.org/wiki/Text_file</a></p>
 
-<p><a href="http://en.wikipedia.org/wiki/Carriage_return">http://en.wikipedia.org/wiki/Carriage_return</a></p>
+<p><a href="https://en.wikipedia.org/wiki/Carriage_return">https://en.wikipedia.org/wiki/Carriage_return</a></p>
 
-<p><a href="http://en.wikipedia.org/wiki/Newline">http://en.wikipedia.org/wiki/Newline</a></p>
+<p><a href="https://en.wikipedia.org/wiki/Newline">https://en.wikipedia.org/wiki/Newline</a></p>
 
-<p><a href="http://en.wikipedia.org/wiki/Unicode">http://en.wikipedia.org/wiki/Unicode</a></p>
+<p><a href="https://en.wikipedia.org/wiki/Unicode">https://en.wikipedia.org/wiki/Unicode</a></p>
 
 <h1 id="FRFATTARE">F&Ouml;RFATTARE</h1>
 
 <p>Benjamin Lin - &lt;blin@socs.uts.edu.au&gt;, Bernd Johannes Wuebben (mac2unix-l&auml;ge) - &lt;wuebben@kde.org&gt;, Christian Wurll (l&auml;gg till en extra radbrytning) - &lt;wurll@ira.uka.de&gt;, Erwin Waterlander - &lt;waterlan@xs4all.nl&gt; (upphovsman)</p>
 
-<p>Projektsida: <a href="http://waterlan.home.xs4all.nl/dos2unix.html">http://waterlan.home.xs4all.nl/dos2unix.html</a></p>
+<p>Projektsida: <a href="https://waterlan.home.xs4all.nl/dos2unix.html">https://waterlan.home.xs4all.nl/dos2unix.html</a></p>
 
-<p>SourceForge-sida: <a href="http://sourceforge.net/projects/dos2unix/">http://sourceforge.net/projects/dos2unix/</a></p>
+<p>SourceForge-sida: <a href="https://sourceforge.net/projects/dos2unix/">https://sourceforge.net/projects/dos2unix/</a></p>
 
 <h1 id="SE-VEN">SE &Auml;VEN</h1>
 

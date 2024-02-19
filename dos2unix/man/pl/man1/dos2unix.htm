@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>dos2unix 7.5.1 - konwerter formatu plik&#xf3;w tekstowych mi&#x119;dzy systemami DOS/Mac a Uniksem</title>
+<title>dos2unix 7.5.2 - konwerter formatu plik&#xf3;w tekstowych mi&#x119;dzy systemami DOS/Mac a Uniksem</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rev="made" href="mailto:ASSI@walter.nonet" />
 </head>
@@ -89,7 +89,7 @@ unix2dos [opcje] [PLIK ...] [-n PLIK_WEJ PLIK_WYJ ...]</code></pre>
 <dt id="ascii"><b>-ascii</b></dt>
 <dd>
 
-<p>Konwersja tylko znak&oacute;w ko&#x144;ca linii. Jest to domy&#x15B;lny tryb konwersji.</p>
+<p>Domy&#x15B;lny tryb konwersji. Wi&#x119;cej w sekcji TRYBY KONWERSJI.</p>
 
 </dd>
 <dt id="iso"><b>-iso</b></dt>
@@ -246,7 +246,15 @@ unix2dos [opcje] [PLIK ...] [-n PLIK_WEJ PLIK_WYJ ...]</code></pre>
 
 <p>Uwaga: czasami plik binarny mo&#x17C;e by&#x107; b&#x142;&#x119;dnie rozpoznany jako tekstowy. P. tak&#x17C;e opcja <code>-s</code>.</p>
 
-<p>Opcjonalnie mo&#x17C;na ustawi&#x107; dodatkowe flagi, aby zmieni&#x107; wyj&#x15B;cie. Mo&#x17C;na doda&#x107; jedn&#x105; lub wi&#x119;cej flag.</p>
+<p>Je&#x15B;li dodatkowo u&#x17C;yta jest opcja <code>-e</code> lub <code>--add-eol</code>, wypisywany jest tak&#x17C;e rodzaj ko&#x144;ca linii z ostatniej linii, lub <code>noeol</code>, je&#x15B;li nie ma &#x17C;adnego.</p>
+
+<p>Przyk&#x142;adowe wyj&#x15B;cie:</p>
+
+<pre><code>     6       0       0  no_bom    text   dos     dos.txt
+     0       6       0  no_bom    text   unix    unix.txt
+     0       0       6  no_bom    text   mac     mac.txt
+     1       0       0  no_bom    text   noeol   noeol_dos.txt
+Opcjonalnie mo&#x17C;na ustawi&#x107; dodatkowe flagi, aby zmieni&#x107; wyj&#x15B;cie. Mo&#x17C;na doda&#x107; jedn&#x105; lub wi&#x119;cej flag.</code></pre>
 
 <dl>
 
@@ -286,12 +294,20 @@ unix2dos [opcje] [PLIK ...] [-n PLIK_WEJ PLIK_WYJ ...]</code></pre>
 <p>Wypisanie, czy plik jest tekstowy, czy binarny.</p>
 
 </dd>
+<dt id="e"><b>e</b></dt>
+<dd>
+
+<p>Wypisanie rodzaju ko&#x144;ca wiersza w ostatnim wierszu, lub <code>noeol</code>, je&#x15B;li nie ma &#x17C;adnego.</p>
+
+</dd>
 <dt id="c"><b>c</b></dt>
 <dd>
 
 <p>Wypisanie tylko plik&oacute;w, kt&oacute;re zosta&#x142;yby przekonwertowane.</p>
 
 <p>Z flag&#x105; <code>c</code> dos2unix wypisze tylko pliki zawieraj&#x105;ce DOS-owe ko&#x144;ce linii, a unix2dos wypisze tylko nazwy plik&oacute;w zawieraj&#x105;cych uniksowe ko&#x144;ce linii.</p>
+
+<p>Je&#x15B;li dodatkowo u&#x17C;yta jest opcja <code>-e</code> lub <code>--add-eol</code>, wypisywane s&#x105; tak&#x17C;e pliki bez zako&#x144;czenia ostatniej linii.</p>
 
 </dd>
 <dt id="h"><b>h</b></dt>
@@ -329,6 +345,10 @@ unix2dos [opcje] [PLIK ...] [-n PLIK_WEJ PLIK_WYJ ...]</code></pre>
 <p>Wypisanie listy plik&oacute;w zawieraj&#x105;cych uniksowe ko&#x144;ce linii:</p>
 
 <pre><code>unix2dos -ic *.txt</code></pre>
+
+<p>Wypisanie listy plik&oacute;w zawieraj&#x105;cych DOS-owe ko&#x144;ce linii lub bez znaku ko&#x144;ca w ostatniej linii:</p>
+
+<pre><code>dos2unix -e -ic *.txt</code></pre>
 
 <p>Konwersja tylko plik&oacute;w maj&#x105;cych DOS-owe ko&#x144;ce linii, pozostawienie pozosta&#x142;ych bez zmian:</p>
 
@@ -503,7 +523,7 @@ unix2dos [opcje] [PLIK ...] [-n PLIK_WEJ PLIK_WYJ ...]</code></pre>
 
 <h1 id="TRYB-MAC">TRYB MAC</h1>
 
-<p>W zwyk&#x142;ym trybie znaki ko&#x144;ca linii s&#x105; konwertowane z DOS-a do Uniksa i odwrotnie. Znaki ko&#x144;ca linii systemu Mac nie s&#x105; konwertowane.</p>
+<p>Domy&#x15B;lnie znaki ko&#x144;ca linii s&#x105; konwertowane z DOS-a do Uniksa i odwrotnie. Znaki ko&#x144;ca linii systemu Mac nie s&#x105; konwertowane.</p>
 
 <p>W trybie Mac znaki ko&#x144;ca linii s&#x105; konwertowane z formatu Maca do Uniksa i odwrotnie. Znaki ko&#x144;ca linii systemu DOS nie s&#x105; zmieniane.</p>
 
@@ -516,9 +536,9 @@ unix2dos [opcje] [PLIK ...] [-n PLIK_WEJ PLIK_WYJ ...]</code></pre>
 <dt id="ascii1"><b>ascii</b></dt>
 <dd>
 
-<p>W trybie <code>ascii</code> konwertowane s&#x105; tylko ko&#x144;ce linii. Jest to domy&#x15B;lny tryb konwersji.</p>
+<p>To jest domy&#x15B;lny tryb konwersji. S&#x142;u&#x17C;y do konwersji plik&oacute;w kodowanych ASCII lub zgodnie z ASCII, np. UTF-8. W&#x142;&#x105;czenie trybu <b>ascii</b> wy&#x142;&#x105;cza tryby <b>7bit</b> i <b>iso</b>.</p>
 
-<p>Mimo &#x17C;e nazwa tego trybu to ASCII, kt&oacute;re jest standardem 7-bitowym, jest to tryb 8-bitowy. Nale&#x17C;y zawsze u&#x17C;ywa&#x107; tego trybu przy konwersji plik&oacute;w Unicode UTF-8.</p>
+<p>Je&#x15B;li dos2unix ma obs&#x142;ug&#x119; UTF-16, pliki kodowane UTF-16 s&#x105; konwertowane do bie&#x17C;&#x105;cego kodowania w systamach zgodnych z POSIX lub do UTF-8 na Windows. W&#x142;&#x105;czenie trybu <b>ascii</b> wy&#x142;&#x105;cza opcj&#x119; zachowywania kodowania UTF-16 (<code>-u</code>) oraz opcje zak&#x142;adaj&#x105;ce wej&#x15B;cie UTF-16 (<code>-ul</code> oraz <code>-ub</code>). Aby sprawdzi&#x107;, czy dos2unix ma obs&#x142;ug&#x119; UTF-16, mo&#x17C;na wywo&#x142;a&#x107; <code>dos2unix -V</code>. Wi&#x119;cej w sekcji UNICODE.</p>
 
 </dd>
 <dt id="bit"><b>7bit</b></dt>
@@ -583,7 +603,7 @@ unix2dos [opcje] [PLIK ...] [-n PLIK_WEJ PLIK_WYJ ...]</code></pre>
 
 <h2 id="Konwersje">Konwersje</h2>
 
-<p>Pliki tekstowe Unicode mog&#x105; mie&#x107; znaki ko&#x144;ca linii systemu DOS, Unix lub Mac, podobnie jak zwyk&#x142;e pliki tekstowe.</p>
+<p>Pliki tekstowe Unicode mog&#x105; mie&#x107; znaki ko&#x144;ca linii systemu DOS, Unix lub Mac, podobnie jak pliki tekstowe ASCII.</p>
 
 <p>Wszystkie wersje dos2unix i unix2dos potrafi&#x105; konwertowa&#x107; pliki kodowane UTF-8, poniewa&#x17C; UTF-8 jest wstecznie zgodne z ASCII.</p>
 
@@ -603,7 +623,7 @@ unix2dos [opcje] [PLIK ...] [-n PLIK_WEJ PLIK_WYJ ...]</code></pre>
 
 <h2 id="Znacznik-BOM">Znacznik BOM</h2>
 
-<p>W systemie Windows pliki tekstowe zwykle zawieraj&#x105; znacznik BOM (Byte Order Mark), poniewa&#x17C; wiele program&oacute;w dla Windows (w tym Notepad) dodaje domy&#x15B;lnie znaczniki BOM. Wi&#x119;cej informacji mo&#x17C;na znale&#x17A;&#x107; pod adresem <a href="http://pl.wikipedia.org/wiki/BOM_(informatyka)">http://pl.wikipedia.org/wiki/BOM_(informatyka)</a>.</p>
+<p>W systemie Windows pliki tekstowe zwykle zawieraj&#x105; znacznik BOM (Byte Order Mark), poniewa&#x17C; wiele program&oacute;w dla Windows (w tym Notepad) dodaje domy&#x15B;lnie znaczniki BOM. Wi&#x119;cej informacji mo&#x17C;na znale&#x17A;&#x107; pod adresem <a href="https://pl.wikipedia.org/wiki/BOM_(informatyka)">https://pl.wikipedia.org/wiki/BOM_(informatyka)</a>.</p>
 
 <p>Pod Uniksem pliki Unicode zwykle nie maj&#x105; znacznika BOM. Pliki tekstowe s&#x105; traktowane jako kodowane zgodnie z kodowaniem znak&oacute;w ustawionej lokalizacji.</p>
 
@@ -643,7 +663,7 @@ unix2dos [opcje] [PLIK ...] [-n PLIK_WEJ PLIK_WYJ ...]</code></pre>
 
 <h1 id="GB18030">GB18030</h1>
 
-<p>GB18030 to standard urz&#x119;dowy w Chinach. Obowi&#x105;zkowy podzbi&oacute;r standardu GB18030 jest oficjalnym wymaganiem ka&#x17C;dego oprogramowania sprzedawanego w Chinach. Wi&#x119;cej pod adresem <a href="http://en.wikipedia.org/wiki/GB_18030">http://en.wikipedia.org/wiki/GB_18030</a>.</p>
+<p>GB18030 to standard urz&#x119;dowy w Chinach. Obowi&#x105;zkowy podzbi&oacute;r standardu GB18030 jest oficjalnym wymaganiem ka&#x17C;dego oprogramowania sprzedawanego w Chinach. Wi&#x119;cej pod adresem <a href="https://en.wikipedia.org/wiki/GB_18030">https://en.wikipedia.org/wiki/GB_18030</a>.</p>
 
 <p>GB18030 jest w pe&#x142;ni zgodny z Unicode i mo&#x17C;e by&#x107; uwa&#x17C;any za format transformacji unikodu. Podobnie jak UTF-8, GB18030 jest zgodny z ASCII. Jest tak&#x17C;e zgodny ze stron&#x105; kodow&#x105; Windows 936, znan&#x105; te&#x17C; jako GBK.</p>
 
@@ -742,7 +762,7 @@ export LANG=es_MX            hiszpa&#x144;ski, Meksyk
 export LANG=en_US.iso88591   angielski, USA, kodowanie Latin-1
 export LANG=en_GB.UTF-8      angielski, Wlk. Brytania, kodowanie UTF-8</code></pre>
 
-<p>Pe&#x142;n&#x105; list&#x119; kod&oacute;w j&#x119;zyk&oacute;w i kraj&oacute;w mo&#x17C;na znale&#x17A;&#x107; w podr&#x119;czniku do gettexta: <a href="http://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html">http://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html</a></p>
+<p>Pe&#x142;n&#x105; list&#x119; kod&oacute;w j&#x119;zyk&oacute;w i kraj&oacute;w mo&#x17C;na znale&#x17A;&#x107; w podr&#x119;czniku do gettexta: <a href="https://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html">https://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html</a></p>
 
 <p>W systemach uniksowych do uzyskania informacji dotycz&#x105;cych lokalizacji mo&#x17C;na u&#x17C;y&#x107; polecenia locale(1).</p>
 
@@ -750,7 +770,7 @@ export LANG=en_GB.UTF-8      angielski, Wlk. Brytania, kodowanie UTF-8</code></p
 <dt id="LANGUAGE"><b>LANGUAGE</b></dt>
 <dd>
 
-<p>Przy u&#x17C;yciu zmiennej &#x15B;rodowiskowej LANGUAGE mo&#x17C;na okre&#x15B;li&#x107; list&#x119; j&#x119;zyk&oacute;w wg priorytetu, oddzielonych dwukropkami. Dos2unix przyjmuje pierwsze&#x144;stwo zmiennej LANGUAGE nad LANG. Na przyk&#x142;ad, najpierw holenderski, nast&#x119;pnie niemiecki: <code>LANGUAGE=nl:de</code>. Aby skorzysta&#x107; z listy wg priorytet&oacute;w ze zmiennej LANGUAGE, trzeba najpierw w&#x142;&#x105;czy&#x107; lokalizacj&#x119; przez ustawienie zmiennej LANG (lub LC_ALL) na warto&#x15B;&#x107; inn&#x105; ni&#x17C; &quot;C&quot;. Wi&#x119;cej informacji znajduje si&#x119; w podr&#x119;czniku do gettexta: <a href="http://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-variable.html">http://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-variable.html</a></p>
+<p>Przy u&#x17C;yciu zmiennej &#x15B;rodowiskowej LANGUAGE mo&#x17C;na okre&#x15B;li&#x107; list&#x119; j&#x119;zyk&oacute;w wg priorytetu, oddzielonych dwukropkami. Dos2unix przyjmuje pierwsze&#x144;stwo zmiennej LANGUAGE nad LANG. Na przyk&#x142;ad, najpierw holenderski, nast&#x119;pnie niemiecki: <code>LANGUAGE=nl:de</code>. Aby skorzysta&#x107; z listy wg priorytet&oacute;w ze zmiennej LANGUAGE, trzeba najpierw w&#x142;&#x105;czy&#x107; lokalizacj&#x119; przez ustawienie zmiennej LANG (lub LC_ALL) na warto&#x15B;&#x107; inn&#x105; ni&#x17C; &quot;C&quot;. Wi&#x119;cej informacji znajduje si&#x119; w podr&#x119;czniku do gettexta: <a href="https://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-variable.html">https://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-variable.html</a></p>
 
 <p>W przypadku wybrania niedost&#x119;pnego j&#x119;zyka, otrzymamy standardowe, angielskie komunikaty.</p>
 
@@ -775,21 +795,21 @@ export LANG=en_GB.UTF-8      angielski, Wlk. Brytania, kodowanie UTF-8</code></p
 
 <h1 id="STANDARDY">STANDARDY</h1>
 
-<p><a href="http://pl.wikipedia.org/wiki/Plik_tekstowy">http://pl.wikipedia.org/wiki/Plik_tekstowy</a></p>
+<p><a href="https://pl.wikipedia.org/wiki/Plik_tekstowy">https://pl.wikipedia.org/wiki/Plik_tekstowy</a></p>
 
-<p><a href="http://en.wikipedia.org/wiki/Carriage_return">http://en.wikipedia.org/wiki/Carriage_return</a></p>
+<p><a href="https://en.wikipedia.org/wiki/Carriage_return">https://en.wikipedia.org/wiki/Carriage_return</a></p>
 
-<p><a href="http://pl.wikipedia.org/wiki/End-of-line">http://pl.wikipedia.org/wiki/End-of-line</a></p>
+<p><a href="https://pl.wikipedia.org/wiki/Koniec_linii">https://pl.wikipedia.org/wiki/Koniec_linii</a></p>
 
-<p><a href="http://pl.wikipedia.org/wiki/Unicode">http://pl.wikipedia.org/wiki/Unicode</a></p>
+<p><a href="https://pl.wikipedia.org/wiki/Unicode">https://pl.wikipedia.org/wiki/Unicode</a></p>
 
 <h1 id="AUTORZY">AUTORZY</h1>
 
 <p>Benjamin Lin &lt;blin@socs.uts.edu.au&gt;; Bernd Johannes Wuebben (tryb mac2unix) &lt;wuebben@kde.org&gt;; Christian Wurll (dodawanie dodatkowej nowej linii) &lt;wurll@ira.uka.de&gt;; Erwin Waterlander &lt;waterlan@xs4all.nl&gt; (prowadz&#x105;cy)</p>
 
-<p>Strona projektu: <a href="http://waterlan.home.xs4all.nl/dos2unix.html">http://waterlan.home.xs4all.nl/dos2unix.html</a></p>
+<p>Strona projektu: <a href="https://waterlan.home.xs4all.nl/dos2unix.html">https://waterlan.home.xs4all.nl/dos2unix.html</a></p>
 
-<p>Strona SourceForge: <a href="http://sourceforge.net/projects/dos2unix/">http://sourceforge.net/projects/dos2unix/</a></p>
+<p>Strona SourceForge: <a href="https://sourceforge.net/projects/dos2unix/">https://sourceforge.net/projects/dos2unix/</a></p>
 
 <h1 id="ZOBACZ-TAKE">ZOBACZ TAK&#x17B;E</h1>
 

@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>dos2unix 7.5.1 - Conversor de formato de arquivo texto de DOS/Mac para Unix e vice-versa</title>
+<title>dos2unix 7.5.2 - Conversor de formato de arquivo texto de DOS/Mac para Unix e vice-versa</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rev="made" href="mailto:ASSI@walter.nonet" />
 </head>
@@ -89,7 +89,7 @@ unix2dos [op&ccedil;&otilde;es] [ARQUIVO ...] [-n ARQENT ARQSA&Iacute;DA ...]</c
 <dt id="ascii"><b>-ascii</b></dt>
 <dd>
 
-<p>Converte apenas as quebras de linhas. Esse &eacute; o modo de convers&atilde;o padr&atilde;o.</p>
+<p>Default conversion mode. See also section CONVERSION MODES.</p>
 
 </dd>
 <dt id="iso"><b>-iso</b></dt>
@@ -246,6 +246,15 @@ unix2dos [op&ccedil;&otilde;es] [ARQUIVO ...] [-n ARQENT ARQSA&Iacute;DA ...]</c
 
 <p>Note que em algumas vezes um arquivo bin&aacute;rio pode ser confundido com um arquivo texto. Veja tamb&eacute;m a op&ccedil;&atilde;o <code>-s</code>.</p>
 
+<p>If in addition option <code>-e</code> or <code>--add-eol</code> is used also the type of the line break of the last line is printed, or <code>noeol</code> if there is none.</p>
+
+<p>Exemplo de sa&iacute;da:</p>
+
+<pre><code>6       0       0  no_bom    text   dos     dos.txt
+0       6       0  no_bom    text   unix    unix.txt
+0       0       6  no_bom    text   mac     mac.txt
+1       0       0  no_bom    text   noeol   noeol_dos.txt</code></pre>
+
 <p>Opcionalmente, op&ccedil;&otilde;es extra podem ser definidas para alterar a sa&iacute;da. Uma ou mais op&ccedil;&otilde;es podem ser adicionadas.</p>
 
 <dl>
@@ -286,12 +295,20 @@ unix2dos [op&ccedil;&otilde;es] [ARQUIVO ...] [-n ARQENT ARQSA&Iacute;DA ...]</c
 <p>Exibe se arquivo &eacute; texto ou bin&aacute;rio.</p>
 
 </dd>
+<dt id="e"><b>e</b></dt>
+<dd>
+
+<p>Print the type of the line break of the last line, or <code>noeol</code> if there is none.</p>
+
+</dd>
 <dt id="c"><b>c</b></dt>
 <dd>
 
 <p>Exibe apenas os arquivos que seriam convertidos.</p>
 
 <p>Com a op&ccedil;&atilde;o <code>c</code>, dos2unix vai exibir apenas os arquivos que cont&ecirc;m quebras de linha do DOS, unix2dos vai exibir apenas os nomes de arquivos que cont&ecirc;m quebras de linha do Unix.</p>
+
+<p>If in addition option <code>-e</code> or <code>--add-eol</code> is used also the files that lack a line break on the last line will be printed.</p>
 
 </dd>
 <dt id="h"><b>h</b></dt>
@@ -329,6 +346,10 @@ unix2dos [op&ccedil;&otilde;es] [ARQUIVO ...] [-n ARQENT ARQSA&Iacute;DA ...]</c
 <p>Lista os arquivos que possuem quebras de linha do Unix:</p>
 
 <pre><code>unix2dos -ic *.txt</code></pre>
+
+<p>List the files that have DOS line breaks or lack a line break on the last line:</p>
+
+<pre><code>dos2unix -e -ic *.txt</code></pre>
 
 <p>Converte apenas arquivos que possuem quebras de linha do DOS e n&atilde;o altera outros arquivos:</p>
 
@@ -503,7 +524,7 @@ unix2dos [op&ccedil;&otilde;es] [ARQUIVO ...] [-n ARQENT ARQSA&Iacute;DA ...]</c
 
 <h1 id="MODO-MAC">MODO MAC</h1>
 
-<p>No modo normal, as quebras de linhas s&atilde;o convertidas de DOS para Unix e vice-versa. Quebras de linha do Mac n&atilde;o s&atilde;o convertidas.</p>
+<p>By default line breaks are converted from DOS to Unix and vice versa. Mac line breaks are not converted.</p>
 
 <p>No modo Mac, quebras de linha s&atilde;o convertidas de Mac para Unix e vice-versa. Quebras de linha do DOS n&atilde;o s&atilde;o alteradas.</p>
 
@@ -516,9 +537,9 @@ unix2dos [op&ccedil;&otilde;es] [ARQUIVO ...] [-n ARQENT ARQSA&Iacute;DA ...]</c
 <dt id="ascii1"><b>ascii</b></dt>
 <dd>
 
-<p>No modo <code>ascii</code>, apenas as quebras de linha s&atilde;o convertidas. Esse &eacute; o modo de convers&atilde;o padr&atilde;o.</p>
+<p>This is the default conversion mode. This mode is for converting ASCII and ASCII-compatible encoded files, like UTF-8. Enabling <b>ascii</b> mode disables <b>7bit</b> and <b>iso</b> mode.</p>
 
-<p>Apesar do nome deste modo ser ASCII, o qual &eacute; um padr&atilde;o de 7 bits, o modo &eacute; em verdade 8 bits. Sempre use este modo quando quiser converter arquivos Unicode UTF-8.</p>
+<p>If dos2unix has UTF-16 support, UTF-16 encoded files are converted to the current locale character encoding on POSIX systems and to UTF-8 on Windows. Enabling <b>ascii</b> mode disables the option to keep UTF-16 encoding (<code>-u</code>) and the options to assume UTF-16 input (<code>-ul</code> and <code>-ub</code>). To see if dos2unix has UTF-16 support type <code>dos2unix -V</code>. See also section UNICODE.</p>
 
 </dd>
 <dt id="bit"><b>7bit</b></dt>
@@ -583,7 +604,7 @@ unix2dos [op&ccedil;&otilde;es] [ARQUIVO ...] [-n ARQENT ARQSA&Iacute;DA ...]</c
 
 <h2 id="Converso">Convers&atilde;o</h2>
 
-<p>Arquivos texto em Unicode pode ter quebras de linha DOS, Unix ou Mac, como arquivos texto comuns.</p>
+<p>Unicode text files can have DOS, Unix or Mac line breaks, like ASCII text files.</p>
 
 <p>Todas as vers&otilde;es do dos2unix e unix2dos podem converter arquivos codificados em UTF-8 porque UTF-8 foi projetado para ter compatibilidade reversa com ASCII.</p>
 
@@ -603,7 +624,7 @@ unix2dos [op&ccedil;&otilde;es] [ARQUIVO ...] [-n ARQENT ARQSA&Iacute;DA ...]</c
 
 <h2 id="Marca-de-ordem-de-byte">Marca de ordem de byte</h2>
 
-<p>No Windows, arquivos Unicode normalmente t&ecirc;m uma Marca de Ordem de Byte (BOM), porque muitos programas (incluindo o Bloco de Notas) adiciona BOMs por padr&atilde;o. Veja tamb&eacute;m <a href="http://en.wikipedia.org/wiki/Byte_order_mark">http://en.wikipedia.org/wiki/Byte_order_mark</a>.</p>
+<p>On Windows Unicode text files typically have a Byte Order Mark (BOM), because many Windows programs (including Notepad) add BOMs by default. See also <a href="https://en.wikipedia.org/wiki/Byte_order_mark">https://en.wikipedia.org/wiki/Byte_order_mark</a>.</p>
 
 <p>No Unix, arquivos Unicode normalmente n&atilde;o t&ecirc;m BOM. Presume-se que arquivos texto s&atilde;o codificados na codifica&ccedil;&atilde;o de caracteres da localiza&ccedil;&atilde;o.</p>
 
@@ -643,7 +664,7 @@ unix2dos [op&ccedil;&otilde;es] [ARQUIVO ...] [-n ARQENT ARQSA&Iacute;DA ...]</c
 
 <h1 id="GB18030">GB18030</h1>
 
-<p>GB18030 &eacute; um padr&atilde;o governamental chin&ecirc;s. Um subconjunto obrigat&oacute;rio do padr&atilde;o GB18030 &eacute; exigido oficialmente para todos os produtos de software vendidos na China. Veja tamb&eacute;m <a href="http://en.wikipedia.org/wiki/GB_18030">http://en.wikipedia.org/wiki/GB_18030</a>.</p>
+<p>GB18030 is a Chinese government standard. A mandatory subset of the GB18030 standard is officially required for all software products sold in China. See also <a href="https://en.wikipedia.org/wiki/GB_18030">https://en.wikipedia.org/wiki/GB_18030</a>.</p>
 
 <p>GB18030 &eacute; completamente compat&iacute;vel com Unicode e pode ser considerado um formato de transforma&ccedil;&atilde;o de unicode. Assim como UTF-8, GB18030 &eacute; compat&iacute;vel com ASCII. GB18030 tamb&eacute;m &eacute; compat&iacute;vel com a p&aacute;gina de c&oacute;digo 936 do Windows, tamb&eacute;m conhecida como GBK.</p>
 
@@ -742,7 +763,7 @@ export LANG=es_MX            Espanhol, M&eacute;xico
 export LANG=en_US.iso88591   Ingl&ecirc;s, EUA, codifica&ccedil;&atilde;o Latin-1
 export LANG=en_GB.UTF-8      Ingl&ecirc;s, Reino Unido, codifica&ccedil;&atilde;o UTF-8</code></pre>
 
-<p>Para a lista completa de c&oacute;digos de idioma e pa&iacute;s, veja o manual do gettext: <a href="http://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html">http://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html</a></p>
+<p>For a complete list of language and country codes see the gettext manual: <a href="https://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html">https://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html</a></p>
 
 <p>Nos sistemas Unix, voc&ecirc; pode usar o comando locale(1) para obter informa&ccedil;&atilde;o espec&iacute;fica da localiza&ccedil;&atilde;o.</p>
 
@@ -750,7 +771,7 @@ export LANG=en_GB.UTF-8      Ingl&ecirc;s, Reino Unido, codifica&ccedil;&atilde;
 <dt id="LANGUAGE"><b>LANGUAGE</b></dt>
 <dd>
 
-<p>Com a vari&aacute;vel de ambiente LANGUAGE, voc&ecirc; pode especificar uma lista de prioridades de idiomas, separada por v&iacute;rgulas. Dos2unix fornece prefer&ecirc;ncia &agrave; LANGUAGE sobre LANG. Por exemplo, primeiro holand&ecirc;s e, ent&atilde;o, alem&atilde;o: <code>LANGUAGE=nl:de</code>. Voc&ecirc; primeiro tem que habilitar localiza&ccedil;&atilde;o, definindo LANG (ou LC_ALL) para um valor diferente de &quot;C&quot;, antes que voc&ecirc; possa usar uma lista de prioridade de idioma por meio da vari&aacute;vel LANGUAGE. Veja tamb&eacute;m o manual do gettext: <a href="http://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-variable.html">http://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-variable.html</a></p>
+<p>With the LANGUAGE environment variable you can specify a priority list of languages, separated by colons. Dos2unix gives preference to LANGUAGE over LANG. For instance, first Dutch and then German: <code>LANGUAGE=nl:de</code>. You have to first enable localization, by setting LANG (or LC_ALL) to a value other than &quot;C&quot;, before you can use a language priority list through the LANGUAGE variable. See also the gettext manual: <a href="https://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-variable.html">https://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-variable.html</a></p>
 
 <p>Se voc&ecirc; selecionou um idioma que n&atilde;o est&aacute; dispon&iacute;vel, voc&ecirc; vai ter&aacute; as mensagens em ingl&ecirc;s (padr&atilde;o).</p>
 
@@ -775,21 +796,21 @@ export LANG=en_GB.UTF-8      Ingl&ecirc;s, Reino Unido, codifica&ccedil;&atilde;
 
 <h1 id="PADRES">PADR&Otilde;ES</h1>
 
-<p><a href="http://en.wikipedia.org/wiki/Text_file">http://en.wikipedia.org/wiki/Text_file</a></p>
+<p><a href="https://en.wikipedia.org/wiki/Text_file">https://en.wikipedia.org/wiki/Text_file</a></p>
 
-<p><a href="http://en.wikipedia.org/wiki/Carriage_return">http://en.wikipedia.org/wiki/Carriage_return</a></p>
+<p><a href="https://en.wikipedia.org/wiki/Carriage_return">https://en.wikipedia.org/wiki/Carriage_return</a></p>
 
-<p><a href="http://en.wikipedia.org/wiki/Newline">http://en.wikipedia.org/wiki/Newline</a></p>
+<p><a href="https://en.wikipedia.org/wiki/Newline">https://en.wikipedia.org/wiki/Newline</a></p>
 
-<p><a href="http://en.wikipedia.org/wiki/Unicode">http://en.wikipedia.org/wiki/Unicode</a></p>
+<p><a href="https://en.wikipedia.org/wiki/Unicode">https://en.wikipedia.org/wiki/Unicode</a></p>
 
 <h1 id="AUTORES">AUTORES</h1>
 
 <p>Benjamin Lin - &lt;blin@socs.uts.edu.au&gt; Bernd Johannes Wuebben (modo mac2unix) - &lt;wuebben@kde.org&gt;, Christian Wurll (adiciona nova linha extra) - &lt;wurll@ira.uka.de&gt;, Erwin Waterlander - &lt;waterlan@xs4all.nl&gt; (mantenedor)</p>
 
-<p>P&aacute;gina do projeto: <a href="http://waterlan.home.xs4all.nl/dos2unix.html">http://waterlan.home.xs4all.nl/dos2unix.html</a></p>
+<p>Project page: <a href="https://waterlan.home.xs4all.nl/dos2unix.html">https://waterlan.home.xs4all.nl/dos2unix.html</a></p>
 
-<p>P&aacute;gina do SourceForge: <a href="http://sourceforge.net/projects/dos2unix/">http://sourceforge.net/projects/dos2unix/</a></p>
+<p>SourceForge page: <a href="https://sourceforge.net/projects/dos2unix/">https://sourceforge.net/projects/dos2unix/</a></p>
 
 <h1 id="VEJA-TAMBM">VEJA TAMB&Eacute;M</h1>
 

@@ -47,7 +47,7 @@
         이 옵션은 dos2unix에서 파일의 사용자 및 그룹 소유권을 유지하는 기능이 있을 경우에만 사용할 수 있습니다.
 
     -ascii
-        줄 바꿈 문자만 변환합니다. 기본 변환 모드입니다.
+        기본 변환 모드입니다. 변환 모드 섹션을 참고하십시오.
 
     -iso
         DOS와 ISO-8859-1 문자 세트 변환을 진행합니다. 변환 모드 섹션을 참고하십시오.
@@ -106,17 +106,17 @@
 
             ConEmu 콘솔을 사용한다면 ConEmu에서 적절한 글꼴을 자동으로 선택하므로 모든 텍스트가 제대로 나타납니다.
 
-            유니코드 사용의 단점은 ASCII와 호환성이 없다는 점입니다. 다른 프로그램으로 출력을 전달할 때 쉽게 처리할 수
+            유니코드 사용의 단점은 아스키와 호환성이 없다는 점입니다. 다른 프로그램으로 출력을 전달할 때 쉽게 처리할 수
             없습니다.
 
             "unicodebom" 방식을 사용하면 BOM(바이트 순서 표시)을 텍스트 앞에 둡니다. BOM은 파워셸에서 출력
             내용을 올바르게 전달 또는 파이핑할 때 필요합니다.
 
         utf8, utf8bom
-            utf8의 장점은 ASCII와의 호환성입니다. 콘솔의 글꼴을 트루타입 글꼴로 선택해야 합니다. 트루타입 글꼴로
-            설정하면 "unicode" 인코딩 때와 비슷하게 나타납니다.
+            utf8의 장점은 아스키와의 호환성입니다. 콘솔의 글꼴을 트루타입 글꼴로 선택해야 합니다. 트루타입 글꼴로 설정하면
+            "unicode" 인코딩 때와 비슷하게 나타납니다.
 
-            단점은 래스터 글꼴을 기본으로 사용하면 ASCII 인코딩 하지 않는 문자를 잘못 나타낼 수 있습니다. 유니코드 파일
+            단점은 래스터 글꼴을 기본으로 사용하면 아스키 인코딩을 하지 않는 문자를 잘못 나타낼 수 있습니다. 유니코드 파일
             이름 뿐만 아니라 번역 메시지 조차 제대로 읽을 수 없습니다. 윈도우에서는 동아시아 지역으로 설정했을 경우 메시지가
             나타날 때 콘솔 화면이 상당히 많이 깜빡거리는걸 볼 수 있습니다.
 
@@ -166,6 +166,16 @@
 
         때로는 이진 파일을 텍스트 파일로 잘못 알아챌 수도 있습니다. "-s" 옵션도 참고하십시오.
 
+        "-e" 또는 "--add-eol" 옵션을 추가로 사용하면 행 마지막 개행 문자 형식도 출력하며, 없다면 "noeol"을
+        출력합니다.
+
+        예제 출력:
+
+             6       0       0  no_bom    text   dos     dos.txt
+             0       6       0  no_bom    text   unix    unix.txt
+             0       0       6  no_bom    text   mac     mac.txt
+             1       0       0  no_bom    text   noeol   noeol_dos.txt
+
         출력 방식을 바꿀 추가 플래그를 설정할 수 있습니다. 플래그 하나 이상을 추가할 수 있습니다.
 
         0   파일 정보 행 끝의 개행 문자 대신 널 문자를 출력합니다. c 플래그를 사용할 때 공백 또는 따옴표로 파일 이름
@@ -181,10 +191,14 @@
 
         t   파일의 텍스트 또는 이진 여부를 출력합니다.
 
+        e   행 마지막에 개행 문자 형식을 출력하거나, 없을 경우 "noeol"을 출력합니다.
+
         c   변환할 파일만 출력합니다.
 
             dos2unix에 "c" 플래그를 사용하면 DOS 개행 문자가 들어간 파일만 출력합니다. unix2dos는 유닉스
             개행 문자가 들어간 파일 이름만 출력합니다.
+
+            "-e" 또는 "--add-eol" 옵션을 추가로 사용하면 행 마지막에 빠진 개행 문자를 출력합니다.
 
         h   헤더를 출력합니다.
 
@@ -211,6 +225,10 @@
         유닉스 개행 문자가 들어간 파일 목록 출력:
 
             unix2dos -ic *.txt
+
+        DOS 개행 문자가 들어갔거나 행 마지막에 개행 문자가 빠진 파일 목록 출력:
+
+            dos2unix -e -ic *.txt
 
         DOS 개행 문자가 들어간 파일만 변환하며 다른 파일은 건드리지 않습니다:
 
@@ -348,7 +366,7 @@
         버전 정보를 표시하고 나갑니다.
 
 맥 모드
-    일반 모드에서는 개행 문자를 DOS에서 유닉스로 그 반대로 변환합니다. 맥 개행 문자는 변환하지 않습니다.
+    DOS 개행 문자와 유닉스 개행 문자를 서로 변환해주는 동작이 기본 동작이빈다. 맥 개행 문자는 변환하지 않습니다.
 
     맥 모드에서 개행 문자를 맥에서 유닉스로, 내지는 그 반대로 변환합니다. DOS 개행 문자를 바꾸지 않습니다.
 
@@ -357,13 +375,16 @@
 
 변환 모드
     ascii
-        "ascii" 모드에서는 개행 문자만 변환합니다. ASCII 모드는 기본 변환 모드입니다.
+        기본 변환 모드입니다. 이 모드는 아스키와 UTF-8과 같은 아스키 호환 인코딩 파일을 변환합니다. ascii 모드를
+        활성화하면 7bit 모드와 iso 모드를 사용하지 않습니다.
 
-        7비트 표준 모드를 ASCII 라고 칭하지만 실제 모드는 8 비트입니다. 유니코드 UTF-8 파일을 변환할 때 항상 이
-        모드를 사용하십시오.
+        dos2unix에서 UTF-16을 지원하면 UTF-16 인코딩 파일을 POSIX 시스템의 현재 로캘 문자 인코딩과 윈도우의
+        UTF-8 인코딩으로 변환합니다. ascii 모드를 사용하면 UTF-16 인코딩 ("u")을 유지하는 옵션과 UTF-16
+        입력("-ul" 및 "-ub")을 가정하는 옵션 값을 사용하지 않습니다. dos2unix에 UTF-16 을 지원하는지
+        알아보려면 "dos2unix -V"를 입력하십시오. 유니코드 섹션도 살펴보십시오.
 
     7bit
-        이 모드에서는 ASCII 영역 밖(128~255 값)의 모든 8비트 문자를 7비트 영역으로 변환합니다.
+        이 모드에서는 아스키 영역 밖(128~255 값)의 모든 8비트 문자를 7비트 영역으로 변환합니다.
 
     iso DOS 문자 세트(코드 페이지)에서 유닉스 ISO 문자 세트 ISO-8859-1(Latin1)로 또는 그 반대로 문자를
         변환합니다. ISO-8859-1에 대응하지 않는 DOS 문자는 변환할 수 없어 구두점으로 변환합니다.
@@ -421,10 +442,10 @@
     인코딩합니다.
 
   변환
-    유니코드 텍스트 파일에는 DOS, 유닉스, 맥 개행 문자를 일반 텍스트 파일처럼 가질 수 있습니다.
+    유니코드 텍스트 파일에는 DOS, 유닉스, 맥 개행 문자를 아스키 텍스트 파일처럼 가질 수 있습니다.
 
-    dos2unix와 unix2dos의 모든 버전에서는 UTF-8이 ASCII와의 하위 호환성을 고려했기 때문에 UTF-8 인코딩
-    파일을 변환할 수 있습니다.
+    dos2unix와 unix2dos의 모든 버전에서는 UTF-8이 아스키와의 하위 호환성을 고려했기 때문에 UTF-8 인코딩 파일을
+    변환할 수 있습니다.
 
     UTF-16을 지원하는 dos2unix와 unix2dos는 UTF-16 리틀엔디언 및 빅엔디언 인코딩 텍스트 파일을 모두 읽을 수
     있습니다. dos2unix에 UTF-16 지원 기능이 들어갔는지 확인하려면 "dos2unix -V" 명령을 입력하십시오.
@@ -447,7 +468,7 @@
 
   바이트 순서 표시(BOM)
     윈도우에서는 유니코드 텍스트 파일에 대부분 윈도우 프로그램(메모장 포함)에서 BOM을 기본으로 추가하기 때문에 보통 바이트 순서
-    표시(BOM)가 들어갑니다. <http://en.wikipedia.org/wiki/Byte_order_mark> 링크를
+    표시(BOM)가 들어갑니다. <https://en.wikipedia.org/wiki/Byte_order_mark> 링크를
     참고하십시오.
 
     유닉스에서는 유니코드 파일에 BOM이 들어가지 않습니다. 텍스트 파일을 로캘 문자 인코딩으로 인코딩했다고 가정합니다.
@@ -492,10 +513,10 @@
 
 GB18030
     GB18030은 중화인민공화국 정부 표준입니다. GB18030 표준 하위 필수 세트는 중화인민공화국에서 판매하는 모든 프로그램
-    제품에 공식적으로 필요합니다. <http://en.wikipedia.org/wiki/GB_18030> 링크를 참고하십시오.
+    제품에 공식적으로 필요합니다. <https://en.wikipedia.org/wiki/GB_18030> 링크를 참고하십시오.
 
     GB18030은 유니코드와 완벽하게 호환하며, 유니코드 변환 형식으로 고려할 수 있습니다. UTF-8과 유사하게, GB18030은
-    ASCII와 호환성을 지닙니다. GB18030은 또한 GBK로 알려진 윈도우 코드 페이지 936과도 호환성이 있습니다.
+    아스키와 호환성을 지닙니다. GB18030은 또한 GBK로 알려진 윈도우 코드 페이지 936과도 호환성이 있습니다.
 
     유닉스/리눅스에서 UTF-16 파일은 로캘 인코딩을 GB18030으로 설정하면 GB18030으로 변환합니다. 참고로 시스템에서
     해당 로캘을 지원할 경우에만 동작합니다. 지원 로캘 목록을 살펴보려면 "locale -a" 명령을 사용하십시오.
@@ -594,8 +615,8 @@ GB18030
             export LANG=en_GB.UTF-8      English, UK, UTF-8 encoding
 
         언어 및 국가 코드 전체 목록을 보려면
-        <http://www.gnu.org/software/gettext/manual/html_node/Usual-Language
-        -Codes.html> gettext 설명서를 참고하십시오
+        <https://www.gnu.org/software/gettext/manual/html_node/Usual-Languag
+        e-Codes.html> gettext 설명서를 참고하십시오
 
         유닉스 시스템에서는 locale(1) 명령을 활용하여 로캘별 정보를 가져올 수 있습니다.
 
@@ -604,8 +625,8 @@ GB18030
         LANGUAGE를 LANG보다 우선하여 취급합니다. 예를 들면 네덜란드어를 먼저 그 다음에 독일어를 설정할 경우
         "LANGUAGE=nl:de"(으)로 설정합니다. LANGUAGE 환경 변수에 언어별 우선 순위를 두어 사용할 수 있기
         전에 LANG 환경 변수에 "C" 대신 다른 값을 넣어 지역화를 우선 설정해야합니다.
-        <http://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-v
-        ariable.html> gettext 설명서를 참고하십시오
+        <https://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-
+        variable.html> gettext 설명서를 참고하십시오
 
         사용할 수 없는 언어를 선택했다면 표준 (국제) 영어 메시지로 나타납니다.
 
@@ -626,13 +647,13 @@ GB18030
     미출력 모드의 반환 값은 항상 0이지만, 명령행 옵션이 잘못됐을 경우는 제외합니다.
 
 표준
-    <http://en.wikipedia.org/wiki/Text_file>
+    <https://en.wikipedia.org/wiki/Text_file>
 
-    <http://en.wikipedia.org/wiki/Carriage_return>
+    <https://en.wikipedia.org/wiki/Carriage_return>
 
-    <http://en.wikipedia.org/wiki/Newline>
+    <https://en.wikipedia.org/wiki/Newline>
 
-    <http://en.wikipedia.org/wiki/Unicode>
+    <https://en.wikipedia.org/wiki/Unicode>
 
 저자
     Benjamin Lin - <blin@socs.uts.edu.au>, Bernd Johannes Wuebben (mac2unix
@@ -640,9 +661,9 @@ GB18030
     <wurll@ira.uka.de>, Erwin Waterlander - <waterlan@xs4all.nl>
     (maintainer)
 
-    프로젝트 페이지: <http://waterlan.home.xs4all.nl/dos2unix.html>
+    프로젝트 페이지: <https://waterlan.home.xs4all.nl/dos2unix.html>
 
-    SourceForge 페이지: <http://sourceforge.net/projects/dos2unix/>
+    SourceForge 페이지: <https://sourceforge.net/projects/dos2unix/>
 
 추가 참조
     file(1) find(1) iconv(1) locale(1) xargs(1)

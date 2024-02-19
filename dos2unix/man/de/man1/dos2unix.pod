@@ -63,7 +63,7 @@ Wenn diese Option verwendet wird, dann bricht die Umwandlung nicht ab, wenn der 
 
 =item B<-ascii>
 
-wandelt nur Zeilenumbrüche um. Dies ist der vorgegebene Umwandlungsmodus.
+ist der voreingestellte Umwandlungsmodus. Weitere Informationen hierzu finden Sie im Abschnitt UMWANDLUNGSMODI.
 
 =item B<-iso>
 
@@ -153,9 +153,9 @@ Die Standardkodierung kann durch Setzen der Umgebungsvariable DOS2UNIX_DISPLAY_E
 
 =item B<-e, --add-eol>
 
-Add a line break to the last line if there isn't one. This works for every conversion.
+fügt einen Zeilenumbruch nach der letzten Zeile hinzu, falls ein solcher nicht existiert. Dies funktioniert in jeder Umwandlung.
 
-A file converted from DOS to Unix format may lack a line break on the last line. There are text editors that write text files without a line break on the last line. Some Unix programs have problems processing these files, because the POSIX standard defines that every line in a text file must end with a terminating newline character. For instance concatenating files may not give the expected result.
+Einer Datei, die aus dem DOS- ins Unix-Format umgewandelt wurde, kann ein Zeilenumbruch nach der letzten Zeile fehlen. Es gibt Texteditoren, die Dateien ohne diesen angehängten Zeilenumbruch schreiben. Einige Unix-Programme haben jedoch Probleme mit der Verarbeitung dieser Dateien, da der POSIX-Standard definiert, dass jede Zeile in einer Textdatei mit einem abschließenden Zeilenvorschubzeichen enden muss. Beispielsweise kann es beim Aneinanderhängen von solche Dateien zu unerwarteten Ergebnissen kommen.
 
 =item B<-f, --force>
 
@@ -188,6 +188,15 @@ Beispielausgabe:
 
 Beachten sie, dass manchmal eine Binärdatei fälschlicherweise als Textdatei erkannt wird. Siehe auch Option C<-s>.
 
+Wenn zusätzlich die Option C<-e> oder C<--add-eol> verwendet wird, dann wird auch der Typ des Zeilenumbruchs der letzten Zeile ausgegeben, oder C<noeol>, falls kein solcher Zeilenumbruch existiert.
+
+Beispielausgabe:
+
+     6       0       0  no_bom    text   dos     dos.txt
+     0       6       0  no_bom    text   unix    unix.txt
+     0       0       6  no_bom    text   mac     mac.txt
+     1       0       0  no_bom    text   noeol   noeol_dos.txt
+
 Optionale zusätzliche Schalter können gesetzt werden, um die Ausgabe anzupassen. Einer oder mehrere Schalter können hinzugefügt werden.
 
 =over 4
@@ -216,11 +225,17 @@ gibt die Markierung der Bytereihenfolge aus.
 
 zeigt an, ob es sich um eine Text- oder eine Binärdatei handelt.
 
+=item B<e>
+
+gibt den Typ des Zeilenumbruchs der letzten Zeile aus, oder C<noeol>, falls kein solcher Zeilenumbruch existiert.
+
 =item B<c>
 
 gibt nur die Dateien aus, die umgewandelt werden würden.
 
 Mit dem Schalter C<c> gibt dos2unix nur die Dateien aus, die DOS-Zeilenumbrüche enthalten, unix2dos nur die Dateien mit Unix-Zeilenumbrüchen.
+
+Wenn zusätzlich die Option C<-e> oder C<--add-eol> verwendet wird, dann werden auch die Dateien ausgegeben, denen der Zeilenumbruch an der letzten Zeile fehlt.
 
 =item B<h>
 
@@ -253,6 +268,10 @@ Die Dateien auflisten, die DOS-Zeilenumbrüche enthalten:
 Die Dateien auflisten, die Unix-Zeilenumbrüche enthalten:
 
     unix2dos -ic *.txt
+
+Die Dateien auflisten, die DOS-Zeilenumbrüche enthalten oder bei denen der Zeilenumbruch nach der letzten Zeile fehlt:
+
+    dos2unix -e -ic *.txt
 
 Nur Dateien umwandeln, die DOS-Zeilenumbrüche enthalten und die anderen Dateien unverändert belassen:
 
@@ -302,17 +321,17 @@ bricht die Umwandlung ab, wenn der Eigentümer und/oder die Gruppe der Originald
 
 =item B<--no-add-eol>
 
-Do not add a line break to the last line if there isn't one.
+fügt keinen Zeilenumbruch nach der letzten Zeile hinzu, falls ein solcher nicht existiert.
 
 =item B<-O, --to-stdout>
 
-Write to standard output, like a Unix filter. Use option C<-o> to go back to old file (in-place) mode.
+schreibt wie ein Unix-Filter in die Standardausgabe. Mit der Option C<-o> können Sie zum Alte-Datei-Modus (Ersetzungsmodus) zurückkehren.
 
-Combined with option C<-e> files can be properly concatenated. No merged last and first lines, and no Unicode byte order marks in the middle of the concatenated file. Example:
+In Kombination mit der Option C<-e> können Dateien korrekt aneinandergehängt werden. Weder werden Zeilen ohne Umbruch zusammengeführt, noch werden Unicode-Markierungen der Bytereihenfolge mitten in die verkettete Datei gesetzt. Beispiel:
 
-    dos2unix -e -O file1.txt file2.txt > output.txt
+    dos2unix -e -O Datei1.txt Datei2.txt > Ausgabe.txt
 
-=item B<-o, --oldfile FILE ...>
+=item B<-o, --oldfile DATEI …>
 
 Alte-Datei-Modus. Die DATEI wird umgewandelt und durch die Ausgabedatei überschrieben. Per Vorgabe werden Umwandlungen in diesem Modus ausgeführt. Platzhalter sind verwendbar.
 
@@ -388,7 +407,7 @@ zeigt Versionsinformationen an und beendet das Programm.
 
 =head1 MAC-MODUS
 
-Im Normalmodus werden Zeilenumbrüche von DOS nach Unix und umgekehrt umgewandelt. Mac-Zeilenumbrüche werden nicht verändert.
+In der Voreinstellung werden Zeilenumbrüche von DOS nach Unix und umgekehrt umgewandelt. Mac-Zeilenumbrüche werden nicht verändert.
 
 Im Mac-Modus werden Zeilenumbrüche von Mac nach Unix und umgekehrt umgewandelt. DOS-Zeilenumbrüche werden nicht verändert.
 
@@ -400,9 +419,9 @@ Um das Programm im Mac-Modus auszuführen, verwenden Sie die Befehlszeilenoption
 
 =item B<ascii>
 
-Im C<ascii>-Modus werden nur Zeilenumbrüche umgewandelt. Dies ist der vorgegebene Umwandlungsmodus.
+Dies ist der vorgegebene Umwandlungsmodus. Dieser Modus dient zum Umwandeln von ASCII- und ASCII-kompatibel kodierten Dateien, wie UTF-8. Durch Aktivierung des B<ascii>-Modus werden die Modi B<7bit> und B<iso> deaktiviert.
 
-Obwohl der Name dieses Modus auf ASCII hinweist, welches ein 7-bit-Standard ist, bezieht sich der eigentliche Modus auf 8 Bit. Verwenden Sie diesen Modus immer dann, wenn Sie Unicode-Dateien in UTF-8-Kodierung umwandeln.
+Falls dos2unix über Unterstützung für UTF-16 verfügt, werden UTF-16-kodierte Dateien auf POSIX-Systemen in die aktuelle Zeichenkodierung der Locale und unter Windows in UTF-8 umgewandelt. Die Aktivierung des B<ascii>-Modus deaktiviert die Option C<-u> zum Erhalten der UTF-16-Kodierung sowie die Optionen C<-ul> und C<-ub>, welche davon ausgehen, dass die Eingabe in UTF-16 kodiert ist. Geben Sie den Befehl C<dos2unix -V> ein, um zu sehen, ob dos2unix UTF-16 unterstützt. Weitere Informationen hierzu finden Sie im Abschnitt UNICODE.
 
 =item B<7bit>
 
@@ -462,7 +481,7 @@ Es gibt verschiedene Unicode-Zeichenkodierungen. Unter Unix und Linux sind Unico
 
 =head2 Umwandlung
 
-Unicode-Textdateien können DOS-, Unix- oder Mac-Zeilenumbrüche enthalten, so wie reguläre Textdateien.
+Unicode-Textdateien können DOS-, Unix- oder Mac-Zeilenumbrüche enthalten, so wie ASCII-Textdateien.
 
 Alle Versionen von dos2unix und unix2dos können UTF-8-kodierte Dateien umwandeln, weil UTF-8 im Hinblick auf Abwärtskompatibilität mit ASCII entwickelt wurde.
 
@@ -482,7 +501,7 @@ Umwandlungen im ISO- und 7bit-Modus funktionieren mit UTF-16-Dateien nicht.
 
 =head2 Markierung der Bytereihenfolge
 
-Unicode-Textdateien unter Windows haben typischerweise eine Markierung der Bytereihenfolge (BOM), da viele Windows-Programme (zum Beispiel Notepad) solche BOMs standardmäßig hinzufügen. Weitere Informationen hierzu finden Sie auf L<http://de.wikipedia.org/wiki/Byte-Reihenfolge>.
+Unicode-Textdateien unter Windows haben typischerweise eine Markierung der Bytereihenfolge (BOM), da viele Windows-Programme (zum Beispiel Notepad) solche BOMs standardmäßig hinzufügen. Weitere Informationen hierzu finden Sie auf L<https://de.wikipedia.org/wiki/Byte-Reihenfolge>.
 
 Unter Unix haben Textdateien üblicherweise keine BOM. Es wird stattdessen angenommen, dass Textdateien in der Zeichenkodierung entsprechend der Spracheinstellung vorliegen.
 
@@ -522,7 +541,7 @@ Umwandlung von Unix UTF-8 nach Windows UTF-16:
 
 =head1 GB18030
 
-GB18030 ist ein Standard der chinesischen Regierung. Eine Teilmenge des in GB18030 definierten Standards ist offiziell für alle in China verkauften Softwareprodukte vorgeschrieben. Siehe auch L<http://de.wikipedia.org/wiki/GB_18030>.
+GB18030 ist ein Standard der chinesischen Regierung. Eine Teilmenge des in GB18030 definierten Standards ist offiziell für alle in China verkauften Softwareprodukte vorgeschrieben. Siehe auch L<https://de.wikipedia.org/wiki/GB_18030>.
 
 GB18030 ist vollständig zu Unicode kompatibel und kann als Unicode-Umwandlungsformat betrachtet werden. Wie auch UTF-8 ist GB18030 kompatibel zu ASCII. Ebenfalls kompatibel ist es zur Codepage 936 von Windows, auch als GBK bekannt.
 
@@ -622,7 +641,7 @@ Die primäre Sprache wird durch die Umgebungsvariable LANG festgelegt. Diese Var
     export LANG=en_US.iso88591   Englisch, USA, Latin-1-Zeichenkodierung
     export LANG=en_GB.UTF-8      Englisch, GB, UTF-8-Zeichenkodierung
 
-Eine vollständige Liste der Sprachen und Ländercodes finden Sie im Gettext-Handbuch: L<http://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html>
+Eine vollständige Liste der Sprachen und Ländercodes finden Sie im Gettext-Handbuch: L<https://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html>
 
 Auf Unix-Systemen erhalten Sie mit dem Befehl locale(1) spezifische Informationen zu den Spracheinstellungen.
 

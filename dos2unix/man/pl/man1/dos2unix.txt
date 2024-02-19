@@ -66,7 +66,7 @@ OPCJE
         obsługę zachowywania użytkownika i grupy plików.
 
     -ascii
-        Konwersja tylko znaków końca linii. Jest to domyślny tryb konwersji.
+        Domyślny tryb konwersji. Więcej w sekcji TRYBY KONWERSJI.
 
     -iso
         Konwersja między zestawami znaków DOS i ISO-8859-1. Więcej w sekcji
@@ -219,8 +219,17 @@ OPCJE
         Uwaga: czasami plik binarny może być błędnie rozpoznany jako
         tekstowy. P. także opcja "-s".
 
-        Opcjonalnie można ustawić dodatkowe flagi, aby zmienić wyjście.
-        Można dodać jedną lub więcej flag.
+        Jeśli dodatkowo użyta jest opcja "-e" lub "--add-eol", wypisywany
+        jest także rodzaj końca linii z ostatniej linii, lub "noeol", jeśli
+        nie ma żadnego.
+
+        Przykładowe wyjście:
+
+             6       0       0  no_bom    text   dos     dos.txt
+             0       6       0  no_bom    text   unix    unix.txt
+             0       0       6  no_bom    text   mac     mac.txt
+             1       0       0  no_bom    text   noeol   noeol_dos.txt
+        Opcjonalnie można ustawić dodatkowe flagi, aby zmienić wyjście. Można dodać jedną lub więcej flag.
 
         0   Wypisanie wierszy informacji o pliku zakończonych znakiem NUL
             zamiast znaku nowej linii. Pozwala to na poprawną interpretację
@@ -238,11 +247,17 @@ OPCJE
 
         t   Wypisanie, czy plik jest tekstowy, czy binarny.
 
+        e   Wypisanie rodzaju końca wiersza w ostatnim wierszu, lub "noeol",
+            jeśli nie ma żadnego.
+
         c   Wypisanie tylko plików, które zostałyby przekonwertowane.
 
             Z flagą "c" dos2unix wypisze tylko pliki zawierające DOS-owe
             końce linii, a unix2dos wypisze tylko nazwy plików zawierających
             uniksowe końce linii.
+
+            Jeśli dodatkowo użyta jest opcja "-e" lub "--add-eol",
+            wypisywane są także pliki bez zakończenia ostatniej linii.
 
         h   Wypisanie nagłówka.
 
@@ -269,6 +284,11 @@ OPCJE
         Wypisanie listy plików zawierających uniksowe końce linii:
 
             unix2dos -ic *.txt
+
+        Wypisanie listy plików zawierających DOS-owe końce linii lub bez
+        znaku końca w ostatniej linii:
+
+            dos2unix -e -ic *.txt
 
         Konwersja tylko plików mających DOS-owe końce linii, pozostawienie
         pozostałych bez zmian:
@@ -442,7 +462,7 @@ OPCJE
         Wyświetlenie informacji o wersji i zakończenie.
 
 TRYB MAC
-    W zwykłym trybie znaki końca linii są konwertowane z DOS-a do Uniksa i
+    Domyślnie znaki końca linii są konwertowane z DOS-a do Uniksa i
     odwrotnie. Znaki końca linii systemu Mac nie są konwertowane.
 
     W trybie Mac znaki końca linii są konwertowane z formatu Maca do Uniksa
@@ -453,12 +473,16 @@ TRYB MAC
 
 TRYBY KONWERSJI
     ascii
-        W trybie "ascii" konwertowane są tylko końce linii. Jest to domyślny
-        tryb konwersji.
+        To jest domyślny tryb konwersji. Służy do konwersji plików
+        kodowanych ASCII lub zgodnie z ASCII, np. UTF-8. Włączenie trybu
+        ascii wyłącza tryby 7bit i iso.
 
-        Mimo że nazwa tego trybu to ASCII, które jest standardem 7-bitowym,
-        jest to tryb 8-bitowy. Należy zawsze używać tego trybu przy
-        konwersji plików Unicode UTF-8.
+        Jeśli dos2unix ma obsługę UTF-16, pliki kodowane UTF-16 są
+        konwertowane do bieżącego kodowania w systamach zgodnych z POSIX lub
+        do UTF-8 na Windows. Włączenie trybu ascii wyłącza opcję
+        zachowywania kodowania UTF-16 ("-u") oraz opcje zakładające wejście
+        UTF-16 ("-ul" oraz "-ub"). Aby sprawdzić, czy dos2unix ma obsługę
+        UTF-16, można wywołać "dos2unix -V". Więcej w sekcji UNICODE.
 
     7bit
         W tym trybie wszystkie znaki 8-bitowe spoza ASCII (o wartościach od
@@ -532,7 +556,7 @@ UNICODE
 
   Konwersje
     Pliki tekstowe Unicode mogą mieć znaki końca linii systemu DOS, Unix lub
-    Mac, podobnie jak zwykłe pliki tekstowe.
+    Mac, podobnie jak pliki tekstowe ASCII.
 
     Wszystkie wersje dos2unix i unix2dos potrafią konwertować pliki kodowane
     UTF-8, ponieważ UTF-8 jest wstecznie zgodne z ASCII.
@@ -569,7 +593,7 @@ UNICODE
     W systemie Windows pliki tekstowe zwykle zawierają znacznik BOM (Byte
     Order Mark), ponieważ wiele programów dla Windows (w tym Notepad) dodaje
     domyślnie znaczniki BOM. Więcej informacji można znaleźć pod adresem
-    <http://pl.wikipedia.org/wiki/BOM_(informatyka)>.
+    <https://pl.wikipedia.org/wiki/BOM_(informatyka)>.
 
     Pod Uniksem pliki Unicode zwykle nie mają znacznika BOM. Pliki tekstowe
     są traktowane jako kodowane zgodnie z kodowaniem znaków ustawionej
@@ -624,7 +648,7 @@ UNICODE
 GB18030
     GB18030 to standard urzędowy w Chinach. Obowiązkowy podzbiór standardu
     GB18030 jest oficjalnym wymaganiem każdego oprogramowania sprzedawanego
-    w Chinach. Więcej pod adresem <http://en.wikipedia.org/wiki/GB_18030>.
+    w Chinach. Więcej pod adresem <https://en.wikipedia.org/wiki/GB_18030>.
 
     GB18030 jest w pełni zgodny z Unicode i może być uważany za format
     transformacji unikodu. Podobnie jak UTF-8, GB18030 jest zgodny z ASCII.
@@ -742,8 +766,8 @@ LOKALIZACJA
 
         Pełną listę kodów języków i krajów można znaleźć w podręczniku do
         gettexta:
-        <http://www.gnu.org/software/gettext/manual/html_node/Usual-Language
-        -Codes.html>
+        <https://www.gnu.org/software/gettext/manual/html_node/Usual-Languag
+        e-Codes.html>
 
         W systemach uniksowych do uzyskania informacji dotyczących
         lokalizacji można użyć polecenia locale(1).
@@ -757,8 +781,8 @@ LOKALIZACJA
         lokalizację przez ustawienie zmiennej LANG (lub LC_ALL) na wartość
         inną niż "C". Więcej informacji znajduje się w podręczniku do
         gettexta:
-        <http://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-v
-        ariable.html>
+        <https://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-
+        variable.html>
 
         W przypadku wybrania niedostępnego języka, otrzymamy standardowe,
         angielskie komunikaty.
@@ -783,13 +807,13 @@ WARTOŚĆ ZWRACANA
     podania błędnych opcji linii poleceń.
 
 STANDARDY
-    <http://pl.wikipedia.org/wiki/Plik_tekstowy>
+    <https://pl.wikipedia.org/wiki/Plik_tekstowy>
 
-    <http://en.wikipedia.org/wiki/Carriage_return>
+    <https://en.wikipedia.org/wiki/Carriage_return>
 
-    <http://pl.wikipedia.org/wiki/End-of-line>
+    <https://pl.wikipedia.org/wiki/Koniec_linii>
 
-    <http://pl.wikipedia.org/wiki/Unicode>
+    <https://pl.wikipedia.org/wiki/Unicode>
 
 AUTORZY
     Benjamin Lin <blin@socs.uts.edu.au>; Bernd Johannes Wuebben (tryb
@@ -797,9 +821,9 @@ AUTORZY
     linii) <wurll@ira.uka.de>; Erwin Waterlander <waterlan@xs4all.nl>
     (prowadzący)
 
-    Strona projektu: <http://waterlan.home.xs4all.nl/dos2unix.html>
+    Strona projektu: <https://waterlan.home.xs4all.nl/dos2unix.html>
 
-    Strona SourceForge: <http://sourceforge.net/projects/dos2unix/>
+    Strona SourceForge: <https://sourceforge.net/projects/dos2unix/>
 
 ZOBACZ TAKŻE
     file(1) find(1) iconv(1) locale(1) xargs(1)

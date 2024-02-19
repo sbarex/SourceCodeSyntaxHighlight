@@ -71,7 +71,7 @@
 .\" ========================================================================
 .\"
 .IX Title "dos2unix 1"
-.TH dos2unix 1 "2023-08-29" "dos2unix" "2023-08-29"
+.TH dos2unix 1 "2024-01-22" "dos2unix" "2024-01-22"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -122,7 +122,7 @@ dos2unix는 SunOS/솔라리스의 dos2unix가 나온 후 구성한 모델입니�
 이 옵션을 사용하면 이전 파일의 사용자 또는 그룹 소유권을 유지할 수 없을 때 변환을 멈추지 않습니다. 새 파일의 모드로 변환할 때 처럼 동일하게 변환한 파일에 새 소유권을 부여하면서 변환을 계속합니다. \f(CW\*(C`\-o\*(C'\fR, \f(CW\*(C`\-n\*(C'\fR 옵션도 참고하십시오. 이 옵션은 dos2unix에서 파일의 사용자 및 그룹 소유권을 유지하는 기능이 있을 경우에만 사용할 수 있습니다.
 .IP "\fB\-ascii\fR" 4
 .IX Item "-ascii"
-줄 바꿈 문자만 변환합니다. 기본 변환 모드입니다.
+기본 변환 모드입니다. 변환 모드 섹션을 참고하십시오.
 .IP "\fB\-iso\fR" 4
 .IX Item "-iso"
 DOS와 \s-1ISO\-8859\-1\s0 문자 세트 변환을 진행합니다. 변환 모드 섹션을 참고하십시오.
@@ -172,14 +172,14 @@ dos2unix의 기본 방식은 \s-1ANSI\s0 인코딩 텍스트를 활용하는 방
 .Sp
 ConEmu 콘솔을 사용한다면 ConEmu에서 적절한 글꼴을 자동으로 선택하므로 모든 텍스트가 제대로 나타납니다.
 .Sp
-유니코드 사용의 단점은 ASCII와 호환성이 없다는 점입니다. 다른 프로그램으로 출력을 전달할 때 쉽게 처리할 수 없습니다.
+유니코드 사용의 단점은 아스키와 호환성이 없다는 점입니다. 다른 프로그램으로 출력을 전달할 때 쉽게 처리할 수 없습니다.
 .Sp
 \&\f(CW\*(C`unicodebom\*(C'\fR 방식을 사용하면 \s-1BOM\s0(바이트 순서 표시)을 텍스트 앞에 둡니다. BOM은 파워셸에서 출력 내용을 올바르게 전달 또는 파이핑할 때 필요합니다.
 .IP "\fButf8, utf8bom\fR" 4
 .IX Item "utf8, utf8bom"
-utf8의 장점은 ASCII와의 호환성입니다. 콘솔의 글꼴을 트루타입 글꼴로 선택해야 합니다. 트루타입 글꼴로 설정하면 \f(CW\*(C`unicode\*(C'\fR 인코딩 때와 비슷하게 나타납니다.
+utf8의 장점은 아스키와의 호환성입니다. 콘솔의 글꼴을 트루타입 글꼴로 선택해야 합니다. 트루타입 글꼴로 설정하면 \f(CW\*(C`unicode\*(C'\fR 인코딩 때와 비슷하게 나타납니다.
 .Sp
-단점은 래스터 글꼴을 기본으로 사용하면 \s-1ASCII\s0 인코딩 하지 않는 문자를 잘못 나타낼 수 있습니다. 유니코드 파일 이름 뿐만 아니라 번역 메시지 조차 제대로 읽을 수 없습니다. 윈도우에서는 동아시아 지역으로 설정했을 경우 메시지가 나타날 때 콘솔 화면이 상당히 많이 깜빡거리는걸 볼 수 있습니다.
+단점은 래스터 글꼴을 기본으로 사용하면 아스키 인코딩을 하지 않는 문자를 잘못 나타낼 수 있습니다. 유니코드 파일 이름 뿐만 아니라 번역 메시지 조차 제대로 읽을 수 없습니다. 윈도우에서는 동아시아 지역으로 설정했을 경우 메시지가 나타날 때 콘솔 화면이 상당히 많이 깜빡거리는걸 볼 수 있습니다.
 .Sp
 ConEmu 콘솔에서는 utf8 인코딩이 제대로 동작합니다.
 .Sp
@@ -224,6 +224,17 @@ ConEmu 콘솔에서는 utf8 인코딩이 제대로 동작합니다.
 .Sp
 때로는 이진 파일을 텍스트 파일로 잘못 알아챌 수도 있습니다. \f(CW\*(C`\-s\*(C'\fR 옵션도 참고하십시오.
 .Sp
+\&\f(CW\*(C`\-e\*(C'\fR 또는 \f(CW\*(C`\-\-add\-eol\*(C'\fR 옵션을 추가로 사용하면 행 마지막 개행 문자 형식도 출력하며, 없다면 \f(CW\*(C`noeol\*(C'\fR을 출력합니다.
+.Sp
+예제 출력:
+.Sp
+.Vb 4
+\&     6       0       0  no_bom    text   dos     dos.txt
+\&     0       6       0  no_bom    text   unix    unix.txt
+\&     0       0       6  no_bom    text   mac     mac.txt
+\&     1       0       0  no_bom    text   noeol   noeol_dos.txt
+.Ve
+.Sp
 출력 방식을 바꿀 추가 플래그를 설정할 수 있습니다. 플래그 하나 이상을 추가할 수 있습니다.
 .RS 4
 .IP "\fB0\fR" 4
@@ -244,11 +255,16 @@ ConEmu 콘솔에서는 utf8 인코딩이 제대로 동작합니다.
 .IP "\fBt\fR" 4
 .IX Item "t"
 파일의 텍스트 또는 이진 여부를 출력합니다.
+.IP "\fBe\fR" 4
+.IX Item "e"
+행 마지막에 개행 문자 형식을 출력하거나, 없을 경우 \f(CW\*(C`noeol\*(C'\fR을 출력합니다.
 .IP "\fBc\fR" 4
 .IX Item "c"
 변환할 파일만 출력합니다.
 .Sp
 dos2unix에 \f(CW\*(C`c\*(C'\fR 플래그를 사용하면 \s-1DOS\s0 개행 문자가 들어간 파일만 출력합니다. unix2dos는 유닉스 개행 문자가 들어간 파일 이름만 출력합니다.
+.Sp
+\&\f(CW\*(C`\-e\*(C'\fR 또는 \f(CW\*(C`\-\-add\-eol\*(C'\fR 옵션을 추가로 사용하면 행 마지막에 빠진 개행 문자를 출력합니다.
 .IP "\fBh\fR" 4
 .IX Item "h"
 헤더를 출력합니다.
@@ -288,6 +304,12 @@ dos2unix에 \f(CW\*(C`c\*(C'\fR 플래그를 사용하면 \s-1DOS\s0 개행 문�
 .Sp
 .Vb 1
 \&    unix2dos \-ic *.txt
+.Ve
+.Sp
+\&\s-1DOS\s0 개행 문자가 들어갔거나 행 마지막에 개행 문자가 빠진 파일 목록 출력:
+.Sp
+.Vb 1
+\&    dos2unix \-e \-ic *.txt
 .Ve
 .Sp
 \&\s-1DOS\s0 개행 문자가 들어간 파일만 변환하며 다른 파일은 건드리지 않습니다:
@@ -410,7 +432,7 @@ UTF\-16LE가 \fI변환 모드\fR로 동작한다고 가정해보겠습니다. �
 버전 정보를 표시하고 나갑니다.
 .SH "맥 모드"
 .IX Header "맥 모드"
-일반 모드에서는 개행 문자를 DOS에서 유닉스로 그 반대로 변환합니다.  맥 개행 문자는 변환하지 않습니다.
+\&\s-1DOS\s0 개행 문자와 유닉스 개행 문자를 서로 변환해주는 동작이 기본 동작이빈다.  맥 개행 문자는 변환하지 않습니다.
 .PP
 맥 모드에서 개행 문자를 맥에서 유닉스로, 내지는 그 반대로 변환합니다. \s-1DOS\s0 개행 문자를 바꾸지 않습니다.
 .PP
@@ -419,12 +441,12 @@ UTF\-16LE가 \fI변환 모드\fR로 동작한다고 가정해보겠습니다. �
 .IX Header "변환 모드"
 .IP "\fBascii\fR" 4
 .IX Item "ascii"
-\&\f(CW\*(C`ascii\*(C'\fR 모드에서는 개행 문자만 변환합니다. \s-1ASCII\s0 모드는 기본 변환 모드입니다.
+기본 변환 모드입니다. 이 모드는 아스키와 UTF\-8과 같은 아스키 호환 인코딩 파일을 변환합니다. \fBascii\fR 모드를 활성화하면 \fB7bit\fR 모드와 \fBiso\fR 모드를 사용하지 않습니다.
 .Sp
-7비트 표준 모드를 \s-1ASCII\s0 라고 칭하지만 실제 모드는 8 비트입니다. 유니코드 \s-1UTF\-8\s0 파일을 변환할 때 항상 이 모드를 사용하십시오.
+dos2unix에서 UTF\-16을 지원하면 \s-1UTF\-16\s0 인코딩 파일을 \s-1POSIX\s0 시스템의 현재 로캘 문자 인코딩과 윈도우의 \s-1UTF\-8\s0 인코딩으로 변환합니다.  \fBascii\fR 모드를 사용하면 \s-1UTF\-16\s0 인코딩 (\f(CW\*(C`u\*(C'\fR)을 유지하는 옵션과 \s-1UTF\-16\s0 입력(\f(CW\*(C`\-ul\*(C'\fR 및 \f(CW\*(C`\-ub\*(C'\fR)을 가정하는 옵션 값을 사용하지 않습니다.  dos2unix에 \s-1UTF\-16\s0 을 지원하는지 알아보려면 \f(CW\*(C`dos2unix \-V\*(C'\fR를 입력하십시오. 유니코드 섹션도 살펴보십시오.
 .IP "\fB7bit\fR" 4
 .IX Item "7bit"
-이 모드에서는 \s-1ASCII\s0 영역 밖(128~255 값)의 모든 8비트 문자를 7비트 영역으로 변환합니다.
+이 모드에서는 아스키 영역 밖(128~255 값)의 모든 8비트 문자를 7비트 영역으로 변환합니다.
 .IP "\fBiso\fR" 4
 .IX Item "iso"
 \&\s-1DOS\s0 문자 세트(코드 페이지)에서 유닉스 \s-1ISO\s0 문자 세트 \s-1ISO\-8859\-1\s0(Latin1)로 또는 그 반대로 문자를 변환합니다. ISO\-8859\-1에 대응하지 않는 \s-1DOS\s0 문자는 변환할 수 없어 구두점으로 변환합니다. ISO\-8859\-1에서 \s-1DOS\s0 문자 세트로 변환할 때도 마찬가지입니다.
@@ -491,9 +513,9 @@ dos2unix에 \f(CW\*(C`\-iso\*(C'\fR옵션만 사용했을 경우 활성 코드 �
 여러가지 유니코드 인코딩이 있습니다. 유닉스와 리뉵스 유니코드 파일은 보통 \s-1UTF\-8\s0 인코딩 방식으로 인코딩합니다. 윈도우에서는 유니코드 텍스트 파일을 \s-1UTF\-8, UTF\-16, UTF\-16\s0 빅엔디언 방식으로 인코딩할 수 있지만 보통 \s-1UTF\-16\s0 형식으로 인코딩합니다.
 .SS "변환"
 .IX Subsection "변환"
-유니코드 텍스트 파일에는 \s-1DOS,\s0 유닉스, 맥 개행 문자를 일반 텍스트 파일처럼 가질 수 있습니다.
+유니코드 텍스트 파일에는 \s-1DOS,\s0 유닉스, 맥 개행 문자를 아스키 텍스트 파일처럼 가질 수 있습니다.
 .PP
-dos2unix와 unix2dos의 모든 버전에서는 UTF\-8이 ASCII와의 하위 호환성을 고려했기 때문에 \s-1UTF\-8\s0 인코딩 파일을 변환할 수 있습니다.
+dos2unix와 unix2dos의 모든 버전에서는 UTF\-8이 아스키와의 하위 호환성을 고려했기 때문에 \s-1UTF\-8\s0 인코딩 파일을 변환할 수 있습니다.
 .PP
 UTF\-16을 지원하는 dos2unix와 unix2dos는 \s-1UTF\-16\s0 리틀엔디언 및 빅엔디언 인코딩 텍스트 파일을 모두 읽을 수 있습니다. dos2unix에 \s-1UTF\-16\s0 지원 기능이 들어갔는지 확인하려면 \f(CW\*(C`dos2unix \-V\*(C'\fR 명령을 입력하십시오.
 .PP
@@ -510,7 +532,7 @@ dos2unix와 unix2dos에는 \s-1UTF\-8\s0 파일을 UTF\-16으로 변환하는 �
 \&\s-1ISO\s0 및 7비트 모드 변환은 \s-1UTF\-16\s0 파일에 동작하지 않습니다.
 .SS "바이트 순서 표시(\s-1BOM\s0)"
 .IX Subsection "바이트 순서 표시(BOM)"
-윈도우에서는 유니코드 텍스트 파일에 대부분 윈도우 프로그램(메모장 포함)에서 BOM을 기본으로 추가하기 때문에 보통 바이트 순서 표시(\s-1BOM\s0)가 들어갑니다. <http://en.wikipedia.org/wiki/Byte_order_mark> 링크를 참고하십시오.
+윈도우에서는 유니코드 텍스트 파일에 대부분 윈도우 프로그램(메모장 포함)에서 BOM을 기본으로 추가하기 때문에 보통 바이트 순서 표시(\s-1BOM\s0)가 들어갑니다. <https://en.wikipedia.org/wiki/Byte_order_mark> 링크를 참고하십시오.
 .PP
 유닉스에서는 유니코드 파일에 BOM이 들어가지 않습니다. 텍스트 파일을 로캘 문자 인코딩으로 인코딩했다고 가정합니다.
 .PP
@@ -555,9 +577,9 @@ dos2unix에서는 윈도우 명령 프롬프트의 유니코드 파일 이름을
 .Ve
 .SH "GB18030"
 .IX Header "GB18030"
-GB18030은 중화인민공화국 정부 표준입니다. \s-1GB18030\s0 표준 하위 필수 세트는 중화인민공화국에서 판매하는 모든 프로그램 제품에 공식적으로 필요합니다. <http://en.wikipedia.org/wiki/GB_18030> 링크를 참고하십시오.
+GB18030은 중화인민공화국 정부 표준입니다. \s-1GB18030\s0 표준 하위 필수 세트는 중화인민공화국에서 판매하는 모든 프로그램 제품에 공식적으로 필요합니다. <https://en.wikipedia.org/wiki/GB_18030> 링크를 참고하십시오.
 .PP
-GB18030은 유니코드와 완벽하게 호환하며, 유니코드 변환 형식으로 고려할 수 있습니다. UTF\-8과 유사하게, GB18030은 ASCII와 호환성을 지닙니다. GB18030은 또한 GBK로 알려진 윈도우 코드 페이지 936과도 호환성이 있습니다.
+GB18030은 유니코드와 완벽하게 호환하며, 유니코드 변환 형식으로 고려할 수 있습니다. UTF\-8과 유사하게, GB18030은 아스키와 호환성을 지닙니다. GB18030은 또한 GBK로 알려진 윈도우 코드 페이지 936과도 호환성이 있습니다.
 .PP
 유닉스/리눅스에서 \s-1UTF\-16\s0 파일은 로캘 인코딩을 GB18030으로 설정하면 GB18030으로 변환합니다. 참고로 시스템에서 해당 로캘을 지원할 경우에만 동작합니다. 지원 로캘 목록을 살펴보려면 \f(CW\*(C`locale \-a\*(C'\fR 명령을 사용하십시오.
 .PP
@@ -680,12 +702,12 @@ a.txt를 변환하여 e.txt로 기록, a.txt를 변환하고 내용 바꾸기, b
 \&    export LANG=en_GB.UTF\-8      English, UK, UTF\-8 encoding
 .Ve
 .Sp
-언어 및 국가 코드 전체 목록을 보려면 <http://www.gnu.org/software/gettext/manual/html_node/Usual\-Language\-Codes.html> gettext 설명서를 참고하십시오
+언어 및 국가 코드 전체 목록을 보려면 <https://www.gnu.org/software/gettext/manual/html_node/Usual\-Language\-Codes.html> gettext 설명서를 참고하십시오
 .Sp
 유닉스 시스템에서는 \fBlocale\fR\|(1) 명령을 활용하여 로캘별 정보를 가져올 수 있습니다.
 .IP "\fB\s-1LANGUAGE\s0\fR" 4
 .IX Item "LANGUAGE"
-\&\s-1LANGUAGE\s0 환경 변수에는 언어를 우선 순위별로 콜론으로 구분하여 지정할 수 있습니다. dos2unix에서는 LANGUAGE를 LANG보다 우선하여 취급합니다.  예를 들면 네덜란드어를 먼저 그 다음에 독일어를 설정할 경우 \f(CW\*(C`LANGUAGE=nl:de\*(C'\fR(으)로 설정합니다. \s-1LANGUAGE\s0 환경 변수에 언어별 우선 순위를 두어 사용할 수 있기 전에 \s-1LANG\s0 환경 변수에 \*(L"C\*(R" 대신 다른 값을 넣어 지역화를 우선 설정해야합니다. <http://www.gnu.org/software/gettext/manual/html_node/The\-LANGUAGE\-variable.html> gettext 설명서를 참고하십시오
+\&\s-1LANGUAGE\s0 환경 변수에는 언어를 우선 순위별로 콜론으로 구분하여 지정할 수 있습니다. dos2unix에서는 LANGUAGE를 LANG보다 우선하여 취급합니다.  예를 들면 네덜란드어를 먼저 그 다음에 독일어를 설정할 경우 \f(CW\*(C`LANGUAGE=nl:de\*(C'\fR(으)로 설정합니다. \s-1LANGUAGE\s0 환경 변수에 언어별 우선 순위를 두어 사용할 수 있기 전에 \s-1LANG\s0 환경 변수에 \*(L"C\*(R" 대신 다른 값을 넣어 지역화를 우선 설정해야합니다. <https://www.gnu.org/software/gettext/manual/html_node/The\-LANGUAGE\-variable.html> gettext 설명서를 참고하십시오
 .Sp
 사용할 수 없는 언어를 선택했다면 표준 (국제) 영어 메시지로 나타납니다.
 .IP "\fB\s-1DOS2UNIX_LOCALEDIR\s0\fR" 4
@@ -704,20 +726,20 @@ a.txt를 변환하여 e.txt로 기록, a.txt를 변환하고 내용 바꾸기, b
 미출력 모드의 반환 값은 항상 0이지만, 명령행 옵션이 잘못됐을 경우는 제외합니다.
 .SH "표준"
 .IX Header "표준"
-<http://en.wikipedia.org/wiki/Text_file>
+<https://en.wikipedia.org/wiki/Text_file>
 .PP
-<http://en.wikipedia.org/wiki/Carriage_return>
+<https://en.wikipedia.org/wiki/Carriage_return>
 .PP
-<http://en.wikipedia.org/wiki/Newline>
+<https://en.wikipedia.org/wiki/Newline>
 .PP
-<http://en.wikipedia.org/wiki/Unicode>
+<https://en.wikipedia.org/wiki/Unicode>
 .SH "저자"
 .IX Header "저자"
 Benjamin Lin \- <blin@socs.uts.edu.au>, Bernd Johannes Wuebben (mac2unix mode) \- <wuebben@kde.org>, Christian Wurll (add extra newline) \- <wurll@ira.uka.de>, Erwin Waterlander \- <waterlan@xs4all.nl> (maintainer)
 .PP
-프로젝트 페이지: <http://waterlan.home.xs4all.nl/dos2unix.html>
+프로젝트 페이지: <https://waterlan.home.xs4all.nl/dos2unix.html>
 .PP
-SourceForge 페이지: <http://sourceforge.net/projects/dos2unix/>
+SourceForge 페이지: <https://sourceforge.net/projects/dos2unix/>
 .SH "추가 참조"
 .IX Header "추가 참조"
 \&\fBfile\fR\|(1)  \fBfind\fR\|(1)  \fBiconv\fR\|(1)  \fBlocale\fR\|(1)  \fBxargs\fR\|(1)

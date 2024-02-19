@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>dos2unix 7.5.1 - Formatumwandlung f&#xfc;r Textdateien von DOS/Mac nach Unix und umgekehrt</title>
+<title>dos2unix 7.5.2 - Formatumwandlung f&#xfc;r Textdateien von DOS/Mac nach Unix und umgekehrt</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rev="made" href="mailto:ASSI@walter.nonet" />
 </head>
@@ -89,7 +89,7 @@ unix2dos [Optionen] [DATEI &hellip;] [-n EINGABEDATEI AUSGABEDATEI &hellip;]</co
 <dt id="ascii"><b>-ascii</b></dt>
 <dd>
 
-<p>wandelt nur Zeilenumbr&uuml;che um. Dies ist der vorgegebene Umwandlungsmodus.</p>
+<p>ist der voreingestellte Umwandlungsmodus. Weitere Informationen hierzu finden Sie im Abschnitt UMWANDLUNGSMODI.</p>
 
 </dd>
 <dt id="iso"><b>-iso</b></dt>
@@ -203,9 +203,9 @@ unix2dos [Optionen] [DATEI &hellip;] [-n EINGABEDATEI AUSGABEDATEI &hellip;]</co
 <dt id="e---add-eol"><b>-e, --add-eol</b></dt>
 <dd>
 
-<p>Add a line break to the last line if there isn&#39;t one. This works for every conversion.</p>
+<p>f&uuml;gt einen Zeilenumbruch nach der letzten Zeile hinzu, falls ein solcher nicht existiert. Dies funktioniert in jeder Umwandlung.</p>
 
-<p>A file converted from DOS to Unix format may lack a line break on the last line. There are text editors that write text files without a line break on the last line. Some Unix programs have problems processing these files, because the POSIX standard defines that every line in a text file must end with a terminating newline character. For instance concatenating files may not give the expected result.</p>
+<p>Einer Datei, die aus dem DOS- ins Unix-Format umgewandelt wurde, kann ein Zeilenumbruch nach der letzten Zeile fehlen. Es gibt Texteditoren, die Dateien ohne diesen angeh&auml;ngten Zeilenumbruch schreiben. Einige Unix-Programme haben jedoch Probleme mit der Verarbeitung dieser Dateien, da der POSIX-Standard definiert, dass jede Zeile in einer Textdatei mit einem abschlie&szlig;enden Zeilenvorschubzeichen enden muss. Beispielsweise kann es beim Aneinanderh&auml;ngen von solche Dateien zu unerwarteten Ergebnissen kommen.</p>
 
 </dd>
 <dt id="f---force"><b>-f, --force</b></dt>
@@ -245,6 +245,15 @@ unix2dos [Optionen] [DATEI &hellip;] [-n EINGABEDATEI AUSGABEDATEI &hellip;]</co
  2     418     219  no_bom    binary  dos2unix.exe</code></pre>
 
 <p>Beachten sie, dass manchmal eine Bin&auml;rdatei f&auml;lschlicherweise als Textdatei erkannt wird. Siehe auch Option <code>-s</code>.</p>
+
+<p>Wenn zus&auml;tzlich die Option <code>-e</code> oder <code>--add-eol</code> verwendet wird, dann wird auch der Typ des Zeilenumbruchs der letzten Zeile ausgegeben, oder <code>noeol</code>, falls kein solcher Zeilenumbruch existiert.</p>
+
+<p>Beispielausgabe:</p>
+
+<pre><code>6       0       0  no_bom    text   dos     dos.txt
+0       6       0  no_bom    text   unix    unix.txt
+0       0       6  no_bom    text   mac     mac.txt
+1       0       0  no_bom    text   noeol   noeol_dos.txt</code></pre>
 
 <p>Optionale zus&auml;tzliche Schalter k&ouml;nnen gesetzt werden, um die Ausgabe anzupassen. Einer oder mehrere Schalter k&ouml;nnen hinzugef&uuml;gt werden.</p>
 
@@ -286,12 +295,20 @@ unix2dos [Optionen] [DATEI &hellip;] [-n EINGABEDATEI AUSGABEDATEI &hellip;]</co
 <p>zeigt an, ob es sich um eine Text- oder eine Bin&auml;rdatei handelt.</p>
 
 </dd>
+<dt id="e"><b>e</b></dt>
+<dd>
+
+<p>gibt den Typ des Zeilenumbruchs der letzten Zeile aus, oder <code>noeol</code>, falls kein solcher Zeilenumbruch existiert.</p>
+
+</dd>
 <dt id="c"><b>c</b></dt>
 <dd>
 
 <p>gibt nur die Dateien aus, die umgewandelt werden w&uuml;rden.</p>
 
 <p>Mit dem Schalter <code>c</code> gibt dos2unix nur die Dateien aus, die DOS-Zeilenumbr&uuml;che enthalten, unix2dos nur die Dateien mit Unix-Zeilenumbr&uuml;chen.</p>
+
+<p>Wenn zus&auml;tzlich die Option <code>-e</code> oder <code>--add-eol</code> verwendet wird, dann werden auch die Dateien ausgegeben, denen der Zeilenumbruch an der letzten Zeile fehlt.</p>
 
 </dd>
 <dt id="h"><b>h</b></dt>
@@ -329,6 +346,10 @@ unix2dos [Optionen] [DATEI &hellip;] [-n EINGABEDATEI AUSGABEDATEI &hellip;]</co
 <p>Die Dateien auflisten, die Unix-Zeilenumbr&uuml;che enthalten:</p>
 
 <pre><code>unix2dos -ic *.txt</code></pre>
+
+<p>Die Dateien auflisten, die DOS-Zeilenumbr&uuml;che enthalten oder bei denen der Zeilenumbruch nach der letzten Zeile fehlt:</p>
+
+<pre><code>dos2unix -e -ic *.txt</code></pre>
 
 <p>Nur Dateien umwandeln, die DOS-Zeilenumbr&uuml;che enthalten und die anderen Dateien unver&auml;ndert belassen:</p>
 
@@ -390,20 +411,20 @@ unix2dos [Optionen] [DATEI &hellip;] [-n EINGABEDATEI AUSGABEDATEI &hellip;]</co
 <dt id="no-add-eol"><b>--no-add-eol</b></dt>
 <dd>
 
-<p>Do not add a line break to the last line if there isn&#39;t one.</p>
+<p>f&uuml;gt keinen Zeilenumbruch nach der letzten Zeile hinzu, falls ein solcher nicht existiert.</p>
 
 </dd>
 <dt id="O---to-stdout"><b>-O, --to-stdout</b></dt>
 <dd>
 
-<p>Write to standard output, like a Unix filter. Use option <code>-o</code> to go back to old file (in-place) mode.</p>
+<p>schreibt wie ein Unix-Filter in die Standardausgabe. Mit der Option <code>-o</code> k&ouml;nnen Sie zum Alte-Datei-Modus (Ersetzungsmodus) zur&uuml;ckkehren.</p>
 
-<p>Combined with option <code>-e</code> files can be properly concatenated. No merged last and first lines, and no Unicode byte order marks in the middle of the concatenated file. Example:</p>
+<p>In Kombination mit der Option <code>-e</code> k&ouml;nnen Dateien korrekt aneinandergeh&auml;ngt werden. Weder werden Zeilen ohne Umbruch zusammengef&uuml;hrt, noch werden Unicode-Markierungen der Bytereihenfolge mitten in die verkettete Datei gesetzt. Beispiel:</p>
 
-<pre><code>dos2unix -e -O file1.txt file2.txt &gt; output.txt</code></pre>
+<pre><code>dos2unix -e -O Datei1.txt Datei2.txt &gt; Ausgabe.txt</code></pre>
 
 </dd>
-<dt id="o---oldfile-FILE"><b>-o, --oldfile FILE ...</b></dt>
+<dt id="o---oldfile-DATEI"><b>-o, --oldfile DATEI &hellip;</b></dt>
 <dd>
 
 <p>Alte-Datei-Modus. Die DATEI wird umgewandelt und durch die Ausgabedatei &uuml;berschrieben. Per Vorgabe werden Umwandlungen in diesem Modus ausgef&uuml;hrt. Platzhalter sind verwendbar.</p>
@@ -503,7 +524,7 @@ unix2dos [Optionen] [DATEI &hellip;] [-n EINGABEDATEI AUSGABEDATEI &hellip;]</co
 
 <h1 id="MAC-MODUS">MAC-MODUS</h1>
 
-<p>Im Normalmodus werden Zeilenumbr&uuml;che von DOS nach Unix und umgekehrt umgewandelt. Mac-Zeilenumbr&uuml;che werden nicht ver&auml;ndert.</p>
+<p>In der Voreinstellung werden Zeilenumbr&uuml;che von DOS nach Unix und umgekehrt umgewandelt. Mac-Zeilenumbr&uuml;che werden nicht ver&auml;ndert.</p>
 
 <p>Im Mac-Modus werden Zeilenumbr&uuml;che von Mac nach Unix und umgekehrt umgewandelt. DOS-Zeilenumbr&uuml;che werden nicht ver&auml;ndert.</p>
 
@@ -516,9 +537,9 @@ unix2dos [Optionen] [DATEI &hellip;] [-n EINGABEDATEI AUSGABEDATEI &hellip;]</co
 <dt id="ascii1"><b>ascii</b></dt>
 <dd>
 
-<p>Im <code>ascii</code>-Modus werden nur Zeilenumbr&uuml;che umgewandelt. Dies ist der vorgegebene Umwandlungsmodus.</p>
+<p>Dies ist der vorgegebene Umwandlungsmodus. Dieser Modus dient zum Umwandeln von ASCII- und ASCII-kompatibel kodierten Dateien, wie UTF-8. Durch Aktivierung des <b>ascii</b>-Modus werden die Modi <b>7bit</b> und <b>iso</b> deaktiviert.</p>
 
-<p>Obwohl der Name dieses Modus auf ASCII hinweist, welches ein 7-bit-Standard ist, bezieht sich der eigentliche Modus auf 8 Bit. Verwenden Sie diesen Modus immer dann, wenn Sie Unicode-Dateien in UTF-8-Kodierung umwandeln.</p>
+<p>Falls dos2unix &uuml;ber Unterst&uuml;tzung f&uuml;r UTF-16 verf&uuml;gt, werden UTF-16-kodierte Dateien auf POSIX-Systemen in die aktuelle Zeichenkodierung der Locale und unter Windows in UTF-8 umgewandelt. Die Aktivierung des <b>ascii</b>-Modus deaktiviert die Option <code>-u</code> zum Erhalten der UTF-16-Kodierung sowie die Optionen <code>-ul</code> und <code>-ub</code>, welche davon ausgehen, dass die Eingabe in UTF-16 kodiert ist. Geben Sie den Befehl <code>dos2unix -V</code> ein, um zu sehen, ob dos2unix UTF-16 unterst&uuml;tzt. Weitere Informationen hierzu finden Sie im Abschnitt UNICODE.</p>
 
 </dd>
 <dt id="bit"><b>7bit</b></dt>
@@ -583,7 +604,7 @@ unix2dos [Optionen] [DATEI &hellip;] [-n EINGABEDATEI AUSGABEDATEI &hellip;]</co
 
 <h2 id="Umwandlung">Umwandlung</h2>
 
-<p>Unicode-Textdateien k&ouml;nnen DOS-, Unix- oder Mac-Zeilenumbr&uuml;che enthalten, so wie regul&auml;re Textdateien.</p>
+<p>Unicode-Textdateien k&ouml;nnen DOS-, Unix- oder Mac-Zeilenumbr&uuml;che enthalten, so wie ASCII-Textdateien.</p>
 
 <p>Alle Versionen von dos2unix und unix2dos k&ouml;nnen UTF-8-kodierte Dateien umwandeln, weil UTF-8 im Hinblick auf Abw&auml;rtskompatibilit&auml;t mit ASCII entwickelt wurde.</p>
 
@@ -603,7 +624,7 @@ unix2dos [Optionen] [DATEI &hellip;] [-n EINGABEDATEI AUSGABEDATEI &hellip;]</co
 
 <h2 id="Markierung-der-Bytereihenfolge">Markierung der Bytereihenfolge</h2>
 
-<p>Unicode-Textdateien unter Windows haben typischerweise eine Markierung der Bytereihenfolge (BOM), da viele Windows-Programme (zum Beispiel Notepad) solche BOMs standardm&auml;&szlig;ig hinzuf&uuml;gen. Weitere Informationen hierzu finden Sie auf <a href="http://de.wikipedia.org/wiki/Byte-Reihenfolge">http://de.wikipedia.org/wiki/Byte-Reihenfolge</a>.</p>
+<p>Unicode-Textdateien unter Windows haben typischerweise eine Markierung der Bytereihenfolge (BOM), da viele Windows-Programme (zum Beispiel Notepad) solche BOMs standardm&auml;&szlig;ig hinzuf&uuml;gen. Weitere Informationen hierzu finden Sie auf <a href="https://de.wikipedia.org/wiki/Byte-Reihenfolge">https://de.wikipedia.org/wiki/Byte-Reihenfolge</a>.</p>
 
 <p>Unter Unix haben Textdateien &uuml;blicherweise keine BOM. Es wird stattdessen angenommen, dass Textdateien in der Zeichenkodierung entsprechend der Spracheinstellung vorliegen.</p>
 
@@ -643,7 +664,7 @@ unix2dos [Optionen] [DATEI &hellip;] [-n EINGABEDATEI AUSGABEDATEI &hellip;]</co
 
 <h1 id="GB18030">GB18030</h1>
 
-<p>GB18030 ist ein Standard der chinesischen Regierung. Eine Teilmenge des in GB18030 definierten Standards ist offiziell f&uuml;r alle in China verkauften Softwareprodukte vorgeschrieben. Siehe auch <a href="http://de.wikipedia.org/wiki/GB_18030">http://de.wikipedia.org/wiki/GB_18030</a>.</p>
+<p>GB18030 ist ein Standard der chinesischen Regierung. Eine Teilmenge des in GB18030 definierten Standards ist offiziell f&uuml;r alle in China verkauften Softwareprodukte vorgeschrieben. Siehe auch <a href="https://de.wikipedia.org/wiki/GB_18030">https://de.wikipedia.org/wiki/GB_18030</a>.</p>
 
 <p>GB18030 ist vollst&auml;ndig zu Unicode kompatibel und kann als Unicode-Umwandlungsformat betrachtet werden. Wie auch UTF-8 ist GB18030 kompatibel zu ASCII. Ebenfalls kompatibel ist es zur Codepage 936 von Windows, auch als GBK bekannt.</p>
 
@@ -742,7 +763,7 @@ export LANG=es_MX            Spanisch, Mexiko
 export LANG=en_US.iso88591   Englisch, USA, Latin-1-Zeichenkodierung
 export LANG=en_GB.UTF-8      Englisch, GB, UTF-8-Zeichenkodierung</code></pre>
 
-<p>Eine vollst&auml;ndige Liste der Sprachen und L&auml;ndercodes finden Sie im Gettext-Handbuch: <a href="http://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html">http://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html</a></p>
+<p>Eine vollst&auml;ndige Liste der Sprachen und L&auml;ndercodes finden Sie im Gettext-Handbuch: <a href="https://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html">https://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html</a></p>
 
 <p>Auf Unix-Systemen erhalten Sie mit dem Befehl locale(1) spezifische Informationen zu den Spracheinstellungen.</p>
 

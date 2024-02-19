@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>dos2unix 7.5.1 - &#x43f;&#x440;&#x435;&#x442;&#x432;&#x430;&#x440;&#x430;&#x447; &#x444;&#x43e;&#x440;&#x43c;&#x430;&#x442;&#x430; &#x442;&#x435;&#x43a;&#x441;&#x442;&#x443;&#x430;&#x43b;&#x43d;&#x438;&#x445; &#x434;&#x430;&#x442;&#x43e;&#x442;&#x435;&#x43a;&#x430; &#x438;&#x437; &#x414;&#x41e;&#x421;/&#x41c;&#x435;&#x43a;-&#x430; &#x443; &#x408;&#x443;&#x43d;&#x438;&#x43a;&#x441; &#x438; &#x43e;&#x431;&#x440;&#x430;&#x442;&#x43d;&#x43e;</title>
+<title>dos2unix 7.5.2 - &#x43f;&#x440;&#x435;&#x442;&#x432;&#x430;&#x440;&#x430;&#x447; &#x444;&#x43e;&#x440;&#x43c;&#x430;&#x442;&#x430; &#x442;&#x435;&#x43a;&#x441;&#x442;&#x443;&#x430;&#x43b;&#x43d;&#x438;&#x445; &#x434;&#x430;&#x442;&#x43e;&#x442;&#x435;&#x43a;&#x430; &#x438;&#x437; &#x414;&#x41e;&#x421;/&#x41c;&#x435;&#x43a;-&#x430; &#x443; &#x408;&#x443;&#x43d;&#x438;&#x43a;&#x441; &#x438; &#x43e;&#x431;&#x440;&#x430;&#x442;&#x43d;&#x43e;</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rev="made" href="mailto:ASSI@walter.nonet" />
 </head>
@@ -89,7 +89,7 @@ unix2dos [&#x43E;&#x43F;&#x446;&#x438;&#x458;&#x435;] [&#x414;&#x410;&#x422;&#x4
 <dt id="ascii"><b>-ascii</b></dt>
 <dd>
 
-<p>&#x41F;&#x440;&#x435;&#x442;&#x432;&#x430;&#x440;&#x430; &#x441;&#x430;&#x43C;&#x43E; &#x43F;&#x440;&#x435;&#x43B;&#x430;&#x43C;&#x430;&#x45A;&#x435; &#x440;&#x435;&#x434;&#x430;. &#x41E;&#x432;&#x43E; &#x458;&#x435; &#x43E;&#x441;&#x43D;&#x43E;&#x432;&#x43D;&#x438; &#x440;&#x435;&#x436;&#x438;&#x43C; &#x43F;&#x440;&#x435;&#x442;&#x432;&#x430;&#x440;&#x430;&#x45A;&#x430;.</p>
+<p>Default conversion mode. See also section CONVERSION MODES.</p>
 
 </dd>
 <dt id="iso"><b>-iso</b></dt>
@@ -246,6 +246,15 @@ unix2dos [&#x43E;&#x43F;&#x446;&#x438;&#x458;&#x435;] [&#x414;&#x410;&#x422;&#x4
 
 <p>&#x417;&#x43D;&#x430;&#x458;&#x442;&#x435; &#x434;&#x430; &#x43F;&#x43E;&#x43D;&#x435;&#x43A;&#x430;&#x434; &#x431;&#x438;&#x43D;&#x430;&#x440;&#x43D;&#x430; &#x434;&#x430;&#x442;&#x43E;&#x442;&#x435;&#x43A;&#x430; &#x43C;&#x43E;&#x436;&#x435; &#x433;&#x440;&#x435;&#x448;&#x43A;&#x43E;&#x43C; &#x431;&#x438;&#x442;&#x438; &#x443;&#x437;&#x435;&#x442;&#x430; &#x437;&#x430; &#x442;&#x435;&#x43A;&#x441;&#x442;&#x443;&#x430;&#x43B;&#x43D;&#x443; &#x434;&#x430;&#x442;&#x43E;&#x442;&#x435;&#x43A;&#x443;. &#x412;&#x438;&#x434;&#x438;&#x442;&#x435; &#x442;&#x430;&#x43A;&#x43E;&#x452;&#x435; &#x43E;&#x43F;&#x446;&#x438;&#x458;&#x443; &bdquo;<code>-s</code>&ldquo;.</p>
 
+<p>If in addition option <code>-e</code> or <code>--add-eol</code> is used also the type of the line break of the last line is printed, or <code>noeol</code> if there is none.</p>
+
+<p>&#x41F;&#x440;&#x438;&#x43C;&#x435;&#x440; &#x438;&#x437;&#x43B;&#x430;&#x437;&#x430;:</p>
+
+<pre><code>6       0       0  no_bom    text   dos     dos.txt
+0       6       0  no_bom    text   unix    unix.txt
+0       0       6  no_bom    text   mac     mac.txt
+1       0       0  no_bom    text   noeol   noeol_dos.txt</code></pre>
+
 <p>&#x418;&#x437;&#x431;&#x43E;&#x440;&#x43D;&#x435; &#x434;&#x43E;&#x434;&#x430;&#x442;&#x43D;&#x435; &#x437;&#x430;&#x441;&#x442;&#x430;&#x432;&#x438;&#x446;&#x435; &#x441;&#x435; &#x43C;&#x43E;&#x433;&#x443; &#x43F;&#x43E;&#x441;&#x442;&#x430;&#x432;&#x438;&#x442;&#x438; &#x434;&#x430; &#x438;&#x437;&#x43C;&#x435;&#x43D;&#x435; &#x438;&#x437;&#x43B;&#x430;&#x437;. &#x41C;&#x43E;&#x433;&#x443; &#x441;&#x435; &#x434;&#x43E;&#x434;&#x430;&#x442;&#x438; &#x458;&#x435;&#x434;&#x43D;&#x430; &#x438;&#x43B;&#x438; &#x432;&#x438;&#x448;&#x435; &#x437;&#x430;&#x441;&#x442;&#x430;&#x432;&#x438;&#x446;&#x430;.</p>
 
 <dl>
@@ -286,12 +295,20 @@ unix2dos [&#x43E;&#x43F;&#x446;&#x438;&#x458;&#x435;] [&#x414;&#x410;&#x422;&#x4
 <p>&#x418;&#x441;&#x43F;&#x438;&#x441;&#x443;&#x458;&#x435; &#x434;&#x430; &#x43B;&#x438; &#x458;&#x435; &#x434;&#x430;&#x442;&#x43E;&#x442;&#x435;&#x43A;&#x430; &#x442;&#x435;&#x43A;&#x441;&#x442;&#x443;&#x430;&#x43B;&#x43D;&#x430; &#x438;&#x43B;&#x438; &#x431;&#x438;&#x43D;&#x430;&#x440;&#x43D;&#x430;.</p>
 
 </dd>
+<dt id="e"><b>e</b></dt>
+<dd>
+
+<p>Print the type of the line break of the last line, or <code>noeol</code> if there is none.</p>
+
+</dd>
 <dt id="c"><b>c</b></dt>
 <dd>
 
 <p>&#x418;&#x441;&#x43F;&#x438;&#x441;&#x443;&#x458;&#x435; &#x441;&#x430;&#x43C;&#x43E; &#x434;&#x430;&#x442;&#x43E;&#x442;&#x435;&#x43A;&#x435; &#x43A;&#x43E;&#x458;&#x435; &#x45B;&#x435; &#x431;&#x438;&#x442;&#x438; &#x43F;&#x440;&#x435;&#x442;&#x432;&#x43E;&#x440;&#x435;&#x43D;&#x435;.</p>
 
 <p>&#x421;&#x430; &#x437;&#x430;&#x441;&#x442;&#x430;&#x432;&#x438;&#x446;&#x43E;&#x43C; &bdquo;<code>c</code>&ldquo; &bdquo;dos2unix&ldquo; &#x45B;&#x435; &#x438;&#x441;&#x43F;&#x438;&#x441;&#x430;&#x442;&#x438; &#x441;&#x430;&#x43C;&#x43E; &#x434;&#x430;&#x442;&#x43E;&#x442;&#x435;&#x43A;&#x435; &#x43A;&#x43E;&#x458;&#x435; &#x441;&#x430;&#x434;&#x440;&#x436;&#x435; &#x414;&#x41E;&#x421; &#x43F;&#x440;&#x435;&#x43B;&#x430;&#x43C;&#x430;&#x45A;&#x430; &#x440;&#x435;&#x434;&#x430;, &bdquo;unix2dos&ldquo; &#x45B;&#x435; &#x438;&#x441;&#x43F;&#x438;&#x441;&#x430;&#x442; &#x441;&#x430;&#x43C;&#x43E; &#x43D;&#x430;&#x437;&#x438;&#x432;&#x435; &#x434;&#x430;&#x442;&#x43E;&#x442;&#x435;&#x43A;&#x430; &#x43A;&#x43E;&#x458;&#x435; &#x438;&#x43C;&#x430;&#x458;&#x443; &#x408;&#x443;&#x43D;&#x438;&#x43A;&#x441; &#x43F;&#x440;&#x435;&#x43B;&#x430;&#x43C;&#x430;&#x45A;&#x430; &#x440;&#x435;&#x434;&#x430;.</p>
+
+<p>If in addition option <code>-e</code> or <code>--add-eol</code> is used also the files that lack a line break on the last line will be printed.</p>
 
 </dd>
 <dt id="h"><b>h</b></dt>
@@ -329,6 +346,10 @@ unix2dos [&#x43E;&#x43F;&#x446;&#x438;&#x458;&#x435;] [&#x414;&#x410;&#x422;&#x4
 <p>&#x418;&#x441;&#x43F;&#x438;&#x441;&#x443;&#x458;&#x435; &#x434;&#x430;&#x442;&#x43E;&#x442;&#x435;&#x43A;&#x435; &#x43A;&#x43E;&#x458;&#x435; &#x438;&#x43C;&#x430;&#x458;&#x443; &#x408;&#x443;&#x43D;&#x438;&#x43A;&#x441; &#x43F;&#x440;&#x435;&#x43B;&#x430;&#x43C;&#x430;&#x45A;&#x435; &#x440;&#x435;&#x434;&#x430;:</p>
 
 <pre><code>unix2dos -ic *.txt</code></pre>
+
+<p>List the files that have DOS line breaks or lack a line break on the last line:</p>
+
+<pre><code>dos2unix -e -ic *.txt</code></pre>
 
 <p>&#x41F;&#x440;&#x435;&#x442;&#x432;&#x430;&#x440;&#x430; &#x441;&#x430;&#x43C;&#x43E; &#x434;&#x430;&#x442;&#x43E;&#x442;&#x435;&#x43A;&#x435; &#x43A;&#x43E;&#x458;&#x435; &#x438;&#x43C;&#x430;&#x458;&#x443; &#x414;&#x41E;&#x421; &#x43F;&#x440;&#x435;&#x43B;&#x430;&#x43C;&#x430;&#x45A;&#x435; &#x440;&#x435;&#x434;&#x430; &#x438; &#x43E;&#x441;&#x442;&#x430;&#x432;&#x459;&#x430; &#x434;&#x440;&#x443;&#x433;&#x435; &#x434;&#x430;&#x442;&#x43E;&#x442;&#x435;&#x43A;&#x435; &#x43D;&#x435;&#x442;&#x430;&#x43A;&#x43D;&#x443;&#x442;&#x438;&#x43C;:</p>
 
@@ -503,7 +524,7 @@ unix2dos [&#x43E;&#x43F;&#x446;&#x438;&#x458;&#x435;] [&#x414;&#x410;&#x422;&#x4
 
 <h1 id="4">&#x41C;&#x415;&#x41A; &#x420;&#x415;&#x416;&#x418;&#x41C;</h1>
 
-<p>&#x423; &#x43D;&#x43E;&#x440;&#x43C;&#x430;&#x43B;&#x43D;&#x43E;&#x43C; &#x440;&#x435;&#x436;&#x438;&#x43C;&#x443; &#x43F;&#x440;&#x435;&#x43B;&#x430;&#x43C;&#x430;&#x45A;&#x430; &#x440;&#x435;&#x434;&#x430; &#x441;&#x435; &#x43F;&#x440;&#x435;&#x442;&#x432;&#x430;&#x440;&#x458;&#x443; &#x438;&#x437; &#x414;&#x41E;&#x421;-&#x430; &#x443; &#x408;&#x443;&#x43D;&#x438;&#x43A;&#x441; &#x438; &#x43E;&#x431;&#x440;&#x430;&#x442;&#x43D;&#x43E;. &#x41C;&#x435;&#x43A; &#x43F;&#x440;&#x435;&#x43B;&#x430;&#x43C;&#x430;&#x45A;&#x430; &#x440;&#x435;&#x434;&#x430; &#x441;&#x435; &#x43D;&#x435; &#x43F;&#x440;&#x435;&#x442;&#x432;&#x430;&#x440;&#x430;&#x458;&#x443;.</p>
+<p>By default line breaks are converted from DOS to Unix and vice versa. Mac line breaks are not converted.</p>
 
 <p>&#x423; &#x41C;&#x435;&#x43A; &#x440;&#x435;&#x436;&#x438;&#x43C;&#x443; &#x43F;&#x440;&#x435;&#x43B;&#x430;&#x43C;&#x430;&#x45A;&#x430; &#x440;&#x435;&#x434;&#x430; &#x441;&#x435; &#x43F;&#x440;&#x435;&#x442;&#x432;&#x430;&#x440;&#x458;&#x443; &#x438;&#x437; &#x41C;&#x435;&#x43A;-&#x430; &#x443; &#x408;&#x443;&#x43D;&#x438;&#x43A;&#x441; &#x438; &#x43E;&#x431;&#x440;&#x430;&#x442;&#x43D;&#x43E;. &#x414;&#x41E;&#x421; &#x43F;&#x440;&#x435;&#x43B;&#x430;&#x43C;&#x430;&#x45A;&#x430; &#x440;&#x435;&#x434;&#x430; &#x441;&#x435; &#x43D;&#x435; &#x43C;&#x435;&#x45A;&#x430;&#x458;&#x443;.</p>
 
@@ -516,9 +537,9 @@ unix2dos [&#x43E;&#x43F;&#x446;&#x438;&#x458;&#x435;] [&#x414;&#x410;&#x422;&#x4
 <dt id="ascii1"><b>ascii</b></dt>
 <dd>
 
-<p>&#x423; &bdquo;<code>ascii</code>&ldquo; &#x440;&#x435;&#x436;&#x438;&#x43C;&#x443; &#x441;&#x430;&#x43C;&#x43E; &#x43F;&#x440;&#x435;&#x43B;&#x430;&#x43C;&#x430;&#x45A;&#x430; &#x440;&#x435;&#x434;&#x430; &#x441;&#x435; &#x43F;&#x440;&#x435;&#x442;&#x432;&#x430;&#x440;&#x430;&#x458;&#x443;. &#x41E;&#x432;&#x43E; &#x458;&#x435; &#x43E;&#x441;&#x43D;&#x43E;&#x432;&#x43D;&#x438; &#x440;&#x435;&#x436;&#x438;&#x43C; &#x43F;&#x440;&#x435;&#x442;&#x432;&#x430;&#x440;&#x430;&#x45A;&#x430;.</p>
+<p>This is the default conversion mode. This mode is for converting ASCII and ASCII-compatible encoded files, like UTF-8. Enabling <b>ascii</b> mode disables <b>7bit</b> and <b>iso</b> mode.</p>
 
-<p>&#x418;&#x430;&#x43A;&#x43E; &#x458;&#x435; &#x43D;&#x430;&#x437;&#x438;&#x432; &#x43E;&#x432;&#x43E;&#x433; &#x440;&#x435;&#x436;&#x438;&#x43C;&#x430; &#x410;&#x421;&#x41A;&#x420;&#x418;, &#x448;&#x442;&#x43E; &#x458;&#x435; 7-&#x431;&#x438;&#x442;&#x43D;&#x438; &#x441;&#x442;&#x430;&#x43D;&#x434;&#x430;&#x440;&#x434;, &#x441;&#x442;&#x432;&#x430;&#x440;&#x43D;&#x438; &#x440;&#x435;&#x436;&#x438;&#x43C; &#x458;&#x435; 8-&#x431;&#x438;&#x442;&#x43D;&#x438;. &#x423;&#x432;&#x435;&#x43A; &#x43A;&#x43E;&#x440;&#x438;&#x441;&#x442;&#x438;&#x442;&#x435; &#x43E;&#x432;&#x430;&#x458; &#x440;&#x435;&#x436;&#x438;&#x43C; &#x43F;&#x440;&#x438;&#x43B;&#x438;&#x43A;&#x43E;&#x43C; &#x43F;&#x440;&#x435;&#x442;&#x432;&#x430;&#x440;&#x430;&#x45A;&#x430; &#x408;&#x443;&#x43D;&#x438;&#x43A;&#x43E;&#x434; &#x423;&#x422;&#x424;-8 &#x434;&#x430;&#x442;&#x43E;&#x442;&#x435;&#x43A;&#x430;.</p>
+<p>If dos2unix has UTF-16 support, UTF-16 encoded files are converted to the current locale character encoding on POSIX systems and to UTF-8 on Windows. Enabling <b>ascii</b> mode disables the option to keep UTF-16 encoding (<code>-u</code>) and the options to assume UTF-16 input (<code>-ul</code> and <code>-ub</code>). To see if dos2unix has UTF-16 support type <code>dos2unix -V</code>. See also section UNICODE.</p>
 
 </dd>
 <dt id="bit"><b>7bit</b></dt>
@@ -583,7 +604,7 @@ unix2dos [&#x43E;&#x43F;&#x446;&#x438;&#x458;&#x435;] [&#x414;&#x410;&#x422;&#x4
 
 <h2 id="8">&#x41F;&#x440;&#x435;&#x442;&#x432;&#x430;&#x440;&#x430;&#x45A;&#x435;</h2>
 
-<p>&#x408;&#x443;&#x43D;&#x438;&#x43A;&#x43E;&#x434; &#x442;&#x435;&#x43A;&#x441;&#x442;&#x443;&#x430;&#x43B;&#x43D;&#x435; &#x434;&#x430;&#x442;&#x43E;&#x442;&#x435;&#x43A;&#x435; &#x43C;&#x43E;&#x433;&#x443; &#x438;&#x43C;&#x430;&#x442;&#x438; &#x414;&#x41E;&#x421;, &#x408;&#x443;&#x43D;&#x438;&#x43A;&#x441; &#x438;&#x43B;&#x438; &#x43C;&#x435;&#x43A; &#x43F;&#x440;&#x435;&#x43B;&#x43E;&#x43C;&#x435; &#x440;&#x435;&#x434;&#x430;, &#x43A;&#x430;&#x43E; &#x43E;&#x431;&#x438;&#x447;&#x43D;&#x435; &#x442;&#x435;&#x43A;&#x441;&#x442;&#x443;&#x430;&#x43B;&#x43D;&#x435; &#x434;&#x430;&#x442;&#x43E;&#x442;&#x435;&#x43A;&#x435;.</p>
+<p>Unicode text files can have DOS, Unix or Mac line breaks, like ASCII text files.</p>
 
 <p>&#x421;&#x432;&#x430; &#x438;&#x437;&#x434;&#x430;&#x45A;&#x430; &bdquo;dos2unix&ldquo;-&#x430; &#x438; &bdquo;unix2do&ldquo;-&#x430; &#x43C;&#x43E;&#x433;&#x443; &#x43F;&#x440;&#x435;&#x442;&#x432;&#x43E;&#x440;&#x438;&#x442;&#x438; &#x423;&#x422;&#x424;-8 &#x43A;&#x43E;&#x434;&#x438;&#x440;&#x430;&#x43D;&#x435; &#x434;&#x430;&#x442;&#x43E;&#x442;&#x435;&#x43A;&#x435;, &#x458;&#x435;&#x440; &#x458;&#x435; &#x423;&#x422;&#x424;-8 &#x434;&#x438;&#x437;&#x430;&#x458;&#x43D;&#x438;&#x440;&#x430;&#x43D; &#x437;&#x430; &#x43F;&#x43E;&#x432;&#x440;&#x430;&#x442;&#x43D;&#x443; &#x441;&#x430;&#x433;&#x43B;&#x430;&#x441;&#x43D;&#x43E;&#x441;&#x442; &#x441;&#x430; &#x410;&#x421;&#x41A;&#x420;&#x418;-&#x438;&#x458;&#x435;&#x43C;.</p>
 
@@ -603,7 +624,7 @@ unix2dos [&#x43E;&#x43F;&#x446;&#x438;&#x458;&#x435;] [&#x414;&#x410;&#x422;&#x4
 
 <h2 id="9">&#x41E;&#x437;&#x43D;&#x430;&#x43A;&#x430; &#x440;&#x435;&#x434;&#x43E;&#x441;&#x43B;&#x435;&#x434;&#x430; &#x431;&#x430;&#x458;&#x442;&#x43E;&#x432;&#x430;</h2>
 
-<p>&#x41D;&#x430; &#x412;&#x438;&#x43D;&#x434;&#x43E;&#x443;&#x437;&#x443; &#x408;&#x443;&#x43D;&#x438;&#x43A;&#x43E;&#x434; &#x442;&#x435;&#x43A;&#x441;&#x442;&#x443;&#x430;&#x43B;&#x43D;&#x435; &#x434;&#x430;&#x442;&#x43E;&#x442;&#x435;&#x43A;&#x435; &#x43E;&#x431;&#x438;&#x447;&#x43D;&#x43E; &#x438;&#x43C;&#x430;&#x458;&#x443; &#x41E;&#x437;&#x43D;&#x430;&#x43A;&#x443; &#x440;&#x435;&#x434;&#x43E;&#x441;&#x43B;&#x435;&#x434;&#x430; &#x431;&#x430;&#x458;&#x442;&#x43E;&#x432;&#x430; (BOM), &#x458;&#x435;&#x440; &#x43C;&#x43D;&#x43E;&#x433;&#x438; &#x412;&#x438;&#x43D;&#x434;&#x43E;&#x443;&#x437; &#x43F;&#x440;&#x43E;&#x433;&#x440;&#x430;&#x43C;&#x438; (&#x443;&#x43A;&#x459;&#x443;&#x447;&#x443;&#x458;&#x443;&#x45B;&#x438; &#x411;&#x435;&#x43B;&#x435;&#x436;&#x43D;&#x438;&#x446;&#x443;) &#x43F;&#x43E;&#x434;&#x440;&#x430;&#x437;&#x443;&#x43C;&#x435;&#x432;&#x430;&#x43D;&#x43E; &#x434;&#x43E;&#x434;&#x430;&#x458;&#x443; &#x41E;&#x420;&#x411;. &#x412;&#x438;&#x434;&#x438;&#x442;&#x435; &#x442;&#x430;&#x43A;&#x43E;&#x452;&#x435; <a href="http://en.wikipedia.org/wiki/Byte_order_mark">http://en.wikipedia.org/wiki/Byte_order_mark</a>.</p>
+<p>On Windows Unicode text files typically have a Byte Order Mark (BOM), because many Windows programs (including Notepad) add BOMs by default. See also <a href="https://en.wikipedia.org/wiki/Byte_order_mark">https://en.wikipedia.org/wiki/Byte_order_mark</a>.</p>
 
 <p>&#x41D;&#x430; &#x408;&#x443;&#x43D;&#x438;&#x43A;&#x441;&#x443; &#x408;&#x443;&#x43D;&#x438;&#x43A;&#x43E;&#x434; &#x434;&#x430;&#x442;&#x43E;&#x442;&#x435;&#x43A;&#x435; &#x43E;&#x431;&#x438;&#x447;&#x43D;&#x43E; &#x43D;&#x435;&#x43C;&#x430;&#x458;&#x443; &#x41E;&#x420;&#x411;. &#x41F;&#x440;&#x435;&#x442;&#x43F;&#x43E;&#x441;&#x442;&#x430;&#x432;&#x459;&#x430; &#x441;&#x435; &#x434;&#x430; &#x441;&#x443; &#x442;&#x435;&#x43A;&#x441;&#x442;&#x443;&#x430;&#x43B;&#x43D;&#x435; &#x434;&#x430;&#x442;&#x43E;&#x442;&#x435;&#x43A;&#x435; &#x43A;&#x43E;&#x434;&#x438;&#x440;&#x430;&#x43D;&#x435; &#x443; &#x458;&#x435;&#x437;&#x438;&#x447;&#x43A;&#x43E;&#x43C; &#x43A;&#x43E;&#x434;&#x438;&#x440;&#x430;&#x45A;&#x443; &#x437;&#x43D;&#x430;&#x43A;&#x430;.</p>
 
@@ -643,7 +664,7 @@ unix2dos [&#x43E;&#x43F;&#x446;&#x438;&#x458;&#x435;] [&#x414;&#x410;&#x422;&#x4
 
 <h1 id="GB18030">GB18030</h1>
 
-<p>&bdquo;GB18030&ldquo; &#x458;&#x435; &#x441;&#x442;&#x430;&#x43D;&#x434;&#x430;&#x440;&#x434; &#x43A;&#x438;&#x43D;&#x435;&#x441;&#x43A;&#x435; &#x432;&#x43B;&#x430;&#x434;&#x435;. &#x41E;&#x431;&#x430;&#x432;&#x435;&#x437;&#x43D;&#x438; &#x43F;&#x43E;&#x434;&#x441;&#x43A;&#x443;&#x43F; &bdquo;GB18030&ldquo; &#x441;&#x442;&#x430;&#x43D;&#x434;&#x430;&#x440;&#x434; &#x441;&#x435; &#x437;&#x432;&#x430;&#x43D;&#x438;&#x447;&#x43D;&#x43E; &#x437;&#x430;&#x445;&#x442;&#x435;&#x432;&#x430; &#x437;&#x430; &#x441;&#x432;&#x435; &#x441;&#x43E;&#x444;&#x442;&#x432;&#x435;&#x440;&#x441;&#x43A;&#x435; &#x43F;&#x440;&#x43E;&#x438;&#x437;&#x432;&#x43E;&#x434;&#x435; &#x43F;&#x440;&#x43E;&#x434;&#x430;&#x442;&#x435; &#x443; &#x41A;&#x438;&#x43D;&#x438;. &#x412;&#x438;&#x434;&#x438;&#x442;&#x435; &#x442;&#x430;&#x43A;&#x43E;&#x452;&#x435; <a href="http://en.wikipedia.org/wiki/GB_18030">http://en.wikipedia.org/wiki/GB_18030</a>.</p>
+<p>GB18030 is a Chinese government standard. A mandatory subset of the GB18030 standard is officially required for all software products sold in China. See also <a href="https://en.wikipedia.org/wiki/GB_18030">https://en.wikipedia.org/wiki/GB_18030</a>.</p>
 
 <p>&bdquo;GB18030&ldquo; &#x458;&#x435; &#x443; &#x43F;&#x43E;&#x442;&#x43F;&#x443;&#x43D;&#x43E;&#x441;&#x442;&#x438; &#x441;&#x430;&#x433;&#x43B;&#x430;&#x441;&#x430;&#x43D; &#x441;&#x430; &#x408;&#x443;&#x43D;&#x438;&#x43A;&#x43E;&#x434;-&#x43E;&#x43C;, &#x438; &#x43C;&#x43E;&#x436;&#x435; &#x441;&#x435; &#x441;&#x43C;&#x430;&#x442;&#x440;&#x430;&#x442;&#x438; &#x408;&#x443;&#x43D;&#x438;&#x43A;&#x43E;&#x434; &#x444;&#x43E;&#x440;&#x43C;&#x430;&#x442;&#x43E;&#x43C; &#x43F;&#x440;&#x435;&#x43E;&#x431;&#x440;&#x430;&#x436;&#x430;&#x458;&#x430;. &#x41A;&#x430;&#x43E; &#x423;&#x422;&#x424;-8, &bdquo;GB18030&ldquo; &#x458;&#x435; &#x441;&#x430;&#x433;&#x43B;&#x430;&#x441;&#x430;&#x43D; &#x441;&#x430; &#x410;&#x421;&#x41A;&#x420;&#x418;. &bdquo;GB18030&ldquo; &#x458;&#x435; &#x442;&#x430;&#x43A;&#x43E;&#x452;&#x435; &#x441;&#x430;&#x433;&#x43B;&#x430;&#x441;&#x430;&#x43D; &#x441;&#x430; &#x412;&#x438;&#x43D;&#x434;&#x43E;&#x443;&#x437; &#x43A;&#x43E;&#x434;&#x43D;&#x43E;&#x43C; &#x441;&#x442;&#x440;&#x430;&#x43D;&#x438;&#x446;&#x43E;&#x43C; 936, &#x43F;&#x43E;&#x437;&#x43D;&#x430;&#x442;&#x43E;&#x43C; &#x438; &#x43A;&#x430;&#x43E; &#x413;&#x411;&#x41A;.</p>
 
@@ -742,7 +763,7 @@ export LANG=es_MX            &#x428;&#x43F;&#x430;&#x43D;&#x441;&#x43A;&#x438;, 
 export LANG=en_US.iso88591   &#x415;&#x43D;&#x433;&#x43B;&#x435;&#x441;&#x43A;&#x438;, &#x421;&#x410;&#x414;, Latin-1 &#x43A;&#x43E;&#x434;&#x438;&#x440;&#x430;&#x45A;&#x435;
 export LANG=en_GB.UTF-8      &#x415;&#x43D;&#x433;&#x43B;&#x435;&#x441;&#x43A;&#x438;, &#x423;&#x41A;, &#x423;&#x422;&#x424;-8 &#x43A;&#x43E;&#x434;&#x438;&#x440;&#x430;&#x45A;&#x435;</code></pre>
 
-<p>&#x417;&#x430; &#x43F;&#x43E;&#x442;&#x43F;&#x443;&#x43D; &#x441;&#x43F;&#x438;&#x441;&#x430;&#x43A; &#x458;&#x435;&#x437;&#x438;&#x43A;&#x430; &#x438; &#x448;&#x438;&#x444;&#x430;&#x440;&#x430; &#x434;&#x440;&#x436;&#x430;&#x432;&#x430; &#x432;&#x438;&#x434;&#x438;&#x442;&#x435; &#x43F;&#x440;&#x438;&#x440;&#x443;&#x447;&#x43D;&#x438;&#x43A; &#x433;&#x435;&#x442;&#x442;&#x435;&#x43A;&#x441;&#x442;&#x430;: <a href="http://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html">http://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html</a></p>
+<p>For a complete list of language and country codes see the gettext manual: <a href="https://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html">https://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html</a></p>
 
 <p>&#x41D;&#x430; &#x408;&#x443;&#x43D;&#x438;&#x43A;&#x441; &#x441;&#x438;&#x441;&#x442;&#x435;&#x43C;&#x438;&#x43C;&#x430; &#x43C;&#x43E;&#x436;&#x435;&#x442;&#x435; &#x43A;&#x43E;&#x440;&#x438;&#x441;&#x442;&#x438;&#x442;&#x438; &#x43D;&#x430;&#x440;&#x435;&#x434;&#x431;&#x443; &bdquo;locale(1)&ldquo; &#x434;&#x430; &#x432;&#x438;&#x434;&#x438;&#x442;&#x435; &#x43E;&#x441;&#x43E;&#x431;&#x435;&#x43D;&#x435; &#x43F;&#x43E;&#x434;&#x430;&#x442;&#x43A;&#x435; &#x458;&#x435;&#x437;&#x438;&#x43A;&#x430;.</p>
 
@@ -750,7 +771,7 @@ export LANG=en_GB.UTF-8      &#x415;&#x43D;&#x433;&#x43B;&#x435;&#x441;&#x43A;&#
 <dt id="16"><b>&#x408;&#x415;&#x417;&#x418;&#x41A;</b></dt>
 <dd>
 
-<p>&#x421;&#x430; &#x43F;&#x440;&#x43E;&#x43C;&#x435;&#x43D;&#x459;&#x438;&#x432;&#x43E;&#x43C; &#x43E;&#x43A;&#x440;&#x443;&#x436;&#x435;&#x45A;&#x430; &#x408;&#x415;&#x417;&#x418;&#x41A; &#x43C;&#x43E;&#x436;&#x435;&#x442;&#x435; &#x43D;&#x430;&#x432;&#x435;&#x441;&#x442;&#x438; &#x441;&#x43F;&#x438;&#x441;&#x430;&#x43A; &#x445;&#x438;&#x442;&#x43D;&#x43E;&#x441;&#x442;&#x438; &#x458;&#x435;&#x437;&#x438;&#x43A;&#x430;. &bdquo;dos2unix&ldquo; &#x434;&#x430;&#x458;&#x435; &#x43F;&#x440;&#x435;&#x434;&#x43D;&#x43E;&#x441;&#x442; &#x437;&#x430; &#x408;&#x415;&#x417;&#x418;&#x41A; &#x43D;&#x430;&#x434; &#x408;&#x415;&#x417;. &#x41D;&#x430; &#x43F;&#x440;&#x438;&#x43C;&#x435;&#x440;, &#x43F;&#x440;&#x432;&#x43E; &#x445;&#x43E;&#x43B;&#x430;&#x43D;&#x434;&#x441;&#x43A;&#x438; &#x430; &#x437;&#x430;&#x442;&#x438;&#x43C; &#x43D;&#x435;&#x43C;&#x430;&#x447;&#x43A;&#x438;: <code>LANGUAGE=nl:de</code>. &#x41F;&#x440;&#x432;&#x43E; &#x442;&#x440;&#x435;&#x431;&#x430; &#x434;&#x430; &#x43E;&#x43C;&#x43E;&#x433;&#x443;&#x45B;&#x438;&#x442;&#x435; &#x43F;&#x440;&#x435;&#x432;&#x43E;&#x434;&#x435;, &#x43F;&#x43E;&#x441;&#x442;&#x430;&#x432;&#x459;&#x430;&#x458;&#x443;&#x45B;&#x438; &bdquo;LANG&ldquo; (&#x438;&#x43B;&#x438; LC_ALL) &#x43D;&#x430; &#x432;&#x440;&#x435;&#x434;&#x43D;&#x43E;&#x441;&#x442; &#x434;&#x440;&#x443;&#x433;&#x430;&#x430;&#x447;&#x438;&#x458;&#x443; &#x43E;&#x434; &bdquo;C&ldquo;, &#x43F;&#x440;&#x435; &#x43D;&#x435;&#x433;&#x43E; &#x43B;&#x438; &#x431;&#x443;&#x434;&#x435;&#x442;&#x435; &#x43C;&#x43E;&#x433;&#x43B;&#x438; &#x434;&#x430; &#x43A;&#x43E;&#x440;&#x438;&#x441;&#x442;&#x438;&#x442;&#x435; &#x441;&#x43F;&#x438;&#x441;&#x430;&#x43A; &#x445;&#x438;&#x442;&#x43D;&#x43E;&#x441;&#x442;&#x438; &#x458;&#x435;&#x437;&#x438;&#x43A;&#x430; &#x43F;&#x440;&#x43E;&#x43C;&#x435;&#x43D;&#x459;&#x438;&#x432;&#x43E;&#x43C; &bdquo;LANGUAGE&ldquo;. &#x412;&#x438;&#x434;&#x438;&#x442;&#x435; &#x442;&#x430;&#x43A;&#x43E;&#x452;&#x435; &#x43F;&#x440;&#x438;&#x440;&#x443;&#x447;&#x43D;&#x438;&#x43A; &#x433;&#x435;&#x442;&#x442;&#x435;&#x43A;&#x441;&#x442;&#x430;: <a href="http://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-variable.html">http://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-variable.html</a></p>
+<p>With the LANGUAGE environment variable you can specify a priority list of languages, separated by colons. Dos2unix gives preference to LANGUAGE over LANG. For instance, first Dutch and then German: <code>LANGUAGE=nl:de</code>. You have to first enable localization, by setting LANG (or LC_ALL) to a value other than &quot;C&quot;, before you can use a language priority list through the LANGUAGE variable. See also the gettext manual: <a href="https://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-variable.html">https://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-variable.html</a></p>
 
 <p>&#x410;&#x43A;&#x43E; &#x438;&#x437;&#x430;&#x431;&#x435;&#x440;&#x435;&#x442;&#x435; &#x458;&#x435;&#x437;&#x438;&#x43A; &#x43A;&#x43E;&#x458;&#x438; &#x43D;&#x438;&#x458;&#x435; &#x434;&#x43E;&#x441;&#x442;&#x443;&#x43F;&#x430;&#x43D; &#x434;&#x43E;&#x431;&#x438;&#x45B;&#x435;&#x442;&#x435; &#x441;&#x442;&#x430;&#x43D;&#x434;&#x430;&#x440;&#x434;&#x43D;&#x435; &#x43F;&#x43E;&#x440;&#x443;&#x43A;&#x435; &#x43D;&#x430; &#x435;&#x43D;&#x433;&#x43B;&#x435;&#x441;&#x43A;&#x43E;&#x43C;.</p>
 
@@ -775,21 +796,21 @@ export LANG=en_GB.UTF-8      &#x415;&#x43D;&#x433;&#x43B;&#x435;&#x441;&#x43A;&#
 
 <h1 id="18">&#x421;&#x422;&#x410;&#x41D;&#x414;&#x410;&#x420;&#x414;&#x418;</h1>
 
-<p><a href="http://en.wikipedia.org/wiki/Text_file">http://en.wikipedia.org/wiki/Text_file</a></p>
+<p><a href="https://en.wikipedia.org/wiki/Text_file">https://en.wikipedia.org/wiki/Text_file</a></p>
 
-<p><a href="http://en.wikipedia.org/wiki/Carriage_return">http://en.wikipedia.org/wiki/Carriage_return</a></p>
+<p><a href="https://en.wikipedia.org/wiki/Carriage_return">https://en.wikipedia.org/wiki/Carriage_return</a></p>
 
-<p><a href="http://en.wikipedia.org/wiki/Newline">http://en.wikipedia.org/wiki/Newline</a></p>
+<p><a href="https://en.wikipedia.org/wiki/Newline">https://en.wikipedia.org/wiki/Newline</a></p>
 
-<p><a href="http://en.wikipedia.org/wiki/Unicode">http://en.wikipedia.org/wiki/Unicode</a></p>
+<p><a href="https://en.wikipedia.org/wiki/Unicode">https://en.wikipedia.org/wiki/Unicode</a></p>
 
 <h1 id="19">&#x410;&#x423;&#x422;&#x41E;&#x420;&#x418;</h1>
 
 <p>&#x411;&#x435;&#x43D;&#x45F;&#x430;&#x43C;&#x438;&#x43D; &#x41B;&#x438;&#x43D; &ndash; &lt;blin@socs.uts.edu.au&gt;, &#x411;&#x435;&#x440;&#x43D;&#x434; &#x408;&#x43E;&#x445;&#x430;&#x43D;&#x435;&#x441; &#x412;&#x435;&#x431;&#x435;&#x43D; (mac2unix) &ndash; &lt;wuebben@kde.org&gt;, &#x41A;&#x440;&#x438;&#x441;&#x442;&#x438;&#x458;&#x430;&#x43D; &#x412;&#x438;&#x440;&#x43B; (&#x434;&#x43E;&#x434;&#x430;&#x458;&#x435; &#x434;&#x43E;&#x434;&#x430;&#x442;&#x43D;&#x438; &#x43D;&#x43E;&#x432;&#x438; &#x440;&#x435;&#x434;) &ndash; &lt;wurll@ira.uka.de&gt;, &#x415;&#x440;&#x432;&#x438;&#x43D; &#x412;&#x43E;&#x442;&#x435;&#x440;&#x43B;&#x430;&#x43D;&#x434;&#x435;&#x440; &ndash; &lt;waterlan@xs4all.nl&gt; (&#x43E;&#x434;&#x440;&#x436;&#x430;&#x432;&#x430;&#x43B;&#x430;&#x446;)</p>
 
-<p>&#x421;&#x442;&#x440;&#x430;&#x43D;&#x438;&#x446;&#x430; &#x43F;&#x440;&#x43E;&#x458;&#x435;&#x43A;&#x442;&#x430;: <a href="http://waterlan.home.xs4all.nl/dos2unix.html">http://waterlan.home.xs4all.nl/dos2unix.html</a></p>
+<p>Project page: <a href="https://waterlan.home.xs4all.nl/dos2unix.html">https://waterlan.home.xs4all.nl/dos2unix.html</a></p>
 
-<p>&#x421;&#x442;&#x440;&#x430;&#x43D;&#x438;&#x446;&#x430; &#x41A;&#x43E;&#x432;&#x43D;&#x438;&#x446;&#x435; &#x438;&#x437;&#x432;&#x43E;&#x440;&#x430;: <a href="http://sourceforge.net/projects/dos2unix/">http://sourceforge.net/projects/dos2unix/</a></p>
+<p>SourceForge page: <a href="https://sourceforge.net/projects/dos2unix/">https://sourceforge.net/projects/dos2unix/</a></p>
 
 <h1 id="20">&#x412;&#x418;&#x414;&#x418;&#x422;&#x415; &#x422;&#x410;&#x41A;&#x41E;&#x402;&#x415;</h1>
 

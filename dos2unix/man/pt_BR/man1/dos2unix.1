@@ -71,7 +71,7 @@
 .\" ========================================================================
 .\"
 .IX Title "dos2unix 1"
-.TH dos2unix 1 "2023-08-29" "dos2unix" "2023-08-29"
+.TH dos2unix 1 "2024-01-22" "dos2unix" "2024-01-22"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -122,7 +122,7 @@ Permite alteração da propriedade de arquivo no modo de arquivo antigo.
 Quando esta opção é usada, a conversão não será abortada quando a propriedade do usuário e/ou do grupo do arquivo original não puder ser preservada no modo de arquivo antigo. A conversão continuará e o arquivo convertido receberá a mesma propriedade nova como se tivesse convertido no modo de novo arquivo. Veja também as opções \f(CW\*(C`\-o\*(C'\fR e \f(CW\*(C`\-n\*(C'\fR. Esta opção só está disponível se o dos2unix oferecer suporte a preservação da propriedade do usuário e do grupo de arquivos.
 .IP "\fB\-ascii\fR" 4
 .IX Item "-ascii"
-Converte apenas as quebras de linhas. Esse é o modo de conversão padrão.
+Default conversion mode. See also section \s-1CONVERSION MODES.\s0
 .IP "\fB\-iso\fR" 4
 .IX Item "-iso"
 Conversão entre conjunto de caractere do \s-1DOS\s0 e \s-1ISO\-8859\-1.\s0 Veja também a seção \s-1MODOS DE\s0 CONVERSÃO.
@@ -224,6 +224,17 @@ Exemplo de saída:
 .Sp
 Note que em algumas vezes um arquivo binário pode ser confundido com um arquivo texto. Veja também a opção \f(CW\*(C`\-s\*(C'\fR.
 .Sp
+If in addition option \f(CW\*(C`\-e\*(C'\fR or \f(CW\*(C`\-\-add\-eol\*(C'\fR is used also the type of the line break of the last line is printed, or \f(CW\*(C`noeol\*(C'\fR if there is none.
+.Sp
+Exemplo de saída:
+.Sp
+.Vb 4
+\&     6       0       0  no_bom    text   dos     dos.txt
+\&     0       6       0  no_bom    text   unix    unix.txt
+\&     0       0       6  no_bom    text   mac     mac.txt
+\&     1       0       0  no_bom    text   noeol   noeol_dos.txt
+.Ve
+.Sp
 Opcionalmente, opções extra podem ser definidas para alterar a saída. Uma ou mais opções podem ser adicionadas.
 .RS 4
 .IP "\fB0\fR" 4
@@ -244,11 +255,16 @@ Exibe a marca de ordem de byte.
 .IP "\fBt\fR" 4
 .IX Item "t"
 Exibe se arquivo é texto ou binário.
+.IP "\fBe\fR" 4
+.IX Item "e"
+Print the type of the line break of the last line, or \f(CW\*(C`noeol\*(C'\fR if there is none.
 .IP "\fBc\fR" 4
 .IX Item "c"
 Exibe apenas os arquivos que seriam convertidos.
 .Sp
 Com a opção \f(CW\*(C`c\*(C'\fR, dos2unix vai exibir apenas os arquivos que contêm quebras de linha do \s-1DOS,\s0 unix2dos vai exibir apenas os nomes de arquivos que contêm quebras de linha do Unix.
+.Sp
+If in addition option \f(CW\*(C`\-e\*(C'\fR or \f(CW\*(C`\-\-add\-eol\*(C'\fR is used also the files that lack a line break on the last line will be printed.
 .IP "\fBh\fR" 4
 .IX Item "h"
 Exibe um cabeçalho.
@@ -288,6 +304,12 @@ Lista os arquivos que possuem quebras de linha do Unix:
 .Sp
 .Vb 1
 \&    unix2dos \-ic *.txt
+.Ve
+.Sp
+List the files that have \s-1DOS\s0 line breaks or lack a line break on the last line:
+.Sp
+.Vb 1
+\&    dos2unix \-e \-ic *.txt
 .Ve
 .Sp
 Converte apenas arquivos que possuem quebras de linha do \s-1DOS\s0 e não altera outros arquivos:
@@ -410,7 +432,7 @@ Mentém ligações simbólicas e alvos inalterados (padrão).
 Exibe informação da versão e sai.
 .SH "MODO MAC"
 .IX Header "MODO MAC"
-No modo normal, as quebras de linhas são convertidas de \s-1DOS\s0 para Unix e vice-versa. Quebras de linha do Mac não são convertidas.
+By default line breaks are converted from \s-1DOS\s0 to Unix and vice versa.  Mac line breaks are not converted.
 .PP
 No modo Mac, quebras de linha são convertidas de Mac para Unix e vice-versa. Quebras de linha do \s-1DOS\s0 não são alteradas.
 .PP
@@ -419,9 +441,9 @@ Para executar no modo Mac, use a opção de linha de comando \f(CW\*(C`\-c mac\*
 .IX Header "MODOS DE CONVERSÃO"
 .IP "\fBascii\fR" 4
 .IX Item "ascii"
-No modo \f(CW\*(C`ascii\*(C'\fR, apenas as quebras de linha são convertidas. Esse é o modo de conversão padrão.
+This is the default conversion mode. This mode is for converting \s-1ASCII\s0 and ASCII-compatible encoded files, like \s-1UTF\-8.\s0 Enabling \fBascii\fR mode disables \fB7bit\fR and \fBiso\fR mode.
 .Sp
-Apesar do nome deste modo ser \s-1ASCII,\s0 o qual é um padrão de 7 bits, o modo é em verdade 8 bits. Sempre use este modo quando quiser converter arquivos Unicode \s-1UTF\-8.\s0
+If dos2unix has \s-1UTF\-16\s0 support, \s-1UTF\-16\s0 encoded files are converted to the current locale character encoding on \s-1POSIX\s0 systems and to \s-1UTF\-8\s0 on Windows. Enabling \fBascii\fR mode disables the option to keep \s-1UTF\-16\s0 encoding (\f(CW\*(C`\-u\*(C'\fR) and the options to assume \s-1UTF\-16\s0 input (\f(CW\*(C`\-ul\*(C'\fR and \f(CW\*(C`\-ub\*(C'\fR).  To see if dos2unix has \s-1UTF\-16\s0 support type \f(CW\*(C`dos2unix \-V\*(C'\fR. See also section \s-1UNICODE.\s0
 .IP "\fB7bit\fR" 4
 .IX Item "7bit"
 Neste modo todos os caracteres não\-ASCII de 8 bits (com valores entre 128 e 255) são convertidos para um espaço de 7 bits.
@@ -491,7 +513,7 @@ Veja também <http://czyborra.com/charsets/codepages.html> e <http://czyborra.co
 Exitem codificações Unicode diferentes. No Unix e no Linux, arquivos Unicode são geralmente codificados em \s-1UTF\-8.\s0 No Windows, arquivos texto Unicode podem ser codificados em \s-1UTF\-8, UTF\-16\s0 ou \s-1UTF\-16\s0 big endian, mas na maioria das vezes são codificados no formato \s-1UTF\-16.\s0
 .SS "Conversão"
 .IX Subsection "Conversão"
-Arquivos texto em Unicode pode ter quebras de linha \s-1DOS,\s0 Unix ou Mac, como arquivos texto comuns.
+Unicode text files can have \s-1DOS,\s0 Unix or Mac line breaks, like \s-1ASCII\s0 text files.
 .PP
 Todas as versões do dos2unix e unix2dos podem converter arquivos codificados em \s-1UTF\-8\s0 porque \s-1UTF\-8\s0 foi projetado para ter compatibilidade reversa com \s-1ASCII.\s0
 .PP
@@ -510,7 +532,7 @@ Dos2unix e unix2dos não possuem opção para converter arquivos \s-1UTF\-8\s0 p
 Modo de conversão \s-1ISO\s0 e 7 bits não funcionam em arquivos \s-1UTF\-16.\s0
 .SS "Marca de ordem de byte"
 .IX Subsection "Marca de ordem de byte"
-No Windows, arquivos Unicode normalmente têm uma Marca de Ordem de Byte (\s-1BOM\s0), porque muitos programas (incluindo o Bloco de Notas) adiciona BOMs por padrão. Veja também <http://en.wikipedia.org/wiki/Byte_order_mark>.
+On Windows Unicode text files typically have a Byte Order Mark (\s-1BOM\s0), because many Windows programs (including Notepad) add BOMs by default. See also <https://en.wikipedia.org/wiki/Byte_order_mark>.
 .PP
 No Unix, arquivos Unicode normalmente não têm \s-1BOM.\s0 Presume-se que arquivos texto são codificados na codificação de caracteres da localização.
 .PP
@@ -555,7 +577,7 @@ Conversão de \s-1UTF\-8\s0 do Unix para \s-1UTF\-16\s0 do Windows:
 .Ve
 .SH "GB18030"
 .IX Header "GB18030"
-\&\s-1GB18030\s0 é um padrão governamental chinês. Um subconjunto obrigatório do padrão \s-1GB18030\s0 é exigido oficialmente para todos os produtos de software vendidos na China. Veja também <http://en.wikipedia.org/wiki/GB_18030>.
+\&\s-1GB18030\s0 is a Chinese government standard. A mandatory subset of the \s-1GB18030\s0 standard is officially required for all software products sold in China. See also <https://en.wikipedia.org/wiki/GB_18030>.
 .PP
 \&\s-1GB18030\s0 é completamente compatível com Unicode e pode ser considerado um formato de transformação de unicode. Assim como \s-1UTF\-8, GB18030\s0 é compatível com \s-1ASCII. GB18030\s0 também é compatível com a página de código 936 do Windows, também conhecida como \s-1GBK.\s0
 .PP
@@ -680,12 +702,12 @@ O idioma primário é selecionado com a variável de ambiente \s-1LANG. A\s0 var
 \&    export LANG=en_GB.UTF\-8      Inglês, Reino Unido, codificação UTF\-8
 .Ve
 .Sp
-Para a lista completa de códigos de idioma e país, veja o manual do gettext: <http://www.gnu.org/software/gettext/manual/html_node/Usual\-Language\-Codes.html>
+For a complete list of language and country codes see the gettext manual: <https://www.gnu.org/software/gettext/manual/html_node/Usual\-Language\-Codes.html>
 .Sp
 Nos sistemas Unix, você pode usar o comando \fBlocale\fR\|(1) para obter informação específica da localização.
 .IP "\fB\s-1LANGUAGE\s0\fR" 4
 .IX Item "LANGUAGE"
-Com a variável de ambiente \s-1LANGUAGE,\s0 você pode especificar uma lista de prioridades de idiomas, separada por vírgulas. Dos2unix fornece preferência à \s-1LANGUAGE\s0 sobre \s-1LANG.\s0 Por exemplo, primeiro holandês e, então, alemão: \f(CW\*(C`LANGUAGE=nl:de\*(C'\fR. Você primeiro tem que habilitar localização, definindo \s-1LANG\s0 (ou \s-1LC_ALL\s0) para um valor diferente de \*(L"C\*(R", antes que você possa usar uma lista de prioridade de idioma por meio da variável \s-1LANGUAGE.\s0 Veja também o manual do gettext: <http://www.gnu.org/software/gettext/manual/html_node/The\-LANGUAGE\-variable.html>
+With the \s-1LANGUAGE\s0 environment variable you can specify a priority list of languages, separated by colons. Dos2unix gives preference to \s-1LANGUAGE\s0 over \s-1LANG.\s0  For instance, first Dutch and then German: \f(CW\*(C`LANGUAGE=nl:de\*(C'\fR. You have to first enable localization, by setting \s-1LANG\s0 (or \s-1LC_ALL\s0) to a value other than \*(L"C\*(R", before you can use a language priority list through the \s-1LANGUAGE\s0 variable. See also the gettext manual: <https://www.gnu.org/software/gettext/manual/html_node/The\-LANGUAGE\-variable.html>
 .Sp
 Se você selecionou um idioma que não está disponível, você vai terá as mensagens em inglês (padrão).
 .IP "\fB\s-1DOS2UNIX_LOCALEDIR\s0\fR" 4
@@ -704,20 +726,20 @@ No sucesso, zero é retornado. Quando um erro de sistema ocorre, o último erro 
 O valor retornado é sempre zero no modo quieto, exceto quando opções de linha de comando erradas são usadas.
 .SH "PADRÕES"
 .IX Header "PADRÕES"
-<http://en.wikipedia.org/wiki/Text_file>
+<https://en.wikipedia.org/wiki/Text_file>
 .PP
-<http://en.wikipedia.org/wiki/Carriage_return>
+<https://en.wikipedia.org/wiki/Carriage_return>
 .PP
-<http://en.wikipedia.org/wiki/Newline>
+<https://en.wikipedia.org/wiki/Newline>
 .PP
-<http://en.wikipedia.org/wiki/Unicode>
+<https://en.wikipedia.org/wiki/Unicode>
 .SH "AUTORES"
 .IX Header "AUTORES"
 Benjamin Lin \- <blin@socs.uts.edu.au> Bernd Johannes Wuebben (modo mac2unix) \- <wuebben@kde.org>, Christian Wurll (adiciona nova linha extra) \- <wurll@ira.uka.de>, Erwin Waterlander \- <waterlan@xs4all.nl> (mantenedor)
 .PP
-Página do projeto: <http://waterlan.home.xs4all.nl/dos2unix.html>
+Project page: <https://waterlan.home.xs4all.nl/dos2unix.html>
 .PP
-Página do SourceForge: <http://sourceforge.net/projects/dos2unix/>
+SourceForge page: <https://sourceforge.net/projects/dos2unix/>
 .SH "VEJA TAMBÉM"
 .IX Header "VEJA TAMBÉM"
 \&\fBfile\fR\|(1)  \fBfind\fR\|(1)  \fBiconv\fR\|(1)  \fBlocale\fR\|(1)  \fBxargs\fR\|(1)

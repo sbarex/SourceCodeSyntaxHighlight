@@ -33,7 +33,7 @@
 	<key>LSMinimumSystemVersion</key>
 	<string>$(MACOSX_DEPLOYMENT_TARGET)</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Developed by SBAREX (2019-2023).</string>
+	<string>Developed by SBAREX (2019-2024).</string>
 	<key>NSMainStoryboardFile</key>
 	<string>Storyboard</string>
 	<key>NSPrincipalClass</key>
@@ -425,6 +425,22 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
+				<string>public.item</string>
+				<string>dyn.ah62d4rv4ge80c25g</string>
+			</array>
+			<key>UTTypeIdentifier</key>
+			<string>com.steampowered.appmanifest</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>acf</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
 				<string>public.source-code</string>
 			</array>
 			<key>UTTypeDescription</key>
@@ -487,6 +503,22 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>twig</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.item</string>
+				<string>dyn.ah62d4rv4ge80c65ysm1u</string>
+			</array>
+			<key>UTTypeIdentifier</key>
+			<string>build.astro.files</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>astro</string>
 				</array>
 			</dict>
 		</dict>
@@ -566,6 +598,7 @@
 			<array>
 				<string>dyn.ah62d4rv4ge81k3x0qf3hg</string>
 				<string>dyn.ah62d4rv4ge81k3u</string>
+				<string>dyn.ah62d4rv4ge80u25q</string>
 				<string>public.item</string>
 			</array>
 			<key>UTTypeIdentifier</key>
@@ -576,6 +609,7 @@
 				<array>
 					<string>tf</string>
 					<string>tfvars</string>
+					<string>hcl</string>
 				</array>
 			</dict>
 		</dict>
@@ -705,11 +739,18 @@
 			<array>
 				<string>public.item</string>
 				<string>dyn.ah62d4rv4ge80e2p4qz0a</string>
+				<string>dyn.ah62d4rv4ge80e8xq</string>
 			</array>
 			<key>UTTypeIdentifier</key>
 			<string>org.bazel.source</string>
 			<key>UTTypeTagSpecification</key>
-			<dict/>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>bzl</string>
+					<string>bazel</string>
+				</array>
+			</dict>
 		</dict>
 		<dict>
 			<key>UTTypeConformsTo</key>
@@ -1125,6 +1166,22 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>less</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.item</string>
+				<string>dyn.ah62d4rv4ge8028k</string>
+			</array>
+			<key>UTTypeIdentifier</key>
+			<string>org.lilypond.files</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>ly</string>
 				</array>
 			</dict>
 		</dict>

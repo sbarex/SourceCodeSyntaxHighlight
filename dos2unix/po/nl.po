@@ -6,14 +6,14 @@
 # Steek hem op 'n stok!
 # Mep al die dekselse dictatortjes tot moes.
 #
-# Benno Schulenberg <benno@vertaalt.nl>, 2014, 2015, 2016, 2020
+# Benno Schulenberg <benno@vertaalt.nl>, 2014, 2015, 2016, 2020, 2023.
 # Erwin Waterlander <waterlan@xs4all.nl>, 2009-2014.
 msgid ""
 msgstr ""
-"Project-Id-Version: dos2unix 7.3.6-beta4\n"
+"Project-Id-Version: dos2unix 7.5.2-beta2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-01 22:23+0200\n"
-"PO-Revision-Date: 2020-09-27 15:17+0200\n"
+"POT-Creation-Date: 2024-01-16 19:49+0100\n"
+"PO-Revision-Date: 2023-12-24 10:56+0100\n"
 "Last-Translator: Benno Schulenberg <vertaling@coevern.nl>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
 "Language: nl\n"
@@ -48,7 +48,7 @@ msgstr "Binair teken 0x00%02X gevonden op regel %u\n"
 #: dos2unix.c:237 dos2unix.c:314 dos2unix.c:445 dos2unix.c:522 unix2dos.c:210
 #: unix2dos.c:281 unix2dos.c:432 unix2dos.c:503
 msgid "Added line break to last line.\n"
-msgstr ""
+msgstr "Regeleindeteken toegevoegd aan laatste regel.\n"
 
 #: dos2unix.c:330 dos2unix.c:538 unix2dos.c:297 unix2dos.c:519
 #, c-format
@@ -139,108 +139,107 @@ msgstr "Gebruik:  %s [opties] [bestand ...] [-n invoerbestand uitvoerbestand ...
 
 #: common.c:650
 msgid " --allow-chown         allow file ownership change\n"
-msgstr " --allow-chown         wijziging van bestandseigenaar toestaan\n"
+msgstr " --allow-chown          wijziging van bestandseigenaar toestaan\n"
 
 #: common.c:652
-msgid " -ascii                convert only line breaks (default)\n"
-msgstr " -ascii                alleen regeleindes converteren (standaard)\n"
+msgid " -ascii                default conversion mode\n"
+msgstr " -ascii                 alleen regeleindes converteren (standaard)\n"
 
 #: common.c:653
 msgid " -iso                  conversion between DOS and ISO-8859-1 character set\n"
-msgstr " -iso                  converteren tussen de tekensets DOS en ISO-8859-1\n"
+msgstr " -iso                   converteren tussen de tekensets DOS en ISO-8859-1\n"
 
 #: common.c:654
 msgid "   -1252               use Windows code page 1252 (Western European)\n"
-msgstr "   -1252               Windows-codetabel 1252 gebruiken (West-Europees)\n"
+msgstr "   -1252                Windows-codetabel 1252 gebruiken (West-Europees)\n"
 
 #: common.c:655
 msgid "   -437                use DOS code page 437 (US) (default)\n"
-msgstr "   -437                DOS-codetabel 437 gebruiken (VS) (standaard)\n"
+msgstr "   -437                 DOS-codetabel 437 gebruiken (VS) (standaard)\n"
 
 #: common.c:656
 msgid "   -850                use DOS code page 850 (Western European)\n"
-msgstr "   -850                DOS-codetabel 850 gebruiken (West-Europees)\n"
+msgstr "   -850                 DOS-codetabel 850 gebruiken (West-Europees)\n"
 
 #: common.c:657
 msgid "   -860                use DOS code page 860 (Portuguese)\n"
-msgstr "   -860                DOS-codetabel 860 gebruiken (Portugees)\n"
+msgstr "   -860                 DOS-codetabel 860 gebruiken (Portugees)\n"
 
 #: common.c:658
 msgid "   -863                use DOS code page 863 (French Canadian)\n"
-msgstr "   -863                DOS-codetabel 863 gebruiken (Canadees Frans)\n"
+msgstr "   -863                 DOS-codetabel 863 gebruiken (Canadees Frans)\n"
 
 #: common.c:659
 msgid "   -865                use DOS code page 865 (Nordic)\n"
-msgstr "   -865                DOS-codetabel 865 gebruiken (Scandinavisch)\n"
+msgstr "   -865                 DOS-codetabel 865 gebruiken (Scandinavisch)\n"
 
 #: common.c:660
 msgid " -7                    convert 8 bit characters to 7 bit space\n"
-msgstr " -7                    lettertekens met achtste bit gezet converteren naar spaties\n"
+msgstr " -7                     lettertekens met achtste bit gezet converteren naar spaties\n"
 
 #: common.c:662
 msgid " -b, --keep-bom        keep Byte Order Mark\n"
-msgstr " -b, --keep-bom        een \"Byte Order Mark\" behouden\n"
+msgstr " -b, --keep-bom         een \"Byte Order Mark\" behouden\n"
 
 #: common.c:664
 msgid " -b, --keep-bom        keep Byte Order Mark (default)\n"
-msgstr " -b, --keep-bom        een \"Byte Order Mark\" behouden (standaard)\n"
+msgstr " -b, --keep-bom         een \"Byte Order Mark\" behouden (standaard)\n"
 
 #: common.c:665
 msgid ""
 " -c, --convmode        conversion mode\n"
 "   convmode            ascii, 7bit, iso, mac, default to ascii\n"
 msgstr ""
-" -c, --convmode        te gebruiken conversiemodus\n"
-"   MODUS               'ascii', '7bit', 'iso', of 'mac' (standaard is 'ascii')\n"
+" -c, --convmode         te gebruiken conversiemodus\n"
+"   MODUS                'ascii', '7bit', 'iso', of 'mac' (standaard is 'ascii')\n"
 
 #: common.c:668
 msgid ""
 " -D, --display-enc     set encoding of displayed text messages\n"
 "   encoding            ansi, unicode, utf8, default to ansi\n"
 msgstr ""
-" -D, --display-enc     te gebruiken codering voor getoonde berichten\n"
-"   CODERING            'ansi', 'unicode', of 'utf8' (standaard is 'ansi')\n"
+" -D, --display-enc      te gebruiken codering voor getoonde berichten\n"
+"   CODERING             'ansi', 'unicode', of 'utf8' (standaard is 'ansi')\n"
 
 #: common.c:671
-#, fuzzy
 msgid " -e, --add-eol         add a line break to the last line if there isn't one\n"
-msgstr " --no-allow-chown      wijziging van bestandseigenaar niet toestaan (standaard)\n"
+msgstr " -e, --add-eol          een ontbrekend regeleindeteken toevoegen aan de laatste regel\n"
 
 #: common.c:672
 msgid " -f, --force           force conversion of binary files\n"
-msgstr " -f, --force           conversie van binaire bestanden afdwingen\n"
+msgstr " -f, --force            conversie van binaire bestanden afdwingen\n"
 
 #: common.c:675
 msgid " -gb, --gb18030        convert UTF-16 to GB18030\n"
-msgstr " -gb, --gb18030        UTF-16 naar GB18030 converteren\n"
+msgstr " -gb, --gb18030         UTF-16 naar GB18030 converteren\n"
 
 #: common.c:678
 msgid " -h, --help            display this help text\n"
-msgstr " -h, --help            deze hulptekst tonen\n"
+msgstr " -h, --help             deze hulptekst tonen\n"
 
 #: common.c:679
 msgid ""
 " -i, --info[=FLAGS]    display file information\n"
 "   file ...            files to analyze\n"
 msgstr ""
-" -i, --info[=VLAGGEN]  bestandsinformatie weergeven\n"
-"   BESTAND...          te analyseren bestand(en)\n"
+" -i, --info[=VLAGGEN]   bestandsinformatie weergeven\n"
+"   BESTAND...           te analyseren bestand(en)\n"
 
 #: common.c:681
 msgid " -k, --keepdate        keep output file date\n"
-msgstr " -k, --keepdate        tijdsstempel van uitvoerbestand behouden\n"
+msgstr " -k, --keepdate         tijdsstempel van uitvoerbestand behouden\n"
 
 #: common.c:682
 msgid " -L, --license         display software license\n"
-msgstr " -L, --license         softwarelicentie tonen\n"
+msgstr " -L, --license          softwarelicentie tonen\n"
 
 #: common.c:683
 msgid " -l, --newline         add additional newline\n"
-msgstr " -l, --newline         extra regeleinde toevoegen\n"
+msgstr " -l, --newline          extra regeleinde toevoegen\n"
 
 #: common.c:684
 msgid " -m, --add-bom         add Byte Order Mark (default UTF-8)\n"
-msgstr " -m, --add-bom         een \"Byte Order Mark\" toevoegen\n"
+msgstr " -m, --add-bom          een \"Byte Order Mark\" toevoegen\n"
 
 #: common.c:685
 msgid ""
@@ -248,25 +247,23 @@ msgid ""
 "   infile              original file in new-file mode\n"
 "   outfile             output file in new-file mode\n"
 msgstr ""
-" -n, --newfile         naar een nieuw bestand schrijven\n"
-"   INVOERBESTAND       het originele bestand in nieuwbestand-modus\n"
-"   UITVOERBESTAND      het geconverteerde bestand in nieuwbestand-modus\n"
+" -n, --newfile          naar een nieuw bestand schrijven\n"
+"   INVOERBESTAND        het originele bestand in nieuwbestand-modus\n"
+"   UITVOERBESTAND       het geconverteerde bestand in nieuwbestand-modus\n"
 
 #: common.c:689
 msgid " --no-allow-chown      don't allow file ownership change (default)\n"
-msgstr " --no-allow-chown      wijziging van bestandseigenaar niet toestaan (standaard)\n"
+msgstr " --no-allow-chown       wijziging van bestandseigenaar niet toestaan (standaard)\n"
 
 #: common.c:691
-#, fuzzy
 msgid " --no-add-eol          don't add a line break to the last line if there isn't one (default)\n"
-msgstr " --no-allow-chown      wijziging van bestandseigenaar niet toestaan (standaard)\n"
+msgstr " --no-add-eol           geen ontbrekend regeleindeteken toevoegen aan laatste regel (standaard)\n"
 
 #: common.c:692
 msgid " -O, --to-stdout       write to standard output\n"
-msgstr ""
+msgstr " -O, --to-stdout        naar standaarduitvoer schrijven\n"
 
 #: common.c:693
-#, fuzzy
 msgid ""
 " -o, --oldfile         write to old file (default)\n"
 "   file ...            files to convert in old-file mode\n"
@@ -276,55 +273,55 @@ msgstr ""
 
 #: common.c:695
 msgid " -q, --quiet           quiet mode, suppress all warnings\n"
-msgstr " -q, --quiet           alle waarschuwingen onderdrukken\n"
+msgstr " -q, --quiet            alle waarschuwingen onderdrukken\n"
 
 #: common.c:697
 msgid " -r, --remove-bom      remove Byte Order Mark (default)\n"
-msgstr " -r, --remove-bom      een \"Byte Order Mark\" verwijderen (standaard)\n"
+msgstr " -r, --remove-bom       een \"Byte Order Mark\" verwijderen (standaard)\n"
 
 #: common.c:699
 msgid " -r, --remove-bom      remove Byte Order Mark\n"
-msgstr " -r, --remove-bom      een \"Byte Order Mark\" verwijderen\n"
+msgstr " -r, --remove-bom       een \"Byte Order Mark\" verwijderen\n"
 
 #: common.c:700
 msgid " -s, --safe            skip binary files (default)\n"
-msgstr " -s, --safe            binaire bestanden overslaan (standaard)\n"
+msgstr " -s, --safe             binaire bestanden overslaan (standaard)\n"
 
 #: common.c:702
 msgid " -u,  --keep-utf16     keep UTF-16 encoding\n"
-msgstr " -u,  --keep-utf16     UTF-16-codering behouden\n"
+msgstr " -u,  --keep-utf16      UTF-16-codering behouden\n"
 
 #: common.c:703
 msgid " -ul, --assume-utf16le assume that the input format is UTF-16LE\n"
-msgstr " -ul, --assume-utf16le aannemen dat de invoeropmaak UTF-16LE is\n"
+msgstr " -ul, --assume-utf16le  aannemen dat de invoeropmaak UTF-16LE is\n"
 
 #: common.c:704
 msgid " -ub, --assume-utf16be assume that the input format is UTF-16BE\n"
-msgstr " -ub, --assume-utf16be aannemen dat de invoeropmaak UTF-16BE is\n"
+msgstr " -ub, --assume-utf16be  aannemen dat de invoeropmaak UTF-16BE is\n"
 
 #: common.c:706
 msgid " -v,  --verbose        verbose operation\n"
-msgstr " -v,  --verbose        gedetailleerde uitvoer produceren\n"
+msgstr " -v,  --verbose         gedetailleerde uitvoer produceren\n"
 
 #: common.c:708
 msgid " -F, --follow-symlink  follow symbolic links and convert the targets\n"
-msgstr " -F, --follow-symlink  symbolische koppelingen volgen en de doelen converteren\n"
+msgstr " -F, --follow-symlink   symbolische koppelingen volgen en de doelen converteren\n"
 
 #: common.c:711
 msgid ""
 " -R, --replace-symlink replace symbolic links with converted files\n"
 "                         (original target files remain unchanged)\n"
 msgstr ""
-" -R, --replace-symlink symbolische koppelingen vervangen door geconverteerde bestanden\n"
-"                         (de originele doelbestanden blijven ongewijzigd)\n"
+" -R, --replace-symlink  symbolische koppelingen vervangen door geconverteerde bestanden\n"
+"                          (de originele doelbestanden blijven ongewijzigd)\n"
 
 #: common.c:713
 msgid " -S, --skip-symlink    keep symbolic links and targets unchanged (default)\n"
-msgstr " -S, --skip-symlink    symbolische koppelingen en doelen ongewijzigd laten (standaard)\n"
+msgstr " -S, --skip-symlink     symbolische koppelingen en doelen ongewijzigd laten (standaard)\n"
 
 #: common.c:715
 msgid " -V, --version         display version number\n"
-msgstr " -V, --version         programmaversie tonen\n"
+msgstr " -V, --version          programmaversie tonen\n"
 
 #: common.c:727
 msgid "DOS 16 bit version (WATCOMC).\n"
@@ -427,19 +424,19 @@ msgstr "Pad voor tijdelijk uitvoerbestand is te lang:"
 msgid "Writing %s BOM.\n"
 msgstr "Schrijven van %s-BOM.\n"
 
-#: common.c:1201 common.c:1254 common.c:1878 common.c:1899
+#: common.c:1201 common.c:1254 common.c:1877 common.c:1898
 msgid "UTF-16LE"
 msgstr "UTF-16LE"
 
-#: common.c:1208 common.c:1257 common.c:1880 common.c:1901
+#: common.c:1208 common.c:1257 common.c:1879 common.c:1900
 msgid "UTF-16BE"
 msgstr "UTF-16BE"
 
-#: common.c:1215 common.c:1234 common.c:1263 common.c:1891
+#: common.c:1215 common.c:1234 common.c:1263 common.c:1890
 msgid "GB18030"
 msgstr "GB18030"
 
-#: common.c:1222 common.c:1241 common.c:1260 common.c:1893
+#: common.c:1222 common.c:1241 common.c:1260 common.c:1892
 msgid "UTF-8"
 msgstr "UTF-8"
 
@@ -461,122 +458,122 @@ msgstr "UTF-16BE-codering wordt aangenomen.\n"
 msgid "problems resolving symbolic link '%s'\n"
 msgstr "problemen met het herleiden van symbolische koppeling '%s'\n"
 
-#: common.c:1522 common.c:1705
-#, c-format
-msgid "          output file remains in '%s'\n"
-msgstr "          uitvoerbestand blijft in '%s'\n"
-
-#: common.c:1540
+#: common.c:1539
 #, c-format
 msgid "Failed to open temporary output file: %s\n"
 msgstr "Kan tijdelijk uitvoerbestand niet openen: %s\n"
 
-#: common.c:1552
+#: common.c:1551
 #, c-format
 msgid "using %s as temporary file\n"
 msgstr "%s wordt als tijdelijk bestand gebruikt\n"
 
-#: common.c:1604 common.c:1632
+#: common.c:1603 common.c:1631
 #, c-format
 msgid "Failed to change the permissions of temporary output file %s:"
 msgstr "Kan toegangsrechten van tijdelijk uitvoerbestand %s niet wijzigen:"
 
-#: common.c:1620
+#: common.c:1619
 #, c-format
 msgid "The user and/or group ownership of file %s is not preserved.\n"
 msgstr "De gebruiker en/of groep van bestand %s is niet behouden.\n"
 
-#: common.c:1642
+#: common.c:1641
 #, c-format
 msgid "Failed to change the owner and group of temporary output file %s:"
 msgstr "Kan eigenaar en groep van tijdelijk uitvoerbestand %s niet wijzigen:"
 
-#: common.c:1699
+#: common.c:1698
 #, c-format
 msgid "problems renaming '%s' to '%s':"
 msgstr "problemen met hernoemen van '%s' naar '%s':"
 
-#: common.c:1703
+#: common.c:1702
 #, c-format
 msgid "          which is the target of symbolic link '%s'\n"
 msgstr "          welke het doel is van symbolische koppeling '%s'\n"
 
-#: common.c:1853 common.c:1948
+#: common.c:1704
+#, c-format
+msgid "          output file remains in '%s'\n"
+msgstr "          uitvoerbestand blijft in '%s'\n"
+
+#: common.c:1852 common.c:1947
 #, c-format
 msgid "Skipping binary file %s\n"
 msgstr "Binair bestand %s wordt overgeslagen\n"
 
-#: common.c:1856 common.c:1951
+#: common.c:1855 common.c:1950
 #, c-format
 msgid "code page %d is not supported.\n"
 msgstr "Codetabel %d wordt niet ondersteund.\n"
 
-#: common.c:1860 common.c:1955 common.c:2043
+#: common.c:1859 common.c:1954 common.c:2042
 #, c-format
 msgid "Skipping UTF-16 file %s, the size of wchar_t is %d bytes.\n"
 msgstr "UTF-16-bestand %s wordt overgeslagen; de grootte van 'wchar_t' is %d bytes.\n"
 
-#: common.c:1863 common.c:1958
+#: common.c:1862 common.c:1957
 #, c-format
 msgid "Skipping UTF-16 file %s, an UTF-16 conversion error occurred on line %u.\n"
 msgstr "UTF-16-bestand %s wordt overgeslagen; er is een UTF-16-conversiefout opgetreden op regel %u.\n"
 
-#: common.c:1867 common.c:1962
+#: common.c:1866 common.c:1961
 #, c-format
 msgid "Skipping UTF-16 file %s, UTF-16 conversion is not supported in this version of %s.\n"
 msgstr "UTF-16-bestand %s wordt overgeslagen; UTF-16-conversie wordt niet ondersteund in deze versie van %s.\n"
 
-#: common.c:1933 common.c:2032
+#: common.c:1932 common.c:2031
 #, c-format
 msgid "Skipping %s, not a regular file.\n"
 msgstr "%s wordt overgeslagen, omdat het geen regulier bestand is.\n"
 
-#: common.c:1937
+#: common.c:1936
 #, c-format
 msgid "Skipping %s, output file %s is a symbolic link.\n"
 msgstr "%s wordt overgeslagen; uitvoerbestand %s is een symbolische koppeling.\n"
 
-#: common.c:1939
+#: common.c:1938
 #, c-format
 msgid "Skipping symbolic link %s.\n"
 msgstr "Symbolische koppeling %s wordt overgeslagen.\n"
 
-#: common.c:1942 common.c:2037
+#: common.c:1941 common.c:2036
 #, c-format
 msgid "Skipping symbolic link %s, target is not a regular file.\n"
 msgstr "Symbolische koppeling %s wordt overgeslagen, omdat het doel geen regulier bestand is.\n"
 
-#: common.c:1945
+#: common.c:1944
 #, c-format
 msgid "Skipping %s, target of symbolic link %s is not a regular file.\n"
 msgstr "%s wordt overgeslagen, omdat het doel van symbolische koppeling %s geen regulier bestand is.\n"
 
-#: common.c:1970
+#: common.c:1969
 #, c-format
 msgid "converting file %s to file %s in Unix format...\n"
 msgstr "converteren van bestand %s naar bestand %s in Unix-opmaak...\n"
 
-#: common.c:1972
+#: common.c:1971
 #, c-format
 msgid "converting file %s to Unix format...\n"
 msgstr "converteren van bestand %s naar Unix-opmaak...\n"
 
-#: common.c:1976
+#: common.c:1975
 #, c-format
 msgid "converting file %s to file %s in Mac format...\n"
 msgstr "converteren van bestand %s naar bestand %s in Mac-opmaak...\n"
 
-#: common.c:1978
+#: common.c:1977
 #, c-format
 msgid "converting file %s to Mac format...\n"
 msgstr "converteren van bestand %s naar Mac-opmaak...\n"
 
-#: common.c:1981
+#: common.c:1980
 #, c-format
 msgid "converting file %s to file %s in DOS format...\n"
 msgstr "converteren van bestand %s naar bestand %s in DOS-opmaak...\n"
 
-#: common.c:1983
+#: common.c:1982
 #, c-format
 msgid "converting file %s to DOS format...\n"
 msgstr "converteren van bestand %s naar DOS-opmaak...\n"
@@ -587,7 +584,7 @@ msgstr "converteren van bestand %s naar DOS-opmaak...\n"
 #. 3rd %s is encoding of output file.
 #. 4th %s is name of output file.
 #. E.g.: converting UTF-16LE file in.txt to UTF-8 file out.txt in Unix format...
-#: common.c:1995
+#: common.c:1994
 #, c-format
 msgid "converting %s file %s to %s file %s in Unix format...\n"
 msgstr "converteren van bestand %2$s (%1$s) naar bestand %4$s (%3$s) in Unix-opmaak...\n"
@@ -597,91 +594,91 @@ msgstr "converteren van bestand %2$s (%1$s) naar bestand %4$s (%3$s) in Unix-opm
 #. 2nd %s is name of input file.
 #. 3rd %s is encoding of output (input file is overwritten).
 #. E.g.: converting UTF-16LE file foo.txt to UTF-8 Unix format...
-#: common.c:2002
+#: common.c:2001
 #, c-format
 msgid "converting %s file %s to %s Unix format...\n"
 msgstr "converteren van bestand %2$s (%1$s) naar Unix-opmaak (%3$s)...\n"
 
-#: common.c:2006
+#: common.c:2005
 #, c-format
 msgid "converting %s file %s to %s file %s in Mac format...\n"
 msgstr "converteren van bestand %2$s (%1$s) naar bestand %4$s (%3$s) in Mac-opmaak...\n"
 
-#: common.c:2008
+#: common.c:2007
 #, c-format
 msgid "converting %s file %s to %s Mac format...\n"
 msgstr "converteren van bestand %2$s (%1$s) naar Mac-opmaak (%3$s)...\n"
 
-#: common.c:2011
+#: common.c:2010
 #, c-format
 msgid "converting %s file %s to %s file %s in DOS format...\n"
 msgstr "converteren van bestand %2$s (%1$s) naar bestand %4$s (%3$s) in DOS-opmaak...\n"
 
-#: common.c:2013
+#: common.c:2012
 #, c-format
 msgid "converting %s file %s to %s DOS format...\n"
 msgstr "converteren van bestand %2$s (%1$s) naar DOS-opmaak (%3$s)...\n"
 
-#: common.c:2020
+#: common.c:2019
 #, c-format
 msgid "problems converting file %s to file %s\n"
 msgstr "problemen met conversie van bestand %s naar bestand %s\n"
 
-#: common.c:2022
+#: common.c:2021
 #, c-format
 msgid "problems converting file %s\n"
 msgstr "problemen met conversie van bestand %s\n"
 
-#: common.c:2157 common.c:2207
+#: common.c:2184 common.c:2241
 #, c-format
 msgid "can not read from input file %s:"
 msgstr "kan niet lezen uit invoerbestand %s:"
 
-#: common.c:2363
+#: common.c:2401
 #, c-format
 msgid "wrong flag '%c' for option -i or --info\n"
 msgstr "onjuiste vlag '%c' voor optie '-i' of '--info'\n"
 
-#: common.c:2499 common.c:2542
+#: common.c:2537 common.c:2580
 #, c-format
 msgid "active code page: %d\n"
 msgstr "actieve codetabel: %d\n"
 
-#: common.c:2554
+#: common.c:2592
 #, c-format
 msgid "invalid %s conversion mode specified\n"
 msgstr "ongeldige conversiemodus %s opgegeven\n"
 
-#: common.c:2562 common.c:2592
+#: common.c:2600 common.c:2630
 #, c-format
 msgid "option '%s' requires an argument\n"
 msgstr "optie '%s' vereist een argument\n"
 
-#: common.c:2584
+#: common.c:2622
 #, c-format
 msgid "invalid %s display encoding specified\n"
 msgstr "ongeldige weergavecodering %s opgegeven\n"
 
-#: common.c:2604 common.c:2618 common.c:2630
+#: common.c:2642 common.c:2656 common.c:2668
 #, c-format
 msgid "target of file %s not specified in new-file mode\n"
 msgstr "doel van bestand %s is niet opgegeven in 'nieuwbestand-modus'\n"
 
-#: common.c:2713
+#: common.c:2751
 #, c-format
 msgid "can not read from input file: %s\n"
 msgstr "kan niet lezen uit invoerbestand: %s\n"
 
-#: common.c:2723 common.c:2735
+#: common.c:2761 common.c:2773
 #, c-format
 msgid "can not write to output file: %s\n"
 msgstr "kan niet schrijven naar uitvoerbestand: %s\n"
 
-#: common.c:2810
+#: common.c:2848
 msgid "error: Invalid surrogate pair. Missing low surrogate.\n"
 msgstr "fout: ongeldig surrogaatpaar -- het lage deel ontbreekt\n"
 
-#: common.c:2826
+#: common.c:2864
 msgid "error: Invalid surrogate pair. Missing high surrogate.\n"
 msgstr "fout: ongeldig surrogaatpaar -- het hoge deel ontbreekt\n"
 

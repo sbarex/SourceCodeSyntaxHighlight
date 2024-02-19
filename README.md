@@ -125,6 +125,7 @@ The application can also handle some [plain files](#plain-files) **without exten
 - AppleScript (`.scpt`, `.applescript`, `.ascr`) _automatically decompiled with `osadecompile`_
 - Apple shell script files (`.command`)
 - Assembler source files (`.asm`, `.s79`)
+- Astro files (`.astro`) _as JSX_.
 - Autolit files (`.au3`, `.a3x`)
 - Azkaban flow files (`.flow`) as _`YAML`_
 - ATL files (`.atl`)
@@ -191,6 +192,7 @@ The application can also handle some [plain files](#plain-files) **without exten
 - Korn Shell script files (`.ksh`)
 - Kotlin source files (`.kt`, `.kts`)
 - LESS stylesheet (`.less`)
+- Lilypond files (`.ly`)x1
 - Lisp source files (`.lisp`, `.lsp`, `.asd`, `.el`)
 - Logos source files (`.xm`)
 - Lua source files (`.lua`)
@@ -240,12 +242,13 @@ The application can also handle some [plain files](#plain-files) **without exten
 - SQL files (`.sql`)
 - Standard ML source files (`.ml`)
 - Stata files (`.do`, `.ado`) _as plain text_
+- Steam app manifest files (`.acf`) _as plain text_.
 - Svelte (`.svelte`) _as `HTML`_
 - Swift source files (`.swift`)
 - Symfony Twig files (`.twig`)
 - TCL source files (`.tcl`)
 - Tenex C Shell script files (`.tcsh`)
-- Terraform files (`.tfvars`, `.tf`) _as `YAML`_
+- Terraform files (`.tfvars`, `.tf`, `.hcl`) _as `YAML`_
 - TeX and LaTeX files (`.tex`, `.sty`, `.cls`, `.latex`, `.ltx`, `.texi`, `.ctx`, `.sty`)
 - Text files (`.txt`, `.text`)
 - TOML files (`.toml`)

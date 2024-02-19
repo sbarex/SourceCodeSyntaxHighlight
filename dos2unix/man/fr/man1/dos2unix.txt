@@ -70,8 +70,8 @@ OPTIONS
         l'utilisateur ou le groupe propriétaire des fichiers.
 
     -ascii
-        Convertit uniquement les sauts de lignes. C'est le mode de
-        conversion par défaut.
+        Mode de conversion par défaut. Voyez aussi la section des MODES DE
+        CONVERSION.
 
     -iso
         Convertit le jeu de caractères du DOS vers ISO-8859-1. Voyez aussi
@@ -233,6 +233,17 @@ OPTIONS
         Notez qu'un fichier binaire peut parfois être considéré à tord comme
         un fichier texte. Voyez aussi l'option "-s".
 
+        Si l'option "-e" ou "--add-eol" est également utilisée, le type du
+        saut de ligne de la dernière ligne est affiché ou "noeol" est
+        affiché s'il n'y en a pas.
+
+        Exemple de sortie :
+
+             6       0       0  no_bom    text   dos     dos.txt
+             0       6       0  no_bom    text   unix    unix.txt
+             0       0       6  no_bom    text   mac     mac.txt
+             1       0       0  no_bom    text   noeol   noeol_dos.txt
+
         Des fanions facultatifs peuvent être ajoutés pour changer la sortie.
         Un ou plusieurs fanions peuvent être ajoutés.
 
@@ -252,11 +263,18 @@ OPTIONS
 
         t   Affiche si le fichier est texte ou binaire.
 
+        e   Affiche le type du saut de ligne de la dernière ligne ou "noeol"
+            s'il n'y en a pas.
+
         c   Affiche uniquement les fichiers qui seraient convertis.
 
             Avec le fanion "c", dos2unix n'affichera que les fichiers
             contenant des sauts de ligne DOS alors que unix2dos n'affichera
             que les noms des fichiers aillant des sauts de ligne Unix.
+
+            Si l'option "-e" ou "--add-eol" est également utilisée, les
+            fichiers qui n'ont pas de saut de ligne à la dernière ligne
+            seront affichés.
 
         h   Afficher un en-tête.
 
@@ -283,6 +301,11 @@ OPTIONS
         Liste les fichiers qui ont des sauts de ligne Unix :
 
             unix2dos -ic *.txt
+
+        Liste les fichiers qui ont des sauts de ligne DOS ou qui n'ont pas
+        de saut de ligne à la dernière ligne.
+
+            dos2unix -e -ic *.txt
 
         Ne converti que les fichiers qui ont des sauts de lignes DOS et
         laisse les autres fichiers inchangés:
@@ -473,7 +496,7 @@ OPTIONS
         Affiche les informations de version puis arrête.
 
 MODE MAC
-    En mode normal, les sauts de lignes sont convertis du DOS vers Unix et
+    Par défaut, les sauts de lignes sont convertis du DOS vers Unix et
     inversement. Les sauts de lignes Mac ne sont pas convertis.
 
     En mode Mac, les sauts de lignes sont convertis du format Mac au format
@@ -484,12 +507,17 @@ MODE MAC
 
 MODES DE CONVERSION
     ascii
-        En mode "ascii", seuls les sauts de lignes sont convertis. Ceci est
-        le mode de conversion par défaut.
+        Ceci est le mode de conversion par défaut. Ce mode convertit les
+        fichiers ASCII en fichiers compatibles avec l'ASCII tel que UTF-9.
+        Activer le mode ascii désactive les modes 7bit et iso.
 
-        Bien que le nom de ce mode soit ASCII, qui est un standard 7 bits,
-        ce mode travail en réalité sur 8 bits. Utilisez toujours ce mode
-        lorsque vous convertissez des fichiers Unicode UTF-8.
+        Si dos2unix supporte UTF-16, les fichiers encodés en UTF-16 sont
+        convertis vers l'encodage des caractères des paramètres
+        linguistiques courants sur les systèmes POSIX et vers UTF-8 sous
+        Windows. Activer le mode ascii désactive l'option pour garder
+        l'encodage UTF-8 ("-u") et les options qui supposent une entrée en
+        UTF-16 ("-ul" et "-ub"). Pour voir si dos2unix supporte UTF-16,
+        tapez "dos2unix -V". Consultez aussi la section UNICODE.
 
     7bit
         Dans ce mode, tous les caractères 8 bits non ASCII (avec des valeurs
@@ -561,7 +589,7 @@ UNICODE
 
   Conversion
     Les fichiers textes Unicode peuvent avoir des sauts de lignes DOS, Unix
-    ou Mac, tout comme les fichiers textes normaux.
+    ou Mac, tout comme les fichiers textes ASCII.
 
     Toutes les versions de dos2unix et unix2dos peuvent convertir des
     fichiers codés en UTF-8 car UTF-8 a été conçu pour être rétro-compatible
@@ -601,7 +629,7 @@ UNICODE
     Les fichiers textes Unicode sous Windows on généralement un indicateur
     d'ordre des octets (BOM) car de nombreux programmes Windows (y compris
     Notepad) ajoutent cet indicateur par défaut. Consultez aussi
-    <http://fr.wikipedia.org/wiki/Indicateur_d%27ordre_des_octets>.
+    <https://fr.wikipedia.org/wiki/Indicateur_d%27ordre_des_octets>.
 
     Sous Unix, les fichiers Unicodes n'ont habituellement pas de BOM. Il est
     supposé que les fichiers textes sont codés selon le codage de
@@ -658,7 +686,7 @@ UNICODE
 GB18030
     GB18030 est un standard du gouvernement chinois. Tout logiciel vendu en
     Chine doit officiellement supporter un sous ensemble obligatoire du
-    standard GB18030. Consultez <http://fr.wikipedia.org/wiki/GB_18030>.
+    standard GB18030. Consultez <https://fr.wikipedia.org/wiki/GB_18030>.
 
     GB18030 est entièrement compatible avec Unicode et peut être considéré
     comme étant un format de transformation unicode. Comme UTF-8, GB18030
@@ -780,8 +808,8 @@ PARAMÈTRES LINGUISTIQUES
 
         La liste complète des codes de langues et de pays est dans le manuel
         de gettext:
-        <http://www.gnu.org/software/gettext/manual/html_node/Usual-Language
-        -Codes.html>
+        <https://www.gnu.org/software/gettext/manual/html_node/Usual-Languag
+        e-Codes.html>
 
         Sur les systèmes Unix, vous pouvez utiliser la commande locale(1)
         pour obtenir des informations sur l'environnement linguistique.
@@ -795,8 +823,8 @@ PARAMÈTRES LINGUISTIQUES
         que « C » à LANG (ou LC_ALL). Ensuite, vous pourrez utiliser la
         liste de priorité avec la variable LANGUAGE. Voyez également le
         manuel de gettext:
-        <http://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-v
-        ariable.html>
+        <https://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-
+        variable.html>
 
         Si vous sélectionnez une langue qui n'est pas disponible, vous
         obtiendrez des messages en anglais standard.
@@ -821,13 +849,13 @@ VALEUR DE RETOUR
     mauvaises options sont utilisées sur la ligne de commande.
 
 STANDARDS
-    <http://fr.wikipedia.org/wiki/Fichier_texte>
+    <https://fr.wikipedia.org/wiki/Fichier_texte>
 
-    <http://fr.wikipedia.org/wiki/Retour_chariot>
+    <https://fr.wikipedia.org/wiki/Retour_chariot>
 
-    <http://fr.wikipedia.org/wiki/Fin_de_ligne>
+    <https://fr.wikipedia.org/wiki/Fin_de_ligne>
 
-    <http://fr.wikipedia.org/wiki/Unicode>
+    <https://fr.wikipedia.org/wiki/Unicode>
 
 AUTEURS
     Benjamin Lin - <blin@socs.uts.edu.au>, Bernd Johannes Wuebben (mode
@@ -835,9 +863,9 @@ AUTEURS
     supplémentaire) - <wurll@ira.uka.de>, Erwin Waterlander -
     <waterlan@xs4all.nl> (Mainteneur)
 
-    Page du projet: <http://waterlan.home.xs4all.nl/dos2unix.html>
+    Page du projet: <https://waterlan.home.xs4all.nl/dos2unix.html>
 
-    Page SourceForge: <http://sourceforge.net/projects/dos2unix/>
+    Page SourceForge: <https://sourceforge.net/projects/dos2unix/>
 
 VOIR AUSSI
     file(1) find(1) iconv(1) locale(1) xargs(1)

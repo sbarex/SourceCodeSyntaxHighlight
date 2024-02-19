@@ -71,7 +71,7 @@
 .\" ========================================================================
 .\"
 .IX Title "dos2unix 1"
-.TH dos2unix 1 "2023-08-29" "dos2unix" "2023-08-29"
+.TH dos2unix 1 "2024-01-22" "dos2unix" "2024-01-22"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -122,7 +122,7 @@ Wijziging van bestandseigenaar toestaan in oud-bestand-modus.
 When this option is used, the conversion will not be aborted when the user and/or group ownership of the original file can't be preserved in old file mode. Conversion will continue and the converted file will get the same new ownership as if it was converted in new file mode. See also options \f(CW\*(C`\-o\*(C'\fR and \f(CW\*(C`\-n\*(C'\fR. This option is only available if dos2unix has support for preserving the user and group ownership of files.
 .IP "\fB\-ascii\fR" 4
 .IX Item "-ascii"
-Alleen regeleindes converteren.  Dit is de standaardconversiemodus.
+Default conversion mode. See also section \s-1CONVERSION MODES.\s0
 .IP "\fB\-iso\fR" 4
 .IX Item "-iso"
 Conversie tussen de tekensets \s-1DOS\s0 en \s-1ISO\-8859\-1.\s0  Zie ook de sectie \fB\s-1CONVERSIEMODI\s0\fR.
@@ -224,6 +224,17 @@ Voorbeelduitvoer:
 .Sp
 Merk op dat een binair bestand soms voor een tekstbestand aangezien kan worden.  Zie ook optie \f(CW\*(C`\-s\*(C'\fR.
 .Sp
+If in addition option \f(CW\*(C`\-e\*(C'\fR or \f(CW\*(C`\-\-add\-eol\*(C'\fR is used also the type of the line break of the last line is printed, or \f(CW\*(C`noeol\*(C'\fR if there is none.
+.Sp
+Voorbeelduitvoer:
+.Sp
+.Vb 4
+\&     6       0       0  no_bom    text   dos     dos.txt
+\&     0       6       0  no_bom    text   unix    unix.txt
+\&     0       0       6  no_bom    text   mac     mac.txt
+\&     1       0       0  no_bom    text   noeol   noeol_dos.txt
+.Ve
+.Sp
 Bij de optie kunnen één of meer vlaggen meegegeven worden om de uitvoer te beperken.
 .RS 4
 .IP "\fB0\fR" 4
@@ -244,11 +255,16 @@ De Byte-Order-Mark tonen.
 .IP "\fBt\fR" 4
 .IX Item "t"
 Tonen of het bestand tekst is of binair.
+.IP "\fBe\fR" 4
+.IX Item "e"
+Print the type of the line break of the last line, or \f(CW\*(C`noeol\*(C'\fR if there is none.
 .IP "\fBc\fR" 4
 .IX Item "c"
 Alleen de namen tonen van de bestanden die geconverteerd zouden worden.
 .Sp
 Met de vlag \f(CW\*(C`c\*(C'\fR toont dos2unix alleen de bestanden die DOS-regeleindes bevatten, en unix2dos alleen de bestanden die Unix-regeleindes bevatten.
+.Sp
+If in addition option \f(CW\*(C`\-e\*(C'\fR or \f(CW\*(C`\-\-add\-eol\*(C'\fR is used also the files that lack a line break on the last line will be printed.
 .IP "\fBh\fR" 4
 .IX Item "h"
 Een kopregel printen.
@@ -288,6 +304,12 @@ De bestanden opsommen die Unix-regeleindes bevatten:
 .Sp
 .Vb 1
 \&    unix2dos \-ic *.txt
+.Ve
+.Sp
+List the files that have \s-1DOS\s0 line breaks or lack a line break on the last line:
+.Sp
+.Vb 1
+\&    dos2unix \-e \-ic *.txt
 .Ve
 .Sp
 Alleen bestanden die DOS-regeleindes bevatten converteren en andere bestanden ongemoeid laten:
@@ -410,7 +432,7 @@ Symbolische koppelingen en doelen ongewijzigd laten (standaard).
 Versie-informatie tonen.
 .SH "MAC-MODUS"
 .IX Header "MAC-MODUS"
-In normale modus worden DOS-regeleindes naar Unix omgezet en vice versa. Mac-regeleindes worden niet omgezet.
+By default line breaks are converted from \s-1DOS\s0 to Unix and vice versa.  Mac line breaks are not converted.
 .PP
 In Mac-modus worden Mac-regeleindes naar Unix omgezet en vice versa. DOS-regeleindes blijven ongewijzigd.
 .PP
@@ -419,9 +441,9 @@ Om in Mac-modus te draaien kunt u de opdrachtregeloptie \f(CW\*(C`\-c mac\*(C'\f
 .IX Header "CONVERSIEMODI"
 .IP "\fBascii\fR" 4
 .IX Item "ascii"
-In modus \f(CW\*(C`ascii\*(C'\fR worden alleen regeleindes omgezet.  Dit is de standaardmodus.
+This is the default conversion mode. This mode is for converting \s-1ASCII\s0 and ASCII-compatible encoded files, like \s-1UTF\-8.\s0 Enabling \fBascii\fR mode disables \fB7bit\fR and \fBiso\fR mode.
 .Sp
-Hoewel de naam van deze modus \s-1ASCII\s0 is, wat een 7\-bits standaard is, is de werkelijke modus 8\-bits.  Gebruik altijd deze modus wanneer u Unicode UTF\-8\-bestanden omzet.
+If dos2unix has \s-1UTF\-16\s0 support, \s-1UTF\-16\s0 encoded files are converted to the current locale character encoding on \s-1POSIX\s0 systems and to \s-1UTF\-8\s0 on Windows. Enabling \fBascii\fR mode disables the option to keep \s-1UTF\-16\s0 encoding (\f(CW\*(C`\-u\*(C'\fR) and the options to assume \s-1UTF\-16\s0 input (\f(CW\*(C`\-ul\*(C'\fR and \f(CW\*(C`\-ub\*(C'\fR).  To see if dos2unix has \s-1UTF\-16\s0 support type \f(CW\*(C`dos2unix \-V\*(C'\fR. See also section \s-1UNICODE.\s0
 .IP "\fB7bit\fR" 4
 .IX Item "7bit"
 Alle 8\-bits niet-ASCII lettertekens (met waardes van 128 t/m 255) worden omgezet naar een 7\-bits spatie.
@@ -491,7 +513,7 @@ Zie ook <http://czyborra.com/charsets/codepages.html> en <http://czyborra.com/ch
 Er bestaan verschillende Unicode-coderingen.  Op Unix en Linux zijn Unicode-bestanden typisch gecodeerd in \s-1UTF\-8.\s0  Op Windows kunnen Unicode-tekstbestanden gecodeerd zijn in \s-1UTF\-8, UTF\-16\s0 of \s-1UTF\-16\s0 big endian, maar ze zijn meestal gecodeerd in \s-1UTF\-16.\s0
 .SS "Conversie"
 .IX Subsection "Conversie"
-Unicode-tekstbestanden kunnen \s-1DOS\-,\s0 Unix\- of Mac-regeleindes hebben, net als reguliere tekstbestanden.
+Unicode text files can have \s-1DOS,\s0 Unix or Mac line breaks, like \s-1ASCII\s0 text files.
 .PP
 Alle versies van dos2unix en unix2dos kunnen UTF\-8\-gecodeerde bestanden omzetten, want \s-1UTF\-8\s0 is ontworpen op compatibiliteit met \s-1ASCII.\s0
 .PP
@@ -510,7 +532,7 @@ Dos2unix en unix2dos hebben geen optie om van \s-1UTF\-8\s0 naar \s-1UTF\-16\s0 
 \&\s-1ISO\-\s0 en 7\-bits\-conversie werken niet op UTF\-16\-bestanden.
 .SS "Byte-Order-Mark"
 .IX Subsection "Byte-Order-Mark"
-Op Windows bevatten Unicode-tekstbestanden gewoonlijk een Byte-Order-Mark (\s-1BOM\s0), omdat veel Windows-programma's (inclusief Kladblok) standaard een \s-1BOM\s0 toevoegen.  Zie ook <http://en.wikipedia.org/wiki/Byte_order_mark>.
+On Windows Unicode text files typically have a Byte Order Mark (\s-1BOM\s0), because many Windows programs (including Notepad) add BOMs by default. See also <https://en.wikipedia.org/wiki/Byte_order_mark>.
 .PP
 Op Unix hebben Unicode-tekstbestanden meestal geen \s-1BOM.\s0  Er wordt aangenomen dat de codering van tekstbestanden gelijk is aan de tekencodering van de ingestelde taalregio.
 .PP
@@ -555,7 +577,7 @@ Omzetten van Unix \s-1UTF\-8\s0 naar Windows \s-1UTF\-16:\s0
 .Ve
 .SH "GB18030"
 .IX Header "GB18030"
-\&\s-1GB18030\s0 is een standaard van de Chinese overheid.  Een subset van de GB18030\-standaard is officieel verplicht voor alle softwareproducten die in China verkocht worden.  Zie ook <http://en.wikipedia.org/wiki/GB_18030>.
+\&\s-1GB18030\s0 is a Chinese government standard. A mandatory subset of the \s-1GB18030\s0 standard is officially required for all software products sold in China. See also <https://en.wikipedia.org/wiki/GB_18030>.
 .PP
 \&\s-1GB18030\s0 is volledig compatibel met Unicode, en kan als een Unicodetransformatie beschouwd worden.  Net als \s-1UTF\-8\s0 is \s-1GB18030\s0 compatibel met \s-1ASCII.\s0  \s-1GB18030\s0 is ook compatibel met Windows-codetabel 936 (ook wel \s-1GBK\s0 genoemd).
 .PP
@@ -680,12 +702,12 @@ De primaire taal wordt geselecteerd via de omgevingsvariabele \s-1LANG.\s0  De v
 \&    export LANG=en_GB.UTF\-8      Engels, GB, UTF\-8\-codering
 .Ve
 .Sp
-Voor een complete lijst van taal\- en landcodes zie de gettext-handleiding: <http://www.gnu.org/software/gettext/manual/html_node/Usual\-Language\-Codes.html>
+For a complete list of language and country codes see the gettext manual: <https://www.gnu.org/software/gettext/manual/html_node/Usual\-Language\-Codes.html>
 .Sp
 Op Unix-systemen kunt u de opdracht \fBlocale\fR(1) gebruiken om specifieke taalregio-informatie te verkrijgen.
 .IP "\fB\s-1LANGUAGE\s0\fR" 4
 .IX Item "LANGUAGE"
-Met de omgevingsvariabele \s-1LANGUAGE\s0 kunt u een prioriteitenlijst specificeren van talen, gescheiden door dubbele punten.  Dos2unix geeft voorrang aan \s-1LANGUAGE\s0 boven \s-1LANG.\s0  Bijvoorbeeld, eerst Nederlands en dan Duits: \f(CW\*(C`LANGUAGE=nl:de\*(C'\fR.  U moet eerst lokalisatie in werking stellen, door het instellen van \s-1LANG\s0 (of \s-1LC_ALL\s0) op een waarde ongelijk aan \*(L"C\*(R", voordat u een talen-prioriteitenlijst kunt gebruiken via de variabele \s-1LANGUAGE.\s0  Zie ook de gettext-handleiding: <http://www.gnu.org/software/gettext/manual/html_node/The\-LANGUAGE\-variable.html>
+With the \s-1LANGUAGE\s0 environment variable you can specify a priority list of languages, separated by colons. Dos2unix gives preference to \s-1LANGUAGE\s0 over \s-1LANG.\s0  For instance, first Dutch and then German: \f(CW\*(C`LANGUAGE=nl:de\*(C'\fR. You have to first enable localization, by setting \s-1LANG\s0 (or \s-1LC_ALL\s0) to a value other than \*(L"C\*(R", before you can use a language priority list through the \s-1LANGUAGE\s0 variable. See also the gettext manual: <https://www.gnu.org/software/gettext/manual/html_node/The\-LANGUAGE\-variable.html>
 .Sp
 Als u een taal kiest die niet beschikbaar is, worden de standaard Engelse berichten gebruikt.
 .IP "\fB\s-1DOS2UNIX_LOCALEDIR\s0\fR" 4
@@ -704,20 +726,20 @@ Bij succes wordt nul teruggegeven.  Wanneer een systeemfout optreedt wordt het l
 De afsluitwaarde is altijd nul in de stillewerkingsmodus, behalve wanneer verkeerde opties worden gegeven.
 .SH "STANDAARDEN"
 .IX Header "STANDAARDEN"
-<http://nl.wikipedia.org/wiki/Tekstbestand>
+<https://en.wikipedia.org/wiki/Text_file>
 .PP
-<http://nl.wikipedia.org/wiki/Carriage_Return>
+<https://en.wikipedia.org/wiki/Carriage_return>
 .PP
-<http://nl.wikipedia.org/wiki/Linefeed>
+<https://en.wikipedia.org/wiki/Newline>
 .PP
-<http://nl.wikipedia.org/wiki/Unicode>
+<https://en.wikipedia.org/wiki/Unicode>
 .SH "AUTEURS"
 .IX Header "AUTEURS"
 Benjamin Lin \- <blin@socs.uts.edu.au>, Bernd Johannes Wuebben (mac2unix\-modus) \- <wuebben@kde.org>, Christian Wurll (toevoegen van extra regeleindes) \- <wurll@ira.uka.de>, Erwin Waterlander \- <waterlan@xs4all.nl> (beheerder)
 .PP
-Projectpagina: <http://waterlan.home.xs4all.nl/dos2unix.html>
+Project page: <https://waterlan.home.xs4all.nl/dos2unix.html>
 .PP
-SourceForge-pagina: <http://sourceforge.net/projects/dos2unix/>
+SourceForge page: <https://sourceforge.net/projects/dos2unix/>
 .SH "ZIE OOK"
 .IX Header "ZIE OOK"
 \&\fBfile\fR\|(1)  \fBfind\fR\|(1)  \fBiconv\fR\|(1)  \fBlocale\fR\|(1)  \fBxargs\fR\|(1)

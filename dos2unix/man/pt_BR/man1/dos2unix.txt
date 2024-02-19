@@ -68,8 +68,7 @@ OPÇÕES
         preservação da propriedade do usuário e do grupo de arquivos.
 
     -ascii
-        Converte apenas as quebras de linhas. Esse é o modo de conversão
-        padrão.
+        Default conversion mode. See also section CONVERSION MODES.
 
     -iso
         Conversão entre conjunto de caractere do DOS e ISO-8859-1. Veja
@@ -226,6 +225,17 @@ OPÇÕES
         Note que em algumas vezes um arquivo binário pode ser confundido com
         um arquivo texto. Veja também a opção "-s".
 
+        If in addition option "-e" or "--add-eol" is used also the type of
+        the line break of the last line is printed, or "noeol" if there is
+        none.
+
+        Exemplo de saída:
+
+             6       0       0  no_bom    text   dos     dos.txt
+             0       6       0  no_bom    text   unix    unix.txt
+             0       0       6  no_bom    text   mac     mac.txt
+             1       0       0  no_bom    text   noeol   noeol_dos.txt
+
         Opcionalmente, opções extra podem ser definidas para alterar a
         saída. Uma ou mais opções podem ser adicionadas.
 
@@ -245,11 +255,17 @@ OPÇÕES
 
         t   Exibe se arquivo é texto ou binário.
 
+        e   Print the type of the line break of the last line, or "noeol" if
+            there is none.
+
         c   Exibe apenas os arquivos que seriam convertidos.
 
             Com a opção "c", dos2unix vai exibir apenas os arquivos que
             contêm quebras de linha do DOS, unix2dos vai exibir apenas os
             nomes de arquivos que contêm quebras de linha do Unix.
+
+            If in addition option "-e" or "--add-eol" is used also the files
+            that lack a line break on the last line will be printed.
 
         h   Exibe um cabeçalho.
 
@@ -276,6 +292,11 @@ OPÇÕES
         Lista os arquivos que possuem quebras de linha do Unix:
 
             unix2dos -ic *.txt
+
+        List the files that have DOS line breaks or lack a line break on the
+        last line:
+
+            dos2unix -e -ic *.txt
 
         Converte apenas arquivos que possuem quebras de linha do DOS e não
         altera outros arquivos:
@@ -454,8 +475,8 @@ OPÇÕES
         Exibe informação da versão e sai.
 
 MODO MAC
-    No modo normal, as quebras de linhas são convertidas de DOS para Unix e
-    vice-versa. Quebras de linha do Mac não são convertidas.
+    By default line breaks are converted from DOS to Unix and vice versa.
+    Mac line breaks are not converted.
 
     No modo Mac, quebras de linha são convertidas de Mac para Unix e
     vice-versa. Quebras de linha do DOS não são alteradas.
@@ -465,12 +486,16 @@ MODO MAC
 
 MODOS DE CONVERSÃO
     ascii
-        No modo "ascii", apenas as quebras de linha são convertidas. Esse é
-        o modo de conversão padrão.
+        This is the default conversion mode. This mode is for converting
+        ASCII and ASCII-compatible encoded files, like UTF-8. Enabling ascii
+        mode disables 7bit and iso mode.
 
-        Apesar do nome deste modo ser ASCII, o qual é um padrão de 7 bits, o
-        modo é em verdade 8 bits. Sempre use este modo quando quiser
-        converter arquivos Unicode UTF-8.
+        If dos2unix has UTF-16 support, UTF-16 encoded files are converted
+        to the current locale character encoding on POSIX systems and to
+        UTF-8 on Windows. Enabling ascii mode disables the option to keep
+        UTF-16 encoding ("-u") and the options to assume UTF-16 input ("-ul"
+        and "-ub"). To see if dos2unix has UTF-16 support type "dos2unix
+        -V". See also section UNICODE.
 
     7bit
         Neste modo todos os caracteres não-ASCII de 8 bits (com valores
@@ -541,8 +566,8 @@ UNICODE
     na maioria das vezes são codificados no formato UTF-16.
 
   Conversão
-    Arquivos texto em Unicode pode ter quebras de linha DOS, Unix ou Mac,
-    como arquivos texto comuns.
+    Unicode text files can have DOS, Unix or Mac line breaks, like ASCII
+    text files.
 
     Todas as versões do dos2unix e unix2dos podem converter arquivos
     codificados em UTF-8 porque UTF-8 foi projetado para ter compatibilidade
@@ -576,10 +601,9 @@ UNICODE
     Modo de conversão ISO e 7 bits não funcionam em arquivos UTF-16.
 
   Marca de ordem de byte
-    No Windows, arquivos Unicode normalmente têm uma Marca de Ordem de Byte
-    (BOM), porque muitos programas (incluindo o Bloco de Notas) adiciona
-    BOMs por padrão. Veja também
-    <http://en.wikipedia.org/wiki/Byte_order_mark>.
+    On Windows Unicode text files typically have a Byte Order Mark (BOM),
+    because many Windows programs (including Notepad) add BOMs by default.
+    See also <https://en.wikipedia.org/wiki/Byte_order_mark>.
 
     No Unix, arquivos Unicode normalmente não têm BOM. Presume-se que
     arquivos texto são codificados na codificação de caracteres da
@@ -630,9 +654,9 @@ UNICODE
         unix2dos < entrada.txt | iconv -f UTF-8 -t UTF-16 > saída.txt
 
 GB18030
-    GB18030 é um padrão governamental chinês. Um subconjunto obrigatório do
-    padrão GB18030 é exigido oficialmente para todos os produtos de software
-    vendidos na China. Veja também <http://en.wikipedia.org/wiki/GB_18030>.
+    GB18030 is a Chinese government standard. A mandatory subset of the
+    GB18030 standard is officially required for all software products sold
+    in China. See also <https://en.wikipedia.org/wiki/GB_18030>.
 
     GB18030 é completamente compatível com Unicode e pode ser considerado um
     formato de transformação de unicode. Assim como UTF-8, GB18030 é
@@ -749,24 +773,24 @@ LOCALIZAÇÃO
             export LANG=en_US.iso88591   Inglês, EUA, codificação Latin-1
             export LANG=en_GB.UTF-8      Inglês, Reino Unido, codificação UTF-8
 
-        Para a lista completa de códigos de idioma e país, veja o manual do
-        gettext:
-        <http://www.gnu.org/software/gettext/manual/html_node/Usual-Language
-        -Codes.html>
+        For a complete list of language and country codes see the gettext
+        manual:
+        <https://www.gnu.org/software/gettext/manual/html_node/Usual-Languag
+        e-Codes.html>
 
         Nos sistemas Unix, você pode usar o comando locale(1) para obter
         informação específica da localização.
 
     LANGUAGE
-        Com a variável de ambiente LANGUAGE, você pode especificar uma lista
-        de prioridades de idiomas, separada por vírgulas. Dos2unix fornece
-        preferência à LANGUAGE sobre LANG. Por exemplo, primeiro holandês e,
-        então, alemão: "LANGUAGE=nl:de". Você primeiro tem que habilitar
-        localização, definindo LANG (ou LC_ALL) para um valor diferente de
-        "C", antes que você possa usar uma lista de prioridade de idioma por
-        meio da variável LANGUAGE. Veja também o manual do gettext:
-        <http://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-v
-        ariable.html>
+        With the LANGUAGE environment variable you can specify a priority
+        list of languages, separated by colons. Dos2unix gives preference to
+        LANGUAGE over LANG. For instance, first Dutch and then German:
+        "LANGUAGE=nl:de". You have to first enable localization, by setting
+        LANG (or LC_ALL) to a value other than "C", before you can use a
+        language priority list through the LANGUAGE variable. See also the
+        gettext manual:
+        <https://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-
+        variable.html>
 
         Se você selecionou um idioma que não está disponível, você vai terá
         as mensagens em inglês (padrão).
@@ -790,13 +814,13 @@ VALOR RETORNADO
     linha de comando erradas são usadas.
 
 PADRÕES
-    <http://en.wikipedia.org/wiki/Text_file>
+    <https://en.wikipedia.org/wiki/Text_file>
 
-    <http://en.wikipedia.org/wiki/Carriage_return>
+    <https://en.wikipedia.org/wiki/Carriage_return>
 
-    <http://en.wikipedia.org/wiki/Newline>
+    <https://en.wikipedia.org/wiki/Newline>
 
-    <http://en.wikipedia.org/wiki/Unicode>
+    <https://en.wikipedia.org/wiki/Unicode>
 
 AUTORES
     Benjamin Lin - <blin@socs.uts.edu.au> Bernd Johannes Wuebben (modo
@@ -804,9 +828,9 @@ AUTORES
     extra) - <wurll@ira.uka.de>, Erwin Waterlander - <waterlan@xs4all.nl>
     (mantenedor)
 
-    Página do projeto: <http://waterlan.home.xs4all.nl/dos2unix.html>
+    Project page: <https://waterlan.home.xs4all.nl/dos2unix.html>
 
-    Página do SourceForge: <http://sourceforge.net/projects/dos2unix/>
+    SourceForge page: <https://sourceforge.net/projects/dos2unix/>
 
 VEJA TAMBÉM
     file(1) find(1) iconv(1) locale(1) xargs(1)

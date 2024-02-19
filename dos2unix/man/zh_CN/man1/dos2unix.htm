@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>dos2unix 7.5.1 - DOS/Mac - Unix&#x6587;&#x4ef6;&#x683c;&#x5f0f;&#x8f6c;&#x6362;&#x5668;</title>
+<title>dos2unix 7.5.2 - DOS/Mac - Unix&#x6587;&#x4ef6;&#x683c;&#x5f0f;&#x8f6c;&#x6362;&#x5668;</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rev="made" href="mailto:ASSI@walter.nonet" />
 </head>
@@ -89,7 +89,7 @@ unix2dos [&#x9009;&#x9879;] [&#x6587;&#x4EF6; &hellip;] [-n &#x8F93;&#x5165;&#x6
 <dt id="ascii"><b>-ascii</b></dt>
 <dd>
 
-<p>&#x53EA;&#x8F6C;&#x6362;&#x65AD;&#x884C;&#x7B26;&#x3002;&#x8FD9;&#x662F;&#x9ED8;&#x8BA4;&#x7684;&#x8F6C;&#x6362;&#x6A21;&#x5F0F;&#x3002;</p>
+<p>&#x9ED8;&#x8BA4;&#x8F6C;&#x6362;&#x6A21;&#x5F0F;&#x3002;&#x3002;&#x53C2;&#x89C1; CONVERSION MODES &#x4E00;&#x8282;&#x3002;</p>
 
 </dd>
 <dt id="iso"><b>-iso</b></dt>
@@ -246,6 +246,15 @@ unix2dos [&#x9009;&#x9879;] [&#x6587;&#x4EF6; &hellip;] [-n &#x8F93;&#x5165;&#x6
 
 <p>&#x6CE8;&#x610F;&#xFF0C;&#x4E8C;&#x8FDB;&#x5236;&#x6587;&#x4EF6;&#x6709;&#x65F6;&#x4F1A;&#x88AB;&#x8BEF;&#x5224;&#x4E3A;&#x6587;&#x672C;&#x6587;&#x4EF6;&#x3002;&#x53C2;&#x89C1;&#x9009;&#x9879; <code>-s</code>&#x3002;</p>
 
+<p>&#x5982;&#x679C;&#x989D;&#x5916;&#x4F7F;&#x7528;&#x4E86; <code>-e</code> &#x6216; <code>--add-eol</code> &#x9009;&#x9879;&#xFF0C;&#x5219;&#x6700;&#x540E;&#x4E00;&#x884C;&#x7684;&#x65AD;&#x884C;&#x7B26;&#x7C7B;&#x578B;&#x4E5F;&#x4F1A;&#x88AB;&#x663E;&#x793A;&#xFF0C;&#x6216;&#x8005;&#x5728;&#x7F3A;&#x5931;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#x663E;&#x793A; <code>noeol</code>&#x3002;</p>
+
+<p>&#x8F93;&#x51FA;&#x793A;&#x4F8B;&#xFF1A;</p>
+
+<pre><code>6       0       0  no_bom    text   dos     dos.txt
+0       6       0  no_bom    text   unix    unix.txt
+0       0       6  no_bom    text   mac     mac.txt
+1       0       0  no_bom    text   noeol   noeol_dos.txt</code></pre>
+
 <p>&#x53EF;&#x4EE5;&#x4E3A;&#x8F93;&#x51FA;&#x8BBE;&#x7F6E;&#x989D;&#x5916;&#x7684;&#x6807;&#x5FD7;&#xFF08;&#x4E00;&#x4E2A;&#x6216;&#x591A;&#x4E2A;&#xFF09;&#x3002;</p>
 
 <dl>
@@ -286,12 +295,20 @@ unix2dos [&#x9009;&#x9879;] [&#x6587;&#x4EF6; &hellip;] [-n &#x8F93;&#x5165;&#x6
 <p>&#x663E;&#x793A;&#x6587;&#x4EF6;&#x4E3A;&#x6587;&#x672C;&#x6216;&#x4E8C;&#x8FDB;&#x5236;&#x3002;</p>
 
 </dd>
+<dt id="e"><b>e</b></dt>
+<dd>
+
+<p>&#x663E;&#x793A;&#x6700;&#x540E;&#x4E00;&#x884C;&#x7684;&#x65AD;&#x884C;&#x7B26;&#x7C7B;&#x578B;&#xFF0C;&#x5982;&#x679C;&#x4E0D;&#x5B58;&#x5728;&#x5219;&#x663E;&#x793A; <code>noeol</code>&#x3002;</p>
+
+</dd>
 <dt id="c"><b>c</b></dt>
 <dd>
 
 <p>&#x53EA;&#x663E;&#x793A;&#x5C06;&#x4F1A;&#x88AB;&#x8F6C;&#x6362;&#x7684;&#x6587;&#x4EF6;&#x3002;</p>
 
 <p>&#x82E5;&#x8BBE;&#x7F6E;&#x4E86; <code>c</code>&#x6807;&#x5FD7;&#xFF0C;dos2unix&#x5C06;&#x53EA;&#x663E;&#x793A;&#x542B;&#x6709;DOS&#x65AD;&#x884C;&#x7B26;&#x7684;&#x6587;&#x4EF6;&#xFF0C;unix2dos&#x5C06;&#x53EA;&#x663E;&#x793A;&#x542B;&#x6709;Unix&#x65AD;&#x884C;&#x7B26;&#x7684;&#x6587;&#x4EF6;&#x3002;</p>
+
+<p>&#x5982;&#x679C;&#x989D;&#x5916;&#x4F7F;&#x7528;&#x4E86; <code>-e</code> &#x6216; <code>--add-eol</code> &#x9009;&#x9879;&#xFF0C;&#x5219;&#x6700;&#x540E;&#x4E00;&#x884C;&#x7F3A;&#x5931;&#x65AD;&#x884C;&#x7B26;&#x7684;&#x6587;&#x4EF6;&#x5C06;&#x88AB;&#x663E;&#x793A;&#x3002;</p>
 
 </dd>
 <dt id="h"><b>h</b></dt>
@@ -329,6 +346,10 @@ unix2dos [&#x9009;&#x9879;] [&#x6587;&#x4EF6; &hellip;] [-n &#x8F93;&#x5165;&#x6
 <p>&#x5217;&#x51FA;&#x542B;&#x6709;Unix&#x65AD;&#x884C;&#x7B26;&#x7684;&#x6587;&#x4EF6;&#xFF1A;</p>
 
 <pre><code>unix2dos -ic *.txt</code></pre>
+
+<p>&#x5217;&#x51FA;&#x542B;&#x6709;DOS&#x65AD;&#x884C;&#x7B26;&#x6216;&#x6700;&#x540E;&#x4E00;&#x884C;&#x7F3A;&#x5C11;&#x65AD;&#x884C;&#x7B26;&#x7684;&#x6587;&#x4EF6;&#xFF1A;</p>
+
+<pre><code>dos2unix -e -ic *.txt</code></pre>
 
 <p>&#x53EA;&#x8F6C;&#x6362;&#x542B;&#x6709;DOS&#x65AD;&#x884C;&#x7B26;&#x7684;&#x6587;&#x4EF6;&#xFF0C;&#x4FDD;&#x6301;&#x5176;&#x4ED6;&#x6587;&#x4EF6;&#x4E0D;&#x53D8;&#xFF1A;</p>
 
@@ -503,7 +524,7 @@ unix2dos [&#x9009;&#x9879;] [&#x6587;&#x4EF6; &hellip;] [-n &#x8F93;&#x5165;&#x6
 
 <h1 id="Mac">Mac&#x6A21;&#x5F0F;</h1>
 
-<p>&#x666E;&#x901A;&#x6A21;&#x5F0F;&#x4E0B;&#xFF0C;&#x65AD;&#x884C;&#x7B26;&#x5C06;&#x88AB;&#x8F6C;&#x6362;&#x4E3A;DOS&#x683C;&#x5F0F;&#xFF0C;&#x6216;&#x76F8;&#x53CD;&#x3002;Mac&#x683C;&#x5F0F;&#x7684;&#x65AD;&#x884C;&#x7B26;&#x5C06;&#x4E0D;&#x4F1A;&#x88AB;&#x8F6C;&#x6362;&#x3002;</p>
+<p>&#x9ED8;&#x8BA4;&#x60C5;&#x51B5;&#x4E0B;&#x65AD;&#x884C;&#x7B26;&#x5C06;&#x4ECE;DOS&#x683C;&#x5F0F;&#x8F6C;&#x6362;&#x4E3A;Unix&#x683C;&#x5F0F;&#xFF0C;&#x6216;&#x76F8;&#x53CD;&#x3002;Mac&#x683C;&#x5F0F;&#x7684;&#x65AD;&#x884C;&#x7B26;&#x5C06;&#x4E0D;&#x4F1A;&#x88AB;&#x8F6C;&#x6362;&#x3002;</p>
 
 <p>Mac&#x6A21;&#x5F0F;&#x4E0B;&#xFF0C;Mac&#x65AD;&#x884C;&#x7B26;&#x5C06;&#x88AB;&#x8F6C;&#x6362;&#x4E3A;Unix&#x683C;&#x5F0F;&#xFF0C;&#x6216;&#x76F8;&#x53CD;&#x3002;DOS&#x65AD;&#x884C;&#x7B26;&#x5C06;&#x4E0D;&#x4F1A;&#x88AB;&#x8F6C;&#x6362;&#x3002;</p>
 
@@ -516,9 +537,9 @@ unix2dos [&#x9009;&#x9879;] [&#x6587;&#x4EF6; &hellip;] [-n &#x8F93;&#x5165;&#x6
 <dt id="ascii1"><b>ascii</b></dt>
 <dd>
 
-<p>&#x5728; <code>ascii</code> &#x6A21;&#x5F0F;&#x4E0B;&#xFF0C;&#x53EA;&#x8F6C;&#x6362;&#x65AD;&#x884C;&#x7B26;&#x3002; &#x8FD9;&#x662F;&#x9ED8;&#x8BA4;&#x7684;&#x8F6C;&#x6362;&#x6A21;&#x5F0F;&#x3002;</p>
+<p>&#x8FD9;&#x662F;&#x9ED8;&#x8BA4;&#x8F6C;&#x6362;&#x6A21;&#x5F0F;&#x3002;&#x8BE5;&#x6A21;&#x5F0F;&#x7528;&#x4E8E;&#x8F6C;&#x6362;ASCII&#x548C;ASCII&#x517C;&#x5BB9;&#x7F16;&#x7801;&#x7684;&#x6587;&#x4EF6;&#xFF0C;&#x4F8B;&#x5982;UTF-8&#x3002;&#x542F;&#x7528;<b>ascii</b>&#x6A21;&#x5F0F;&#x4F1A;&#x7981;&#x7528;<b>7bit</b>&#x548C;<b>iso</b>&#x6A21;&#x5F0F;&#x3002;</p>
 
-<p>&#x5C3D;&#x7BA1;&#x6B64;&#x6A21;&#x5F0F;&#x540D;&#x53EB;&ldquo;ASCII&rdquo;&#xFF08;7&#x4F4D;&#x7F16;&#x7801;&#x6807;&#x51C6;&#xFF09;&#xFF0C;&#x5B9E;&#x9645;&#x4E0A;&#x8F6C;&#x6362;&#x6309;&#x7167;8&#x4F4D;&#x7F16;&#x7801;&#x8FDB;&#x884C;&#x3002;&#x8F6C;&#x6362;UTF-8&#x7F16;&#x7801;&#x6587;&#x4EF6;&#x65F6;&#x8BF7;&#x52A1;&#x5FC5;&#x4F7F;&#x7528;&#x6B64;&#x6A21;&#x5F0F;&#x3002;</p>
+<p>&#x5982;&#x679C;dos2unix&#x5E26;&#x6709;UTF-16&#x652F;&#x6301;&#xFF0C;&#x5219;UTF-16&#x7F16;&#x7801;&#x7684;&#x6587;&#x4EF6;&#x5728;POSIX&#x7CFB;&#x7EDF;&#x4E0A;&#x5C06;&#x88AB;&#x8F6C;&#x6362;&#x4E3A;&#x5F53;&#x524D;&#x8BED;&#x533A;&#x5BF9;&#x5E94;&#x7684;&#x5B57;&#x7B26;&#x7F16;&#x7801;&#xFF0C;&#x5728;Windows&#x4E0A;&#x5219;&#x4F1A;&#x88AB;&#x8F6C;&#x6362;&#x4E3A;UTF-8&#x3002;&#x542F;&#x7528; <b>ascii</b> &#x6A21;&#x5F0F;&#x5C06;&#x7981;&#x7528;&#x7EF4;&#x6301;UTF-16&#x7F16;&#x7801;&#x7684;&#x9009;&#x9879;&#xFF08;<code>-u</code>&#xFF09;&#x548C;&#x5047;&#x5B9A;&#x8F93;&#x5165;&#x4E3A;UTF-16&#x7684;&#x9009;&#x9879;&#xFF08;<code>-ul</code> &#x548C; <code>-ub</code>&#xFF09;&#x3002;&#x5982;&#x9700;&#x67E5;&#x770B;dos2unix&#x662F;&#x5426;&#x5E26;&#x6709;UTF-16&#x652F;&#x6301;&#xFF0C;&#x8BF7;&#x8FD0;&#x884C; <code>dos2unix -V</code>&#x3002;&#x66F4;&#x591A;&#x4FE1;&#x606F;&#x53E6;&#x8BF7;&#x53C2;&#x89C1; UNICODE &#x7AE0;&#x8282;&#x3002;</p>
 
 </dd>
 <dt id="bit"><b>7bit</b></dt>
@@ -583,7 +604,7 @@ unix2dos [&#x9009;&#x9879;] [&#x6587;&#x4EF6; &hellip;] [-n &#x8F93;&#x5165;&#x6
 
 <h2 id="6">&#x8F6C;&#x6362;</h2>
 
-<p>Unicode&#x6587;&#x672C;&#x6587;&#x4EF6;&#x53EF;&#x4EE5;&#x542B;&#x6709;DOS&#x3001;Unix&#x6216;Mac&#x65AD;&#x884C;&#x7B26;&#xFF0C;&#x5C31;&#x50CF;&#x666E;&#x901A;&#x6587;&#x672C;&#x6587;&#x4EF6;&#x4E00;&#x6837;&#x3002;</p>
+<p>Unicode&#x6587;&#x672C;&#x6587;&#x4EF6;&#x53EF;&#x4EE5;&#x542B;&#x6709;DOS&#x3001;Unix&#x6216;Mac&#x65AD;&#x884C;&#x7B26;&#xFF0C;&#x5C31;&#x50CF;ASCII&#x6587;&#x672C;&#x6587;&#x4EF6;&#x4E00;&#x6837;&#x3002;</p>
 
 <p>&#x6240;&#x6709;&#x7248;&#x672C;&#x7684;dos2unix&#x548C;unix2dos&#x90FD;&#x53EF;&#x4EE5;&#x8F6C;&#x6362;UTF-8&#x6587;&#x4EF6;&#xFF0C;&#x56E0;&#x4E3A;UTF-8&#x5411;&#x540E;&#x517C;&#x5BB9;ASCII&#x3002;</p>
 
@@ -603,7 +624,7 @@ unix2dos [&#x9009;&#x9879;] [&#x6587;&#x4EF6; &hellip;] [-n &#x8F93;&#x5165;&#x6
 
 <h2 id="7">&#x5B57;&#x8282;&#x5E8F;&#x6807;&#x8BB0;</h2>
 
-<p>&#x5728;Windows&#x4E2D;&#xFF0C;&#x6587;&#x672C;&#x6587;&#x4EF6;&#x4E00;&#x822C;&#x542B;&#x6709;&#x5B57;&#x8282;&#x5E8F;&#x6807;&#x8BB0;&#xFF08;BOM&#xFF09;&#xFF0C;&#x56E0;&#x4E3A;&#x5F88;&#x591A;Windows&#x7A0B;&#x5E8F;&#xFF08;&#x5305;&#x62EC;&#x8BB0;&#x4E8B;&#x672C;&#xFF09;&#x9ED8;&#x8BA4;&#x6DFB;&#x52A0;BOM&#x3002;&#x53C2;&#x89C1; <a href="http://en.wikipedia.org/wiki/Byte_order_mark">http://en.wikipedia.org/wiki/Byte_order_mark</a>&#x3002;</p>
+<p>&#x5728;Windows&#x4E2D;&#xFF0C;&#x6587;&#x672C;&#x6587;&#x4EF6;&#x4E00;&#x822C;&#x542B;&#x6709;&#x5B57;&#x8282;&#x5E8F;&#x6807;&#x8BB0;&#xFF08;BOM&#xFF09;&#xFF0C;&#x56E0;&#x4E3A;&#x5F88;&#x591A;Windows&#x7A0B;&#x5E8F;&#xFF08;&#x5305;&#x62EC;&#x8BB0;&#x4E8B;&#x672C;&#xFF09;&#x9ED8;&#x8BA4;&#x6DFB;&#x52A0;BOM&#x3002;&#x53C2;&#x89C1; <a href="https://en.wikipedia.org/wiki/Byte_order_mark">https://en.wikipedia.org/wiki/Byte_order_mark</a>&#x3002;</p>
 
 <p>&#x5728;Unix&#x4E2D;&#xFF0C;Unicode&#x6587;&#x4EF6;&#x4E00;&#x822C;&#x4E0D;&#x542B;BOM&#x3002;&#x5047;&#x5B9A;&#x6587;&#x672C;&#x6587;&#x4EF6;&#x4F7F;&#x7528;&#x533A;&#x57DF;&#x5B57;&#x7B26;&#x7F16;&#x7801;&#x8BBE;&#x7F6E;&#x6240;&#x6307;&#x5B9A;&#x7684;&#x7F16;&#x7801;&#x3002;</p>
 
@@ -643,7 +664,7 @@ unix2dos [&#x9009;&#x9879;] [&#x6587;&#x4EF6; &hellip;] [-n &#x8F93;&#x5165;&#x6
 
 <h1 id="GB18030">GB18030</h1>
 
-<p>GB18030&#x662F;&#x4E2D;&#x56FD;&#x56FD;&#x5BB6;&#x6807;&#x51C6;&#x3002;GB18030&#x6807;&#x51C6;&#x7684;&#x4E00;&#x7CFB;&#x5217;&#x5B50;&#x96C6;&#x88AB;&#x5F3A;&#x5236;&#x5E94;&#x7528;&#x4E8E;&#x4E2D;&#x56FD;&#x9500;&#x552E;&#x7684;&#x8F6F;&#x4EF6;&#x4EA7;&#x54C1;&#x3002;&#x53C2;&#x89C1; <a href="http://en.wikipedia.org/wiki/GB_18030">http://en.wikipedia.org/wiki/GB_18030</a>&#x3002;</p>
+<p>GB18030&#x662F;&#x4E2D;&#x56FD;&#x56FD;&#x5BB6;&#x6807;&#x51C6;&#x3002;GB18030&#x6807;&#x51C6;&#x7684;&#x4E00;&#x7CFB;&#x5217;&#x5B50;&#x96C6;&#x88AB;&#x5F3A;&#x5236;&#x5E94;&#x7528;&#x4E8E;&#x4E2D;&#x56FD;&#x9500;&#x552E;&#x7684;&#x8F6F;&#x4EF6;&#x4EA7;&#x54C1;&#x3002;&#x53C2;&#x89C1; <a href="https://en.wikipedia.org/wiki/GB_18030">https://en.wikipedia.org/wiki/GB_18030</a>&#x3002;</p>
 
 <p>GB18030&#x4E0E;Unicode&#x5B8C;&#x5168;&#x517C;&#x5BB9;&#xFF0C;&#x5E76;&#x4E14;&#x53EF;&#x4EE5;&#x88AB;&#x8BA4;&#x4E3A;&#x662F;Unicode&#x683C;&#x5F0F;&#x7684;&#x53D8;&#x4F53;&#x3002;&#x548C;UTF-8&#x4E00;&#x6837;&#xFF0C;GB18030&#x4E5F;&#x517C;&#x5BB9;ASCII&#x3002;GB18030&#x4E5F;&#x517C;&#x5BB9;Windows 936&#x4EE3;&#x7801;&#x9875;&#xFF08;GBK&#xFF09;&#x3002;</p>
 
@@ -743,7 +764,7 @@ export LANG=es_MX            &#x897F;&#x73ED;&#x7259;&#x8BED;&#xFF0C;&#x58A8;&#x
 export LANG=en_US.iso88591   &#x82F1;&#x8BED;&#xFF0C;&#x7F8E;&#x56FD;&#xFF0C;Latin-1&#x7F16;&#x7801;
 export LANG=en_GB.UTF-8      &#x82F1;&#x8BED;&#xFF0C;&#x82F1;&#x56FD;&#xFF0C;UTF-8&#x7F16;&#x7801;</code></pre>
 
-<p>&#x5B8C;&#x6574;&#x7684;&#x8BED;&#x8A00;&#x548C;&#x56FD;&#x5BB6;/&#x5730;&#x533A;&#x7F16;&#x7801;&#x53EF;&#x4EE5;&#x5728;gettext&#x624B;&#x518C;&#x4E2D;&#x627E;&#x5230;&#xFF1A;<a href="http://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html">http://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html</a></p>
+<p>&#x5B8C;&#x6574;&#x7684;&#x8BED;&#x8A00;&#x548C;&#x56FD;&#x5BB6;/&#x5730;&#x533A;&#x7F16;&#x7801;&#x53EF;&#x4EE5;&#x5728;gettext&#x624B;&#x518C;&#x4E2D;&#x627E;&#x5230;&#xFF1A;<a href="https://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html">https://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html</a></p>
 
 <p>&#x5728;Unix&#x7CFB;&#x7EDF;&#x4E2D;&#xFF0C;&#x4F60;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; locale(1) &#x547D;&#x4EE4;&#x83B7;&#x53D6;&#x7279;&#x5B9A;&#x533A;&#x57DF;&#x7684;&#x4FE1;&#x606F;&#x3002;</p>
 
@@ -751,7 +772,7 @@ export LANG=en_GB.UTF-8      &#x82F1;&#x8BED;&#xFF0C;&#x82F1;&#x56FD;&#xFF0C;UTF
 <dt id="LANGUAGE"><b>LANGUAGE</b></dt>
 <dd>
 
-<p>&#x53EF;&#x4EE5;&#x4F7F;&#x7528;LANGUAGE&#x53D8;&#x91CF;&#x6307;&#x5B9A;&#x4E00;&#x7CFB;&#x5217;&#x8BED;&#x8A00;&#x7684;&#x4F18;&#x5148;&#x7EA7;&#xFF0C;&#x5404;&#x9879;&#x4E4B;&#x95F4;&#x7531;&#x5192;&#x53F7;&#x5206;&#x5272;&#x3002;dos2unix&#x9996;&#x5148;&#x4F7F;&#x7528;LANGUAGE&#x53D8;&#x91CF;&#xFF0C;&#x5176;&#x6B21;&#x624D;&#x662F;LANG&#x3002;&#x4F8B;&#x5982;&#xFF0C;&#x9996;&#x9009;&#x4E2D;&#x6587;&#x3001;&#x5176;&#x6B21;&#x82F1;&#x6587;&#xFF1A;<code>LANGUAGE=&lt;zh:en</code>&#x3002;&#x5728;&#x4F7F;&#x7528;&#x8BED;&#x8A00;&#x4F18;&#x5148;&#x7EA7;&#x4E4B;&#x524D;&#xFF0C;&#x5FC5;&#x987B;&#x5148;&#x542F;&#x7528;&#x533A;&#x57DF;&#x5316;&#x529F;&#x80FD;&#xFF0C;&#x5373;&#x5C06;LANG&#xFF08;&#x6216;LC_ALL&#xFF09;&#x53D8;&#x91CF;&#x8BBE;&#x7F6E;&#x4E3A;&#x9664;&#x4E86;&ldquo;C&rdquo;&#x4EE5;&#x5916;&#x7684;&#x5176;&#x4ED6;&#x503C;&#x3002;&#x53C2;&#x89C1;gettext&#x624B;&#x518C;&#xFF1A;<a href="http://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-variable.html">http://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-variable.html</a></p>
+<p>&#x53EF;&#x4EE5;&#x4F7F;&#x7528;LANGUAGE&#x53D8;&#x91CF;&#x6307;&#x5B9A;&#x4E00;&#x7CFB;&#x5217;&#x8BED;&#x8A00;&#x7684;&#x4F18;&#x5148;&#x7EA7;&#xFF0C;&#x5404;&#x9879;&#x4E4B;&#x95F4;&#x7531;&#x5192;&#x53F7;&#x5206;&#x5272;&#x3002;dos2unix&#x9996;&#x5148;&#x4F7F;&#x7528;LANGUAGE&#x53D8;&#x91CF;&#xFF0C;&#x5176;&#x6B21;&#x624D;&#x662F;LANG&#x3002;&#x4F8B;&#x5982;&#xFF0C;&#x9996;&#x9009;&#x4E2D;&#x6587;&#x3001;&#x5176;&#x6B21;&#x82F1;&#x6587;&#xFF1A;<code>LANGUAGE=&lt;zh:en</code>&#x3002;&#x5728;&#x4F7F;&#x7528;&#x8BED;&#x8A00;&#x4F18;&#x5148;&#x7EA7;&#x4E4B;&#x524D;&#xFF0C;&#x5FC5;&#x987B;&#x5148;&#x542F;&#x7528;&#x533A;&#x57DF;&#x5316;&#x529F;&#x80FD;&#xFF0C;&#x5373;&#x5C06;LANG&#xFF08;&#x6216;LC_ALL&#xFF09;&#x53D8;&#x91CF;&#x8BBE;&#x7F6E;&#x4E3A;&#x9664;&#x4E86;&ldquo;C&rdquo;&#x4EE5;&#x5916;&#x7684;&#x5176;&#x4ED6;&#x503C;&#x3002;&#x53C2;&#x89C1;gettext&#x624B;&#x518C;&#xFF1A;<a href="https://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-variable.html">https://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-variable.html</a></p>
 
 <p>&#x5982;&#x679C;&#x4F60;&#x9009;&#x62E9;&#x4E86;&#x4E00;&#x4E2A;&#x4E0D;&#x53EF;&#x7528;&#x7684;&#x8BED;&#x8A00;&#xFF0C;&#x7A0B;&#x5E8F;&#x5C06;&#x4F1A;&#x8F93;&#x51FA;&#x6807;&#x51C6;&#x7684;&#x82F1;&#x8BED;&#x4FE1;&#x606F;&#x3002;</p>
 
@@ -776,21 +797,21 @@ export LANG=en_GB.UTF-8      &#x82F1;&#x8BED;&#xFF0C;&#x82F1;&#x56FD;&#xFF0C;UTF
 
 <h1 id="12">&#x9075;&#x5FAA;&#x89C4;&#x8303;</h1>
 
-<p><a href="http://en.wikipedia.org/wiki/Text_file">http://en.wikipedia.org/wiki/Text_file</a></p>
+<p><a href="https://en.wikipedia.org/wiki/Text_file">https://en.wikipedia.org/wiki/Text_file</a></p>
 
-<p><a href="http://en.wikipedia.org/wiki/Carriage_return">http://en.wikipedia.org/wiki/Carriage_return</a></p>
+<p><a href="https://en.wikipedia.org/wiki/Carriage_return">https://en.wikipedia.org/wiki/Carriage_return</a></p>
 
-<p><a href="http://en.wikipedia.org/wiki/Newline">http://en.wikipedia.org/wiki/Newline</a></p>
+<p><a href="https://en.wikipedia.org/wiki/Newline">https://en.wikipedia.org/wiki/Newline</a></p>
 
-<p><a href="http://en.wikipedia.org/wiki/Unicode">http://en.wikipedia.org/wiki/Unicode</a></p>
+<p><a href="https://en.wikipedia.org/wiki/Unicode">https://en.wikipedia.org/wiki/Unicode</a></p>
 
 <h1 id="13">&#x4F5C;&#x8005;</h1>
 
 <p>Benjamin Lin - &lt;blin@socs.uts.edu.au&gt; Bernd Johannes Wuebben&#xFF08;mac2unix&#x6A21;&#x5F0F;&#xFF09; - &lt;wuebben@kde.org&gt;&#xFF0C;Christian Wurll&#xFF08;&#x6DFB;&#x52A0;&#x989D;&#x5916;&#x65B0;&#x884C;&#xFF09; - &lt;wurll@ira.uka.de&gt;&#xFF0C;Erwin Waterlander - &lt;waterlan@xs4all.nl&gt;&#xFF08;&#x7EF4;&#x62A4;&#x8005;&#xFF09;</p>
 
-<p>&#x9879;&#x76EE;&#x4E3B;&#x9875;&#xFF1A;<a href="http://waterlan.home.xs4all.nl/dos2unix.html">http://waterlan.home.xs4all.nl/dos2unix.html</a></p>
+<p>&#x9879;&#x76EE;&#x4E3B;&#x9875;&#xFF1A;<a href="https://waterlan.home.xs4all.nl/dos2unix.html">https://waterlan.home.xs4all.nl/dos2unix.html</a></p>
 
-<p>SourceForge&#x4E3B;&#x9875;&#xFF1A;<a href="http://sourceforge.net/projects/dos2unix/">http://sourceforge.net/projects/dos2unix/</a></p>
+<p>SourceForge&#x4E3B;&#x9875;&#xFF1A;<a href="https://sourceforge.net/projects/dos2unix/">https://sourceforge.net/projects/dos2unix/</a></p>
 
 <h1 id="14">&#x53C2;&#x89C1;</h1>
 

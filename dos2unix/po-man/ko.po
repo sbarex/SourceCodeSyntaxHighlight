@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: dos2unix-man 7.5.0-beta5\n"
-"POT-Creation-Date: 2023-04-23 10:34+0200\n"
-"PO-Revision-Date: 2023-04-27 12:47+0900\n"
+"Project-Id-Version: dos2unix-man 7.5.2-beta3\n"
+"POT-Creation-Date: 2023-11-27 22:01+0100\n"
+"PO-Revision-Date: 2023-12-01 01:54+0900\n"
 "Last-Translator: Seong-ho Cho <darkcircle.0426@gmail.com>\n"
 "Language-Team: Korean <translation-team-ko@googlegroups.com>\n"
 "Language: ko\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Bugs: Report translation errors to the Language-Team address.\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.4.1\n"
 
 #. type: =head1
 #: dos2unix.pod:52
@@ -147,8 +147,8 @@ msgstr "B<-ascii>"
 
 #. type: textblock
 #: dos2unix.pod:121
-msgid "Convert only line breaks. This is the default conversion mode."
-msgstr "줄 바꿈 문자만 변환합니다. 기본 변환 모드입니다."
+msgid "Default conversion mode. See also section CONVERSION MODES."
+msgstr "기본 변환 모드입니다. 변환 모드 섹션을 참고하십시오."
 
 #. type: =item
 #: dos2unix.pod:123
@@ -303,7 +303,7 @@ msgstr "ConEmu 콘솔을 사용한다면 ConEmu에서 적절한 글꼴을 자동
 #. type: textblock
 #: dos2unix.pod:208
 msgid "The disadvantage of unicode is that it is not compatible with ASCII. The output is not easy to handle when you redirect it to another program."
-msgstr "유니코드 사용의 단점은 ASCII와 호환성이 없다는 점입니다. 다른 프로그램으로 출력을 전달할 때 쉽게 처리할 수 없습니다."
+msgstr "유니코드 사용의 단점은 아스키와 호환성이 없다는 점입니다. 다른 프로그램으로 출력을 전달할 때 쉽게 처리할 수 없습니다."
 
 #. type: textblock
 #: dos2unix.pod:211
@@ -318,12 +318,12 @@ msgstr "B<utf8, utf8bom>"
 #. type: textblock
 #: dos2unix.pod:218
 msgid "The advantage of utf8 is that it is compatible with ASCII. You need to set the console's font to a TrueType font. With a TrueType font the text is displayed similar as with the C<unicode> encoding."
-msgstr "utf8의 장점은 ASCII와의 호환성입니다. 콘솔의 글꼴을 트루타입 글꼴로 선택해야 합니다. 트루타입 글꼴로 설정하면 C<unicode> 인코딩 때와 비슷하게 나타납니다."
+msgstr "utf8의 장점은 아스키와의 호환성입니다. 콘솔의 글꼴을 트루타입 글꼴로 선택해야 합니다. 트루타입 글꼴로 설정하면 C<unicode> 인코딩 때와 비슷하게 나타납니다."
 
 #. type: textblock
 #: dos2unix.pod:222
 msgid "The disadvantage is that when you use the default raster font all non-ASCII characters are displayed wrong. Not only unicode file names, but also translated messages become unreadable. On Windows configured for an East-Asian region you may see a lot of flickering of the console when the messages are displayed."
-msgstr "단점은 래스터 글꼴을 기본으로 사용하면 ASCII 인코딩 하지 않는 문자를 잘못 나타낼 수 있습니다. 유니코드 파일 이름 뿐만 아니라 번역 메시지 조차 제대로 읽을 수 없습니다. 윈도우에서는 동아시아 지역으로 설정했을 경우 메시지가 나타날 때 콘솔 화면이 상당히 많이 깜빡거리는걸 볼 수 있습니다."
+msgstr "단점은 래스터 글꼴을 기본으로 사용하면 아스키 인코딩을 하지 않는 문자를 잘못 나타낼 수 있습니다. 유니코드 파일 이름 뿐만 아니라 번역 메시지 조차 제대로 읽을 수 없습니다. 윈도우에서는 동아시아 지역으로 설정했을 경우 메시지가 나타날 때 콘솔 화면이 상당히 많이 깜빡거리는걸 볼 수 있습니다."
 
 #. type: textblock
 #: dos2unix.pod:228
@@ -401,7 +401,7 @@ msgid "The following information is printed, in this order: number of DOS line b
 msgstr "다음 정보를 DOS 개행 문자 수, 유닉스 개행 문자 수, 맥 개행 문자 수, 바이트 순서 표시, 텍스트 또는 이진 파일 여부, 파일 이름 순으로 정보를 출력합니다."
 
 #. type: textblock
-#: dos2unix.pod:274
+#: dos2unix.pod:274 dos2unix.pod:290
 msgid "Example output:"
 msgstr "예제 출력:"
 
@@ -436,116 +436,152 @@ msgstr "때로는 이진 파일을 텍스트 파일로 잘못 알아챌 수도 �
 
 #. type: textblock
 #: dos2unix.pod:287
+msgid "If in addition option C<-e> or C<--add-eol> is used also the type of the line break of the last line is printed, or C<noeol> if there is none."
+msgstr "C<-e> 또는 C<--add-eol> 옵션을 추가로 사용하면 행 마지막 개행 문자 형식도 출력하며, 없다면 C<noeol>을 출력합니다."
+
+#. type: verbatim
+#: dos2unix.pod:292
+#, no-wrap
+msgid ""
+"     6       0       0  no_bom    text   dos     dos.txt\n"
+"     0       6       0  no_bom    text   unix    unix.txt\n"
+"     0       0       6  no_bom    text   mac     mac.txt\n"
+"     1       0       0  no_bom    text   noeol   noeol_dos.txt\n"
+"\n"
+msgstr ""
+"     6       0       0  no_bom    text   dos     dos.txt\n"
+"     0       6       0  no_bom    text   unix    unix.txt\n"
+"     0       0       6  no_bom    text   mac     mac.txt\n"
+"     1       0       0  no_bom    text   noeol   noeol_dos.txt\n"
+"\n"
+
+#. type: textblock
+#: dos2unix.pod:297
 msgid "Optionally extra flags can be set to change the output. One or more flags can be added."
 msgstr "출력 방식을 바꿀 추가 플래그를 설정할 수 있습니다. 플래그 하나 이상을 추가할 수 있습니다."
 
 #. type: =item
-#: dos2unix.pod:292
+#: dos2unix.pod:302
 msgid "B<0>"
 msgstr "B<0>"
 
 #. type: textblock
-#: dos2unix.pod:294
+#: dos2unix.pod:304
 msgid "Print the file information lines followed by a null character instead of a newline character. This enables correct interpretation of file names with spaces or quotes when flag c is used. Use this flag in combination with xargs(1) option C<-0> or C<--null>."
 msgstr "파일 정보 행 끝의 개행 문자 대신 널 문자를 출력합니다. c 플래그를 사용할 때 공백 또는 따옴표로 파일 이름 해석을 올바르게 할 수 있습니다. 이 플래그는 xargs(1) 옵션 C<-0> 또는 C<--null>을 함께 사용하십시오."
 
 #. type: =item
-#: dos2unix.pod:299
+#: dos2unix.pod:309
 msgid "B<d>"
 msgstr "B<d>"
 
 #. type: textblock
-#: dos2unix.pod:301
+#: dos2unix.pod:311
 msgid "Print number of DOS line breaks."
 msgstr "DOS 개행 문자를 출력합니다."
 
 #. type: =item
-#: dos2unix.pod:303
+#: dos2unix.pod:313
 msgid "B<u>"
 msgstr "B<u>"
 
 #. type: textblock
-#: dos2unix.pod:305
+#: dos2unix.pod:315
 msgid "Print number of Unix line breaks."
 msgstr "유닉스 개행 문자를 출력합니다."
 
 #. type: =item
-#: dos2unix.pod:307
+#: dos2unix.pod:317
 msgid "B<m>"
 msgstr "B<m>"
 
 #. type: textblock
-#: dos2unix.pod:309
+#: dos2unix.pod:319
 msgid "Print number of Mac line breaks."
 msgstr "맥 개행 문자를 출력합니다."
 
 #. type: =item
-#: dos2unix.pod:311
+#: dos2unix.pod:321
 msgid "B<b>"
 msgstr "B<b>"
 
 #. type: textblock
-#: dos2unix.pod:313
+#: dos2unix.pod:323
 msgid "Print the byte order mark."
 msgstr "바이트 순서 표시를 출력합니다."
 
 #. type: =item
-#: dos2unix.pod:315
+#: dos2unix.pod:325
 msgid "B<t>"
 msgstr "B<t>"
 
 #. type: textblock
-#: dos2unix.pod:317
+#: dos2unix.pod:327
 msgid "Print if file is text or binary."
 msgstr "파일의 텍스트 또는 이진 여부를 출력합니다."
 
 #. type: =item
-#: dos2unix.pod:319
+#: dos2unix.pod:329
+msgid "B<e>"
+msgstr "B<e>"
+
+#. type: textblock
+#: dos2unix.pod:331
+msgid "Print the type of the line break of the last line, or C<noeol> if there is none."
+msgstr "행 마지막에 개행 문자 형식을 출력하거나, 없을 경우 C<noeol>을 출력합니다."
+
+#. type: =item
+#: dos2unix.pod:333
 msgid "B<c>"
 msgstr "B<c>"
 
 #. type: textblock
-#: dos2unix.pod:321
+#: dos2unix.pod:335
 msgid "Print only the files that would be converted."
 msgstr "변환할 파일만 출력합니다."
 
 #. type: textblock
-#: dos2unix.pod:323
+#: dos2unix.pod:337
 msgid "With the C<c> flag dos2unix will print only the files that contain DOS line breaks, unix2dos will print only file names that have Unix line breaks."
 msgstr "dos2unix에 C<c> 플래그를 사용하면 DOS 개행 문자가 들어간 파일만 출력합니다. unix2dos는 유닉스 개행 문자가 들어간 파일 이름만 출력합니다."
 
+#. type: textblock
+#: dos2unix.pod:340
+msgid "If in addition option C<-e> or C<--add-eol> is used also the files that lack a line break on the last line will be printed."
+msgstr "C<-e> 또는 C<--add-eol> 옵션을 추가로 사용하면 행 마지막에 빠진 개행 문자를 출력합니다."
+
 #. type: =item
-#: dos2unix.pod:326
+#: dos2unix.pod:343
 msgid "B<h>"
 msgstr "B<h>"
 
 #. type: textblock
-#: dos2unix.pod:328
+#: dos2unix.pod:345
 msgid "Print a header."
 msgstr "헤더를 출력합니다."
 
 #. type: =item
-#: dos2unix.pod:330
+#: dos2unix.pod:347
 msgid "B<p>"
 msgstr "B<p>"
 
 #. type: textblock
-#: dos2unix.pod:332
+#: dos2unix.pod:349
 msgid "Show file names without path."
 msgstr "경로를 뺀 파일 이름을 나타냅니다."
 
 #. type: textblock
-#: dos2unix.pod:336
+#: dos2unix.pod:353
 msgid "Examples:"
 msgstr "예제:"
 
 #. type: textblock
-#: dos2unix.pod:338
+#: dos2unix.pod:355
 msgid "Show information for all *.txt files:"
 msgstr "모든 *.txt 파일 정보 출력:"
 
 #. type: verbatim
-#: dos2unix.pod:340
+#: dos2unix.pod:357
 #, no-wrap
 msgid ""
 "    dos2unix -i *.txt\n"
@@ -555,12 +591,12 @@ msgstr ""
 "\n"
 
 #. type: textblock
-#: dos2unix.pod:342
+#: dos2unix.pod:359
 msgid "Show only the number of DOS line breaks and Unix line breaks:"
 msgstr "DOS 개행 문자와 유닉스 개행 문자 갯수만 출력:"
 
 #. type: verbatim
-#: dos2unix.pod:344
+#: dos2unix.pod:361
 #, no-wrap
 msgid ""
 "    dos2unix -idu *.txt\n"
@@ -570,12 +606,12 @@ msgstr ""
 "\n"
 
 #. type: textblock
-#: dos2unix.pod:346
+#: dos2unix.pod:363
 msgid "Show only the byte order mark:"
 msgstr "바이트 순서 표시만 나타내기:"
 
 #. type: verbatim
-#: dos2unix.pod:348
+#: dos2unix.pod:365
 #, no-wrap
 msgid ""
 "    dos2unix --info=b *.txt\n"
@@ -585,12 +621,12 @@ msgstr ""
 "\n"
 
 #. type: textblock
-#: dos2unix.pod:350
+#: dos2unix.pod:367
 msgid "List the files that have DOS line breaks:"
 msgstr "DOS 개행 문자가 들어간 파일 목록 출력:"
 
 #. type: verbatim
-#: dos2unix.pod:352
+#: dos2unix.pod:369
 #, no-wrap
 msgid ""
 "    dos2unix -ic *.txt\n"
@@ -600,12 +636,12 @@ msgstr ""
 "\n"
 
 #. type: textblock
-#: dos2unix.pod:354
+#: dos2unix.pod:371
 msgid "List the files that have Unix line breaks:"
 msgstr "유닉스 개행 문자가 들어간 파일 목록 출력:"
 
 #. type: verbatim
-#: dos2unix.pod:356
+#: dos2unix.pod:373
 #, no-wrap
 msgid ""
 "    unix2dos -ic *.txt\n"
@@ -615,12 +651,27 @@ msgstr ""
 "\n"
 
 #. type: textblock
-#: dos2unix.pod:358
+#: dos2unix.pod:375
+msgid "List the files that have DOS line breaks or lack a line break on the last line:"
+msgstr "DOS 개행 문자가 들어갔거나 행 마지막에 개행 문자가 빠진 파일 목록 출력:"
+
+#. type: verbatim
+#: dos2unix.pod:377
+#, no-wrap
+msgid ""
+"    dos2unix -e -ic *.txt\n"
+"\n"
+msgstr ""
+"    dos2unix -e -ic *.txt\n"
+"\n"
+
+#. type: textblock
+#: dos2unix.pod:379
 msgid "Convert only files that have DOS line breaks and leave the other files untouched:"
 msgstr "DOS 개행 문자가 들어간 파일만 변환하며 다른 파일은 건드리지 않습니다:"
 
 #. type: verbatim
-#: dos2unix.pod:360
+#: dos2unix.pod:381
 #, no-wrap
 msgid ""
 "    dos2unix -ic0 *.txt | xargs -0 dos2unix\n"
@@ -630,12 +681,12 @@ msgstr ""
 "\n"
 
 #. type: textblock
-#: dos2unix.pod:362
+#: dos2unix.pod:383
 msgid "Find text files that have DOS line breaks:"
 msgstr "DOS 개행 문자가 들어간 텍스트 파일 찾기:"
 
 #. type: verbatim
-#: dos2unix.pod:364
+#: dos2unix.pod:385
 #, no-wrap
 msgid ""
 "    find -name '*.txt' -print0 | xargs -0 dos2unix -ic\n"
@@ -645,122 +696,122 @@ msgstr ""
 "\n"
 
 #. type: =item
-#: dos2unix.pod:366
+#: dos2unix.pod:387
 msgid "B<-k, --keepdate>"
 msgstr "B<-k, --keepdate>"
 
 #. type: textblock
-#: dos2unix.pod:368
+#: dos2unix.pod:389
 msgid "Keep the date stamp of output file same as input file."
 msgstr "출력 파일의 날짜 스탬프는 입력 파일과 동일하게 설정합니다."
 
 #. type: =item
-#: dos2unix.pod:370
+#: dos2unix.pod:391
 msgid "B<-L, --license>"
 msgstr "B<-L, --license>"
 
 #. type: textblock
-#: dos2unix.pod:372
+#: dos2unix.pod:393
 msgid "Display program's license."
 msgstr "프로그램 라이선스를 표시합니다."
 
 #. type: =item
-#: dos2unix.pod:374
+#: dos2unix.pod:395
 msgid "B<-l, --newline>"
 msgstr "B<-l, --newline>"
 
 #. type: textblock
-#: dos2unix.pod:376
+#: dos2unix.pod:397
 msgid "Add additional newline."
 msgstr "부가 개행 문자를 추가합니다."
 
 #. type: textblock
-#: dos2unix.pod:378
+#: dos2unix.pod:399
 msgid "B<dos2unix>: Only DOS line breaks are changed to two Unix line breaks.  In Mac mode only Mac line breaks are changed to two Unix line breaks."
 msgstr "B<dos2unix>: DOS 개행 문자만을 유닉스 개행 문자 둘로 변환합니다.  맥 모드에서는 맥 개행 문자만을 유닉스 개행 문자 둘로 변환합니다."
 
 #. type: textblock
-#: dos2unix.pod:382
+#: dos2unix.pod:403
 msgid "B<unix2dos>: Only Unix line breaks are changed to two DOS line breaks.  In Mac mode Unix line breaks are changed to two Mac line breaks."
 msgstr "B<unix2dos>: 유닉스 개행 문자만을 DOS 개행 문자 둘로 변환합니다.  맥 모드에서는 유닉스 개행 문자를 맥 개행 문자 둘로 변환합니다."
 
 #. type: =item
-#: dos2unix.pod:385
+#: dos2unix.pod:406
 msgid "B<-m, --add-bom>"
 msgstr "B<-m, --add-bom>"
 
 #. type: textblock
-#: dos2unix.pod:387
+#: dos2unix.pod:408
 msgid "Write a Byte Order Mark (BOM) in the output file. By default an UTF-8 BOM is written."
 msgstr "바이트 순서 표시(BOM)를 출력 파일에 기록합니다. 기본적으로 UTF-8 BOM을 기록합니다."
 
 #. type: textblock
-#: dos2unix.pod:390
+#: dos2unix.pod:411
 msgid "When the input file is UTF-16, and the option C<-u> is used, an UTF-16 BOM will be written."
 msgstr "입력 파일 인코딩이 UTF-16이고 C<-u> 옵션을 사용했다면 UTF-16 BOM을 기록합니다."
 
 #. type: textblock
-#: dos2unix.pod:393
+#: dos2unix.pod:414
 msgid "Never use this option when the output encoding is other than UTF-8, UTF-16, or GB18030. See also section UNICODE."
 msgstr "출력 인코딩이 UTF-8, UTF-16, GB18030이 아니라면 이 옵션을 사용하지 마십시오. 유니코드 섹션도 참고하십시오."
 
 #. type: =item
-#: dos2unix.pod:397
+#: dos2unix.pod:418
 msgid "B<-n, --newfile INFILE OUTFILE ...>"
 msgstr "B<< -n, --newfile <입력파일> <출력파일> ... >>"
 
 #. type: textblock
-#: dos2unix.pod:399
+#: dos2unix.pod:420
 msgid "New file mode. Convert file INFILE and write output to file OUTFILE.  File names must be given in pairs and wildcard names should I<not> be used or you I<will> lose your files."
 msgstr "새 파일 모드입니다. <입력파일>을 변환하여 <출력파일>에 기록합니다.  파일 이름은 짝으로 지정하며 와일드카드 이름은 사용하지 I<말아야> 하며, 그렇지 않으면 파일을 I<잃습니다>."
 
 #. type: textblock
-#: dos2unix.pod:403
+#: dos2unix.pod:424
 msgid "The person who starts the conversion in new file (paired) mode will be the owner of the converted file. The read/write permissions of the new file will be the permissions of the original file minus the umask(1) of the person who runs the conversion."
 msgstr "새 파일(짝)모드로 파일 변환을 시작한 사용자는 변환한 파일의 소유자가 됩니다. 새 파일의 읽기/쓰기 권한은 변환을 실행한 사용자의 umask(1)를 뺀 원본 파일의 권한으로 부여합니다."
 
 #. type: =item
-#: dos2unix.pod:408
+#: dos2unix.pod:429
 msgid "B<--no-allow-chown>"
 msgstr "B<--no-allow-chown>"
 
 #. type: textblock
-#: dos2unix.pod:410
+#: dos2unix.pod:431
 msgid "Don't allow file ownership change in old file mode (default)."
 msgstr "이전 파일 모드의 파일 소유권 변경을 허용하지 않습니다(기본값)."
 
 #. type: textblock
-#: dos2unix.pod:412
+#: dos2unix.pod:433
 msgid "Abort conversion when the user and/or group ownership of the original file can't be preserved in old file mode. See also options C<-o> and C<-n>. This option is only available if dos2unix has support for preserving the user and group ownership of files."
 msgstr "원본 파일의 사용자 또는 그룹 소유권을 이전 파일 모드에서 유지할 수 없다면 변환을 멈춥니다. C<-o>, C<-n> 옵션도 참고하십시오. 이 옵션은 dos2unix에서 파일의 사용자 및 그룹 소유권을 유지하는 기능이 있을 경우에만 사용할 수 있습니다."
 
 #. type: =item
-#: dos2unix.pod:417
+#: dos2unix.pod:438
 msgid "B<--no-add-eol>"
 msgstr "B<--no-add-eol>"
 
 #. type: textblock
-#: dos2unix.pod:419
+#: dos2unix.pod:440
 msgid "Do not add a line break to the last line if there isn't one."
 msgstr "개행 문자가 줄 끝에 없을 경우 넣지 않습니다."
 
 #. type: =item
-#: dos2unix.pod:421
+#: dos2unix.pod:442
 msgid "B<-O, --to-stdout>"
 msgstr "B<-O, --to-stdout>"
 
 #. type: textblock
-#: dos2unix.pod:423
+#: dos2unix.pod:444
 msgid "Write to standard output, like a Unix filter. Use option C<-o> to go back to old file (in-place) mode."
 msgstr "유닉스 필터 동작과 비슷하게 표준 출력에 기록합니다. 이전 파일(기록) 모드로 돌아가려면 C<-o> 옵션을 사용합니다."
 
 #. type: textblock
-#: dos2unix.pod:426
+#: dos2unix.pod:447
 msgid "Combined with option C<-e> files can be properly concatenated. No merged last and first lines, and no Unicode byte order marks in the middle of the concatenated file. Example:"
 msgstr "C<-e> 옵션을 붙여 결합한 파일은 제대로 내용을 합칠 수 있습니다. 마지막 줄과 첫줄은 병합하지 않으며, 결합한 파일 내용 중간에 들어있는 유니코드 바이트 순서 표시는 들어가지 않습니다. 예를 들면:"
 
 #. type: verbatim
-#: dos2unix.pod:430
+#: dos2unix.pod:451
 #, no-wrap
 msgid ""
 "    dos2unix -e -O file1.txt file2.txt > output.txt\n"
@@ -770,32 +821,32 @@ msgstr ""
 "\n"
 
 #. type: =item
-#: dos2unix.pod:432
+#: dos2unix.pod:453
 msgid "B<-o, --oldfile FILE ...>"
 msgstr "B<< -o, --oldfile <파일> ... >>"
 
 #. type: textblock
-#: dos2unix.pod:434
+#: dos2unix.pod:455
 msgid "Old file mode. Convert file FILE and overwrite output to it. The program defaults to run in this mode. Wildcard names may be used."
 msgstr "이전 파일 모드. <파일>을 변환하고 출력을 <파일>에 덮어씁니다. 프로그램 기본값은 이 모드로의 실행입니다. 와일드카드 이름을 사용할 수도 있습니다."
 
 #. type: textblock
-#: dos2unix.pod:437
+#: dos2unix.pod:458
 msgid "In old file (in-place) mode the converted file gets the same owner, group, and read/write permissions as the original file. Also when the file is converted by another user who has write permissions on the file (e.g. user root).  The conversion will be aborted when it is not possible to preserve the original values.  Change of owner could mean that the original owner is not able to read the file any more. Change of group could be a security risk, the file could be made readable for persons for whom it is not intended.  Preservation of owner, group, and read/write permissions is only supported on Unix."
 msgstr "이전 파일(자체 변환)모드에서 변환한 파일은 동일한 소유자, 그룹, 읽기 쓰기 권한을 원본 파일과 동일하게 유지합니다. 게다가 쓰기 권한이 있는 다른 사용자(예를 들어, root)가 파일을 변환했다 하더라도 마찬가지입니다.  원본 값을 그대로 유지할 수 없을 경우에는 변환을 멈춥니다.  소유권 변경이 가능하단건 곧 원본 소유자가 더이상 파일을 읽을 수 없음을 의미합니다. 소유그룹 변경은 원하지 않는 사용자가 파일을 읽게 할 수 있어 보안 문제를 야기할 수 있습니다. 소유자, 소유그룹, 읽기/쓰기 권한 유지는 유닉스에서만 지원합니다."
 
 #. type: textblock
-#: dos2unix.pod:446
+#: dos2unix.pod:467
 msgid "To check if dos2unix has support for preserving the user and group ownership of files type C<dos2unix -V>."
 msgstr "dos2unix에서 파일의 사용자 및 그룹 소유권을 유지하는 기능을 지원하는지 확인하려면 C<dos2unix -V>를 입력하십시오."
 
 #. type: textblock
-#: dos2unix.pod:449
+#: dos2unix.pod:470
 msgid "Conversion is always done via a temporary file. When an error occurs halfway the conversion, the temporary file is deleted and the original file stays intact. When the conversion is successful, the original file is replaced with the temporary file. You may have write permission on the original file, but no permission to put the same user and/or group ownership properties on the temporary file as the original file has. This means you are not able to preserve the user and/or group ownership of the original file. In this case you can use option C<--allow-chown> to continue with the conversion:"
 msgstr "변환 동작은 항상 임시 파일로 처리합니다.  변환 과정 도중 오류가 발생하면, 임시 파일을 삭제하고 원본 파일을 그대로 둡니다. 변환이 끝나면 원본 파일을 임시 파일로 바꿉니다. 실행한 사용자는 원본 파일의 쓰기 권한을 가지겠지만, 원본 파일처럼 임시 파일에 사용자 또는 그룹 소유권을 동일하게 부여할 수는 없습니다. 즉, 원본 파일의 사용자 또는 그룹 권한을 그대로 대상 파일에 설정할 수는 없단 뜻입니다. 이 경우 C<--allow-chown> 옵션을 사용하여 변환을 계속할 수 있습니다:"
 
 #. type: verbatim
-#: dos2unix.pod:458
+#: dos2unix.pod:479
 #, no-wrap
 msgid ""
 "    dos2unix --allow-chown foo.txt\n"
@@ -805,12 +856,12 @@ msgstr ""
 "\n"
 
 #. type: textblock
-#: dos2unix.pod:460
+#: dos2unix.pod:481
 msgid "Another option is to use new file mode:"
 msgstr "다른 옵션은 새 파일 모드에서 사용합니다:"
 
 #. type: verbatim
-#: dos2unix.pod:462
+#: dos2unix.pod:483
 #, no-wrap
 msgid ""
 "    dos2unix -n foo.txt foo.txt\n"
@@ -820,477 +871,477 @@ msgstr ""
 "\n"
 
 #. type: textblock
-#: dos2unix.pod:464
+#: dos2unix.pod:485
 msgid "The advantage of the C<--allow-chown> option is that you can use wildcards, and the ownership properties will be preserved when possible."
 msgstr "C<--allow-chown> 옵션의 장점은 와일드 카드를 사용할 수 있으며, 가능하다면 소유관 속성을 유지합니다."
 
 #. type: =item
-#: dos2unix.pod:467
+#: dos2unix.pod:488
 msgid "B<-q, --quiet>"
 msgstr "B<-q, --quiet>"
 
 #. type: textblock
-#: dos2unix.pod:469
+#: dos2unix.pod:490
 msgid "Quiet mode. Suppress all warnings and messages. The return value is zero.  Except when wrong command-line options are used."
 msgstr "미 출력 모드. 모든 경고와 메시지를 끕니다. 반환 값은 0입니다.  잘못된 명령행 옵션을 사용했을 때는 이 경우에서 제외합니다."
 
 #. type: =item
-#: dos2unix.pod:472
+#: dos2unix.pod:493
 msgid "B<-r, --remove-bom>"
 msgstr "B<-r, --remove-bom>"
 
 #. type: textblock
-#: dos2unix.pod:474
+#: dos2unix.pod:495
 msgid "Remove Byte Order Mark (BOM). Do not write a BOM in the output file.  This is the default behavior when converting to Unix line breaks.  See also option C<-b>."
 msgstr "바이트 순서 표시(BOM)를 제거합니다. BOM을 출력 파일에 기록하지 않습니다.  유닉스 개행 문자로 변환할 때 기본 동작입니다.  C<-b> 옵션도 참고하십시오."
 
 #. type: =item
-#: dos2unix.pod:478
+#: dos2unix.pod:499
 msgid "B<-s, --safe>"
 msgstr "B<-s, --safe>"
 
 #. type: textblock
-#: dos2unix.pod:480
+#: dos2unix.pod:501
 msgid "Skip binary files (default)."
 msgstr "이진 파일은 건너뜁니다(기본값)."
 
 #. type: textblock
-#: dos2unix.pod:482
+#: dos2unix.pod:503
 msgid "The skipping of binary files is done to avoid accidental mistakes. Be aware that the detection of binary files is not 100% foolproof. Input files are scanned for binary symbols which are typically not found in text files. It is possible that a binary file contains only normal text characters. Such a binary file will mistakenly be seen as a text file."
 msgstr "이진 파일 건너뛰기는 갑작스런 실수를 피하는 동작입니다. 이진 파일 감시는 100% 실패 예방을 하지 않습니다. 입력 파일에서 텍스트 파일에서 보통 찾을 수 없는 이진 심볼을 검색합니다. 이진 파일에도 일반 텍스트 문자만 들어있을 수 있습니다. 이런 이진 파일 종류는 (그래서) 텍스트 파일로 실수로 알아챌 수 있습니다."
 
 #. type: =item
-#: dos2unix.pod:488
+#: dos2unix.pod:509
 msgid "B<-u, --keep-utf16>"
 msgstr "B<-u, --keep-utf16>"
 
 #. type: textblock
-#: dos2unix.pod:490
+#: dos2unix.pod:511
 msgid "Keep the original UTF-16 encoding of the input file. The output file will be written in the same UTF-16 encoding, little or big endian, as the input file.  This prevents transformation to UTF-8. An UTF-16 BOM will be written accordingly. This option can be disabled with the C<-ascii> option."
 msgstr "입력의 UTF-16 인코딩 원본을 유지합니다. 원본 파일은 동일한 UTF-16 인코딩을 리틀엔디언 또는 빅엔디언으로 입력 파일과 같이 기록합니다.  이는 UTF-8로의 변환을 막습니다. UTF-16 BOM은 원본을 따라 대상에 기록합니다. 이 옵션 동작은 C<-ascii> 옵션으로 막을 수 있습니다."
 
 #. type: =item
-#: dos2unix.pod:495
+#: dos2unix.pod:516
 msgid "B<-ul, --assume-utf16le>"
 msgstr "B<-ul, --assume-utf16le>"
 
 #. type: textblock
-#: dos2unix.pod:497
+#: dos2unix.pod:518
 msgid "Assume that the input file format is UTF-16LE."
 msgstr "입력 파일 형식을 UTF-16LE로 가정합니다."
 
 #. type: textblock
-#: dos2unix.pod:499
+#: dos2unix.pod:520
 msgid "When there is a Byte Order Mark in the input file the BOM has priority over this option."
 msgstr "바이트 순서 표시가 입력 파일에 있다면 BOM은 이 옵션보다 우선순위를 갖습니다."
 
 #. type: textblock
-#: dos2unix.pod:502
+#: dos2unix.pod:523
 msgid "When you made a wrong assumption (the input file was not in UTF-16LE format) and the conversion succeeded, you will get an UTF-8 output file with wrong text.  You can undo the wrong conversion with iconv(1) by converting the UTF-8 output file back to UTF-16LE. This will bring back the original file."
 msgstr "잘못된 가정(입력 파일이 UTF-16LE 형식이 아니라거나)하에 변환에 성공했다면, 잘못된 내용이 들어간 UTF-8 출력 파일을 받을 수 있습니다.  iconf(1) 명령을 활용하여 UTF-8 출력 파일을 UTF-16LE로 되돌려 변환하는 방식으로 잘못된 변환 결과를 되돌릴 수 있습니다. 이런 방법으로 원본 파일을 되돌릴 수 있습니다."
 
 #. type: textblock
-#: dos2unix.pod:507
+#: dos2unix.pod:528
 msgid "The assumption of UTF-16LE works as a I<conversion mode>. By switching to the default I<ascii> mode the UTF-16LE assumption is turned off."
 msgstr "UTF-16LE가 I<변환 모드>로 동작한다고 가정해보겠습니다. 기본 I<ascii> 모드로 전환하면 UTF-16LE에 대한 가정은 꺼진 상태입니다."
 
 #. type: =item
-#: dos2unix.pod:510
+#: dos2unix.pod:531
 msgid "B<-ub, --assume-utf16be>"
 msgstr "B<-ub, --assume-utf16be>"
 
 #. type: textblock
-#: dos2unix.pod:512
+#: dos2unix.pod:533
 msgid "Assume that the input file format is UTF-16BE."
 msgstr "입력 파일 형식을 UTF-16BE로 가정합니다."
 
 #. type: textblock
-#: dos2unix.pod:514
+#: dos2unix.pod:535
 msgid "This option works the same as option C<-ul>."
 msgstr "이 옵션은 C<-ul>과 동일한 동작을 수행합니다."
 
 #. type: =item
-#: dos2unix.pod:516
+#: dos2unix.pod:537
 msgid "B<-v, --verbose>"
 msgstr "B<-v, --verbose>"
 
 #. type: textblock
-#: dos2unix.pod:518
+#: dos2unix.pod:539
 msgid "Display verbose messages. Extra information is displayed about Byte Order Marks and the amount of converted line breaks."
 msgstr "자세한 메시지를 표시합니다. 추가로, 바이트 순서 표시 세부정보가 나타나며 변환 개행 문자가 나타납니다."
 
 #. type: =item
-#: dos2unix.pod:521
+#: dos2unix.pod:542
 msgid "B<-F, --follow-symlink>"
 msgstr "B<-F, --follow-symlink>"
 
 #. type: textblock
-#: dos2unix.pod:523
+#: dos2unix.pod:544
 msgid "Follow symbolic links and convert the targets."
 msgstr "심볼릭 링크를 따라가서 대상을 변환합니다."
 
 #. type: =item
-#: dos2unix.pod:525
+#: dos2unix.pod:546
 msgid "B<-R, --replace-symlink>"
 msgstr "B<-R, --replace-symlink>"
 
 #. type: textblock
-#: dos2unix.pod:527
+#: dos2unix.pod:548
 msgid "Replace symbolic links with converted files (original target files remain unchanged)."
 msgstr "심볼릭 링크를 변환 파일로 바꿉니다(원시 대상 파일은 바뀌지 않은 상태로 둡니다)."
 
 #. type: =item
-#: dos2unix.pod:530
+#: dos2unix.pod:551
 msgid "B<-S, --skip-symlink>"
 msgstr "B<-S, --skip-symlink>"
 
 #. type: textblock
-#: dos2unix.pod:532
+#: dos2unix.pod:553
 msgid "Keep symbolic links and targets unchanged (default)."
 msgstr "심볼릭 링크와 대상을 바뀌지 않게 그대로 둡니다(기본값)."
 
 #. type: =item
-#: dos2unix.pod:534
+#: dos2unix.pod:555
 msgid "B<-V, --version>"
 msgstr "B<-V, --version>"
 
 #. type: textblock
-#: dos2unix.pod:536
+#: dos2unix.pod:557
 msgid "Display version information and exit."
 msgstr "버전 정보를 표시하고 나갑니다."
 
 #. type: =head1
-#: dos2unix.pod:540
+#: dos2unix.pod:561
 msgid "MAC MODE"
 msgstr "맥 모드"
 
 #. type: textblock
-#: dos2unix.pod:542
-msgid "In normal mode line breaks are converted from DOS to Unix and vice versa.  Mac line breaks are not converted."
-msgstr "일반 모드에서는 개행 문자를 DOS에서 유닉스로 그 반대로 변환합니다.  맥 개행 문자는 변환하지 않습니다."
+#: dos2unix.pod:563
+msgid "By default line breaks are converted from DOS to Unix and vice versa.  Mac line breaks are not converted."
+msgstr "DOS 개행 문자와 유닉스 개행 문자를 서로 변환해주는 동작이 기본 동작이빈다.  맥 개행 문자는 변환하지 않습니다."
 
 #. type: textblock
-#: dos2unix.pod:545
+#: dos2unix.pod:566
 msgid "In Mac mode line breaks are converted from Mac to Unix and vice versa. DOS line breaks are not changed."
 msgstr "맥 모드에서 개행 문자를 맥에서 유닉스로, 내지는 그 반대로 변환합니다. DOS 개행 문자를 바꾸지 않습니다."
 
 #. type: textblock
-#: dos2unix.pod:548
+#: dos2unix.pod:569
 msgid "To run in Mac mode use the command-line option C<-c mac> or use the commands C<mac2unix> or C<unix2mac>."
 msgstr "맥 모드를 실행하려면 C<-c mac> 명령행 옵션을 사용하거나 C<mac2unix> 명령 또는 C<unix2mac> 명령을 사용하십시오."
 
 #. type: =head1
-#: dos2unix.pod:551
+#: dos2unix.pod:572
 msgid "CONVERSION MODES"
 msgstr "변환 모드"
 
 #. type: =item
-#: dos2unix.pod:555
+#: dos2unix.pod:576
 msgid "B<ascii>"
 msgstr "B<ascii>"
 
 #. type: textblock
-#: dos2unix.pod:557
-msgid "In mode C<ascii> only line breaks are converted. This is the default conversion mode."
-msgstr "C<ascii> 모드에서는 개행 문자만 변환합니다. ASCII 모드는 기본 변환 모드입니다."
+#: dos2unix.pod:578
+msgid "This is the default conversion mode. This mode is for converting ASCII and ASCII-compatible encoded files, like UTF-8. Enabling B<ascii> mode disables B<7bit> and B<iso> mode."
+msgstr "기본 변환 모드입니다. 이 모드는 아스키와 UTF-8과 같은 아스키 호환 인코딩 파일을 변환합니다. B<ascii> 모드를 활성화하면 B<7bit> 모드와 B<iso> 모드를 사용하지 않습니다."
 
 #. type: textblock
-#: dos2unix.pod:560
-msgid "Although the name of this mode is ASCII, which is a 7 bit standard, the actual mode is 8 bit. Use always this mode when converting Unicode UTF-8 files."
-msgstr "7비트 표준 모드를 ASCII 라고 칭하지만 실제 모드는 8 비트입니다. 유니코드 UTF-8 파일을 변환할 때 항상 이 모드를 사용하십시오."
+#: dos2unix.pod:582
+msgid "If dos2unix has UTF-16 support, UTF-16 encoded files are converted to the current locale character encoding on POSIX systems and to UTF-8 on Windows.  Enabling B<ascii> mode disables the option to keep UTF-16 encoding (C<-u>) and the options to assume UTF-16 input (C<-ul> and C<-ub>).  To see if dos2unix has UTF-16 support type C<dos2unix -V>. See also section UNICODE."
+msgstr "dos2unix에서 UTF-16을 지원하면 UTF-16 인코딩 파일을 POSIX 시스템의 현재 로캘 문자 인코딩과 윈도우의 UTF-8 인코딩으로 변환합니다.  B<ascii> 모드를 사용하면 UTF-16 인코딩 (C<u>)을 유지하는 옵션과 UTF-16 입력(C<-ul> 및 C<-ub>)을 가정하는 옵션 값을 사용하지 않습니다.  dos2unix에 UTF-16 을 지원하는지 알아보려면 C<dos2unix -V>를 입력하십시오. 유니코드 섹션도 살펴보십시오."
 
 #. type: =item
-#: dos2unix.pod:564
+#: dos2unix.pod:588
 msgid "B<7bit>"
 msgstr "B<7bit>"
 
 #. type: textblock
-#: dos2unix.pod:566
+#: dos2unix.pod:590
 msgid "In this mode all 8 bit non-ASCII characters (with values from 128 to 255)  are converted to a 7 bit space."
-msgstr "이 모드에서는 ASCII 영역 밖(128~255 값)의 모든 8비트 문자를 7비트 영역으로 변환합니다."
+msgstr "이 모드에서는 아스키 영역 밖(128~255 값)의 모든 8비트 문자를 7비트 영역으로 변환합니다."
 
 #. type: =item
-#: dos2unix.pod:569
+#: dos2unix.pod:593
 msgid "B<iso>"
 msgstr "B<iso>"
 
 #. type: textblock
-#: dos2unix.pod:571
+#: dos2unix.pod:595
 msgid "Characters are converted between a DOS character set (code page) and ISO character set ISO-8859-1 (Latin-1) on Unix. DOS characters without ISO-8859-1 equivalent, for which conversion is not possible, are converted to a dot. The same counts for ISO-8859-1 characters without DOS counterpart."
 msgstr "DOS 문자 세트(코드 페이지)에서 유닉스 ISO 문자 세트 ISO-8859-1(Latin1)로 또는 그 반대로 문자를 변환합니다. ISO-8859-1에 대응하지 않는 DOS 문자는 변환할 수 없어 구두점으로 변환합니다. ISO-8859-1에서 DOS 문자 세트로 변환할 때도 마찬가지입니다."
 
 #. type: textblock
-#: dos2unix.pod:576
+#: dos2unix.pod:600
 msgid "When only option C<-iso> is used dos2unix will try to determine the active code page. When this is not possible dos2unix will use default code page CP437, which is mainly used in the USA.  To force a specific code page use options C<-437> (US), C<-850> (Western European), C<-860> (Portuguese), C<-863> (French Canadian), or C<-865> (Nordic).  Windows code page CP1252 (Western European) is also supported with option C<-1252>. For other code pages use dos2unix in combination with iconv(1).  Iconv can convert between a long list of character encodings."
 msgstr "dos2unix에 C<-iso>옵션만 사용했을 경우 활성 코드 페이지 확인을 시도합니다. 불가능하다면 dos2unix는 미합중국에서 주로 사용하는 CP437 기본 코드 페이지를 사용합니다.  코드 페이지를 강제로 지정하려면 C<-437> (US), C<-850> (서유럽어), C<-860> (포르투갈어), C<-863> (캐나다 프랑스어), C<-865> (북유럽어) 옵션 중 하나를 사용하십시오.  윈도우 코드 페이지 CP1252 (서유럽어)는 C<-1252> 옵션으로 지원합니다. 다른 코드 페이지를 활용하려면 dos2unix와 iconv(1)를 함께 사용하십시오.  iconv는 다양한 문자 인코딩을 변환할 수 있습니다."
 
 #. type: textblock
-#: dos2unix.pod:585
+#: dos2unix.pod:609
 msgid "Never use ISO conversion on Unicode text files. It will corrupt UTF-8 encoded files."
 msgstr "유니코드 텍스트 파일을 ISO 방식으로 변환하지 마십시오. UTF-8 인코딩 파일이 깨집니다."
 
 #. type: textblock
-#: dos2unix.pod:587
+#: dos2unix.pod:611
 msgid "Some examples:"
 msgstr "일부 예제:"
 
 #. type: textblock
-#: dos2unix.pod:589
+#: dos2unix.pod:613
 msgid "Convert from DOS default code page to Unix Latin-1:"
 msgstr "DOS 기본 코드 페이지에서 유닉스 Latin-1으로 변환:"
-
-#. type: verbatim
-#: dos2unix.pod:591
-#, no-wrap
-msgid ""
-"    dos2unix -iso -n in.txt out.txt\n"
-"\n"
-msgstr ""
-"    dos2unix -iso -n in.txt out.txt\n"
-"\n"
-
-#. type: textblock
-#: dos2unix.pod:593
-msgid "Convert from DOS CP850 to Unix Latin-1:"
-msgstr "DOS CP850에서 유닉스 Latin-1으로 변환:"
-
-#. type: verbatim
-#: dos2unix.pod:595
-#, no-wrap
-msgid ""
-"    dos2unix -850 -n in.txt out.txt\n"
-"\n"
-msgstr ""
-"    dos2unix -850 -n in.txt out.txt\n"
-"\n"
-
-#. type: textblock
-#: dos2unix.pod:597
-msgid "Convert from Windows CP1252 to Unix Latin-1:"
-msgstr "윈도우 CP1252에서 유닉스 Latin-1으로 변환:"
-
-#. type: verbatim
-#: dos2unix.pod:599
-#, no-wrap
-msgid ""
-"    dos2unix -1252 -n in.txt out.txt\n"
-"\n"
-msgstr ""
-"    dos2unix -1252 -n in.txt out.txt\n"
-"\n"
-
-#. type: textblock
-#: dos2unix.pod:601
-msgid "Convert from Windows CP1252 to Unix UTF-8 (Unicode):"
-msgstr "윈도우 CP1252에서 유닉스 UTF-8(유니코드)로 변환:"
-
-#. type: verbatim
-#: dos2unix.pod:603
-#, no-wrap
-msgid ""
-"    iconv -f CP1252 -t UTF-8 in.txt | dos2unix > out.txt\n"
-"\n"
-msgstr ""
-"    iconv -f CP1252 -t UTF-8 in.txt | dos2unix > out.txt\n"
-"\n"
-
-#. type: textblock
-#: dos2unix.pod:605
-msgid "Convert from Unix Latin-1 to DOS default code page:"
-msgstr "유닉스 Latin-1에서 DOS 기본 코드 페이지로 변환:"
-
-#. type: verbatim
-#: dos2unix.pod:607
-#, no-wrap
-msgid ""
-"    unix2dos -iso -n in.txt out.txt\n"
-"\n"
-msgstr ""
-"    unix2dos -iso -n in.txt out.txt\n"
-"\n"
-
-#. type: textblock
-#: dos2unix.pod:609
-msgid "Convert from Unix Latin-1 to DOS CP850:"
-msgstr "유닉스 Latin-1에서 DOS CP850으로 변환:"
-
-#. type: verbatim
-#: dos2unix.pod:611
-#, no-wrap
-msgid ""
-"    unix2dos -850 -n in.txt out.txt\n"
-"\n"
-msgstr ""
-"    unix2dos -850 -n in.txt out.txt\n"
-"\n"
-
-#. type: textblock
-#: dos2unix.pod:613
-msgid "Convert from Unix Latin-1 to Windows CP1252:"
-msgstr "유닉스 Latin-1에서 윈도우 CP1252로 변환:"
 
 #. type: verbatim
 #: dos2unix.pod:615
 #, no-wrap
 msgid ""
-"    unix2dos -1252 -n in.txt out.txt\n"
+"    dos2unix -iso -n in.txt out.txt\n"
 "\n"
 msgstr ""
-"    unix2dos -1252 -n in.txt out.txt\n"
+"    dos2unix -iso -n in.txt out.txt\n"
 "\n"
 
 #. type: textblock
 #: dos2unix.pod:617
-msgid "Convert from Unix UTF-8 (Unicode) to Windows CP1252:"
-msgstr "유닉스 UTF-8(유니코드)에서 윈도우 CP1252로 변환:"
+msgid "Convert from DOS CP850 to Unix Latin-1:"
+msgstr "DOS CP850에서 유닉스 Latin-1으로 변환:"
 
 #. type: verbatim
 #: dos2unix.pod:619
 #, no-wrap
 msgid ""
-"    unix2dos < in.txt | iconv -f UTF-8 -t CP1252 > out.txt\n"
+"    dos2unix -850 -n in.txt out.txt\n"
 "\n"
 msgstr ""
-"    unix2dos < in.txt | iconv -f UTF-8 -t CP1252 > out.txt\n"
+"    dos2unix -850 -n in.txt out.txt\n"
 "\n"
 
 #. type: textblock
 #: dos2unix.pod:621
+msgid "Convert from Windows CP1252 to Unix Latin-1:"
+msgstr "윈도우 CP1252에서 유닉스 Latin-1으로 변환:"
+
+#. type: verbatim
+#: dos2unix.pod:623
+#, no-wrap
+msgid ""
+"    dos2unix -1252 -n in.txt out.txt\n"
+"\n"
+msgstr ""
+"    dos2unix -1252 -n in.txt out.txt\n"
+"\n"
+
+#. type: textblock
+#: dos2unix.pod:625
+msgid "Convert from Windows CP1252 to Unix UTF-8 (Unicode):"
+msgstr "윈도우 CP1252에서 유닉스 UTF-8(유니코드)로 변환:"
+
+#. type: verbatim
+#: dos2unix.pod:627
+#, no-wrap
+msgid ""
+"    iconv -f CP1252 -t UTF-8 in.txt | dos2unix > out.txt\n"
+"\n"
+msgstr ""
+"    iconv -f CP1252 -t UTF-8 in.txt | dos2unix > out.txt\n"
+"\n"
+
+#. type: textblock
+#: dos2unix.pod:629
+msgid "Convert from Unix Latin-1 to DOS default code page:"
+msgstr "유닉스 Latin-1에서 DOS 기본 코드 페이지로 변환:"
+
+#. type: verbatim
+#: dos2unix.pod:631
+#, no-wrap
+msgid ""
+"    unix2dos -iso -n in.txt out.txt\n"
+"\n"
+msgstr ""
+"    unix2dos -iso -n in.txt out.txt\n"
+"\n"
+
+#. type: textblock
+#: dos2unix.pod:633
+msgid "Convert from Unix Latin-1 to DOS CP850:"
+msgstr "유닉스 Latin-1에서 DOS CP850으로 변환:"
+
+#. type: verbatim
+#: dos2unix.pod:635
+#, no-wrap
+msgid ""
+"    unix2dos -850 -n in.txt out.txt\n"
+"\n"
+msgstr ""
+"    unix2dos -850 -n in.txt out.txt\n"
+"\n"
+
+#. type: textblock
+#: dos2unix.pod:637
+msgid "Convert from Unix Latin-1 to Windows CP1252:"
+msgstr "유닉스 Latin-1에서 윈도우 CP1252로 변환:"
+
+#. type: verbatim
+#: dos2unix.pod:639
+#, no-wrap
+msgid ""
+"    unix2dos -1252 -n in.txt out.txt\n"
+"\n"
+msgstr ""
+"    unix2dos -1252 -n in.txt out.txt\n"
+"\n"
+
+#. type: textblock
+#: dos2unix.pod:641
+msgid "Convert from Unix UTF-8 (Unicode) to Windows CP1252:"
+msgstr "유닉스 UTF-8(유니코드)에서 윈도우 CP1252로 변환:"
+
+#. type: verbatim
+#: dos2unix.pod:643
+#, no-wrap
+msgid ""
+"    unix2dos < in.txt | iconv -f UTF-8 -t CP1252 > out.txt\n"
+"\n"
+msgstr ""
+"    unix2dos < in.txt | iconv -f UTF-8 -t CP1252 > out.txt\n"
+"\n"
+
+#. type: textblock
+#: dos2unix.pod:645
 msgid "See also L<http://czyborra.com/charsets/codepages.html> and L<http://czyborra.com/charsets/iso8859.html>."
 msgstr "L<http://czyborra.com/charsets/codepages.html> 링크와 L<http://czyborra.com/charsets/iso8859.html> 링크도 참고하십시오."
 
 #. type: =head1
-#: dos2unix.pod:626
+#: dos2unix.pod:650
 msgid "UNICODE"
 msgstr "유니코드"
 
 #. type: =head2
-#: dos2unix.pod:628
+#: dos2unix.pod:652
 msgid "Encodings"
 msgstr "인코딩"
 
 #. type: textblock
-#: dos2unix.pod:630
+#: dos2unix.pod:654
 msgid "There exist different Unicode encodings. On Unix and Linux Unicode files are typically encoded in UTF-8 encoding. On Windows Unicode text files can be encoded in UTF-8, UTF-16, or UTF-16 big endian, but are mostly encoded in UTF-16 format."
 msgstr "여러가지 유니코드 인코딩이 있습니다. 유닉스와 리뉵스 유니코드 파일은 보통 UTF-8 인코딩 방식으로 인코딩합니다. 윈도우에서는 유니코드 텍스트 파일을 UTF-8, UTF-16, UTF-16 빅엔디언 방식으로 인코딩할 수 있지만 보통 UTF-16 형식으로 인코딩합니다."
 
 #. type: =head2
-#: dos2unix.pod:635
+#: dos2unix.pod:659
 msgid "Conversion"
 msgstr "변환"
 
 #. type: textblock
-#: dos2unix.pod:637
-msgid "Unicode text files can have DOS, Unix or Mac line breaks, like regular text files."
-msgstr "유니코드 텍스트 파일에는 DOS, 유닉스, 맥 개행 문자를 일반 텍스트 파일처럼 가질 수 있습니다."
+#: dos2unix.pod:661
+msgid "Unicode text files can have DOS, Unix or Mac line breaks, like ASCII text files."
+msgstr "유니코드 텍스트 파일에는 DOS, 유닉스, 맥 개행 문자를 아스키 텍스트 파일처럼 가질 수 있습니다."
 
 #. type: textblock
-#: dos2unix.pod:640
+#: dos2unix.pod:664
 msgid "All versions of dos2unix and unix2dos can convert UTF-8 encoded files, because UTF-8 was designed for backward compatibility with ASCII."
-msgstr "dos2unix와 unix2dos의 모든 버전에서는 UTF-8이 ASCII와의 하위 호환성을 고려했기 때문에 UTF-8 인코딩 파일을 변환할 수 있습니다."
+msgstr "dos2unix와 unix2dos의 모든 버전에서는 UTF-8이 아스키와의 하위 호환성을 고려했기 때문에 UTF-8 인코딩 파일을 변환할 수 있습니다."
 
 #. type: textblock
-#: dos2unix.pod:643
+#: dos2unix.pod:667
 msgid "Dos2unix and unix2dos with Unicode UTF-16 support, can read little and big endian UTF-16 encoded text files. To see if dos2unix was built with UTF-16 support type C<dos2unix -V>."
 msgstr "UTF-16을 지원하는 dos2unix와 unix2dos는 UTF-16 리틀엔디언 및 빅엔디언 인코딩 텍스트 파일을 모두 읽을 수 있습니다. dos2unix에 UTF-16 지원 기능이 들어갔는지 확인하려면 C<dos2unix -V> 명령을 입력하십시오."
 
 #. type: textblock
-#: dos2unix.pod:647
+#: dos2unix.pod:671
 msgid "On Unix/Linux UTF-16 encoded files are converted to the locale character encoding. Use the locale(1) command to find out what the locale character encoding is. When conversion is not possible a conversion error will occur and the file will be skipped."
 msgstr "유닉스/리눅스에서 UTF-16 인코딩 파일은 로캘 문자 인코딩으로 변환합니다. 어떤 로캘 문자 인코딩을 사용했는지 확인하려면 locale(1) 명령을 사용하십시오. 변환이 불가능할 경우 변환 오류가 나타나며, 해당 파일을 건너뜁니다."
 
 #. type: textblock
-#: dos2unix.pod:652
+#: dos2unix.pod:676
 msgid "On Windows UTF-16 files are by default converted to UTF-8. UTF-8 formatted text files are well supported on both Windows and Unix/Linux."
 msgstr "윈도우에서 UTF-16 파일은 기본적으로 UTF-8로 변환합니다. UTF-8 형식 텍스트 파일은 윈도우, 유닉스, 리눅스에서 잘 읽힙니다."
 
 #. type: textblock
-#: dos2unix.pod:655
+#: dos2unix.pod:679
 msgid "UTF-16 and UTF-8 encoding are fully compatible, there will no text be lost in the conversion. When an UTF-16 to UTF-8 conversion error occurs, for instance when the UTF-16 input file contains an error, the file will be skipped."
 msgstr "UTF-16과 UTF-8 인코딩은 완전한 호환 관계이며, 변환 과정에 잃을 내용은 없습니다. UTF-16에서 UTF-8로 변환하던 중 오류가 나타났다면, 예를 들어 UTF-16 파일에 오류가 있다면, 해당 파일을 건너뜁니다."
 
 #. type: textblock
-#: dos2unix.pod:659
+#: dos2unix.pod:683
 msgid "When option C<-u> is used, the output file will be written in the same UTF-16 encoding as the input file. Option C<-u> prevents conversion to UTF-8."
 msgstr "C<-u> 옵션을 사용하면 입력 파일의 UTF-16 인코딩을 출력 파일에도 그대로 적용합니다. C<-u> 옵션은 UTF-8로의 변환을 막습니다."
 
 #. type: textblock
-#: dos2unix.pod:662
+#: dos2unix.pod:686
 msgid "Dos2unix and unix2dos have no option to convert UTF-8 files to UTF-16."
 msgstr "dos2unix와 unix2dos에는 UTF-8 파일을 UTF-16으로 변환하는 옵션이 없습니다."
 
 #. type: textblock
-#: dos2unix.pod:664
+#: dos2unix.pod:688
 msgid "ISO and 7-bit mode conversion do not work on UTF-16 files."
 msgstr "ISO 및 7비트 모드 변환은 UTF-16 파일에 동작하지 않습니다."
 
 #. type: =head2
-#: dos2unix.pod:666
+#: dos2unix.pod:690
 msgid "Byte Order Mark"
 msgstr "바이트 순서 표시(BOM)"
 
 #. type: textblock
-#: dos2unix.pod:668
-msgid "On Windows Unicode text files typically have a Byte Order Mark (BOM), because many Windows programs (including Notepad) add BOMs by default. See also L<http://en.wikipedia.org/wiki/Byte_order_mark>."
-msgstr "윈도우에서는 유니코드 텍스트 파일에 대부분 윈도우 프로그램(메모장 포함)에서 BOM을 기본으로 추가하기 때문에 보통 바이트 순서 표시(BOM)가 들어갑니다. L<http://en.wikipedia.org/wiki/Byte_order_mark> 링크를 참고하십시오."
+#: dos2unix.pod:692
+msgid "On Windows Unicode text files typically have a Byte Order Mark (BOM), because many Windows programs (including Notepad) add BOMs by default. See also L<https://en.wikipedia.org/wiki/Byte_order_mark>."
+msgstr "윈도우에서는 유니코드 텍스트 파일에 대부분 윈도우 프로그램(메모장 포함)에서 BOM을 기본으로 추가하기 때문에 보통 바이트 순서 표시(BOM)가 들어갑니다. L<https://en.wikipedia.org/wiki/Byte_order_mark> 링크를 참고하십시오."
 
 #. type: textblock
-#: dos2unix.pod:672
+#: dos2unix.pod:696
 msgid "On Unix Unicode files typically don't have a BOM. It is assumed that text files are encoded in the locale character encoding."
 msgstr "유닉스에서는 유니코드 파일에 BOM이 들어가지 않습니다. 텍스트 파일을 로캘 문자 인코딩으로 인코딩했다고 가정합니다."
 
 #. type: textblock
-#: dos2unix.pod:675
+#: dos2unix.pod:699
 msgid "Dos2unix can only detect if a file is in UTF-16 format if the file has a BOM.  When an UTF-16 file doesn't have a BOM, dos2unix will see the file as a binary file."
 msgstr "dos2unix는 UTF-16 형식인지, BOM이 들어갔는지만 알 수 있습니다.  UTF-16 파일에 BOM이 없다면 dos2unix는 이진 파일로 인식합니다."
 
 #. type: textblock
-#: dos2unix.pod:679
+#: dos2unix.pod:703
 msgid "Use option C<-ul> or C<-ub> to convert an UTF-16 file without BOM."
 msgstr "UTF-16 파일을 BOM을 빼고 변환하려면 C<-ul> 옵션 또는 C<-ub> 옵션을 사용하십시오."
 
 #. type: textblock
-#: dos2unix.pod:681
+#: dos2unix.pod:705
 msgid "Dos2unix writes by default no BOM in the output file. With option C<-b> Dos2unix writes a BOM when the input file has a BOM."
 msgstr "dos2unix에서는 기본적으로 출력 파일에 BOM을 기록하지 않습니다. 입력 파일에 BOM이 있다면 dos2unix에 C<-b> 옵션을 지정했을 때 출력 파일에 BOM을 기록합니다."
 
 #. type: textblock
-#: dos2unix.pod:684
+#: dos2unix.pod:708
 msgid "Unix2dos writes by default a BOM in the output file when the input file has a BOM. Use option C<-r> to remove the BOM."
 msgstr "unix2dos에서는 기본적으로 입력 파일에 BOM이 있다면 출력 파일에 BOM을 기록합니다. BOM을 제거하려면 C<-r> 옵션을 사용하십시오."
 
 #. type: textblock
-#: dos2unix.pod:687
+#: dos2unix.pod:711
 msgid "Dos2unix and unix2dos write always a BOM when option C<-m> is used."
 msgstr "dos2unix와 unix2dos는 C<-m> 옵션을 사용하면 항상 BOM을 기록합니다."
 
 #. type: =head2
-#: dos2unix.pod:689
+#: dos2unix.pod:713
 msgid "Unicode file names on Windows"
 msgstr "윈도우의 유니코드 파일 이름"
 
 #. type: textblock
-#: dos2unix.pod:691
+#: dos2unix.pod:715
 msgid "Dos2unix has optional support for reading and writing Unicode file names in the Windows Command Prompt. That means that dos2unix can open files that have characters in the name that are not part of the default system ANSI code page.  To see if dos2unix for Windows was built with Unicode file name support type C<dos2unix -V>."
 msgstr "dos2unix에서는 윈도우 명령 프롬프트의 유니코드 파일 이름을 읽고 쓰는 추가 기능을 지원합니다. dos2unix에서 기본 시스템 ANSI 코드 페이지의 일부가 아닌 문자가 들어간 이름일지라도 파일을 열 수 있다는 뜻입니다.  윈도우용 dos2unix에 유니코드 파일 이름 지원 기능이 들어있는지 확인하려면 C<dos2unix -V> 명령을 입력하십시오."
 
 #. type: textblock
-#: dos2unix.pod:697
+#: dos2unix.pod:721
 msgid "There are some issues with displaying Unicode file names in a Windows console.  See option C<-D>, C<--display-enc>. The file names may be displayed wrongly in the console, but the files will be written with the correct name."
 msgstr "윈도우 콘솔에 유니코드 파일 이름을 표시할 때 몇가지 문제가 있습니다.  C<-D>, C<--display-enc> 옵션을 참고하십시오. 콘솔에서 파일 이름이 잘못 나타날 수는 있지만 파일은 (어쨌든) 올바른 이름으로 기록합니다."
 
 #. type: =head2
-#: dos2unix.pod:701
+#: dos2unix.pod:725
 msgid "Unicode examples"
 msgstr "유니코드 예제"
 
 #. type: textblock
-#: dos2unix.pod:703
+#: dos2unix.pod:727
 msgid "Convert from Windows UTF-16 (with BOM) to Unix UTF-8:"
 msgstr "윈도우 UTF-16(+BOM)을 유닉스 UTF-8로 변환:"
 
 #. type: verbatim
-#: dos2unix.pod:705
+#: dos2unix.pod:729
 #, no-wrap
 msgid ""
 "    dos2unix -n in.txt out.txt\n"
@@ -1300,12 +1351,12 @@ msgstr ""
 "\n"
 
 #. type: textblock
-#: dos2unix.pod:707
+#: dos2unix.pod:731
 msgid "Convert from Windows UTF-16LE (without BOM) to Unix UTF-8:"
 msgstr "윈도우 UTF-16LE(-BOM)를 유닉스 UTF-8로 변환:"
 
 #. type: verbatim
-#: dos2unix.pod:709
+#: dos2unix.pod:733
 #, no-wrap
 msgid ""
 "    dos2unix -ul -n in.txt out.txt\n"
@@ -1315,79 +1366,79 @@ msgstr ""
 "\n"
 
 #. type: textblock
-#: dos2unix.pod:711
+#: dos2unix.pod:735
 msgid "Convert from Unix UTF-8 to Windows UTF-8 with BOM:"
 msgstr "유닉스 UTF-8을 윈도우 UTF-8(+BOM)로 변환:"
 
 #. type: verbatim
-#: dos2unix.pod:713
-#, no-wrap
-msgid ""
-"    unix2dos -m -n in.txt out.txt\n"
-"\n"
-msgstr ""
-"    unix2dos -m -n in.txt out.txt\n"
-"\n"
-
-#. type: textblock
-#: dos2unix.pod:715
-msgid "Convert from Unix UTF-8 to Windows UTF-16:"
-msgstr "유닉스 UTF-8을 윈도우 UTF-16으로 변환:"
-
-#. type: verbatim
-#: dos2unix.pod:717
-#, no-wrap
-msgid ""
-"    unix2dos < in.txt | iconv -f UTF-8 -t UTF-16 > out.txt\n"
-"\n"
-msgstr ""
-"    unix2dos < in.txt | iconv -f UTF-8 -t UTF-16 > out.txt\n"
-"\n"
-
-#. type: =head1
-#: dos2unix.pod:719
-msgid "GB18030"
-msgstr "GB18030"
-
-#. type: textblock
-#: dos2unix.pod:721
-msgid "GB18030 is a Chinese government standard. A mandatory subset of the GB18030 standard is officially required for all software products sold in China. See also L<http://en.wikipedia.org/wiki/GB_18030>."
-msgstr "GB18030은 중화인민공화국 정부 표준입니다. GB18030 표준 하위 필수 세트는 중화인민공화국에서 판매하는 모든 프로그램 제품에 공식적으로 필요합니다. L<http://en.wikipedia.org/wiki/GB_18030> 링크를 참고하십시오."
-
-#. type: textblock
-#: dos2unix.pod:725
-msgid "GB18030 is fully compatible with Unicode, and can be considered an unicode transformation format. Like UTF-8, GB18030 is compatible with ASCII. GB18030 is also compatible with Windows code page 936, also known as GBK."
-msgstr "GB18030은 유니코드와 완벽하게 호환하며, 유니코드 변환 형식으로 고려할 수 있습니다. UTF-8과 유사하게, GB18030은 ASCII와 호환성을 지닙니다. GB18030은 또한 GBK로 알려진 윈도우 코드 페이지 936과도 호환성이 있습니다."
-
-#. type: textblock
-#: dos2unix.pod:729
-msgid "On Unix/Linux UTF-16 files are converted to GB18030 when the locale encoding is set to GB18030. Note that this will only work if the locale is supported by the system. Use command C<locale -a> to get the list of supported locales."
-msgstr "유닉스/리눅스에서 UTF-16 파일은 로캘 인코딩을 GB18030으로 설정하면 GB18030으로 변환합니다. 참고로 시스템에서 해당 로캘을 지원할 경우에만 동작합니다. 지원 로캘 목록을 살펴보려면 C<locale -a> 명령을 사용하십시오."
-
-#. type: textblock
-#: dos2unix.pod:733
-msgid "On Windows you need to use option C<-gb> to convert UTF-16 files to GB18030."
-msgstr "윈도우에서는 UTF-16 파일을 GB18030으로 변환하려면 C<-gb> 옵션을 사용해야합니다."
-
-#. type: textblock
-#: dos2unix.pod:735
-msgid "GB18030 encoded files can have a Byte Order Mark, like Unicode files."
-msgstr "GB18030 인코딩 파일에는 유니코드 파일처럼 바이트 순서 표시가 들어갈 수 있습니다."
-
-#. type: =head1
 #: dos2unix.pod:737
-msgid "EXAMPLES"
-msgstr "예제"
+#, no-wrap
+msgid ""
+"    unix2dos -m -n in.txt out.txt\n"
+"\n"
+msgstr ""
+"    unix2dos -m -n in.txt out.txt\n"
+"\n"
 
 #. type: textblock
 #: dos2unix.pod:739
-msgid "Read input from 'stdin' and write output to 'stdout':"
-msgstr "'표준 입력'을 읽어 '표준 출력'에 출력:"
+msgid "Convert from Unix UTF-8 to Windows UTF-16:"
+msgstr "유닉스 UTF-8을 윈도우 UTF-16으로 변환:"
 
 #. type: verbatim
 #: dos2unix.pod:741
 #, no-wrap
 msgid ""
+"    unix2dos < in.txt | iconv -f UTF-8 -t UTF-16 > out.txt\n"
+"\n"
+msgstr ""
+"    unix2dos < in.txt | iconv -f UTF-8 -t UTF-16 > out.txt\n"
+"\n"
+
+#. type: =head1
+#: dos2unix.pod:743
+msgid "GB18030"
+msgstr "GB18030"
+
+#. type: textblock
+#: dos2unix.pod:745
+msgid "GB18030 is a Chinese government standard. A mandatory subset of the GB18030 standard is officially required for all software products sold in China. See also L<https://en.wikipedia.org/wiki/GB_18030>."
+msgstr "GB18030은 중화인민공화국 정부 표준입니다. GB18030 표준 하위 필수 세트는 중화인민공화국에서 판매하는 모든 프로그램 제품에 공식적으로 필요합니다. L<https://en.wikipedia.org/wiki/GB_18030> 링크를 참고하십시오."
+
+#. type: textblock
+#: dos2unix.pod:749
+msgid "GB18030 is fully compatible with Unicode, and can be considered an unicode transformation format. Like UTF-8, GB18030 is compatible with ASCII. GB18030 is also compatible with Windows code page 936, also known as GBK."
+msgstr "GB18030은 유니코드와 완벽하게 호환하며, 유니코드 변환 형식으로 고려할 수 있습니다. UTF-8과 유사하게, GB18030은 아스키와 호환성을 지닙니다. GB18030은 또한 GBK로 알려진 윈도우 코드 페이지 936과도 호환성이 있습니다."
+
+#. type: textblock
+#: dos2unix.pod:753
+msgid "On Unix/Linux UTF-16 files are converted to GB18030 when the locale encoding is set to GB18030. Note that this will only work if the locale is supported by the system. Use command C<locale -a> to get the list of supported locales."
+msgstr "유닉스/리눅스에서 UTF-16 파일은 로캘 인코딩을 GB18030으로 설정하면 GB18030으로 변환합니다. 참고로 시스템에서 해당 로캘을 지원할 경우에만 동작합니다. 지원 로캘 목록을 살펴보려면 C<locale -a> 명령을 사용하십시오."
+
+#. type: textblock
+#: dos2unix.pod:757
+msgid "On Windows you need to use option C<-gb> to convert UTF-16 files to GB18030."
+msgstr "윈도우에서는 UTF-16 파일을 GB18030으로 변환하려면 C<-gb> 옵션을 사용해야합니다."
+
+#. type: textblock
+#: dos2unix.pod:759
+msgid "GB18030 encoded files can have a Byte Order Mark, like Unicode files."
+msgstr "GB18030 인코딩 파일에는 유니코드 파일처럼 바이트 순서 표시가 들어갈 수 있습니다."
+
+#. type: =head1
+#: dos2unix.pod:761
+msgid "EXAMPLES"
+msgstr "예제"
+
+#. type: textblock
+#: dos2unix.pod:763
+msgid "Read input from 'stdin' and write output to 'stdout':"
+msgstr "'표준 입력'을 읽어 '표준 출력'에 출력:"
+
+#. type: verbatim
+#: dos2unix.pod:765
+#, no-wrap
+msgid ""
 "    dos2unix < a.txt\n"
 "    cat a.txt | dos2unix\n"
 "\n"
@@ -1397,12 +1448,12 @@ msgstr ""
 "\n"
 
 #. type: textblock
-#: dos2unix.pod:744
+#: dos2unix.pod:768
 msgid "Convert and replace a.txt. Convert and replace b.txt:"
 msgstr "a.txt를 변환하고 내용 바꾸기. b.txt를 변환하고 내용 바꾸기:"
 
 #. type: verbatim
-#: dos2unix.pod:746
+#: dos2unix.pod:770
 #, no-wrap
 msgid ""
 "    dos2unix a.txt b.txt\n"
@@ -1414,12 +1465,12 @@ msgstr ""
 "\n"
 
 #. type: textblock
-#: dos2unix.pod:749
+#: dos2unix.pod:773
 msgid "Convert and replace a.txt in ascii conversion mode:"
 msgstr "a.txt를 아스키 변환 모드로 변환하고 내용 바꾸기:"
 
 #. type: verbatim
-#: dos2unix.pod:751
+#: dos2unix.pod:775
 #, no-wrap
 msgid ""
 "    dos2unix a.txt\n"
@@ -1429,12 +1480,12 @@ msgstr ""
 "\n"
 
 #. type: textblock
-#: dos2unix.pod:753
+#: dos2unix.pod:777
 msgid "Convert and replace a.txt in ascii conversion mode, convert and replace b.txt in 7bit conversion mode:"
 msgstr "a.txt를 아스키 변환 모드로 변환하고 내용 바꾸기, b.txt를 7비트 변환 모드로 변환하고 내용 바꾸기:"
 
 #. type: verbatim
-#: dos2unix.pod:756
+#: dos2unix.pod:780
 #, no-wrap
 msgid ""
 "    dos2unix a.txt -c 7bit b.txt\n"
@@ -1448,12 +1499,12 @@ msgstr ""
 "\n"
 
 #. type: textblock
-#: dos2unix.pod:760
+#: dos2unix.pod:784
 msgid "Convert a.txt from Mac to Unix format:"
 msgstr "a.txt를 맥 형식에서 유닉스 형식으로 변환:"
 
 #. type: verbatim
-#: dos2unix.pod:762
+#: dos2unix.pod:786
 #, no-wrap
 msgid ""
 "    dos2unix -c mac a.txt\n"
@@ -1465,186 +1516,186 @@ msgstr ""
 "\n"
 
 #. type: textblock
-#: dos2unix.pod:765
+#: dos2unix.pod:789
 msgid "Convert a.txt from Unix to Mac format:"
 msgstr "a.txt를 유닉스 형시에서 맥 형식으로 변환:"
-
-#. type: verbatim
-#: dos2unix.pod:767
-#, no-wrap
-msgid ""
-"    unix2dos -c mac a.txt\n"
-"    unix2mac a.txt\n"
-"\n"
-msgstr ""
-"    unix2dos -c mac a.txt\n"
-"    unix2mac a.txt\n"
-"\n"
-
-#. type: textblock
-#: dos2unix.pod:770
-msgid "Convert and replace a.txt while keeping original date stamp:"
-msgstr "a.txt의 날짜 스탬프를 유지하며 변환하고 내용 바꾸기:"
-
-#. type: verbatim
-#: dos2unix.pod:772
-#, no-wrap
-msgid ""
-"    dos2unix -k a.txt\n"
-"    dos2unix -k -o a.txt\n"
-"\n"
-msgstr ""
-"    dos2unix -k a.txt\n"
-"    dos2unix -k -o a.txt\n"
-"\n"
-
-#. type: textblock
-#: dos2unix.pod:775
-msgid "Convert a.txt and write to e.txt:"
-msgstr "a.txt를 변환하여 e.txt로 기록:"
-
-#. type: verbatim
-#: dos2unix.pod:777
-#, no-wrap
-msgid ""
-"    dos2unix -n a.txt e.txt\n"
-"\n"
-msgstr ""
-"    dos2unix -n a.txt e.txt\n"
-"\n"
-
-#. type: textblock
-#: dos2unix.pod:779
-msgid "Convert a.txt and write to e.txt, keep date stamp of e.txt same as a.txt:"
-msgstr "a.txt를 변환하고 e.txt로 기록, e.txt의 날짜 스탬프를 a.txt와 동일하게 설정:"
-
-#. type: verbatim
-#: dos2unix.pod:781
-#, no-wrap
-msgid ""
-"    dos2unix -k -n a.txt e.txt\n"
-"\n"
-msgstr ""
-"    dos2unix -k -n a.txt e.txt\n"
-"\n"
-
-#. type: textblock
-#: dos2unix.pod:783
-msgid "Convert and replace a.txt, convert b.txt and write to e.txt:"
-msgstr "a.txt를 변환하고 내용 바꾸기, b.txt를 변환하고 e.txt에 기록:"
-
-#. type: verbatim
-#: dos2unix.pod:785
-#, no-wrap
-msgid ""
-"    dos2unix a.txt -n b.txt e.txt\n"
-"    dos2unix -o a.txt -n b.txt e.txt\n"
-"\n"
-msgstr ""
-"    dos2unix a.txt -n b.txt e.txt\n"
-"    dos2unix -o a.txt -n b.txt e.txt\n"
-"\n"
-
-#. type: textblock
-#: dos2unix.pod:788
-msgid "Convert c.txt and write to e.txt, convert and replace a.txt, convert and replace b.txt, convert d.txt and write to f.txt:"
-msgstr "a.txt를 변환하여 e.txt로 기록, a.txt를 변환하고 내용 바꾸기, b.txt를 변환하고 내용 바꾸기, d.txt를 변환하고 f.txt로 기록:"
 
 #. type: verbatim
 #: dos2unix.pod:791
 #, no-wrap
 msgid ""
-"    dos2unix -n c.txt e.txt -o a.txt b.txt -n d.txt f.txt\n"
+"    unix2dos -c mac a.txt\n"
+"    unix2mac a.txt\n"
 "\n"
 msgstr ""
-"    dos2unix -n c.txt e.txt -o a.txt b.txt -n d.txt f.txt\n"
+"    unix2dos -c mac a.txt\n"
+"    unix2mac a.txt\n"
 "\n"
 
-#. type: =head1
-#: dos2unix.pod:793
-msgid "RECURSIVE CONVERSION"
-msgstr "재귀 변환"
-
 #. type: textblock
-#: dos2unix.pod:795
-msgid "In a Unix shell the find(1) and xargs(1) commands can be used to run dos2unix recursively over all text files in a directory tree. For instance to convert all .txt files in the directory tree under the current directory type:"
-msgstr "유닉스 셸에서 dos2unix로 하여금 디렉터리 트리의 모든 텍스트 파일을 재귀적으로 탐색하여 처리하려 할 때, find(1)와 xargs(1) 명령을 사용할 수 있습니다. 예를 들어 아래 형태를 갖춘 디렉터리 트리의 모든 .txt 파일을 변환하려면:"
+#: dos2unix.pod:794
+msgid "Convert and replace a.txt while keeping original date stamp:"
+msgstr "a.txt의 날짜 스탬프를 유지하며 변환하고 내용 바꾸기:"
 
 #. type: verbatim
-#: dos2unix.pod:799
+#: dos2unix.pod:796
 #, no-wrap
 msgid ""
-"    find . -name '*.txt' -print0 |xargs -0 dos2unix\n"
+"    dos2unix -k a.txt\n"
+"    dos2unix -k -o a.txt\n"
 "\n"
 msgstr ""
-"    find . -name '*.txt' -print0 |xargs -0 dos2unix\n"
+"    dos2unix -k a.txt\n"
+"    dos2unix -k -o a.txt\n"
 "\n"
 
 #. type: textblock
+#: dos2unix.pod:799
+msgid "Convert a.txt and write to e.txt:"
+msgstr "a.txt를 변환하여 e.txt로 기록:"
+
+#. type: verbatim
 #: dos2unix.pod:801
-msgid "The find(1) option C<-print0> and corresponding xargs(1) option C<-0> are needed when there are files with spaces or quotes in the name. Otherwise these options can be omitted. Another option is to use find(1) with the C<-exec> option:"
-msgstr "find(1) 명령의 옵션 C<-print0> 그리고 이에 해당하는 xargs(1) 명령의 C<-0>옵션은 이름에 공백이나 따옴표가 있을 경우 필요합니다. 공백이나 따옴표가 없으면 이 옵션을 생략할 수 있습니다. 다른 옵션으로는 find(1)의 C<-exec> 옵션이 있습니다:"
+#, no-wrap
+msgid ""
+"    dos2unix -n a.txt e.txt\n"
+"\n"
+msgstr ""
+"    dos2unix -n a.txt e.txt\n"
+"\n"
+
+#. type: textblock
+#: dos2unix.pod:803
+msgid "Convert a.txt and write to e.txt, keep date stamp of e.txt same as a.txt:"
+msgstr "a.txt를 변환하고 e.txt로 기록, e.txt의 날짜 스탬프를 a.txt와 동일하게 설정:"
 
 #. type: verbatim
 #: dos2unix.pod:805
 #, no-wrap
 msgid ""
-"    find . -name '*.txt' -exec dos2unix {} \\;\n"
+"    dos2unix -k -n a.txt e.txt\n"
 "\n"
 msgstr ""
-"    find . -name '*.txt' -exec dos2unix {} \\;\n"
+"    dos2unix -k -n a.txt e.txt\n"
 "\n"
 
 #. type: textblock
 #: dos2unix.pod:807
-msgid "In a Windows Command Prompt the following command can be used:"
-msgstr "윈도우 명령 프롬프트에서 다음 명령을 활용할 수 없습니다:"
+msgid "Convert and replace a.txt, convert b.txt and write to e.txt:"
+msgstr "a.txt를 변환하고 내용 바꾸기, b.txt를 변환하고 e.txt에 기록:"
 
 #. type: verbatim
 #: dos2unix.pod:809
 #, no-wrap
 msgid ""
-"    for /R %G in (*.txt) do dos2unix \"%G\"\n"
+"    dos2unix a.txt -n b.txt e.txt\n"
+"    dos2unix -o a.txt -n b.txt e.txt\n"
 "\n"
 msgstr ""
-"    for /R %G in (*.txt) do dos2unix \"%G\"\n"
+"    dos2unix a.txt -n b.txt e.txt\n"
+"    dos2unix -o a.txt -n b.txt e.txt\n"
 "\n"
 
 #. type: textblock
-#: dos2unix.pod:811
-msgid "PowerShell users can use the following command in Windows PowerShell:"
-msgstr "파워셸 사용자는 윈도우 파워셸에서 다음 명령을 활용할 수 있습니다:"
+#: dos2unix.pod:812
+msgid "Convert c.txt and write to e.txt, convert and replace a.txt, convert and replace b.txt, convert d.txt and write to f.txt:"
+msgstr "a.txt를 변환하여 e.txt로 기록, a.txt를 변환하고 내용 바꾸기, b.txt를 변환하고 내용 바꾸기, d.txt를 변환하고 f.txt로 기록:"
 
 #. type: verbatim
-#: dos2unix.pod:813
+#: dos2unix.pod:815
 #, no-wrap
 msgid ""
-"    get-childitem -path . -filter '*.txt' -recurse | foreach-object {dos2unix $_.Fullname}\n"
+"    dos2unix -n c.txt e.txt -o a.txt b.txt -n d.txt f.txt\n"
 "\n"
 msgstr ""
-"    get-childitem -path . -filter '*.txt' -recurse | foreach-object {dos2unix $_.Fullname}\n"
+"    dos2unix -n c.txt e.txt -o a.txt b.txt -n d.txt f.txt\n"
 "\n"
 
 #. type: =head1
-#: dos2unix.pod:816
-msgid "LOCALIZATION"
-msgstr "지역화"
-
-# NOTE: 환경변수 이름이므로 변환하지 말것
-#. type: =item
-#: dos2unix.pod:820
-msgid "B<LANG>"
-msgstr "B<LANG>"
+#: dos2unix.pod:817
+msgid "RECURSIVE CONVERSION"
+msgstr "재귀 변환"
 
 #. type: textblock
-#: dos2unix.pod:822
-msgid "The primary language is selected with the environment variable LANG. The LANG variable consists out of several parts. The first part is in small letters the language code. The second is optional and is the country code in capital letters, preceded with an underscore. There is also an optional third part: character encoding, preceded with a dot. A few examples for POSIX standard type shells:"
-msgstr "기본 언어는 LANG 환경 변수로 선택합니다. LANG 환경 변수는 몇가지 부분으로 구성합니다. 첫번째 부분은 언어 코드를 의미하는 몇가지 문자입니다. 두번제 부분은 대문자로 이루어진 국가 코드입니다. 두 코드 사이에는 밑줄 문자가 들어갑니다. 마지막으로 추가하는 부분은 점이 앞서 오는 문자 인코딩입니다. POSIX 표준 형 셸에서 몇가지 예제를 보여드리도록 하겠습니다:"
+#: dos2unix.pod:819
+msgid "In a Unix shell the find(1) and xargs(1) commands can be used to run dos2unix recursively over all text files in a directory tree. For instance to convert all .txt files in the directory tree under the current directory type:"
+msgstr "유닉스 셸에서 dos2unix로 하여금 디렉터리 트리의 모든 텍스트 파일을 재귀적으로 탐색하여 처리하려 할 때, find(1)와 xargs(1) 명령을 사용할 수 있습니다. 예를 들어 아래 형태를 갖춘 디렉터리 트리의 모든 .txt 파일을 변환하려면:"
+
+#. type: verbatim
+#: dos2unix.pod:823
+#, no-wrap
+msgid ""
+"    find . -name '*.txt' -print0 |xargs -0 dos2unix\n"
+"\n"
+msgstr ""
+"    find . -name '*.txt' -print0 |xargs -0 dos2unix\n"
+"\n"
+
+#. type: textblock
+#: dos2unix.pod:825
+msgid "The find(1) option C<-print0> and corresponding xargs(1) option C<-0> are needed when there are files with spaces or quotes in the name. Otherwise these options can be omitted. Another option is to use find(1) with the C<-exec> option:"
+msgstr "find(1) 명령의 옵션 C<-print0> 그리고 이에 해당하는 xargs(1) 명령의 C<-0>옵션은 이름에 공백이나 따옴표가 있을 경우 필요합니다. 공백이나 따옴표가 없으면 이 옵션을 생략할 수 있습니다. 다른 옵션으로는 find(1)의 C<-exec> 옵션이 있습니다:"
 
 #. type: verbatim
 #: dos2unix.pod:829
 #, no-wrap
 msgid ""
+"    find . -name '*.txt' -exec dos2unix {} \\;\n"
+"\n"
+msgstr ""
+"    find . -name '*.txt' -exec dos2unix {} \\;\n"
+"\n"
+
+#. type: textblock
+#: dos2unix.pod:831
+msgid "In a Windows Command Prompt the following command can be used:"
+msgstr "윈도우 명령 프롬프트에서 다음 명령을 활용할 수 없습니다:"
+
+#. type: verbatim
+#: dos2unix.pod:833
+#, no-wrap
+msgid ""
+"    for /R %G in (*.txt) do dos2unix \"%G\"\n"
+"\n"
+msgstr ""
+"    for /R %G in (*.txt) do dos2unix \"%G\"\n"
+"\n"
+
+#. type: textblock
+#: dos2unix.pod:835
+msgid "PowerShell users can use the following command in Windows PowerShell:"
+msgstr "파워셸 사용자는 윈도우 파워셸에서 다음 명령을 활용할 수 있습니다:"
+
+#. type: verbatim
+#: dos2unix.pod:837
+#, no-wrap
+msgid ""
+"    get-childitem -path . -filter '*.txt' -recurse | foreach-object {dos2unix $_.Fullname}\n"
+"\n"
+msgstr ""
+"    get-childitem -path . -filter '*.txt' -recurse | foreach-object {dos2unix $_.Fullname}\n"
+"\n"
+
+#. type: =head1
+#: dos2unix.pod:840
+msgid "LOCALIZATION"
+msgstr "지역화"
+
+# NOTE: 환경변수 이름이므로 변환하지 말것
+#. type: =item
+#: dos2unix.pod:844
+msgid "B<LANG>"
+msgstr "B<LANG>"
+
+#. type: textblock
+#: dos2unix.pod:846
+msgid "The primary language is selected with the environment variable LANG. The LANG variable consists out of several parts. The first part is in small letters the language code. The second is optional and is the country code in capital letters, preceded with an underscore. There is also an optional third part: character encoding, preceded with a dot. A few examples for POSIX standard type shells:"
+msgstr "기본 언어는 LANG 환경 변수로 선택합니다. LANG 환경 변수는 몇가지 부분으로 구성합니다. 첫번째 부분은 언어 코드를 의미하는 몇가지 문자입니다. 두번제 부분은 대문자로 이루어진 국가 코드입니다. 두 코드 사이에는 밑줄 문자가 들어갑니다. 마지막으로 추가하는 부분은 점이 앞서 오는 문자 인코딩입니다. POSIX 표준 형 셸에서 몇가지 예제를 보여드리도록 하겠습니다:"
+
+#. type: verbatim
+#: dos2unix.pod:853
+#, no-wrap
+msgid ""
 "    export LANG=nl               Dutch\n"
 "    export LANG=nl_NL            Dutch, The Netherlands\n"
 "    export LANG=nl_BE            Dutch, Belgium\n"
@@ -1664,49 +1715,49 @@ msgstr ""
 "\n"
 
 #. type: textblock
-#: dos2unix.pod:837
-msgid "For a complete list of language and country codes see the gettext manual: L<http://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html>"
-msgstr "언어 및 국가 코드 전체 목록을 보려면 L<http://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html> gettext 설명서를 참고하십시오"
+#: dos2unix.pod:861
+msgid "For a complete list of language and country codes see the gettext manual: L<https://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html>"
+msgstr "언어 및 국가 코드 전체 목록을 보려면 L<https://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html> gettext 설명서를 참고하십시오"
 
 #. type: textblock
-#: dos2unix.pod:840
+#: dos2unix.pod:864
 msgid "On Unix systems you can use the command locale(1) to get locale specific information."
 msgstr "유닉스 시스템에서는 locale(1) 명령을 활용하여 로캘별 정보를 가져올 수 있습니다."
 
 # NOTE: 환경변수 이름이므로 변환하지 말것
 #. type: =item
-#: dos2unix.pod:843
+#: dos2unix.pod:867
 msgid "B<LANGUAGE>"
 msgstr "B<LANGUAGE>"
 
 #. type: textblock
-#: dos2unix.pod:845
-msgid "With the LANGUAGE environment variable you can specify a priority list of languages, separated by colons. Dos2unix gives preference to LANGUAGE over LANG.  For instance, first Dutch and then German: C<LANGUAGE=nl:de>. You have to first enable localization, by setting LANG (or LC_ALL) to a value other than \"C\", before you can use a language priority list through the LANGUAGE variable. See also the gettext manual: L<http://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-variable.html>"
-msgstr "LANGUAGE 환경 변수에는 언어를 우선 순위별로 콜론으로 구분하여 지정할 수 있습니다. dos2unix에서는 LANGUAGE를 LANG보다 우선하여 취급합니다.  예를 들면 네덜란드어를 먼저 그 다음에 독일어를 설정할 경우 C<LANGUAGE=nl:de>(으)로 설정합니다. LANGUAGE 환경 변수에 언어별 우선 순위를 두어 사용할 수 있기 전에 LANG 환경 변수에 \"C\" 대신 다른 값을 넣어 지역화를 우선 설정해야합니다. L<http://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-variable.html> gettext 설명서를 참고하십시오"
+#: dos2unix.pod:869
+msgid "With the LANGUAGE environment variable you can specify a priority list of languages, separated by colons. Dos2unix gives preference to LANGUAGE over LANG.  For instance, first Dutch and then German: C<LANGUAGE=nl:de>. You have to first enable localization, by setting LANG (or LC_ALL) to a value other than \"C\", before you can use a language priority list through the LANGUAGE variable. See also the gettext manual: L<https://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-variable.html>"
+msgstr "LANGUAGE 환경 변수에는 언어를 우선 순위별로 콜론으로 구분하여 지정할 수 있습니다. dos2unix에서는 LANGUAGE를 LANG보다 우선하여 취급합니다.  예를 들면 네덜란드어를 먼저 그 다음에 독일어를 설정할 경우 C<LANGUAGE=nl:de>(으)로 설정합니다. LANGUAGE 환경 변수에 언어별 우선 순위를 두어 사용할 수 있기 전에 LANG 환경 변수에 \"C\" 대신 다른 값을 넣어 지역화를 우선 설정해야합니다. L<https://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-variable.html> gettext 설명서를 참고하십시오"
 
 #. type: textblock
-#: dos2unix.pod:853
+#: dos2unix.pod:877
 msgid "If you select a language which is not available you will get the standard English messages."
 msgstr "사용할 수 없는 언어를 선택했다면 표준 (국제) 영어 메시지로 나타납니다."
 
 # NOTE: 환경변수 이름이므로 변환하지 말것
 #. type: =item
-#: dos2unix.pod:857
+#: dos2unix.pod:881
 msgid "B<DOS2UNIX_LOCALEDIR>"
 msgstr "B<DOS2UNIX_LOCALEDIR>"
 
 #. type: textblock
-#: dos2unix.pod:859
+#: dos2unix.pod:883
 msgid "With the environment variable DOS2UNIX_LOCALEDIR the LOCALEDIR set during compilation can be overruled. LOCALEDIR is used to find the language files. The GNU default value is C</usr/local/share/locale>.  Option B<--version> will display the LOCALEDIR that is used."
 msgstr "DOS2UNIX_LOCALEDIR 환경 변수는, 컴파일 시간에는 LOCALEDIR 환경 변수를 우선 활용할 수 있습니다. LOCALEDIR 환경 변수는 언어 파일을 찾을 때 활용합니다. GNU 기본값은 C</usr/local/share/locale>입니다.  B<--version> 옵션을 사용하면 LOCALEDIR이 사용하는 값을 보여줍니다."
 
 #. type: textblock
-#: dos2unix.pod:864
+#: dos2unix.pod:888
 msgid "Example (POSIX shell):"
 msgstr "예제 (POSIX 셸):"
 
 #. type: verbatim
-#: dos2unix.pod:866
+#: dos2unix.pod:890
 #, no-wrap
 msgid ""
 "    export DOS2UNIX_LOCALEDIR=$HOME/share/locale\n"
@@ -1716,71 +1767,80 @@ msgstr ""
 "\n"
 
 #. type: =head1
-#: dos2unix.pod:871
+#: dos2unix.pod:895
 msgid "RETURN VALUE"
 msgstr "반환 값"
 
 #. type: textblock
-#: dos2unix.pod:873
+#: dos2unix.pod:897
 msgid "On success, zero is returned.  When a system error occurs the last system error will be returned. For other errors 1 is returned."
 msgstr "성공하면 0값을 반환합니다.  시스템 오류가 나타나면 가장 마지막에 나타난 시스템 오류를 반환합니다. 다른 오류는 1 값을 반환합니다."
 
 #. type: textblock
-#: dos2unix.pod:876
+#: dos2unix.pod:900
 msgid "The return value is always zero in quiet mode, except when wrong command-line options are used."
 msgstr "미출력 모드의 반환 값은 항상 0이지만, 명령행 옵션이 잘못됐을 경우는 제외합니다."
 
 #. type: =head1
-#: dos2unix.pod:879
+#: dos2unix.pod:903
 msgid "STANDARDS"
 msgstr "표준"
 
 #. type: textblock
-#: dos2unix.pod:881
-msgid "L<http://en.wikipedia.org/wiki/Text_file>"
-msgstr "L<http://en.wikipedia.org/wiki/Text_file>"
+#: dos2unix.pod:905
+msgid "L<https://en.wikipedia.org/wiki/Text_file>"
+msgstr "L<https://en.wikipedia.org/wiki/Text_file>"
 
 #. type: textblock
-#: dos2unix.pod:883
-msgid "L<http://en.wikipedia.org/wiki/Carriage_return>"
-msgstr "L<http://en.wikipedia.org/wiki/Carriage_return>"
+#: dos2unix.pod:907
+msgid "L<https://en.wikipedia.org/wiki/Carriage_return>"
+msgstr "L<https://en.wikipedia.org/wiki/Carriage_return>"
 
 #. type: textblock
-#: dos2unix.pod:885
-msgid "L<http://en.wikipedia.org/wiki/Newline>"
-msgstr "L<http://en.wikipedia.org/wiki/Newline>"
+#: dos2unix.pod:909
+msgid "L<https://en.wikipedia.org/wiki/Newline>"
+msgstr "L<https://en.wikipedia.org/wiki/Newline>"
 
 #. type: textblock
-#: dos2unix.pod:887
-msgid "L<http://en.wikipedia.org/wiki/Unicode>"
-msgstr "L<http://en.wikipedia.org/wiki/Unicode>"
+#: dos2unix.pod:911
+msgid "L<https://en.wikipedia.org/wiki/Unicode>"
+msgstr "L<https://en.wikipedia.org/wiki/Unicode>"
 
 #. type: =head1
-#: dos2unix.pod:889
+#: dos2unix.pod:913
 msgid "AUTHORS"
 msgstr "저자"
 
 #. type: textblock
-#: dos2unix.pod:891
+#: dos2unix.pod:915
 msgid "Benjamin Lin - <blin@socs.uts.edu.au>, Bernd Johannes Wuebben (mac2unix mode) - <wuebben@kde.org>, Christian Wurll (add extra newline) - <wurll@ira.uka.de>, Erwin Waterlander - <waterlan@xs4all.nl> (maintainer)"
 msgstr "Benjamin Lin - <blin@socs.uts.edu.au>, Bernd Johannes Wuebben (mac2unix mode) - <wuebben@kde.org>, Christian Wurll (add extra newline) - <wurll@ira.uka.de>, Erwin Waterlander - <waterlan@xs4all.nl> (maintainer)"
 
 #. type: textblock
-#: dos2unix.pod:896
-msgid "Project page: L<http://waterlan.home.xs4all.nl/dos2unix.html>"
-msgstr "프로젝트 페이지: L<http://waterlan.home.xs4all.nl/dos2unix.html>"
+#: dos2unix.pod:920
+msgid "Project page: L<https://waterlan.home.xs4all.nl/dos2unix.html>"
+msgstr "프로젝트 페이지: L<https://waterlan.home.xs4all.nl/dos2unix.html>"
 
 #. type: textblock
-#: dos2unix.pod:898
-msgid "SourceForge page: L<http://sourceforge.net/projects/dos2unix/>"
-msgstr "SourceForge 페이지: L<http://sourceforge.net/projects/dos2unix/>"
+#: dos2unix.pod:922
+msgid "SourceForge page: L<https://sourceforge.net/projects/dos2unix/>"
+msgstr "SourceForge 페이지: L<https://sourceforge.net/projects/dos2unix/>"
 
 #. type: =head1
-#: dos2unix.pod:900
+#: dos2unix.pod:924
 msgid "SEE ALSO"
 msgstr "추가 참조"
 
 #. type: textblock
-#: dos2unix.pod:902
+#: dos2unix.pod:926
 msgid "file(1)  find(1)  iconv(1)  locale(1)  xargs(1)"
 msgstr "file(1)  find(1)  iconv(1)  locale(1)  xargs(1)"
+
+#~ msgid "Convert only line breaks. This is the default conversion mode."
+#~ msgstr "줄 바꿈 문자만 변환합니다. 기본 변환 모드입니다."
+
+#~ msgid "In mode C<ascii> only line breaks are converted. This is the default conversion mode."
+#~ msgstr "C<ascii> 모드에서는 개행 문자만 변환합니다. ASCII 모드는 기본 변환 모드입니다."
+
+#~ msgid "Although the name of this mode is ASCII, which is a 7 bit standard, the actual mode is 8 bit. Use always this mode when converting Unicode UTF-8 files."
+#~ msgstr "7비트 표준 모드를 ASCII 라고 칭하지만 실제 모드는 8 비트입니다. 유니코드 UTF-8 파일을 변환할 때 항상 이 모드를 사용하십시오."

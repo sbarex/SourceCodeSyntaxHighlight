@@ -41,7 +41,7 @@
         dos2unix 支持保护文件的属主/属组时才能使用该选项。
 
     -ascii
-        只转换断行符。这是默认的转换模式。
+        默认转换模式。。参见 CONVERSION MODES 一节。
 
     -iso
         在DOS和ISO-8859-1字符集之间转换。参见 CONVERSION MODES 一节。
@@ -152,6 +152,15 @@
 
         注意，二进制文件有时会被误判为文本文件。参见选项 "-s"。
 
+        如果额外使用了 "-e" 或 "--add-eol" 选项，则最后一行的断行符类型也会被显示，或者在缺失的情况下显示 "noeol"。
+
+        输出示例：
+
+             6       0       0  no_bom    text   dos     dos.txt
+             0       6       0  no_bom    text   unix    unix.txt
+             0       0       6  no_bom    text   mac     mac.txt
+             1       0       0  no_bom    text   noeol   noeol_dos.txt
+
         可以为输出设置额外的标志（一个或多个）。
 
         0   使用零字符（"\0"）而非换行符来分割文件信息行。用于在指定了 c 选项的情况下，正确解析含有空格或引号的文件名。请结合
@@ -167,9 +176,13 @@
 
         t   显示文件为文本或二进制。
 
+        e   显示最后一行的断行符类型，如果不存在则显示 "noeol"。
+
         c   只显示将会被转换的文件。
 
             若设置了 "c"标志，dos2unix将只显示含有DOS断行符的文件，unix2dos将只显示含有Unix断行符的文件。
+
+            如果额外使用了 "-e" 或 "--add-eol" 选项，则最后一行缺失断行符的文件将被显示。
 
         h   显示头部。
 
@@ -196,6 +209,10 @@
         列出含有Unix断行符的文件：
 
             unix2dos -ic *.txt
+
+        列出含有DOS断行符或最后一行缺少断行符的文件：
+
+            dos2unix -e -ic *.txt
 
         只转换含有DOS断行符的文件，保持其他文件不变：
 
@@ -318,7 +335,7 @@
         显示版本信息，然后退出。
 
 Mac模式
-    普通模式下，断行符将被转换为DOS格式，或相反。Mac格式的断行符将不会被转换。
+    默认情况下断行符将从DOS格式转换为Unix格式，或相反。Mac格式的断行符将不会被转换。
 
     Mac模式下，Mac断行符将被转换为Unix格式，或相反。DOS断行符将不会被转换。
 
@@ -326,9 +343,12 @@ Mac模式
 
 转换模式
     ascii
-        在 "ascii" 模式下，只转换断行符。 这是默认的转换模式。
+        这是默认转换模式。该模式用于转换ASCII和ASCII兼容编码的文件，例如UTF-8。启用ascii模式会禁用7bit和iso模式。
 
-        尽管此模式名叫“ASCII”（7位编码标准），实际上转换按照8位编码进行。转换UTF-8编码文件时请务必使用此模式。
+        如果dos2unix带有UTF-16支持，则UTF-16编码的文件在POSIX系统上将被转换为当前语区对应的字符编码，在Windows上
+        则会被转换为UTF-8。启用 ascii 模式将禁用维持UTF-16编码的选项（"-u"）和假定输入为UTF-16的选项（"-ul" 和
+        "-ub"）。如需查看dos2unix是否带有UTF-16支持，请运行 "dos2unix -V"。更多信息另请参见 UNICODE
+        章节。
 
     7bit
         在此模式下，所以的8位非ASCII字符（取值范围128-255）将被转换到7位编码空间。
@@ -387,7 +407,7 @@ UNICODE
     、UTF-16或UTF-16BE编码，但大多采用UTF-16格式。
 
   转换
-    Unicode文本文件可以含有DOS、Unix或Mac断行符，就像普通文本文件一样。
+    Unicode文本文件可以含有DOS、Unix或Mac断行符，就像ASCII文本文件一样。
 
     所有版本的dos2unix和unix2dos都可以转换UTF-8文件，因为UTF-8向后兼容ASCII。
 
@@ -409,7 +429,7 @@ UNICODE
 
   字节序标记
     在Windows中，文本文件一般含有字节序标记（BOM），因为很多Windows程序（包括记事本）默认添加BOM。参见
-    <http://en.wikipedia.org/wiki/Byte_order_mark>。
+    <https://en.wikipedia.org/wiki/Byte_order_mark>。
 
     在Unix中，Unicode文件一般不含BOM。假定文本文件使用区域字符编码设置所指定的编码。
 
@@ -449,7 +469,7 @@ UNICODE
 
 GB18030
     GB18030是中国国家标准。GB18030标准的一系列子集被强制应用于中国销售的软件产品。参见
-    <http://en.wikipedia.org/wiki/GB_18030>。
+    <https://en.wikipedia.org/wiki/GB_18030>。
 
     GB18030与Unicode完全兼容，并且可以被认为是Unicode格式的变体。和UTF-8一样，GB18030也兼容ASCII。GB1803
     0也兼容Windows 936代码页（GBK）。
@@ -547,16 +567,16 @@ GB18030
             export LANG=en_US.iso88591   英语，美国，Latin-1编码
             export LANG=en_GB.UTF-8      英语，英国，UTF-8编码
 
-        完整的语言和国家/地区编码可以在gettext手册中找到：<http://www.gnu.org/software/gettext/ma
-        nual/html_node/Usual-Language-Codes.html>
+        完整的语言和国家/地区编码可以在gettext手册中找到：<https://www.gnu.org/software/gettext/m
+        anual/html_node/Usual-Language-Codes.html>
 
         在Unix系统中，你可以使用 locale(1) 命令获取特定区域的信息。
 
     LANGUAGE
         可以使用LANGUAGE变量指定一系列语言的优先级，各项之间由冒号分割。dos2unix首先使用LANGUAGE变量，其次才是LANG。
         例如，首选中文、其次英文："LANGUAGE=<zh:en"。在使用语言优先级之前，必须先启用区域化功能，即将LANG（或LC_ALL）
-        变量设置为除了“C”以外的其他值。参见gettext手册：<http://www.gnu.org/software/gettext/ma
-        nual/html_node/The-LANGUAGE-variable.html>
+        变量设置为除了“C”以外的其他值。参见gettext手册：<https://www.gnu.org/software/gettext/m
+        anual/html_node/The-LANGUAGE-variable.html>
 
         如果你选择了一个不可用的语言，程序将会输出标准的英语信息。
 
@@ -574,22 +594,22 @@ GB18030
     在安静模式下，返回值总是为0，除非命令行选项有误。
 
 遵循规范
-    <http://en.wikipedia.org/wiki/Text_file>
+    <https://en.wikipedia.org/wiki/Text_file>
 
-    <http://en.wikipedia.org/wiki/Carriage_return>
+    <https://en.wikipedia.org/wiki/Carriage_return>
 
-    <http://en.wikipedia.org/wiki/Newline>
+    <https://en.wikipedia.org/wiki/Newline>
 
-    <http://en.wikipedia.org/wiki/Unicode>
+    <https://en.wikipedia.org/wiki/Unicode>
 
 作者
     Benjamin Lin - <blin@socs.uts.edu.au> Bernd Johannes Wuebben（mac2unix模式）
     - <wuebben@kde.org>，Christian Wurll（添加额外新行） - <wurll@ira.uka.de>，Erwin
     Waterlander - <waterlan@xs4all.nl>（维护者）
 
-    项目主页：<http://waterlan.home.xs4all.nl/dos2unix.html>
+    项目主页：<https://waterlan.home.xs4all.nl/dos2unix.html>
 
-    SourceForge主页：<http://sourceforge.net/projects/dos2unix/>
+    SourceForge主页：<https://sourceforge.net/projects/dos2unix/>
 
 参见
     file(1) find(1) iconv(1) locale(1) xargs(1)

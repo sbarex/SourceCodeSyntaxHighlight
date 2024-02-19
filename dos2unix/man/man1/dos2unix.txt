@@ -62,7 +62,7 @@ OPTIONS
         user and group ownership of files.
 
     -ascii
-        Convert only line breaks. This is the default conversion mode.
+        Default conversion mode. See also section CONVERSION MODES.
 
     -iso
         Conversion between DOS and ISO-8859-1 character set. See also
@@ -212,6 +212,17 @@ OPTIONS
         Note that sometimes a binary file can be mistaken for a text file.
         See also option "-s".
 
+        If in addition option "-e" or "--add-eol" is used also the type of
+        the line break of the last line is printed, or "noeol" if there is
+        none.
+
+        Example output:
+
+             6       0       0  no_bom    text   dos     dos.txt
+             0       6       0  no_bom    text   unix    unix.txt
+             0       0       6  no_bom    text   mac     mac.txt
+             1       0       0  no_bom    text   noeol   noeol_dos.txt
+
         Optionally extra flags can be set to change the output. One or more
         flags can be added.
 
@@ -231,11 +242,17 @@ OPTIONS
 
         t   Print if file is text or binary.
 
+        e   Print the type of the line break of the last line, or "noeol" if
+            there is none.
+
         c   Print only the files that would be converted.
 
             With the "c" flag dos2unix will print only the files that
             contain DOS line breaks, unix2dos will print only file names
             that have Unix line breaks.
+
+            If in addition option "-e" or "--add-eol" is used also the files
+            that lack a line break on the last line will be printed.
 
         h   Print a header.
 
@@ -262,6 +279,11 @@ OPTIONS
         List the files that have Unix line breaks:
 
             unix2dos -ic *.txt
+
+        List the files that have DOS line breaks or lack a line break on the
+        last line:
+
+            dos2unix -e -ic *.txt
 
         Convert only files that have DOS line breaks and leave the other
         files untouched:
@@ -431,8 +453,8 @@ OPTIONS
         Display version information and exit.
 
 MAC MODE
-    In normal mode line breaks are converted from DOS to Unix and vice
-    versa. Mac line breaks are not converted.
+    By default line breaks are converted from DOS to Unix and vice versa.
+    Mac line breaks are not converted.
 
     In Mac mode line breaks are converted from Mac to Unix and vice versa.
     DOS line breaks are not changed.
@@ -442,12 +464,16 @@ MAC MODE
 
 CONVERSION MODES
     ascii
-        In mode "ascii" only line breaks are converted. This is the default
-        conversion mode.
+        This is the default conversion mode. This mode is for converting
+        ASCII and ASCII-compatible encoded files, like UTF-8. Enabling ascii
+        mode disables 7bit and iso mode.
 
-        Although the name of this mode is ASCII, which is a 7 bit standard,
-        the actual mode is 8 bit. Use always this mode when converting
-        Unicode UTF-8 files.
+        If dos2unix has UTF-16 support, UTF-16 encoded files are converted
+        to the current locale character encoding on POSIX systems and to
+        UTF-8 on Windows. Enabling ascii mode disables the option to keep
+        UTF-16 encoding ("-u") and the options to assume UTF-16 input ("-ul"
+        and "-ub"). To see if dos2unix has UTF-16 support type "dos2unix
+        -V". See also section UNICODE.
 
     7bit
         In this mode all 8 bit non-ASCII characters (with values from 128 to
@@ -517,7 +543,7 @@ UNICODE
     encoded in UTF-16 format.
 
   Conversion
-    Unicode text files can have DOS, Unix or Mac line breaks, like regular
+    Unicode text files can have DOS, Unix or Mac line breaks, like ASCII
     text files.
 
     All versions of dos2unix and unix2dos can convert UTF-8 encoded files,
@@ -551,7 +577,7 @@ UNICODE
   Byte Order Mark
     On Windows Unicode text files typically have a Byte Order Mark (BOM),
     because many Windows programs (including Notepad) add BOMs by default.
-    See also <http://en.wikipedia.org/wiki/Byte_order_mark>.
+    See also <https://en.wikipedia.org/wiki/Byte_order_mark>.
 
     On Unix Unicode files typically don't have a BOM. It is assumed that
     text files are encoded in the locale character encoding.
@@ -602,7 +628,7 @@ UNICODE
 GB18030
     GB18030 is a Chinese government standard. A mandatory subset of the
     GB18030 standard is officially required for all software products sold
-    in China. See also <http://en.wikipedia.org/wiki/GB_18030>.
+    in China. See also <https://en.wikipedia.org/wiki/GB_18030>.
 
     GB18030 is fully compatible with Unicode, and can be considered an
     unicode transformation format. Like UTF-8, GB18030 is compatible with
@@ -717,8 +743,8 @@ LOCALIZATION
 
         For a complete list of language and country codes see the gettext
         manual:
-        <http://www.gnu.org/software/gettext/manual/html_node/Usual-Language
-        -Codes.html>
+        <https://www.gnu.org/software/gettext/manual/html_node/Usual-Languag
+        e-Codes.html>
 
         On Unix systems you can use the command locale(1) to get locale
         specific information.
@@ -731,8 +757,8 @@ LOCALIZATION
         LANG (or LC_ALL) to a value other than "C", before you can use a
         language priority list through the LANGUAGE variable. See also the
         gettext manual:
-        <http://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-v
-        ariable.html>
+        <https://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-
+        variable.html>
 
         If you select a language which is not available you will get the
         standard English messages.
@@ -755,13 +781,13 @@ RETURN VALUE
     command-line options are used.
 
 STANDARDS
-    <http://en.wikipedia.org/wiki/Text_file>
+    <https://en.wikipedia.org/wiki/Text_file>
 
-    <http://en.wikipedia.org/wiki/Carriage_return>
+    <https://en.wikipedia.org/wiki/Carriage_return>
 
-    <http://en.wikipedia.org/wiki/Newline>
+    <https://en.wikipedia.org/wiki/Newline>
 
-    <http://en.wikipedia.org/wiki/Unicode>
+    <https://en.wikipedia.org/wiki/Unicode>
 
 AUTHORS
     Benjamin Lin - <blin@socs.uts.edu.au>, Bernd Johannes Wuebben (mac2unix
@@ -769,9 +795,9 @@ AUTHORS
     <wurll@ira.uka.de>, Erwin Waterlander - <waterlan@xs4all.nl>
     (maintainer)
 
-    Project page: <http://waterlan.home.xs4all.nl/dos2unix.html>
+    Project page: <https://waterlan.home.xs4all.nl/dos2unix.html>
 
-    SourceForge page: <http://sourceforge.net/projects/dos2unix/>
+    SourceForge page: <https://sourceforge.net/projects/dos2unix/>
 
 SEE ALSO
     file(1) find(1) iconv(1) locale(1) xargs(1)

@@ -71,7 +71,7 @@
 .\" ========================================================================
 .\"
 .IX Title "dos2unix 1"
-.TH dos2unix 1 "2023-08-29" "dos2unix" "2023-08-29"
+.TH dos2unix 1 "2024-01-22" "dos2unix" "2024-01-22"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -122,7 +122,7 @@ erlaubt die Änderung des Eigentümers der Datei im Alte-Datei-Modus.
 Wenn diese Option verwendet wird, dann bricht die Umwandlung nicht ab, wenn der Eigentümer und die Gruppe der Originaldatei im Alte-Datei-Modus nicht erhalten werden kann. Die Umwandlung wird fortgesetzt und die umgewandelte Datei erhält den gleichen neuen Eigentümer, als wäre sie im Neue-Datei-Modus umgewandelt worden. Siehe auch die Optionen \f(CW\*(C`\-o\*(C'\fR und \f(CW\*(C`\-n\*(C'\fR. Diese Option ist nur verfügbar, wenn dos2unix über Unterstützung für die Erhaltung des Eigentümers und der Gruppe von Dateien verfügt.
 .IP "\fB\-ascii\fR" 4
 .IX Item "-ascii"
-wandelt nur Zeilenumbrüche um. Dies ist der vorgegebene Umwandlungsmodus.
+ist der voreingestellte Umwandlungsmodus. Weitere Informationen hierzu finden Sie im Abschnitt \s-1UMWANDLUNGSMODI.\s0
 .IP "\fB\-iso\fR" 4
 .IX Item "-iso"
 wandelt aus dem \s-1DOS\-\s0 in den ISO\-8859\-1\-Zeichensatz um. Weitere Informationen hierzu finden Sie im Abschnitt \s-1UMWANDLUNGSMODI.\s0
@@ -191,9 +191,9 @@ Die Standardkodierung kann durch Setzen der Umgebungsvariable \s-1DOS2UNIX_DISPL
 .RE
 .IP "\fB\-e, \-\-add\-eol\fR" 4
 .IX Item "-e, --add-eol"
-Add a line break to the last line if there isn't one. This works for every conversion.
+fügt einen Zeilenumbruch nach der letzten Zeile hinzu, falls ein solcher nicht existiert. Dies funktioniert in jeder Umwandlung.
 .Sp
-A file converted from \s-1DOS\s0 to Unix format may lack a line break on the last line. There are text editors that write text files without a line break on the last line. Some Unix programs have problems processing these files, because the \s-1POSIX\s0 standard defines that every line in a text file must end with a terminating newline character. For instance concatenating files may not give the expected result.
+Einer Datei, die aus dem \s-1DOS\-\s0 ins Unix-Format umgewandelt wurde, kann ein Zeilenumbruch nach der letzten Zeile fehlen. Es gibt Texteditoren, die Dateien ohne diesen angehängten Zeilenumbruch schreiben. Einige Unix-Programme haben jedoch Probleme mit der Verarbeitung dieser Dateien, da der POSIX-Standard definiert, dass jede Zeile in einer Textdatei mit einem abschließenden Zeilenvorschubzeichen enden muss. Beispielsweise kann es beim Aneinanderhängen von solche Dateien zu unerwarteten Ergebnissen kommen.
 .IP "\fB\-f, \-\-force\fR" 4
 .IX Item "-f, --force"
 erzwingt die Umwandlung von Binärdateien.
@@ -224,6 +224,17 @@ Beispielausgabe:
 .Sp
 Beachten sie, dass manchmal eine Binärdatei fälschlicherweise als Textdatei erkannt wird. Siehe auch Option \f(CW\*(C`\-s\*(C'\fR.
 .Sp
+Wenn zusätzlich die Option \f(CW\*(C`\-e\*(C'\fR oder \f(CW\*(C`\-\-add\-eol\*(C'\fR verwendet wird, dann wird auch der Typ des Zeilenumbruchs der letzten Zeile ausgegeben, oder \f(CW\*(C`noeol\*(C'\fR, falls kein solcher Zeilenumbruch existiert.
+.Sp
+Beispielausgabe:
+.Sp
+.Vb 4
+\&     6       0       0  no_bom    text   dos     dos.txt
+\&     0       6       0  no_bom    text   unix    unix.txt
+\&     0       0       6  no_bom    text   mac     mac.txt
+\&     1       0       0  no_bom    text   noeol   noeol_dos.txt
+.Ve
+.Sp
 Optionale zusätzliche Schalter können gesetzt werden, um die Ausgabe anzupassen. Einer oder mehrere Schalter können hinzugefügt werden.
 .RS 4
 .IP "\fB0\fR" 4
@@ -244,11 +255,16 @@ gibt die Markierung der Bytereihenfolge aus.
 .IP "\fBt\fR" 4
 .IX Item "t"
 zeigt an, ob es sich um eine Text\- oder eine Binärdatei handelt.
+.IP "\fBe\fR" 4
+.IX Item "e"
+gibt den Typ des Zeilenumbruchs der letzten Zeile aus, oder \f(CW\*(C`noeol\*(C'\fR, falls kein solcher Zeilenumbruch existiert.
 .IP "\fBc\fR" 4
 .IX Item "c"
 gibt nur die Dateien aus, die umgewandelt werden würden.
 .Sp
 Mit dem Schalter \f(CW\*(C`c\*(C'\fR gibt dos2unix nur die Dateien aus, die DOS\-Zeilenumbrüche enthalten, unix2dos nur die Dateien mit Unix\-Zeilenumbrüchen.
+.Sp
+Wenn zusätzlich die Option \f(CW\*(C`\-e\*(C'\fR oder \f(CW\*(C`\-\-add\-eol\*(C'\fR verwendet wird, dann werden auch die Dateien ausgegeben, denen der Zeilenumbruch an der letzten Zeile fehlt.
 .IP "\fBh\fR" 4
 .IX Item "h"
 gibt eine Kopfzeile aus.
@@ -288,6 +304,12 @@ Die Dateien auflisten, die Unix\-Zeilenumbrüche enthalten:
 .Sp
 .Vb 1
 \&    unix2dos \-ic *.txt
+.Ve
+.Sp
+Die Dateien auflisten, die DOS\-Zeilenumbrüche enthalten oder bei denen der Zeilenumbruch nach der letzten Zeile fehlt:
+.Sp
+.Vb 1
+\&    dos2unix \-e \-ic *.txt
 .Ve
 .Sp
 Nur Dateien umwandeln, die DOS\-Zeilenumbrüche enthalten und die anderen Dateien unverändert belassen:
@@ -334,18 +356,18 @@ verhindert die Änderung des Eigentümers der Datei im Alte-Datei-Modus (Voreins
 bricht die Umwandlung ab, wenn der Eigentümer und/oder die Gruppe der Originaldatei im Alte-Datei-Modus nicht erhalten werden kann. Siehe auch die Optionen \f(CW\*(C`\-o\*(C'\fR und \f(CW\*(C`\-n\*(C'\fR. Diese Option ist nur verfügbar, wenn dos2unix über Unterstützung für die Erhaltung des Eigentümers und der Gruppe von Dateien verfügt.
 .IP "\fB\-\-no\-add\-eol\fR" 4
 .IX Item "--no-add-eol"
-Do not add a line break to the last line if there isn't one.
+fügt keinen Zeilenumbruch nach der letzten Zeile hinzu, falls ein solcher nicht existiert.
 .IP "\fB\-O, \-\-to\-stdout\fR" 4
 .IX Item "-O, --to-stdout"
-Write to standard output, like a Unix filter. Use option \f(CW\*(C`\-o\*(C'\fR to go back to old file (in-place) mode.
+schreibt wie ein Unix-Filter in die Standardausgabe. Mit der Option \f(CW\*(C`\-o\*(C'\fR können Sie zum Alte-Datei-Modus (Ersetzungsmodus) zurückkehren.
 .Sp
-Combined with option \f(CW\*(C`\-e\*(C'\fR files can be properly concatenated. No merged last and first lines, and no Unicode byte order marks in the middle of the concatenated file. Example:
+In Kombination mit der Option \f(CW\*(C`\-e\*(C'\fR können Dateien korrekt aneinandergehängt werden. Weder werden Zeilen ohne Umbruch zusammengeführt, noch werden Unicode-Markierungen der Bytereihenfolge mitten in die verkettete Datei gesetzt. Beispiel:
 .Sp
 .Vb 1
-\&    dos2unix \-e \-O file1.txt file2.txt > output.txt
+\&    dos2unix \-e \-O Datei1.txt Datei2.txt > Ausgabe.txt
 .Ve
-.IP "\fB\-o, \-\-oldfile \s-1FILE ...\s0\fR" 4
-.IX Item "-o, --oldfile FILE ..."
+.IP "\fB\-o, \-\-oldfile \s-1DATEI\s0 …\fR" 4
+.IX Item "-o, --oldfile DATEI …"
 Alte-Datei-Modus. Die \s-1DATEI\s0 wird umgewandelt und durch die Ausgabedatei überschrieben. Per Vorgabe werden Umwandlungen in diesem Modus ausgeführt. Platzhalter sind verwendbar.
 .Sp
 Im Alte-Datei-Modus (Ersetzungsmodus) erhalten die umgewandelten Dateien den gleichen Eigentümer, die gleiche Gruppe und die gleichen Lese\- und Schreibberechtigungen wie die Originaldatei, auch wenn die Datei von einem anderen Benutzer umgewandelt wird, der Schreibrechte für die Datei hat (zum Beispiel der Systemadministrator). Die Umwandlung wird abgebrochen, wenn es nicht möglich ist, die originalen Werte beizubehalten. Die Änderung des Eigentümers könnte zum Beispiel bewirken, dass der ursprüngliche Eigentümer die Datei nicht mehr lesen kann. Die Änderung der Gruppe könnte ein Sicherheitsrisiko sein, da die Datei vielleicht für Benutzer lesbar wird, für die sie nicht bestimmt ist. Die Beibehaltung von Eigentümer, Gruppe und Schreib\- und Leserechten wird nur unter Unix unterstützt.
@@ -410,7 +432,7 @@ erhält symbolische Links als solche und lässt die Ziele unverändert (Vorgabe)
 zeigt Versionsinformationen an und beendet das Programm.
 .SH "MAC-MODUS"
 .IX Header "MAC-MODUS"
-Im Normalmodus werden Zeilenumbrüche von \s-1DOS\s0 nach Unix und umgekehrt umgewandelt. Mac\-Zeilenumbrüche werden nicht verändert.
+In der Voreinstellung werden Zeilenumbrüche von \s-1DOS\s0 nach Unix und umgekehrt umgewandelt. Mac\-Zeilenumbrüche werden nicht verändert.
 .PP
 Im Mac-Modus werden Zeilenumbrüche von Mac nach Unix und umgekehrt umgewandelt. DOS\-Zeilenumbrüche werden nicht verändert.
 .PP
@@ -419,9 +441,9 @@ Um das Programm im Mac-Modus auszuführen, verwenden Sie die Befehlszeilenoption
 .IX Header "UMWANDLUNGSMODI"
 .IP "\fBascii\fR" 4
 .IX Item "ascii"
-Im \f(CW\*(C`ascii\*(C'\fR\-Modus werden nur Zeilenumbrüche umgewandelt. Dies ist der vorgegebene Umwandlungsmodus.
+Dies ist der vorgegebene Umwandlungsmodus. Dieser Modus dient zum Umwandeln von \s-1ASCII\-\s0 und ASCII-kompatibel kodierten Dateien, wie \s-1UTF\-8.\s0 Durch Aktivierung des \fBascii\fR\-Modus werden die Modi \fB7bit\fR und \fBiso\fR deaktiviert.
 .Sp
-Obwohl der Name dieses Modus auf \s-1ASCII\s0 hinweist, welches ein 7\-bit\-Standard ist, bezieht sich der eigentliche Modus auf 8 Bit. Verwenden Sie diesen Modus immer dann, wenn Sie Unicode-Dateien in UTF\-8\-Kodierung umwandeln.
+Falls dos2unix über Unterstützung für \s-1UTF\-16\s0 verfügt, werden UTF\-16\-kodierte Dateien auf POSIX-Systemen in die aktuelle Zeichenkodierung der Locale und unter Windows in \s-1UTF\-8\s0 umgewandelt. Die Aktivierung des \fBascii\fR\-Modus deaktiviert die Option \f(CW\*(C`\-u\*(C'\fR zum Erhalten der UTF\-16\-Kodierung sowie die Optionen \f(CW\*(C`\-ul\*(C'\fR und \f(CW\*(C`\-ub\*(C'\fR, welche davon ausgehen, dass die Eingabe in \s-1UTF\-16\s0 kodiert ist. Geben Sie den Befehl \f(CW\*(C`dos2unix \-V\*(C'\fR ein, um zu sehen, ob dos2unix \s-1UTF\-16\s0 unterstützt. Weitere Informationen hierzu finden Sie im Abschnitt \s-1UNICODE.\s0
 .IP "\fB7bit\fR" 4
 .IX Item "7bit"
 In diesem Modus werden alle Nicht-ASCII-Zeichen aus 8 Bit in das 7\-Bit\-Bitmuster umgewandelt.
@@ -491,7 +513,7 @@ Siehe auch <http://czyborra.com/charsets/codepages.html> und <http://czyborra.co
 Es gibt verschiedene Unicode-Zeichenkodierungen. Unter Unix und Linux sind Unicode-Dateien typischerweise in \s-1UTF\-8\s0 kodiert. Unter Windows können Textdateien in \s-1UTF\-8, UTF\-16\s0 oder \s-1UTF\-16\s0 in Big-Endian-Bytereihenfolge kodiert sein, liegen aber meist im Format \s-1UTF\-16\s0 vor.
 .SS "Umwandlung"
 .IX Subsection "Umwandlung"
-Unicode-Textdateien können \s-1DOS\-,\s0 Unix\- oder Mac\-Zeilenumbrüche enthalten, so wie reguläre Textdateien.
+Unicode-Textdateien können \s-1DOS\-,\s0 Unix\- oder Mac\-Zeilenumbrüche enthalten, so wie ASCII-Textdateien.
 .PP
 Alle Versionen von dos2unix und unix2dos können UTF\-8\-kodierte Dateien umwandeln, weil \s-1UTF\-8\s0 im Hinblick auf Abwärtskompatibilität mit \s-1ASCII\s0 entwickelt wurde.
 .PP
@@ -510,7 +532,7 @@ Dos2unix und unix2dos bieten keine Option zur Umwandlung von UTF\-8\-Dateien in 
 Umwandlungen im \s-1ISO\-\s0 und 7bit\-Modus funktionieren mit UTF\-16\-Dateien nicht.
 .SS "Markierung der Bytereihenfolge"
 .IX Subsection "Markierung der Bytereihenfolge"
-Unicode-Textdateien unter Windows haben typischerweise eine Markierung der Bytereihenfolge (\s-1BOM\s0), da viele Windows-Programme (zum Beispiel Notepad) solche BOMs standardmäßig hinzufügen. Weitere Informationen hierzu finden Sie auf <http://de.wikipedia.org/wiki/Byte\-Reihenfolge>.
+Unicode-Textdateien unter Windows haben typischerweise eine Markierung der Bytereihenfolge (\s-1BOM\s0), da viele Windows-Programme (zum Beispiel Notepad) solche BOMs standardmäßig hinzufügen. Weitere Informationen hierzu finden Sie auf <https://de.wikipedia.org/wiki/Byte\-Reihenfolge>.
 .PP
 Unter Unix haben Textdateien üblicherweise keine \s-1BOM.\s0 Es wird stattdessen angenommen, dass Textdateien in der Zeichenkodierung entsprechend der Spracheinstellung vorliegen.
 .PP
@@ -555,7 +577,7 @@ Umwandlung von Unix \s-1UTF\-8\s0 nach Windows \s-1UTF\-16:\s0
 .Ve
 .SH "GB18030"
 .IX Header "GB18030"
-\&\s-1GB18030\s0 ist ein Standard der chinesischen Regierung. Eine Teilmenge des in \s-1GB18030\s0 definierten Standards ist offiziell für alle in China verkauften Softwareprodukte vorgeschrieben. Siehe auch <http://de.wikipedia.org/wiki/GB_18030>.
+\&\s-1GB18030\s0 ist ein Standard der chinesischen Regierung. Eine Teilmenge des in \s-1GB18030\s0 definierten Standards ist offiziell für alle in China verkauften Softwareprodukte vorgeschrieben. Siehe auch <https://de.wikipedia.org/wiki/GB_18030>.
 .PP
 \&\s-1GB18030\s0 ist vollständig zu Unicode kompatibel und kann als Unicode-Umwandlungsformat betrachtet werden. Wie auch \s-1UTF\-8\s0 ist \s-1GB18030\s0 kompatibel zu \s-1ASCII.\s0 Ebenfalls kompatibel ist es zur Codepage 936 von Windows, auch als \s-1GBK\s0 bekannt.
 .PP
@@ -680,7 +702,7 @@ Die primäre Sprache wird durch die Umgebungsvariable \s-1LANG\s0 festgelegt. Di
 \&    export LANG=en_GB.UTF\-8      Englisch, GB, UTF\-8\-Zeichenkodierung
 .Ve
 .Sp
-Eine vollständige Liste der Sprachen und Ländercodes finden Sie im Gettext-Handbuch: <http://www.gnu.org/software/gettext/manual/html_node/Usual\-Language\-Codes.html>
+Eine vollständige Liste der Sprachen und Ländercodes finden Sie im Gettext-Handbuch: <https://www.gnu.org/software/gettext/manual/html_node/Usual\-Language\-Codes.html>
 .Sp
 Auf Unix-Systemen erhalten Sie mit dem Befehl \fBlocale\fR\|(1) spezifische Informationen zu den Spracheinstellungen.
 .IP "\fB\s-1LANGUAGE\s0\fR" 4

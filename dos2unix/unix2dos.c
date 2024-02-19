@@ -8,7 +8,7 @@
  *  See also https://www.freebsd.org/copyright/freebsd-license.html
  *  --------
  *
- *  Copyright (C) 2009-2023 Erwin Waterlander
+ *  Copyright (C) 2009-2024 Erwin Waterlander
  *  Copyright (C) 1994-1995 Benjamin Lin.
  *  All rights reserved.
  *
@@ -69,7 +69,7 @@ void PrintLicense(void)
   D2U_ANSI_FPRINTF(stdout,_("\
 Copyright (C) 2009-%d Erwin Waterlander\n\
 Copyright (C) 1994-1995 Benjamin Lin\n\
-All rights reserved.\n\n"),2023);
+All rights reserved.\n\n"),2024);
   PrintBSDLicense();
 }
 
