@@ -1,5 +1,8 @@
 [![counter](https://img.shields.io/github/downloads/sbarex/SourceCodeSyntaxHighlight/latest/total)](https://github.com/sbarex/SourceCodeSyntaxHighlight/releases) [![counter](https://img.shields.io/github/downloads/sbarex/SourceCodeSyntaxHighlight/total)](https://github.com/sbarex/SourceCodeSyntaxHighlight/releases)
 
+[![buy me a coffee](https://img.buymeacoffee.com/button-api/?text=Buy+me+a+coffee&emoji=&slug=sbarex&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff")](https://www.buymeacoffee.com/sbarex)
+
+
 <p align="center">
   <img src="assets/icon.png" width="128" height="128" alt="logo" />
 </p>
@@ -10,6 +13,8 @@ The application offers a Quick Look Extension for macOS 10.15 Catalina and later
 Inside it uses [Highlight](http://www.andre-simon.de/doku/highlight/en/highlight.php) to render source code with syntax highlighting.
 
 > **`Syntax Highlight` is distributed in the hope that it will be useful but WITHOUT ANY WARRANTY.**
+
+If you like this application and find it useful, [buy me a coffee](https://www.buymeacoffee.com/sbarex)!
 
   - [Installation](#installation)
     - [Download precompiled release](#download-precompiled-release)
