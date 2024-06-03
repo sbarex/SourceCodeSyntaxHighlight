@@ -120,6 +120,7 @@ The application can also handle some [plain files](#plain-files) **without exten
 - Ada (`.ada`)
 - Adobe Acrobat Sequence files (`.sequ`) _as `XML`_
 - Adobe Flash ActionScript source files (`.as`)
+- Adobe Flex files (`.mxml`) files _as XML_
 - Adobe JSX script files (`.jsx`)
 - Apple workflow (`.wflow`) _as `plist (XML)`_
 - AppleScript (`.scpt`, `.applescript`, `.ascr`) _automatically decompiled with `osadecompile`_
@@ -248,7 +249,7 @@ The application can also handle some [plain files](#plain-files) **without exten
 - Symfony Twig files (`.twig`)
 - TCL source files (`.tcl`)
 - Tenex C Shell script files (`.tcsh`)
-- Terraform files (`.tfvars`, `.tf`, `.hcl`) _as `YAML`_
+- Terraform files (`.tfvars`, `.tfstate`, `.tf`, `.hcl`) _as `YAML`_
 - TeX and LaTeX files (`.tex`, `.sty`, `.cls`, `.latex`, `.ltx`, `.texi`, `.ctx`, `.sty`)
 - Text files (`.txt`, `.text`)
 - TOML files (`.toml`)

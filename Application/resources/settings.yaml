@@ -318,7 +318,7 @@ UTIs:
         
     # .nf
     dyn.ah62d4rv4ge8063u:
-        syntax: groovy
+        syntax: java
         
     # .pub
     dyn.ah62d4rv4ge81a7pc:
@@ -350,11 +350,16 @@ UTIs:
     # .tfvars
     dyn.ah62d4rv4ge81k3x0qf3hg:
         syntax: yaml
+    # .tfstate
+    dyn.ah62d4rv4ge81k3xxsvu1k3:
+        syntax: yaml
     # .tf
     dyn.ah62d4rv4ge81k3u:
         syntax: yaml
     # .hcl
     dyn.ah62d4rv4ge80u25q:
+        syntax: yaml
+    io.terraform.tfvars:
         syntax: yaml
     
     # .sage
@@ -386,6 +391,11 @@ UTIs:
         syntax: ly
     dyn.ah62d4rv4ge8028k:
         syntax: ly
+        
+    com.adobe.mxml:
+        syntax: xml
+    dyn.ah62d4rv4ge8048drru:
+        syntax: xml
         
 extensions:
     _plist*: &plist
@@ -546,7 +556,7 @@ extensions:
     sequ: *xml
     
     nf:
-        syntax: groovy
+        syntax: java
             
     # dyn.ah62d4rv4ge81u6pzqz3hw:
     ml:
@@ -586,7 +596,12 @@ extensions:
         
     tfvars:
         syntax: yaml
+    tfstate:
+        syntax: yaml
     tf:
         syntax: yaml
     hcl:
         syntax: yaml
+        
+    mxml:
+        syntax: xml

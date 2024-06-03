@@ -38,6 +38,7 @@
 				<string>com.adobe.coldfusion</string>
 				<string>com.adobe.jsx</string>
 				<string>com.adobe.edn</string>
+				<string>com.adobe.mxml</string>
 				<string>com.apple.applescript.script</string>
 				<string>com.apple.applescript.text</string>
 				<string>com.apple.binary-property-list</string>
@@ -375,6 +376,8 @@
 				<string>dyn.ah62d4rv4ge80u25q</string>
 				<string>dyn.ah62d4rv4ge80c65ysm1u</string>
 				<string>dyn.ah62d4rv4ge8028k</string>
+				<string>dyn.ah62d4rv4ge8048drru</string>
+				<string>dyn.ah62d4rv4ge81k3xxsvu1k3</string>
 			</array>
 			<key>QLSupportsSearchableItems</key>
 			<false/>

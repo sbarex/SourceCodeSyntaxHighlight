@@ -91,6 +91,22 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
+				<string>public.xml</string>
+				<string>dyn.ah62d4rv4ge8048drru</string>
+			</array>
+			<key>UTTypeIdentifier</key>
+			<string>com.adobe.mxml</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>com.apple.ostype</key>
+				<array>
+					<string>mxml</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
 				<string>public.item</string>
 				<string>dyn.ah62d4rv4ge80y652</string>
 				<string>public.data</string>
@@ -405,6 +421,8 @@
 			</dict>
 		</dict>
 		<dict>
+			<key>UTTypeDescription</key>
+			<string>Stata source file</string>
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.item</string>
@@ -507,6 +525,8 @@
 			</dict>
 		</dict>
 		<dict>
+			<key>UTTypeDescription</key>
+			<string>Astro source files</string>
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.item</string>
@@ -578,6 +598,8 @@
 			</dict>
 		</dict>
 		<dict>
+			<key>UTTypeDescription</key>
+			<string>Nextflow files</string>
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>dyn.ah62d4rv4ge8063u</string>
@@ -594,11 +616,14 @@
 			</dict>
 		</dict>
 		<dict>
+			<key>UTTypeDescription</key>
+			<string>Terraform files</string>
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>dyn.ah62d4rv4ge81k3x0qf3hg</string>
 				<string>dyn.ah62d4rv4ge81k3u</string>
 				<string>dyn.ah62d4rv4ge80u25q</string>
+				<string>dyn.ah62d4rv4ge81k3xxsvu1k3</string>
 				<string>public.item</string>
 			</array>
 			<key>UTTypeIdentifier</key>
@@ -607,6 +632,7 @@
 			<dict>
 				<key>public.filename-extension</key>
 				<array>
+					<string>tfstate</string>
 					<string>tf</string>
 					<string>tfvars</string>
 					<string>hcl</string>
@@ -735,6 +761,8 @@
 			</dict>
 		</dict>
 		<dict>
+			<key>UTTypeDescription</key>
+			<string>Bazel source file</string>
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.item</string>
@@ -844,6 +872,8 @@
 			</dict>
 		</dict>
 		<dict>
+			<key>UTTypeDescription</key>
+			<string>Crystal source file</string>
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.item</string>
@@ -1170,6 +1200,8 @@
 			</dict>
 		</dict>
 		<dict>
+			<key>UTTypeDescription</key>
+			<string>Lilypond source file</string>
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.item</string>
@@ -1932,6 +1964,8 @@
 			</dict>
 		</dict>
 		<dict>
+			<key>UTTypeDescription</key>
+			<string>Smali source file</string>
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.item</string>

@@ -1,21 +1,34 @@
 Changelog
 =======
 
+### 2.1.22 (71)
+
+New Features: 
+- Update Highlight to release 4.11.
+- Support for Adobe Flex `.mxml` files _as XML_.
+- Extended support for Terraform files to the extension `.tfstate` (_ as YAML_).
+
+Bugfix:
+- Fixed terraform files.
+- Fixed missing format descriptions.
+
+
 ### 2.1.21 (70)
 
 New Features: 
 - Update Highlight to release 4.10.
 - Update Dos2Unix to release 7.5.2.
 - Support for Steam app manifest files (`.acf`) _as plain text_.
-- Support fo Lilypond files (`.ly`).
-- Experimental support of Astro files (`.astro`) _as JSX_.
+- Support for Lilypond files (`.ly`).
+- Experimental support for Astro files (`.astro`) _as JSX_.
 
 Bugfix:
 - Better support for bazel files.
 - Fixed `cmake` support.
 - Fixed support for `lua` files.
 - Fixed support for `md` files.
-- Extended support for Terraform files to the extension `.hcl` (_ as YAML_)
+- Extended support for Terraform files to the extension `.hcl` (_ as YAML_).
+
 
 ### 2.1.20 (69)
 New features:
