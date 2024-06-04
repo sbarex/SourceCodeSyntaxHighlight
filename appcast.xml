@@ -35,7 +35,7 @@
                 <ul>
                     <li>Update Highlight to release 4.11.</li>
                     <li>Support for Adobe Flex (<code>.mxml</code>) files <i>as XML</i>.</li>
-                    <li>Extended support for Terraform files to the extension <code>.tfstate<code> <i> as YAML</i>.</li>
+                    <li>Extended support for Terraform files to the extension <code>.tfstate</code> <i> as YAML</i>.</li>
                     <li>Link to buy me a coffee.</li>
                 </ul>
                 <p>Bug fix:</p>
