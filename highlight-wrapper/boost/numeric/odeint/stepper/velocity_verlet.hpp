@@ -31,7 +31,7 @@
 #include <boost/numeric/odeint/util/copy.hpp>
 #include <boost/numeric/odeint/util/resizer.hpp>
 // #include <boost/numeric/odeint/util/is_pair.hpp>
-// #include <boost/array.hpp>
+// #include <array>
 
 
 
@@ -149,9 +149,7 @@ public:
     void initialize( const AccelerationIn & ain )
     {
         // alloc a
-        m_resizer.adjust_size( ain ,
-                               detail::bind( &velocity_verlet::template resize_impl< AccelerationIn > ,
-                                             detail::ref( *this ) , detail::_1 ) );
+        m_resizer.adjust_size(ain, [this](auto&& arg) { return this->resize_impl<AccelerationIn>(std::forward<decltype(arg)>(arg)); });
         boost::numeric::odeint::copy( ain , get_current_acc() );
         m_first_call = false;
     }
@@ -160,9 +158,7 @@ public:
     template< class System , class CoorIn , class VelocityIn >
     void initialize( System system , const CoorIn & qin , const VelocityIn & pin , time_type t )
     {
-        m_resizer.adjust_size( qin ,
-                               detail::bind( &velocity_verlet::template resize_impl< CoorIn > ,
-                                             detail::ref( *this ) , detail::_1 ) );
+        m_resizer.adjust_size(qin, [this](auto&& arg) { return this->resize_impl<CoorIn>(std::forward<decltype(arg)>(arg)); });
         initialize_acc( system , qin , pin , t );
     }
 
@@ -195,10 +191,8 @@ private:
         momentum_in_type & pinout = statein.second;
 
         // alloc a
-        if( m_resizer.adjust_size( qinout ,
-                                   detail::bind( &velocity_verlet::template resize_impl< xyz_type > ,
-                                                 detail::ref( *this ) , detail::_1 ) )
-         || m_first_call )
+        if( m_resizer.adjust_size(qinout, [this](auto&& arg) { return this->resize_impl<xyz_type>(std::forward<decltype(arg)>(arg)); })
+           || m_first_call )
         {
             initialize_acc( system , qinout , pinout , t );
         }

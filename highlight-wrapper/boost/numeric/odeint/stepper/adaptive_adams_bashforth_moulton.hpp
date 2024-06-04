@@ -86,7 +86,7 @@ public:
     template< class System >
     void do_step(System system, state_type &inOut, time_type t, time_type dt )
     {
-        m_xnew_resizer.adjust_size( inOut , detail::bind( &stepper_type::template resize_xnew_impl< state_type > , detail::ref( *this ) , detail::_1 ) );
+        m_xnew_resizer.adjust_size(inOut, [this](auto&& arg) { return this->resize_xnew_impl<state_type>(std::forward<decltype(arg)>(arg)); });
     
         do_step(system, inOut, t, m_xnew.m_v, dt, m_xerr.m_v);
         boost::numeric::odeint::copy( m_xnew.m_v , inOut);
@@ -101,7 +101,7 @@ public:
     template< class System >
     void do_step(System system, state_type &inOut, time_type t, time_type dt, state_type &xerr)
     {
-        m_xnew_resizer.adjust_size( inOut , detail::bind( &stepper_type::template resize_xnew_impl< state_type > , detail::ref( *this ) , detail::_1 ) );
+        m_xnew_resizer.adjust_size(inOut, [this](auto&& arg) { return this->resize_xnew_impl<state_type>(std::forward<decltype(arg)>(arg)); });
     
         do_step(system, inOut, t, m_xnew.m_v, dt, xerr);
         boost::numeric::odeint::copy( m_xnew.m_v , inOut);
@@ -128,7 +128,7 @@ public:
         reset();
         dt = dt/static_cast< time_type >(order_value);
 
-        m_dxdt_resizer.adjust_size( inOut , detail::bind( &stepper_type::template resize_dxdt_impl< state_type > , detail::ref( *this ) , detail::_1 ) );
+        m_dxdt_resizer.adjust_size(inOut, [this](auto&& arg) { return this->resize_dxdt_impl<state_type>(std::forward<decltype(arg)>(arg)); });
 
         system( inOut , m_dxdt.m_v , t );
         for( size_t i=0 ; i<order_value; ++i )
@@ -168,8 +168,8 @@ public:
     {
         size_t eO = m_coeff.m_eo;
 
-        m_xerr_resizer.adjust_size( in , detail::bind( &stepper_type::template resize_xerr_impl< state_type > , detail::ref( *this ) , detail::_1 ) );
-        m_dxdt_resizer.adjust_size( in , detail::bind( &stepper_type::template resize_dxdt_impl< state_type > , detail::ref( *this ) , detail::_1 ) );
+        m_xerr_resizer.adjust_size(in, [this](auto&& arg) { return this->resize_xerr_impl<state_type>(std::forward<decltype(arg)>(arg)); });
+        m_dxdt_resizer.adjust_size(in, [this](auto&& arg) { return this->resize_dxdt_impl<state_type>(std::forward<decltype(arg)>(arg)); });
 
         m_coeff.predict(t, dt);
         if (m_coeff.m_steps_init == 1)

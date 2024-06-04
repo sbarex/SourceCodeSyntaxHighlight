@@ -67,7 +67,7 @@ class extrapolation_stepper : public explicit_error_stepper_base
 
   private:
     // check for Order being odd
-    BOOST_STATIC_ASSERT_MSG(
+    static_assert(
         ( ( Order % 2 ) == 0 ) && ( Order > 2 ),
         "extrapolation_stepper requires even Order larger than 2" );
 
@@ -172,9 +172,7 @@ class extrapolation_stepper : public explicit_error_stepper_base
     void do_step_impl( System system, const StateIn &in, const DerivIn &dxdt,
                        time_type t, StateOut &out, time_type dt )
     {
-        m_resizer.adjust_size(
-            in, detail::bind( &stepper_type::template resize_impl< StateIn >,
-                              detail::ref( *this ), detail::_1 ) );
+        m_resizer.adjust_size(in, [this](auto&& arg) { return this->resize_impl<StateIn>(std::forward<decltype(arg)>(arg)); });
         size_t k = 0;
         m_midpoint.set_steps( m_interval_sequence[k] );
         m_midpoint.do_step( system, in, dxdt, t, out, dt );
@@ -191,10 +189,7 @@ class extrapolation_stepper : public explicit_error_stepper_base
                           time_type t, time_type dt )
     {
         // special care for inout
-        m_xout_resizer.adjust_size(
-            inout,
-            detail::bind( &stepper_type::template resize_m_xout< StateInOut >,
-                          detail::ref( *this ), detail::_1 ) );
+        m_xout_resizer.adjust_size(inout, [this](auto&& arg) { return this->resize_m_xout<StateInOut>(std::forward<decltype(arg)>(arg)); });
         do_step_impl( system, inout, dxdt, t, m_xout.m_v, dt );
         boost::numeric::odeint::copy( m_xout.m_v, inout );
     }

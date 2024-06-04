@@ -1,6 +1,20 @@
 Changelog
 =======
 
+### 2.1.23 (72)
+New Features: 
+- Update Highlight to release 4.12.
+- Update Boost to release 1.8.5.
+- Update Sparkle to release 2.6.3
+- Support for Nix Expression Language files (`.nix`).
+- Advanced settings to show about app info on the footer preview.
+- Link to buy me a :coffee: (:heart:)
+
+Bugfix:
+- Fixed support for `public.xsd` UTI.
+- Added `.ily` extension for Lilypond files.
+
+
 ### 2.1.22 (71)
 
 New Features: 

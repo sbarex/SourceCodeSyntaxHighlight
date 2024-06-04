@@ -18,7 +18,7 @@
 #ifndef BOOST_NUMERIC_ODEINT_STEPPER_DETAIL_ADAMS_MOULTON_CALL_ALGEBRA_HPP_INCLUDED
 #define BOOST_NUMERIC_ODEINT_STEPPER_DETAIL_ADAMS_MOULTON_CALL_ALGEBRA_HPP_INCLUDED
 
-#include <boost/assert.hpp> 
+#include <cstddef>
 
 namespace boost {
 namespace numeric {

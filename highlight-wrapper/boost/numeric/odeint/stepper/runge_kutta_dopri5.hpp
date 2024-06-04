@@ -125,7 +125,7 @@ public :
 
         typename odeint::unwrap_reference< System >::type &sys = system;
 
-        m_k_x_tmp_resizer.adjust_size( in , detail::bind( &stepper_type::template resize_k_x_tmp_impl<StateIn> , detail::ref( *this ) , detail::_1 ) );
+        m_k_x_tmp_resizer.adjust_size(in, [this](auto&& arg) { return this->resize_k_x_tmp_impl<StateIn>(std::forward<decltype(arg)>(arg)); });
 
         //m_x_tmp = x + dt*b21*dxdt
         stepper_base_type::m_algebra.for_each3( m_x_tmp.m_v , in , dxdt_in ,
@@ -179,7 +179,7 @@ public :
         /* ToDo: copy only if &dxdt_in == &dxdt_out ? */
         if( same_instance( dxdt_in , dxdt_out ) )
         {
-            m_dxdt_tmp_resizer.adjust_size( in , detail::bind( &stepper_type::template resize_dxdt_tmp_impl<StateIn> , detail::ref( *this ) , detail::_1 ) );
+            m_dxdt_tmp_resizer.adjust_size(in, [this](auto&& arg) { return this->resize_dxdt_tmp_impl<StateIn>(std::forward<decltype(arg)>(arg)); });
             boost::numeric::odeint::copy( dxdt_in , m_dxdt_tmp.m_v );
             do_step_impl( system , in , dxdt_in , t , out , dxdt_out , dt );
             //error estimate

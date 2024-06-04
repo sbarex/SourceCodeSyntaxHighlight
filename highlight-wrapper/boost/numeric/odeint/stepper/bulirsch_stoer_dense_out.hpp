@@ -45,9 +45,6 @@
 
 #include <boost/numeric/odeint/integrate/max_step_checker.hpp>
 
-#include <boost/type_traits.hpp>
-
-
 namespace boost {
 namespace numeric {
 namespace odeint {
@@ -311,7 +308,7 @@ public:
     template< class StateType >
     void initialize( const StateType &x0 , const time_type &t0 , const time_type &dt0 )
     {
-        m_resizer.adjust_size( x0 , detail::bind( &controlled_error_bs_type::template resize_impl< StateType > , detail::ref( *this ) , detail::_1 ) );
+        m_resizer.adjust_size(x0, [this](auto&& arg) { return this->resize_impl<StateType>(std::forward<decltype(arg)>(arg)); });
         boost::numeric::odeint::copy( x0 , get_current_state() );
         m_t = t0;
         m_dt = dt0;

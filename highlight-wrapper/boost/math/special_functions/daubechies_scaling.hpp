@@ -26,7 +26,7 @@
 #include <boost/math/tools/is_standalone.hpp>
 #ifndef BOOST_MATH_STANDALONE
 #  include <boost/config.hpp>
-#  ifdef BOOST_NO_CXX17_IF_CONSTEXPR
+#  ifdef BOOST_MATH_NO_CXX17_IF_CONSTEXPR
 #    error "The header <boost/special_functions/daubechies_scaling.hpp> can only be used in C++17 and later."
 #  endif
 #endif
@@ -48,7 +48,7 @@ std::vector<Real> daubechies_scaling_dyadic_grid(int64_t j_max)
     auto phik = detail::daubechies_scaling_integer_grid<Real, p, order>();
 
     // Maximum sensible j for 32 bit floats is j_max = 22:
-    if (std::is_same_v<Real, float>)
+    if constexpr (std::is_same_v<Real, float>)
     {
         if (j_max > 23)
         {
@@ -357,27 +357,27 @@ public:
         else {
             if (grid_refinements < 0)
             {
-                if (std::is_same_v<Real, float>)
+                if constexpr (std::is_same_v<Real, float>)
                 {
                 if (grid_refinements == -2)
                 {
                     // Control absolute error:
                     //                          p= 2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19
-                    std::array<int, 20> r{ -1, -1, 18, 19, 16, 11,  8,  7,  7,  7,  5,  5,  4,  4,  4,  4,  3,  3,  3,  3 };
+                    constexpr std::array<int, 20> r{ -1, -1, 18, 19, 16, 11,  8,  7,  7,  7,  5,  5,  4,  4,  4,  4,  3,  3,  3,  3 };
                     grid_refinements = r[p];
                 }
                 else
                 {
                     // Control relative error:
                     //                          p= 2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19
-                    std::array<int, 20> r{ -1, -1, 21, 21, 21, 17, 16, 15, 14, 13, 12, 11, 11, 11, 11, 11, 11, 11, 11, 11 };
+                    constexpr std::array<int, 20> r{ -1, -1, 21, 21, 21, 17, 16, 15, 14, 13, 12, 11, 11, 11, 11, 11, 11, 11, 11, 11 };
                     grid_refinements = r[p];
                 }
                 }
-                else if (std::is_same_v<Real, double>)
+                else if constexpr (std::is_same_v<Real, double>)
                 {
                     //                          p= 2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19
-                    std::array<int, 20> r{ -1, -1, 21, 21, 21, 21, 21, 21, 21, 21, 20, 20, 19, 19, 18, 18, 18, 18, 18, 18 };
+                    constexpr std::array<int, 20> r{ -1, -1, 21, 21, 21, 21, 21, 21, 21, 21, 20, 20, 19, 19, 18, 18, 18, 18, 18, 18 };
                     grid_refinements = r[p];
                 }
                 else

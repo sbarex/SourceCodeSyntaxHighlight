@@ -120,8 +120,7 @@ T ellint_d_imp(T k, const Policy& pol)
 
     if (abs(k) >= 1)
     {
-       return policies::raise_domain_error<T>("boost::math::ellint_d<%1%>(%1%)",
-            "Got k = %1%, function requires |k| <= 1", k, pol);
+       return policies::raise_domain_error<T>("boost::math::ellint_d<%1%>(%1%)", "Got k = %1%, function requires |k| <= 1", k, pol);
     }
     if(fabs(k) <= tools::root_epsilon<T>())
        return constants::pi<T>() / 4;

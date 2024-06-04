@@ -6,9 +6,12 @@
 #ifndef BOOST_MATH_CCMATH_ISGREATEREQUAL_HPP
 #define BOOST_MATH_CCMATH_ISGREATEREQUAL_HPP
 
-#include <cmath>
-#include <limits>
-#include <boost/math/tools/is_constant_evaluated.hpp>
+#include <boost/math/ccmath/detail/config.hpp>
+
+#ifdef BOOST_MATH_NO_CCMATH
+#error "The header <boost/math/islessequal.hpp> can only be used in C++17 and later."
+#endif
+
 #include <boost/math/ccmath/isnan.hpp>
 
 namespace boost::math::ccmath {

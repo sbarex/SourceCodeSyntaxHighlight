@@ -53,7 +53,7 @@ public:
     : m_algebra( algebra )
     {};
 
-    size_t adjust_order(size_t order, size_t init, boost::array<wrapped_state_type, 4> &xerr)
+    size_t adjust_order(size_t order, size_t init, std::array<wrapped_state_type, 4> &xerr)
     {
         using std::abs;
 
@@ -149,7 +149,7 @@ public:
 
     typedef typename stepper_type::wrapped_state_type wrapped_state_type;
     typedef typename stepper_type::wrapped_deriv_type wrapped_deriv_type;
-    typedef boost::array< wrapped_state_type , 4 > error_storage_type;
+    typedef std::array< wrapped_state_type , 4 > error_storage_type;
 
     typedef typename stepper_type::coeff_type coeff_type;
     typedef controlled_adams_bashforth_moulton< ErrorStepper , StepAdjuster , OrderAdjuster , Resizer > controlled_stepper_type;
@@ -178,7 +178,7 @@ public:
         reset();
         coeff_type &coeff = m_stepper.coeff();
 
-        m_dxdt_resizer.adjust_size( inOut , detail::bind( &controlled_stepper_type::template resize_dxdt_impl< state_type > , detail::ref( *this ) , detail::_1 ) );
+        m_dxdt_resizer.adjust_size(inOut, [this](auto&& arg) { return this->resize_dxdt_impl<state_type>(std::forward<decltype(arg)>(arg)); });
 
         controlled_step_result res = fail;
 
@@ -206,7 +206,7 @@ public:
     template< class System >
     controlled_step_result try_step(System system, state_type & inOut, time_type &t, time_type &dt)
     {
-        m_xnew_resizer.adjust_size( inOut , detail::bind( &controlled_stepper_type::template resize_xnew_impl< state_type > , detail::ref( *this ) , detail::_1 ) );
+        m_xnew_resizer.adjust_size(inOut, [this](auto&& arg) { return this->resize_xnew_impl<state_type>(std::forward<decltype(arg)>(arg)); });
 
         controlled_step_result res = try_step(system, inOut, t, m_xnew.m_v, dt);
 
@@ -221,8 +221,8 @@ public:
     template< class System >
     controlled_step_result try_step(System system, const state_type & in, time_type &t, state_type & out, time_type &dt)
     {
-        m_xerr_resizer.adjust_size( in , detail::bind( &controlled_stepper_type::template resize_xerr_impl< state_type > , detail::ref( *this ) , detail::_1 ) );
-        m_dxdt_resizer.adjust_size( in , detail::bind( &controlled_stepper_type::template resize_dxdt_impl< state_type > , detail::ref( *this ) , detail::_1 ) );
+        m_xerr_resizer.adjust_size(in, [this](auto&& arg) { return this->resize_xerr_impl<state_type>(std::forward<decltype(arg)>(arg)); });
+        m_dxdt_resizer.adjust_size(in, [this](auto&& arg) { return this->resize_dxdt_impl<state_type>(std::forward<decltype(arg)>(arg)); });
 
         m_stepper.do_step_impl(system, in, t, out, dt, m_xerr[2].m_v);
 

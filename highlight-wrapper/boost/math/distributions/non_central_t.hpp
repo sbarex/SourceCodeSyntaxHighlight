@@ -97,9 +97,7 @@ namespace boost
                ++count;
                if(count > max_iter)
                {
-                  return policies::raise_evaluation_error(
-                     "cdf(non_central_t_distribution<%1%>, %1%)",
-                     "Series did not converge, closest value was %1%", sum, pol);
+                  return policies::raise_evaluation_error("cdf(non_central_t_distribution<%1%>, %1%)", "Series did not converge, closest value was %1%", sum, pol); // LCOV_EXCL_LINE
                }
             }
             return sum;
@@ -195,9 +193,7 @@ namespace boost
                last_term = term;
                if(count > max_iter)
                {
-                  return policies::raise_evaluation_error(
-                     "cdf(non_central_t_distribution<%1%>, %1%)",
-                     "Series did not converge, closest value was %1%", sum, pol);
+                  return policies::raise_evaluation_error("cdf(non_central_t_distribution<%1%>, %1%)", "Series did not converge, closest value was %1%", sum, pol); // LCOV_EXCL_LINE
                }
                ++count;
             }
@@ -396,10 +392,12 @@ namespace boost
             pois = gamma_p_derivative(T(k+1), d2, pol)
                * tgamma_delta_ratio(T(k + 1), T(0.5f))
                * delta / constants::root_two<T>();
+            BOOST_MATH_INSTRUMENT_VARIABLE(pois);
             // Starting beta term:
             xterm = x < y
                ? ibeta_derivative(T(k + 1), n / 2, x, pol)
                : ibeta_derivative(n / 2, T(k + 1), y, pol);
+            BOOST_MATH_INSTRUMENT_VARIABLE(xterm);
             T poisf(pois), xtermf(xterm);
             T sum = init_val;
             if((pois == 0) || (xterm == 0))
@@ -410,22 +408,25 @@ namespace boost
             // direction for recursion:
             //
             std::uintmax_t count = 0;
+            T old_ratio = 1;  // arbitrary "large" value
             for(auto i = k; i >= 0; --i)
             {
                T term = xterm * pois;
                sum += term;
-               if(((fabs(term/sum) < errtol) && (i != k)) || (term == 0))
+               BOOST_MATH_INSTRUMENT_VARIABLE(sum);
+               T ratio = fabs(term / sum);
+               if(((ratio < errtol) && (i != k) && (ratio < old_ratio)) || (term == 0))
                   break;
+               old_ratio = ratio;
                pois *= (i + 0.5f) / d2;
                xterm *= (i) / (x * (n / 2 + i));
                ++count;
                if(count > max_iter)
                {
-                  return policies::raise_evaluation_error(
-                     "pdf(non_central_t_distribution<%1%>, %1%)",
-                     "Series did not converge, closest value was %1%", sum, pol);
+                  return policies::raise_evaluation_error("pdf(non_central_t_distribution<%1%>, %1%)", "Series did not converge, closest value was %1%", sum, pol); // LCOV_EXCL_LINE
                }
             }
+            BOOST_MATH_INSTRUMENT_VARIABLE(sum);
             for(auto i = k + 1; ; ++i)
             {
                poisf *= d2 / (i + 0.5f);
@@ -437,11 +438,10 @@ namespace boost
                ++count;
                if(count > max_iter)
                {
-                  return policies::raise_evaluation_error(
-                     "pdf(non_central_t_distribution<%1%>, %1%)",
-                     "Series did not converge, closest value was %1%", sum, pol);
+                  return policies::raise_evaluation_error("pdf(non_central_t_distribution<%1%>, %1%)", "Series did not converge, closest value was %1%", sum, pol); // LCOV_EXCL_LINE
                }
             }
+            BOOST_MATH_INSTRUMENT_VARIABLE(sum);
             return sum;
          }
 
@@ -505,9 +505,12 @@ namespace boost
             // Calculate pdf:
             //
             T dt = n * t / (n * n + 2 * n * t * t + t * t * t * t);
+            BOOST_MATH_INSTRUMENT_VARIABLE(dt);
             T result = non_central_beta_pdf(a, b, d2, x, y, pol);
+            BOOST_MATH_INSTRUMENT_VARIABLE(result);
             T tol = tools::epsilon<T>() * result * 500;
             result = non_central_t2_pdf(n, delta, x, y, pol, result);
+            BOOST_MATH_INSTRUMENT_VARIABLE(result);
             if(result <= tol)
                result = 0;
             result *= dt;
@@ -634,9 +637,8 @@ namespace boost
                //
                // Can't a thing if one of p and q is zero:
                //
-               return policies::raise_evaluation_error<RealType>(function,
-                  "Can't find degrees of freedom when the probability is 0 or 1, only possible answer is %1%",
-                  RealType(std::numeric_limits<RealType>::quiet_NaN()), Policy());
+               return policies::raise_evaluation_error<RealType>(function, "Can't find degrees of freedom when the probability is 0 or 1, only possible answer is %1%", // LCOV_EXCL_LINE
+                  RealType(std::numeric_limits<RealType>::quiet_NaN()), Policy()); // LCOV_EXCL_LINE
             }
             t_degrees_of_freedom_finder<RealType, Policy> f(delta, x, p < q ? p : q, p < q ? false : true);
             tools::eps_tolerance<RealType> tol(policies::digits<RealType, Policy>());
@@ -650,8 +652,8 @@ namespace boost
             RealType result = ir.first + (ir.second - ir.first) / 2;
             if(max_iter >= policies::get_max_root_iterations<Policy>())
             {
-               return policies::raise_evaluation_error<RealType>(function, "Unable to locate solution in a reasonable time:"
-                  " or there is no answer to problem.  Current best guess is %1%", result, Policy());
+               return policies::raise_evaluation_error<RealType>(function, "Unable to locate solution in a reasonable time:" // LCOV_EXCL_LINE
+                  " or there is no answer to problem.  Current best guess is %1%", result, Policy()); // LCOV_EXCL_LINE
             }
             return result;
          }
@@ -687,9 +689,8 @@ namespace boost
                //
                // Can't do a thing if one of p and q is zero:
                //
-               return policies::raise_evaluation_error<RealType>(function,
-                  "Can't find non-centrality parameter when the probability is 0 or 1, only possible answer is %1%",
-                  RealType(std::numeric_limits<RealType>::quiet_NaN()), Policy());
+               return policies::raise_evaluation_error<RealType>(function, "Can't find non-centrality parameter when the probability is 0 or 1, only possible answer is %1%", // LCOV_EXCL_LINE
+                  RealType(std::numeric_limits<RealType>::quiet_NaN()), Policy()); // LCOV_EXCL_LINE
             }
             t_non_centrality_finder<RealType, Policy> f(v, x, p < q ? p : q, p < q ? false : true);
             tools::eps_tolerance<RealType> tol(policies::digits<RealType, Policy>());
@@ -708,8 +709,8 @@ namespace boost
             RealType result = ir.first + (ir.second - ir.first) / 2;
             if(max_iter >= policies::get_max_root_iterations<Policy>())
             {
-               return policies::raise_evaluation_error<RealType>(function, "Unable to locate solution in a reasonable time:"
-                  " or there is no answer to problem.  Current best guess is %1%", result, Policy());
+               return policies::raise_evaluation_error<RealType>(function, "Unable to locate solution in a reasonable time:" // LCOV_EXCL_LINE
+                  " or there is no answer to problem.  Current best guess is %1%", result, Policy()); // LCOV_EXCL_LINE
             }
             return result;
          }

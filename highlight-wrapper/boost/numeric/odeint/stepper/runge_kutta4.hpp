@@ -30,7 +30,7 @@
 #include <boost/numeric/odeint/algebra/algebra_dispatcher.hpp>
 #include <boost/numeric/odeint/algebra/operations_dispatcher.hpp>
 
-#include <boost/array.hpp>
+#include <array>
 
 #include <boost/numeric/odeint/util/resizer.hpp>
 
@@ -42,7 +42,7 @@ namespace odeint {
 
 #ifndef DOXYGEN_SKIP
 template< class Value = double >
-struct rk4_coefficients_a1 : boost::array< Value , 1 >
+struct rk4_coefficients_a1 : std::array< Value , 1 >
 {
     rk4_coefficients_a1( void )
     {
@@ -51,7 +51,7 @@ struct rk4_coefficients_a1 : boost::array< Value , 1 >
 };
 
 template< class Value = double >
-struct rk4_coefficients_a2 : boost::array< Value , 2 >
+struct rk4_coefficients_a2 : std::array< Value , 2 >
 {
     rk4_coefficients_a2( void )
     {
@@ -62,7 +62,7 @@ struct rk4_coefficients_a2 : boost::array< Value , 2 >
 
 
 template< class Value = double >
-struct rk4_coefficients_a3 : boost::array< Value , 3 >
+struct rk4_coefficients_a3 : std::array< Value , 3 >
 {
     rk4_coefficients_a3( void )
             {
@@ -73,7 +73,7 @@ struct rk4_coefficients_a3 : boost::array< Value , 3 >
 };
 
 template< class Value = double >
-struct rk4_coefficients_b : boost::array< Value , 4 >
+struct rk4_coefficients_b : std::array< Value , 4 >
 {
     rk4_coefficients_b( void )
     {
@@ -85,7 +85,7 @@ struct rk4_coefficients_b : boost::array< Value , 4 >
 };
 
 template< class Value = double >
-struct rk4_coefficients_c : boost::array< Value , 4 >
+struct rk4_coefficients_c : std::array< Value , 4 >
 {
     rk4_coefficients_c( void )
     {

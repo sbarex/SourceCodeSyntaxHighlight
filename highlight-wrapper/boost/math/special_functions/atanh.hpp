@@ -40,21 +40,15 @@ namespace boost
 
             if(x < -1)
             {
-               return policies::raise_domain_error<T>(
-                  function,
-                  "atanh requires x >= -1, but got x = %1%.", x, pol);
+               return policies::raise_domain_error<T>(function, "atanh requires x >= -1, but got x = %1%.", x, pol);
             }
             else if(x > 1)
             {
-               return policies::raise_domain_error<T>(
-                  function,
-                  "atanh requires x <= 1, but got x = %1%.", x, pol);
+               return policies::raise_domain_error<T>(function, "atanh requires x <= 1, but got x = %1%.", x, pol);
             }
             else if((boost::math::isnan)(x))
             {
-               return policies::raise_domain_error<T>(
-                  function,
-                  "atanh requires -1 <= x <= 1, but got x = %1%.", x, pol);
+               return policies::raise_domain_error<T>(function, "atanh requires -1 <= x <= 1, but got x = %1%.", x, pol);
             }
             else if(x < -1 + tools::epsilon<T>())
             {

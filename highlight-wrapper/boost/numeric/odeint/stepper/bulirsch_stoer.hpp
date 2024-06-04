@@ -152,7 +152,7 @@ public:
     template< class System , class StateInOut , class DerivIn >
     controlled_step_result try_step( System system , StateInOut &x , const DerivIn &dxdt , time_type &t , time_type &dt )
     {
-        m_xnew_resizer.adjust_size( x , detail::bind( &controlled_error_bs_type::template resize_m_xnew< StateInOut > , detail::ref( *this ) , detail::_1 ) );
+        m_xnew_resizer.adjust_size(x, [this](auto&& arg) { return this->resize_m_xnew<StateInOut>(std::forward<decltype(arg)>(arg)); });
         controlled_step_result res = try_step( system , x , dxdt , t , m_xnew.m_v , dt );
         if( res == success )
         {
@@ -171,7 +171,7 @@ public:
     try_step( System system , const StateIn &in , time_type &t , StateOut &out , time_type &dt )
     {
         typename odeint::unwrap_reference< System >::type &sys = system;
-        m_dxdt_resizer.adjust_size( in , detail::bind( &controlled_error_bs_type::template resize_m_dxdt< StateIn > , detail::ref( *this ) , detail::_1 ) );
+        m_dxdt_resizer.adjust_size(in, [this](auto&& arg) { return this->resize_m_dxdt<StateIn>(std::forward<decltype(arg)>(arg)); });
         sys( in , m_dxdt.m_v , t );
         return try_step( system , in , m_dxdt.m_v , t , out , dt );
     }
@@ -198,7 +198,7 @@ public:
 
         static const value_type val1( 1.0 );
 
-        if( m_resizer.adjust_size( in , detail::bind( &controlled_error_bs_type::template resize_impl< StateIn > , detail::ref( *this ) , detail::_1 ) ) )
+        if( m_resizer.adjust_size(in, [this](auto&& arg) { return this->resize_impl<StateIn>(std::forward<decltype(arg)>(arg)); }) )
         {
             reset(); // system resized -> reset
         }
@@ -388,7 +388,7 @@ private:
     controlled_step_result try_step_v1( System system , StateInOut &x , time_type &t , time_type &dt )
     {
         typename odeint::unwrap_reference< System >::type &sys = system;
-        m_dxdt_resizer.adjust_size( x , detail::bind( &controlled_error_bs_type::template resize_m_dxdt< StateInOut > , detail::ref( *this ) , detail::_1 ) );
+        m_dxdt_resizer.adjust_size(x, [this](auto&& arg) { return this->resize_m_dxdt<StateInOut>(std::forward<decltype(arg)>(arg)); });
         sys( x , m_dxdt.m_v ,t );
         return try_step( system , x , m_dxdt.m_v , t , dt );
     }

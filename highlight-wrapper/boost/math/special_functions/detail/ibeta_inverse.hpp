@@ -15,6 +15,8 @@
 #include <boost/math/special_functions/erf.hpp>
 #include <boost/math/tools/roots.hpp>
 #include <boost/math/special_functions/detail/t_distribution_inv.hpp>
+#include <boost/math/special_functions/fpclassify.hpp>
+#include <boost/math/tools/precision.hpp>
 
 namespace boost{ namespace math{ namespace detail{
 
@@ -25,23 +27,16 @@ namespace boost{ namespace math{ namespace detail{
 template <class T>
 struct temme_root_finder
 {
-   temme_root_finder(const T t_, const T a_) : t(t_), a(a_) {}
+   temme_root_finder(const T t_, const T a_) : t(t_), a(a_) {
+      BOOST_MATH_ASSERT(
+         math::tools::epsilon<T>() <= a && !(boost::math::isinf)(a));
+   }
 
    boost::math::tuple<T, T> operator()(T x)
    {
       BOOST_MATH_STD_USING // ADL of std names
 
       T y = 1 - x;
-      if(y == 0)
-      {
-         T big = tools::max_value<T>() / 4;
-         return boost::math::make_tuple(static_cast<T>(-big), static_cast<T>(-big));
-      }
-      if(x == 0)
-      {
-         T big = tools::max_value<T>() / 4;
-         return boost::math::make_tuple(static_cast<T>(-big), big);
-      }
       T f = log(x) + a * log(y) + t;
       T f1 = (1 / x) - (a / (y));
       return boost::math::make_tuple(f, f1);
@@ -410,6 +405,10 @@ T temme_method_3_ibeta_inverse(T a, T b, T p, T q, const Policy& pol)
    T lower = eta < mu ? cross : 0;
    T upper = eta < mu ? 1 : cross;
    T x = (lower + upper) / 2;
+
+   // Early exit for cases with numerical precision issues.
+   if (cross == 0 || cross == 1) { return cross; }
+   
    x = tools::newton_raphson_iterate(
       temme_root_finder<T>(u, mu), x, lower, upper, policies::digits<T, Policy>() / 2);
 #ifdef BOOST_INSTRUMENT
@@ -641,7 +640,7 @@ T ibeta_inv_imp(T a, T b, T p, T q, const Policy& pol, T* py)
             T bet = 0;
             if (b < 2)
             {
-#ifndef BOOST_NO_EXCEPTIONS
+#ifndef BOOST_MATH_NO_EXCEPTIONS
                try
 #endif
                {
@@ -649,11 +648,11 @@ T ibeta_inv_imp(T a, T b, T p, T q, const Policy& pol, T* py)
 
                   typedef typename Policy::overflow_error_type overflow_type;
 
-                  BOOST_IF_CONSTEXPR(overflow_type::value != boost::math::policies::throw_on_error)
+                  BOOST_MATH_IF_CONSTEXPR(overflow_type::value != boost::math::policies::throw_on_error)
                      if(bet > tools::max_value<T>())
                         bet = tools::max_value<T>();
                }
-#ifndef BOOST_NO_EXCEPTIONS
+#ifndef BOOST_MATH_NO_EXCEPTIONS
                catch (const std::overflow_error&)
                {
                   bet = tools::max_value<T>();
@@ -715,11 +714,11 @@ T ibeta_inv_imp(T a, T b, T p, T q, const Policy& pol, T* py)
       T bet = 0;
       T xg;
       bool overflow = false;
-#ifndef BOOST_NO_EXCEPTIONS
+#ifndef BOOST_MATH_NO_EXCEPTIONS
       try {
 #endif
          bet = boost::math::beta(a, b, pol);
-#ifndef BOOST_NO_EXCEPTIONS
+#ifndef BOOST_MATH_NO_EXCEPTIONS
       }
       catch (const std::runtime_error&)
       {
@@ -828,16 +827,30 @@ T ibeta_inv_imp(T a, T b, T p, T q, const Policy& pol, T* py)
          std::swap(p, q);
          invert = !invert;
       }
-      if(pow(p, 1/a) < 0.5)
+      if (a < tools::min_value<T>())
       {
-#ifndef BOOST_NO_EXCEPTIONS
+         // Avoid spurious overflows for denorms:
+         if (p < 1)
+         {
+            x = 1;
+            y = 0;
+         }
+         else
+         {
+            x = 0;
+            y = 1;
+         }
+      }
+      else if(pow(p, 1/a) < 0.5)
+      {
+#ifndef BOOST_MATH_NO_EXCEPTIONS
          try 
          {
 #endif
             x = pow(p * a * boost::math::beta(a, b, pol), 1 / a);
             if ((x > 1) || !(boost::math::isfinite)(x))
                x = 1;
-#ifndef BOOST_NO_EXCEPTIONS
+#ifndef BOOST_MATH_NO_EXCEPTIONS
          }
          catch (const std::overflow_error&)
          {
@@ -851,14 +864,14 @@ T ibeta_inv_imp(T a, T b, T p, T q, const Policy& pol, T* py)
       else /*if(pow(q, 1/b) < 0.1)*/
       {
          // model a distorted quarter circle:
-#ifndef BOOST_NO_EXCEPTIONS
+#ifndef BOOST_MATH_NO_EXCEPTIONS
          try 
          {
 #endif
             y = pow(1 - pow(p, b * boost::math::beta(a, b, pol)), 1/b);
             if ((y > 1) || !(boost::math::isfinite)(y))
                y = 1;
-#ifndef BOOST_NO_EXCEPTIONS
+#ifndef BOOST_MATH_NO_EXCEPTIONS
          }
          catch (const std::overflow_error&)
          {

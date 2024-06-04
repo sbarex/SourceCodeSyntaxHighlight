@@ -53,7 +53,18 @@ struct algebra_dispatcher< thrust::device_vector< T , A > >
 
 #include <thrust/version.h>
 
-#if THRUST_VERSION >= 100600
+#if THRUST_VERSION >= 101000
+
+#include <thrust/detail/vector_base.h>
+namespace boost { namespace numeric { namespace odeint {
+    template< class T , class A >
+    struct algebra_dispatcher< thrust::detail::vector_base< T , A > >
+    {
+        typedef thrust_algebra algebra_type;
+    };
+} } }
+
+#elif THRUST_VERSION >= 100600
 
 // specialization for thrust cpp vector
 #include <thrust/system/cpp/vector.h>

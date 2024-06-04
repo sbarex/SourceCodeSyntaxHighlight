@@ -19,8 +19,7 @@
 #define BOOST_NUMERIC_ODEINT_INTEGRATE_OBSERVER_COLLECTION_HPP_INCLUDED
 
 #include <vector>
-
-#include <boost/function.hpp>
+#include <functional>
 
 namespace boost {
 namespace numeric {
@@ -31,7 +30,7 @@ class observer_collection
 {
 public:
 
-    typedef boost::function< void( const State& , const Time& ) > observer_type;
+    typedef std::function< void( const State& , const Time& ) > observer_type;
     typedef std::vector< observer_type > collection_type;
 
     void operator()( const State& x , Time t )

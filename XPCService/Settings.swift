@@ -59,6 +59,7 @@ class SettingsBase: NSObject {
         static let convertEOL = "convert-EOL"
         
         static let version = "version"
+        static let about = "about"
         static let debug = "debug"
         
         static let dumpPlain = "dump"
@@ -987,6 +988,30 @@ class Settings: SettingsBase {
     
     internal var plainSettings: [PlainSettings] = []
     
+    var app_version: String {
+        var title: String = "<a href='https://github.com/sbarex/SourceCodeSyntaxHighlight'>";
+        if let info = Bundle.main.infoDictionary {
+            title += (info["CFBundleExecutable"] as? String ?? "Syntax Highlight") + "</a>"
+            if let version = info["CFBundleShortVersionString"] as? String,
+                let build = info["CFBundleVersion"] as? String {
+                title += ", version \(version) (\(build))"
+            }
+            if let copy = info["NSHumanReadableCopyright"] as? String {
+                title += ".<br />\n\(copy.trimmingCharacters(in: CharacterSet(charactersIn: ". ")) + " with <span style='font-style: normal'>❤️</span>")"
+            }
+        } else {
+            title += "Syntax Highlight</a>"
+        }
+        title += ".<br/>\nIf you like this app, <a href='https://www.buymeacoffee.com/sbarex'><strong>buy me a coffee</strong></a>!"
+        return title
+    }
+    
+    dynamic var isAboutVisible: Bool = true {
+        didSet {
+            requestRefreshOnChanged(oldValue: oldValue, newValue: isAboutVisible)
+        }
+    }
+    
     dynamic var isDebug: Bool = false {
         didSet {
             requestRefreshOnChanged(oldValue: oldValue, newValue: isDebug)
@@ -1074,6 +1099,7 @@ class Settings: SettingsBase {
     required internal init(settings: [String: AnyHashable]) {
         self.version = settings[SettingsBase.Key.version] as? Float ?? Settings.version
         
+        self.isAboutVisible = true
         self.isDebug = false
         
         self.isVCS = false
@@ -1121,6 +1147,9 @@ class Settings: SettingsBase {
         
         super.override(fromDictionary: dict)
         
+        if let v = settings[SettingsBase.Key.about] as? Bool {
+            self.isAboutVisible = v
+        }
         if let v = settings[SettingsBase.Key.debug] as? Bool {
             self.isDebug = v
         }
@@ -1189,6 +1218,7 @@ class Settings: SettingsBase {
     /// Output the settings to a dictionary.
     override func toDictionary(forSaving: Bool = false) -> [String: AnyHashable] {
         var r = super.toDictionary(forSaving: forSaving)
+        r[SettingsBase.Key.about] = self.isAboutVisible
         
         r[SettingsBase.Key.debug] = self.isDebug
         

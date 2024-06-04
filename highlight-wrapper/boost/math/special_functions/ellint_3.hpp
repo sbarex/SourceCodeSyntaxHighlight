@@ -55,8 +55,7 @@ T ellint_pi_imp(T v, T phi, T k, T vc, const Policy& pol)
 
    if (k * k * sphi * sphi > 1)
    {
-      return policies::raise_domain_error<T>(function,
-         "Got k = %1%, function requires |k| <= 1", k, pol);
+      return policies::raise_domain_error<T>(function, "Got k = %1%, function requires |k| <= 1", k, pol);
    }
    // Special cases first:
    if(v == 0)
@@ -67,8 +66,7 @@ T ellint_pi_imp(T v, T phi, T k, T vc, const Policy& pol)
    if((v > 0) && (1 / v < (sphi * sphi)))
    {
       // Complex result is a domain error:
-      return policies::raise_domain_error<T>(function,
-         "Got v = %1%, but result is complex for v > 1 / sin^2(phi)", v, pol);
+      return policies::raise_domain_error<T>(function, "Got v = %1%, but result is complex for v > 1 / sin^2(phi)", v, pol);
    }
 
    if(v == 1)
@@ -107,10 +105,8 @@ T ellint_pi_imp(T v, T phi, T k, T vc, const Policy& pol)
       //
       if(fabs(phi) > 1 / tools::epsilon<T>())
       {
-         if(v > 1)
-            return policies::raise_domain_error<T>(
-            function,
-            "Got v = %1%, but this is only supported for 0 <= phi <= pi/2", v, pol);
+         // Invalid for v > 1, this case is caught above since v > 1 implies 1/v < sin^2(phi)
+         BOOST_MATH_ASSERT(v <= 1);
          //  
          // Phi is so large that phi%pi is necessarily zero (or garbage),
          // just return the second part of the duplication formula:
@@ -180,8 +176,10 @@ T ellint_pi_imp(T v, T phi, T k, T vc, const Policy& pol)
       T Nm1 = (1 - k2) / (1 - v);
       T p2 = -v * N;
       T t;
-      if(p2 <= tools::min_value<T>())
+      if (p2 <= tools::min_value<T>())
+      {
          p2 = sqrt(-v) * sqrt(N);
+      }
       else
          p2 = sqrt(p2);
       T delta = sqrt(1 - k2 * sphi * sphi);
@@ -282,14 +280,12 @@ T ellint_pi_imp(T v, T k, T vc, const Policy& pol)
 
     if (abs(k) >= 1)
     {
-       return policies::raise_domain_error<T>(function,
-            "Got k = %1%, function requires |k| <= 1", k, pol);
+       return policies::raise_domain_error<T>(function, "Got k = %1%, function requires |k| <= 1", k, pol);
     }
     if(vc <= 0)
     {
        // Result is complex:
-       return policies::raise_domain_error<T>(function,
-            "Got v = %1%, function requires v < 1", v, pol);
+       return policies::raise_domain_error<T>(function, "Got v = %1%, function requires v < 1", v, pol);
     }
 
     if(v == 0)

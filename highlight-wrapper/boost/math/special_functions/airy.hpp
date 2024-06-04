@@ -186,7 +186,7 @@ T airy_ai_zero_imp(int m, const Policy& pol)
    std::uintmax_t iterations_used = iterations_allowed;
 
    // Use a dynamic tolerance because the roots get closer the higher m gets.
-   T tolerance;
+   T tolerance;  // LCOV_EXCL_LINE
 
    if     (m <=   10) { tolerance = T(0.3F); }
    else if(m <=  100) { tolerance = T(0.1F); }
@@ -238,7 +238,7 @@ T airy_bi_zero_imp(int m, const Policy& pol)
    std::uintmax_t iterations_used = iterations_allowed;
 
    // Use a dynamic tolerance because the roots get closer the higher m gets.
-   T tolerance;
+   T tolerance; // LCOV_EXCL_LINE
 
    if     (m <=   10) { tolerance = T(0.3F); }
    else if(m <=  100) { tolerance = T(0.1F); }

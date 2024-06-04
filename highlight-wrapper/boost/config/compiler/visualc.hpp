@@ -263,6 +263,9 @@
 #define BOOST_NO_CXX17_INLINE_VARIABLES
 #define BOOST_NO_CXX17_FOLD_EXPRESSIONS
 #endif
+#if (_MSC_VER < 1914) || (_MSVC_LANG < 201703)
+#define BOOST_NO_CXX17_AUTO_NONTYPE_TEMPLATE_PARAMS
+#endif
 
 //
 // Things that don't work in clr mode:
@@ -303,6 +306,10 @@
 #  define BOOST_CXX_VERSION 201703L
 #elif BOOST_MSVC >= 1916
 #  define BOOST_CXX_VERSION 201402L
+#endif
+
+#if BOOST_CXX_VERSION >= 201703L
+#  define BOOST_ATTRIBUTE_UNUSED [[maybe_unused]]
 #endif
 
 #ifndef BOOST_COMPILER

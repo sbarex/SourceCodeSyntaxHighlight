@@ -40,13 +40,11 @@ T ellint_rc_imp(T x, T y, const Policy& pol)
 
     if(x < 0)
     {
-       return policies::raise_domain_error<T>(function,
-            "Argument x must be non-negative but got %1%", x, pol);
+       return policies::raise_domain_error<T>(function, "Argument x must be non-negative but got %1%", x, pol);
     }
     if(y == 0)
     {
-       return policies::raise_domain_error<T>(function,
-            "Argument y must not be zero but got %1%", y, pol);
+       return policies::raise_domain_error<T>(function, "Argument y must not be zero but got %1%", y, pol);
     }
 
     // for y < 0, the integral is singular, return Cauchy principal value

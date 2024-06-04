@@ -1,4 +1,5 @@
 {
+  "originHash" : "15968c5bad8d4865dd1b180983f5457041ce820d0ebeb16cc3e861da762c4bfc",
   "pins" : [
     {
       "identity" : "sparkle",
@@ -6,7 +7,7 @@
       "location" : "https://github.com/sparkle-project/Sparkle",
       "state" : {
         "branch" : "2.x",
-        "revision" : "f0ceaf5cc9f3f23daa0ccb6dcebd79fc96ccc7d9"
+        "revision" : "0ad8d83066f30834ab8acd422e4b40e47b84206c"
       }
     },
     {
@@ -14,10 +15,10 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/jpsim/Yams",
       "state" : {
-        "revision" : "0d9ee7ea8c4ebd4a489ad7a73d5c6cad55d6fed3",
-        "version" : "5.0.6"
+        "revision" : "9234124cff5e22e178988c18d8b95a8ae8007f76",
+        "version" : "5.1.2"
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }

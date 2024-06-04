@@ -154,8 +154,7 @@ T ellint_k_imp(T k, const Policy& pol, std::integral_constant<int, 2> const&)
 
     if (abs(k) > 1)
     {
-       return policies::raise_domain_error<T>(function,
-            "Got k = %1%, function requires |k| <= 1", k, pol);
+       return policies::raise_domain_error<T>(function, "Got k = %1%, function requires |k| <= 1", k, pol);
     }
     if (abs(k) == 1)
     {
@@ -187,7 +186,7 @@ T ellint_k_imp(T k, const Policy& pol, std::integral_constant<int, 2> const&)
 // archived in the code below), but was found to have slightly higher error rates.
 //
 template <typename T, typename Policy>
-BOOST_FORCEINLINE T ellint_k_imp(T k, const Policy& pol, std::integral_constant<int, 0> const&)
+BOOST_MATH_FORCEINLINE T ellint_k_imp(T k, const Policy& pol, std::integral_constant<int, 0> const&)
 {
    using std::abs;
    using namespace boost::math::tools;
@@ -460,7 +459,7 @@ BOOST_FORCEINLINE T ellint_k_imp(T k, const Policy& pol, std::integral_constant<
    }
 }
 template <typename T, typename Policy>
-BOOST_FORCEINLINE T ellint_k_imp(T k, const Policy& pol, std::integral_constant<int, 1> const&)
+BOOST_MATH_FORCEINLINE T ellint_k_imp(T k, const Policy& pol, std::integral_constant<int, 1> const&)
 {
    using std::abs;
    using namespace boost::math::tools;
@@ -746,7 +745,7 @@ BOOST_FORCEINLINE T ellint_k_imp(T k, const Policy& pol, std::integral_constant<
 }
 
 template <typename T, typename Policy>
-BOOST_FORCEINLINE typename tools::promote_args<T>::type ellint_1(T k, const Policy& pol, const std::true_type&)
+BOOST_MATH_FORCEINLINE typename tools::promote_args<T>::type ellint_1(T k, const Policy& pol, const std::true_type&)
 {
    typedef typename tools::promote_args<T>::type result_type;
    typedef typename policies::evaluation<result_type, Policy>::type value_type;
@@ -762,7 +761,7 @@ BOOST_FORCEINLINE typename tools::promote_args<T>::type ellint_1(T k, const Poli
 }
 
 template <class T1, class T2>
-BOOST_FORCEINLINE typename tools::promote_args<T1, T2>::type ellint_1(T1 k, T2 phi, const std::false_type&)
+BOOST_MATH_FORCEINLINE typename tools::promote_args<T1, T2>::type ellint_1(T1 k, T2 phi, const std::false_type&)
 {
    return boost::math::ellint_1(k, phi, policies::policy<>());
 }
@@ -771,14 +770,14 @@ BOOST_FORCEINLINE typename tools::promote_args<T1, T2>::type ellint_1(T1 k, T2 p
 
 // Complete elliptic integral (Legendre form) of the first kind
 template <typename T>
-BOOST_FORCEINLINE typename tools::promote_args<T>::type ellint_1(T k)
+BOOST_MATH_FORCEINLINE typename tools::promote_args<T>::type ellint_1(T k)
 {
    return ellint_1(k, policies::policy<>());
 }
 
 // Elliptic integral (Legendre form) of the first kind
 template <class T1, class T2, class Policy>
-BOOST_FORCEINLINE typename tools::promote_args<T1, T2>::type ellint_1(T1 k, T2 phi, const Policy& pol)
+BOOST_MATH_FORCEINLINE typename tools::promote_args<T1, T2>::type ellint_1(T1 k, T2 phi, const Policy& pol)  // LCOV_EXCL_LINE gcc misses this but sees the function body, strange!
 {
    typedef typename tools::promote_args<T1, T2>::type result_type;
    typedef typename policies::evaluation<result_type, Policy>::type value_type;
@@ -786,7 +785,7 @@ BOOST_FORCEINLINE typename tools::promote_args<T1, T2>::type ellint_1(T1 k, T2 p
 }
 
 template <class T1, class T2>
-BOOST_FORCEINLINE typename tools::promote_args<T1, T2>::type ellint_1(T1 k, T2 phi)
+BOOST_MATH_FORCEINLINE typename tools::promote_args<T1, T2>::type ellint_1(T1 k, T2 phi)
 {
    typedef typename policies::is_policy<T2>::type tag_type;
    return detail::ellint_1(k, phi, tag_type());

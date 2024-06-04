@@ -198,7 +198,7 @@ The application can also handle some [plain files](#plain-files) **without exten
 - Korn Shell script files (`.ksh`)
 - Kotlin source files (`.kt`, `.kts`)
 - LESS stylesheet (`.less`)
-- Lilypond files (`.ly`)x1
+- Lilypond files (`.ly`, `.ily`)
 - Lisp source files (`.lisp`, `.lsp`, `.asd`, `.el`)
 - Logos source files (`.xm`)
 - Lua source files (`.lua`)
@@ -210,6 +210,7 @@ The application can also handle some [plain files](#plain-files) **without exten
 - Microsoft PowerShell files (`.psm1`, `.psd1`, `.ps1`)
 - NextFlow (`.nf`) _as Groovy (Java)_
 - Nim source files (`.nim`)
+- Nix Expression Language (`.nix`)
 - Node CommonJS module (`.cjs`)
 - Objective-C source files (`.m`)
 - Objective-C++ source files (`.mm`)
@@ -305,6 +306,7 @@ You can set the settings for all supported formats on the _General_ tab.
 |Convert line ending| Allow to convert Windows (`CRLF`) and Mac Classic (`CR`) line ending to the Unix style (`LN`). This option is ignored when a _preprocessor_ is set or when a _Language Server_ is enabled. The line ending conversion is made my [`dos2unix`](https://waterlan.home.xs4all.nl/dos2unix.html). |Yes|
 |VCS Support| If enabled, allow to highlight lines added/edited/removed from last commit. It can handle VCS based on `git` and `mercurial`. |Yes|
 |Custom Quick Look size|Allow you to choose a custom size for the content area of the Quick Look window. _Use with caution on macOS before version 12 Monterey_.||
+|Show about info | If enabled, shows information about this application at the bottom of the preview page.|Yes|
 |Debug | If enabled, a `colorize.log` and `colorize.rtf\|html` file will be created on your Desktop folder with the log of last rendering.|Yes|
 
 You can also override the global options for some formats on the _Formats_ tab.
@@ -658,3 +660,5 @@ Highlight is developed by [Andre Simon](http://www.andre-simon.de/).
 Dos2unix is developed by [Erwin Waterlander](https://waterlan.home.xs4all.nl/dos2unix.html).
 
 This application was inspired by [anthonygelibert/QLColorCode](https://github.com/anthonygelibert/QLColorCode) and [NSGod/qlstephen](https://github.com/NSGod/qlstephen).
+
+If you find this application useful, [buy me a coffee](https://www.buymeacoffee.com/sbarex).

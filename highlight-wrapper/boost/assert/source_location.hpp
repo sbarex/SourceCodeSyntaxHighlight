@@ -7,9 +7,7 @@
 // Distributed under the Boost Software License, Version 1.0.
 // http://www.boost.org/LICENSE_1_0.txt
 
-#include <boost/current_function.hpp>
 #include <boost/config.hpp>
-#include <boost/config/workaround.hpp>
 #include <boost/cstdint.hpp>
 #include <iosfwd>
 #include <string>
@@ -145,6 +143,10 @@ template<class E, class T> std::basic_ostream<E, T> & operator<<( std::basic_ost
 #if defined(BOOST_DISABLE_CURRENT_LOCATION)
 
 # define BOOST_CURRENT_LOCATION ::boost::source_location()
+
+#elif defined(BOOST_MSVC) && BOOST_MSVC >= 1935
+
+# define BOOST_CURRENT_LOCATION ::boost::source_location(__builtin_FILE(), __builtin_LINE(), __builtin_FUNCSIG(), __builtin_COLUMN())
 
 #elif defined(BOOST_MSVC) && BOOST_MSVC >= 1926
 

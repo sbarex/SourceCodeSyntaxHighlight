@@ -7,17 +7,19 @@
 #ifndef BOOST_MATH_CCMATH_NEXT_HPP
 #define BOOST_MATH_CCMATH_NEXT_HPP
 
-#include <cmath>
+#include <boost/math/ccmath/detail/config.hpp>
+
+#ifdef BOOST_MATH_NO_CCMATH
+#error "The header <boost/math/next.hpp> can only be used in C++17 and later."
+#endif
+
+#include <stdexcept>
 #include <cfloat>
 #include <cstdint>
-#include <limits>
-#include <type_traits>
-#include <stdexcept>
 #include <boost/math/policies/policy.hpp>
 #include <boost/math/policies/error_handling.hpp>
 #include <boost/math/tools/assert.hpp>
 #include <boost/math/tools/config.hpp>
-#include <boost/math/tools/is_constant_evaluated.hpp>
 #include <boost/math/tools/precision.hpp>
 #include <boost/math/tools/traits.hpp>
 #include <boost/math/tools/promotion.hpp>
@@ -101,7 +103,7 @@ constexpr T get_smallest_value(const std::false_type&)
 template <typename T>
 constexpr T get_smallest_value()
 {
-    return get_smallest_value<T>(std::integral_constant<bool, std::numeric_limits<T>::is_specialized && (std::numeric_limits<T>::has_denorm == std::denorm_present)>());
+    return get_smallest_value<T>(std::integral_constant<bool, std::numeric_limits<T>::is_specialized>());
 }
 
 template <typename T>

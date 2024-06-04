@@ -19,6 +19,7 @@
 #ifndef BOOST_NUMERIC_ODEINT_UTIL_SPLIT_ADAPTOR_INCLUDED
 #define BOOST_NUMERIC_ODEINT_UTIL_SPLIT_ADAPTOR_INCLUDED
 
+#include <boost/numeric/odeint/tools/assert.hpp>
 #include <boost/range/adaptor/argument_fwd.hpp>
 #include <boost/range/size_type.hpp>
 #include <boost/range/iterator_range.hpp>
@@ -33,8 +34,8 @@ namespace detail {
 inline std::pair<std::size_t, std::size_t>
 split_offsets( std::size_t total_length, std::size_t index, std::size_t parts )
 {
-    BOOST_ASSERT( parts > 0 );
-    BOOST_ASSERT( index < parts );
+    BOOST_NUMERIC_ODEINT_ASSERT( parts > 0 );
+    BOOST_NUMERIC_ODEINT_ASSERT( index < parts );
     const std::size_t
         slice = total_length / parts,
         partial = total_length % parts,

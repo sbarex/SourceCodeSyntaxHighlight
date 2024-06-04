@@ -307,5 +307,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
             alert.runModal()
         }
     }
+    
+    @IBAction func buyMeACoffee(_ sender: Any?) {
+        let url = URL(string: "https://www.buymeacoffee.com/sbarex")!
+        NSWorkspace.shared.open(url)
+    }
 }
 

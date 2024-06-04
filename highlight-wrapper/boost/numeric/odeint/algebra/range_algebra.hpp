@@ -3,7 +3,7 @@
  boost/numeric/odeint/algebra/range_algebra.hpp
 
  [begin_description]
- Default algebra, which works with the most state types, like vector< double >, boost::array< double >, boost::range.
+ Default algebra, which works with the most state types, like vector< double >, std::array< double >, boost::range.
  Internally is uses boost::range to obtain the begin and end iterator of the according sequence.
  [end_description]
 

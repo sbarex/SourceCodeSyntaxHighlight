@@ -70,6 +70,12 @@ struct ColorizeArguments {
             }
         }
         
+        if custom_settings.isAboutVisible {
+            env["SH_VERSION"] = custom_settings.app_version
+            hlArguments.arguments.append("--plug-in=about")
+            try? "Highlight plugin: about.lua".appendLine(to: custom_settings.logFile)
+        }
+        
         if custom_settings.isVCS && !custom_settings.vcsDiff.isEmpty {
             // Set the env used by the vcs plugin.
             env["VCS_DIFF"] = custom_settings.vcsDiff.joined(separator: " ")

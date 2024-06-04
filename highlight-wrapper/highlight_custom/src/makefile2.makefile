@@ -17,11 +17,11 @@ CXX ?= g++
 
 QMAKE ?= qmake
 
-CFLAGS:=-Wall -O2 ${CFLAGS} ${MYCFLAGS} -std=c++11 -D_FILE_OFFSET_BITS=64 -Wno-unknown-warning-option
+CFLAGS:=-Wall -O2 ${CFLAGS} ${MYCFLAGS} -std=c++17 -D_FILE_OFFSET_BITS=64 -Wno-unknown-warning-option
 
 #CFLAGS:= -fPIC -O2 -g -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -fexceptions -fstack-protector-strong -grecord-gcc-switches -fasynchronous-unwind-tables -fstack-clash-protection
 
-#CFLAGS:=-ggdb -O0 ${CFLAGS} -std=c++11
+#CFLAGS:=-ggdb -O0 ${CFLAGS} -std=c++17
 
 CFLAGS_DILU=-fno-strict-aliasing
 

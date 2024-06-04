@@ -72,7 +72,7 @@ inline Real chebyshev_imp(unsigned n, Real const & x, const Policy&)
     Real T0 = 1;
     Real T1;
 
-    BOOST_IF_CONSTEXPR (second)
+    BOOST_MATH_IF_CONSTEXPR (second)
     {
         if (x > 1 || x < -1)
         {

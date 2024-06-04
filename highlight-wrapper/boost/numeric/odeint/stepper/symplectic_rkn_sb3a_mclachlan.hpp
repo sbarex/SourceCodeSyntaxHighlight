@@ -28,7 +28,7 @@
 
 #include <boost/numeric/odeint/util/resizer.hpp>
 
-#include <boost/array.hpp>
+#include <array>
 
 namespace boost {
 namespace numeric {
@@ -48,7 +48,7 @@ namespace symplectic_rkn_sb3a_mclachlan {
     */
 
     template< class Value >
-    struct coef_a_type : public boost::array< Value , 6 >
+    struct coef_a_type : public std::array< Value , 6 >
     {
         coef_a_type( void )
         {
@@ -63,7 +63,7 @@ namespace symplectic_rkn_sb3a_mclachlan {
     };
 
     template< class Value >
-    struct coef_b_type : public boost::array< Value , 6 >
+    struct coef_b_type : public std::array< Value , 6 >
     {
         coef_b_type( void )
         {

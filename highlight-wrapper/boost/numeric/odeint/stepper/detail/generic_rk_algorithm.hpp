@@ -33,7 +33,7 @@
 #include <boost/fusion/mpl.hpp>
 #include <boost/fusion/sequence.hpp>
 
-#include <boost/array.hpp>
+#include <array>
 
 #include <boost/numeric/odeint/algebra/range_algebra.hpp>
 #include <boost/numeric/odeint/algebra/default_operations.hpp>
@@ -49,14 +49,14 @@ namespace detail {
 template< class T , class Constant >
 struct array_wrapper
 {
-    typedef const typename boost::array< T , Constant::value > type;
+    typedef const typename std::array< T , Constant::value > type;
 };
 
 template< class T , size_t i >
 struct stage
 {
     T c;
-    boost::array< T , i > a;
+    std::array< T , i > a;
 };
 
 
@@ -91,8 +91,8 @@ public:
     >::type
     >::type coef_a_type;
 
-    typedef boost::array< Value , StageCount > coef_b_type;
-    typedef boost::array< Value , StageCount > coef_c_type;
+    typedef std::array< Value , StageCount > coef_b_type;
+    typedef std::array< Value , StageCount > coef_c_type;
 
     typedef typename boost::fusion::result_of::as_vector
             <

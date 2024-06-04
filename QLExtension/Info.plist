@@ -107,6 +107,7 @@
 				<string>com.unknown.lhs</string>
 				<string>com.seriflabs.xmp</string>
 				<string>com.symfony.twig</string>
+				<string>dev.nix.source</string>
 				<string>dev.svelte.source</string>
 				<string>edu.uo.texshop.tex</string>
 				<string>info.haml.haml</string>
@@ -292,6 +293,8 @@
 				<string>public.typescript</string>
 				<string>public.unix-executable</string>
 				<string>public.xml</string>
+				<string>public.xml.xsd</string>
+				<string>public.xsd</string>
 				<string>public.yaml</string>
 				<string>public.zsh-script</string>
 				<string>tk.tcl.tcl</string>
@@ -378,6 +381,8 @@
 				<string>dyn.ah62d4rv4ge8028k</string>
 				<string>dyn.ah62d4rv4ge8048drru</string>
 				<string>dyn.ah62d4rv4ge81k3xxsvu1k3</string>
+				<string>dyn.ah62d4rv4ge8064p2</string>
+				<string>dyn.ah62d4rv4ge80w5d3</string>
 			</array>
 			<key>QLSupportsSearchableItems</key>
 			<false/>

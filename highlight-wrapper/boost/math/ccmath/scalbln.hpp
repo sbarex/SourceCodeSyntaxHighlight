@@ -6,10 +6,13 @@
 #ifndef BOOST_MATH_CCMATH_SCALBLN_HPP
 #define BOOST_MATH_CCMATH_SCALBLN_HPP
 
-#include <cmath>
+#include <boost/math/ccmath/detail/config.hpp>
+
+#ifdef BOOST_MATH_NO_CCMATH
+#error "The header <boost/math/scalbln.hpp> can only be used in C++17 and later."
+#endif
+
 #include <cfloat>
-#include <type_traits>
-#include <boost/math/tools/is_constant_evaluated.hpp>
 #include <boost/math/ccmath/scalbn.hpp>
 #include <boost/math/ccmath/abs.hpp>
 #include <boost/math/ccmath/isinf.hpp>

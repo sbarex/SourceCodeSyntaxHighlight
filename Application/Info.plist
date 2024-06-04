@@ -543,6 +543,25 @@
 			</dict>
 		</dict>
 		<dict>
+			<key>UTTypeDescription</key>
+			<string>Nix Expression Language</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>public.item</string>
+				<string>dyn.ah62d4rv4ge8064p2</string>
+			</array>
+			<key>UTTypeIdentifier</key>
+			<string>dev.nix.source</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>nix</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.item</string>
@@ -1214,6 +1233,7 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>ly</string>
+					<string>ily</string>
 				</array>
 			</dict>
 		</dict>
@@ -2051,6 +2071,8 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
+				<string>public.xsd</string>
+				<string>public.xml</string>
 				<string>public.item</string>
 				<string>dyn.ah62d4rv4ge81u6pzqz3hw</string>
 				<string>dyn.ah62d4rv4ge81u6k</string>
@@ -2074,6 +2096,8 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
+				<string>public.xsd</string>
+				<string>publix.xml</string>
 				<string>public.item</string>
 				<string>dyn.ah62d4rv4ge81u65e</string>
 			</array>

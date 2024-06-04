@@ -22,7 +22,6 @@
 
 #include <gsl/gsl_vector.h>
 
-#include <boost/type_traits/integral_constant.hpp>
 #include <boost/range.hpp>
 #include <boost/iterator/iterator_facade.hpp>
 
@@ -167,8 +166,8 @@ namespace odeint {
 template<>
 struct is_resizeable< gsl_vector* >
 {
-    //struct type : public boost::true_type { };
-    typedef boost::true_type type;
+    //struct type : public std::integral_constant<bool, true> { };
+    typedef std::integral_constant<bool, true> type;
     const static bool value = type::value;
 };
 

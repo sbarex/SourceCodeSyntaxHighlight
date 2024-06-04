@@ -29,14 +29,37 @@ struct gauss_constant_category
       (std::numeric_limits<T>::is_specialized == 0) ? 999 :
       (std::numeric_limits<T>::radix == 2) ?
       (
-         (std::numeric_limits<T>::digits <= std::numeric_limits<float>::digits) && std::is_convertible<float, T>::value ? 0 :
-         (std::numeric_limits<T>::digits <= std::numeric_limits<double>::digits) && std::is_convertible<double, T>::value ? 1 :
-         (std::numeric_limits<T>::digits <= std::numeric_limits<long double>::digits) && std::is_convertible<long double, T>::value ? 2 :
 #ifdef BOOST_HAS_FLOAT128
-         (std::numeric_limits<T>::digits <= 113) && std::is_constructible<__float128, T>::value ? 3 :
+         (std::numeric_limits<T>::digits <= 113) && std::is_constructible<T, __float128>::value ? 0 :
+#else
+         (std::numeric_limits<T>::digits <= std::numeric_limits<long double>::digits) && std::is_constructible<T, long double>::value ? 0 :
 #endif
-         (std::numeric_limits<T>::digits10 <= 110) ? 4 : 999
-      ) : (std::numeric_limits<T>::digits10 <= 110) ? 4 : 999;
+         (std::numeric_limits<T>::digits10 <= 110) && std::is_constructible<T, const char*>::value ? 4 : 999
+      ) : (std::numeric_limits<T>::digits10 <= 110) && std::is_constructible<T, const char*>::value ? 4 : 999;
+   
+   using storage_type =
+      std::conditional_t<(std::numeric_limits<T>::is_specialized == 0), T,
+         std::conditional_t<(std::numeric_limits<T>::radix == 2),
+            std::conditional_t< ((std::numeric_limits<T>::digits <= std::numeric_limits<float>::digits) && std::is_constructible<T, float>::value),
+               float,
+               std::conditional_t<((std::numeric_limits<T>::digits <= std::numeric_limits<double>::digits) && std::is_constructible<T, double>::value),
+                  double,
+                  std::conditional_t<((std::numeric_limits<T>::digits <= std::numeric_limits<long double>::digits) && std::is_constructible<T, long double>::value),
+                     long double,
+#ifdef BOOST_HAS_FLOAT128
+                     std::conditional_t<((std::numeric_limits<T>::digits <= 113) && std::is_constructible<T, __float128>::value),
+                        __float128,
+                        T
+                     >
+                  >
+#else
+                     T
+                  >
+#endif
+               >
+            >, T
+         >
+      >;
 };
 
 #ifndef BOOST_MATH_GAUSS_NO_COMPUTE_ON_DEMAND
@@ -74,106 +97,56 @@ template <class Real, unsigned N, unsigned Category>
 class gauss_detail;
 
 #endif
-
+#ifndef BOOST_HAS_FLOAT128
 template <class T>
 class gauss_detail<T, 7, 0>
 {
+   using storage_type = typename gauss_constant_category<T>::storage_type;
 public:
-   static std::array<T, 4> const & abscissa()
+   static std::array<storage_type, 4> const & abscissa()
    {
-      static constexpr std::array<T, 4> data = {
-         0.000000000e+00f,
-         4.058451514e-01f,
-         7.415311856e-01f,
-         9.491079123e-01f,
+      static constexpr std::array<storage_type, 4> data = {
+         static_cast<storage_type>(0.00000000000000000000000000000000000e+00L),
+         static_cast<storage_type>(4.05845151377397166906606412076961463e-01L),
+         static_cast<storage_type>(7.41531185599394439863864773280788407e-01L),
+         static_cast<storage_type>(9.49107912342758524526189684047851262e-01L),
       };
       return data;
    }
-   static std::array<T, 4> const & weights()
+   static std::array<storage_type, 4> const & weights()
    {
-      static constexpr std::array<T, 4> data = {
-         4.179591837e-01f,
-         3.818300505e-01f,
-         2.797053915e-01f,
-         1.294849662e-01f,
+      static constexpr std::array<storage_type, 4> data = {
+         static_cast<storage_type>(4.17959183673469387755102040816326531e-01L),
+         static_cast<storage_type>(3.81830050505118944950369775488975134e-01L),
+         static_cast<storage_type>(2.79705391489276667901467771423779582e-01L),
+         static_cast<storage_type>(1.29484966168869693270611432679082018e-01L),
       };
       return data;
    }
 };
-
+#else
 template <class T>
-class gauss_detail<T, 7, 1>
+class gauss_detail<T, 7, 0>
 {
+   using storage_type = typename gauss_constant_category<T>::storage_type;
 public:
-   static std::array<T, 4> const & abscissa()
+   static std::array<storage_type, 4> const & abscissa()
    {
-      static constexpr std::array<T, 4> data = {
-         0.00000000000000000e+00,
-         4.05845151377397167e-01,
-         7.41531185599394440e-01,
-         9.49107912342758525e-01,
+      static const std::array<storage_type, 4> data = {
+         static_cast<storage_type>(0.00000000000000000000000000000000000e+00Q),
+         static_cast<storage_type>(4.05845151377397166906606412076961463e-01Q),
+         static_cast<storage_type>(7.41531185599394439863864773280788407e-01Q),
+         static_cast<storage_type>(9.49107912342758524526189684047851262e-01Q),
       };
       return data;
    }
-   static std::array<T, 4> const & weights()
+   static std::array<storage_type, 4> const & weights()
    {
-      static constexpr std::array<T, 4> data = {
-         4.17959183673469388e-01,
-         3.81830050505118945e-01,
-         2.79705391489276668e-01,
-         1.29484966168869693e-01,
-      };
-      return data;
-   }
-};
-
-template <class T>
-class gauss_detail<T, 7, 2>
-{
-public:
-   static std::array<T, 4> const & abscissa()
-   {
-      static constexpr std::array<T, 4> data = {
-         0.00000000000000000000000000000000000e+00L,
-         4.05845151377397166906606412076961463e-01L,
-         7.41531185599394439863864773280788407e-01L,
-         9.49107912342758524526189684047851262e-01L,
-      };
-      return data;
-   }
-   static std::array<T, 4> const & weights()
-   {
-      static constexpr std::array<T, 4> data = {
-         4.17959183673469387755102040816326531e-01L,
-         3.81830050505118944950369775488975134e-01L,
-         2.79705391489276667901467771423779582e-01L,
-         1.29484966168869693270611432679082018e-01L,
-      };
-      return data;
-   }
-};
-#ifdef BOOST_HAS_FLOAT128
-template <class T>
-class gauss_detail<T, 7, 3>
-{
-public:
-   static std::array<T, 4> const & abscissa()
-   {
-      static const std::array<T, 4> data = {
-         0.00000000000000000000000000000000000e+00Q,
-         4.05845151377397166906606412076961463e-01Q,
-         7.41531185599394439863864773280788407e-01Q,
-         9.49107912342758524526189684047851262e-01Q,
-      };
-      return data;
-   }
-   static std::array<T, 4> const & weights()
-   {
-      static const std::array<T, 4> data = {
-         4.17959183673469387755102040816326531e-01Q,
-         3.81830050505118944950369775488975134e-01Q,
-         2.79705391489276667901467771423779582e-01Q,
-         1.29484966168869693270611432679082018e-01Q,
+      static const std::array<storage_type, 4> data = {
+         static_cast<storage_type>(4.17959183673469387755102040816326531e-01Q),
+         static_cast<storage_type>(3.81830050505118944950369775488975134e-01Q),
+         static_cast<storage_type>(2.79705391489276667901467771423779582e-01Q),
+         static_cast<storage_type>(1.29484966168869693270611432679082018e-01Q),
       };
       return data;
    }
@@ -185,133 +158,79 @@ class gauss_detail<T, 7, 4>
 public:
    static  std::array<T, 4> const & abscissa()
    {
-      static  std::array<T, 4> data = {
+      static  std::array<T, 4> data = { // LCOV_EXCL_START
          BOOST_MATH_HUGE_CONSTANT(T, 0, 0.0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000e+00),
          BOOST_MATH_HUGE_CONSTANT(T, 0, 4.0584515137739716690660641207696146334738201409937012638704325179466381322612565532831268972774658776528675866604802e-01),
          BOOST_MATH_HUGE_CONSTANT(T, 0, 7.4153118559939443986386477328078840707414764714139026011995535196742987467218051379282683236686324705969251809311201e-01),
          BOOST_MATH_HUGE_CONSTANT(T, 0, 9.4910791234275852452618968404785126240077093767061778354876910391306333035484014080573077002792572414430073966699522e-01),
-      };
+      }; // LCOV_EXCL_STOP
       return data;
    }
    static  std::array<T, 4> const & weights()
    {
-      static  std::array<T, 4> data = {
+      static  std::array<T, 4> data = { // LCOV_EXCL_START
          BOOST_MATH_HUGE_CONSTANT(T, 0, 4.1795918367346938775510204081632653061224489795918367346938775510204081632653061224489795918367346938775510204081633e-01),
          BOOST_MATH_HUGE_CONSTANT(T, 0, 3.8183005050511894495036977548897513387836508353386273475108345103070554643412970834868465934404480145031467176458536e-01),
          BOOST_MATH_HUGE_CONSTANT(T, 0, 2.7970539148927666790146777142377958248692506522659876453701403269361881043056267681324094290119761876632337521337205e-01),
          BOOST_MATH_HUGE_CONSTANT(T, 0, 1.2948496616886969327061143267908201832858740225994666397720863872465523497204230871562541816292084508948440200163443e-01),
-      };
+      }; // LCOV_EXCL_STOP
       return data;
    }
 };
-
+#ifndef BOOST_HAS_FLOAT128
 template <class T>
 class gauss_detail<T, 10, 0>
 {
+   using storage_type = typename gauss_constant_category<T>::storage_type;
 public:
-   static std::array<T, 5> const & abscissa()
+   static std::array<storage_type, 5> const & abscissa()
    {
-      static constexpr std::array<T, 5> data = {
-         1.488743390e-01f,
-         4.333953941e-01f,
-         6.794095683e-01f,
-         8.650633667e-01f,
-         9.739065285e-01f,
+      static constexpr std::array<storage_type, 5> data = {
+         static_cast<storage_type>(1.48874338981631210884826001129719985e-01L),
+         static_cast<storage_type>(4.33395394129247190799265943165784162e-01L),
+         static_cast<storage_type>(6.79409568299024406234327365114873576e-01L),
+         static_cast<storage_type>(8.65063366688984510732096688423493049e-01L),
+         static_cast<storage_type>(9.73906528517171720077964012084452053e-01L),
       };
       return data;
    }
-   static std::array<T, 5> const & weights()
+   static std::array<storage_type, 5> const & weights()
    {
-      static constexpr std::array<T, 5> data = {
-         2.955242247e-01f,
-         2.692667193e-01f,
-         2.190863625e-01f,
-         1.494513492e-01f,
-         6.667134431e-02f,
+      static constexpr std::array<storage_type, 5> data = {
+         static_cast<storage_type>(2.95524224714752870173892994651338329e-01L),
+         static_cast<storage_type>(2.69266719309996355091226921569469353e-01L),
+         static_cast<storage_type>(2.19086362515982043995534934228163192e-01L),
+         static_cast<storage_type>(1.49451349150580593145776339657697332e-01L),
+         static_cast<storage_type>(6.66713443086881375935688098933317929e-02L),
       };
       return data;
    }
 };
-
+#else
 template <class T>
-class gauss_detail<T, 10, 1>
+class gauss_detail<T, 10, 0>
 {
+   using storage_type = typename gauss_constant_category<T>::storage_type;
 public:
-   static std::array<T, 5> const & abscissa()
+   static std::array<storage_type, 5> const & abscissa()
    {
-      static constexpr std::array<T, 5> data = {
-         1.48874338981631211e-01,
-         4.33395394129247191e-01,
-         6.79409568299024406e-01,
-         8.65063366688984511e-01,
-         9.73906528517171720e-01,
+      static const std::array<storage_type, 5> data = {
+         static_cast<storage_type>(1.48874338981631210884826001129719985e-01Q),
+         static_cast<storage_type>(4.33395394129247190799265943165784162e-01Q),
+         static_cast<storage_type>(6.79409568299024406234327365114873576e-01Q),
+         static_cast<storage_type>(8.65063366688984510732096688423493049e-01Q),
+         static_cast<storage_type>(9.73906528517171720077964012084452053e-01Q),
       };
       return data;
    }
-   static std::array<T, 5> const & weights()
+   static std::array<storage_type, 5> const & weights()
    {
-      static constexpr std::array<T, 5> data = {
-         2.95524224714752870e-01,
-         2.69266719309996355e-01,
-         2.19086362515982044e-01,
-         1.49451349150580593e-01,
-         6.66713443086881376e-02,
-      };
-      return data;
-   }
-};
-
-template <class T>
-class gauss_detail<T, 10, 2>
-{
-public:
-   static std::array<T, 5> const & abscissa()
-   {
-      static constexpr std::array<T, 5> data = {
-         1.48874338981631210884826001129719985e-01L,
-         4.33395394129247190799265943165784162e-01L,
-         6.79409568299024406234327365114873576e-01L,
-         8.65063366688984510732096688423493049e-01L,
-         9.73906528517171720077964012084452053e-01L,
-      };
-      return data;
-   }
-   static std::array<T, 5> const & weights()
-   {
-      static constexpr std::array<T, 5> data = {
-         2.95524224714752870173892994651338329e-01L,
-         2.69266719309996355091226921569469353e-01L,
-         2.19086362515982043995534934228163192e-01L,
-         1.49451349150580593145776339657697332e-01L,
-         6.66713443086881375935688098933317929e-02L,
-      };
-      return data;
-   }
-};
-#ifdef BOOST_HAS_FLOAT128
-template <class T>
-class gauss_detail<T, 10, 3>
-{
-public:
-   static std::array<T, 5> const & abscissa()
-   {
-      static const std::array<T, 5> data = {
-         1.48874338981631210884826001129719985e-01Q,
-         4.33395394129247190799265943165784162e-01Q,
-         6.79409568299024406234327365114873576e-01Q,
-         8.65063366688984510732096688423493049e-01Q,
-         9.73906528517171720077964012084452053e-01Q,
-      };
-      return data;
-   }
-   static std::array<T, 5> const & weights()
-   {
-      static const std::array<T, 5> data = {
-         2.95524224714752870173892994651338329e-01Q,
-         2.69266719309996355091226921569469353e-01Q,
-         2.19086362515982043995534934228163192e-01Q,
-         1.49451349150580593145776339657697332e-01Q,
-         6.66713443086881375935688098933317929e-02Q,
+      static const std::array<storage_type, 5> data = {
+         static_cast<storage_type>(2.95524224714752870173892994651338329e-01Q),
+         static_cast<storage_type>(2.69266719309996355091226921569469353e-01Q),
+         static_cast<storage_type>(2.19086362515982043995534934228163192e-01Q),
+         static_cast<storage_type>(1.49451349150580593145776339657697332e-01Q),
+         static_cast<storage_type>(6.66713443086881375935688098933317929e-02Q),
       };
       return data;
    }
@@ -323,159 +242,94 @@ class gauss_detail<T, 10, 4>
 public:
    static  std::array<T, 5> const & abscissa()
    {
-      static  std::array<T, 5> data = {
+      static  std::array<T, 5> data = { // LCOV_EXCL_START
          BOOST_MATH_HUGE_CONSTANT(T, 0, 1.4887433898163121088482600112971998461756485942069169570798925351590361735566852137117762979946369123003116080525534e-01),
          BOOST_MATH_HUGE_CONSTANT(T, 0, 4.3339539412924719079926594316578416220007183765624649650270151314376698907770350122510275795011772122368293504099894e-01),
          BOOST_MATH_HUGE_CONSTANT(T, 0, 6.7940956829902440623432736511487357576929471183480946766481718895255857539507492461507857357048037949983390204739932e-01),
          BOOST_MATH_HUGE_CONSTANT(T, 0, 8.6506336668898451073209668842349304852754301496533045252195973184537475513805556135679072894604577069440463108641177e-01),
          BOOST_MATH_HUGE_CONSTANT(T, 0, 9.7390652851717172007796401208445205342826994669238211923121206669659520323463615962572356495626855625823304251877421e-01),
-      };
+      }; // LCOV_EXCL_STOP
       return data;
    }
    static  std::array<T, 5> const & weights()
    {
-      static  std::array<T, 5> data = {
+      static  std::array<T, 5> data = { // LCOV_EXCL_START
          BOOST_MATH_HUGE_CONSTANT(T, 0, 2.9552422471475287017389299465133832942104671702685360135430802975599593821715232927035659579375421672271716440125256e-01),
          BOOST_MATH_HUGE_CONSTANT(T, 0, 2.6926671930999635509122692156946935285975993846088379580056327624215343231917927676422663670925276075559581145036870e-01),
          BOOST_MATH_HUGE_CONSTANT(T, 0, 2.1908636251598204399553493422816319245877187052267708988095654363519991065295128124268399317720219278659121687281289e-01),
          BOOST_MATH_HUGE_CONSTANT(T, 0, 1.4945134915058059314577633965769733240255663966942736783547726875323865472663001094594726463473195191400575256104544e-01),
          BOOST_MATH_HUGE_CONSTANT(T, 0, 6.6671344308688137593568809893331792857864834320158145128694881613412064084087101776785509685058877821090054714520419e-02),
-      };
+      }; // LCOV_EXCL_STOP
       return data;
    }
 };
 
+#ifndef BOOST_HAS_FLOAT128
 template <class T>
 class gauss_detail<T, 15, 0>
 {
+   using storage_type = typename gauss_constant_category<T>::storage_type;
 public:
-   static std::array<T, 8> const & abscissa()
+   static std::array<storage_type, 8> const & abscissa()
    {
-      static constexpr std::array<T, 8> data = {
-         0.000000000e+00f,
-         2.011940940e-01f,
-         3.941513471e-01f,
-         5.709721726e-01f,
-         7.244177314e-01f,
-         8.482065834e-01f,
-         9.372733924e-01f,
-         9.879925180e-01f,
+      static constexpr std::array<storage_type, 8> data = {
+         static_cast<storage_type>(0.00000000000000000000000000000000000e+00L),
+         static_cast<storage_type>(2.01194093997434522300628303394596208e-01L),
+         static_cast<storage_type>(3.94151347077563369897207370981045468e-01L),
+         static_cast<storage_type>(5.70972172608538847537226737253910641e-01L),
+         static_cast<storage_type>(7.24417731360170047416186054613938010e-01L),
+         static_cast<storage_type>(8.48206583410427216200648320774216851e-01L),
+         static_cast<storage_type>(9.37273392400705904307758947710209471e-01L),
+         static_cast<storage_type>(9.87992518020485428489565718586612581e-01L),
       };
       return data;
    }
-   static std::array<T, 8> const & weights()
+   static std::array<storage_type, 8> const & weights()
    {
-      static constexpr std::array<T, 8> data = {
-         2.025782419e-01f,
-         1.984314853e-01f,
-         1.861610000e-01f,
-         1.662692058e-01f,
-         1.395706779e-01f,
-         1.071592205e-01f,
-         7.036604749e-02f,
-         3.075324200e-02f,
+      static constexpr std::array<storage_type, 8> data = {
+         static_cast<storage_type>(2.02578241925561272880620199967519315e-01L),
+         static_cast<storage_type>(1.98431485327111576456118326443839325e-01L),
+         static_cast<storage_type>(1.86161000015562211026800561866422825e-01L),
+         static_cast<storage_type>(1.66269205816993933553200860481208811e-01L),
+         static_cast<storage_type>(1.39570677926154314447804794511028323e-01L),
+         static_cast<storage_type>(1.07159220467171935011869546685869303e-01L),
+         static_cast<storage_type>(7.03660474881081247092674164506673385e-02L),
+         static_cast<storage_type>(3.07532419961172683546283935772044177e-02L),
       };
       return data;
    }
 };
-
+#else
 template <class T>
-class gauss_detail<T, 15, 1>
+class gauss_detail<T, 15, 0>
 {
+   using storage_type = typename gauss_constant_category<T>::storage_type;
 public:
-   static std::array<T, 8> const & abscissa()
+   static std::array<storage_type, 8> const & abscissa()
    {
-      static constexpr std::array<T, 8> data = {
-         0.00000000000000000e+00,
-         2.01194093997434522e-01,
-         3.94151347077563370e-01,
-         5.70972172608538848e-01,
-         7.24417731360170047e-01,
-         8.48206583410427216e-01,
-         9.37273392400705904e-01,
-         9.87992518020485428e-01,
+      static const std::array<storage_type, 8> data = {
+         static_cast<storage_type>(0.00000000000000000000000000000000000e+00Q),
+         static_cast<storage_type>(2.01194093997434522300628303394596208e-01Q),
+         static_cast<storage_type>(3.94151347077563369897207370981045468e-01Q),
+         static_cast<storage_type>(5.70972172608538847537226737253910641e-01Q),
+         static_cast<storage_type>(7.24417731360170047416186054613938010e-01Q),
+         static_cast<storage_type>(8.48206583410427216200648320774216851e-01Q),
+         static_cast<storage_type>(9.37273392400705904307758947710209471e-01Q),
+         static_cast<storage_type>(9.87992518020485428489565718586612581e-01Q),
       };
       return data;
    }
-   static std::array<T, 8> const & weights()
+   static std::array<storage_type, 8> const & weights()
    {
-      static constexpr std::array<T, 8> data = {
-         2.02578241925561273e-01,
-         1.98431485327111576e-01,
-         1.86161000015562211e-01,
-         1.66269205816993934e-01,
-         1.39570677926154314e-01,
-         1.07159220467171935e-01,
-         7.03660474881081247e-02,
-         3.07532419961172684e-02,
-      };
-      return data;
-   }
-};
-
-template <class T>
-class gauss_detail<T, 15, 2>
-{
-public:
-   static std::array<T, 8> const & abscissa()
-   {
-      static constexpr std::array<T, 8> data = {
-         0.00000000000000000000000000000000000e+00L,
-         2.01194093997434522300628303394596208e-01L,
-         3.94151347077563369897207370981045468e-01L,
-         5.70972172608538847537226737253910641e-01L,
-         7.24417731360170047416186054613938010e-01L,
-         8.48206583410427216200648320774216851e-01L,
-         9.37273392400705904307758947710209471e-01L,
-         9.87992518020485428489565718586612581e-01L,
-      };
-      return data;
-   }
-   static std::array<T, 8> const & weights()
-   {
-      static constexpr std::array<T, 8> data = {
-         2.02578241925561272880620199967519315e-01L,
-         1.98431485327111576456118326443839325e-01L,
-         1.86161000015562211026800561866422825e-01L,
-         1.66269205816993933553200860481208811e-01L,
-         1.39570677926154314447804794511028323e-01L,
-         1.07159220467171935011869546685869303e-01L,
-         7.03660474881081247092674164506673385e-02L,
-         3.07532419961172683546283935772044177e-02L,
-      };
-      return data;
-   }
-};
-#ifdef BOOST_HAS_FLOAT128
-template <class T>
-class gauss_detail<T, 15, 3>
-{
-public:
-   static std::array<T, 8> const & abscissa()
-   {
-      static const std::array<T, 8> data = {
-         0.00000000000000000000000000000000000e+00Q,
-         2.01194093997434522300628303394596208e-01Q,
-         3.94151347077563369897207370981045468e-01Q,
-         5.70972172608538847537226737253910641e-01Q,
-         7.24417731360170047416186054613938010e-01Q,
-         8.48206583410427216200648320774216851e-01Q,
-         9.37273392400705904307758947710209471e-01Q,
-         9.87992518020485428489565718586612581e-01Q,
-      };
-      return data;
-   }
-   static std::array<T, 8> const & weights()
-   {
-      static const std::array<T, 8> data = {
-         2.02578241925561272880620199967519315e-01Q,
-         1.98431485327111576456118326443839325e-01Q,
-         1.86161000015562211026800561866422825e-01Q,
-         1.66269205816993933553200860481208811e-01Q,
-         1.39570677926154314447804794511028323e-01Q,
-         1.07159220467171935011869546685869303e-01Q,
-         7.03660474881081247092674164506673385e-02Q,
-         3.07532419961172683546283935772044177e-02Q,
+      static const std::array<storage_type, 8> data = {
+         static_cast<storage_type>(2.02578241925561272880620199967519315e-01Q),
+         static_cast<storage_type>(1.98431485327111576456118326443839325e-01Q),
+         static_cast<storage_type>(1.86161000015562211026800561866422825e-01Q),
+         static_cast<storage_type>(1.66269205816993933553200860481208811e-01Q),
+         static_cast<storage_type>(1.39570677926154314447804794511028323e-01Q),
+         static_cast<storage_type>(1.07159220467171935011869546685869303e-01Q),
+         static_cast<storage_type>(7.03660474881081247092674164506673385e-02Q),
+         static_cast<storage_type>(3.07532419961172683546283935772044177e-02Q),
       };
       return data;
    }
@@ -487,7 +341,7 @@ class gauss_detail<T, 15, 4>
 public:
    static  std::array<T, 8> const & abscissa()
    {
-      static  std::array<T, 8> data = {
+      static  std::array<T, 8> data = { // LCOV_EXCL_START
          BOOST_MATH_HUGE_CONSTANT(T, 0, 0.0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000e+00),
          BOOST_MATH_HUGE_CONSTANT(T, 0, 2.0119409399743452230062830339459620781283645446263767961594972460994823900302018760183625806752105908967902257386509e-01),
          BOOST_MATH_HUGE_CONSTANT(T, 0, 3.9415134707756336989720737098104546836275277615869825503116534395160895778696141797549711416165976202589352169635648e-01),
@@ -496,12 +350,12 @@ public:
          BOOST_MATH_HUGE_CONSTANT(T, 0, 8.4820658341042721620064832077421685136625617473699263409572755876067507517414548519760771975082148085090373835713340e-01),
          BOOST_MATH_HUGE_CONSTANT(T, 0, 9.3727339240070590430775894771020947124399627351530445790136307635020297379704552795054758617426808659746824044603157e-01),
          BOOST_MATH_HUGE_CONSTANT(T, 0, 9.8799251802048542848956571858661258114697281712376148999999751558738843736901942471272205036831914497667516843990079e-01),
-      };
+      }; // LCOV_EXCL_STOP
       return data;
    }
    static  std::array<T, 8> const & weights()
    {
-      static  std::array<T, 8> data = {
+      static  std::array<T, 8> data = { // LCOV_EXCL_START
          BOOST_MATH_HUGE_CONSTANT(T, 0, 2.0257824192556127288062019996751931483866215800947735679670411605143539875474607409339344071278803213535148267082999e-01),
          BOOST_MATH_HUGE_CONSTANT(T, 0, 1.9843148532711157645611832644383932481869255995754199348473792792912479753343426813331499916481782320766020854889310e-01),
          BOOST_MATH_HUGE_CONSTANT(T, 0, 1.8616100001556221102680056186642282450622601227792840281549572731001325550269916061894976888609932360539977709001384e-01),
@@ -510,158 +364,85 @@ public:
          BOOST_MATH_HUGE_CONSTANT(T, 0, 1.0715922046717193501186954668586930341554371575810198068702238912187799485231579972568585713760862404439808767837506e-01),
          BOOST_MATH_HUGE_CONSTANT(T, 0, 7.0366047488108124709267416450667338466708032754330719825907292914387055512874237044840452066693939219355489858595041e-02),
          BOOST_MATH_HUGE_CONSTANT(T, 0, 3.0753241996117268354628393577204417721748144833434074264228285504237189467117168039038770732399404002516991188859473e-02),
-      };
+      }; // LCOV_EXCL_STOP
       return data;
    }
 };
 
+#ifndef BOOST_HAS_FLOAT128
 template <class T>
 class gauss_detail<T, 20, 0>
 {
+   using storage_type = typename gauss_constant_category<T>::storage_type;
 public:
-   static std::array<T, 10> const & abscissa()
+   static std::array<storage_type, 10> const & abscissa()
    {
-      static constexpr std::array<T, 10> data = {
-         7.652652113e-02f,
-         2.277858511e-01f,
-         3.737060887e-01f,
-         5.108670020e-01f,
-         6.360536807e-01f,
-         7.463319065e-01f,
-         8.391169718e-01f,
-         9.122344283e-01f,
-         9.639719273e-01f,
-         9.931285992e-01f,
+      static constexpr std::array<storage_type, 10> data = {
+         static_cast<storage_type>(7.65265211334973337546404093988382110e-02L),
+         static_cast<storage_type>(2.27785851141645078080496195368574625e-01L),
+         static_cast<storage_type>(3.73706088715419560672548177024927237e-01L),
+         static_cast<storage_type>(5.10867001950827098004364050955250998e-01L),
+         static_cast<storage_type>(6.36053680726515025452836696226285937e-01L),
+         static_cast<storage_type>(7.46331906460150792614305070355641590e-01L),
+         static_cast<storage_type>(8.39116971822218823394529061701520685e-01L),
+         static_cast<storage_type>(9.12234428251325905867752441203298113e-01L),
+         static_cast<storage_type>(9.63971927277913791267666131197277222e-01L),
+         static_cast<storage_type>(9.93128599185094924786122388471320278e-01L),
       };
       return data;
    }
-   static std::array<T, 10> const & weights()
+   static std::array<storage_type, 10> const & weights()
    {
-      static constexpr std::array<T, 10> data = {
-         1.527533871e-01f,
-         1.491729865e-01f,
-         1.420961093e-01f,
-         1.316886384e-01f,
-         1.181945320e-01f,
-         1.019301198e-01f,
-         8.327674158e-02f,
-         6.267204833e-02f,
-         4.060142980e-02f,
-         1.761400714e-02f,
+      static constexpr std::array<storage_type, 10> data = {
+         static_cast<storage_type>(1.52753387130725850698084331955097593e-01L),
+         static_cast<storage_type>(1.49172986472603746787828737001969437e-01L),
+         static_cast<storage_type>(1.42096109318382051329298325067164933e-01L),
+         static_cast<storage_type>(1.31688638449176626898494499748163135e-01L),
+         static_cast<storage_type>(1.18194531961518417312377377711382287e-01L),
+         static_cast<storage_type>(1.01930119817240435036750135480349876e-01L),
+         static_cast<storage_type>(8.32767415767047487247581432220462061e-02L),
+         static_cast<storage_type>(6.26720483341090635695065351870416064e-02L),
+         static_cast<storage_type>(4.06014298003869413310399522749321099e-02L),
+         static_cast<storage_type>(1.76140071391521183118619623518528164e-02L),
       };
       return data;
    }
 };
-
+#else
 template <class T>
-class gauss_detail<T, 20, 1>
+class gauss_detail<T, 20, 0>
 {
+   using storage_type = typename gauss_constant_category<T>::storage_type;
 public:
-   static std::array<T, 10> const & abscissa()
+   static std::array<storage_type, 10> const & abscissa()
    {
-      static constexpr std::array<T, 10> data = {
-         7.65265211334973338e-02,
-         2.27785851141645078e-01,
-         3.73706088715419561e-01,
-         5.10867001950827098e-01,
-         6.36053680726515025e-01,
-         7.46331906460150793e-01,
-         8.39116971822218823e-01,
-         9.12234428251325906e-01,
-         9.63971927277913791e-01,
-         9.93128599185094925e-01,
+      static const std::array<storage_type, 10> data = {
+         static_cast<storage_type>(7.65265211334973337546404093988382110e-02Q),
+         static_cast<storage_type>(2.27785851141645078080496195368574625e-01Q),
+         static_cast<storage_type>(3.73706088715419560672548177024927237e-01Q),
+         static_cast<storage_type>(5.10867001950827098004364050955250998e-01Q),
+         static_cast<storage_type>(6.36053680726515025452836696226285937e-01Q),
+         static_cast<storage_type>(7.46331906460150792614305070355641590e-01Q),
+         static_cast<storage_type>(8.39116971822218823394529061701520685e-01Q),
+         static_cast<storage_type>(9.12234428251325905867752441203298113e-01Q),
+         static_cast<storage_type>(9.63971927277913791267666131197277222e-01Q),
+         static_cast<storage_type>(9.93128599185094924786122388471320278e-01Q),
       };
       return data;
    }
-   static std::array<T, 10> const & weights()
+   static std::array<storage_type, 10> const & weights()
    {
-      static constexpr std::array<T, 10> data = {
-         1.52753387130725851e-01,
-         1.49172986472603747e-01,
-         1.42096109318382051e-01,
-         1.31688638449176627e-01,
-         1.18194531961518417e-01,
-         1.01930119817240435e-01,
-         8.32767415767047487e-02,
-         6.26720483341090636e-02,
-         4.06014298003869413e-02,
-         1.76140071391521183e-02,
-      };
-      return data;
-   }
-};
-
-template <class T>
-class gauss_detail<T, 20, 2>
-{
-public:
-   static std::array<T, 10> const & abscissa()
-   {
-      static constexpr std::array<T, 10> data = {
-         7.65265211334973337546404093988382110e-02L,
-         2.27785851141645078080496195368574625e-01L,
-         3.73706088715419560672548177024927237e-01L,
-         5.10867001950827098004364050955250998e-01L,
-         6.36053680726515025452836696226285937e-01L,
-         7.46331906460150792614305070355641590e-01L,
-         8.39116971822218823394529061701520685e-01L,
-         9.12234428251325905867752441203298113e-01L,
-         9.63971927277913791267666131197277222e-01L,
-         9.93128599185094924786122388471320278e-01L,
-      };
-      return data;
-   }
-   static std::array<T, 10> const & weights()
-   {
-      static constexpr std::array<T, 10> data = {
-         1.52753387130725850698084331955097593e-01L,
-         1.49172986472603746787828737001969437e-01L,
-         1.42096109318382051329298325067164933e-01L,
-         1.31688638449176626898494499748163135e-01L,
-         1.18194531961518417312377377711382287e-01L,
-         1.01930119817240435036750135480349876e-01L,
-         8.32767415767047487247581432220462061e-02L,
-         6.26720483341090635695065351870416064e-02L,
-         4.06014298003869413310399522749321099e-02L,
-         1.76140071391521183118619623518528164e-02L,
-      };
-      return data;
-   }
-};
-#ifdef BOOST_HAS_FLOAT128
-template <class T>
-class gauss_detail<T, 20, 3>
-{
-public:
-   static std::array<T, 10> const & abscissa()
-   {
-      static const std::array<T, 10> data = {
-         7.65265211334973337546404093988382110e-02Q,
-         2.27785851141645078080496195368574625e-01Q,
-         3.73706088715419560672548177024927237e-01Q,
-         5.10867001950827098004364050955250998e-01Q,
-         6.36053680726515025452836696226285937e-01Q,
-         7.46331906460150792614305070355641590e-01Q,
-         8.39116971822218823394529061701520685e-01Q,
-         9.12234428251325905867752441203298113e-01Q,
-         9.63971927277913791267666131197277222e-01Q,
-         9.93128599185094924786122388471320278e-01Q,
-      };
-      return data;
-   }
-   static std::array<T, 10> const & weights()
-   {
-      static const std::array<T, 10> data = {
-         1.52753387130725850698084331955097593e-01Q,
-         1.49172986472603746787828737001969437e-01Q,
-         1.42096109318382051329298325067164933e-01Q,
-         1.31688638449176626898494499748163135e-01Q,
-         1.18194531961518417312377377711382287e-01Q,
-         1.01930119817240435036750135480349876e-01Q,
-         8.32767415767047487247581432220462061e-02Q,
-         6.26720483341090635695065351870416064e-02Q,
-         4.06014298003869413310399522749321099e-02Q,
-         1.76140071391521183118619623518528164e-02Q,
+      static const std::array<storage_type, 10> data = {
+         static_cast<storage_type>(1.52753387130725850698084331955097593e-01Q),
+         static_cast<storage_type>(1.49172986472603746787828737001969437e-01Q),
+         static_cast<storage_type>(1.42096109318382051329298325067164933e-01Q),
+         static_cast<storage_type>(1.31688638449176626898494499748163135e-01Q),
+         static_cast<storage_type>(1.18194531961518417312377377711382287e-01Q),
+         static_cast<storage_type>(1.01930119817240435036750135480349876e-01Q),
+         static_cast<storage_type>(8.32767415767047487247581432220462061e-02Q),
+         static_cast<storage_type>(6.26720483341090635695065351870416064e-02Q),
+         static_cast<storage_type>(4.06014298003869413310399522749321099e-02Q),
+         static_cast<storage_type>(1.76140071391521183118619623518528164e-02Q),
       };
       return data;
    }
@@ -673,7 +454,7 @@ class gauss_detail<T, 20, 4>
 public:
    static  std::array<T, 10> const & abscissa()
    {
-      static  std::array<T, 10> data = {
+      static  std::array<T, 10> data = { // LCOV_EXCL_START
          BOOST_MATH_HUGE_CONSTANT(T, 0, 7.6526521133497333754640409398838211004796266813497500804795244384256342048336978241545114181556215606998505646364133e-02),
          BOOST_MATH_HUGE_CONSTANT(T, 0, 2.2778585114164507808049619536857462474308893768292747231463573920717134186355582779495212519096870803177373131560430e-01),
          BOOST_MATH_HUGE_CONSTANT(T, 0, 3.7370608871541956067254817702492723739574632170568271182794861351564576437305952789589568363453337894476772208852815e-01),
@@ -684,12 +465,12 @@ public:
          BOOST_MATH_HUGE_CONSTANT(T, 0, 9.1223442825132590586775244120329811304918479742369177479588221915807089120871907893644472619292138737876039175464603e-01),
          BOOST_MATH_HUGE_CONSTANT(T, 0, 9.6397192727791379126766613119727722191206032780618885606353759389204158078438305698001812525596471563131043491596423e-01),
          BOOST_MATH_HUGE_CONSTANT(T, 0, 9.9312859918509492478612238847132027822264713090165589614818413121798471762775378083944940249657220927472894034724419e-01),
-      };
+      }; // LCOV_EXCL_STOP
       return data;
    }
    static  std::array<T, 10> const & weights()
    {
-      static  std::array<T, 10> data = {
+      static  std::array<T, 10> data = { // LCOV_EXCL_START
          BOOST_MATH_HUGE_CONSTANT(T, 0, 1.5275338713072585069808433195509759349194864511237859727470104981759745316273778153557248783650390593544001842813788e-01),
          BOOST_MATH_HUGE_CONSTANT(T, 0, 1.4917298647260374678782873700196943669267990408136831649621121780984442259558678069396132603521048105170913854567338e-01),
          BOOST_MATH_HUGE_CONSTANT(T, 0, 1.4209610931838205132929832506716493303451541339202030333736708298382808749793436761694922428320058260133068573666201e-01),
@@ -700,182 +481,97 @@ public:
          BOOST_MATH_HUGE_CONSTANT(T, 0, 6.2672048334109063569506535187041606351601076578436364099584345437974811033665678644563766056832203512603253399592073e-02),
          BOOST_MATH_HUGE_CONSTANT(T, 0, 4.0601429800386941331039952274932109879090639989951536817606854561832296750987328295538920623044384976189825709675075e-02),
          BOOST_MATH_HUGE_CONSTANT(T, 0, 1.7614007139152118311861962351852816362143105543336732524349326677348419259621847817403105542146097668703716227512570e-02),
-      };
+      }; // LCOV_EXCL_STOP
       return data;
    }
 };
 
+#ifndef BOOST_HAS_FLOAT128
 template <class T>
 class gauss_detail<T, 25, 0>
 {
+   using storage_type = typename gauss_constant_category<T>::storage_type;
 public:
-   static std::array<T, 13> const & abscissa()
+   static std::array<storage_type, 13> const & abscissa()
    {
-      static constexpr std::array<T, 13> data = {
-         0.000000000e+00f,
-         1.228646926e-01f,
-         2.438668837e-01f,
-         3.611723058e-01f,
-         4.730027314e-01f,
-         5.776629302e-01f,
-         6.735663685e-01f,
-         7.592592630e-01f,
-         8.334426288e-01f,
-         8.949919979e-01f,
-         9.429745712e-01f,
-         9.766639215e-01f,
-         9.955569698e-01f,
+      static constexpr std::array<storage_type, 13> data = {
+         static_cast<storage_type>(0.00000000000000000000000000000000000e+00L),
+         static_cast<storage_type>(1.22864692610710396387359818808036806e-01L),
+         static_cast<storage_type>(2.43866883720988432045190362797451586e-01L),
+         static_cast<storage_type>(3.61172305809387837735821730127640667e-01L),
+         static_cast<storage_type>(4.73002731445714960522182115009192041e-01L),
+         static_cast<storage_type>(5.77662930241222967723689841612654067e-01L),
+         static_cast<storage_type>(6.73566368473468364485120633247622176e-01L),
+         static_cast<storage_type>(7.59259263037357630577282865204360976e-01L),
+         static_cast<storage_type>(8.33442628760834001421021108693569569e-01L),
+         static_cast<storage_type>(8.94991997878275368851042006782804954e-01L),
+         static_cast<storage_type>(9.42974571228974339414011169658470532e-01L),
+         static_cast<storage_type>(9.76663921459517511498315386479594068e-01L),
+         static_cast<storage_type>(9.95556969790498097908784946893901617e-01L),
       };
       return data;
    }
-   static std::array<T, 13> const & weights()
+   static std::array<storage_type, 13> const & weights()
    {
-      static constexpr std::array<T, 13> data = {
-         1.231760537e-01f,
-         1.222424430e-01f,
-         1.194557635e-01f,
-         1.148582591e-01f,
-         1.085196245e-01f,
-         1.005359491e-01f,
-         9.102826198e-02f,
-         8.014070034e-02f,
-         6.803833381e-02f,
-         5.490469598e-02f,
-         4.093915670e-02f,
-         2.635498662e-02f,
-         1.139379850e-02f,
+      static constexpr std::array<storage_type, 13> data = {
+         static_cast<storage_type>(1.23176053726715451203902873079050142e-01L),
+         static_cast<storage_type>(1.22242442990310041688959518945851506e-01L),
+         static_cast<storage_type>(1.19455763535784772228178126512901047e-01L),
+         static_cast<storage_type>(1.14858259145711648339325545869555809e-01L),
+         static_cast<storage_type>(1.08519624474263653116093957050116619e-01L),
+         static_cast<storage_type>(1.00535949067050644202206890392685827e-01L),
+         static_cast<storage_type>(9.10282619829636498114972207028916534e-02L),
+         static_cast<storage_type>(8.01407003350010180132349596691113023e-02L),
+         static_cast<storage_type>(6.80383338123569172071871856567079686e-02L),
+         static_cast<storage_type>(5.49046959758351919259368915404733242e-02L),
+         static_cast<storage_type>(4.09391567013063126556234877116459537e-02L),
+         static_cast<storage_type>(2.63549866150321372619018152952991449e-02L),
+         static_cast<storage_type>(1.13937985010262879479029641132347736e-02L),
       };
       return data;
    }
 };
-
+#else
 template <class T>
-class gauss_detail<T, 25, 1>
+class gauss_detail<T, 25, 0>
 {
+   using storage_type = typename gauss_constant_category<T>::storage_type;
 public:
-   static std::array<T, 13> const & abscissa()
+   static std::array<storage_type, 13> const & abscissa()
    {
-      static constexpr std::array<T, 13> data = {
-         0.00000000000000000e+00,
-         1.22864692610710396e-01,
-         2.43866883720988432e-01,
-         3.61172305809387838e-01,
-         4.73002731445714961e-01,
-         5.77662930241222968e-01,
-         6.73566368473468364e-01,
-         7.59259263037357631e-01,
-         8.33442628760834001e-01,
-         8.94991997878275369e-01,
-         9.42974571228974339e-01,
-         9.76663921459517511e-01,
-         9.95556969790498098e-01,
+      static const std::array<storage_type, 13> data = {
+         static_cast<storage_type>(0.00000000000000000000000000000000000e+00Q),
+         static_cast<storage_type>(1.22864692610710396387359818808036806e-01Q),
+         static_cast<storage_type>(2.43866883720988432045190362797451586e-01Q),
+         static_cast<storage_type>(3.61172305809387837735821730127640667e-01Q),
+         static_cast<storage_type>(4.73002731445714960522182115009192041e-01Q),
+         static_cast<storage_type>(5.77662930241222967723689841612654067e-01Q),
+         static_cast<storage_type>(6.73566368473468364485120633247622176e-01Q),
+         static_cast<storage_type>(7.59259263037357630577282865204360976e-01Q),
+         static_cast<storage_type>(8.33442628760834001421021108693569569e-01Q),
+         static_cast<storage_type>(8.94991997878275368851042006782804954e-01Q),
+         static_cast<storage_type>(9.42974571228974339414011169658470532e-01Q),
+         static_cast<storage_type>(9.76663921459517511498315386479594068e-01Q),
+         static_cast<storage_type>(9.95556969790498097908784946893901617e-01Q),
       };
       return data;
    }
-   static std::array<T, 13> const & weights()
+   static std::array<storage_type, 13> const & weights()
    {
-      static constexpr std::array<T, 13> data = {
-         1.23176053726715451e-01,
-         1.22242442990310042e-01,
-         1.19455763535784772e-01,
-         1.14858259145711648e-01,
-         1.08519624474263653e-01,
-         1.00535949067050644e-01,
-         9.10282619829636498e-02,
-         8.01407003350010180e-02,
-         6.80383338123569172e-02,
-         5.49046959758351919e-02,
-         4.09391567013063127e-02,
-         2.63549866150321373e-02,
-         1.13937985010262879e-02,
-      };
-      return data;
-   }
-};
-
-template <class T>
-class gauss_detail<T, 25, 2>
-{
-public:
-   static std::array<T, 13> const & abscissa()
-   {
-      static constexpr std::array<T, 13> data = {
-         0.00000000000000000000000000000000000e+00L,
-         1.22864692610710396387359818808036806e-01L,
-         2.43866883720988432045190362797451586e-01L,
-         3.61172305809387837735821730127640667e-01L,
-         4.73002731445714960522182115009192041e-01L,
-         5.77662930241222967723689841612654067e-01L,
-         6.73566368473468364485120633247622176e-01L,
-         7.59259263037357630577282865204360976e-01L,
-         8.33442628760834001421021108693569569e-01L,
-         8.94991997878275368851042006782804954e-01L,
-         9.42974571228974339414011169658470532e-01L,
-         9.76663921459517511498315386479594068e-01L,
-         9.95556969790498097908784946893901617e-01L,
-      };
-      return data;
-   }
-   static std::array<T, 13> const & weights()
-   {
-      static constexpr std::array<T, 13> data = {
-         1.23176053726715451203902873079050142e-01L,
-         1.22242442990310041688959518945851506e-01L,
-         1.19455763535784772228178126512901047e-01L,
-         1.14858259145711648339325545869555809e-01L,
-         1.08519624474263653116093957050116619e-01L,
-         1.00535949067050644202206890392685827e-01L,
-         9.10282619829636498114972207028916534e-02L,
-         8.01407003350010180132349596691113023e-02L,
-         6.80383338123569172071871856567079686e-02L,
-         5.49046959758351919259368915404733242e-02L,
-         4.09391567013063126556234877116459537e-02L,
-         2.63549866150321372619018152952991449e-02L,
-         1.13937985010262879479029641132347736e-02L,
-      };
-      return data;
-   }
-};
-#ifdef BOOST_HAS_FLOAT128
-template <class T>
-class gauss_detail<T, 25, 3>
-{
-public:
-   static std::array<T, 13> const & abscissa()
-   {
-      static const std::array<T, 13> data = {
-         0.00000000000000000000000000000000000e+00Q,
-         1.22864692610710396387359818808036806e-01Q,
-         2.43866883720988432045190362797451586e-01Q,
-         3.61172305809387837735821730127640667e-01Q,
-         4.73002731445714960522182115009192041e-01Q,
-         5.77662930241222967723689841612654067e-01Q,
-         6.73566368473468364485120633247622176e-01Q,
-         7.59259263037357630577282865204360976e-01Q,
-         8.33442628760834001421021108693569569e-01Q,
-         8.94991997878275368851042006782804954e-01Q,
-         9.42974571228974339414011169658470532e-01Q,
-         9.76663921459517511498315386479594068e-01Q,
-         9.95556969790498097908784946893901617e-01Q,
-      };
-      return data;
-   }
-   static std::array<T, 13> const & weights()
-   {
-      static const std::array<T, 13> data = {
-         1.23176053726715451203902873079050142e-01Q,
-         1.22242442990310041688959518945851506e-01Q,
-         1.19455763535784772228178126512901047e-01Q,
-         1.14858259145711648339325545869555809e-01Q,
-         1.08519624474263653116093957050116619e-01Q,
-         1.00535949067050644202206890392685827e-01Q,
-         9.10282619829636498114972207028916534e-02Q,
-         8.01407003350010180132349596691113023e-02Q,
-         6.80383338123569172071871856567079686e-02Q,
-         5.49046959758351919259368915404733242e-02Q,
-         4.09391567013063126556234877116459537e-02Q,
-         2.63549866150321372619018152952991449e-02Q,
-         1.13937985010262879479029641132347736e-02Q,
+      static const std::array<storage_type, 13> data = {
+         static_cast<storage_type>(1.23176053726715451203902873079050142e-01Q),
+         static_cast<storage_type>(1.22242442990310041688959518945851506e-01Q),
+         static_cast<storage_type>(1.19455763535784772228178126512901047e-01Q),
+         static_cast<storage_type>(1.14858259145711648339325545869555809e-01Q),
+         static_cast<storage_type>(1.08519624474263653116093957050116619e-01Q),
+         static_cast<storage_type>(1.00535949067050644202206890392685827e-01Q),
+         static_cast<storage_type>(9.10282619829636498114972207028916534e-02Q),
+         static_cast<storage_type>(8.01407003350010180132349596691113023e-02Q),
+         static_cast<storage_type>(6.80383338123569172071871856567079686e-02Q),
+         static_cast<storage_type>(5.49046959758351919259368915404733242e-02Q),
+         static_cast<storage_type>(4.09391567013063126556234877116459537e-02Q),
+         static_cast<storage_type>(2.63549866150321372619018152952991449e-02Q),
+         static_cast<storage_type>(1.13937985010262879479029641132347736e-02Q),
       };
       return data;
    }
@@ -887,7 +583,7 @@ class gauss_detail<T, 25, 4>
 public:
    static  std::array<T, 13> const & abscissa()
    {
-      static  std::array<T, 13> data = {
+      static  std::array<T, 13> data = { // LCOV_EXCL_START
          BOOST_MATH_HUGE_CONSTANT(T, 0, 0.0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000e+00),
          BOOST_MATH_HUGE_CONSTANT(T, 0, 1.2286469261071039638735981880803680553220534604978373842389353789270883496885841582643884994633105537597765980412320e-01),
          BOOST_MATH_HUGE_CONSTANT(T, 0, 2.4386688372098843204519036279745158640563315632598447642113565325038747278585595067977636776325034060327548499765742e-01),
@@ -901,12 +597,12 @@ public:
          BOOST_MATH_HUGE_CONSTANT(T, 0, 9.4297457122897433941401116965847053190520157060899014192745249713729532254404926130890521815127348327109666786665572e-01),
          BOOST_MATH_HUGE_CONSTANT(T, 0, 9.7666392145951751149831538647959406774537055531440674467098742731616386753588055389644670948300617866819865983054648e-01),
          BOOST_MATH_HUGE_CONSTANT(T, 0, 9.9555696979049809790878494689390161725756264940480817121080493113293348134372793448728802635294700756868258870429256e-01),
-      };
+      }; // LCOV_EXCL_STOP
       return data;
    }
    static  std::array<T, 13> const & weights()
    {
-      static  std::array<T, 13> data = {
+      static  std::array<T, 13> data = { // LCOV_EXCL_START
          BOOST_MATH_HUGE_CONSTANT(T, 0, 1.2317605372671545120390287307905014243823362751815166539135219731691200794926142128460112517504958377310054583945994e-01),
          BOOST_MATH_HUGE_CONSTANT(T, 0, 1.2224244299031004168895951894585150583505924756305904090758008223203896721918010243033540891078906637115620156845304e-01),
          BOOST_MATH_HUGE_CONSTANT(T, 0, 1.1945576353578477222817812651290104739017670141372642551958788133518409022018773502442869720975271321374348568426235e-01),
@@ -920,198 +616,106 @@ public:
          BOOST_MATH_HUGE_CONSTANT(T, 0, 4.0939156701306312655623487711645953660845783364104346504698414899297432880215512770478971055110424130123527015425511e-02),
          BOOST_MATH_HUGE_CONSTANT(T, 0, 2.6354986615032137261901815295299144935963281703322468755366165783870934008879499371529821528172928890350362464605104e-02),
          BOOST_MATH_HUGE_CONSTANT(T, 0, 1.1393798501026287947902964113234773603320526292909696448948061116189891729766743355923677112945033505688431618009664e-02),
-      };
+      }; // LCOV_EXCL_STOP
       return data;
    }
 };
 
+
+#ifndef BOOST_HAS_FLOAT128
 template <class T>
 class gauss_detail<T, 30, 0>
 {
+   using storage_type = typename gauss_constant_category<T>::storage_type;
 public:
-   static std::array<T, 15> const & abscissa()
+   static std::array<storage_type, 15> const & abscissa()
    {
-      static constexpr std::array<T, 15> data = {
-         5.147184256e-02f,
-         1.538699136e-01f,
-         2.546369262e-01f,
-         3.527047255e-01f,
-         4.470337695e-01f,
-         5.366241481e-01f,
-         6.205261830e-01f,
-         6.978504948e-01f,
-         7.677774321e-01f,
-         8.295657624e-01f,
-         8.825605358e-01f,
-         9.262000474e-01f,
-         9.600218650e-01f,
-         9.836681233e-01f,
-         9.968934841e-01f,
+      static constexpr std::array<storage_type, 15> data = {
+         static_cast<storage_type>(5.14718425553176958330252131667225737e-02L),
+         static_cast<storage_type>(1.53869913608583546963794672743255920e-01L),
+         static_cast<storage_type>(2.54636926167889846439805129817805108e-01L),
+         static_cast<storage_type>(3.52704725530878113471037207089373861e-01L),
+         static_cast<storage_type>(4.47033769538089176780609900322854000e-01L),
+         static_cast<storage_type>(5.36624148142019899264169793311072794e-01L),
+         static_cast<storage_type>(6.20526182989242861140477556431189299e-01L),
+         static_cast<storage_type>(6.97850494793315796932292388026640068e-01L),
+         static_cast<storage_type>(7.67777432104826194917977340974503132e-01L),
+         static_cast<storage_type>(8.29565762382768397442898119732501916e-01L),
+         static_cast<storage_type>(8.82560535792052681543116462530225590e-01L),
+         static_cast<storage_type>(9.26200047429274325879324277080474004e-01L),
+         static_cast<storage_type>(9.60021864968307512216871025581797663e-01L),
+         static_cast<storage_type>(9.83668123279747209970032581605662802e-01L),
+         static_cast<storage_type>(9.96893484074649540271630050918695283e-01L),
       };
       return data;
    }
-   static std::array<T, 15> const & weights()
+   static std::array<storage_type, 15> const & weights()
    {
-      static constexpr std::array<T, 15> data = {
-         1.028526529e-01f,
-         1.017623897e-01f,
-         9.959342059e-02f,
-         9.636873717e-02f,
-         9.212252224e-02f,
-         8.689978720e-02f,
-         8.075589523e-02f,
-         7.375597474e-02f,
-         6.597422988e-02f,
-         5.749315622e-02f,
-         4.840267283e-02f,
-         3.879919257e-02f,
-         2.878470788e-02f,
-         1.846646831e-02f,
-         7.968192496e-03f,
+      static constexpr std::array<storage_type, 15> data = {
+         static_cast<storage_type>(1.02852652893558840341285636705415044e-01L),
+         static_cast<storage_type>(1.01762389748405504596428952168554045e-01L),
+         static_cast<storage_type>(9.95934205867952670627802821035694765e-02L),
+         static_cast<storage_type>(9.63687371746442596394686263518098651e-02L),
+         static_cast<storage_type>(9.21225222377861287176327070876187672e-02L),
+         static_cast<storage_type>(8.68997872010829798023875307151257026e-02L),
+         static_cast<storage_type>(8.07558952294202153546949384605297309e-02L),
+         static_cast<storage_type>(7.37559747377052062682438500221907342e-02L),
+         static_cast<storage_type>(6.59742298821804951281285151159623612e-02L),
+         static_cast<storage_type>(5.74931562176190664817216894020561288e-02L),
+         static_cast<storage_type>(4.84026728305940529029381404228075178e-02L),
+         static_cast<storage_type>(3.87991925696270495968019364463476920e-02L),
+         static_cast<storage_type>(2.87847078833233693497191796112920436e-02L),
+         static_cast<storage_type>(1.84664683110909591423021319120472691e-02L),
+         static_cast<storage_type>(7.96819249616660561546588347467362245e-03L),
       };
       return data;
    }
 };
-
+#else
 template <class T>
-class gauss_detail<T, 30, 1>
+class gauss_detail<T, 30, 0>
 {
+   using storage_type = typename gauss_constant_category<T>::storage_type;
 public:
-   static std::array<T, 15> const & abscissa()
+   static std::array<storage_type, 15> const & abscissa()
    {
-      static constexpr std::array<T, 15> data = {
-         5.14718425553176958e-02,
-         1.53869913608583547e-01,
-         2.54636926167889846e-01,
-         3.52704725530878113e-01,
-         4.47033769538089177e-01,
-         5.36624148142019899e-01,
-         6.20526182989242861e-01,
-         6.97850494793315797e-01,
-         7.67777432104826195e-01,
-         8.29565762382768397e-01,
-         8.82560535792052682e-01,
-         9.26200047429274326e-01,
-         9.60021864968307512e-01,
-         9.83668123279747210e-01,
-         9.96893484074649540e-01,
+      static const std::array<storage_type, 15> data = {
+         static_cast<storage_type>(5.14718425553176958330252131667225737e-02Q),
+         static_cast<storage_type>(1.53869913608583546963794672743255920e-01Q),
+         static_cast<storage_type>(2.54636926167889846439805129817805108e-01Q),
+         static_cast<storage_type>(3.52704725530878113471037207089373861e-01Q),
+         static_cast<storage_type>(4.47033769538089176780609900322854000e-01Q),
+         static_cast<storage_type>(5.36624148142019899264169793311072794e-01Q),
+         static_cast<storage_type>(6.20526182989242861140477556431189299e-01Q),
+         static_cast<storage_type>(6.97850494793315796932292388026640068e-01Q),
+         static_cast<storage_type>(7.67777432104826194917977340974503132e-01Q),
+         static_cast<storage_type>(8.29565762382768397442898119732501916e-01Q),
+         static_cast<storage_type>(8.82560535792052681543116462530225590e-01Q),
+         static_cast<storage_type>(9.26200047429274325879324277080474004e-01Q),
+         static_cast<storage_type>(9.60021864968307512216871025581797663e-01Q),
+         static_cast<storage_type>(9.83668123279747209970032581605662802e-01Q),
+         static_cast<storage_type>(9.96893484074649540271630050918695283e-01Q),
       };
       return data;
    }
-   static std::array<T, 15> const & weights()
+   static std::array<storage_type, 15> const & weights()
    {
-      static constexpr std::array<T, 15> data = {
-         1.02852652893558840e-01,
-         1.01762389748405505e-01,
-         9.95934205867952671e-02,
-         9.63687371746442596e-02,
-         9.21225222377861287e-02,
-         8.68997872010829798e-02,
-         8.07558952294202154e-02,
-         7.37559747377052063e-02,
-         6.59742298821804951e-02,
-         5.74931562176190665e-02,
-         4.84026728305940529e-02,
-         3.87991925696270496e-02,
-         2.87847078833233693e-02,
-         1.84664683110909591e-02,
-         7.96819249616660562e-03,
-      };
-      return data;
-   }
-};
-
-template <class T>
-class gauss_detail<T, 30, 2>
-{
-public:
-   static std::array<T, 15> const & abscissa()
-   {
-      static constexpr std::array<T, 15> data = {
-         5.14718425553176958330252131667225737e-02L,
-         1.53869913608583546963794672743255920e-01L,
-         2.54636926167889846439805129817805108e-01L,
-         3.52704725530878113471037207089373861e-01L,
-         4.47033769538089176780609900322854000e-01L,
-         5.36624148142019899264169793311072794e-01L,
-         6.20526182989242861140477556431189299e-01L,
-         6.97850494793315796932292388026640068e-01L,
-         7.67777432104826194917977340974503132e-01L,
-         8.29565762382768397442898119732501916e-01L,
-         8.82560535792052681543116462530225590e-01L,
-         9.26200047429274325879324277080474004e-01L,
-         9.60021864968307512216871025581797663e-01L,
-         9.83668123279747209970032581605662802e-01L,
-         9.96893484074649540271630050918695283e-01L,
-      };
-      return data;
-   }
-   static std::array<T, 15> const & weights()
-   {
-      static constexpr std::array<T, 15> data = {
-         1.02852652893558840341285636705415044e-01L,
-         1.01762389748405504596428952168554045e-01L,
-         9.95934205867952670627802821035694765e-02L,
-         9.63687371746442596394686263518098651e-02L,
-         9.21225222377861287176327070876187672e-02L,
-         8.68997872010829798023875307151257026e-02L,
-         8.07558952294202153546949384605297309e-02L,
-         7.37559747377052062682438500221907342e-02L,
-         6.59742298821804951281285151159623612e-02L,
-         5.74931562176190664817216894020561288e-02L,
-         4.84026728305940529029381404228075178e-02L,
-         3.87991925696270495968019364463476920e-02L,
-         2.87847078833233693497191796112920436e-02L,
-         1.84664683110909591423021319120472691e-02L,
-         7.96819249616660561546588347467362245e-03L,
-      };
-      return data;
-   }
-};
-#ifdef BOOST_HAS_FLOAT128
-template <class T>
-class gauss_detail<T, 30, 3>
-{
-public:
-   static std::array<T, 15> const & abscissa()
-   {
-      static const std::array<T, 15> data = {
-         5.14718425553176958330252131667225737e-02Q,
-         1.53869913608583546963794672743255920e-01Q,
-         2.54636926167889846439805129817805108e-01Q,
-         3.52704725530878113471037207089373861e-01Q,
-         4.47033769538089176780609900322854000e-01Q,
-         5.36624148142019899264169793311072794e-01Q,
-         6.20526182989242861140477556431189299e-01Q,
-         6.97850494793315796932292388026640068e-01Q,
-         7.67777432104826194917977340974503132e-01Q,
-         8.29565762382768397442898119732501916e-01Q,
-         8.82560535792052681543116462530225590e-01Q,
-         9.26200047429274325879324277080474004e-01Q,
-         9.60021864968307512216871025581797663e-01Q,
-         9.83668123279747209970032581605662802e-01Q,
-         9.96893484074649540271630050918695283e-01Q,
-      };
-      return data;
-   }
-   static std::array<T, 15> const & weights()
-   {
-      static const std::array<T, 15> data = {
-         1.02852652893558840341285636705415044e-01Q,
-         1.01762389748405504596428952168554045e-01Q,
-         9.95934205867952670627802821035694765e-02Q,
-         9.63687371746442596394686263518098651e-02Q,
-         9.21225222377861287176327070876187672e-02Q,
-         8.68997872010829798023875307151257026e-02Q,
-         8.07558952294202153546949384605297309e-02Q,
-         7.37559747377052062682438500221907342e-02Q,
-         6.59742298821804951281285151159623612e-02Q,
-         5.74931562176190664817216894020561288e-02Q,
-         4.84026728305940529029381404228075178e-02Q,
-         3.87991925696270495968019364463476920e-02Q,
-         2.87847078833233693497191796112920436e-02Q,
-         1.84664683110909591423021319120472691e-02Q,
-         7.96819249616660561546588347467362245e-03Q,
+      static const std::array<storage_type, 15> data = {
+         static_cast<storage_type>(1.02852652893558840341285636705415044e-01Q),
+         static_cast<storage_type>(1.01762389748405504596428952168554045e-01Q),
+         static_cast<storage_type>(9.95934205867952670627802821035694765e-02Q),
+         static_cast<storage_type>(9.63687371746442596394686263518098651e-02Q),
+         static_cast<storage_type>(9.21225222377861287176327070876187672e-02Q),
+         static_cast<storage_type>(8.68997872010829798023875307151257026e-02Q),
+         static_cast<storage_type>(8.07558952294202153546949384605297309e-02Q),
+         static_cast<storage_type>(7.37559747377052062682438500221907342e-02Q),
+         static_cast<storage_type>(6.59742298821804951281285151159623612e-02Q),
+         static_cast<storage_type>(5.74931562176190664817216894020561288e-02Q),
+         static_cast<storage_type>(4.84026728305940529029381404228075178e-02Q),
+         static_cast<storage_type>(3.87991925696270495968019364463476920e-02Q),
+         static_cast<storage_type>(2.87847078833233693497191796112920436e-02Q),
+         static_cast<storage_type>(1.84664683110909591423021319120472691e-02Q),
+         static_cast<storage_type>(7.96819249616660561546588347467362245e-03Q),
       };
       return data;
    }
@@ -1123,7 +727,7 @@ class gauss_detail<T, 30, 4>
 public:
    static  std::array<T, 15> const & abscissa()
    {
-      static  std::array<T, 15> data = {
+      static  std::array<T, 15> data = { // LCOV_EXCL_START
          BOOST_MATH_HUGE_CONSTANT(T, 0, 5.1471842555317695833025213166722573749141453666569564255160843987964755210427109055870090707285485841217089963590678e-02),
          BOOST_MATH_HUGE_CONSTANT(T, 0, 1.5386991360858354696379467274325592041855197124433846171896298291578714851081610139692310651074078557990111754952062e-01),
          BOOST_MATH_HUGE_CONSTANT(T, 0, 2.5463692616788984643980512981780510788278930330251842616428597508896353156907880290636628138423620257595521678255758e-01),
@@ -1139,12 +743,12 @@ public:
          BOOST_MATH_HUGE_CONSTANT(T, 0, 9.6002186496830751221687102558179766293035921740392339948566167242493995770706842922718944370380002378239172677454384e-01),
          BOOST_MATH_HUGE_CONSTANT(T, 0, 9.8366812327974720997003258160566280194031785470971136351718001015114429536479104370207597166035471368057762560137209e-01),
          BOOST_MATH_HUGE_CONSTANT(T, 0, 9.9689348407464954027163005091869528334088203811775079010809429780238769521016374081588201955806171741257405095963817e-01),
-      };
+      }; // LCOV_EXCL_STOP
       return data;
    }
    static  std::array<T, 15> const & weights()
    {
-      static  std::array<T, 15> data = {
+      static  std::array<T, 15> data = { // LCOV_EXCL_START
          BOOST_MATH_HUGE_CONSTANT(T, 0, 1.0285265289355884034128563670541504386837555706492822258631898667601623865660942939262884632188870916503815852709086e-01),
          BOOST_MATH_HUGE_CONSTANT(T, 0, 1.0176238974840550459642895216855404463270628948712684086426094541964251360531767494547599781978391198881693385887696e-01),
          BOOST_MATH_HUGE_CONSTANT(T, 0, 9.9593420586795267062780282103569476529869263666704277221365146183946660389908809018092299289324184705373523229592037e-02),
@@ -1160,7 +764,7 @@ public:
          BOOST_MATH_HUGE_CONSTANT(T, 0, 2.8784707883323369349719179611292043639588894546287496474180122608145988940013933101730206711484171554940392262251283e-02),
          BOOST_MATH_HUGE_CONSTANT(T, 0, 1.8466468311090959142302131912047269096206533968181403371298365514585599521307973654080519029675417955638095832046164e-02),
          BOOST_MATH_HUGE_CONSTANT(T, 0, 7.9681924961666056154658834746736224504806965871517212294851633569200384329013332941536616922861735209846506562158817e-03),
-      };
+      }; // LCOV_EXCL_STOP
       return data;
    }
 };
@@ -1185,7 +789,7 @@ public:
       unsigned non_zero_start = 1;
       K result = Real(0);
       if (N & 1) {
-         result = f(Real(0)) * base::weights()[0];
+         result = f(Real(0)) * static_cast<Real>(base::weights()[0]);
       }
       else {
          result = 0;
@@ -1194,10 +798,10 @@ public:
       Real L1 = abs(result);
       for (unsigned i = non_zero_start; i < base::abscissa().size(); ++i)
       {
-         K fp = f(base::abscissa()[i]);
-         K fm = f(-base::abscissa()[i]);
-         result += (fp + fm) * base::weights()[i];
-         L1 += (abs(fp) + abs(fm)) *  base::weights()[i];
+         K fp = f(static_cast<Real>(base::abscissa()[i]));
+         K fm = f(static_cast<Real>(-base::abscissa()[i]));
+         result += (fp + fm) * static_cast<Real>(base::weights()[i]);
+         L1 += (abs(fp) + abs(fm)) * static_cast<Real>(base::weights()[i]);
       }
       if (pL1)
          *pL1 = L1;

@@ -44,7 +44,7 @@ namespace symplectic_rkn_sb3a_m4_mclachlan {
 
 
     template< class Value >
-    struct coef_a_type : public boost::array< Value , 5 >
+    struct coef_a_type : public std::array< Value , 5 >
     {
         coef_a_type( void )
         {
@@ -60,7 +60,7 @@ namespace symplectic_rkn_sb3a_m4_mclachlan {
     };
 
     template< class Value >
-    struct coef_b_type : public boost::array< Value , 5 >
+    struct coef_b_type : public std::array< Value , 5 >
     {
         coef_b_type( void )
         {

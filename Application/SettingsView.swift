@@ -57,6 +57,7 @@ class SettingsView: NSView, SettingsSplitViewElement {
     @IBOutlet weak var dataLimitTextField: NSTextField!
     @IBOutlet weak var dataLimitPopupButton: NSPopUpButton!
     @IBOutlet weak var EOLSwitch: NSSwitch!
+    @IBOutlet weak var aboutSwitch: NSSwitch!
     @IBOutlet weak var debugSwitch: NSSwitch!
     @IBOutlet weak var vcsCheckBox: NSButton!
     @IBOutlet weak var vcsSwitch: NSSwitch!
@@ -86,6 +87,7 @@ class SettingsView: NSView, SettingsSplitViewElement {
             gridView.cell(for: customCSSCheckBox)?.row?.isHidden = !isAdvancedSettingsVisible || settings?.format != .html
             
             gridView.cell(for: argumentsCheckBox)?.row?.isHidden = !isAdvancedSettingsVisible
+            gridView.cell(for: aboutSwitch)?.row?.isHidden = !isAdvancedSettingsVisible
             gridView.cell(for: debugSwitch)?.row?.isHidden = !isAdvancedSettingsVisible
             gridView.cell(for: vcsSwitch)?.row?.isHidden = !isAdvancedSettingsVisible
             gridView.cell(for: EOLSwitch)?.row?.isHidden = !isAdvancedSettingsVisible
@@ -242,6 +244,7 @@ class SettingsView: NSView, SettingsSplitViewElement {
         gridView.cell(for: syntaxPopupButton)?.row?.isHidden = true
         gridView.cell(for: lspButton)?.row?.isHidden = true
         
+        gridView.cell(for: aboutSwitch)?.row?.isHidden = !isAdvancedSettingsVisible
         gridView.cell(for: debugSwitch)?.row?.isHidden = !isAdvancedSettingsVisible
         gridView.cell(for: vcsSwitch)?.row?.isHidden = !isAdvancedSettingsVisible
         gridView.cell(for: EOLSwitch)?.row?.isHidden = !isAdvancedSettingsVisible
@@ -295,6 +298,7 @@ class SettingsView: NSView, SettingsSplitViewElement {
             interactiveCheckBox.isEnabled = false
             interactiveSwitch.isEnabled = false
             
+            aboutSwitch.isEnabled = false
             debugSwitch.isEnabled = false
             
             vcsCheckBox.isEnabled = false
@@ -394,6 +398,10 @@ class SettingsView: NSView, SettingsSplitViewElement {
         vcsSwitch.isEnabled = true
         
         if let settings = settings as? Settings {
+            aboutSwitch.isEnabled = true
+            aboutSwitch.state = settings.isAboutVisible ? .on : .off
+            gridView.cell(for: aboutSwitch)?.row?.isHidden = !self.isAdvancedSettingsVisible
+            
             debugSwitch.isEnabled = true
             debugSwitch.state = settings.isDebug ? .on : .off
             gridView.cell(for: debugSwitch)?.row?.isHidden = !self.isAdvancedSettingsVisible
@@ -428,6 +436,7 @@ class SettingsView: NSView, SettingsSplitViewElement {
             qlHeightField.integerValue = settings.qlWindowHeight ?? 800
             self.handleQLSizeChanged(self.qlSizeSwitch)
         } else {
+            gridView.cell(for: aboutSwitch)?.row?.isHidden = true
             gridView.cell(for: debugSwitch)?.row?.isHidden = true
             
             vcsCheckBox.imagePosition = .imageLeft
@@ -675,6 +684,12 @@ class SettingsView: NSView, SettingsSplitViewElement {
     @IBAction func onEOLChanged(_ sender: Any) {
         if let settings = self.settings as? Settings {
             settings.convertEOL = self.EOLSwitch.state == .on
+        }
+    }
+    
+    @IBAction func onAboutChanged(_ sender: Any) {
+        if let settings = self.settings as? Settings {
+            settings.isAboutVisible = self.aboutSwitch.state == .on
         }
     }
     

@@ -10,6 +10,8 @@
 #include <regex>
 #include <filesystem>
 
+using namespace std;
+
 #define EXPORT __attribute__((visibility("default")))
 
 static os_log_t sLog = os_log_create("org.sbarex.highlight-wrapper", "rendering");
@@ -55,11 +57,11 @@ __unused char *get_highlight_email() {
 __unused char *get_highlight_about() {
     string about =
             "highlight version " + highlight::Info::getVersion() +
-            "\n Copyright (C) 2002-2023 Andre Simon <a dot simon at mailbox.org>" +
+            "\n Copyright (C) 2002-2024 Andre Simon <a dot simon at mailbox.org>" +
             "\n\n Argparser class" +
             "\n Copyright (C) 2006-2008 Antonio Diaz Diaz <ant_diaz at teleline.es>" +
-            "\n\n Artistic Style Classes (3.4.6)" +
-            "\n Copyright (C) 1998-2023 The Artistic Style Authors" +
+            "\n\n Artistic Style Classes (3.4.10)" +
+            "\n Copyright (C) 1998-2024 The Artistic Style Authors" +
             "\n\n Diluculum Lua wrapper (1.0)" +
             "\n Copyright (C) 2005-2013 by Leandro Motta Barros" +
             "\n\n xterm 256 color matching functions" +

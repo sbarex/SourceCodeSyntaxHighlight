@@ -17,7 +17,7 @@ Real gegenbauer(unsigned n, Real lambda, Real x)
 {
     static_assert(!std::is_integral<Real>::value, "Gegenbauer polynomials required floating point arguments.");
     if (lambda <= -1/Real(2)) {
-#ifndef BOOST_NO_EXCEPTIONS
+#ifndef BOOST_MATH_NO_EXCEPTIONS
        throw std::domain_error("lambda > -1/2 is required.");
 #else
        return std::numeric_limits<Real>::quiet_NaN();

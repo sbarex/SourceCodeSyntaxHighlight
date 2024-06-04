@@ -38,9 +38,7 @@ namespace boost
             
             if((x < 1) || (boost::math::isnan)(x))
             {
-               return policies::raise_domain_error<T>(
-                  "boost::math::acosh<%1%>(%1%)",
-                  "acosh requires x >= 1, but got x = %1%.", x, pol);
+               return policies::raise_domain_error<T>("boost::math::acosh<%1%>(%1%)", "acosh requires x >= 1, but got x = %1%.", x, pol);
             }
             else if    ((x - 1) >= tools::root_epsilon<T>())
             {

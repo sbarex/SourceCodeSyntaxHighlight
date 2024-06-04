@@ -147,6 +147,7 @@ inline T bessel_y_derivative_small_z_series(T v, T x, const Policy& pol)
    T p = log(x / 2);
    T scale = 1;
    bool need_logs = (v >= boost::math::max_factorial<T>::value) || (boost::math::tools::log_max_value<T>() / v < fabs(p));
+
    if (!need_logs)
    {
       gam = boost::math::tgamma(v, pol);
@@ -204,7 +205,9 @@ inline T bessel_y_derivative_small_z_series(T v, T x, const Policy& pol)
    T b = boost::math::tools::sum_series(s2, boost::math::policies::get_epsilon<T, Policy>(), max_iter);
 
    result += scale * prefix * b;
-   return result;
+   if(scale * tools::max_value<T>() < result)
+      return boost::math::policies::raise_overflow_error<T>(function, nullptr, pol);
+   return result / scale;
 }
 
 // Calculating of BesselY'(v,x) with small x (x < epsilon) and integer x using derivatives

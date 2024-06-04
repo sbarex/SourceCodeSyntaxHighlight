@@ -14,7 +14,7 @@
 #include <boost/math/constants/constants.hpp>
 #include <boost/math/tools/config.hpp>
 
-#ifdef BOOST_HAS_THREADS
+#ifdef BOOST_MATH_HAS_THREADS
 #include <mutex>
 #include <atomic>
 #endif
@@ -382,7 +382,7 @@ private:
         lnode_row.shrink_to_fit();
         lweight_row.shrink_to_fit();
 
-        #ifdef BOOST_HAS_THREADS
+        #ifdef BOOST_MATH_HAS_THREADS
         // std::scoped_lock once C++17 is more common?
         std::lock_guard<std::mutex> lock(node_weight_mutex_);
         #endif 
@@ -419,7 +419,7 @@ private:
         return I0;
     }
 
-    #ifdef BOOST_HAS_THREADS
+    #ifdef BOOST_MATH_HAS_THREADS
     std::mutex node_weight_mutex_;
     #endif
     // Nodes for n >= 0, giving t_n = pi*phi(nh)/h. Generally t_n >> 1.
@@ -433,7 +433,7 @@ private:
     std::vector<std::vector<Real>> lweights_;
     Real rel_err_goal_;
 
-    #ifdef BOOST_HAS_THREADS
+    #ifdef BOOST_MATH_HAS_THREADS
     std::atomic<long> starting_level_{};
     #else
     long starting_level_;
@@ -619,7 +619,7 @@ private:
         lnode_row.shrink_to_fit();
         lweight_row.shrink_to_fit();
 
-        #ifdef BOOST_HAS_THREADS
+        #ifdef BOOST_MATH_HAS_THREADS
         std::lock_guard<std::mutex> lock(node_weight_mutex_);
         #endif
 
@@ -651,7 +651,7 @@ private:
         return I0;
     }
 
-    #ifdef BOOST_HAS_THREADS
+    #ifdef BOOST_MATH_HAS_THREADS
     std::mutex node_weight_mutex_;
     #endif 
 
@@ -662,7 +662,7 @@ private:
     std::vector<std::vector<Real>> lweights_;
     Real rel_err_goal_;
 
-    #ifdef BOOST_HAS_THREADS
+    #ifdef BOOST_MATH_HAS_THREADS
     std::atomic<long> starting_level_{};
     #else
     long starting_level_;

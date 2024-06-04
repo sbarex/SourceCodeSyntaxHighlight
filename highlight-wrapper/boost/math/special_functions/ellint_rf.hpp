@@ -40,17 +40,11 @@ namespace boost { namespace math { namespace detail{
 
       if(x < 0 || y < 0 || z < 0)
       {
-         return policies::raise_domain_error<T>(function,
-            "domain error, all arguments must be non-negative, "
-            "only sensible result is %1%.",
-            std::numeric_limits<T>::quiet_NaN(), pol);
+         return policies::raise_domain_error<T>(function, "domain error, all arguments must be non-negative, only sensible result is %1%.", std::numeric_limits<T>::quiet_NaN(), pol);
       }
       if(x + y == 0 || y + z == 0 || z + x == 0)
       {
-         return policies::raise_domain_error<T>(function,
-            "domain error, at most one argument can be zero, "
-            "only sensible result is %1%.",
-            std::numeric_limits<T>::quiet_NaN(), pol);
+         return policies::raise_domain_error<T>(function, "domain error, at most one argument can be zero, only sensible result is %1%.", std::numeric_limits<T>::quiet_NaN(), pol);
       }
       //
       // Special cases from http://dlmf.nist.gov/19.20#i

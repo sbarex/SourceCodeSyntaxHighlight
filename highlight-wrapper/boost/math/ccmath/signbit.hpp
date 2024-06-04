@@ -6,23 +6,17 @@
 #ifndef BOOST_MATH_CCMATH_SIGNBIT_HPP
 #define BOOST_MATH_CCMATH_SIGNBIT_HPP
 
-#include <cmath>
+#include <boost/math/ccmath/detail/config.hpp>
+
+#ifdef BOOST_MATH_NO_CCMATH
+#error "The header <boost/math/signbit.hpp> can only be used in C++17 and later."
+#endif
+
 #include <cstdint>
-#include <limits>
-#include <type_traits>
-#include <boost/math/tools/is_constant_evaluated.hpp>
 #include <boost/math/tools/assert.hpp>
 #include <boost/math/special_functions/detail/fp_traits.hpp>
 #include <boost/math/ccmath/isnan.hpp>
 #include <boost/math/ccmath/abs.hpp>
-
-#include <boost/math/tools/is_standalone.hpp>
-#ifndef BOOST_MATH_STANDALONE
-#include <boost/config.hpp>
-#ifdef BOOST_NO_CXX17_IF_CONSTEXPR
-#error "The header <boost/math/norms.hpp> can only be used in C++17 and later."
-#endif
-#endif
 
 #ifdef __has_include
 #  if __has_include(<bit>)

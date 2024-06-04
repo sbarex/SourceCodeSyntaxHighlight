@@ -27,7 +27,7 @@
 #include <boost/numeric/odeint/algebra/algebra_dispatcher.hpp>
 #include <boost/numeric/odeint/algebra/operations_dispatcher.hpp>
 
-#include <boost/array.hpp>
+#include <array>
 
 namespace boost {
 namespace numeric {
@@ -132,7 +132,7 @@ public:
 
     void do_step(const deriv_type &dxdt, const int o = 0)
     {
-        m_phi_resizer.adjust_size( dxdt , detail::bind( &aac_type::template resize_phi_impl< deriv_type > , detail::ref( *this ) , detail::_1 ) );
+        m_phi_resizer.adjust_size(dxdt, [this](auto&& arg) { return this->resize_phi_impl<deriv_type>(std::forward<decltype(arg)>(arg)); });
 
         phi[o][0].m_v = dxdt;
 
@@ -168,10 +168,10 @@ public:
     size_t m_eo;
     size_t m_steps_init;
 
-    rotating_buffer<boost::array<value_type, order_value+1>, 2> beta; // beta[0] = beta(n)
-    rotating_buffer<boost::array<wrapped_deriv_type, order_value+2>, 3> phi; // phi[0] = phi(n+1)
-    boost::array<value_type, order_value + 2> g;
-    boost::array<value_type, 14> gs;
+    rotating_buffer<std::array<value_type, order_value+1>, 2> beta; // beta[0] = beta(n)
+    rotating_buffer<std::array<wrapped_deriv_type, order_value+2>, 3> phi; // phi[0] = phi(n+1)
+    std::array<value_type, order_value + 2> g;
+    std::array<value_type, 14> gs;
 
 private:
     template< class StateType >
@@ -192,7 +192,7 @@ private:
 
     time_storage_type m_time_storage;
     static const size_t c_size = order_value + 2;
-    boost::array<value_type, c_size*c_size> c;
+    std::array<value_type, c_size*c_size> c;
 
     algebra_type m_algebra;
 

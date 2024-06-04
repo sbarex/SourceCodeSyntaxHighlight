@@ -19,7 +19,7 @@
 #define BOOST_NUMERIC_ODEINT_STEPPER_DETAIL_ADAMS_MOULTON_COEFFICIENTS_HPP_INCLUDED
 
 
-#include <boost/array.hpp>
+#include <array>
 
 
 namespace boost {
@@ -31,11 +31,11 @@ template< class Value , size_t Steps >
 class adams_moulton_coefficients ;
 
 template< class Value >
-class adams_moulton_coefficients< Value , 1 > : public boost::array< Value , 1 >
+class adams_moulton_coefficients< Value , 1 > : public std::array< Value , 1 >
 {
 public:
     adams_moulton_coefficients( void )
-    : boost::array< Value , 1 >()
+    : std::array< Value , 1 >()
       {
         (*this)[0] = static_cast< Value >( 1 );
       }
@@ -43,11 +43,11 @@ public:
 
 
 template< class Value >
-class adams_moulton_coefficients< Value , 2 > : public boost::array< Value , 2 >
+class adams_moulton_coefficients< Value , 2 > : public std::array< Value , 2 >
 {
 public:
     adams_moulton_coefficients( void )
-    : boost::array< Value , 2 >()
+    : std::array< Value , 2 >()
       {
         (*this)[0] = static_cast< Value >( 1 ) / static_cast< Value >( 2 );
         (*this)[1] = static_cast< Value >( 1 ) / static_cast< Value >( 2 );
@@ -56,11 +56,11 @@ public:
 
 
 template< class Value >
-class adams_moulton_coefficients< Value , 3 > : public boost::array< Value , 3 >
+class adams_moulton_coefficients< Value , 3 > : public std::array< Value , 3 >
 {
 public:
     adams_moulton_coefficients( void )
-    : boost::array< Value , 3 >()
+    : std::array< Value , 3 >()
       {
         (*this)[0] = static_cast< Value >( 5 ) / static_cast< Value >( 12 );
         (*this)[1] = static_cast< Value >( 2 ) / static_cast< Value >( 3 );
@@ -70,11 +70,11 @@ public:
 
 
 template< class Value >
-class adams_moulton_coefficients< Value , 4 > : public boost::array< Value , 4 >
+class adams_moulton_coefficients< Value , 4 > : public std::array< Value , 4 >
 {
 public:
     adams_moulton_coefficients( void )
-    : boost::array< Value , 4 >()
+    : std::array< Value , 4 >()
       {
         (*this)[0] = static_cast< Value >( 3 ) / static_cast< Value >( 8 );
         (*this)[1] = static_cast< Value >( 19 ) / static_cast< Value >( 24 );
@@ -85,11 +85,11 @@ public:
 
 
 template< class Value >
-class adams_moulton_coefficients< Value , 5 > : public boost::array< Value , 5 >
+class adams_moulton_coefficients< Value , 5 > : public std::array< Value , 5 >
 {
 public:
     adams_moulton_coefficients( void )
-    : boost::array< Value , 5 >()
+    : std::array< Value , 5 >()
       {
         (*this)[0] = static_cast< Value >( 251 ) / static_cast< Value >( 720 );
         (*this)[1] = static_cast< Value >( 323 ) / static_cast< Value >( 360 );
@@ -101,11 +101,11 @@ public:
 
 
 template< class Value >
-class adams_moulton_coefficients< Value , 6 > : public boost::array< Value , 6 >
+class adams_moulton_coefficients< Value , 6 > : public std::array< Value , 6 >
 {
 public:
     adams_moulton_coefficients( void )
-    : boost::array< Value , 6 >()
+    : std::array< Value , 6 >()
       {
         (*this)[0] = static_cast< Value >( 95 ) / static_cast< Value >( 288 );
         (*this)[1] = static_cast< Value >( 1427 ) / static_cast< Value >( 1440 );
@@ -117,11 +117,11 @@ public:
 };
 
 template< class Value >
-class adams_moulton_coefficients< Value , 7 > : public boost::array< Value , 7 >
+class adams_moulton_coefficients< Value , 7 > : public std::array< Value , 7 >
 {
 public:
     adams_moulton_coefficients( void )
-    : boost::array< Value , 7 >()
+    : std::array< Value , 7 >()
       {
         (*this)[0] = static_cast< Value >( 19087 ) / static_cast< Value >( 60480 );
         (*this)[1] = static_cast< Value >( 2713 ) / static_cast< Value >( 2520 );
@@ -135,11 +135,11 @@ public:
 
 
 template< class Value >
-class adams_moulton_coefficients< Value , 8 > : public boost::array< Value , 8 >
+class adams_moulton_coefficients< Value , 8 > : public std::array< Value , 8 >
 {
 public:
     adams_moulton_coefficients( void )
-    : boost::array< Value , 8 >()
+    : std::array< Value , 8 >()
       {
         (*this)[0] = static_cast< Value >( 5257 ) / static_cast< Value >( 17280 );
         (*this)[1] = static_cast< Value >( 139849 ) / static_cast< Value >( 120960 );

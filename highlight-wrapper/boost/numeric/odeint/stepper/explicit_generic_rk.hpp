@@ -20,7 +20,7 @@
 #define BOOST_NUMERIC_ODEINT_STEPPER_EXPLICIT_GENERIC_RK_HPP_INCLUDED
 
 
-#include <boost/array.hpp>
+#include <array>
 
 
 #include <boost/numeric/odeint/stepper/base/explicit_stepper_base.hpp>
@@ -60,14 +60,14 @@ struct stage_vector;
 template< class T , class Constant >
 struct array_wrapper
 {
-    typedef const typename boost::array< T , Constant::value > type;
+    typedef const typename std::array< T , Constant::value > type;
 };
 
 template< class T , size_t i >
 struct stage
 {
     T c;
-    boost::array< T , i > a;
+    std::array< T , i > a;
 };
 
 
@@ -146,7 +146,7 @@ public:
     void do_step_impl( System system , const StateIn &in , const DerivIn &dxdt ,
             time_type t , StateOut &out , time_type dt )
     {
-        m_resizer.adjust_size( in , detail::bind( &stepper_type::template resize_impl< StateIn > , detail::ref( *this ) , detail::_1 ) );
+        m_resizer.adjust_size(in, [this](auto&& arg) { return this->resize_impl<StateIn>(std::forward<decltype(arg)>(arg)); });
 
         // actual calculation done in generic_rk.hpp
         m_rk_algorithm.do_step( stepper_base_type::m_algebra , system , in , dxdt , t , out , dt , m_x_tmp.m_v , m_F );

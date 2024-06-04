@@ -15,7 +15,7 @@
 #ifndef BOOST_NUMERIC_ODEINT_STEPPER_DETAIL_PID_STEP_ADJUSTER_COEFFICIENTS_HPP_INCLUDED
 #define BOOST_NUMERIC_ODEINT_STEPPER_DETAIL_PID_STEP_ADJUSTER_COEFFICIENTS_HPP_INCLUDED
 
-#include <boost/array.hpp>
+#include <array>
 
 namespace boost {
 namespace numeric {
@@ -38,11 +38,11 @@ template<int Type>
 class pid_step_adjuster_coefficients;
 
 template<>
-class pid_step_adjuster_coefficients<BASIC> : public boost::array<double, 5>
+class pid_step_adjuster_coefficients<BASIC> : public std::array<double, 5>
 {
 public:
     pid_step_adjuster_coefficients()
-    : boost::array<double, 5>()
+    : std::array<double, 5>()
     {
         (*this)[0] = 1.0;
         (*this)[1] = 0.0;
@@ -53,11 +53,11 @@ public:
 };
 
 template<>
-class pid_step_adjuster_coefficients<H0211> : public boost::array<double, 5>
+class pid_step_adjuster_coefficients<H0211> : public std::array<double, 5>
 {
 public:
     pid_step_adjuster_coefficients()
-    : boost::array<double, 5>()
+    : std::array<double, 5>()
     {
         (*this)[0] = 1.0 / 2.0;
         (*this)[1] = 1.0 / 2.0;
@@ -68,11 +68,11 @@ public:
 };
 
 template<>
-class pid_step_adjuster_coefficients<H211b> : public boost::array<double, 5>
+class pid_step_adjuster_coefficients<H211b> : public std::array<double, 5>
 {
 public:
     pid_step_adjuster_coefficients()
-    : boost::array<double, 5>()
+    : std::array<double, 5>()
     {
         (*this)[0] = 1.0 / 5.0;
         (*this)[1] = 2.0 / 5.0;
@@ -83,11 +83,11 @@ public:
 };
 
 template<>
-class pid_step_adjuster_coefficients<H211PI> : public boost::array<double, 5>
+class pid_step_adjuster_coefficients<H211PI> : public std::array<double, 5>
 {
 public:
     pid_step_adjuster_coefficients()
-    : boost::array<double, 5>()
+    : std::array<double, 5>()
     {
         (*this)[0] = 1.0 / 6.0;
         (*this)[1] = 2.0 / 6.0;
@@ -98,11 +98,11 @@ public:
 };
 
 template<>
-class pid_step_adjuster_coefficients<H0312> : public boost::array<double, 5>
+class pid_step_adjuster_coefficients<H0312> : public std::array<double, 5>
 {
 public:
     pid_step_adjuster_coefficients()
-    : boost::array<double, 5>()
+    : std::array<double, 5>()
     {
         (*this)[0] = 1.0 / 4.0;
         (*this)[1] = 2.0 / 2.0;
@@ -113,11 +113,11 @@ public:
 };
 
 template<>
-class pid_step_adjuster_coefficients<H312b> : public boost::array<double, 5>
+class pid_step_adjuster_coefficients<H312b> : public std::array<double, 5>
 {
 public:
     pid_step_adjuster_coefficients()
-    : boost::array<double, 5>()
+    : std::array<double, 5>()
     {
         (*this)[0] = 1.0 / 6.0;
         (*this)[1] = 2.0 / 6.0;
@@ -128,11 +128,11 @@ public:
 };
 
 template<>
-class pid_step_adjuster_coefficients<H312PID> : public boost::array<double, 5>
+class pid_step_adjuster_coefficients<H312PID> : public std::array<double, 5>
 {
 public:
     pid_step_adjuster_coefficients()
-    : boost::array<double, 5>()
+    : std::array<double, 5>()
     {
         (*this)[0] = 1.0 / 18.0;
         (*this)[1] = 2.0 / 9.0;
@@ -143,11 +143,11 @@ public:
 };
 
 template<>
-class pid_step_adjuster_coefficients<H0321> : public boost::array<double, 5>
+class pid_step_adjuster_coefficients<H0321> : public std::array<double, 5>
 {
 public:
     pid_step_adjuster_coefficients()
-    : boost::array<double, 5>()
+    : std::array<double, 5>()
     {
         (*this)[0] =  5.0 / 4.0;
         (*this)[1] =  1.0 / 2.0;
@@ -158,11 +158,11 @@ public:
 };
 
 template<>
-class pid_step_adjuster_coefficients<H321> : public boost::array<double, 5>
+class pid_step_adjuster_coefficients<H321> : public std::array<double, 5>
 {
 public:
     pid_step_adjuster_coefficients()
-    : boost::array<double, 5>()
+    : std::array<double, 5>()
     {
         (*this)[0] =  1.0 / 3.0;
         (*this)[1] =  1.0 / 18.0;

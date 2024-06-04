@@ -69,7 +69,7 @@ public:
         if( m_steps++ >= m_max_steps )
         {
             char error_msg[200];
-            std::sprintf(error_msg, "Max number of iterations exceeded (%d).", m_max_steps);
+            std::snprintf(error_msg, 200, "Max number of iterations exceeded (%d).", m_max_steps);
             BOOST_THROW_EXCEPTION( no_progress_error(error_msg) );
         }
     }
@@ -101,7 +101,7 @@ public:
         if( m_steps++ >= m_max_steps )
         {
             char error_msg[200];
-            std::sprintf(error_msg, "Max number of iterations exceeded (%d). A new step size was not found.", m_max_steps);
+            std::snprintf(error_msg, 200, "Max number of iterations exceeded (%d). A new step size was not found.", m_max_steps);
             BOOST_THROW_EXCEPTION( step_adjustment_error(error_msg) );
         }
     }

@@ -292,15 +292,15 @@ public:
        normalize();
    }
 
-   template <class I>
-   polynomial(I first, I last)
+   template <class Iterator>
+   polynomial(Iterator first, Iterator last)
       : m_data(first, last)
    {
        normalize();
    }
 
-   template <class I>
-   polynomial(I first, unsigned length)
+   template <class Iterator>
+   polynomial(Iterator first, unsigned length)
       : m_data(first, std::next(first, length + 1))
    {
        normalize();

@@ -19,7 +19,7 @@ endif
 BUILD_DIR := $(BUILD_DIR)/highlight
 
 CXX=clang++
-CFLAGS=-Wall -std=c++11 -D_FILE_OFFSET_BITS=64 \
+CFLAGS=-Wall -std=c++17 -D_FILE_OFFSET_BITS=64 \
        -I "${CURRENT_DIR}/${HIGHLIGHT_DIR}/src/include" \
        -I "${CURRENT_DIR}/${LUA_DIR}/src" \
        -I "${CURRENT_DIR}" \

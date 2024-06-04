@@ -209,15 +209,18 @@ function themeUpdate(desc)
         span.hl.vcs.add::before {
             content: " + ";
             background-color: ${add_color};
+            -webkit-user-select: none;
         }
         span.hl.vcs.changed::before {
             content: " | ";
             background-color: ${edit_color};
+            -webkit-user-select: none;
         }
         span.hl.vcs.del::before {
             content: " - ";
             background-color: ${del_color};
             top: -.5em;
+            -webkit-user-select: none;
         }
         hr.vcs.del {
             margin-left: -3em;

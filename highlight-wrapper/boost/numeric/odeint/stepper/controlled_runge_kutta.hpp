@@ -263,7 +263,7 @@ public:
      * \brief Tries to perform one step.
      *
      * This method tries to do one step with step size dt. If the error estimate
-     * is to large, the step is rejected and the method returns fail and the 
+     * is too large, the step is rejected and the method returns fail and the 
      * step size dt is reduced. If the error estimate is acceptably small, the
      * step is performed, success is returned and dt might be increased to make 
      * the steps as large as possible. This method also updates t if a step is
@@ -337,7 +337,7 @@ public:
     template< class System , class StateInOut , class DerivIn >
     controlled_step_result try_step( System system , StateInOut &x , const DerivIn &dxdt , time_type &t , time_type &dt )
     {
-        m_xnew_resizer.adjust_size( x , detail::bind( &controlled_runge_kutta::template resize_m_xnew_impl< StateInOut > , detail::ref( *this ) , detail::_1 ) );
+        m_xnew_resizer.adjust_size(x, [this](auto&& arg) { return this->resize_m_xnew_impl<StateInOut>(std::forward<decltype(arg)>(arg)); });
         controlled_step_result res = try_step( system , x , dxdt , t , m_xnew.m_v , dt );
         if( res == success )
         {
@@ -378,7 +378,7 @@ public:
     try_step( System system , const StateIn &in , time_type &t , StateOut &out , time_type &dt )
     {
         typename odeint::unwrap_reference< System >::type &sys = system;
-        m_dxdt_resizer.adjust_size( in , detail::bind( &controlled_runge_kutta::template resize_m_dxdt_impl< StateIn > , detail::ref( *this ) , detail::_1 ) );
+        m_dxdt_resizer.adjust_size(in, [this](auto&& arg) { return this->resize_m_dxdt_impl<StateIn>(std::forward<decltype(arg)>(arg)); });
         sys( in , m_dxdt.m_v , t );
         return try_step( system , in , m_dxdt.m_v , t , out , dt );
     }
@@ -419,7 +419,7 @@ public:
             return fail;
         }
 
-        m_xerr_resizer.adjust_size( in , detail::bind( &controlled_runge_kutta::template resize_m_xerr_impl< StateIn > , detail::ref( *this ) , detail::_1 ) );
+        m_xerr_resizer.adjust_size(in, [this](auto&& arg) { return this->resize_m_xerr_impl<StateIn>(std::forward<decltype(arg)>(arg)); });
 
         // do one step with error calculation
         m_stepper.do_step( system , in , dxdt , t , out , dt , m_xerr.m_v );
@@ -478,7 +478,7 @@ private:
     controlled_step_result try_step_v1( System system , StateInOut &x , time_type &t , time_type &dt )
     {
         typename odeint::unwrap_reference< System >::type &sys = system;
-        m_dxdt_resizer.adjust_size( x , detail::bind( &controlled_runge_kutta::template resize_m_dxdt_impl< StateInOut > , detail::ref( *this ) , detail::_1 ) );
+        m_dxdt_resizer.adjust_size(x, [this](auto&& arg) { return this->resize_m_dxdt_impl<StateInOut>(std::forward<decltype(arg)>(arg)); });
         sys( x , m_dxdt.m_v ,t );
         return try_step( system , x , m_dxdt.m_v , t , dt );
     }
@@ -678,7 +678,7 @@ public:
     typename boost::disable_if< boost::is_same< StateIn , time_type > , controlled_step_result >::type
     try_step( System system , const StateIn &in , time_type &t , StateOut &out , time_type &dt )
     {
-        if( m_dxdt_resizer.adjust_size( in , detail::bind( &controlled_runge_kutta::template resize_m_dxdt_impl< StateIn > , detail::ref( *this ) , detail::_1 ) ) || m_first_call )
+        if( m_dxdt_resizer.adjust_size(in, [this](auto&& arg) { return this->resize_m_dxdt_impl<StateIn>(std::forward<decltype(arg)>(arg)); }) || m_first_call )
         {
             initialize( system , in , t );
         }
@@ -713,8 +713,8 @@ public:
     template< class System , class StateInOut , class DerivInOut >
     controlled_step_result try_step( System system , StateInOut &x , DerivInOut &dxdt , time_type &t , time_type &dt )
     {
-        m_xnew_resizer.adjust_size( x , detail::bind( &controlled_runge_kutta::template resize_m_xnew_impl< StateInOut > , detail::ref( *this ) , detail::_1 ) );
-        m_dxdt_new_resizer.adjust_size( x , detail::bind( &controlled_runge_kutta::template resize_m_dxdt_new_impl< StateInOut > , detail::ref( *this ) , detail::_1 ) );
+        m_xnew_resizer.adjust_size(x, [this](auto&& arg) { return this->resize_m_xnew_impl<StateInOut>(std::forward<decltype(arg)>(arg)); });
+        m_dxdt_new_resizer.adjust_size(x, [this](auto&& arg) { return this->resize_m_dxdt_new_impl<StateInOut>(std::forward<decltype(arg)>(arg)); });
         controlled_step_result res = try_step( system , x , dxdt , t , m_xnew.m_v , m_dxdtnew.m_v , dt );
         if( res == success )
         {
@@ -761,7 +761,7 @@ public:
             return fail;
         }
 
-        m_xerr_resizer.adjust_size( in , detail::bind( &controlled_runge_kutta::template resize_m_xerr_impl< StateIn > , detail::ref( *this ) , detail::_1 ) );
+        m_xerr_resizer.adjust_size(in, [this](auto&& arg) { return this->resize_m_xerr_impl<StateIn>(std::forward<decltype(arg)>(arg)); });
 
         //fsal: m_stepper.get_dxdt( dxdt );
         //fsal: m_stepper.do_step( sys , x , dxdt , t , dt , m_x_err );
@@ -895,7 +895,7 @@ private:
     template< class System , class StateInOut >
     controlled_step_result try_step_v1( System system , StateInOut &x , time_type &t , time_type &dt )
     {
-        if( m_dxdt_resizer.adjust_size( x , detail::bind( &controlled_runge_kutta::template resize_m_dxdt_impl< StateInOut > , detail::ref( *this ) , detail::_1 ) ) || m_first_call )
+        if( m_dxdt_resizer.adjust_size(x, [this](auto&& arg) { return this->resize_m_dxdt_impl<StateInOut>(std::forward<decltype(arg)>(arg)); }) || m_first_call )
         {
             initialize( system , x , t );
         }

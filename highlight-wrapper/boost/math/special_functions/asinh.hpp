@@ -38,9 +38,7 @@ namespace boost
             
             if((boost::math::isnan)(x))
             {
-               return policies::raise_domain_error<T>(
-                  "boost::math::asinh<%1%>(%1%)",
-                  "asinh requires a finite argument, but got x = %1%.", x, pol);
+               return policies::raise_domain_error<T>("boost::math::asinh<%1%>(%1%)", "asinh requires a finite argument, but got x = %1%.", x, pol);
             }
             if        (x >= tools::forth_root_epsilon<T>())
             {

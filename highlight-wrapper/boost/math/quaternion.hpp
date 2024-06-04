@@ -46,7 +46,7 @@ namespace boost
          struct is_trivial_arithmetic_type : public is_trivial_arithmetic_type_imp<T>::type {};
       }
 
-#ifndef BOOST_NO_CXX14_CONSTEXPR
+#ifndef BOOST_MATH_NO_CXX14_CONSTEXPR
       namespace constexpr_detail
       {
          template <class T>
@@ -175,9 +175,9 @@ namespace boost
                return(::std::complex<T>(c, d));
             }
 
-            BOOST_CXX14_CONSTEXPR void swap(quaternion& o)
+            BOOST_MATH_CXX14_CONSTEXPR void swap(quaternion& o)
             {
-#ifndef BOOST_NO_CXX14_CONSTEXPR
+#ifndef BOOST_MATH_NO_CXX14_CONSTEXPR
                using constexpr_detail::swap;
 #else
                using std::swap;
@@ -191,7 +191,7 @@ namespace boost
             // assignment operators
             
             template<typename X>
-            BOOST_CXX14_CONSTEXPR quaternion<T> &        operator = (quaternion<X> const  & a_affecter)
+            BOOST_MATH_CXX14_CONSTEXPR quaternion<T> &        operator = (quaternion<X> const  & a_affecter)
             {
                a = static_cast<T>(a_affecter.R_component_1());
                b = static_cast<T>(a_affecter.R_component_2());
@@ -201,7 +201,7 @@ namespace boost
                return(*this);
             }
 
-            BOOST_CXX14_CONSTEXPR quaternion<T> &        operator = (quaternion<T> const & a_affecter)
+            BOOST_MATH_CXX14_CONSTEXPR quaternion<T> &        operator = (quaternion<T> const & a_affecter)
             {
                a = a_affecter.a;
                b = a_affecter.b;
@@ -211,7 +211,7 @@ namespace boost
                return(*this);
             }
 
-            BOOST_CXX14_CONSTEXPR quaternion<T> &        operator = (quaternion<T> && a_affecter)
+            BOOST_MATH_CXX14_CONSTEXPR quaternion<T> &        operator = (quaternion<T> && a_affecter)
             {
                a = std::move(a_affecter.a);
                b = std::move(a_affecter.b);
@@ -221,7 +221,7 @@ namespace boost
                return(*this);
             }
 
-            BOOST_CXX14_CONSTEXPR quaternion<T> &        operator = (T const & a_affecter)
+            BOOST_MATH_CXX14_CONSTEXPR quaternion<T> &        operator = (T const & a_affecter)
             {
                a = a_affecter;
 
@@ -230,7 +230,7 @@ namespace boost
                return(*this);
             }
 
-            BOOST_CXX14_CONSTEXPR quaternion<T> &        operator = (::std::complex<T> const & a_affecter)
+            BOOST_MATH_CXX14_CONSTEXPR quaternion<T> &        operator = (::std::complex<T> const & a_affecter)
             {
                a = a_affecter.real();
                b = a_affecter.imag();
@@ -250,31 +250,31 @@ namespace boost
             //          type T throws no exceptions, and one exception-safe version
             //          for the case where it might.
          private:
-            BOOST_CXX14_CONSTEXPR quaternion<T> &        do_add(T const & rhs, const std::true_type&)
+            BOOST_MATH_CXX14_CONSTEXPR quaternion<T> &        do_add(T const & rhs, const std::true_type&)
             {
                a += rhs;
                return *this;
             }
-            BOOST_CXX14_CONSTEXPR quaternion<T> &        do_add(T const & rhs, const std::false_type&)
+            BOOST_MATH_CXX14_CONSTEXPR quaternion<T> &        do_add(T const & rhs, const std::false_type&)
             {
                quaternion<T> result(a + rhs, b, c, d); // exception guard
                swap(result);
                return *this;
             }
-            BOOST_CXX14_CONSTEXPR quaternion<T> &        do_add(std::complex<T> const & rhs, const std::true_type&)
+            BOOST_MATH_CXX14_CONSTEXPR quaternion<T> &        do_add(std::complex<T> const & rhs, const std::true_type&)
             {
                a += std::real(rhs);
                b += std::imag(rhs);
                return *this;
             }
-            BOOST_CXX14_CONSTEXPR quaternion<T> &        do_add(std::complex<T> const & rhs, const std::false_type&)
+            BOOST_MATH_CXX14_CONSTEXPR quaternion<T> &        do_add(std::complex<T> const & rhs, const std::false_type&)
             {
                quaternion<T> result(a + std::real(rhs), b + std::imag(rhs), c, d); // exception guard
                swap(result);
                return *this;
             }
             template <class X>
-            BOOST_CXX14_CONSTEXPR quaternion<T> &        do_add(quaternion<X> const & rhs, const std::true_type&)
+            BOOST_MATH_CXX14_CONSTEXPR quaternion<T> &        do_add(quaternion<X> const & rhs, const std::true_type&)
             {
                a += rhs.R_component_1();
                b += rhs.R_component_2();
@@ -283,38 +283,38 @@ namespace boost
                return *this;
             }
             template <class X>
-            BOOST_CXX14_CONSTEXPR quaternion<T> &        do_add(quaternion<X> const & rhs, const std::false_type&)
+            BOOST_MATH_CXX14_CONSTEXPR quaternion<T> &        do_add(quaternion<X> const & rhs, const std::false_type&)
             {
                quaternion<T> result(a + rhs.R_component_1(), b + rhs.R_component_2(), c + rhs.R_component_3(), d + rhs.R_component_4()); // exception guard
                swap(result);
                return *this;
             }
 
-            BOOST_CXX14_CONSTEXPR quaternion<T> &        do_subtract(T const & rhs, const std::true_type&)
+            BOOST_MATH_CXX14_CONSTEXPR quaternion<T> &        do_subtract(T const & rhs, const std::true_type&)
             {
                a -= rhs;
                return *this;
             }
-            BOOST_CXX14_CONSTEXPR quaternion<T> &        do_subtract(T const & rhs, const std::false_type&)
+            BOOST_MATH_CXX14_CONSTEXPR quaternion<T> &        do_subtract(T const & rhs, const std::false_type&)
             {
                quaternion<T> result(a - rhs, b, c, d); // exception guard
                swap(result);
                return *this;
             }
-            BOOST_CXX14_CONSTEXPR quaternion<T> &        do_subtract(std::complex<T> const & rhs, const std::true_type&)
+            BOOST_MATH_CXX14_CONSTEXPR quaternion<T> &        do_subtract(std::complex<T> const & rhs, const std::true_type&)
             {
                a -= std::real(rhs);
                b -= std::imag(rhs);
                return *this;
             }
-            BOOST_CXX14_CONSTEXPR quaternion<T> &        do_subtract(std::complex<T> const & rhs, const std::false_type&)
+            BOOST_MATH_CXX14_CONSTEXPR quaternion<T> &        do_subtract(std::complex<T> const & rhs, const std::false_type&)
             {
                quaternion<T> result(a - std::real(rhs), b - std::imag(rhs), c, d); // exception guard
                swap(result);
                return *this;
             }
             template <class X>
-            BOOST_CXX14_CONSTEXPR quaternion<T> &        do_subtract(quaternion<X> const & rhs, const std::true_type&)
+            BOOST_MATH_CXX14_CONSTEXPR quaternion<T> &        do_subtract(quaternion<X> const & rhs, const std::true_type&)
             {
                a -= rhs.R_component_1();
                b -= rhs.R_component_2();
@@ -323,14 +323,14 @@ namespace boost
                return *this;
             }
             template <class X>
-            BOOST_CXX14_CONSTEXPR quaternion<T> &        do_subtract(quaternion<X> const & rhs, const std::false_type&)
+            BOOST_MATH_CXX14_CONSTEXPR quaternion<T> &        do_subtract(quaternion<X> const & rhs, const std::false_type&)
             {
                quaternion<T> result(a - rhs.R_component_1(), b - rhs.R_component_2(), c - rhs.R_component_3(), d - rhs.R_component_4()); // exception guard
                swap(result);
                return *this;
             }
 
-            BOOST_CXX14_CONSTEXPR quaternion<T> &        do_multiply(T const & rhs, const std::true_type&)
+            BOOST_MATH_CXX14_CONSTEXPR quaternion<T> &        do_multiply(T const & rhs, const std::true_type&)
             {
                a *= rhs;
                b *= rhs;
@@ -338,14 +338,14 @@ namespace boost
                d *= rhs;
                return *this;
             }
-            BOOST_CXX14_CONSTEXPR quaternion<T> &        do_multiply(T const & rhs, const std::false_type&)
+            BOOST_MATH_CXX14_CONSTEXPR quaternion<T> &        do_multiply(T const & rhs, const std::false_type&)
             {
                quaternion<T> result(a * rhs, b * rhs, c * rhs, d * rhs); // exception guard
                swap(result);
                return *this;
             }
 
-            BOOST_CXX14_CONSTEXPR quaternion<T> &        do_divide(T const & rhs, const std::true_type&)
+            BOOST_MATH_CXX14_CONSTEXPR quaternion<T> &        do_divide(T const & rhs, const std::true_type&)
             {
                a /= rhs;
                b /= rhs;
@@ -353,7 +353,7 @@ namespace boost
                d /= rhs;
                return *this;
             }
-            BOOST_CXX14_CONSTEXPR quaternion<T> &        do_divide(T const & rhs, const std::false_type&)
+            BOOST_MATH_CXX14_CONSTEXPR quaternion<T> &        do_divide(T const & rhs, const std::false_type&)
             {
                quaternion<T> result(a / rhs, b / rhs, c / rhs, d / rhs); // exception guard
                swap(result);
@@ -361,17 +361,17 @@ namespace boost
             }
          public:
 
-            BOOST_CXX14_CONSTEXPR quaternion<T> &        operator += (T const & rhs) { return do_add(rhs, detail::is_trivial_arithmetic_type<T>()); }
-            BOOST_CXX14_CONSTEXPR quaternion<T> &        operator += (::std::complex<T> const & rhs) { return do_add(rhs, detail::is_trivial_arithmetic_type<T>()); }
-            template<typename X> BOOST_CXX14_CONSTEXPR quaternion<T> & operator += (quaternion<X> const & rhs) { return do_add(rhs, detail::is_trivial_arithmetic_type<T>()); }
+            BOOST_MATH_CXX14_CONSTEXPR quaternion<T> &        operator += (T const & rhs) { return do_add(rhs, detail::is_trivial_arithmetic_type<T>()); }
+            BOOST_MATH_CXX14_CONSTEXPR quaternion<T> &        operator += (::std::complex<T> const & rhs) { return do_add(rhs, detail::is_trivial_arithmetic_type<T>()); }
+            template<typename X> BOOST_MATH_CXX14_CONSTEXPR quaternion<T> & operator += (quaternion<X> const & rhs) { return do_add(rhs, detail::is_trivial_arithmetic_type<T>()); }
 
-            BOOST_CXX14_CONSTEXPR quaternion<T> &        operator -= (T const & rhs) { return do_subtract(rhs, detail::is_trivial_arithmetic_type<T>()); }
-            BOOST_CXX14_CONSTEXPR quaternion<T> &        operator -= (::std::complex<T> const & rhs) { return do_subtract(rhs, detail::is_trivial_arithmetic_type<T>()); }
-            template<typename X> BOOST_CXX14_CONSTEXPR quaternion<T> & operator -= (quaternion<X> const & rhs) { return do_subtract(rhs, detail::is_trivial_arithmetic_type<T>()); }
+            BOOST_MATH_CXX14_CONSTEXPR quaternion<T> &        operator -= (T const & rhs) { return do_subtract(rhs, detail::is_trivial_arithmetic_type<T>()); }
+            BOOST_MATH_CXX14_CONSTEXPR quaternion<T> &        operator -= (::std::complex<T> const & rhs) { return do_subtract(rhs, detail::is_trivial_arithmetic_type<T>()); }
+            template<typename X> BOOST_MATH_CXX14_CONSTEXPR quaternion<T> & operator -= (quaternion<X> const & rhs) { return do_subtract(rhs, detail::is_trivial_arithmetic_type<T>()); }
             
-            BOOST_CXX14_CONSTEXPR quaternion<T> &        operator *= (T const & rhs) { return do_multiply(rhs, detail::is_trivial_arithmetic_type<T>()); }
+            BOOST_MATH_CXX14_CONSTEXPR quaternion<T> &        operator *= (T const & rhs) { return do_multiply(rhs, detail::is_trivial_arithmetic_type<T>()); }
             
-            BOOST_CXX14_CONSTEXPR quaternion<T> &        operator *= (::std::complex<T> const & rhs)
+            BOOST_MATH_CXX14_CONSTEXPR quaternion<T> &        operator *= (::std::complex<T> const & rhs)
             {
                 T    ar = rhs.real();
                 T    br = rhs.imag();
@@ -381,7 +381,7 @@ namespace boost
             }
             
             template<typename X>
-            BOOST_CXX14_CONSTEXPR quaternion<T> &        operator *= (quaternion<X> const & rhs)
+            BOOST_MATH_CXX14_CONSTEXPR quaternion<T> &        operator *= (quaternion<X> const & rhs)
             {
                 T    ar = static_cast<T>(rhs.R_component_1());
                 T    br = static_cast<T>(rhs.R_component_2());
@@ -393,9 +393,9 @@ namespace boost
                 return(*this);
             }
             
-            BOOST_CXX14_CONSTEXPR quaternion<T> &        operator /= (T const & rhs) { return do_divide(rhs, detail::is_trivial_arithmetic_type<T>()); }
+            BOOST_MATH_CXX14_CONSTEXPR quaternion<T> &        operator /= (T const & rhs) { return do_divide(rhs, detail::is_trivial_arithmetic_type<T>()); }
             
-            BOOST_CXX14_CONSTEXPR quaternion<T> &        operator /= (::std::complex<T> const & rhs)
+            BOOST_MATH_CXX14_CONSTEXPR quaternion<T> &        operator /= (::std::complex<T> const & rhs)
             {
                 T    ar = rhs.real();
                 T    br = rhs.imag();
@@ -406,7 +406,7 @@ namespace boost
             }
             
             template<typename X>
-            BOOST_CXX14_CONSTEXPR quaternion<T> &        operator /= (quaternion<X> const & rhs)
+            BOOST_MATH_CXX14_CONSTEXPR quaternion<T> &        operator /= (quaternion<X> const & rhs)
             {
                 T    ar = static_cast<T>(rhs.R_component_1());
                 T    br = static_cast<T>(rhs.R_component_2());
@@ -425,7 +425,7 @@ namespace boost
 
 // swap:
 template <class T>
-BOOST_CXX14_CONSTEXPR void swap(quaternion<T>& a, quaternion<T>& b) { a.swap(b); }
+BOOST_MATH_CXX14_CONSTEXPR void swap(quaternion<T>& a, quaternion<T>& b) { a.swap(b); }
         
 // operator+
 template <class T1, class T2>
@@ -441,13 +441,13 @@ operator + (const T1& a, const quaternion<T2>& b)
    return quaternion<T2>(static_cast<T2>(b.R_component_1() + a), b.R_component_2(), b.R_component_3(), b.R_component_4());
 }
 template <class T1, class T2>
-inline BOOST_CXX14_CONSTEXPR typename std::enable_if<std::is_convertible<T2, T1>::value, quaternion<T1> >::type
+inline BOOST_MATH_CXX14_CONSTEXPR typename std::enable_if<std::is_convertible<T2, T1>::value, quaternion<T1> >::type
 operator + (const quaternion<T1>& a, const std::complex<T2>& b)
 {
    return quaternion<T1>(a.R_component_1() + std::real(b), a.R_component_2() + std::imag(b), a.R_component_3(), a.R_component_4());
 }
 template <class T1, class T2>
-inline BOOST_CXX14_CONSTEXPR typename std::enable_if<std::is_convertible<T1, T2>::value, quaternion<T2> >::type
+inline BOOST_MATH_CXX14_CONSTEXPR typename std::enable_if<std::is_convertible<T1, T2>::value, quaternion<T2> >::type
 operator + (const std::complex<T1>& a, const quaternion<T2>& b)
 {
    return quaternion<T1>(b.R_component_1() + std::real(a), b.R_component_2() + std::imag(a), b.R_component_3(), b.R_component_4());
@@ -471,13 +471,13 @@ operator - (const T1& a, const quaternion<T2>& b)
    return quaternion<T2>(static_cast<T2>(a - b.R_component_1()), -b.R_component_2(), -b.R_component_3(), -b.R_component_4());
 }
 template <class T1, class T2>
-inline BOOST_CXX14_CONSTEXPR typename std::enable_if<std::is_convertible<T2, T1>::value, quaternion<T1> >::type
+inline BOOST_MATH_CXX14_CONSTEXPR typename std::enable_if<std::is_convertible<T2, T1>::value, quaternion<T1> >::type
 operator - (const quaternion<T1>& a, const std::complex<T2>& b)
 {
    return quaternion<T1>(a.R_component_1() - std::real(b), a.R_component_2() - std::imag(b), a.R_component_3(), a.R_component_4());
 }
 template <class T1, class T2>
-inline BOOST_CXX14_CONSTEXPR typename std::enable_if<std::is_convertible<T1, T2>::value, quaternion<T2> >::type
+inline BOOST_MATH_CXX14_CONSTEXPR typename std::enable_if<std::is_convertible<T1, T2>::value, quaternion<T2> >::type
 operator - (const std::complex<T1>& a, const quaternion<T2>& b)
 {
    return quaternion<T1>(std::real(a) - b.R_component_1(), std::imag(a) - b.R_component_2(), -b.R_component_3(), -b.R_component_4());
@@ -502,7 +502,7 @@ operator * (const T1& a, const quaternion<T2>& b)
    return quaternion<T2>(static_cast<T2>(a * b.R_component_1()), a * b.R_component_2(), a * b.R_component_3(), a * b.R_component_4());
 }
 template <class T1, class T2>
-inline BOOST_CXX14_CONSTEXPR typename std::enable_if<std::is_convertible<T2, T1>::value, quaternion<T1> >::type
+inline BOOST_MATH_CXX14_CONSTEXPR typename std::enable_if<std::is_convertible<T2, T1>::value, quaternion<T1> >::type
 operator * (const quaternion<T1>& a, const std::complex<T2>& b)
 {
    quaternion<T1> result(a);
@@ -510,7 +510,7 @@ operator * (const quaternion<T1>& a, const std::complex<T2>& b)
    return result;
 }
 template <class T1, class T2>
-inline BOOST_CXX14_CONSTEXPR typename std::enable_if<std::is_convertible<T1, T2>::value, quaternion<T2> >::type
+inline BOOST_MATH_CXX14_CONSTEXPR typename std::enable_if<std::is_convertible<T1, T2>::value, quaternion<T2> >::type
 operator * (const std::complex<T1>& a, const quaternion<T2>& b)
 {
    quaternion<T1> result(a);
@@ -518,7 +518,7 @@ operator * (const std::complex<T1>& a, const quaternion<T2>& b)
    return result;
 }
 template <class T>
-inline BOOST_CXX14_CONSTEXPR quaternion<T> operator * (const quaternion<T>& a, const quaternion<T>& b)
+inline BOOST_MATH_CXX14_CONSTEXPR quaternion<T> operator * (const quaternion<T>& a, const quaternion<T>& b)
 {
    quaternion<T> result(a);
    result *= b;
@@ -533,7 +533,7 @@ operator / (const quaternion<T1>& a, const T2& b)
    return quaternion<T1>(a.R_component_1() / b, a.R_component_2() / b, a.R_component_3() / b, a.R_component_4() / b);
 }
 template <class T1, class T2>
-inline BOOST_CXX14_CONSTEXPR typename std::enable_if<std::is_convertible<T1, T2>::value, quaternion<T2> >::type
+inline BOOST_MATH_CXX14_CONSTEXPR typename std::enable_if<std::is_convertible<T1, T2>::value, quaternion<T2> >::type
 operator / (const T1& a, const quaternion<T2>& b)
 {
    quaternion<T2> result(a);
@@ -541,7 +541,7 @@ operator / (const T1& a, const quaternion<T2>& b)
    return result;
 }
 template <class T1, class T2>
-inline BOOST_CXX14_CONSTEXPR typename std::enable_if<std::is_convertible<T2, T1>::value, quaternion<T1> >::type
+inline BOOST_MATH_CXX14_CONSTEXPR typename std::enable_if<std::is_convertible<T2, T1>::value, quaternion<T1> >::type
 operator / (const quaternion<T1>& a, const std::complex<T2>& b)
 {
    quaternion<T1> result(a);
@@ -549,7 +549,7 @@ operator / (const quaternion<T1>& a, const std::complex<T2>& b)
    return result;
 }
 template <class T1, class T2>
-inline BOOST_CXX14_CONSTEXPR typename std::enable_if<std::is_convertible<T1, T2>::value, quaternion<T2> >::type
+inline BOOST_MATH_CXX14_CONSTEXPR typename std::enable_if<std::is_convertible<T1, T2>::value, quaternion<T2> >::type
 operator / (const std::complex<T1>& a, const quaternion<T2>& b)
 {
    quaternion<T2> result(a);
@@ -557,7 +557,7 @@ operator / (const std::complex<T1>& a, const quaternion<T2>& b)
    return result;
 }
 template <class T>
-inline BOOST_CXX14_CONSTEXPR quaternion<T> operator / (const quaternion<T>& a, const quaternion<T>& b)
+inline BOOST_MATH_CXX14_CONSTEXPR quaternion<T> operator / (const quaternion<T>& a, const quaternion<T>& b)
 {
    quaternion<T> result(a);
    result /= b;
@@ -944,7 +944,7 @@ inline BOOST_CXX14_CONSTEXPR quaternion<T> operator / (const quaternion<T>& a, c
         // Note:    This is the Cayley norm, not the Euclidean norm...
         
         template<typename T>
-        inline BOOST_CXX14_CONSTEXPR T norm(quaternion<T>const  & q)
+        inline BOOST_MATH_CXX14_CONSTEXPR T norm(quaternion<T>const  & q)
         {
             return(real(q*conj(q)));
         }

@@ -26,7 +26,7 @@
 #include <boost/numeric/odeint/algebra/algebra_dispatcher.hpp>
 #include <boost/numeric/odeint/algebra/operations_dispatcher.hpp>
 
-#include <boost/array.hpp>
+#include <array>
 
 namespace boost {
 namespace numeric {
@@ -38,7 +38,7 @@ namespace detail {
 namespace symplectic_euler_coef {
 
 template< class Value >
-struct coef_a_type : public boost::array< Value , 1 >
+struct coef_a_type : public std::array< Value , 1 >
 {
     coef_a_type( void )
     {
@@ -47,7 +47,7 @@ struct coef_a_type : public boost::array< Value , 1 >
 };
 
 template< class Value >
-struct coef_b_type : public boost::array< Value , 1 >
+struct coef_b_type : public std::array< Value , 1 >
 {
     coef_b_type( void )
     {

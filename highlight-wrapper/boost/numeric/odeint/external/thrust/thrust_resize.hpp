@@ -140,7 +140,17 @@ ODEINT_THRUST_COPY_IMPL( thrust::host_vector )
 
 #include <thrust/version.h>
 
-#if THRUST_VERSION >= 100600
+#if THRUST_VERSION >= 101000
+
+#include <thrust/detail/vector_base.h>
+namespace boost { namespace numeric { namespace odeint {
+    ODEINT_THRUST_VECTOR_IS_RESIZEABLE( thrust::detail::vector_base )
+    ODEINT_TRHUST_VECTOR_RESIZE_IMPL( thrust::detail::vector_base )
+    ODEINT_THRUST_SAME_SIZE_IMPL( thrust::detail::vector_base )
+    ODEINT_THRUST_COPY_IMPL( thrust::detail::vector_base )
+} } }
+
+#elif THRUST_VERSION >= 100600
 
 #include <thrust/system/cpp/vector.h>
 namespace boost { namespace numeric { namespace odeint {

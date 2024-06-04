@@ -264,8 +264,8 @@ inline int digits<mpfr::mpreal>(BOOST_MATH_EXPLICIT_TEMPLATE_TYPE_SPEC(mpfr::mpr
 
 namespace detail{
 
-template<class I>
-void convert_to_long_result(mpfr::mpreal const& r, I& result)
+template<class Integer
+void convert_to_long_result(mpfr::mpreal const& r, Integer& result)
 {
    result = 0;
    I last_result(0);

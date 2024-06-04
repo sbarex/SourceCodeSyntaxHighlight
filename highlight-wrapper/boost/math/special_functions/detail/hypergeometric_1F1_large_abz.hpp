@@ -393,7 +393,15 @@
         // So shift b to match a (b shifting seems to be more stable via method of ratios).
         //
         int b_shift = itrunc(b - a);
+        if ((b_shift < 0) && (b - b_shift != a))
+           b_shift -= 1;
         T b_local = b - b_shift;
+        if ((b_local - a - 0.5 <= 0) && (b_local != a))
+        {
+           // Make sure b_local - a - 0.5 > 0
+           b_shift -= 1;
+           b_local += 1;
+        }
         T h = boost::math::detail::hypergeometric_1F1_AS_13_3_6(a, b_local, z, T(b_local - a), pol, log_scaling);
         return hypergeometric_1F1_shift_on_b(h, a, b_local, z, b_shift, pol, log_scaling);
      }

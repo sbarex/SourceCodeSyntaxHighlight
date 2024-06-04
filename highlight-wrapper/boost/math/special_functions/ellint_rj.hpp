@@ -38,13 +38,7 @@ T ellint_rc1p_imp(T y, const Policy& pol)
    // Calculate RC(1, 1 + x)
    BOOST_MATH_STD_USING
 
-  static const char* function = "boost::math::ellint_rc<%1%>(%1%,%1%)";
-
-   if(y == -1)
-   {
-      return policies::raise_domain_error<T>(function,
-         "Argument y must not be zero but got %1%", y, pol);
-   }
+   BOOST_MATH_ASSERT(y != -1);
 
    // for 1 + y < 0, the integral is singular, return Cauchy principal value
    T result;
@@ -84,29 +78,23 @@ T ellint_rj_imp(T x, T y, T z, T p, const Policy& pol)
 
    if(x < 0)
    {
-      return policies::raise_domain_error<T>(function,
-         "Argument x must be non-negative, but got x = %1%", x, pol);
+      return policies::raise_domain_error<T>(function, "Argument x must be non-negative, but got x = %1%", x, pol);
    }
    if(y < 0)
    {
-      return policies::raise_domain_error<T>(function,
-         "Argument y must be non-negative, but got y = %1%", y, pol);
+      return policies::raise_domain_error<T>(function, "Argument y must be non-negative, but got y = %1%", y, pol);
    }
    if(z < 0)
    {
-      return policies::raise_domain_error<T>(function,
-         "Argument z must be non-negative, but got z = %1%", z, pol);
+      return policies::raise_domain_error<T>(function, "Argument z must be non-negative, but got z = %1%", z, pol);
    }
    if(p == 0)
    {
-      return policies::raise_domain_error<T>(function,
-         "Argument p must not be zero, but got p = %1%", p, pol);
+      return policies::raise_domain_error<T>(function, "Argument p must not be zero, but got p = %1%", p, pol);
    }
    if(x + y == 0 || y + z == 0 || z + x == 0)
    {
-      return policies::raise_domain_error<T>(function,
-         "At most one argument can be zero, "
-         "only possible result is %1%.", std::numeric_limits<T>::quiet_NaN(), pol);
+      return policies::raise_domain_error<T>(function, "At most one argument can be zero, only possible result is %1%.", std::numeric_limits<T>::quiet_NaN(), pol);
    }
 
    // for p < 0, the integral is singular, return Cauchy principal value

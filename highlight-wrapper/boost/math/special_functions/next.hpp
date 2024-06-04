@@ -82,8 +82,8 @@ inline T normalize_value(const T& val, const std::true_type&)
 }
 
 template <class T>
-inline T get_smallest_value(std::true_type const&)
-{
+inline T get_smallest_value(std::true_type const&) {
+   static_assert(std::numeric_limits<T>::is_specialized, "Type T must be specialized.");
    //
    // numeric_limits lies about denorms being present - particularly
    // when this can be turned on or off at runtime, as is the case
@@ -106,11 +106,12 @@ inline T get_smallest_value(std::false_type const&)
 template <class T>
 inline T get_smallest_value()
 {
-#if defined(BOOST_MSVC) && (BOOST_MSVC <= 1310)
-   return get_smallest_value<T>(std::integral_constant<bool, std::numeric_limits<T>::is_specialized && (std::numeric_limits<T>::has_denorm == 1)>());
-#else
-   return get_smallest_value<T>(std::integral_constant<bool, std::numeric_limits<T>::is_specialized && (std::numeric_limits<T>::has_denorm == std::denorm_present)>());
-#endif
+   return get_smallest_value<T>(std::integral_constant<bool, std::numeric_limits<T>::is_specialized>());
+}
+
+template <class T>
+inline bool has_denorm_now() {
+   return get_smallest_value<T>() < tools::min_value<T>();
 }
 
 //
@@ -693,9 +694,9 @@ inline typename tools::promote_args<T, U>::type float_distance(const T& a, const
          && !std::numeric_limits<T>::is_integer && !std::numeric_limits<U>::is_integer)),
       "Float distance between two different floating point types is undefined.");
 
-   BOOST_IF_CONSTEXPR (!std::is_same<T, U>::value)
+   BOOST_MATH_IF_CONSTEXPR (!std::is_same<T, U>::value)
    {
-      BOOST_IF_CONSTEXPR(std::is_integral<T>::value)
+      BOOST_MATH_IF_CONSTEXPR(std::is_integral<T>::value)
       {
          return float_distance(static_cast<U>(a), b, pol);
       }

@@ -32,8 +32,55 @@
   #include <boost/math/tools/nothrow.hpp>
   #include <boost/math/tools/throw_exception.hpp>
 
-//  #if (0)
-  #if defined(__GNUC__)
+namespace boost {
+   namespace math {
+      namespace detail {
+         //
+         // What follows is the input streaming code: this is not "proper" iostream code at all
+         // but that's hard to write.
+         // For now just pull in all the characters that could possibly form the number
+         // and let libquadmath's string parser make use of it.  This fixes most use cases
+         // including CSV type formats such as those used by the Random lib.
+         //
+         inline std::string read_string_while(std::istream& is, std::string const& permitted_chars)
+         {
+            std::ios_base::iostate     state = std::ios_base::goodbit;
+            const std::istream::sentry sentry_check(is);
+            std::string                result;
+
+            if (sentry_check)
+            {
+               int c = is.rdbuf()->sgetc();
+
+               for (;; c = is.rdbuf()->snextc())
+                  if (std::istream::traits_type::eq_int_type(std::istream::traits_type::eof(), c))
+                  { // end of file:
+                     state |= std::ios_base::eofbit;
+                     break;
+                  }
+                  else if (permitted_chars.find_first_of(std::istream::traits_type::to_char_type(c)) == std::string::npos)
+                  {
+                     // Invalid numeric character, stop reading:
+                     //is.rdbuf()->sputbackc(static_cast<char>(c));
+                     break;
+                  }
+                  else
+                  {
+                     result.append(1, std::istream::traits_type::to_char_type(c));
+                  }
+            }
+
+            if (!result.size())
+               state |= std::ios_base::failbit;
+            is.setstate(state);
+            return result;
+         }
+
+      }
+   }
+}
+
+#if defined(__GNUC__) && !defined(BOOST_MATH_TEST_IO_AS_INTEL_QUAD)
 
   // Forward declarations of quadruple-precision string functions.
   extern "C" int quadmath_snprintf(char *str, size_t size, const char *format, ...) BOOST_MATH_NOTHROW;
@@ -96,14 +143,14 @@
         // So we have to use dynamic memory allocation for the output
         // string buffer.
 
-        char* my_buffer2 = static_cast<char*>(0U);
+        char* my_buffer2 = nullptr;
 
-#ifndef BOOST_NO_EXCEPTIONS
+#ifndef BOOST_MATH_NO_EXCEPTIONS
         try
         {
 #endif
           my_buffer2 = new char[v + 3];
-#ifndef BOOST_NO_EXCEPTIONS
+#ifndef BOOST_MATH_NO_EXCEPTIONS
         }
         catch(const std::bad_alloc&)
         {
@@ -136,9 +183,7 @@
     template<typename char_type, class traits_type>
     inline std::basic_istream<char_type, traits_type>& operator>>(std::basic_istream<char_type, traits_type>& is, boost::math::cstdfloat::detail::float_internal128_t& x)
     {
-      std::string str;
-
-      static_cast<void>(is >> str);
+      std::string str = boost::math::detail::read_string_while(is, "+-eE.0123456789infINFnanNANinfinityINFINITY");
 
       char* p_end;
 
@@ -160,8 +205,7 @@
     }
   }
 
-//  #elif defined(__GNUC__)
-  #elif defined(__INTEL_COMPILER)
+#elif defined(__INTEL_COMPILER) || defined(BOOST_MATH_TEST_IO_AS_INTEL_QUAD)
 
   // The section for I/O stream support for the ICC compiler is particularly
   // long, because these functions must be painstakingly synthesized from
@@ -171,6 +215,7 @@
   // The following string-extraction routines are based on the methodology
   // used in Boost.Multiprecision by John Maddock and Christopher Kormanyos.
   // This methodology has been slightly modified here for boost::float128_t.
+
 
   #include <cstring>
   #include <cctype>
@@ -266,7 +311,7 @@
     {
       // Pad out the end with zero's if we need to.
 
-      int chars = static_cast<int>(str.size());
+      std::ptrdiff_t chars = static_cast<std::ptrdiff_t>(str.size());
       chars = digits - chars;
 
       if(scientific)
@@ -442,7 +487,7 @@
       if(isneg) { x = -x; }
 
       float_type t;
-      float_type ten = 10;
+      constexpr float_type ten = 10;
 
       eval_log10(t, x);
       eval_floor(t, t);
@@ -507,6 +552,8 @@
         eval_subtract(t, digit);
         eval_multiply(t, ten);
       }
+      if (result.size() == 0)
+         result = "0";
 
       // Possibly round the result.
       if(digits >= 0)
@@ -522,11 +569,13 @@
           if((static_cast<int>(*result.rbegin() - '0') & 1) != 0)
           {
             round_string_up_at(result, static_cast<int>(result.size() - 1U), expon);
+            if (digits == 0) digits = 1;
           }
         }
         else if(cdigit >= 5)
         {
-          round_string_up_at(result, static_cast<int>(result.size() - 1), expon);
+          round_string_up_at(result, static_cast<int>(result.size() - 1u), expon);
+          if (digits == 0) digits = 1;
         }
       }
     }
@@ -569,9 +618,9 @@
   {
     value = 0;
 
-    if((p == static_cast<const char*>(0U)) || (*p == static_cast<char>(0)))
+    if((p == nullptr) || (*p == '\0'))
     {
-      return;
+      return false;
     }
 
     bool is_neg       = false;
@@ -584,11 +633,11 @@
 
     constexpr int max_digits = std::numeric_limits<float_type>::max_digits10 + 1;
 
-    if(*p == static_cast<char>('+'))
+    if(*p == '+')
     {
       ++p;
     }
-    else if(*p == static_cast<char>('-'))
+    else if(*p == '-')
     {
       is_neg = true;
       ++p;
@@ -632,7 +681,7 @@
       ++digits_seen;
     }
 
-    if(*p == static_cast<char>('.'))
+    if(*p == '.')
     {
       // Grab everything after the point, stop when we've seen
       // enough digits, even if there are actually more available.
@@ -659,15 +708,15 @@
     }
 
     // Parse the exponent.
-    if((*p == static_cast<char>('e')) || (*p == static_cast<char>('E')))
+    if((*p == 'e') || (*p == 'E'))
     {
       ++p;
 
-      if(*p == static_cast<char>('+'))
+      if(*p == '+')
       {
         ++p;
       }
-      else if(*p == static_cast<char>('-'))
+      else if(*p == '-')
       {
         is_neg_expon = true;
         ++p;
@@ -718,7 +767,7 @@
       value = -value;
     }
 
-    return (*p == static_cast<char>(0));
+    return (*p == '\0');
   }
   } } } } // boost::math::cstdfloat::detail
 
@@ -746,9 +795,7 @@
     template<typename char_type, class traits_type>
     inline std::basic_istream<char_type, traits_type>& operator>>(std::basic_istream<char_type, traits_type>& is, boost::math::cstdfloat::detail::float_internal128_t& x)
     {
-      std::string str;
-
-      static_cast<void>(is >> str);
+      std::string str = boost::math::detail::read_string_while(is, "+-eE.0123456789infINFnanNANinfinityINFINITY");
 
       const bool conversion_is_ok = boost::math::cstdfloat::detail::convert_from_string(x, str.c_str());
 

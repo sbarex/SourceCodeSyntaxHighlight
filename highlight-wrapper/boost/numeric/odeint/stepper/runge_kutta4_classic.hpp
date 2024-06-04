@@ -91,7 +91,7 @@ public :
 
         static const value_type val1 = static_cast< value_type >( 1 );
 
-        m_resizer.adjust_size( in , detail::bind( &stepper_type::template resize_impl< StateIn > , detail::ref( *this ) , detail::_1 ) );
+        m_resizer.adjust_size(in, [this](auto&& arg) { return this->resize_impl<StateIn>(std::forward<decltype(arg)>(arg)); });
 
         typename odeint::unwrap_reference< System >::type &sys = system;
 

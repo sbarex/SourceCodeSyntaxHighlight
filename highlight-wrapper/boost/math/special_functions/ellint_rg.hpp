@@ -28,10 +28,7 @@ namespace boost { namespace math { namespace detail{
 
       if(x < 0 || y < 0 || z < 0)
       {
-         return policies::raise_domain_error<T>(function,
-            "domain error, all arguments must be non-negative, "
-            "only sensible result is %1%.",
-            std::numeric_limits<T>::quiet_NaN(), pol);
+         return policies::raise_domain_error<T>(function, "domain error, all arguments must be non-negative, only sensible result is %1%.", std::numeric_limits<T>::quiet_NaN(), pol);
       }
       //
       // Function is symmetric in x, y and z, but we require
@@ -73,10 +70,8 @@ namespace boost { namespace math { namespace detail{
       }
       else if(y == z)
       {
-         if(x == 0)
-            return constants::pi<T>() * sqrt(y) / 4;
-         else
-            return (y == 0) ? T(sqrt(x) / 2) : T((y * ellint_rc_imp(x, y, pol) + sqrt(x)) / 2);
+         BOOST_MATH_ASSERT(x > 0);  // Ordering of x,y,z above takes care of x == 0 case.
+         return (y == 0) ? T(sqrt(x) / 2) : T((y * ellint_rc_imp(x, y, pol) + sqrt(x)) / 2);
       }
       else if(y == 0)
       {

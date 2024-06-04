@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22690"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -285,13 +285,13 @@
                                 <subviews>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fAu-ke-YDq">
                                         <rect key="frame" x="8" y="3.5" width="16" height="15.5"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="16" id="j37-rN-FVU"/>
-                                        </constraints>
                                         <buttonCell key="cell" type="roundRect" bezelStyle="roundedRect" image="NSAddTemplate" imagePosition="left" alignment="center" imageScaling="proportionallyDown" inset="2" id="Bcb-x7-WsT">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="cellTitle"/>
                                         </buttonCell>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="16" id="j37-rN-FVU"/>
+                                        </constraints>
                                         <connections>
                                             <action selector="handleAddButton:" target="-2" id="q1B-VN-ZeB"/>
                                         </connections>
@@ -307,7 +307,7 @@
                                         </connections>
                                     </button>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Hfy-UU-ox7">
-                                        <rect key="frame" x="56" y="4" width="16" height="16.5"/>
+                                        <rect key="frame" x="56" y="4" width="16" height="17.5"/>
                                         <buttonCell key="cell" type="roundRect" bezelStyle="roundedRect" image="NSTouchBarComposeTemplate" imagePosition="left" alignment="center" imageScaling="proportionallyDown" inset="2" id="WXC-lV-IVj">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="cellTitle"/>
@@ -435,11 +435,11 @@
         </customView>
     </objects>
     <resources>
-        <image name="NSAddTemplate" width="14" height="13"/>
-        <image name="NSRemoveTemplate" width="14" height="4"/>
-        <image name="NSTouchBarComposeTemplate" width="17" height="15"/>
-        <image name="NSTouchBarGoDownTemplate" width="15" height="9"/>
-        <image name="NSTouchBarGoUpTemplate" width="15" height="9"/>
+        <image name="NSAddTemplate" width="18" height="17"/>
+        <image name="NSRemoveTemplate" width="18" height="5"/>
+        <image name="NSTouchBarComposeTemplate" width="21" height="21"/>
+        <image name="NSTouchBarGoDownTemplate" width="18" height="11"/>
+        <image name="NSTouchBarGoUpTemplate" width="18" height="11"/>
         <image name="aA" width="20" height="20"/>
         <image name="re" width="20" height="20"/>
     </resources>

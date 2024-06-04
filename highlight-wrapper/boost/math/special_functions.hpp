@@ -79,7 +79,8 @@
 #include <boost/math/special_functions/lambert_w.hpp>
 #include <boost/math/special_functions/gegenbauer.hpp>
 #include <boost/math/special_functions/jacobi.hpp>
-#ifndef BOOST_NO_EXCEPTIONS
+#ifndef BOOST_MATH_NO_EXCEPTIONS
 #include <boost/math/special_functions/legendre_stieltjes.hpp>
 #endif
+
 #endif // BOOST_MATH_SPECIAL_FUNCTIONS_HPP

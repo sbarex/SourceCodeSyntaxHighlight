@@ -28,7 +28,7 @@
 #include <boost/numeric/odeint/algebra/algebra_dispatcher.hpp>
 #include <boost/numeric/odeint/algebra/operations_dispatcher.hpp>
 
-#include <boost/array.hpp>
+#include <array>
 
 #include <boost/numeric/odeint/util/state_wrapper.hpp>
 #include <boost/numeric/odeint/util/is_resizeable.hpp>
@@ -44,7 +44,7 @@ namespace odeint {
 
 #ifndef DOXYGEN_SKIP
 template< class Value = double >
-struct rk78_coefficients_a1 : boost::array< Value , 1 >
+struct rk78_coefficients_a1 : std::array< Value , 1 >
 {
     rk78_coefficients_a1( void )
             {
@@ -53,7 +53,7 @@ struct rk78_coefficients_a1 : boost::array< Value , 1 >
 };
 
 template< class Value = double >
-struct rk78_coefficients_a2 : boost::array< Value , 2 >
+struct rk78_coefficients_a2 : std::array< Value , 2 >
 {
     rk78_coefficients_a2( void )
             {
@@ -64,7 +64,7 @@ struct rk78_coefficients_a2 : boost::array< Value , 2 >
 
 
 template< class Value = double >
-struct rk78_coefficients_a3 : boost::array< Value , 3 >
+struct rk78_coefficients_a3 : std::array< Value , 3 >
 {
     rk78_coefficients_a3( void )
             {
@@ -75,7 +75,7 @@ struct rk78_coefficients_a3 : boost::array< Value , 3 >
 };
 
 template< class Value = double >
-struct rk78_coefficients_a4 : boost::array< Value , 4 >
+struct rk78_coefficients_a4 : std::array< Value , 4 >
 {
     rk78_coefficients_a4( void )
             {
@@ -87,7 +87,7 @@ struct rk78_coefficients_a4 : boost::array< Value , 4 >
 };
 
 template< class Value = double >
-struct rk78_coefficients_a5 : boost::array< Value , 5 >
+struct rk78_coefficients_a5 : std::array< Value , 5 >
 {
     rk78_coefficients_a5( void )
             {
@@ -101,7 +101,7 @@ struct rk78_coefficients_a5 : boost::array< Value , 5 >
 
 
 template< class Value = double >
-struct rk78_coefficients_a6 : boost::array< Value , 6 >
+struct rk78_coefficients_a6 : std::array< Value , 6 >
 {
     rk78_coefficients_a6( void )
             {
@@ -115,7 +115,7 @@ struct rk78_coefficients_a6 : boost::array< Value , 6 >
 };
 
 template< class Value = double >
-struct rk78_coefficients_a7 : boost::array< Value , 7 >
+struct rk78_coefficients_a7 : std::array< Value , 7 >
 {
     rk78_coefficients_a7( void )
             {
@@ -130,7 +130,7 @@ struct rk78_coefficients_a7 : boost::array< Value , 7 >
 };
 
 template< class Value = double >
-struct rk78_coefficients_a8 : boost::array< Value , 8 >
+struct rk78_coefficients_a8 : std::array< Value , 8 >
 {
     rk78_coefficients_a8( void )
             {
@@ -146,7 +146,7 @@ struct rk78_coefficients_a8 : boost::array< Value , 8 >
 };
 
 template< class Value = double >
-struct rk78_coefficients_a9 : boost::array< Value , 9 >
+struct rk78_coefficients_a9 : std::array< Value , 9 >
 {
     rk78_coefficients_a9( void )
             {
@@ -163,7 +163,7 @@ struct rk78_coefficients_a9 : boost::array< Value , 9 >
 };
 
 template< class Value = double >
-struct rk78_coefficients_a10 : boost::array< Value , 10 >
+struct rk78_coefficients_a10 : std::array< Value , 10 >
 {
     rk78_coefficients_a10( void )
             {
@@ -181,7 +181,7 @@ struct rk78_coefficients_a10 : boost::array< Value , 10 >
 };
 
 template< class Value = double >
-struct rk78_coefficients_a11 : boost::array< Value , 11 >
+struct rk78_coefficients_a11 : std::array< Value , 11 >
 {
     rk78_coefficients_a11( void )
             {
@@ -200,7 +200,7 @@ struct rk78_coefficients_a11 : boost::array< Value , 11 >
 };
 
 template< class Value = double >
-struct rk78_coefficients_a12 : boost::array< Value , 12 >
+struct rk78_coefficients_a12 : std::array< Value , 12 >
 {
     rk78_coefficients_a12( void )
             {
@@ -220,7 +220,7 @@ struct rk78_coefficients_a12 : boost::array< Value , 12 >
 };
 
 template< class Value = double >
-struct rk78_coefficients_b : boost::array< Value , 13 >
+struct rk78_coefficients_b : std::array< Value , 13 >
 {
     rk78_coefficients_b( void )
             {
@@ -241,7 +241,7 @@ struct rk78_coefficients_b : boost::array< Value , 13 >
 };
 
 template< class Value = double >
-struct rk78_coefficients_db : boost::array< Value , 13 >
+struct rk78_coefficients_db : std::array< Value , 13 >
 {
     rk78_coefficients_db( void )
             {
@@ -263,7 +263,7 @@ struct rk78_coefficients_db : boost::array< Value , 13 >
 
 
 template< class Value = double >
-struct rk78_coefficients_c : boost::array< Value , 13 >
+struct rk78_coefficients_c : std::array< Value , 13 >
 {
     rk78_coefficients_c( void )
             {

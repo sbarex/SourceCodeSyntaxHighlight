@@ -135,7 +135,7 @@ std::array<Real, 4> quartic_roots(Real a, Real b, Real c, Real d, Real e) {
     }
     Real s = sqrt(largest_root);
     // s is nonzero, because we took care of the biquadratic case.
-    Real v = (p + s*s + q/s)/2;
+    Real v = (p + largest_root + q/s)/2;
     Real u = v - q/s;
     // Now solve y^2 + sy + u = 0:
     auto [root0, root1] = quadratic_roots(Real(1), s, u);

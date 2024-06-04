@@ -17,85 +17,19 @@
 #ifndef BOOST_NUMERIC_ODEINT_UTIL_BIND_HPP_INCLUDED
 #define BOOST_NUMERIC_ODEINT_UTIL_BIND_HPP_INCLUDED
 
-
-#include <boost/numeric/odeint/config.hpp>
-
-
-#if BOOST_NUMERIC_ODEINT_CXX11 
-    #include <functional>
-#else
-#define BOOST_BIND_NO_PLACEHOLDERS
-#include <boost/bind.hpp>
-#endif
-
-namespace boost {
-namespace numeric {
-namespace odeint {
-namespace detail {
-
-#if BOOST_NUMERIC_ODEINT_CXX11 
-
-using ::std::bind;
-using namespace ::std::placeholders;
-
-
-#else
-
-// unnamed namespace to avoid multiple declarations (#138)
-namespace {
-using ::boost::bind;
-boost::arg<1> _1;
-boost::arg<2> _2;
-}
-// using ::boost::bind;
-// using ::_1;
-// using ::_2;
-
-#endif
-
-}
-}
-}
-}
-
-
-
-
-
-/*
-
-// the following is the suggested way. Unfortunately it does not work with all compilers.
-
-#ifdef BOOST_NO_CXX11_HDR_FUNCTIONAL
-#include <boost/bind.hpp>
-#else
 #include <functional>
-#endif
-
 
 namespace boost {
 namespace numeric {
 namespace odeint {
 namespace detail {
 
-    
-#ifdef BOOST_NO_CXX11_HDR_FUNCTIONAL
+using std::bind;
+using namespace std::placeholders;
 
-using ::boost::bind;
-using ::_1;
-using ::_2;
-
-#else
-
-using ::std::bind;
-using namespace ::std::placeholders;
-
-#endif
-
-
-}
-}
-}
-}*/
+} //namespace detail
+} //namespace odeint
+} //namespace numeric
+} //namespace boost
 
 #endif // BOOST_NUMERIC_ODEINT_UTIL_BIND_HPP_INCLUDED

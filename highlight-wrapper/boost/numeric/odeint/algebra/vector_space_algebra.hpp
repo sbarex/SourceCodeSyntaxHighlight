@@ -20,9 +20,6 @@
 
 #include <complex>
 
-#include <boost/type_traits/remove_reference.hpp>
-
-
 namespace boost {
 namespace numeric {
 namespace odeint {

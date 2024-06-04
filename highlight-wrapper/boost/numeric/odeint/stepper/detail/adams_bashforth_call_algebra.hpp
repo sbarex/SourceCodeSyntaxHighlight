@@ -18,8 +18,7 @@
 #ifndef BOOST_NUMERIC_ODEINT_STEPPER_DETAIL_ADAMS_BASHFORTH_CALL_ALGEBRA_HPP_INCLUDED
 #define BOOST_NUMERIC_ODEINT_STEPPER_DETAIL_ADAMS_BASHFORTH_CALL_ALGEBRA_HPP_INCLUDED
 
-#include <boost/assert.hpp>
-
+#include <cstddef>
 
 namespace boost {
 namespace numeric {
@@ -115,7 +114,6 @@ struct adams_bashforth_call_algebra< 7 , Algebra , Operations >
     template< class StateIn , class StateOut , class StepStorage , class Coefficients , class Time >
     void operator()( Algebra &algebra , const StateIn &in , StateOut &out , const StepStorage &steps , const Coefficients &coef , Time dt ) const
     {
-        //BOOST_ASSERT( false ); // not implemented
         typedef typename Coefficients::value_type value_type;
         algebra.for_each9( out , in , steps[0].m_v , steps[1].m_v , steps[2].m_v , steps[3].m_v , steps[4].m_v , steps[5].m_v , steps[6].m_v ,
                             typename Operations::template scale_sum8< value_type , Time , Time , Time , Time , Time , Time >(
@@ -130,7 +128,6 @@ struct adams_bashforth_call_algebra< 8 , Algebra , Operations >
     template< class StateIn , class StateOut , class StepStorage , class Coefficients , class Time >
     void operator()( Algebra &algebra , const StateIn &in , StateOut &out , const StepStorage &steps , const Coefficients &coef , Time dt ) const
     {
-        //BOOST_ASSERT( false ); // not implemented
         typedef typename Coefficients::value_type value_type;
         algebra.for_each10( out , in , steps[0].m_v , steps[1].m_v , steps[2].m_v , steps[3].m_v , steps[4].m_v , steps[5].m_v , steps[6].m_v , steps[7].m_v ,
                              typename Operations::template scale_sum9< value_type , Time , Time , Time , Time , Time , Time , Time >(

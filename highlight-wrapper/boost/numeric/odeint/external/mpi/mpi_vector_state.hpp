@@ -26,6 +26,7 @@
 #include <boost/numeric/odeint/util/split_adaptor.hpp>
 #include <boost/numeric/odeint/algebra/algebra_dispatcher.hpp>
 #include <boost/numeric/odeint/external/mpi/mpi_state.hpp>
+#include <boost/numeric/odeint/tools/assert.hpp>
 
 namespace boost {
 namespace numeric {
@@ -75,7 +76,7 @@ struct unsplit_impl< mpi_state< InnerState >, Target,
             size_t total_size = 0;
             for(size_t i = 0 ; i < pieces.size() ; i++)
                 total_size += boost::size(pieces[i]);
-            BOOST_ASSERT( total_size <= boost::size(to) );
+            BOOST_NUMERIC_ODEINT_ASSERT( total_size <= boost::size(to) );
             // copy parts
             iterator out = boost::begin(to);
             for(size_t i = 0 ; i < pieces.size() ; i++)

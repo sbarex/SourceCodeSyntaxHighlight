@@ -105,7 +105,7 @@ public:
     template< class StateType >
     void initialize( const StateType &x0 , time_type t0 , time_type dt0 )
     {
-        m_resizer.adjust_size( x0 , detail::bind( &dense_output_stepper_type::template resize_impl< StateType > , detail::ref( *this ) , detail::_1 ) );
+        m_resizer.adjust_size(x0, [this](auto&& arg) { return this->resize_impl<StateType>(std::forward<decltype(arg)>(arg)); });
         boost::numeric::odeint::copy( x0 , get_current_state() );
         m_t = t0;
         m_dt = dt0;
@@ -313,7 +313,7 @@ public:
     template< class StateType >
     void initialize( const StateType &x0 , time_type t0 , time_type dt0 )
     {
-        m_resizer.adjust_size( x0 , detail::bind( &dense_output_stepper_type::template resize< StateType > , detail::ref( *this ) , detail::_1 ) );
+        m_resizer.adjust_size(x0, [this](auto&& arg) { return this->resize<StateType>(std::forward<decltype(arg)>(arg)); });
         boost::numeric::odeint::copy( x0 , get_current_state() );
         m_t = t0;
         m_dt = dt0;

@@ -19,6 +19,7 @@
 #define BOOST_NUMERIC_ODEINT_ALGEBRA_DETAIL_NORM_INF_HPP_INCLUDED
 
 #include <cmath>
+#include <algorithm>
 
 namespace boost {
 namespace numeric {

@@ -162,7 +162,7 @@ public:
     void do_step( System system , const StateIn &in , time_type t , StateOut &out , time_type dt )
     {
         typename odeint::unwrap_reference< System >::type &sys = system;
-        m_resizer.adjust_size( in , detail::bind( &internal_stepper_base_type::template resize_impl<StateIn> , detail::ref( *this ) , detail::_1 ) );
+        m_resizer.adjust_size(in, [this](auto&& arg) { return this->resize_impl<StateIn>(std::forward<decltype(arg)>(arg)); });
         sys( in , m_dxdt.m_v ,t );
         this->stepper().do_step_impl( system , in , m_dxdt.m_v , t , out , dt );
     }
@@ -225,7 +225,7 @@ private:
     void do_step_v1( System system , StateInOut &x , time_type t , time_type dt )
     {
         typename odeint::unwrap_reference< System >::type &sys = system;
-        m_resizer.adjust_size( x , detail::bind( &internal_stepper_base_type::template resize_impl< StateInOut > , detail::ref( *this ) , detail::_1 ) );
+        m_resizer.adjust_size(x, [this](auto&& arg) { return this->resize_impl<StateInOut>(std::forward<decltype(arg)>(arg)); });
         sys( x , m_dxdt.m_v ,t );
         this->stepper().do_step_impl( system , x , m_dxdt.m_v , t , x , dt );
     }

@@ -15,7 +15,7 @@
 #include <boost/math/tools/is_standalone.hpp>
 #ifndef BOOST_MATH_STANDALONE
 #include <boost/config.hpp>
-#ifdef BOOST_NO_CXX17_IF_CONSTEXPR
+#ifdef BOOST_MATH_NO_CXX17_IF_CONSTEXPR
 #error "The header <boost/math/norms.hpp> can only be used in C++17 and later."
 #endif
 #endif

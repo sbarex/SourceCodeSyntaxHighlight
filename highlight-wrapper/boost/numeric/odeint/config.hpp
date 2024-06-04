@@ -43,7 +43,7 @@
 
 #include <boost/config.hpp>
 
-#if __cplusplus >= 201103L
+#if __cplusplus >= 201103L || (defined(_MSVC_LANG) && _MSVC_LANG >= 201103L)
 #define BOOST_NUMERIC_ODEINT_CXX11 1
 #endif
 

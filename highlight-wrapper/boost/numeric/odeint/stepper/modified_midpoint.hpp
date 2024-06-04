@@ -81,7 +81,7 @@ public :
         static const value_type val1 = static_cast< value_type >( 1 );
         static const value_type val05 = static_cast< value_type >( 1 ) / static_cast< value_type >( 2 );
 
-        m_resizer.adjust_size( in , detail::bind( &stepper_type::template resize_impl< StateIn > , detail::ref( *this ) , detail::_1 ) );
+        m_resizer.adjust_size(in, [this](auto&& arg) { return this->resize_impl<StateIn>(std::forward<decltype(arg)>(arg)); });
 
         const time_type h = dt /  static_cast<value_type>( m_steps );
         const time_type h2 = static_cast<value_type>(2) * h;
@@ -204,7 +204,7 @@ public :
         static const value_type val1 = static_cast< value_type >( 1 );
         static const value_type val05 = static_cast< value_type >( 1 ) / static_cast< value_type >( 2 );
 
-        m_resizer.adjust_size( in , detail::bind( &stepper_type::template resize< StateIn > , detail::ref( *this ) , detail::_1 ) );
+        m_resizer.adjust_size(in, [this](auto&& arg) { return this->resize<StateIn>(std::forward<decltype(arg)>(arg)); });
 
         const time_type h = dt / static_cast<value_type>( m_steps );
         const time_type h2 = static_cast<value_type>( 2 ) * h;

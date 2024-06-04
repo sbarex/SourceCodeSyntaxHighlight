@@ -206,6 +206,11 @@ std::vector<T> legendre_p_zeros_imp(int n, const Policy& pol)
                                               lower_bound, upper_bound,
                                               policies::digits<T, Policy>(),
                                               number_of_iterations);
+        if (number_of_iterations >= policies::get_max_root_iterations<Policy>())
+        {
+           policies::raise_evaluation_error<T>("legendre_p_zeros<%1%>", "Unable to locate solution in a reasonable time:"  // LCOV_EXCL_LINE
+              " either there is no answer or the answer is infinite.  Current best guess is %1%", x_nk, Policy()); // LCOV_EXCL_LINE
+        }
 
         BOOST_MATH_ASSERT(lower_bound < x_nk);
         BOOST_MATH_ASSERT(upper_bound > x_nk);

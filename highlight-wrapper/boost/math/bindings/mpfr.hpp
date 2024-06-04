@@ -304,8 +304,8 @@ inline int digits<mpfr_class>(BOOST_MATH_EXPLICIT_TEMPLATE_TYPE_SPEC(mpfr_class)
 
 namespace detail{
 
-template<class I>
-void convert_to_long_result(mpfr_class const& r, I& result)
+template<class Integer>
+void convert_to_long_result(mpfr_class const& r, Integer& result)
 {
    result = 0;
    I last_result(0);

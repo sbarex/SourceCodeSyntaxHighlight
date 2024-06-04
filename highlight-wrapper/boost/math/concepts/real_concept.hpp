@@ -45,8 +45,12 @@
 #  include <cstdio>
 #endif
 
-#if __has_include(<stdfloat>)
-#  include <stdfloat>
+#if defined __has_include
+#  if __cplusplus > 202002L || _MSVC_LANG > 202002L 
+#    if __has_include (<stdfloat>)
+#    include <stdfloat>
+#    endif
+#  endif
 #endif
 
 namespace boost{ namespace math{

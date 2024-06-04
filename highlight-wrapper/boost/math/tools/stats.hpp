@@ -36,8 +36,8 @@ public:
       ++m_count;
       m_squared_total += val*val;
    }
-   T min BOOST_PREVENT_MACRO_SUBSTITUTION()const{ return m_min; }
-   T max BOOST_PREVENT_MACRO_SUBSTITUTION()const{ return m_max; }
+   T min BOOST_MATH_PREVENT_MACRO_SUBSTITUTION()const{ return m_min; }
+   T max BOOST_MATH_PREVENT_MACRO_SUBSTITUTION()const{ return m_max; }
    T total()const{ return m_total; }
    T mean()const{ return m_total / static_cast<T>(m_count); }
    std::uintmax_t count()const{ return m_count; }

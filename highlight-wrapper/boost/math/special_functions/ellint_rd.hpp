@@ -38,23 +38,19 @@ T ellint_rd_imp(T x, T y, T z, const Policy& pol)
 
    if(x < 0)
    {
-      return policies::raise_domain_error<T>(function,
-         "Argument x must be >= 0, but got %1%", x, pol);
+      return policies::raise_domain_error<T>(function, "Argument x must be >= 0, but got %1%", x, pol);
    }
    if(y < 0)
    {
-      return policies::raise_domain_error<T>(function,
-         "Argument y must be >= 0, but got %1%", y, pol);
+      return policies::raise_domain_error<T>(function, "Argument y must be >= 0, but got %1%", y, pol);
    }
    if(z <= 0)
    {
-      return policies::raise_domain_error<T>(function,
-         "Argument z must be > 0, but got %1%", z, pol);
+      return policies::raise_domain_error<T>(function, "Argument z must be > 0, but got %1%", z, pol);
    }
    if(x + y == 0)
    {
-      return policies::raise_domain_error<T>(function,
-         "At most one argument can be zero, but got, x + y = %1%", x + y, pol);
+      return policies::raise_domain_error<T>(function, "At most one argument can be zero, but got, x + y = %1%", x + y, pol);
    }
    //
    // Special cases from http://dlmf.nist.gov/19.20#iv
@@ -74,14 +70,14 @@ T ellint_rd_imp(T x, T y, T z, const Policy& pol)
       }
       else
       {
-         if((std::min)(x, y) / (std::max)(x, y) > T(1.3))
+         if((std::max)(x, y) / (std::min)(x, y) > T(1.3))
             return 3 * (ellint_rc_imp(x, y, pol) - sqrt(x) / y) / (2 * (y - x));
          // Otherwise fall through to avoid cancellation in the above (RC(x,y) -> 1/x^0.5 as x -> y)
       }
    }
    if(x == y)
    {
-      if((std::min)(x, z) / (std::max)(x, z) > T(1.3))
+      if((std::max)(x, z) / (std::min)(x, z) > T(1.3))
          return 3 * (ellint_rc_imp(z, x, pol) - 1 / sqrt(z)) / (z - x);
       // Otherwise fall through to avoid cancellation in the above (RC(x,y) -> 1/x^0.5 as x -> y)
    }

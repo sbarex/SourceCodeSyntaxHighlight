@@ -90,6 +90,11 @@ UTIs:
     dyn.ah62d4rv4ge81g7xfrv4gn:
         syntax: html
         
+    dev.nix.source:
+        syntax: nix
+    dyn.ah62d4rv4ge8064p2:
+        syntax: nix
+        
     io.azkaban.flow:
         syntax: yaml
     dyn.ah62d4rv4ge80q5dts6:
@@ -391,6 +396,8 @@ UTIs:
         syntax: ly
     dyn.ah62d4rv4ge8028k:
         syntax: ly
+    dyn.ah62d4rv4ge80w5d3:
+        syntax: ily
         
     com.adobe.mxml:
         syntax: xml
@@ -448,6 +455,9 @@ extensions:
     
     fnc:
         syntax: sql
+        
+    ily:
+        syntax: ly
        
     #dyn.ah62d4rv4ge80y65r
     jsm:
@@ -584,7 +594,7 @@ extensions:
     pub:
         syntax: txt
         
-    .sage:
+    sage:
         syntax: py
         
     t:
