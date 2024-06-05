@@ -1,11 +1,17 @@
 Changelog
 =======
 
+### 2.1.24 (73)
+Bugfix:
+- CLI tool allow to show/hide about footer.
+- Fixed saving about flag settings.
+
+
 ### 2.1.23 (72)
 New Features: 
 - Update Highlight to release 4.12.
 - Update Boost to release 1.8.5.
-- Update Sparkle to release 2.6.3
+- Update Sparkle to release 2.6.3.
 - Support for Nix Expression Language files (`.nix`).
 - Advanced settings to show about app info on the footer preview.
 - Link to buy me a :coffee: (:heart:)
@@ -20,7 +26,7 @@ Bugfix:
 New Features: 
 - Update Highlight to release 4.11.
 - Support for Adobe Flex `.mxml` files _as XML_.
-- Extended support for Terraform files to the extension `.tfstate` (_ as YAML_).
+- Extended support for Terraform files to the extension `.tfstate` _as YAML_.
 
 Bugfix:
 - Fixed terraform files.

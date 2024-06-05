@@ -231,6 +231,7 @@ extension Settings: SettingsCSS {
         updateDomains(SettingsBase.Key.interactive, allowInteractiveActions)
         updateDomains(SettingsBase.Key.convertEOL, convertEOL)
         updateDomains(SettingsBase.Key.debug, isDebug)
+        updateDomains(SettingsBase.Key.about, isAboutVisible)
         
         updateDomains(SettingsBase.Key.dumpPlain, isDumpPlainData)
         updateDomains(SettingsBase.Key.vcs, isVCS)

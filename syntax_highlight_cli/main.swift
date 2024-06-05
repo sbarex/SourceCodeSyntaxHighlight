@@ -70,7 +70,7 @@ func usage(exitCode: Int = -1) {
     print(" --lsp-semantic on|off       ")
     print(" --lsp-errors on|off         ")
     print(" --lsp-option arg            \tExtra argument passed to the LSP program. Protect the value inside quotes. You can repeat --lsp-option multiple times.")
-    
+    print(" --about on|off              Show a footer with info about Syntax Highlight engine.")
     print(" --debug on|off              ")
     print("\nTo handle multiple files at time you must pass the -o argument with a destination folder.")
     print("\nUnspecified rendering options will use the settings defined in the main application.")
@@ -132,6 +132,7 @@ func dump(settings: SettingsRendering) {
     }
     print("  - Convert line ending: \(settings.convertEOL ? "enabled" : "disabled")")
     print("  - VCS: \(settings.isVCS ? "enabled" : "disabled")")
+    print("  - About info: \(settings.isAboutVisible ? "on" : "off")")
     print("  - Debug: \(settings.isDebug ? "on" : "off")")
 }
 
@@ -351,6 +352,9 @@ while i < Int(CommandLine.argc) {
                 options.append(u)
                 overridingSettings[SettingsBase.Key.lspOptions] = options
                 
+            case "--about":
+                overridingSettings[SettingsBase.Key.about] = parseArgOnOff(index: i)
+                i += 1
             case "--debug":
                 overridingSettings[SettingsBase.Key.debug] = parseArgOnOff(index: i)
                 i += 1
