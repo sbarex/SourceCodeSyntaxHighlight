@@ -431,7 +431,7 @@ The tool is located inside the `Syntax Highlight.app/Contents/Resources` folder 
 From the Application menu you can create a symbolic link into `/usr/local/bin` folder.
 
 ```bash
-/Application/Syntax\ Highlight.app/Contents/Resources/syntax_highlight_cli -h
+/Applications/Syntax\ Highlight.app/Contents/Resources/syntax_highlight_cli -h
 ```
 ```
 Usage: syntax_highlight_cli [-o <path>] <file> [..]
