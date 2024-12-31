@@ -4,6 +4,44 @@
         <title>Syntax Highlight</title>
 
         <item>
+            <title>2.1.25</title>
+            <pubDate>mar, 31 dic 2024 18:21:00 +0100</pubDate>
+            <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
+            <enclosure 
+                       type="application/octet-stream" 
+                       url="https://github.com/sbarex/SourceCodeSyntaxHighlight/releases/download/2.1.25/Syntax.Highlight.zip" 
+                       sparkle:shortVersionString="2.1.25" sparkle:version="74" 
+                       sparkle:edSignature="VuLMgvYuGCmq20zpYrCHjio4Np9HV1V9ZAMHSuezHfnurMrk0Xr7L/jIqfXgnbax+6j24oFOmnVqTPQYV+9wAw==" length="16366351"
+            />
+            <description><![CDATA[
+                <h2>Release 2.1.25 (74)</h2>
+                <p align="center">If you like this app, <a href="https://www.buymeacoffee.com/sbarex">buy me a coffee!</a></p>
+                <p>New features:</p>
+                <ul>
+                    <li>Support for Jupyter Notebook files (<code>.ipynb</code>) <i>as JSON</i>.</li>
+                    <li>Support for MAMEdev layout files (<code>.lay</code>) <i>as XML</i>.</li>
+                    <li>Support for NVidia Cuda (<code>.cu</code>) files <i>as C++</i>.</li>
+                    <li>Support for <code>.raml</code> files <i>as YAML</i>.</li>
+                    <li>Experimental <b>Shortcut Action</b> (require macOS 15.2). </li>
+                    <li>Update Highlight to release 4.15.</li>
+                    <li>Update Boost to release 1.8.7.</li>
+                    <li>Update Lua to release 5.4.7.</li>
+                </ul>
+                <p>Bug fix:</p>
+                <ul>
+                    <li>Better support for Kotlin files.</li>
+                    <li>Better light/dark mode recognition.</li>
+                    <li>Fixed some deprecation warnings during compilation.</li>
+                </ul>
+
+                <p>If you like this app, <a href="https://www.buymeacoffee.com/sbarex">buy me a coffee!</a></p>
+                
+                <p><a href="https://github.com/sbarex/SourceCodeSyntaxHighlight/blob/master/CHANGELOG.md">See the complete changelog.</a></p>
+            ]]>
+            </description>
+        </item>
+
+        <item>
             <title>2.1.24</title>
             <pubDate>mer, 05 giu 2024 07:12:00 +0100</pubDate>
             <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
