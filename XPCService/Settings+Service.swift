@@ -93,7 +93,8 @@ extension Settings: SettingsCSS {
         self.isAllSpecialSettingsPopulated = true
         
         // Process files on bundle the application support folder.
-        if let p = serviceBundle.url(forResource: "settings", withExtension: "yaml"), let data = try? String(contentsOf: p) {
+        var enc: String.Encoding = .utf8
+        if let p = serviceBundle.url(forResource: "settings", withExtension: "yaml"), let data = try? String(contentsOf: p, usedEncoding: &enc) {
             do {
                 if let d = try Yams.load(yaml: data) as? [String: [String: [String: String]]] {
                     self.specialSettings = d
@@ -104,7 +105,8 @@ extension Settings: SettingsCSS {
         }
         
         // Process files on support folder.
-        if let p = supportFolder?.appendingPathComponent("settings.yaml"), let data = try? String(contentsOf: p) {
+        enc = .utf8
+        if let p = supportFolder?.appendingPathComponent("settings.yaml"), let data = try? String(contentsOf: p, usedEncoding: &enc) {
             do {
                 if let d = try Yams.load(yaml: data) as? [String: [String: [String: String]]] {
                     for group in d {

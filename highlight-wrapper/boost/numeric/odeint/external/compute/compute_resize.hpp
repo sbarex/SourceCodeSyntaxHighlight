@@ -22,6 +22,8 @@
 
 #include <boost/numeric/odeint/util/copy.hpp>
 
+#include <type_traits>
+
 namespace boost {
 namespace numeric {
 namespace odeint {
@@ -29,7 +31,7 @@ namespace odeint {
 template< class T, class A >
 struct is_resizeable< boost::compute::vector< T , A > >
 {
-    struct type : public boost::true_type { };
+    struct type : public std::true_type { };
     const static bool value = type::value;
 };
 

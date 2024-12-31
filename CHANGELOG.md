@@ -1,6 +1,23 @@
 Changelog
 =======
 
+### 2.1.25 (74)
+New Features: 
+- Support for Jupyter Notebook files (`.ipynb`) _as JSON_.
+- Support for MAMEdev layout files `.lay` _as XML_.
+- Support for NVidia Cuda `.cu` files as _C++_.
+- Support for `.raml` files as _YAML_.
+- Experimental Shortcut Action (require macOS 15.2). 
+- Update Highlight to release 4.15.
+- Update Lua to release 5.4.7.
+- Update Boost to release 1.8.7.
+
+Bugfix:
+- Better support for Kotlin files.
+- Better light/dark mode recognition.
+- Fixed some deprecation warnings during compilation.
+
+
 ### 2.1.24 (73)
 Bugfix:
 - CLI tool allow to show/hide about footer.
@@ -14,7 +31,7 @@ New Features:
 - Update Sparkle to release 2.6.3.
 - Support for Nix Expression Language files (`.nix`).
 - Advanced settings to show about app info on the footer preview.
-- Link to buy me a :coffee: (:heart:)
+- Link to buy me a :coffee: ( :heart: )
 
 Bugfix:
 - Fixed support for `public.xsd` UTI.

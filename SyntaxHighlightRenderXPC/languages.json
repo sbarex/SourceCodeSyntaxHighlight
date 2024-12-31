@@ -120,7 +120,7 @@
     "Lilypond": ["lilypond", "ly"],
     "Limbo": ["limbo", "b"],
     "Linden Script": ["lindenscript", "lsl"],
-    "Lisp": ["lisp", "cl", "clisp", "el", "fas", "lsp", "sbcl", "scm", "scom"],
+    "Lisp": ["lisp", "cl", "clisp", "el", "fas", "lsp", "sbcl", "scm", "scom", "ss", "sls", "sps", "sld", "sch","rkt"],
     "Logtalk": ["logtalk", "lgt"],
     "Lotos": ["lotos"],
     "Lotus": ["lotus", "ls"],

@@ -255,11 +255,16 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
         }
     }
     
+    public lazy var CLIURL: URL = {
+        return URL(fileURLWithPath: utsname.isAppleSilicon ? "/opt/sbarex/syntax_highlight_cli" : "/usr/local/bin/syntax_highlight_cli");
+    }()
+    
     @IBAction func installCLITool(_ sender: Any) {
         guard let srcApp = Bundle.main.url(forResource: "syntax_highlight_cli", withExtension: nil) else {
             return
         }
-        let dstApp = URL(fileURLWithPath: "/usr/local/bin/syntax_highlight_cli")
+        
+        let dstApp = CLIURL;
         
         let alert1 = NSAlert()
         alert1.messageText = "The tool will be installed in \(dstApp.path) \nDo you want to continue?"
@@ -270,6 +275,24 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
         guard alert1.runModal() == .alertFirstButtonReturn else {
             return
         }
+        
+        /*if !FileManager.default.fileExists(atPath: dstApp.deletingLastPathComponent().path) {
+            do {
+                var error: NSDictionary?
+                NSAppleScript(source: "do shell script \"sudo mkdir -p \(dstApp.deletingLastPathComponent().path)\" with administrator " + "privileges")!.executeAndReturnError(&error)
+                guard error == nil else {
+                    throw MyShellError.runtimeError(error!.description)
+                }
+            } catch {
+                let alert = NSAlert()
+                alert.messageText = "Unable to install the command line tool"
+                alert.informativeText = "(\(error.localizedDescription))\n\nYou can manually install the tool from a Terminal shell with this command: \nln -sfv \"\(srcApp.path)\" \"\(dstApp.path)\""
+                alert.alertStyle = .critical
+                alert.runModal()
+                return
+            }
+        }*/
+        
         guard access(dstApp.deletingLastPathComponent().path, W_OK) == 0 else {
             let alert = NSAlert()
             alert.messageText = "Unable to install the tool: \(dstApp.deletingLastPathComponent().path) is not writable"
@@ -282,6 +305,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
         
         let alert = NSAlert()
         do {
+            if FileManager.default.fileExists(atPath: dstApp.deletingLastPathComponent().path) {
+                var error: NSDictionary?
+                NSAppleScript(source: "do shell script \"sudo mkdir1 -p \(dstApp.deletingLastPathComponent().path)\" with administrator privileges")!.executeAndReturnError(&error)
+                guard error == nil else {
+                    throw MyShellError.runtimeError(error!.description)
+                }
+            }
             try FileManager.default.createSymbolicLink(at: dstApp, withDestinationURL: srcApp)
             alert.messageText = "Command line tool installed"
             alert.informativeText = "You can call it from this path: \(dstApp.path)"
@@ -295,7 +325,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
     }
     
     @IBAction func revealCLITool(_ sender: Any) {
-        let u = URL(fileURLWithPath: "/usr/local/bin/syntax_highlight_cli")
+        let u = CLIURL
         if FileManager.default.fileExists(atPath: u.path) {
             // Open the Finder to the settings file.
             NSWorkspace.shared.activateFileViewerSelecting([u])
@@ -314,3 +344,21 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
     }
 }
 
+extension utsname {
+    static var sMachine: String {
+        var utsname = utsname()
+        uname(&utsname)
+        return withUnsafePointer(to: &utsname.machine) {
+            $0.withMemoryRebound(to: CChar.self, capacity: Int(_SYS_NAMELEN)) {
+                String(cString: $0)
+            }
+        }
+    }
+    static var isAppleSilicon: Bool {
+        sMachine == "arm64"
+    }
+}
+
+fileprivate enum MyShellError: Error {
+    case runtimeError(String)
+}

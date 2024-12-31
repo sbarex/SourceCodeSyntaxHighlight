@@ -22,6 +22,7 @@
 #include <omp.h>
 #include <vector>
 #include <algorithm>
+#include <type_traits>
 #include <boost/range/adaptor/sliced.hpp>
 #include <boost/numeric/odeint/util/copy.hpp>
 #include <boost/numeric/odeint/util/split.hpp>
@@ -56,7 +57,7 @@ struct openmp_state : public std::vector< std::vector< T > >
 
 
 template< class T >
-struct is_resizeable< openmp_state< T > > : boost::true_type { };
+struct is_resizeable< openmp_state< T > > : std::true_type { };
 
 
 template< class T >

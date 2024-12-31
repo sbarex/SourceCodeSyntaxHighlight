@@ -22,6 +22,7 @@
 #include <boost/container/detail/config_begin.hpp>
 #include <boost/container/detail/workaround.hpp>
 #include <boost/container/detail/type_traits.hpp>
+#include <boost/move/detail/launder.hpp>
 #include <boost/container/vector.hpp>
 
 #include <cstddef>
@@ -63,12 +64,9 @@ class static_storage_allocator
    {  return *this;  }
 
    inline T* internal_storage() const BOOST_NOEXCEPT_OR_NOTHROW
-   {  return const_cast<T*>(static_cast<const T*>(static_cast<const void*>(storage.data)));  }
+   {  return move_detail::launder_cast<T*>(&storage);  }
 
-   inline T* internal_storage() BOOST_NOEXCEPT_OR_NOTHROW
-   {  return static_cast<T*>(static_cast<void*>(storage.data));  }
-
-   static const std::size_t internal_capacity = N;
+   BOOST_STATIC_CONSTEXPR std::size_t internal_capacity = N;
 
    std::size_t max_size() const
    {  return N;   }
@@ -88,7 +86,7 @@ class static_storage_allocator
 
    private:
    BOOST_CONTAINER_STATIC_ASSERT_MSG(!InplaceAlignment || (InplaceAlignment & (InplaceAlignment-1)) == 0, "Alignment option must be zero or power of two");
-   static const std::size_t final_alignment = InplaceAlignment ? InplaceAlignment : dtl::alignment_of<T>::value;
+   BOOST_STATIC_CONSTEXPR std::size_t final_alignment = InplaceAlignment ? InplaceAlignment : dtl::alignment_of<T>::value;
    typename dtl::aligned_storage<sizeof(T)*N, final_alignment>::type storage;
 };
 
@@ -104,6 +102,19 @@ struct get_static_vector_opt<void>
    typedef static_vector_null_opt type;
 };
 
+template<class Options>
+struct get_vector_opt_from_static_vector_opt
+{
+   typedef typename get_static_vector_opt<Options>::type options_t;
+   typedef vector_opt<void, typename options_t::stored_size_type> type;
+};
+
+template<>
+struct get_vector_opt_from_static_vector_opt<void>
+{
+   typedef void type;
+};
+
 template <typename T, std::size_t Capacity, class Options>
 struct get_static_vector_allocator
 {
@@ -115,7 +126,6 @@ struct get_static_vector_allocator
       , options_t::throw_on_overflow
       > type;
 };
-
 
 }  //namespace dtl {
 
@@ -150,12 +160,18 @@ struct get_static_vector_allocator
 //! is specified, by default throw_on_overflow<true> option is set.
 template <typename T, std::size_t Capacity, class Options BOOST_CONTAINER_DOCONLY(= void) >
 class static_vector
-    : public vector<T, typename dtl::get_static_vector_allocator< T, Capacity, Options>::type>
+   #ifndef BOOST_CONTAINER_DOXYGEN_INVOKED
+    : public vector< T
+                   , typename dtl::get_static_vector_allocator< T, Capacity, Options>::type
+                   , typename dtl::get_vector_opt_from_static_vector_opt<Options>::type
+                   >
+   #endif
 {
    public:
    #ifndef BOOST_CONTAINER_DOXYGEN_INVOKED
    typedef typename dtl::get_static_vector_allocator< T, Capacity, Options>::type allocator_type;
-   typedef vector<T, allocator_type > base_t;
+   typedef typename dtl::get_vector_opt_from_static_vector_opt<Options>::type options_type;
+   typedef vector<T, allocator_type, options_type> base_t;
 
    BOOST_COPYABLE_AND_MOVABLE(static_vector)
 
@@ -190,7 +206,7 @@ public:
     typedef typename base_t::const_reverse_iterator const_reverse_iterator;
 
     //! @brief The capacity/max size of the container
-    static const size_type static_capacity = Capacity;
+    BOOST_STATIC_CONSTEXPR size_type static_capacity = Capacity;
 
     //! @brief Constructs an empty static_vector.
     //!

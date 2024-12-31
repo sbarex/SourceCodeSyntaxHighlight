@@ -18,6 +18,8 @@
 #ifndef BOOST_NUMERIC_ODEINT_EXTERNAL_THRUST_THRUST_RESIZE_HPP_INCLUDED
 #define BOOST_NUMERIC_ODEINT_EXTERNAL_THRUST_THRUST_RESIZE_HPP_INCLUDED
 
+#include <type_traits>
+
 #include <boost/range.hpp>
 
 #include <thrust/device_vector.h>
@@ -38,7 +40,7 @@ namespace odeint {
 template< class T , class A >                               \
 struct is_resizeable< THRUST_VECTOR<T,A> >                  \
 {                                                           \
-    struct type : public boost::true_type { };              \
+    struct type : public std::true_type { };              \
     const static bool value = type::value;                  \
 };                                                          \
 

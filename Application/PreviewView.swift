@@ -62,7 +62,7 @@ class PreviewView: NSView, SettingsSplitViewElement {
     @IBOutlet weak var textView: NSTextView!
     
     var isLocked = false
-    fileprivate (set) var isRefreshig = false
+    fileprivate(set) var isRefreshig = false
     
     
     var isLight: Bool = {

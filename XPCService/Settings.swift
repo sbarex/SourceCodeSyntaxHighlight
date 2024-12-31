@@ -651,11 +651,13 @@ class SettingsBase: NSObject {
     }
     
     func isOSThemeLight() -> Bool {
-        if #available(macOS 11.0, *) {
+        /*if #available(macOS 11.0, *) {
+            // Fixme: nell'estensione non sempre restituisce il valore aggiornato.
             return NSAppearance.currentDrawing().bestMatch(from: [.aqua, .darkAqua]) ?? .aqua == .aqua
         } else {
             return (UserDefaults.standard.string(forKey: "AppleInterfaceStyle") ?? "Light") == "Light"
-        }
+        }*/
+        return (UserDefaults.standard.string(forKey: "AppleInterfaceStyle") ?? "Light") == "Light"
     }
     
     func getTheme() -> ThemeBaseColor {

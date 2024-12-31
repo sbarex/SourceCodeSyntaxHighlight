@@ -1,0 +1,11 @@
+#
+$(SRCROOT)/Application/resources/colorize.sh
+$(SRCROOT)/Application/resources/style.css
+$(SRCROOT)/Application/resources/style2.css
+
+$(SRCROOT)/Application/resources/html_editor.lua
+$(SRCROOT)/Application/resources/vcs.lua
+$(SRCROOT)/Application/resources/about.lua
+$(SRCROOT)/Application/resources/debug.lua
+
+$(SRCROOT)/Application/resources/settings.yaml

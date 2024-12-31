@@ -37,6 +37,7 @@ If you like this application and find it useful, [buy me a coffee](https://www.b
   - [Known bugs](#known-bugs)
   - [Note for developers](#note-for-developers)
     - [Info about decoding dynamic UTI identifiers](#info-about-decoding-dynamic-uti-identifiers)
+    - [Other useful links](#other-useful-links)
   - [Credits](#credits)
 
   
@@ -153,6 +154,7 @@ The application can also handle some [plain files](#plain-files) **without exten
 - Crystal language (`.cr`)
 - CSON source files (`.cson`)
 - CSS files (`.css`)
+- Cuda files (`.cu`) _as `C++`_ 
 - D (`.d`)
 - Dart source files (`.dart`) **`.dart` is reserved by macOS and cannot be handled.**
 - Diff files (`.diff`, `.patch`)
@@ -194,6 +196,7 @@ The application can also handle some [plain files](#plain-files) **without exten
 - JSON files (`.json`, `.jsonc`) ** On macOS 13 Ventura with Apple Silicon the `.json` extension is reserved by the system and cannot be handled.** 
 - JSON Line files (`.jsonl`) _as `JSON`_
 - Julia source files  (`.jl`)
+- Jupyter Notebook files (`.ipynb`) _as `JSON`_
 - Kermeta source files (`.kmt`)
 - Korn Shell script files (`.ksh`)
 - Kotlin source files (`.kt`, `.kts`)
@@ -203,6 +206,7 @@ The application can also handle some [plain files](#plain-files) **without exten
 - Logos source files (`.xm`)
 - Lua source files (`.lua`)
 - Makefile files (`.mk`, `.mak`)
+- MAMEdev layout files (`.lay`) _as XML_.
 - Markdown files (`.md`, `.rmd`): _please use [QLMarkdown](https://github.com/sbarex/QLMarkdown)_ which allows you to choose whether to display formatted output or the highlighted source code.
 - Media Presentation Description (`.mpd`) _as XML_. 
 - MF source files (`.mf`)
@@ -230,6 +234,7 @@ The application can also handle some [plain files](#plain-files) **without exten
 - Python source files (`.py`)
 - R (`.r`)
 - Racket (`.rkt`) _as `Lisp`_
+- RAML (`.raml`) _as `YAML`_
 - RDF files (`.rdf`)
 - README files (`.readme`) _as plain text_
 - reStructuredText document (`.rst`)
@@ -242,7 +247,7 @@ The application can also handle some [plain files](#plain-files) **without exten
 - SAS files (`.sas`)
 - SASS/SCSS files (`.scss`)
 - Scala source files (`.sc`, `.sbt`, `.scala`)
-- Scheme source files (`.scm`)
+- Scheme source files (`.scm`, `.ss`, `.sls`, `.sps`, `.sld`, `.sch`) _as `Lisp`_
 - Shell script files (`.bashrc`, `.zshrc`, `.sh`)
 - Smali (`.smali`) _as plain text_.
 - Solidity source files (`.sol`)
@@ -580,7 +585,7 @@ The application embed the [`Highlight`](http://www.andre-simon.de/doku/highlight
 ![highlight info](assets/about_highlight.png)
 
 
-### Info about decoding dynamic UTI identifiers:
+### Info about decoding dynamic UTI identifiers
 
 - https://gist.github.com/jtbandes/19646e7457208ae9b1ad
 - https://alastairs-place.net/blog/2012/06/06/utis-are-better-than-you-think-and-heres-why/
@@ -651,6 +656,16 @@ pluginkit -mAvvv -p com.apple.quicklook.preview
 ```bash
 pluginkit -m -v -i org.sbarex.SourceCodeSyntaxHighlight.QuickLookExtension --raw
 ```
+
+### Other useful links
+
+https://eclecticlight.co/2024/11/04/how-does-quicklook-create-thumbnails-and-previews-with-an-update-to-mints/
+
+https://eclecticlight.co/2024/11/02/a-brief-history-of-icons-thumbnails-and-quicklook/
+
+https://eclecticlight.co/2024/10/31/how-sequoia-has-changed-quicklook-and-its-thumbnails/
+
+https://mjtsai.com/blog/2024/11/05/sequoia-no-longer-supports-quicklook-generator-plug-ins/
 
 ## Credits
 Developed by [sbarex](https://github.com/sbarex) with :heart:.

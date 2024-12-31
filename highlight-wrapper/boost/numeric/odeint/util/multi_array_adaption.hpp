@@ -28,6 +28,7 @@
 #include <boost/mpl/bool.hpp>
 #include <boost/multi_array.hpp>
 
+#include <type_traits>
 
 namespace boost {
 namespace numeric {
@@ -36,14 +37,14 @@ namespace odeint {
 template< typename T >
 struct is_multi_array
 {
-    typedef boost::false_type type;
+    typedef std::false_type type;
     const static bool value = type::value;
 };
     
 template< typename T >
 struct is_resizeable_multi_array
 {
-    typedef boost::false_type type;
+    typedef std::false_type type;
     const static bool value = type::value;
 };
 
@@ -52,14 +53,14 @@ struct is_resizeable_multi_array
 template< typename V , size_t Dim , typename A >
 struct is_multi_array< boost::multi_array< V , Dim , A > >
 {
-    typedef boost::true_type type;
+    typedef std::true_type type;
     const static bool value = type::value;
 };
 
 template< typename V , size_t Dim , typename A >
 struct is_resizeable_multi_array< boost::multi_array< V , Dim , A > >
 {
-    typedef boost::true_type type;
+    typedef std::true_type type;
     const static bool value = type::value;
 };
 
@@ -69,7 +70,7 @@ struct is_resizeable_multi_array< boost::multi_array< V , Dim , A > >
 template< typename T  >
 struct is_resizeable_sfinae< T , typename boost::enable_if< typename is_resizeable_multi_array< T >::type >::type >
 {
-    typedef boost::true_type type;
+    typedef std::true_type type;
     const static bool value = type::value;
 };
 

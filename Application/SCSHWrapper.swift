@@ -99,7 +99,7 @@ public class SCSHWrapper: NSObject {
         NotificationCenter.default.removeObserver(self, name: .ThemeNeedRefresh, object: nil)
     }
     
-    fileprivate (set) var isSaving = false
+    fileprivate(set) var isSaving = false
     
     func saveSettings(handler: ((Bool)->Void)?) {
         guard let service = SCSHWrapper.service, let settings = self.settings else {

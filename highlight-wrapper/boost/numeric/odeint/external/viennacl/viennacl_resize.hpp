@@ -19,6 +19,8 @@
 #ifndef BOOST_NUMERIC_ODEINT_EXTERNAL_VIENNACL_VIENNACL_RESIZE_HPP_INCLUDED
 #define BOOST_NUMERIC_ODEINT_EXTERNAL_VIENNACL_VIENNACL_RESIZE_HPP_INCLUDED
 
+#include <type_traits>
+
 #include <viennacl/vector.hpp>
 
 #include <boost/numeric/odeint/util/is_resizeable.hpp>
@@ -35,7 +37,7 @@ namespace odeint {
  * specializations for viennacl::vector< T >
  */
 template< typename T >
-struct is_resizeable< viennacl::vector< T > > : boost::true_type { };
+struct is_resizeable< viennacl::vector< T > > : std::true_type { };
 
 template< typename T >
 struct resize_impl< viennacl::vector< T > , viennacl::vector< T > >

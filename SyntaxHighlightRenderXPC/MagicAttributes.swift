@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UniformTypeIdentifiers
 
 // MARK: -
 class MagicAttributes {
@@ -23,46 +24,82 @@ class MagicAttributes {
         } else if components.first?.contains("text") ?? false {
             return true
         } else {
-            if let UType = UTTypeCreatePreferredIdentifierForTag(kUTTagClassMIMEType, mimeType as CFString, kUTTypeData)?.takeRetainedValue() {
-                return UTTypeConformsTo(UType, kUTTypeText)
+            if #available(macOS 11.0, *) {
+                return UTType(mimeType: mimeType)?.conforms(to: UTType.text) ?? false
             } else {
-                return false
+                if let UType = UTTypeCreatePreferredIdentifierForTag(kUTTagClassMIMEType, mimeType as CFString, kUTTypeData)?.takeRetainedValue() {
+                    return UTTypeConformsTo(UType, kUTTypeText)
+                } else {
+                    return false
+                }
             }
         }
     }()
     
     func checkMime(conformTo uttype: CFString) -> Bool {
-        if let UType = UTTypeCreatePreferredIdentifierForTag(kUTTagClassMIMEType, mimeType as CFString, kUTTypeData)?.takeRetainedValue() {
-            return UTTypeConformsTo(UType, uttype)
+        if #available(macOS 12.0, *) {
+            if let type = UTType(mimeType: mimeType), let t = UTType(uttype as String) {
+                return type.conforms(to: t)
+            } else {
+                return false
+            }
         } else {
-            return false
+            if let UType = UTTypeCreatePreferredIdentifierForTag(kUTTagClassMIMEType, mimeType as CFString, kUTTypeData)?.takeRetainedValue() {
+                return UTTypeConformsTo(UType, uttype)
+            } else {
+                return false
+            }
         }
+    }
+    
+    @available(macOS 11.0, *)
+    func checkMime(conformTo uttype: UTType) -> Bool {
+        if let type = UTType(mimeType: mimeType) {
+            return type.conforms(to: uttype)
+        }
+        return false
     }
     
     /// Return if the parsed file is an image.
     lazy var isImage: Bool = {
-        return checkMime(conformTo: kUTTypeImage)
+        if #available(macOS 11.0, *) {
+            return checkMime(conformTo: UTType.image)
+        } else {
+            return checkMime(conformTo: kUTTypeImage)
+        }
     }()
     /// Return if the parsed file is an image.
     var isPDF: Bool {
         if self.mimeType == "application/pdf" {
             return true
         } else {
-            return checkMime(conformTo: kUTTypePDF)
+            if #available(macOS 11.0, *) {
+                return checkMime(conformTo: UTType.pdf)
+            } else {
+                return checkMime(conformTo: kUTTypePDF)
+            }
         }
     }
     var isMovie: Bool {
         if self.mimeType.hasPrefix("video/") {
             return true
         } else {
-            return checkMime(conformTo: kUTTypeVideo)
+            if #available(macOS 11.0, *) {
+                return checkMime(conformTo: UTType.video)
+            } else {
+                return checkMime(conformTo: kUTTypeVideo)
+            }
         }
     }
     var isAudio: Bool {
         if self.mimeType.hasPrefix("audio/") {
             return true
         } else {
-            return checkMime(conformTo: kUTTypeAudio)
+            if #available(macOS 11.0, *) {
+                return checkMime(conformTo: UTType.audio)
+            } else {
+                return checkMime(conformTo: kUTTypeAudio)
+            }
         }
     }
     

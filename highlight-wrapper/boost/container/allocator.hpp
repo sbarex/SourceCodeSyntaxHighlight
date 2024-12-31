@@ -115,7 +115,7 @@ class allocator
    template<class T2, unsigned int Version2, unsigned int AllocationDisableMask2>
    allocator& operator=(const allocator<T2, Version2, AllocationDisableMask2>&);
 
-   static const unsigned int ForbiddenMask =
+   BOOST_STATIC_CONSTEXPR unsigned int ForbiddenMask =
       BOOST_CONTAINER_ALLOCATE_NEW | BOOST_CONTAINER_EXPAND_BWD | BOOST_CONTAINER_EXPAND_FWD ;
 
    //The mask can't disable all the allocation types
@@ -336,8 +336,8 @@ class allocator
       BOOST_CONTAINER_STATIC_ASSERT(( Version > 1 ));
       dlmalloc_memchain ch;
       void *beg(&*chain.begin()), *last(&*chain.last());
-      size_t size(chain.size());
-      BOOST_CONTAINER_MEMCHAIN_INIT_FROM(&ch, beg, last, size);
+      size_t sz(chain.size());
+      BOOST_CONTAINER_MEMCHAIN_INIT_FROM(&ch, beg, last, sz);
       dlmalloc_multidealloc(&ch);
       //dlmalloc_multidealloc(move_detail::force_ptr<dlmalloc_memchain *>(&chain));
    }

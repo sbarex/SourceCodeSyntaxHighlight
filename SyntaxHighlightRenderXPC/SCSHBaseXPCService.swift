@@ -23,6 +23,7 @@
 import Foundation
 import Cocoa
 import OSLog
+import UniformTypeIdentifiers
 
 @objc
 class SCSHBaseXPCService: NSObject {
@@ -353,9 +354,17 @@ class SCSHBaseXPCService: NSObject {
                     uti = plain!.UTI
                 }
             
-                if uti=="auto" || uti == nil, let attributes = attributes, let utiType = UTTypeCreatePreferredIdentifierForTag(kUTTagClassMIMEType, attributes.mimeType as CFString, nil)?.takeRetainedValue() {
-                    // Set the uti from the recognized mime.
-                    uti = utiType as String
+                if uti=="auto" || uti == nil, let attributes = attributes {
+                    if #available(macOS 11.0, *) {
+                        if let u = UTType(mimeType: attributes.mimeType) {
+                            uti = u.identifier
+                        }
+                    } else {
+                        if let utiType = UTTypeCreatePreferredIdentifierForTag(kUTTagClassMIMEType, attributes.mimeType as CFString, nil)?.takeRetainedValue() {
+                            // Set the uti from the recognized mime.
+                            uti = utiType as String
+                        }
+                    }
                 }
                 var syntax = "auto"
                 if plain == nil || plain?.syntax == "auto", let u = uti {

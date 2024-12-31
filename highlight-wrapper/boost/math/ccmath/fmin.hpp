@@ -62,7 +62,7 @@ constexpr auto fmin(T1 x, T2 y) noexcept
 {
     if (BOOST_MATH_IS_CONSTANT_EVALUATED(x))
     {
-        using promoted_type = boost::math::tools::promote_args_2_t<T1, T2>;
+        using promoted_type = boost::math::tools::promote_args_t<T1, T2>;
         return boost::math::ccmath::fmin(static_cast<promoted_type>(x), static_cast<promoted_type>(y));
     }
     else
@@ -72,13 +72,13 @@ constexpr auto fmin(T1 x, T2 y) noexcept
     }
 }
 
-float fminf(float x, float y) noexcept
+constexpr float fminf(float x, float y) noexcept
 {
     return boost::math::ccmath::fmin(x, y);
 }
 
 #ifndef BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS
-long double fminl(long double x, long double y) noexcept
+constexpr long double fminl(long double x, long double y) noexcept
 {
     return boost::math::ccmath::fmin(x, y);
 }

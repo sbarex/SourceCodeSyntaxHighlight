@@ -47,11 +47,31 @@ UTIs:
     com.barebones.bbedit.typescript-source:
         syntax: typescript
         
+    com.coteditor.scheme:
+        syntax: lisp
+    
+    # .ss
+    dyn.ah62d4rv4ge81g62:
+        syntax: lisp
+    
+    # .sls
+    dyn.ah62d4rv4ge81g5dx:
+        syntax: lisp
+    # .sps
+    dyn.ah62d4rv4ge81g6dx:
+        syntax: lisp
+    # .sld
+    dyn.ah62d4rv4ge81g5de:
+        syntax: lisp
+    # .rkt
+    dyn.ah62d4rv4ge81e45y:
+        syntax: lisp
+        
     com.google.earth.kml: *xml
     com.jetbrain.source: *xml
     
-    com.nutstore.down:
-        syntax: md
+    com.macromates.textmate.scheme:
+        syntax: lisp
     
     com.microsoft.typescript:
         syntax: typescript
@@ -59,6 +79,16 @@ UTIs:
         syntax: typescript
 
     com.microsoft.xaml: *xml
+            
+    com.nutstore.down:
+        syntax: md
+        
+    com.nvidia.cuda:
+        syntax: c
+    # .cu
+    dyn.ah62d4rv4ge80g7k:
+        syntax: c
+    
     com.seriflabs.xmp: *xml
     dyn.ah62d4rv4ge81u5pu: *xml
     
@@ -123,6 +153,9 @@ UTIs:
         
     org.clojure.script:
         syntax: clojure
+        
+    dyn.ah62d4rv4ge8022p3: *xml
+    org.mamedev.lay: *xml
         
     org.tug.cls:
         syntax: latex
@@ -281,8 +314,17 @@ UTIs:
     dyn.ah62d4rv4ge80s6xbqv0gn:
         syntax: gradle
         
+    org.jupyter.ipynb:
+        syntax: json
+    # ipynb
+    dyn.ah62d4rv4ge80w6d3r3va:
+        syntax: json
+        
     org.kmt.source:
         syntax: scala
+        
+    org.kotlinlang.kotlin-source:
+        syntax: kotlin
         
     dyn.ah62d4rv4ge80y5a:
         syntax: julia
@@ -403,6 +445,12 @@ UTIs:
         syntax: xml
     dyn.ah62d4rv4ge8048drru:
         syntax: xml
+    
+    org.raml.raml:
+        syntax: yaml
+    # .raml
+    dyn.ah62d4rv4ge81e2prru:
+        syntax: yaml
         
 extensions:
     _plist*: &plist
@@ -458,6 +506,9 @@ extensions:
         
     ily:
         syntax: ly
+        
+    ipynb:
+        syntax: json
        
     #dyn.ah62d4rv4ge80y65r
     jsm:
@@ -500,6 +551,9 @@ extensions:
     conf:
         # org.sbarex.conf
         syntax: ini
+        
+    cu:
+        syntax: c
         
     jsonl:
         syntax: json
@@ -594,8 +648,24 @@ extensions:
     pub:
         syntax: txt
         
+    raml:
+        syntax: yaml
+    rkt:
+        syntax: lisp
+        
     sage:
         syntax: py
+        
+    ss:
+        syntax: lisp
+    sls:
+        syntax: lisp
+    sps:
+        syntax: lisp
+    sld:
+        syntax: lisp
+    sch:
+        syntax: lisp
         
     t:
         syntax: perl

@@ -11,6 +11,8 @@
 	<array>
 		<string>/usr/local/bin</string>
 		<string>/usr/local/bin/syntax_highlight_cli</string>
+		<string>/opt/sbarex</string>
+		<string>/opt/sbarex/syntax_highlight_cli</string>
 	</array>
 	<key>com.apple.security.temporary-exception.files.home-relative-path.read-write</key>
 	<array>

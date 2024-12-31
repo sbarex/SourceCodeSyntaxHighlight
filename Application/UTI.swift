@@ -21,6 +21,7 @@
 //  along with SyntaxHighlight. If not, see <http://www.gnu.org/licenses/>.
 
 import Cocoa
+import UniformTypeIdentifiers
 
 class UTI: Equatable {
     typealias SuppressedExtension = (ext: String, uti: String)
@@ -34,10 +35,19 @@ class UTI: Equatable {
     lazy var description: String = {
         let type = self.UTI as CFString
         
-        if let desc = UTTypeCopyDescription(type)?.takeRetainedValue() as String?, !desc.isEmpty {
-            return desc.prefix(1).uppercased() + desc.dropFirst()
+        if #available(macOS 11.0, *) {
+            if let desc = UTType(self.UTI)?.description, !desc.isEmpty {
+                return desc.prefix(1).uppercased() + desc.dropFirst()
+            } else {
+                return self.UTI
+            }
         } else {
-            return self.UTI
+            if let desc = UTTypeCopyDescription(type)?.takeRetainedValue() as String?, !desc.isEmpty {
+                return desc.prefix(1).uppercased() + desc.dropFirst()
+            } else {
+                return self.UTI
+            }
+            // Fallback on earlier versions
         }
     }()
     
@@ -52,19 +62,30 @@ class UTI: Equatable {
     }()
     
     lazy var extensions: [String] = {
-        guard let tags = UTTypeCopyAllTagsWithClass(self.UTI as CFString, kUTTagClassFilenameExtension as CFString)?.takeRetainedValue() else {
-            return []
+        if #available(macOS 11.0, *) {
+            return UTType(self.UTI)?.tags[UTTagClass.filenameExtension] ?? []
+        } else {
+            guard let tags = UTTypeCopyAllTagsWithClass(self.UTI as CFString, kUTTagClassFilenameExtension as CFString)?.takeRetainedValue() else {
+                return []
+            }
+            return tags as NSArray as? [String] ?? []
         }
-        
-        return tags as NSArray as? [String] ?? []
     }()
     
     lazy var suppressedExtensions: [SuppressedExtension] = {
         var e: [SuppressedExtension] = []
         for ext in extensions {
-            if let u = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, ext as CFString, nil)?.takeRetainedValue() {
-                if u as String != self.UTI {
-                    e.append((ext: ext, uti: u as String))
+            if #available(macOS 11.0, *) {
+                if let u = UTType(filenameExtension: ext) {
+                    if u.identifier != self.UTI {
+                        e.append((ext: ext, uti: u.identifier as String))
+                    }
+                }
+            } else {
+                if let u = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, ext as CFString, nil)?.takeRetainedValue() {
+                    if u as String != self.UTI {
+                        e.append((ext: ext, uti: u as String))
+                    }
                 }
             }
         }
@@ -76,22 +97,34 @@ class UTI: Equatable {
     }
     
     lazy var conformsTo: [String] = {
-        if let info = UTTypeCopyDeclaration(UTI as CFString)?.takeRetainedValue() as? [String: AnyObject] {
-            if let c = info[kUTTypeConformsToKey as String] as? String {
-                return [c]
-            } else if let c = info[kUTTypeConformsToKey as String] as? [String] {
-                return c
+        if #available(macOS 12.0, *) {
+            return UTType(UTI)?.supertypes.map { $0.identifier } ?? []
+        } else {
+            if let info = UTTypeCopyDeclaration(UTI as CFString)?.takeRetainedValue() as? [String: AnyObject] {
+                if let c = info[kUTTypeConformsToKey as String] as? String {
+                    return [c]
+                } else if let c = info[kUTTypeConformsToKey as String] as? [String] {
+                    return c
+                }
             }
+            return []
         }
-        return []
     }()
     
     lazy var mimeTypes: [String] = {
-        guard let tags = UTTypeCopyAllTagsWithClass(self.UTI as CFString, kUTTagClassMIMEType as CFString)?.takeRetainedValue() else {
-            return []
+        if #available(macOS 12.0, *) {
+            if let t = UTType(self.UTI) {
+                return t.tags[.mimeType] ?? []
+            } else {
+                return []
+            }
+        } else {
+            guard let tags = UTTypeCopyAllTagsWithClass(self.UTI as CFString, kUTTagClassMIMEType as CFString)?.takeRetainedValue() else {
+                return []
+            }
+            
+            return tags as NSArray as? [String] ?? []
         }
-        
-        return tags as NSArray as? [String] ?? []
     }()
     
     fileprivate var _image_fetched = false
@@ -107,14 +140,16 @@ class UTI: Equatable {
     
     func fetchIcon(async: Bool = true) {
         if #available(macOS 11.0, *) {
-            guard !_image_fetched else { return }
+            guard !_image_fetched, let uti = UTType(self.UTI) else {
+                return
+            }
             if async {
                 DispatchQueue.global(qos: .userInitiated).async() {
-                    self._image = NSWorkspace.shared.icon(forFileType: self.UTI)
+                    self._image = NSWorkspace.shared.icon(for: uti)
                     self._image_fetched = true
                 }
             } else {
-                _image = NSWorkspace.shared.icon(forFileType: self.UTI)
+                _image = NSWorkspace.shared.icon(for: uti)
                 _image_fetched = true
             }
         } else {
@@ -123,7 +158,15 @@ class UTI: Equatable {
     }
     
     lazy var isDynamic: Bool = {
-        return UTTypeIsDynamic(UTI as CFString)
+        if #available(macOS 12.0, *) {
+            if let u = UTType(UTI) {
+                return u.isDynamic
+            } else {
+                return false
+            }
+        } else {
+            return UTTypeIsDynamic(UTI as CFString)
+        }
     }()
     
     /// Return if the system know the file extensions or mime types for the UTI.

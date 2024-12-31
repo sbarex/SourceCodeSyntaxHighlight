@@ -24,6 +24,7 @@ copy at http://www.boost.org/LICENSE_1_0.txt)
 #include <boost/numeric/mtl/matrix/dense2D.hpp>
 #include <boost/numeric/mtl/matrix/compressed2D.hpp>
 
+#include <type_traits>
 
 namespace boost {
 namespace numeric {
@@ -33,21 +34,21 @@ namespace odeint {
 template< class Value , class Parameters >
 struct is_resizeable< mtl::dense_vector< Value , Parameters > >
 { 
-    typedef boost::true_type type;
+    typedef std::true_type type;
     const static bool value = type::value;
 };
 
 template< class Value , class Parameters >
 struct is_resizeable< mtl::dense2D< Value , Parameters > >
 {
-    typedef boost::true_type type;
+    typedef std::true_type type;
     const static bool value = type::value;
 };
 
 template< class Value , class Parameters >
 struct is_resizeable< mtl::compressed2D< Value , Parameters > >
 {
-    typedef boost::true_type type;
+    typedef std::true_type type;
     const static bool value = type::value;
 };
 

@@ -13,12 +13,14 @@
 
 #include <boost/numeric/odeint/util/same_size.hpp>
 
+#include <type_traits>
+
 namespace boost { namespace numeric { namespace odeint {
 
 template<typename T, typename S>
 struct is_resizeable< nt2::container::table<T,S> >
 {
-  typedef boost::true_type type;
+  typedef std::true_type type;
   static const bool value = type::value;
 };
 

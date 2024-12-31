@@ -18,8 +18,8 @@
 #ifndef BOOST_NUMERIC_ODEINT_UTIL_UBLAS_WRAPPER_HPP_INCLUDED
 #define BOOST_NUMERIC_ODEINT_UTIL_UBLAS_WRAPPER_HPP_INCLUDED
 
+#include <type_traits>
 
-#include <boost/type_traits/integral_constant.hpp>
 #include <boost/numeric/ublas/vector.hpp>
 #include <boost/numeric/ublas/matrix.hpp>
 #include <boost/numeric/ublas/lu.hpp>
@@ -171,7 +171,7 @@ namespace odeint {
 template< class T , class A >
 struct is_resizeable< boost::numeric::ublas::vector< T , A > >
 {
-    typedef boost::true_type type;
+    typedef std::true_type type;
     const static bool value = type::value;
 };
 
@@ -182,7 +182,7 @@ struct is_resizeable< boost::numeric::ublas::vector< T , A > >
 template< class T , class L , class A >
 struct is_resizeable< boost::numeric::ublas::matrix< T , L , A > >
 {
-    typedef boost::true_type type;
+    typedef std::true_type type;
     const static bool value = type::value;
 };
 
@@ -193,7 +193,7 @@ struct is_resizeable< boost::numeric::ublas::matrix< T , L , A > >
 template< class T , class A >
 struct is_resizeable< boost::numeric::ublas::permutation_matrix< T , A > >
 {
-    typedef boost::true_type type;
+    typedef std::true_type type;
     const static bool value = type::value;
 };
 

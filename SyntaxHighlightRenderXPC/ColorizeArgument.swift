@@ -128,7 +128,8 @@ struct ColorizeArguments {
                     cssCode += "\n"
                 }
                 do {
-                    cssCode += try String(contentsOf: style)
+                    var enc: String.Encoding = .utf8
+                    cssCode += try String(contentsOf: style, usedEncoding: &enc)
                     try? "CSS: \(style.path)".appendLine(to: custom_settings.logFile)
                 } catch {
                     try? "ERROR: unable to read the CSS file `\(style.path)`".appendLine(to: custom_settings.logFile)

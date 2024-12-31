@@ -79,6 +79,16 @@ class PreviewViewController: NSViewController, QLPreviewingController, WKNavigat
     var textScrollView: NSScrollView?
     var textView: NSTextView?
     var webView: WKWebView?
+    var appearanceObserver: NSKeyValueObservation?
+    
+    /// Check if the appearance is Dark
+    lazy var isDarkMode: Bool = {
+        // fixme: nell'estensione non sempre restituisce il valore aggiornato!
+        if let appearance = self.view.effectiveAppearance.bestMatch(from: [.darkAqua, .aqua]) {
+            return appearance == .darkAqua
+        }
+        return false
+    }()
     
     lazy var connection: NSXPCConnection = {
         let connection = NSXPCConnection(serviceName: "org.sbarex.SourceCodeSyntaxHighlight.XPCRender")
@@ -105,12 +115,18 @@ class PreviewViewController: NSViewController, QLPreviewingController, WKNavigat
             view.layer?.borderWidth = 0
         }
         
+        self.appearanceObserver = NSApp.observe(\.effectiveAppearance, options: [.new, .old, .initial, .prior]) { app, change in
+            self.isDarkMode = change.newValue?.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua
+        }
+        
         DistributedNotificationCenter.default().addObserver(self, selector: #selector(self.handleSettingsChanged(_:)), name: .SettingsUpdated, object: nil)
     }
 
     deinit {
         self.connection.invalidate()
         DistributedNotificationCenter.default().removeObserver(self, name: .SettingsUpdated, object: nil)
+        self.appearanceObserver?.invalidate()
+        self.appearanceObserver = nil
     }
     
     /// Reload settings after they have been changed in the main app.
@@ -138,7 +154,7 @@ class PreviewViewController: NSViewController, QLPreviewingController, WKNavigat
     var handler: ((Error?) -> Void)? = nil
     
     func preparePreviewOfFile(at url: URL, completionHandler handler: @escaping (Error?) -> Void) {
-        // This code will not be called on macOS 12 Monterey with QLIsDataBasedPreview set.
+        // This code will *not* be called on macOS 12 Monterey with QLIsDataBasedPreview set.
         
         // Add the supported content types to the QLSupportedContentTypes array in the Info.plist of the extension.
         

@@ -41,7 +41,7 @@ class ThemesListView: NSView, SettingsSplitViewElement {
     }
     
     /// All (unfiltered) standard themes.
-    fileprivate (set) var allStandardThemes: [SCSHThemePreview] = [] {
+    fileprivate(set) var allStandardThemes: [SCSHThemePreview] = [] {
         didSet {
             filterThemes(custom: false)
         }

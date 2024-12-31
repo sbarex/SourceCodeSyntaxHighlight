@@ -343,7 +343,7 @@ struct DistributionConcept
    template <class R, class P>
    static void test_extra_members(const boost::math::hypergeometric_distribution<R, P>& d)
    {
-      unsigned u = d.defective();
+      std::uint64_t u = d.defective();
       u = d.sample_count();
       u = d.total();
       suppress_unused_variable_warning(u);

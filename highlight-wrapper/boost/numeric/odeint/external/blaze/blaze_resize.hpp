@@ -24,6 +24,8 @@
 
 #include <blaze/math/dense/DynamicVector.h>
 
+#include <type_traits>
+
 namespace boost {
 namespace numeric {
 namespace odeint {
@@ -31,7 +33,7 @@ namespace odeint {
 template< typename T , bool TF >
 struct is_resizeable< blaze::DynamicVector< T , TF > > 
 { 
-    typedef boost::true_type type;
+    typedef std::true_type type;
     const static bool value = type::value;
 };
 

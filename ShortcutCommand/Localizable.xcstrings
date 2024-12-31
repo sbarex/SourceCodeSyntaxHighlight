@@ -1,0 +1,136 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "Engine" : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Motore di formattazione"
+          }
+        }
+      }
+    },
+    "Generate debug log" : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Genera file di log"
+          }
+        }
+      }
+    },
+    "Highlight source code of ${inputFile} to a ${engine} file." : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Formatta il codice sorgente di${inputFile} in un file ${engine}."
+          }
+        }
+      }
+    },
+    "HTML" : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HTML"
+          }
+        }
+      }
+    },
+    "Input File" : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "File"
+          }
+        }
+      }
+    },
+    "Option engine" : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opzione del motore di formattazione"
+          }
+        }
+      }
+    },
+    "predefined" : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "predefinito"
+          }
+        }
+      }
+    },
+    "RTF" : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "RTF"
+          }
+        }
+      }
+    },
+    "Save log to ~/Desktop/colorize.log" : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Salva un file di log in ~/Scrivania/colorize.log"
+          }
+        }
+      }
+    },
+    "Syntax Highlight source file" : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Evidenzia la sintassi del codice sorgente"
+          }
+        }
+      }
+    },
+    "Syntax Highlights the source code of a file." : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Evidenzia la sintassi del codice sorgente di un file"
+          }
+        }
+      }
+    },
+    "The rendering engine." : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Motore di formattazione."
+          }
+        }
+      }
+    },
+    "The source file to hightlights." : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "File sorgente da formattare."
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

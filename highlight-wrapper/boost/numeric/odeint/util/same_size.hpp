@@ -19,6 +19,8 @@
 #ifndef BOOST_NUMERIC_ODEINT_UTIL_SAME_SIZE_HPP_INCLUDED
 #define BOOST_NUMERIC_ODEINT_UTIL_SAME_SIZE_HPP_INCLUDED
 
+#include <type_traits>
+
 #include <boost/numeric/odeint/util/is_resizeable.hpp>
 
 #include <boost/utility/enable_if.hpp>
@@ -77,13 +79,13 @@ struct same_size_fusion
     }
 
     template< class S1 , class S2 >
-    bool same_size_op( const S1 &x1 , const S2 &x2 , boost::true_type ) const
+    bool same_size_op( const S1 &x1 , const S2 &x2 , std::true_type ) const
     {
         return same_size( x1 , x2 );
     }
 
     template< class S1 , class S2 >
-    bool same_size_op( const S1 &/*x1*/ , const S2 &/*x2*/ , boost::false_type ) const
+    bool same_size_op( const S1 &/*x1*/ , const S2 &/*x2*/ , std::false_type ) const
     {
         return true;
     }

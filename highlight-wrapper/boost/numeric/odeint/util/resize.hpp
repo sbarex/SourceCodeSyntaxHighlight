@@ -19,6 +19,8 @@
 #ifndef BOOST_NUMERIC_ODEINT_UTIL_RESIZE_HPP_INCLUDED
 #define BOOST_NUMERIC_ODEINT_UTIL_RESIZE_HPP_INCLUDED
 
+#include <type_traits>
+
 #include <boost/range.hpp>
 
 #include <boost/utility/enable_if.hpp>
@@ -77,13 +79,13 @@ namespace detail {
         }
 
         template< class StateOut , class StateIn >
-        void resize_op( StateOut &x1 , const StateIn &x2 , boost::true_type ) const
+        void resize_op( StateOut &x1 , const StateIn &x2 , std::true_type ) const
         {
             resize( x1 , x2 );
         }
 
         template< class StateOut , class StateIn >
-        void resize_op( StateOut &/*x1*/ , const StateIn &/*x2*/ , boost::false_type ) const
+        void resize_op( StateOut &/*x1*/ , const StateIn &/*x2*/ , std::false_type ) const
         {
         }
 

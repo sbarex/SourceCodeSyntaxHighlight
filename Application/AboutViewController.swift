@@ -6,7 +6,7 @@
 //
 
 import Cocoa
-import WebKit
+@preconcurrency import WebKit
 
 class AboutViewController: NSViewController, WKNavigationDelegate {
     @IBOutlet weak var imageView: NSImageView!

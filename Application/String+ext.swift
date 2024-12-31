@@ -74,7 +74,8 @@ extension String {
     func toData(settings: SettingsRendering, cssFile: URL? = nil) -> Data {
         let colors = settings.getTheme()
         var css = settings.css
-        if let file = cssFile, let s = try? String(contentsOf: file) {
+        var enc: String.Encoding = .utf8
+        if let file = cssFile, let s = try? String(contentsOf: file, usedEncoding: &enc) {
             css = s + css
         }
         return String.stringToFormattedData(self, format: settings.format, fgColor: colors.foreground, bgColor: colors.background, font: settings.fontName, fontSize: settings.fontSize, css: css)
@@ -87,7 +88,8 @@ extension String {
     func toHTML(settings: SettingsRendering, cssFile: URL? = nil) -> String {
         let colors = settings.getTheme()
         var css = settings.css
-        if let file = cssFile, let s = try? String(contentsOf: file) {
+        var enc: String.Encoding = .utf8
+        if let file = cssFile, let s = try? String(contentsOf: file, usedEncoding: &enc) {
             css = s + css
         }
         return toHTML(fgColor: colors.foreground, bgColor: colors.background, font: settings.fontName, fontSize: settings.fontSize, css: css)
@@ -140,7 +142,8 @@ extension String {
     static func stringToFormattedData(_ string: String, settings: SettingsRendering, cssFile: URL? = nil) -> Data {
         let colors = settings.getTheme()
         var css = settings.css
-        if let file = cssFile, let s = try? String(contentsOf: file) {
+        var enc: String.Encoding = .utf8
+        if let file = cssFile, let s = try? String(contentsOf: file, usedEncoding: &enc) {
             css = s + css
         }
         return stringToFormattedData(string, format: settings.format, fgColor: colors.foreground, bgColor: colors.background, font: settings.fontName, fontSize: settings.fontSize, css: css)

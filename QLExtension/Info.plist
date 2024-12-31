@@ -68,6 +68,7 @@
 				<string>com.barebones.bbedit.vbscript-source</string>
 				<string>com.barebones.bbedit.verilog-hdl-source</string>
 				<string>com.barebones.bbedit.vhdl-source</string>
+				<string>com.coteditor.scheme</string>
 				<string>com.dhowett.logos</string>
 				<string>com.docker.dockerfile</string>
 				<string>com.eiffel.eiffelstudio-project-config</string>
@@ -91,6 +92,7 @@
 				<string>com.microsoft.xaml</string>
 				<string>com.netscape.javascript-source</string>
 				<string>com.nutstore.down</string>
+				<string>com.nvidia.cuda</string>
 				<string>com.oracle.sql</string>
 				<string>com.sas.source</string>
 				<string>com.sass-lang.sass</string>
@@ -148,17 +150,20 @@
 				<string>org.inno.source</string>
 				<string>org.iso.sql</string>
 				<string>org.julialang.julia</string>
+				<string>org.jupyter.ipynb</string>
 				<string>org.json.jsonc</string>
 				<string>org.jsonlines.jsonl</string>
 				<string>org.khronos.gltf</string>
 				<string>org.kmt.source</string>
 				<string>org.km3</string>
+				<string>org.kotlinlang.kotlin-source</string>
 				<string>org.kotlinlang.source</string>
 				<string>org.latex-project.latex</string>
 				<string>org.lesscss.less</string>
 				<string>org.lilypond.files</string>
 				<string>org.lua.lua</string>
 				<string>org.lua.lua-source</string>
+				<string>org.mamedev.lay</string>
 				<string>org.microsoft.inf</string>
 				<string>org.nfo</string>
 				<string>org.n8gray.awk</string>
@@ -190,6 +195,7 @@
 				<string>org.python.restructuredtext</string>
 				<string>org.r-project.r</string>
 				<string>org.racket-lang.source</string>
+				<string>org.raml.raml</string>
 				<string>org.rdf.source</string>
 				<string>org.rubygems.gemspec</string>
 				<string>org.ruby-lang.erb</string>
@@ -383,6 +389,15 @@
 				<string>dyn.ah62d4rv4ge81k3xxsvu1k3</string>
 				<string>dyn.ah62d4rv4ge8064p2</string>
 				<string>dyn.ah62d4rv4ge80w5d3</string>
+				<string>dyn.ah62d4rv4ge81e2prru</string>
+				<string>dyn.ah62d4rv4ge80g7k</string>
+				<string>dyn.ah62d4rv4ge80w6d3r3va</string>
+				<string>dyn.ah62d4rv4ge81g5dx</string>
+				<string>dyn.ah62d4rv4ge81g6dx</string>
+				<string>dyn.ah62d4rv4ge81g5de</string>
+				<string>dyn.ah62d4rv4ge81g62</string>
+				<string>dyn.ah62d4rv4ge81e45y</string>
+				<string>dyn.ah62d4rv4ge8022p3</string>
 			</array>
 			<key>QLSupportsSearchableItems</key>
 			<false/>
@@ -393,6 +408,6 @@
 		<string>$(PRODUCT_MODULE_NAME).PreviewViewController</string>
 	</dict>
 	<key>NSHumanReadableCopyright</key>
-	<string>Developed by SBAREX (2019-2024).</string>
+	<string>Developed by SBAREX (2019-2025).</string>
 </dict>
 </plist>
