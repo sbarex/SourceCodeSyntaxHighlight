@@ -36,8 +36,10 @@ class UTI: Equatable {
         let type = self.UTI as CFString
         
         if #available(macOS 11.0, *) {
-            if let desc = UTType(self.UTI)?.description, !desc.isEmpty {
+            if let desc = UTType(self.UTI)?.localizedDescription, !desc.isEmpty {
                 return desc.prefix(1).uppercased() + desc.dropFirst()
+            } else if let desc = UTType(self.UTI)?.description, !desc.isEmpty {
+                return desc
             } else {
                 return self.UTI
             }

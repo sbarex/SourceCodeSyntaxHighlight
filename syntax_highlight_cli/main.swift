@@ -498,7 +498,11 @@ for src in files {
             }
             n += 1
         } else {
-            try FileHandle.standardOutput.write(contentsOf: r.data)
+            if #available(macOS 10.15.4, *) {
+                try FileHandle.standardOutput.write(contentsOf: r.data)
+            } else {
+                FileHandle.standardOutput.write(r.data)
+            }
             n += 1
         }
     } catch {

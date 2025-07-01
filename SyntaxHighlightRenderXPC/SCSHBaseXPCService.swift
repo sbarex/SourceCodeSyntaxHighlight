@@ -190,6 +190,8 @@ class SCSHBaseXPCService: NSObject {
         defer {
             if let logFile = custom_settings.logFile {
                 var log = "";
+                log += "OS Appearance: \(custom_settings.isOSThemeLight() ? "light" : "dark")"
+                
                 // Log the custom theme.
                 if let theme = colorize.inlineTheme, !theme.isEmpty {
                     log += "\n\n#######\n# Custom Theme:\n\(theme)\n\n#######"

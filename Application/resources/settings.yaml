@@ -1,5 +1,8 @@
   
 UTIs:
+    _json: &json
+        syntax: json
+        
     _plist: &plist
         syntax: xml
         preprocessor: /usr/bin/plutil -convert xml1 -o - $targetHL
@@ -23,6 +26,7 @@ UTIs:
         syntax: applescript
         preprocessor: /usr/bin/osadecompile $targetHL
     
+    com.apple.dt.document.scheme: *xml    
     com.apple.dt.interfacebuilder.document.storyboard: *xml
     com.apple.interfacebuilder.document.cocoa: *xml
     com.apple.mobileconfig: *xml
@@ -46,6 +50,12 @@ UTIs:
         
     com.barebones.bbedit.typescript-source:
         syntax: typescript
+        
+    com.bps.elixir-source:
+        syntax: elixir
+        
+    dyn.ah62d4rv4ge80u3pfta:
+        syntax: elixir
         
     com.coteditor.scheme:
         syntax: lisp
@@ -72,6 +82,9 @@ UTIs:
     
     com.macromates.textmate.scheme:
         syntax: lisp
+        
+    dyn.ah62d4rv4ge80g65usm10y: *xml
+    com.microsoft.csproj: *xml
     
     com.microsoft.typescript:
         syntax: typescript
@@ -115,6 +128,11 @@ UTIs:
     com.symfony.twig:
         syntax: html
         
+    dyn.ah62d4rv4ge81n5xmsv6u:
+        syntax: yaml
+    com.unity.document:
+        syntax: yaml
+        
     dev.svelte.source:
         syntax: html
     dyn.ah62d4rv4ge81g7xfrv4gn:
@@ -154,6 +172,9 @@ UTIs:
     org.clojure.script:
         syntax: clojure
         
+    dyn.ah62d4rv4ge81k7d2: *xml
+    org.fonttools.ttx: *xml
+        
     dyn.ah62d4rv4ge8022p3: *xml
     org.mamedev.lay: *xml
         
@@ -163,18 +184,13 @@ UTIs:
     org.cocoapods.podspec:
         syntax: ruby
         
-    org.khronos.gltf:
-        syntax: json
+    org.khronos.gltf: *json
         
-    org.json.jsonc:
-        syntax: json
-    dyn.ah62d4rv4ge80y65tr3vu:
-        syntax: json
+    org.json.jsonc: *json
+    dyn.ah62d4rv4ge80y65tr3vu: *json
         
-    org.jsonlines.jsonl:
-        syntax: json
-    dyn.ah62d4rv4ge80y65tr30a:
-        syntax: json
+    org.jsonlines.jsonl: *json
+    dyn.ah62d4rv4ge80y65tr30a: *json
                 
     org.microsoft.inf:
         syntax: ini
@@ -223,6 +239,9 @@ UTIs:
         extra: --plug-in cpp_syslog
         
     public.data.xml.opml: *xml
+    
+    public.elixir-source:
+        syntax: elixir
     
     public.fortran-95-source:
         syntax: fortran90
@@ -314,11 +333,9 @@ UTIs:
     dyn.ah62d4rv4ge80s6xbqv0gn:
         syntax: gradle
         
-    org.jupyter.ipynb:
-        syntax: json
+    org.jupyter.ipynb: *json
     # ipynb
-    dyn.ah62d4rv4ge80w6d3r3va:
-        syntax: json
+    dyn.ah62d4rv4ge80w6d3r3va: *json
         
     org.kmt.source:
         syntax: scala
@@ -344,8 +361,7 @@ UTIs:
         syntax: txr
     
     # .code-workspace
-    dyn.ah62d4rv4ge80g55eqy01s55wrr31a2pdqy:
-        syntax: json
+    dyn.ah62d4rv4ge80g55eqy01s55wrr31a2pdqy: *json
     
     # .cr
     dyn.ah62d4rv4ge80g6u:
@@ -370,6 +386,13 @@ UTIs:
     # .pub
     dyn.ah62d4rv4ge81a7pc:
         syntax: txt
+        
+    # .pyi
+    dyn.ah62d4rv4ge81a8pm:
+        syntax: python
+    # .py3
+    dyn.ah62d4rv4ge81a8mx:
+        syntax: python
     
     # .sas
     dyn.ah62d4rv4ge81g2px:
@@ -452,7 +475,24 @@ UTIs:
     dyn.ah62d4rv4ge81e2prru:
         syntax: yaml
         
+    # .otio
+    dyn.ah62d4rv4ge8087dmr6: *json
+    
+    # .edl
+    dyn.ah62d4rv4ge80n3dq:
+        syntax: txt
+        
+    # .mhl
+    dyn.ah62d4rv4ge8044dq:
+        syntax: txt
+    
+    # .loctable
+    dyn.ah62d4rv4ge80255dsvu0e5df: *plist
+
+        
 extensions:
+    _json*: &json
+        syntax: json
     _plist*: &plist
         syntax: xml
         preprocessor: /usr/bin/plutil -convert xml1 -o - $targetHL
@@ -471,6 +511,8 @@ extensions:
     
     au3:
         syntax: autoit
+    avt:
+        syntax: sql
     a3x:
         syntax: autoit
         
@@ -482,8 +524,7 @@ extensions:
     bzl:
         syntax: txt
         
-    code-workspace:
-        syntax: json
+    code-workspace: *json
     
     cls:
         syntax: latex
@@ -492,136 +533,88 @@ extensions:
     cjs:
         syntax: javascript
         
-    cr:
-        syntax: crystal
-        
-    do:
-        syntax: txt
-        
-    f95:
-        syntax: fortran90
-    
-    fnc:
-        syntax: sql
-        
-    ily:
-        syntax: ly
-        
-    ipynb:
-        syntax: json
-       
-    #dyn.ah62d4rv4ge80y65r
-    jsm:
-        syntax: javascript
-        
-    prc:
-        syntax: sql
-    trg:
-        syntax: sql
-    pks:
-        syntax: sql
-    pkb:
-        syntax: sql
-    pck:
-        syntax: sql
-    tps:
-        syntax: sql
-    tpb:
-        syntax: sql
-    typ:
-        syntax: sql
-    tab:
-        syntax: sql
-    avt:
-        syntax: sql
     con:
         syntax: sql
-    sqs:
-        syntax: sql
-    vw:
-        syntax: sql
-    mvw:
-        syntax: sql
     
-    # org.sbarex.compiled-python-script
-    pyc:
-        syntax: py
-        preprocessor: uncompyle6 $targetHL
-        
     conf:
         # org.sbarex.conf
         syntax: ini
         
+    csproj:
+        syntax: xml
+        
     cu:
         syntax: c
-        
-    jsonl:
-        syntax: json
-        
-    mjs:
-        syntax: javascript
-        
-    # org.sbarex.ms-powershell-module-manifest:
-    psd1:
-        syntax: ps1
-    # org.sbarex.ms-powershell-module
-    psm1:
-        syntax: ps1
     
-    # dyn.ah62d4rv4ge81g22
-    sc:
-        syntax: scala
+    cr:
+        syntax: crystal
         
-    # dyn.ah62d4rv4ge81g22
-    # dyn.ah62d4rv4ge81g25brvuu
-    sbt:
-        syntax: scala
-            
-    # dyn.ah62d4rv4ge81g5pbrvyu
-    smali:
-        syntax: txt
-
-    # dyn.ah62d4rv4ge80w5pq
-    iml: *xml
-
-    # dyn.ah62d4rv4ge80g7dx:
-    ts: *typescript
-    tsx: *typescript
-    mts: *typescript
     cts: *typescript
-
-    # dyn.ah62d4rv4ge81g7xfrv4gn
-    svelte:
-        syntax: svelte
-
-            
+    
+    do:
+        syntax: txt
+        
+    dockerfile:
+        syntax: dockerfile
+        
+    edl:
+        syntax: txt
+    
+    ex:
+        syntax: elixir
+    exs:
+        syntax: elixir
+        
+    f95:
+        syntax: fortran90
+    
     # dyn.ah62d4rv4ge80q5dts6
     flow:
         syntax: yaml
-    dyn.ah62d4rv4ge81s3xqr75u: *plist
-
-            
+        
+    fnc:
+        syntax: sql
+        
+    gltf: *json
+    
+    hcl:
+        syntax: yaml
+    
+    heex:
+        syntax: elixir
+        
+    ily:
+        syntax: ly
+    
+    # dyn.ah62d4rv4ge80w5pq
+    iml: *xml
+    
+    ipynb: *json
+       
+    #dyn.ah62d4rv4ge80y65r
+    jsm:
+        syntax: javascript
+    
+    # dyn.ah62d4rv4ge80y65tr3vu
+    jsonc: *json
+    jsonl: *json
+        
     # dyn.ah62d4rv4ge8007a
     kts:
         syntax: kotlin
     kt:
         syntax: kotlin
         
-    # dyn.ah62d4rv4ge81u6pzqz3hw
-    # dyn.ah62d4rv4ge81u6k
-    # dyn.ah62d4rv4ge81u7k
-    # dyn.ah62d4rv4ge81u65e
-    xsd: *xml
-    xquery: *xml
-    xq: *xml
-    xu: *xml
-
-    # dyn.ah62d4rv4ge81g3pvsy
-    sequ: *xml
-    
-    nf:
-        syntax: java
+    #dyn.ah62d4rv4ge80255dsvu0e5df
+    loctable: *plist
             
+    # dyn.ah62d4rv4ge8044dq
+    mhl:
+        syntax: txt
+    
+    mjs:
+        syntax: javascript
+    
     # dyn.ah62d4rv4ge81u6pzqz3hw:
     ml:
         syntax: ocaml
@@ -630,24 +623,55 @@ extensions:
     mly:
         syntax: ocaml
         
-    dockerfile:
-        syntax: dockerfile
-        
-    gltf:
-        syntax: json
-    
-    # dyn.ah62d4rv4ge80y65tr3vu
-    jsonc:
-        syntax: json
-        
     #dyn.ah62d4rv4ge8046de
-    mpd:
-        syntax: xml
+    mpd: *xml
+        
+    mts: *typescript
+    
+    mvw:
+        syntax: sql
+        
+    mxml: *xml
+        
+    nf:
+        syntax: java
+        
+    otio: *json
+        
+    pck:
+        syntax: sql
+    pkb:
+        syntax: sql
+    pks:
+        syntax: sql
+    prc:
+        syntax: sql
+        
+    # org.sbarex.ms-powershell-module-manifest:
+    psd1:
+        syntax: ps1
+    # org.sbarex.ms-powershell-module
+    psm1:
+        syntax: ps1
 
     # dyn.ah62d4rv4ge81a7pc
     pub:
         syntax: txt
         
+    # org.sbarex.compiled-python-script
+    pyc:
+        syntax: py
+        preprocessor: uncompyle6 $targetHL
+        
+            
+    # dyn.ah62d4rv4ge81a8pm:
+    .pyi:
+        syntax: python
+
+    # dyn.ah62d4rv4ge81a8mx:
+    .py3:
+        syntax: python
+            
     raml:
         syntax: yaml
     rkt:
@@ -655,33 +679,85 @@ extensions:
         
     sage:
         syntax: py
+            
+    # dyn.ah62d4rv4ge81g22
+    # dyn.ah62d4rv4ge81g25brvuu
+    sbt:
+        syntax: scala
+    
+    # dyn.ah62d4rv4ge81g22
+    sc:
+        syntax: scala
         
-    ss:
-        syntax: lisp
-    sls:
-        syntax: lisp
-    sps:
-        syntax: lisp
-    sld:
-        syntax: lisp
     sch:
         syntax: lisp
         
+    # dyn.ah62d4rv4ge81g3pvsy
+    sequ: *xml
+    
+    sld:
+        syntax: lisp
+    sls:
+        syntax: lisp
+    
+    # dyn.ah62d4rv4ge81g5pbrvyu
+    smali:
+        syntax: txt
+        
+    sps:
+        syntax: lisp
+    ss:
+        syntax: lisp
+        
+    sqs:
+        syntax: sql
+        
+    # dyn.ah62d4rv4ge81g7xfrv4gn
+    svelte:
+        syntax: svelte
+        
     t:
         syntax: perl
+
+    tab:
+        syntax: sql
+                
+    tf:
+        syntax: yaml
+    tfstate:
+        syntax: yaml
+    tfvars:
+        syntax: yaml
+
+    tpb:
+        syntax: sql
+    tps:
+        syntax: sql
+    trg:
+        syntax: sql
+    
+    # dyn.ah62d4rv4ge80g7dx:
+    ts: *typescript
+    tsx: *typescript
+    
+    typ:
+        syntax: sql
+        
+    unity:
+        syntax: yaml
+    vw:
+        syntax: sql
     
     # dyn.ah62d4rv4ge81s65eru
     wsdl:
         syntax: xml
-        
-    tfvars:
-        syntax: yaml
-    tfstate:
-        syntax: yaml
-    tf:
-        syntax: yaml
-    hcl:
-        syntax: yaml
-        
-    mxml:
-        syntax: xml
+    
+    # dyn.ah62d4rv4ge81u6pzqz3hw
+    # dyn.ah62d4rv4ge81u6k
+    # dyn.ah62d4rv4ge81u7k
+    # dyn.ah62d4rv4ge81u65e
+    xsd: *xml
+    xquery: *xml
+    xq: *xml
+    xu: *xml
+    

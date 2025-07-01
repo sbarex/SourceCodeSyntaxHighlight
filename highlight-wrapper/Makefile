@@ -197,6 +197,7 @@ ${BUILD_DIR}/highlight-arm64: | $(BUILD_DIR) lua
 	@cp highlight_custom/makefile2.makefile highlight/makefile2.makefile
 	@cp highlight_custom/src/makefile2.makefile highlight/src/makefile2.makefile
 	${MAKE} BUILD_DIR=build_arm-$(CONFIGURATION) LUA_CFLAGS="-I$(CURRENT_DIR)/$(LUA_DIR)/src" LUA_LIBS="-L$(BUILD_DIR) -llua -lm" MYCFLAGS="${CFLAGS_arm64} -I$(CURRENT_DIR)/" MYLDFLAGS="$(LDFLAGS_arm64)" -C ${HIGHLIGHT_DIR} -f makefile2.makefile cli
+	${MAKE} PREFIX=build-$(CONFIGURATION) BUILD_DIR=build_arm-$(CONFIGURATION) LUA_CFLAGS="-I\"$(CURRENT_DIR)/$(LUA_DIR)/src\"" LUA_LIBS="-L\"$(BUILD_DIR)\" -llua -lm" MYCFLAGS="${LDFLAGS_arm64} -I\"$(CURRENT_DIR)/\"" -C "${HIGHLIGHT_DIR}" -f makefile2.makefile install
 	cp "${HIGHLIGHT_DIR}/src/build_arm-$(CONFIGURATION)/highlight" "${BUILD_DIR}/highlight-arm64"
 	@rm highlight/makefile2.makefile
 	@rm highlight/src/makefile2.makefile

@@ -39,6 +39,7 @@
 		831FD8202691FF6500C314CE /* UTI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831D5F5A237F1E87007340E7 /* UTI.swift */; };
 		831FD821269203EF00C314CE /* UTI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831D5F5A237F1E87007340E7 /* UTI.swift */; };
 		832700BE2C0EEFAF00DD3E9D /* about.lua in Copy extra plugins */ = {isa = PBXBuildFile; fileRef = 832700BB2C0EE86700DD3E9D /* about.lua */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		832F7E5E2E054B9F0015DBBC /* Yams in Frameworks */ = {isa = PBXBuildFile; productRef = 832F7E5D2E054B9F0015DBBC /* Yams */; };
 		83408DDE23804A0700128B0C /* examples in Resources */ = {isa = PBXBuildFile; fileRef = 83408DDD23804A0600128B0C /* examples */; };
 		83408DE02380505000128B0C /* CSSControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83408DDF2380505000128B0C /* CSSControlView.swift */; };
 		8342C90E277EF4340018FCD8 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 8342C90D277EF4340018FCD8 /* Sparkle */; };
@@ -221,6 +222,13 @@
 			remoteGlobalIDString = 83257FD82638126E00A8888F;
 			remoteInfo = dos2unix;
 		};
+		832F7E5F2E05510C0015DBBC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8359233D235599F6001506B6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 832F7E552E054B8E0015DBBC;
+			remoteInfo = settings_chk;
+		};
 		8359236823559A2B001506B6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8359233D235599F6001506B6 /* Project object */;
@@ -248,6 +256,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 8373D5C22716161800B43140;
 			remoteInfo = syntax_highlight_cli;
+		};
+		837B88EA2E12672F009FE273 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8359233D235599F6001506B6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 832F7E552E054B8E0015DBBC;
+			remoteInfo = settings_chk;
 		};
 		838F4663238D813500268B4A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -322,6 +337,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		832F7E542E054B8E0015DBBC /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
 		8359236E23559A2B001506B6 /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -692,6 +716,7 @@
 		832580C1263812C800A8888F /* DEVEL.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = DEVEL.txt; sourceTree = "<group>"; };
 		832580C2263812C800A8888F /* unix2dos.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = unix2dos.c; sourceTree = "<group>"; };
 		832700BB2C0EE86700DD3E9D /* about.lua */ = {isa = PBXFileReference; lastKnownFileType = text; path = about.lua; sourceTree = "<group>"; };
+		832F7E562E054B8E0015DBBC /* settings_chk */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = settings_chk; sourceTree = BUILT_PRODUCTS_DIR; };
 		833C295C236028B000B14757 /* LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		83408DDD23804A0600128B0C /* examples */ = {isa = PBXFileReference; lastKnownFileType = folder; path = examples; sourceTree = "<group>"; };
 		83408DDF2380505000128B0C /* CSSControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSSControlView.swift; sourceTree = "<group>"; };
@@ -816,10 +841,19 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		832F7E572E054B8E0015DBBC /* settings_chk */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = settings_chk; sourceTree = "<group>"; };
 		83ABC9BB2D1BF61900CF8972 /* ShortcutCommand */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (83ABC9C82D1BF61900CF8972 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = ShortcutCommand; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		832F7E532E054B8E0015DBBC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				832F7E5E2E054B9F0015DBBC /* Yams in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		83592342235599F6001506B6 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -1277,6 +1311,7 @@
 				83FD6ED1246B061600F5BDF3 /* relaunch */,
 				8373D5C42716161800B43140 /* syntax_highlight_cli */,
 				83ABC9BB2D1BF61900CF8972 /* ShortcutCommand */,
+				832F7E572E054B8E0015DBBC /* settings_chk */,
 				8359235D23559A2B001506B6 /* Frameworks */,
 				83592346235599F6001506B6 /* Products */,
 				83B47BB725A77AEE00DE0CF4 /* highlight-wrapper.xcodeproj */,
@@ -1295,6 +1330,7 @@
 				8373D5C32716161800B43140 /* syntax_highlight_cli */,
 				83A25C4B2D1DD7DB00C8B349 /* highlight */,
 				83ABC9BA2D1BF61900CF8972 /* Syntax Hightlight Shortcut Action.appex */,
+				832F7E562E054B8E0015DBBC /* settings_chk */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1519,23 +1555,47 @@
 		};
 		83FDB5322D10493D00D55608 /* yaml checker */ = {
 			isa = PBXLegacyTarget;
-			buildArgumentsString = "-MYAML -e 'use YAML;YAML::LoadFile(\"Application/resources/settings.yaml\")'";
+			buildArgumentsString = "\"$(PROJECT_DIR)/Application/resources/settings.yaml\"";
 			buildConfigurationList = 83FDB5332D10493D00D55608 /* Build configuration list for PBXLegacyTarget "yaml checker" */;
 			buildPhases = (
 			);
-			buildToolPath = /usr/bin/perl;
+			buildToolPath = "$(BUILT_PRODUCTS_DIR)/settings_chk";
 			buildWorkingDirectory = "$(PROJECT_DIR)";
 			dependencies = (
+				832F7E602E05510C0015DBBC /* PBXTargetDependency */,
 			);
 			name = "yaml checker";
 			packageProductDependencies = (
 			);
-			passBuildSettingsInEnvironment = 0;
+			passBuildSettingsInEnvironment = 1;
 			productName = "yaml checker";
 		};
 /* End PBXLegacyTarget section */
 
 /* Begin PBXNativeTarget section */
+		832F7E552E054B8E0015DBBC /* settings_chk */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 832F7E5A2E054B8E0015DBBC /* Build configuration list for PBXNativeTarget "settings_chk" */;
+			buildPhases = (
+				832F7E522E054B8E0015DBBC /* Sources */,
+				832F7E532E054B8E0015DBBC /* Frameworks */,
+				832F7E542E054B8E0015DBBC /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				832F7E572E054B8E0015DBBC /* settings_chk */,
+			);
+			name = settings_chk;
+			packageProductDependencies = (
+				832F7E5D2E054B9F0015DBBC /* Yams */,
+			);
+			productName = settings_chk;
+			productReference = 832F7E562E054B8E0015DBBC /* settings_chk */;
+			productType = "com.apple.product-type.tool";
+		};
 		83592344235599F6001506B6 /* Syntax Highlight */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 83592355235599F9001506B6 /* Build configuration list for PBXNativeTarget "Syntax Highlight" */;
@@ -1556,6 +1616,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				837B88EB2E12672F009FE273 /* PBXTargetDependency */,
 				83A25C752D1E08D000C8B349 /* PBXTargetDependency */,
 				83FDB5372D104AA200D55608 /* PBXTargetDependency */,
 				836B55CE272E92D9008297D5 /* PBXTargetDependency */,
@@ -1710,10 +1771,13 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastSwiftUpdateCheck = 1620;
-				LastUpgradeCheck = 1620;
+				LastSwiftUpdateCheck = 1640;
+				LastUpgradeCheck = 1640;
 				ORGANIZATIONNAME = sbarex;
 				TargetAttributes = {
+					832F7E552E054B8E0015DBBC = {
+						CreatedOnToolsVersion = 16.4;
+					};
 					83592344235599F6001506B6 = {
 						CreatedOnToolsVersion = 11.0;
 					};
@@ -1785,6 +1849,7 @@
 				8373D5C22716161800B43140 /* syntax_highlight_cli */,
 				83FDB5322D10493D00D55608 /* yaml checker */,
 				83A25C6C2D1E06CC00C8B349 /* extra_resources */,
+				832F7E552E054B8E0015DBBC /* settings_chk */,
 			);
 		};
 /* End PBXProject section */
@@ -1856,6 +1921,13 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		832F7E522E054B8E0015DBBC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		83592341235599F6001506B6 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2041,6 +2113,11 @@
 			name = dos2unix;
 			targetProxy = 8319450E26394445002E5B86 /* PBXContainerItemProxy */;
 		};
+		832F7E602E05510C0015DBBC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 832F7E552E054B8E0015DBBC /* settings_chk */;
+			targetProxy = 832F7E5F2E05510C0015DBBC /* PBXContainerItemProxy */;
+		};
 		8359236923559A2B001506B6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 8359235B23559A2B001506B6 /* Syntax Highlight Quick Look Extension */;
@@ -2060,6 +2137,11 @@
 			isa = PBXTargetDependency;
 			target = 8373D5C22716161800B43140 /* syntax_highlight_cli */;
 			targetProxy = 836B55CD272E92D9008297D5 /* PBXContainerItemProxy */;
+		};
+		837B88EB2E12672F009FE273 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 832F7E552E054B8E0015DBBC /* settings_chk */;
+			targetProxy = 837B88EA2E12672F009FE273 /* PBXContainerItemProxy */;
 		};
 		838F4664238D813500268B4A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -2125,6 +2207,33 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		832F7E5B2E054B8E0015DBBC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		832F7E5C2E054B8E0015DBBC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 		83592353235599F9001506B6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2262,7 +2371,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 74;
+				CURRENT_PROJECT_VERSION = 75;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -2282,8 +2391,8 @@
 					"$(inherited)",
 					"\"$(BUILT_PRODUCTS_DIR)/highlight\"",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				MARKETING_VERSION = 2.1.25;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MARKETING_VERSION = 2.1.26;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2302,7 +2411,7 @@
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 74;
+				CURRENT_PROJECT_VERSION = 75;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -2322,8 +2431,8 @@
 					"$(inherited)",
 					"\"$(BUILT_PRODUCTS_DIR)/highlight\"",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				MARKETING_VERSION = 2.1.25;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MARKETING_VERSION = 2.1.26;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2340,7 +2449,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 74;
+				CURRENT_PROJECT_VERSION = 75;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -2354,8 +2463,8 @@
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				MARKETING_VERSION = 2.1.25;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MARKETING_VERSION = 2.1.26;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.QuickLookExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2372,7 +2481,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 74;
+				CURRENT_PROJECT_VERSION = 75;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -2386,8 +2495,8 @@
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				MARKETING_VERSION = 2.1.25;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MARKETING_VERSION = 2.1.26;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.QuickLookExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2405,7 +2514,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 74;
+				CURRENT_PROJECT_VERSION = 75;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -2415,8 +2524,8 @@
 					"$(LD_RUNPATH_SEARCH_PATHS_$(IS_MACCATALYST)_$(_BOOL_$(SKIP_INSTALL)))",
 				);
 				LIBRARY_SEARCH_PATHS = "\"$(BUILT_PRODUCTS_DIR)/highlight\"";
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				MARKETING_VERSION = 2.1.25;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MARKETING_VERSION = 2.1.26;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.XPCService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2436,7 +2545,7 @@
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 74;
+				CURRENT_PROJECT_VERSION = 75;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -2446,8 +2555,8 @@
 					"$(LD_RUNPATH_SEARCH_PATHS_$(IS_MACCATALYST)_$(_BOOL_$(SKIP_INSTALL)))",
 				);
 				LIBRARY_SEARCH_PATHS = "\"$(BUILT_PRODUCTS_DIR)/highlight\"";
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				MARKETING_VERSION = 2.1.25;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MARKETING_VERSION = 2.1.26;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.XPCService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2470,7 +2579,7 @@
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.cli;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2489,7 +2598,7 @@
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.cli;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2506,7 +2615,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 74;
+				CURRENT_PROJECT_VERSION = 75;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -2519,8 +2628,8 @@
 					"$(inherited)",
 					"@loader_path/../../../../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				MARKETING_VERSION = 2.1.25;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MARKETING_VERSION = 2.1.26;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.XPCRender;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2541,7 +2650,7 @@
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 74;
+				CURRENT_PROJECT_VERSION = 75;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -2554,8 +2663,8 @@
 					"$(inherited)",
 					"@loader_path/../../../../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				MARKETING_VERSION = 2.1.25;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MARKETING_VERSION = 2.1.26;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.XPCRender;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2577,6 +2686,7 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2591,6 +2701,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2605,7 +2716,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 74;
+				CURRENT_PROJECT_VERSION = 75;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
@@ -2620,7 +2731,7 @@
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 15.2;
-				MARKETING_VERSION = 2.1.25;
+				MARKETING_VERSION = 2.1.26;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.ShortcutCommand;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -2638,7 +2749,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 74;
+				CURRENT_PROJECT_VERSION = 75;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
@@ -2653,7 +2764,7 @@
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 15.2;
-				MARKETING_VERSION = 2.1.25;
+				MARKETING_VERSION = 2.1.26;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.ShortcutCommand;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -2672,7 +2783,7 @@
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.relaunch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2690,7 +2801,7 @@
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.relaunch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2734,6 +2845,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		832F7E5A2E054B8E0015DBBC /* Build configuration list for PBXNativeTarget "settings_chk" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				832F7E5B2E054B8E0015DBBC /* Debug */,
+				832F7E5C2E054B8E0015DBBC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		83592340235599F6001506B6 /* Build configuration list for PBXProject "SourceCodeSyntaxHighlight" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -2846,6 +2966,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		832F7E5D2E054B9F0015DBBC /* Yams */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 836CD77E283024BF00F074CB /* XCRemoteSwiftPackageReference "Yams" */;
+			productName = Yams;
+		};
 		8342C90D277EF4340018FCD8 /* Sparkle */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 8342C90C277EF4340018FCD8 /* XCRemoteSwiftPackageReference "Sparkle" */;

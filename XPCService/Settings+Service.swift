@@ -96,10 +96,23 @@ extension Settings: SettingsCSS {
         var enc: String.Encoding = .utf8
         if let p = serviceBundle.url(forResource: "settings", withExtension: "yaml"), let data = try? String(contentsOf: p, usedEncoding: &enc) {
             do {
-                if let d = try Yams.load(yaml: data) as? [String: [String: [String: String]]] {
-                    self.specialSettings = d
+                if let raw_d = try Yams.load(yaml: data) {
+                    if let d = raw_d as? [String: [String: [String: String]]] {
+                        self.specialSettings = d
+                    } else {
+                        if #available(macOS 13.0, *) {
+                            os_log(OSLogType.error, "Settings %{public}s is not valid!", p.path(percentEncoded: false))
+                        } else {
+                            os_log(OSLogType.error, "Settings %{public}s is not valid!", p.path)
+                        }
+                    }
                 }
             } catch {
+                if #available(macOS 13.0, *) {
+                    os_log(OSLogType.error, "Settings %{public}s is not valid yaml file!", p.path(percentEncoded: false))
+                } else {
+                    os_log(OSLogType.error, "Settings %{public}s is not valid yaml file!", p.path)
+                }
                 print(error)
             }
         }
@@ -108,23 +121,36 @@ extension Settings: SettingsCSS {
         enc = .utf8
         if let p = supportFolder?.appendingPathComponent("settings.yaml"), let data = try? String(contentsOf: p, usedEncoding: &enc) {
             do {
-                if let d = try Yams.load(yaml: data) as? [String: [String: [String: String]]] {
-                    for group in d {
-                        if self.specialSettings[group.key] == nil {
-                            self.specialSettings[group.key] = [:]
-                        }
-                        for item in group.value {
-                            if self.specialSettings[group.key]![item.key] == nil {
-                                self.specialSettings[group.key]![item.key] = item.value
-                            } else {
-                                self.specialSettings[group.key]![item.key] = self.specialSettings[group.key]![item.key]?.merging(item.value, uniquingKeysWith: { _, new in
-                                    return new
-                                })
+                if let raw_d = try Yams.load(yaml: data) {
+                    if let d = raw_d as? [String: [String: [String: String]]] {
+                        for group in d {
+                            if self.specialSettings[group.key] == nil {
+                                self.specialSettings[group.key] = [:]
                             }
+                            for item in group.value {
+                                if self.specialSettings[group.key]![item.key] == nil {
+                                    self.specialSettings[group.key]![item.key] = item.value
+                                } else {
+                                    self.specialSettings[group.key]![item.key] = self.specialSettings[group.key]![item.key]?.merging(item.value, uniquingKeysWith: { _, new in
+                                        return new
+                                    })
+                                }
+                            }
+                        }
+                    } else {
+                        if #available(macOS 13.0, *) {
+                            os_log(OSLogType.error, "Settings %{public}s is not valid!", p.path(percentEncoded: false))
+                        } else {
+                            os_log(OSLogType.error, "Settings %{public}s is not valid!", p.path)
                         }
                     }
                 }
             } catch {
+                if #available(macOS 13.0, *) {
+                    os_log(OSLogType.error, "Settings %{public}s is not valid yaml file!", p.path(percentEncoded: false))
+                } else {
+                    os_log(OSLogType.error, "Settings %{public}s is not valid yaml file!", p.path)
+                }
                 print(error)
             }
         }

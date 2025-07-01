@@ -279,6 +279,24 @@
 			</dict>
 		</dict>
 		<dict>
+			<key>UTTypeDescription</key>
+			<string>Visual Studio C# Project</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>dyn.ah62d4rv4ge80g65usm10y</string>
+				<string>public.xml</string>
+			</array>
+			<key>UTTypeIdentifier</key>
+			<string>com.microsoft.csproj</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>csproj</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.source-code</string>
@@ -538,6 +556,24 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>twig</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeDescription</key>
+			<string>Unity document</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.plain-text</string>
+				<string>dyn.ah62d4rv4ge81n5xmsv6u</string>
+			</array>
+			<key>UTTypeIdentifier</key>
+			<string>com.unity.document</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>unity</string>
 				</array>
 			</dict>
 		</dict>
@@ -993,6 +1029,24 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>fish</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeDescription</key>
+			<string>XML Font Tool file</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>dyn.ah62d4rv4ge81k7d2</string>
+				<string>public.xml</string>
+			</array>
+			<key>UTTypeIdentifier</key>
+			<string>org.fonttools.ttx</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>ttx</string>
 				</array>
 			</dict>
 		</dict>

@@ -5,7 +5,8 @@
    version = "2.0">
    <BuildAction
       parallelizeBuildables = "YES"
-      buildImplicitDependencies = "YES">
+      buildImplicitDependencies = "YES"
+      buildArchitectures = "Automatic">
       <BuildActionEntries>
          <BuildActionEntry
             buildForTesting = "YES"
@@ -15,9 +16,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "8359235B23559A2B001506B6"
-               BuildableName = "Syntax Highlight Quick Look Extension.appex"
-               BlueprintName = "Syntax Highlight Quick Look Extension"
+               BlueprintIdentifier = "83ABC9B92D1BF61900CF8972"
+               BuildableName = "Syntax Hightlight Shortcut Action.appex"
+               BlueprintName = "Syntax Hightlight Shortcut Action"
                ReferencedContainer = "container:SourceCodeSyntaxHighlight.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -41,9 +42,8 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES">
-      <Testables>
-      </Testables>
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      shouldAutocreateTestPlan = "YES">
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
@@ -58,9 +58,9 @@
       allowLocationSimulation = "YES"
       launchAutomaticallySubstyle = "2">
       <RemoteRunnable
-         runnableDebuggingMode = "2"
-         BundleIdentifier = "com.apple.finder"
-         RemotePath = "/Finder">
+         runnableDebuggingMode = "0"
+         BundleIdentifier = "com.apple.shortcuts"
+         RemotePath = "/System/Applications/Shortcuts.app">
       </RemoteRunnable>
       <MacroExpansion>
          <BuildableReference
@@ -71,18 +71,6 @@
             ReferencedContainer = "container:SourceCodeSyntaxHighlight.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
-      <EnvironmentVariables>
-         <EnvironmentVariable
-            key = "OS_ACTIVITY_MODE"
-            value = "disable"
-            isEnabled = "NO">
-         </EnvironmentVariable>
-         <EnvironmentVariable
-            key = "DYLD_PRINT_LIBRARIES"
-            value = "1"
-            isEnabled = "NO">
-         </EnvironmentVariable>
-      </EnvironmentVariables>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"

@@ -126,13 +126,14 @@ The application can also handle some [plain files](#plain-files) **without exten
 - Ada (`.ada`)
 - Adobe Acrobat Sequence files (`.sequ`) _as `XML`_
 - Adobe Flash ActionScript source files (`.as`)
-- Adobe Flex files (`.mxml`) files _as XML_
+- Adobe Flex files (`.mxml`) files _as `XML`_
 - Adobe JSX script files (`.jsx`)
+- Apple loctable (`.loctable`) _as `plist (XML)`_
 - Apple workflow (`.wflow`) _as `plist (XML)`_
 - AppleScript (`.scpt`, `.applescript`, `.ascr`) _automatically decompiled with `osadecompile`_
 - Apple shell script files (`.command`)
 - Assembler source files (`.asm`, `.s79`)
-- Astro files (`.astro`) _as JSX_.
+- Astro files (`.astro`) _as `JSX`_.
 - Autolit files (`.au3`, `.a3x`)
 - Azkaban flow files (`.flow`) as _`YAML`_
 - ATL files (`.atl`)
@@ -165,9 +166,11 @@ The application can also handle some [plain files](#plain-files) **without exten
 - ECore files (`.ecore`)
 - Eiffel project files (`.ecf`) _as `XML`_
 - Eiffel source files (`.e`, `.ex`, `.exs`)
+- Elixir files (`.ex`, `.exs`, `.heex`)
 - Erlang source files (`.erl`, `.hri`)
 - F# source files (`.fsx`, `.fs`)
 - fish source files (`.fish`)
+- FonTool files (`.ttx`) _as `XML`_.
 - Fortran source files (`.f`, `.for`, `.f90`, `.f95`)
 - GCC linked files (`.ld`, `.map`, `.d`)
 - Gdscript (Godot engine) (`.gd`).
@@ -206,13 +209,14 @@ The application can also handle some [plain files](#plain-files) **without exten
 - Logos source files (`.xm`)
 - Lua source files (`.lua`)
 - Makefile files (`.mk`, `.mak`)
-- MAMEdev layout files (`.lay`) _as XML_.
+- MAMEdev layout files (`.lay`) _as `XML`_.
 - Markdown files (`.md`, `.rmd`): _please use [QLMarkdown](https://github.com/sbarex/QLMarkdown)_ which allows you to choose whether to display formatted output or the highlighted source code.
-- Media Presentation Description (`.mpd`) _as XML_. 
+- Media Presentation Description (`.mpd`) _as `XML`_. 
 - MF source files (`.mf`)
 - Microsoft Active Server Page files (`.asp`, `.aspx`)
 - Microsoft PowerShell files (`.psm1`, `.psd1`, `.ps1`)
-- NextFlow (`.nf`) _as Groovy (Java)_
+- Microsoft Visual Studio C# Project (`.csproj`) _as `XML`_
+- NextFlow (`.nf`) _as `Groovy (Java)`_
 - Nim source files (`.nim`)
 - Nix Expression Language (`.nix`)
 - Node CommonJS module (`.cjs`)
@@ -220,6 +224,7 @@ The application can also handle some [plain files](#plain-files) **without exten
 - Objective-C++ source files (`.mm`)
 - OCaml source files (`.ml`, `.mll`, `.mly`)
 - OpenSSH RSA public key (`.pub`) _as plain text_
+- OpenTimelineIO files (`.otio`) _as JSON_
 - OPML (Outline Processor Markup Language) files (`.opml`) _as `XML`_
 - Oracle PL/SQL files (`.fnc`, `.prc`, `.trg`, `.pks`, `.pkb`, `.pck`, `.tps`, `.tpb`, `.typ`, `.tab`, `.avt`, `.con`, `.sqs`, `.vw`, `.mvw`, `.trg`) _as `SQL`_
 - Paradox files (`.sc`)
@@ -231,7 +236,7 @@ The application can also handle some [plain files](#plain-files) **without exten
 - PHP source files (`.php`, `.php3`, `.php4`, `.ph3`, `.ph4`, `.phtml`)
 - Properties files (`.properties`) _as `INI`_
 - Property List files (`.plist`) _dynamically decompiled with `plutil`_ **On macOS 10.15 Catalina `.plist` is reserved by the system and cannot be handled.**
-- Python source files (`.py`)
+- Python source files (`.py`, `.py3`, `.pyi`)
 - R (`.r`)
 - Racket (`.rkt`) _as `Lisp`_
 - RAML (`.raml`) _as `YAML`_
@@ -265,15 +270,17 @@ The application can also handle some [plain files](#plain-files) **without exten
 - Text files (`.txt`, `.text`)
 - TOML files (`.toml`)
 - TypeScript files (`.ts`, `.tsx`, `.cts`, `.mts`) **`.ts` and `.mts` are reserved by macOS and cannot be handled.**
-- Visual Studio Code Workspace (`.code-workspace`) _ as `JSON`_
+- Unity document (`.unity`) _as `YAML`_
+- Visual Studio Code Workspace (`.code-workspace`) _as `JSON`_
 - Verilog HDL files (`.v`, `.vl`)
 - VHDL source files (`.vhd`, `.vhdl`)
 - VIM script files (`.vim`)
 - Visual Basic source files (`.vb`, `.bas`, `.basic`, `.vbs`)
 - Vue source files (`.vue`)
-- XAML source files (`.xaml`) _as XML_
-- Xcode entitlement files (`.entitlements`) (dynamically decompiled with `plutil`) _as XML_
-- Xcode localizable strings files (`.strings`, `.stringsdict`) (dynamically decompiled with `plutil`) _as XML_ 
+- XAML source files (`.xaml`) _as `XML`_
+- Xcode entitlement files (`.entitlements`) (dynamically decompiled with `plutil`) _as `XML`_
+- Xcode localizable strings files (`.strings`, `.stringsdict`) (dynamically decompiled with `plutil`) _as `XML`_ 
+_ Xcode scheme _as `XML`_ 
 - XHTML files (`.xhtml`)
 - XML files (`.xml`) **Before macOS 12 Monterey `.xml` is reserved by the system and cannot be handled.**
 - XSD Schema files (`.xsd`, `.xquery`, `.xq`, `.xu`)
@@ -495,8 +502,6 @@ Unspecified rendering options will use the settings defined in the main applicat
 The CLI interface uses the same settings as the Quick Look extension, but you can override it if you wish. 
 
 The highlighted data is printed to the `stdout` or writed to file if you use the `-o` option. 
-
-The command line tool require macOS 10.15.4 or later.
 
 
 ## Add support to a custom format

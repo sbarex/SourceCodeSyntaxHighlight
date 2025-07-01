@@ -43,6 +43,7 @@
 				<string>com.apple.applescript.text</string>
 				<string>com.apple.binary-property-list</string>
 				<string>com.apple.dt.document.ascii-property-list</string>
+				<string>com.apple.dt.document.scheme</string>
 				<string>com.apple.dt.interfacebuilder.document.storyboard</string>
 				<string>com.apple.interfacebuilder.document.cocoa</string>
 				<string>com.apple.mobileconfig</string>
@@ -68,6 +69,7 @@
 				<string>com.barebones.bbedit.vbscript-source</string>
 				<string>com.barebones.bbedit.verilog-hdl-source</string>
 				<string>com.barebones.bbedit.vhdl-source</string>
+				<string>com.bps.elixir-source</string>
 				<string>com.coteditor.scheme</string>
 				<string>com.dhowett.logos</string>
 				<string>com.docker.dockerfile</string>
@@ -83,6 +85,7 @@
 				<string>com.microsoft.asp</string>
 				<string>com.microsoft.code-workspace</string>
 				<string>com.microsoft.csharp-source</string>
+				<string>com.microsoft.csproj</string>
 				<string>com.microsoft.c-sharp</string>
 				<string>com.microsoft.f-sharp</string>
 				<string>com.microsoft.ini</string>
@@ -109,6 +112,7 @@
 				<string>com.unknown.lhs</string>
 				<string>com.seriflabs.xmp</string>
 				<string>com.symfony.twig</string>
+				<string>com.unity.document</string>
 				<string>dev.nix.source</string>
 				<string>dev.svelte.source</string>
 				<string>edu.uo.texshop.tex</string>
@@ -140,6 +144,7 @@
 				<string>org.erlang.erlang-source</string>
 				<string>org.elixir-lang.source</string>
 				<string>org.fish.source</string>
+				<string>org.fonttools.ttx</string>
 				<string>org.gcc.files</string>
 				<string>org.go.source</string>
 				<string>org.golang.golang</string>
@@ -265,6 +270,7 @@
 				<string>public.data.xml.opml</string>
 				<string>public.diff</string>
 				<string>public.dylan-source</string>
+				<string>public.elixir-source</string>
 				<string>public.fortran-source</string>
 				<string>public.fortran-90-source</string>
 				<string>public.fortran-95-source</string>
@@ -398,6 +404,15 @@
 				<string>dyn.ah62d4rv4ge81g62</string>
 				<string>dyn.ah62d4rv4ge81e45y</string>
 				<string>dyn.ah62d4rv4ge8022p3</string>
+				<string>dyn.ah62d4rv4ge81k7d2</string>
+				<string>dyn.ah62d4rv4ge80g65usm10y</string>
+				<string>dyn.ah62d4rv4ge81n5xmsv6u</string>
+				<string>dyn.ah62d4rv4ge80u3pfta</string>
+				<string>dyn.ah62d4rv4ge8087dmr6</string>
+				<string>dyn.ah62d4rv4ge80n3dq</string>
+				<string>dyn.ah62d4rv4ge80255dsvu0e5df</string>
+				<string>dyn.ah62d4rv4ge81a8mx</string>
+				<string>dyn.ah62d4rv4ge81a8pm</string>
 			</array>
 			<key>QLSupportsSearchableItems</key>
 			<false/>

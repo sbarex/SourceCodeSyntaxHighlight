@@ -1,12 +1,27 @@
 Changelog
 =======
 
+### 2.1.26 (75)
+New Features: 
+- Support for Elixir files (`.ex`, `.exs`, `.heex`)
+- Support for OpenTimelineIO files (`.otio`) _as JSON_.
+- Support for FontTool files (`.ttx`) _as XML_.
+- Support for Unity document (`.unity`) _as YAML_
+- Support for Visual Studio C# Project (`.csproj`) _as XML_
+- Support for Xcode scheme (`.xcscheme`) _as XML_
+- Support for Loctable files (`.loctable`) _as plist_.
+- Update Highlight to release 4.16. 
+
+Bugfix:
+- Python extensions `.pyi` and `.py3` are recognized.
+- Fixed compatibility with macOS 10.15 Catalina.
+
 ### 2.1.25 (74)
 New Features: 
 - Support for Jupyter Notebook files (`.ipynb`) _as JSON_.
-- Support for MAMEdev layout files `.lay` _as XML_.
-- Support for NVidia Cuda `.cu` files as _C++_.
-- Support for `.raml` files as _YAML_.
+- Support for MAMEdev layout files (`.lay`) _as XML_.
+- Support for NVidia Cuda (`.cu`) files _as C++_.
+- Support for `.raml` files _as YAML_.
 - Experimental Shortcut Action (require macOS 15.2). 
 - Update Highlight to release 4.15.
 - Update Lua to release 5.4.7.
