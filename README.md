@@ -18,7 +18,7 @@ If you like this application and find it useful, [buy me a coffee](https://www.b
 
   - [Installation](#installation)
     - [Download precompiled release](#download-precompiled-release)
-    - [Install with Homebrew Cask](#install-with-homebrew-cask)
+    - [Install with Homebrew](#install-with-homebrew)
     - [Note for the precompiled release](#note-for-the-precompiled-release)
     - [Build from source](#build-from-source)
   - [Enable the Quick Look extension](#enable-the-quick-look-extension)
@@ -50,11 +50,11 @@ After installation, _the application must be launched at least once to allow the
 ### Download precompiled release
 Head over to the [releases](https://github.com/sbarex/SourceCodeSyntaxHighlight/releases) page to view the latest version. Move `Syntax Highlight.app` into the `Applications` folder.
 
-### Install with Homebrew Cask
-Syntax Highlight can also be installed via [Homebrew Cask](https://github.com/Homebrew/homebrew-cask). If you have not installed Homebrew, follow the simple instructions [here](https://brew.sh/). After that, install the current version of Syntax Highlight with the following command:
+### Install with Homebrew
+Syntax Highlight can also be installed via [Homebrew](https://brew.sh). If you have not installed Homebrew, follow the simple instructions [here](https://brew.sh/). After that, install the current version of Syntax Highlight with the following command:
 
 ```bash
-brew install --cask --no-quarantine syntax-highlight
+brew install --no-quarantine syntax-highlight
 ```
 
 ### Note for the precompiled release
