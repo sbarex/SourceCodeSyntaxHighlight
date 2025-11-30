@@ -75,6 +75,7 @@
     "Express": ["express", "exp"],
     "FAME": ["fame", "fame"],
     "fasm": ["fasm", "inc"],
+    "OpenType Feature File": ["fea"],
     "Felix": ["felix", "flx"],
     "Fish": ["fish"],
     "Fortran 77": ["fortran77", "f", "for", "ftn"],

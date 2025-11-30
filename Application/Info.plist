@@ -2164,6 +2164,25 @@
 			</dict>
 		</dict>
 		<dict>
+			<key>UTTypeDescription</key>
+			<string>OpenType feature syntax</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.text</string>
+				<string>public.data</string>
+				<string>dyn.ah62d4rv4ge80q3pb</string>
+			</array>
+			<key>UTTypeIdentifier</key>
+			<string>org.unifiedfontobject.fea</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>fea</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.source-code</string>

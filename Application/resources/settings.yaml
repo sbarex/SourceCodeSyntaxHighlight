@@ -21,6 +21,9 @@ UTIs:
     
     com.adobe.edn:
         syntax: clojure
+        
+    com.adobe.fea:
+        syntax: fea
     
     com.apple.applescript.script:
         syntax: applescript
@@ -191,7 +194,10 @@ UTIs:
         
     org.jsonlines.jsonl: *json
     dyn.ah62d4rv4ge80y65tr30a: *json
-                
+    
+    org.letterror.designspace: *xml
+    dyn.ah62d4rv4ge80k3pxrfx0665uqfv0n: *xml
+    
     org.microsoft.inf:
         syntax: ini
         
@@ -332,6 +338,11 @@ UTIs:
         
     dyn.ah62d4rv4ge80s6xbqv0gn:
         syntax: gradle
+        
+    org.unifiedfontobject.fea:
+        syntax: fea
+    dyn.ah62d4rv4ge80q3pb:
+        syntax: fea
         
     org.jupyter.ipynb: *json
     # ipynb
@@ -482,12 +493,29 @@ UTIs:
     dyn.ah62d4rv4ge80n3dq:
         syntax: txt
         
+    # .loctable
+    dyn.ah62d4rv4ge80255dsvu0e5df: *plist
+        
     # .mhl
     dyn.ah62d4rv4ge8044dq:
         syntax: txt
     
-    # .loctable
-    dyn.ah62d4rv4ge80255dsvu0e5df: *plist
+    # .nc
+    dyn.ah62d4rv4ge80622:
+        syntax: txt
+        
+    # .pom
+    dyn.ah62d4rv4ge81a55r: *xml
+    
+    # .tmml
+    dyn.ah62d4rv4ge81k5prru: *xml
+    
+    # .zig
+    dyn.ah62d4rv4ge81y4ph:
+        syntax: zig
+    # .zog
+    dyn.ah62d4rv4ge81y55s: *json
+    
 
         
 extensions:
@@ -550,6 +578,8 @@ extensions:
         syntax: crystal
         
     cts: *typescript
+    
+    designspace: *xml
     
     do:
         syntax: txt
@@ -632,7 +662,10 @@ extensions:
         syntax: sql
         
     mxml: *xml
-        
+    
+    nc:
+        syntax: txt
+    
     nf:
         syntax: java
         
@@ -646,6 +679,9 @@ extensions:
         syntax: sql
     prc:
         syntax: sql
+    
+    # dyn.ah62d4rv4ge81a55r
+    pom: *xml
         
     # org.sbarex.ms-powershell-module-manifest:
     psd1:
@@ -729,6 +765,7 @@ extensions:
     tfvars:
         syntax: yaml
 
+    tmml: *xml
     tpb:
         syntax: sql
     tps:
@@ -749,8 +786,7 @@ extensions:
         syntax: sql
     
     # dyn.ah62d4rv4ge81s65eru
-    wsdl:
-        syntax: xml
+    wsdl: *xml
     
     # dyn.ah62d4rv4ge81u6pzqz3hw
     # dyn.ah62d4rv4ge81u6k
@@ -761,3 +797,6 @@ extensions:
     xq: *xml
     xu: *xml
     
+    zig:
+        syntax: zig
+    zog: *json

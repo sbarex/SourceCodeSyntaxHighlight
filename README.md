@@ -158,6 +158,7 @@ The application can also handle some [plain files](#plain-files) **without exten
 - Cuda files (`.cu`) _as `C++`_ 
 - D (`.d`)
 - Dart source files (`.dart`) **`.dart` is reserved by macOS and cannot be handled.**
+- Designspace files (`.designspace`) _as `XML`_
 - Diff files (`.diff`, `.patch`)
 - Dockerfile (`.dockerfile`)
 - Document Type Definition (`.dtd`)
@@ -225,6 +226,7 @@ The application can also handle some [plain files](#plain-files) **without exten
 - OCaml source files (`.ml`, `.mll`, `.mly`)
 - OpenSSH RSA public key (`.pub`) _as plain text_
 - OpenTimelineIO files (`.otio`) _as JSON_
+- OpenType feature file specification (`.fea`)
 - OPML (Outline Processor Markup Language) files (`.opml`) _as `XML`_
 - Oracle PL/SQL files (`.fnc`, `.prc`, `.trg`, `.pks`, `.pkb`, `.pck`, `.tps`, `.tpb`, `.typ`, `.tab`, `.avt`, `.con`, `.sqs`, `.vw`, `.mvw`, `.trg`) _as `SQL`_
 - Paradox files (`.sc`)
@@ -234,6 +236,7 @@ The application can also handle some [plain files](#plain-files) **without exten
 - Perl script files (`.pl`, `.pm`, `.t`)
 - Planning Domain Description Language (`.pddl`) _as `Lisp`_
 - PHP source files (`.php`, `.php3`, `.php4`, `.ph3`, `.ph4`, `.phtml`)
+- Project Object Model files (`.pom`) _as XML_
 - Properties files (`.properties`) _as `INI`_
 - Property List files (`.plist`) _dynamically decompiled with `plutil`_ **On macOS 10.15 Catalina `.plist` is reserved by the system and cannot be handled.**
 - Python source files (`.py`, `.py3`, `.pyi`)
@@ -287,6 +290,8 @@ _ Xcode scheme _as `XML`_
 - XUL files (`.xul`)
 - YAML files (`.yaml`)
 - Z shell script files (`.zsh`)
+- Zig source files (`.zig`)
+- Zig Object Notation files (`.zog`) _as JSON_.
 
 ## Application settings
 

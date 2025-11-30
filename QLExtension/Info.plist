@@ -38,6 +38,7 @@
 				<string>com.adobe.coldfusion</string>
 				<string>com.adobe.jsx</string>
 				<string>com.adobe.edn</string>
+				<string>com.adobe.fea</string>
 				<string>com.adobe.mxml</string>
 				<string>com.apple.applescript.script</string>
 				<string>com.apple.applescript.text</string>
@@ -165,6 +166,7 @@
 				<string>org.kotlinlang.source</string>
 				<string>org.latex-project.latex</string>
 				<string>org.lesscss.less</string>
+				<string>org.letterror.designspace</string>
 				<string>org.lilypond.files</string>
 				<string>org.lua.lua</string>
 				<string>org.lua.lua-source</string>
@@ -224,6 +226,7 @@
 				<string>org.tug.tex</string>
 				<string>org.tug.tex.bibtex</string>
 				<string>org.tug.sty</string>
+				<string>org.unifiedfontobject.fea</string>
 				<string>org.vim.as-file</string>
 				<string>org.vim.asp-file</string>
 				<string>org.vim.aspx-file</string>
@@ -413,6 +416,12 @@
 				<string>dyn.ah62d4rv4ge80255dsvu0e5df</string>
 				<string>dyn.ah62d4rv4ge81a8mx</string>
 				<string>dyn.ah62d4rv4ge81a8pm</string>
+				<string>dyn.ah62d4rv4ge81k5prru</string>
+				<string>dyn.ah62d4rv4ge81y4ph</string>
+				<string>dyn.ah62d4rv4ge80622</string>
+				<string>dyn.ah62d4rv4ge80k3pxrfx0665uqfv0n</string>
+				<string>dyn.ah62d4rv4ge81a55r</string>
+				<string>dyn.ah62d4rv4ge80q3pb</string>
 			</array>
 			<key>QLSupportsSearchableItems</key>
 			<false/>

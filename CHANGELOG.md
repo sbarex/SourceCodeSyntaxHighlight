@@ -1,20 +1,33 @@
 Changelog
 =======
 
+### 2.1.27 (76)
+New Features: 
+- Support for TeXMac files (`.tmml`) _as XML_.
+- Support for Zig source files (`.zig`).
+- Support for Zig Object Notation files (`.zog`) _as JSON_.
+- Support for .nc files for CAM softwares _as plain text_.
+- Support for .designspace files _as XML.
+- Support for Project Object Model files (`.pom`) _as XML_.
+- Support for OpenType feature file specification (`.fea`).
+- Update Highlight to release 4.18.
+ 
+
 ### 2.1.26 (75)
 New Features: 
-- Support for Elixir files (`.ex`, `.exs`, `.heex`)
+- Support for Elixir files (`.ex`, `.exs`, `.heex`).
 - Support for OpenTimelineIO files (`.otio`) _as JSON_.
-- Support for FontTool files (`.ttx`) _as XML_.
-- Support for Unity document (`.unity`) _as YAML_
-- Support for Visual Studio C# Project (`.csproj`) _as XML_
-- Support for Xcode scheme (`.xcscheme`) _as XML_
+- Support for fontTools files (`.ttx`) _as XML_.
+- Support for Unity document (`.unity`) _as YAML_.
+- Support for Visual Studio C# Project (`.csproj`) _as XML_.
+- Support for Xcode scheme (`.xcscheme`) _as XML_.
 - Support for Loctable files (`.loctable`) _as plist_.
 - Update Highlight to release 4.16. 
 
 Bugfix:
 - Python extensions `.pyi` and `.py3` are recognized.
 - Fixed compatibility with macOS 10.15 Catalina.
+
 
 ### 2.1.25 (74)
 New Features: 
