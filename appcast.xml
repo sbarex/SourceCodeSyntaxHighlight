@@ -4,6 +4,38 @@
         <title>Syntax Highlight</title>
 
         <item>
+            <title>2.1.27</title>
+            <pubDate>dom, 30 nov 2025 23:13:00 +0100</pubDate>
+            <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
+            <enclosure 
+                       type="application/octet-stream" 
+                       url="https://github.com/sbarex/SourceCodeSyntaxHighlight/releases/download/2.1.27/Syntax.Highlight.zip" 
+                       sparkle:shortVersionString="2.1.27" sparkle:version="76" 
+                       sparkle:edSignature="C9xQSlUQq2hp9M06QuFS171mPZMfA9HLDNmvTeQs0HRAW2WkBKjyDPLl2ftAHPONFtll/MYHXw+WM1coxR4fCg==" length="16482098"
+            />
+            <description><![CDATA[
+                <h2>Release 2.1.27 (76)</h2>
+                <p align="center">If you like this app, <a href="https://www.buymeacoffee.com/sbarex">buy me a coffee!</a></p>
+                <p>New features:</p>
+                <ul>
+                    <li>Support for TeXMac files (<code>.tmml</code>) <i>as XML</i>.</li>
+                    <li>SSupport for Zig source files (<code>.zig</code>).</li>
+                    <li>Support for Zig Object Notation files (<code>.zog</code>) <i>as JSON</i>.</li>
+                    <li>Support for <code>.nc</code> files for CAM softwares <i>as plain text</i>.</li>
+                    <li>Support for <code>.designspace</code> files<i>as XML</i>.</li>
+                    <li>Support for Project Object Model files (<code>.pom</code>) <i>as XML</i>.</li>
+                    <li>SSupport for OpenType feature file specification (<code>.fea</code>).</li>
+                    <li>Update Highlight to release 4.18.</li>
+                </ul>
+
+                <p>If you like this app, <a href="https://www.buymeacoffee.com/sbarex">buy me a coffee!</a></p>
+                
+                <p><a href="https://github.com/sbarex/SourceCodeSyntaxHighlight/blob/master/CHANGELOG.md">See the complete changelog.</a></p>
+            ]]>
+            </description>
+        </item>
+
+        <item>
             <title>2.1.26</title>
             <pubDate>mar, 1 lug 2025 17:13:00 +0100</pubDate>
             <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
@@ -23,7 +55,7 @@
                     <li>Support for FontTool files (<code>.ttx</code>) <i>as XML</i>.</li>
                     <li>Support for Unity document (<code>.unity</code>) files <i>as YAML</i>.</li>
                     <li>Support for Visual Studio C# Project (<code>.csproj</code>) <i>as XML</i>.</li>
-                    <li>Support for Xcode scheme(<code>.xcscheme</code>) <i>as XML</i>.</li>
+                    <li>Support for Xcode scheme (<code>.xcscheme</code>) <i>as XML</i>.</li>
                     <li>Support for Loctable files (<code>.loctable</code>) <i>as XML</i>.</li>
                     <li>Support for Visual Studio C# Project (<code>.csproj</code>) <i>as plist</i>.</li>
                     <li>Update Highlight to release 4.16.</li>
