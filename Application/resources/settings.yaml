@@ -5,7 +5,7 @@ UTIs:
         
     _plist: &plist
         syntax: xml
-        preprocessor: /usr/bin/plutil -convert xml1 -o - $targetHL
+        preprocessor: /usr/bin/plutil -convert xml1 -o - $targetHL | perl -pe 's/\x00/␀/g'
 
     _xml: &xml
         syntax: xml
@@ -523,7 +523,7 @@ extensions:
         syntax: json
     _plist*: &plist
         syntax: xml
-        preprocessor: /usr/bin/plutil -convert xml1 -o - $targetHL
+        preprocessor: /usr/bin/plutil -convert xml1 -o - $targetHL | perl -pe 's/\x00/␀/g'
 
     _xml*: &xml
         syntax: xml
