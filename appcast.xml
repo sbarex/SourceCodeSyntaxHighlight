@@ -4,6 +4,44 @@
         <title>Syntax Highlight</title>
 
         <item>
+            <title>2.1.28</title>
+            <pubDate>mer, 11 mar 2026 11:16:00 +0100</pubDate>
+            <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
+            <enclosure 
+                       type="application/octet-stream" 
+                       url="https://github.com/sbarex/SourceCodeSyntaxHighlight/releases/download/2.1.28/Syntax.Highlight.zip" 
+                       sparkle:shortVersionString="2.1.28" sparkle:version="77" 
+                       sparkle:edSignature="8lQwq2sJeukNahjrNlFUv9XUx1dtYqRSmkTQAy2bEuEvLTlMbsri0i4JFMV4+234drg7LSL6crc2sdsR4RN6Dw==" length="16466277"
+            />
+            <description><![CDATA[
+                <h2>Release 2.1.27 (76)</h2>
+                <p align="center">If you like this app, <a href="https://www.buymeacoffee.com/sbarex">buy me a coffee!</a></p>
+                <p>New features:</p>
+                <ul>
+                    <li>Support for Gleam (<code>.gleam</code>) files.</li>
+                    <li>Support for Adobe UPX Javascript (<code>.psjs</code>).</li>
+                    <li>Support for MiniScript (<code>.ms</code>) files.</li>
+                    <li>Support for MetaTrader (<code>.mq4</code>, <code>.mq5</code>) files <i>as CPP</i>.</li>
+                    <li>Support for JSON5 (<code>.json5</code>) files.</li>
+                    <li>Support for JSON Canvas (<code>.canvas</code>) files <i>as JSON</i>.</li>
+                    <li>Support for Scala scale file format (<code>.scl</code>) <i>as plain text</i>.</li>
+                    <li>Update Highlight to release 4.19.</li>
+                </ul>
+                <p>Bugfix:</p>
+                <ul>
+                    <li>Better support for KML format.</li>
+                    <li>Fix support <code>.toml</code> files.</li>
+                    <li>Better support for Adobe JSX files.</li>
+                    <li>Fixed Zig Object Notation files (<code>.zon</code>)</li>
+            </ul>
+                <p>If you like this app, <a href="https://www.buymeacoffee.com/sbarex">buy me a coffee!</a></p>
+                
+                <p><a href="https://github.com/sbarex/SourceCodeSyntaxHighlight/blob/master/CHANGELOG.md">See the complete changelog.</a></p>
+            ]]>
+            </description>
+        </item>
+
+        <item>
             <title>2.1.27</title>
             <pubDate>dom, 30 nov 2025 23:13:00 +0100</pubDate>
             <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
@@ -19,12 +57,12 @@
                 <p>New features:</p>
                 <ul>
                     <li>Support for TeXMac files (<code>.tmml</code>) <i>as XML</i>.</li>
-                    <li>SSupport for Zig source files (<code>.zig</code>).</li>
+                    <li>Support for Zig source files (<code>.zig</code>).</li>
                     <li>Support for Zig Object Notation files (<code>.zog</code>) <i>as JSON</i>.</li>
                     <li>Support for <code>.nc</code> files for CAM softwares <i>as plain text</i>.</li>
                     <li>Support for <code>.designspace</code> files<i>as XML</i>.</li>
                     <li>Support for Project Object Model files (<code>.pom</code>) <i>as XML</i>.</li>
-                    <li>SSupport for OpenType feature file specification (<code>.fea</code>).</li>
+                    <li>Support for OpenType feature file specification (<code>.fea</code>).</li>
                     <li>Update Highlight to release 4.18.</li>
                 </ul>
 
