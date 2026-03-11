@@ -1,13 +1,32 @@
 Changelog
 =======
 
+### 2.1.28 (77)
+New Features:
+- Support for Gleam (`.gleam`) files.
+- Support for Adobe UPX Javascript (`.psjs`).
+- Support for [MiniScript](https://miniscript.org/) (`.ms`) files.
+- Support for MetaTrader (`.mq4`, `.mq5`) files _as CPP_.
+- Support for JSON5 (`.json5`) files.
+- Support for JSON Canvas (`.canvas`) files _as `JSON`_
+- Support for [Scala scale file format](https://huygens-fokker.org/scala/scl_format.html) (`.scl`) _as plain text_.
+- A custom homebrew cask to install the app bypassing the deprecated warning (a signed version of the app will be available later this year).
+- Updated Highlight to version 4.19.
+
+Bugfix:
+- Better support for KML format.
+- Fix support `.toml` files.
+- Better support for Adobe JSX files.
+- Fixed Zig Object Notation files (`.zon`).
+
+
 ### 2.1.27 (76)
 New Features: 
 - Support for TeXMac files (`.tmml`) _as XML_.
 - Support for Zig source files (`.zig`).
-- Support for Zig Object Notation files (`.zog`) _as JSON_.
-- Support for .nc files for CAM softwares _as plain text_.
-- Support for .designspace files _as XML.
+- Support for Zig Object Notation files (`.zon`) _as JSON_.
+- Support for `.nc` files for CAM softwares _as plain text_.
+- Support for `.designspace` files _as XML.
 - Support for Project Object Model files (`.pom`) _as XML_.
 - Support for OpenType feature file specification (`.fea`).
 - Update Highlight to release 4.18.

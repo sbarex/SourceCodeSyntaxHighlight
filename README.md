@@ -128,6 +128,7 @@ The application can also handle some [plain files](#plain-files) **without exten
 - Adobe Flash ActionScript source files (`.as`)
 - Adobe Flex files (`.mxml`) files _as `XML`_
 - Adobe JSX script files (`.jsx`)
+- Adobe UPX Javascript (`.psjs`)
 - Apple loctable (`.loctable`) _as `plist (XML)`_
 - Apple workflow (`.wflow`) _as `plist (XML)`_
 - AppleScript (`.scpt`, `.applescript`, `.ascr`) _automatically decompiled with `osadecompile`_
@@ -175,6 +176,7 @@ The application can also handle some [plain files](#plain-files) **without exten
 - Fortran source files (`.f`, `.for`, `.f90`, `.f95`)
 - GCC linked files (`.ld`, `.map`, `.d`)
 - Gdscript (Godot engine) (`.gd`).
+- Gleam (`.gleam`)
 - Golang source files (`.go`)
 - Google Earth KML Document files (`.kml`) _as `XML`_
 - Gradle source files (`.gradle`)
@@ -197,7 +199,8 @@ The application can also handle some [plain files](#plain-files) **without exten
 - Java Web Start (`.jnlp`)
 - JavaFX ML (`.fxml`)
 - JavaScript files (`.js`, `.jscript`, `.javascript`, `.mjs`, `.jsm`)
-- JSON files (`.json`, `.jsonc`) ** On macOS 13 Ventura with Apple Silicon the `.json` extension is reserved by the system and cannot be handled.** 
+- JSON files (`.json`, `.jsonc`, `.json5`) ** On macOS 13 Ventura with Apple Silicon the `.json` extension is reserved by the system and cannot be handled.** 
+- JSON Canvas (`.canvas`) _as `JSON`_
 - JSON Line files (`.jsonl`) _as `JSON`_
 - Julia source files  (`.jl`)
 - Jupyter Notebook files (`.ipynb`) _as `JSON`_
@@ -212,11 +215,13 @@ The application can also handle some [plain files](#plain-files) **without exten
 - Makefile files (`.mk`, `.mak`)
 - MAMEdev layout files (`.lay`) _as `XML`_.
 - Markdown files (`.md`, `.rmd`): _please use [QLMarkdown](https://github.com/sbarex/QLMarkdown)_ which allows you to choose whether to display formatted output or the highlighted source code.
-- Media Presentation Description (`.mpd`) _as `XML`_. 
+- Media Presentation Description (`.mpd`) _as `XML`_.
+- MetaTrader (`.mq4`, `.mq5`) files _as CPP_. 
 - MF source files (`.mf`)
 - Microsoft Active Server Page files (`.asp`, `.aspx`)
 - Microsoft PowerShell files (`.psm1`, `.psd1`, `.ps1`)
 - Microsoft Visual Studio C# Project (`.csproj`) _as `XML`_
+- [MiniScript](https://miniscript.org/) files (`.ms`)
 - NextFlow (`.nf`) _as `Groovy (Java)`_
 - Nim source files (`.nim`)
 - Nix Expression Language (`.nix`)
@@ -255,6 +260,7 @@ The application can also handle some [plain files](#plain-files) **without exten
 - SAS files (`.sas`)
 - SASS/SCSS files (`.scss`)
 - Scala source files (`.sc`, `.sbt`, `.scala`)
+- [Scala scale file format](https://huygens-fokker.org/scala/scl_format.html) (`.scl`) _as plain text_
 - Scheme source files (`.scm`, `.ss`, `.sls`, `.sps`, `.sld`, `.sch`) _as `Lisp`_
 - Shell script files (`.bashrc`, `.zshrc`, `.sh`)
 - Smali (`.smali`) _as plain text_.
@@ -291,7 +297,7 @@ _ Xcode scheme _as `XML`_
 - YAML files (`.yaml`)
 - Z shell script files (`.zsh`)
 - Zig source files (`.zig`)
-- Zig Object Notation files (`.zog`) _as JSON_.
+- Zig Object Notation files (`.zon`) _as JSON_.
 
 ## Application settings
 
@@ -676,6 +682,9 @@ https://eclecticlight.co/2024/11/02/a-brief-history-of-icons-thumbnails-and-quic
 https://eclecticlight.co/2024/10/31/how-sequoia-has-changed-quicklook-and-its-thumbnails/
 
 https://mjtsai.com/blog/2024/11/05/sequoia-no-longer-supports-quicklook-generator-plug-ins/
+
+https://eclecticlight.co/2025/10/25/explainer-how-does-macos-recognise-file-types/
+
 
 ## Credits
 Developed by [sbarex](https://github.com/sbarex) with :heart:.

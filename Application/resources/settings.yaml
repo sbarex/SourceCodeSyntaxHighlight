@@ -13,6 +13,13 @@ UTIs:
     com.adobe.acrobat.sequ: *xml
     dyn.ah62d4rv4ge81g3pvsy: *xml
     
+    com.adobe.psjs:
+        syntax: javascript
+    dyn.age81a65nsq:
+        syntax: javascript
+    dyn.ah62d4rv4ge81a65nsq:
+        syntax: javascript
+        
     # .acf
     com.steampowered.appmanifest:
         syntax: txt
@@ -94,6 +101,13 @@ UTIs:
     dyn.ah62d4rv4ge80g7dx:
         syntax: typescript
 
+    dyn.ah62d4rv4ge8046mz:
+        syntax: cpp
+    dyn.ah62d4rv4ge8046my:
+        syntax: cpp
+    com.metatrader.mq:
+        syntax: cpp
+    
     com.microsoft.xaml: *xml
             
     com.nutstore.down:
@@ -177,9 +191,22 @@ UTIs:
         
     dyn.ah62d4rv4ge81k7d2: *xml
     org.fonttools.ttx: *xml
+    
+    org.huygens-fokker.scala:
+        syntax: txt
+    dyn.ah62d4rv4ge81g25q:
+        syntax: txt
+    
+    org.jsoncanvas.canvas: *json
+    dyn.ah62d4rv4ge80g2pss3u1g: *json
         
     dyn.ah62d4rv4ge8022p3: *xml
     org.mamedev.lay: *xml
+    
+    dyn.ah62d4rv4ge80462:
+        syntax: ms
+    org.miniscript.ms:
+        syntax: ms
         
     org.tug.cls:
         syntax: latex
@@ -191,6 +218,9 @@ UTIs:
         
     org.json.jsonc: *json
     dyn.ah62d4rv4ge80y65tr3vu: *json
+    
+    org.json5.json5: *json
+    dyn.ah62d4rv4ge80y65tr24u: *json
         
     org.jsonlines.jsonl: *json
     dyn.ah62d4rv4ge80y65tr30a: *json
@@ -251,6 +281,9 @@ UTIs:
     
     public.fortran-95-source:
         syntax: fortran90
+        
+    public.jsx-source:
+        syntax: jsx
     
     public.make-source:
         syntax: makefile
@@ -513,9 +546,13 @@ UTIs:
     # .zig
     dyn.ah62d4rv4ge81y4ph:
         syntax: zig
-    # .zog
+    # .zon
     dyn.ah62d4rv4ge81y55s: *json
     
+    dyn.age80s5dfqf0u:
+        syntax: gleam
+    run.gleam.source:
+        syntax: gleam
 
         
 extensions:
@@ -551,6 +588,8 @@ extensions:
         syntax: txt
     bzl:
         syntax: txt
+        
+    canvas: *json
         
     code-workspace: *json
     
@@ -605,6 +644,9 @@ extensions:
     fnc:
         syntax: sql
         
+    gleam:
+        syntax: gleam
+    
     gltf: *json
     
     hcl:
@@ -624,6 +666,8 @@ extensions:
     #dyn.ah62d4rv4ge80y65r
     jsm:
         syntax: javascript
+    
+    json5: *json
     
     # dyn.ah62d4rv4ge80y65tr3vu
     jsonc: *json
@@ -656,6 +700,9 @@ extensions:
     #dyn.ah62d4rv4ge8046de
     mpd: *xml
         
+    ms:
+        syntax: ms
+    
     mts: *typescript
     
     mvw:
@@ -679,6 +726,9 @@ extensions:
         syntax: sql
     prc:
         syntax: sql
+        
+    psjs:
+        syntax: javascript
     
     # dyn.ah62d4rv4ge81a55r
     pom: *xml
@@ -701,11 +751,11 @@ extensions:
         
             
     # dyn.ah62d4rv4ge81a8pm:
-    .pyi:
+    pyi:
         syntax: python
 
     # dyn.ah62d4rv4ge81a8mx:
-    .py3:
+    py3:
         syntax: python
             
     raml:
@@ -727,6 +777,9 @@ extensions:
         
     sch:
         syntax: lisp
+        
+    scl:
+        syntax: txt
         
     # dyn.ah62d4rv4ge81g3pvsy
     sequ: *xml
@@ -799,4 +852,4 @@ extensions:
     
     zig:
         syntax: zig
-    zog: *json
+    zon: *json

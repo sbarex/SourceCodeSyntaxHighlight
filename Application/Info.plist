@@ -126,6 +126,23 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
+				<string>dyn.ah62d4rv4ge81a65nsq</string>
+				<string>dyn.age81a65nsq</string>
+				<string>public.javascript</string>
+			</array>
+			<key>UTTypeIdentifier</key>
+			<string>com.adobe.psjs</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>js</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
 				<string>dyn.ah62d4rv4ge80c7mx</string>
 				<string>public.data</string>
 			</array>
@@ -240,6 +257,24 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>iml</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.source-code</string>
+				<string>dyn.ah62d4rv4ge8046my</string>
+				<string>dyn.ah62d4rv4ge8046mz</string>
+			</array>
+			<key>UTTypeIdentifier</key>
+			<string>com.metatrader.mq</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>mq4</string>
+					<string>mq5</string>
 				</array>
 			</dict>
 		</dict>
@@ -1151,6 +1186,22 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
+				<string>public.item</string>
+				<string>dyn.ah62d4rv4ge81g25q</string>
+			</array>
+			<key>UTTypeIdentifier</key>
+			<string>org.huygens-fokker.scala</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>scl</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
 				<string>public.source-code</string>
 			</array>
 			<key>UTTypeDescription</key>
@@ -1199,6 +1250,22 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>jsonc</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>dyn.ah62d4rv4ge80y65tr24u</string>
+				<string>public.json</string>
+			</array>
+			<key>UTTypeIdentifier</key>
+			<string>org.json5.json5</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>json5</string>
 				</array>
 			</dict>
 		</dict>
@@ -1394,6 +1461,22 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>inf</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>dyn.ah62d4rv4ge80462</string>
+				<string>public.item</string>
+			</array>
+			<key>UTTypeIdentifier</key>
+			<string>org.miniscript.ms</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>ms</string>
 				</array>
 			</dict>
 		</dict>
@@ -2738,6 +2821,24 @@
 			</dict>
 		</dict>
 		<dict>
+			<key>UTTypeDescription</key>
+			<string>JSON Canvas</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.json</string>
+				<string>dyn.ah62d4rv4ge80g2pss3u1g</string>
+			</array>
+			<key>UTTypeIdentifier</key>
+			<string>org.jsoncanvas.canvas</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>canvas</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.json</string>
@@ -3006,6 +3107,23 @@
 				</array>
 				<key>public.mime-type</key>
 				<string>text/x-gdscript</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.source-code</string>
+				<string>public.plain-text</string>
+				<string>public.text</string>
+			</array>
+			<key>UTTypeIdentifier</key>
+			<string>run.gleam.source</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>gleam</string>
+				</array>
 			</dict>
 		</dict>
 		<dict>

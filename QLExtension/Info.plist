@@ -77,12 +77,14 @@
 				<string>com.eiffel.eiffelstudio-project-config</string>
 				<string>com.eiffel.source-code</string>
 				<string>com.google.earth.kml</string>
+				<string>com.google.kml</string>
 				<string>com.jetbrain.source</string>
 				<string>com.macromates.textmate.cgi-script</string>
 				<string>com.macromates.textmate.config-file</string>
 				<string>com.macromates.textmate.lisp</string>
 				<string>com.macromates.textmate.scheme</string>
 				<string>com.macromates.textmate.standard-ml</string>
+				<string>com.metatrader.mq</string>
 				<string>com.microsoft.asp</string>
 				<string>com.microsoft.code-workspace</string>
 				<string>com.microsoft.csharp-source</string>
@@ -122,6 +124,7 @@
 				<string>io.github.jsx</string>
 				<string>io.nextflow.source</string>
 				<string>io.terraform.tfvars</string>
+				<string>io.toml</string>
 				<string>is.workflow.my.workflow</string>
 				<string>org.applescript.source</string>
 				<string>org.arduino.ino-source</string>
@@ -158,6 +161,8 @@
 				<string>org.julialang.julia</string>
 				<string>org.jupyter.ipynb</string>
 				<string>org.json.jsonc</string>
+				<string>org.json5.json5</string>
+				<string>org.jsoncanvas.canvas</string>
 				<string>org.jsonlines.jsonl</string>
 				<string>org.khronos.gltf</string>
 				<string>org.kmt.source</string>
@@ -172,6 +177,7 @@
 				<string>org.lua.lua-source</string>
 				<string>org.mamedev.lay</string>
 				<string>org.microsoft.inf</string>
+				<string>org.miniscript.ms</string>
 				<string>org.nfo</string>
 				<string>org.n8gray.awk</string>
 				<string>org.n8gray.bat</string>
@@ -282,6 +288,7 @@
 				<string>public.item</string>
 				<string>public.java</string>
 				<string>public.json</string>
+				<string>public.jsx-source</string>
 				<string>public.ksh-script</string>
 				<string>public.lua-source</string>
 				<string>public.make-source</string>
@@ -312,6 +319,7 @@
 				<string>public.xsd</string>
 				<string>public.yaml</string>
 				<string>public.zsh-script</string>
+				<string>run.gleam.source</string>
 				<string>tk.tcl.tcl</string>
 				<string>tk.tcl.tcl-source</string>
 				<string>dyn.ah62d4rv4ge8007a</string>
@@ -422,6 +430,16 @@
 				<string>dyn.ah62d4rv4ge80k3pxrfx0665uqfv0n</string>
 				<string>dyn.ah62d4rv4ge81a55r</string>
 				<string>dyn.ah62d4rv4ge80q3pb</string>
+				<string>dyn.age80s5dfqf0u</string>
+				<string>dyn.ah62d4rv4ge80g2pss3u1g</string>
+				<string>dyn.age81a65nsq</string>
+				<string>dyn.ah62d4rv4ge81a65nsq</string>
+				<string>dyn.ah62d4rv4ge81y55s</string>
+				<string>dyn.ah62d4rv4ge81g25q</string>
+				<string>dyn.ah62d4rv4ge80462</string>
+				<string>dyn.ah62d4rv4ge8046mz</string>
+				<string>dyn.ah62d4rv4ge8046my</string>
+				<string>dyn.ah62d4rv4ge80y65tr24u</string>
 			</array>
 			<key>QLSupportsSearchableItems</key>
 			<false/>

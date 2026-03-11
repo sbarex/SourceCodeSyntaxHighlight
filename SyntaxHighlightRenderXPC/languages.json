@@ -162,6 +162,7 @@
     "Emacs Org-Mode": ["org"],
     "Object Script": ["os"],
     "Oz": ["oz"],
+    "MiniScript":  ["ms"],
     "Paradox": ["paradox", "sc"],
     "Pascal": ["pas"],
     "Portable Document Format": ["pdf"],
