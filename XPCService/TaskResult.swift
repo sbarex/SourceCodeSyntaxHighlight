@@ -91,7 +91,7 @@ class ShellTask {
         }
         
         let data = file.readDataToEndOfFile()
-        let dataErr = file.readDataToEndOfFile()
+        let dataErr = fileErr.readDataToEndOfFile()
         
         task.waitUntilExit()
         
