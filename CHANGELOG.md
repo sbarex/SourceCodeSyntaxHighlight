@@ -1,6 +1,13 @@
 Changelog
 =======
 
+### 2.1.29 (78)
+New Features:
+- Support for Microsoft DeepZoom files (`.dzi`) _as XML_.
+- Support for ePub [Open Packaging Format](https://idpf.org/epub/20/spec/OPF_2.0_latest.htm) (`.opf`) files _as XML_.
+- Support for ePub [Navigation Center eXtended](https://idpf.org/epub/20/spec/OPF_2.0_latest.htm#Section2.4.1) (`.ncx`) _as XML_.
+
+
 ### 2.1.28 (77)
 New Features:
 - Support for Gleam (`.gleam`) files.
@@ -8,7 +15,7 @@ New Features:
 - Support for [MiniScript](https://miniscript.org/) (`.ms`) files.
 - Support for MetaTrader (`.mq4`, `.mq5`) files _as CPP_.
 - Support for JSON5 (`.json5`) files.
-- Support for JSON Canvas (`.canvas`) files _as `JSON`_
+- Support for JSON Canvas (`.canvas`) files _as `JSON`_.
 - Support for [Scala scale file format](https://huygens-fokker.org/scala/scl_format.html) (`.scl`) _as plain text_.
 - A custom homebrew cask to install the app bypassing the deprecated warning (a signed version of the app will be available later this year).
 - Updated Highlight to version 4.19.

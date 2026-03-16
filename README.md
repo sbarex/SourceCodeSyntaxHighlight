@@ -169,6 +169,8 @@ The application can also handle some [plain files](#plain-files) **without exten
 - Eiffel project files (`.ecf`) _as `XML`_
 - Eiffel source files (`.e`, `.ex`, `.exs`)
 - Elixir files (`.ex`, `.exs`, `.heex`)
+- ePub [Navigation Center eXtended](https://idpf.org/epub/20/spec/OPF_2.0_latest.htm#Section2.4.1) (`.ncx`) _as XML_.
+- ePub [Open Packaging Format](https://idpf.org/epub/20/spec/OPF_2.0_latest.htm) (`.opf`) files _as XML_.
 - Erlang source files (`.erl`, `.hri`)
 - F# source files (`.fsx`, `.fs`)
 - fish source files (`.fish`)

@@ -90,6 +90,7 @@
 				<string>com.microsoft.csharp-source</string>
 				<string>com.microsoft.csproj</string>
 				<string>com.microsoft.c-sharp</string>
+				<string>com.microsoft.dzi</string>
 				<string>com.microsoft.f-sharp</string>
 				<string>com.microsoft.ini</string>
 				<string>com.microsoft.typescript</string>
@@ -156,6 +157,8 @@
 				<string>org.haskell.haskell</string>
 				<string>org.haskell.haskell-source</string>
 				<string>org.haskell.literate-haskell-source</string>
+				<string>org.idpf.ncx</string>
+				<string>org.idpf.opf</string>
 				<string>org.inno.source</string>
 				<string>org.iso.sql</string>
 				<string>org.julialang.julia</string>
@@ -440,6 +443,9 @@
 				<string>dyn.ah62d4rv4ge8046mz</string>
 				<string>dyn.ah62d4rv4ge8046my</string>
 				<string>dyn.ah62d4rv4ge80y65tr24u</string>
+				<string>dyn.ah62d4rv4ge80k8xm</string>
+				<string>dyn.ah62d4rv4ge8086dg</string>
+				<string>dyn.ah62d4rv4ge806252</string>
 			</array>
 			<key>QLSupportsSearchableItems</key>
 			<false/>

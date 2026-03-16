@@ -96,6 +96,9 @@ UTIs:
     dyn.ah62d4rv4ge80g65usm10y: *xml
     com.microsoft.csproj: *xml
     
+    dyn.ah62d4rv4ge80k8xm: *xml
+    com.microsoft.dzi: *xml
+    
     com.microsoft.typescript:
         syntax: typescript
     dyn.ah62d4rv4ge80g7dx:
@@ -196,6 +199,12 @@ UTIs:
         syntax: txt
     dyn.ah62d4rv4ge81g25q:
         syntax: txt
+        
+    dyn.ah62d4rv4ge806252: *xml
+    org.idpf.ncx: *xml
+    
+    dyn.ah62d4rv4ge8086dg: *xml
+    org.idpf.opf: *xml
     
     org.jsoncanvas.canvas: *json
     dyn.ah62d4rv4ge80g2pss3u1g: *json
@@ -626,6 +635,8 @@ extensions:
     dockerfile:
         syntax: dockerfile
         
+    dzi: *xml
+        
     edl:
         syntax: txt
     
@@ -713,9 +724,13 @@ extensions:
     nc:
         syntax: txt
     
+    ncx: *xml
+    
     nf:
         syntax: java
         
+    opf: *xml
+    
     otio: *json
         
     pck:
