@@ -54,7 +54,7 @@ Head over to the [releases](https://github.com/sbarex/SourceCodeSyntaxHighlight/
 Syntax Highlight can also be installed via [Homebrew](https://brew.sh). If you have not installed Homebrew, follow the simple instructions [here](https://brew.sh/). After that, install the current version of Syntax Highlight with the following command:
 
 ```bash
-brew install --no-quarantine syntax-highlight
+brew install syntax-highlight
 ```
 
 ### Note for the precompiled release
