@@ -54,23 +54,12 @@ Head over to the [releases](https://github.com/sbarex/SourceCodeSyntaxHighlight/
 Syntax Highlight can also be installed via [Homebrew](https://brew.sh). If you have not installed Homebrew, follow the simple instructions [here](https://brew.sh/). After that, install the current version of Syntax Highlight with the following command:
 
 ```bash
-brew install --no-quarantine syntax-highlight
+brew install syntax-highlight
 ```
 
 ### Note for the precompiled release
-The [precompiled app](https://github.com/sbarex/SourceCodeSyntaxHighlight/releases) is not notarized or signed, so the first time you run the app the system may show a warning about the impossibility to check for malicious software.
+The [precompiled app](https://github.com/sbarex/SourceCodeSyntaxHighlight/releases) is codesigned and notarized.
 
-To fix, you can launch the app with right-click (or Control-click) on the app icon and choose the open action.
-
-You can also execute this command from the terminal:
-
-```bash
-xattr -r -d com.apple.quarantine "FULL PATH OF Syntax Highlight.app (you can drag the file to get the pull path)"
-```
-
-Alternatively, after trying to launch the app for the first time, you can open the `System Preferences > Security & Privacy > General (tab)` and click the `Open Anyway` button.
-
-This will resolve the error of an unsigned application when launching the app.
 
 ### Build from source
 
@@ -91,19 +80,6 @@ _To use the Quick Look preview you must launch the Application at least once._ I
 
 ![System preferences/Extensions](assets/extensions.png)
 
-When opening the app _for the first time_, you may see a pop-up warning about unable to check malicious software.
-
-To fix follow these steps: 
-
-- Switch to Finder and navigate to the application. 
-- Right-click (or Control-click) `Syntax Highlight.app` and choose the `Open` item from the contextual menu. 
-- A modal popup appears stating:
-  > "Syntax Highlight.app" can’t be opened because Apple cannot check it for malicious software.
-- Click `Open` to confirm.
-
-This warning is because the app is neither codesigned nor notarized.
-
-For more info see the [note for the precompiled release](#note-for-the-precompiled-release).
 
 ## File format management
 
@@ -250,6 +226,7 @@ The application can also handle some [plain files](#plain-files) **without exten
 - R (`.r`)
 - Racket (`.rkt`) _as `Lisp`_
 - RAML (`.raml`) _as `YAML`_
+- Rexx (`.rex`, `.rexx`)
 - RDF files (`.rdf`)
 - README files (`.readme`) _as plain text_
 - reStructuredText document (`.rst`)
@@ -300,6 +277,7 @@ _ Xcode scheme _as `XML`_
 - Z shell script files (`.zsh`)
 - Zig source files (`.zig`)
 - Zig Object Notation files (`.zon`) _as JSON_.
+
 
 ## Application settings
 

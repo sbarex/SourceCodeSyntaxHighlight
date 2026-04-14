@@ -3,8 +3,8 @@ Changelog
 
 ### 2.1.30 (79)
 New Features:
-- Support for Rexx files (`.rex`, `.rexx`) _as XML_.
-- App is now codesigned/notarized. 
+- App is now codesigned and notarized. 
+- Support for Rexx files (`.rex`, `.rexx`).
 
 
 ### 2.1.29 (78) 
