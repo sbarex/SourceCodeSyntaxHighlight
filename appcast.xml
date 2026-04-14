@@ -4,6 +4,34 @@
         <title>Syntax Highlight</title>
 
         <item>
+            <title>2.1.30</title>
+            <pubDate>mar, 14 apri 2026 20:29:00 +0100</pubDate>
+            <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
+            <enclosure 
+                       type="application/octet-stream" 
+                       url="https://github.com/sbarex/SourceCodeSyntaxHighlight/releases/download/2.1.30/Syntax.Highlight.zip" 
+                       sparkle:shortVersionString="2.1.30" sparkle:version="79" 
+                       sparkle:edSignature="9D3sCbgwBleTzxyFd2zVniX8ldusJioZdhvh+Oyq4ib1ghZIV4yb+NBhQwTopGTgJY7U2uXo0kxCbsZ5/i5pDw==" length="15897215"
+            />
+            <description><![CDATA[
+                <h2>Release 2.1.30 (79)</h2>
+                <p align="center">If you like this app, <a href="https://www.buymeacoffee.com/sbarex">buy me a coffee!</a></p>
+                <p>New features:</p>
+                <ul>
+                    <li><b>App is now codesigned and notarized.</b></li>
+                    <li>Support for Rexx files (<code>.rex</code>, <code>.rexx</code>) files.</li>
+                    <li>Support for Microsoft DeepZoom files (<code>.dzi</code>) <i>as XML</i>.</li>
+                    <li>Support for ePub Open Packaging Format (<code>.opf</code>) files <i>as XML</i>.</li>
+                    <li>Support for ePub Navigation Center eXtended (<code>.ncx</code>) <i>as XML</i>.</li>
+                </ul>
+                <p>If you like this app, <a href="https://www.buymeacoffee.com/sbarex">buy me a coffee!</a></p>
+                
+                <p><a href="https://github.com/sbarex/SourceCodeSyntaxHighlight/blob/master/CHANGELOG.md">See the complete changelog.</a></p>
+            ]]>
+            </description>
+        </item>
+        
+        <item>
             <title>2.1.28</title>
             <pubDate>mer, 11 mar 2026 11:16:00 +0100</pubDate>
             <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
@@ -14,7 +42,7 @@
                        sparkle:edSignature="8lQwq2sJeukNahjrNlFUv9XUx1dtYqRSmkTQAy2bEuEvLTlMbsri0i4JFMV4+234drg7LSL6crc2sdsR4RN6Dw==" length="16466277"
             />
             <description><![CDATA[
-                <h2>Release 2.1.27 (76)</h2>
+                <h2>Release 2.1.28 (77)</h2>
                 <p align="center">If you like this app, <a href="https://www.buymeacoffee.com/sbarex">buy me a coffee!</a></p>
                 <p>New features:</p>
                 <ul>
@@ -33,7 +61,7 @@
                     <li>Fix support <code>.toml</code> files.</li>
                     <li>Better support for Adobe JSX files.</li>
                     <li>Fixed Zig Object Notation files (<code>.zon</code>)</li>
-            </ul>
+                </ul>
                 <p>If you like this app, <a href="https://www.buymeacoffee.com/sbarex">buy me a coffee!</a></p>
                 
                 <p><a href="https://github.com/sbarex/SourceCodeSyntaxHighlight/blob/master/CHANGELOG.md">See the complete changelog.</a></p>
