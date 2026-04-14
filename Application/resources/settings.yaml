@@ -88,6 +88,16 @@ UTIs:
         syntax: lisp
         
     com.google.earth.kml: *xml
+    
+    # .rexx
+    dyn.ah62d4rv4ge81e3p2ta:
+        syntax: rexx
+    # .rex
+    dyn.ah62d4rv4ge81e3p2:
+        syntax: rexx
+    com.ibm.rexx:
+        syntax: rexx
+    
     com.jetbrain.source: *xml
     
     com.macromates.textmate.scheme:
@@ -775,6 +785,12 @@ extensions:
             
     raml:
         syntax: yaml
+        
+    rex:
+        syntax: rexx
+    rexx:
+        syntax: rexx
+        
     rkt:
         syntax: lisp
         

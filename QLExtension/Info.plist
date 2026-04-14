@@ -78,6 +78,7 @@
 				<string>com.eiffel.source-code</string>
 				<string>com.google.earth.kml</string>
 				<string>com.google.kml</string>
+				<string>com.ibm.rexx</string>
 				<string>com.jetbrain.source</string>
 				<string>com.macromates.textmate.cgi-script</string>
 				<string>com.macromates.textmate.config-file</string>
@@ -446,6 +447,8 @@
 				<string>dyn.ah62d4rv4ge80k8xm</string>
 				<string>dyn.ah62d4rv4ge8086dg</string>
 				<string>dyn.ah62d4rv4ge806252</string>
+				<string>dyn.ah62d4rv4ge81e3p2</string>
+				<string>dyn.ah62d4rv4ge81e3p2ta</string>
 			</array>
 			<key>QLSupportsSearchableItems</key>
 			<false/>

@@ -83,7 +83,7 @@
 /* Begin PBXLegacyTarget section */
 		83257FD82638126E00A8888F /* dos2unix */ = {
 			isa = PBXLegacyTarget;
-			buildArgumentsString = "$(ACTION)";
+			buildArgumentsString = "";
 			buildConfigurationList = 83257FF82638126E00A8888F /* Build configuration list for PBXLegacyTarget "dos2unix" */;
 			buildPhases = (
 			);

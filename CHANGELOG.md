@@ -1,7 +1,13 @@
 Changelog
 =======
 
-### 2.1.29 (78)
+### 2.1.30 (79)
+New Features:
+- Support for Rexx files (`.rex`, `.rexx`) _as XML_.
+- App is now codesigned/notarized. 
+
+
+### 2.1.29 (78) 
 New Features:
 - Support for Microsoft DeepZoom files (`.dzi`) _as XML_.
 - Support for ePub [Open Packaging Format](https://idpf.org/epub/20/spec/OPF_2.0_latest.htm) (`.opf`) files _as XML_.

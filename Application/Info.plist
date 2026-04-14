@@ -243,6 +243,26 @@
 			</dict>
 		</dict>
 		<dict>
+			<key>UTTypeDescription</key>
+			<string>Rexx source file</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.item</string>
+				<string>dyn.ah62d4rv4ge81e3p2ta</string>
+				<string>dyn.ah62d4rv4ge81e3p2</string>
+			</array>
+			<key>UTTypeIdentifier</key>
+			<string>com.ibm.rexx</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>rexx</string>
+					<string>rex</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>dyn.ah62d4rv4ge80w5pq</string>

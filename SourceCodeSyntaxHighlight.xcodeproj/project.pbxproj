@@ -102,6 +102,7 @@
 		836257A325A8BD8E00475069 /* HighlightWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8362579725A8BD6A00475069 /* HighlightWrapper.swift */; };
 		836257BB25A9D7CB00475069 /* colorize.sh in Copy Highlight share files */ = {isa = PBXBuildFile; fileRef = 8359236F2355B19F001506B6 /* colorize.sh */; };
 		8362582925A9F3E100475069 /* Syntax Highlight XPC Render.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = 838F465A238D813500268B4A /* Syntax Highlight XPC Render.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		83632E812F8E2BA5008B95DE /* Yams in Frameworks */ = {isa = PBXBuildFile; productRef = 83632E802F8E2BA5008B95DE /* Yams */; };
 		836A09E0270442F30067AF0D /* languages.json in CopyFiles */ = {isa = PBXBuildFile; fileRef = 836A09DE270441680067AF0D /* languages.json */; };
 		836CBCD92712221600A228AE /* vcs.lua in Copy extra plugins */ = {isa = PBXBuildFile; fileRef = 836DAC07270AD7A900053043 /* vcs.lua */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		836CBCDC2712C70200A228AE /* VCSSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836CBCDB2712C70200A228AE /* VCSSettingsViewController.swift */; };
@@ -197,7 +198,6 @@
 		83E5E67C25AE1FF900FAF5E2 /* SaveAsFormatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E5E67925AE1FF900FAF5E2 /* SaveAsFormatView.swift */; };
 		83E5E68225AE242F00FAF5E2 /* SaveAsFormatView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83E5E67B25AE1FF900FAF5E2 /* SaveAsFormatView.xib */; };
 		83EDC92D25F6E23100B1621E /* FontSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83EDC92C25F6E23100B1621E /* FontSelectorViewController.swift */; };
-		83FD6ED3246B061600F5BDF3 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FD6ED2246B061600F5BDF3 /* main.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -257,13 +257,6 @@
 			remoteGlobalIDString = 8373D5C22716161800B43140;
 			remoteInfo = syntax_highlight_cli;
 		};
-		837B88EA2E12672F009FE273 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8359233D235599F6001506B6 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 832F7E552E054B8E0015DBBC;
-			remoteInfo = settings_chk;
-		};
 		838F4663238D813500268B4A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8359233D235599F6001506B6 /* Project object */;
@@ -277,13 +270,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 83A25C6C2D1E06CC00C8B349;
 			remoteInfo = extra_resources;
-		};
-		83A25C722D1E08C200C8B349 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8359233D235599F6001506B6 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 83FDB5322D10493D00D55608;
-			remoteInfo = "yaml checker";
 		};
 		83A25C742D1E08D000C8B349 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -312,27 +298,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 83ABC9B92D1BF61900CF8972;
 			remoteInfo = ShortcutCommand;
-		};
-		83FDB5362D104AA200D55608 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8359233D235599F6001506B6 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 83FDB5322D10493D00D55608;
-			remoteInfo = "yaml checker";
-		};
-		83FDB5382D104AAF00D55608 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8359233D235599F6001506B6 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 83FDB5322D10493D00D55608;
-			remoteInfo = "yaml checker";
-		};
-		83FDB53A2D104AB600D55608 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8359233D235599F6001506B6 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 83FDB5322D10493D00D55608;
-			remoteInfo = "yaml checker";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -523,15 +488,6 @@
 			);
 			name = "Copy Highlight share files";
 			runOnlyForDeploymentPostprocessing = 0;
-		};
-		83FD6ECE246B061600F5BDF3 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
@@ -810,6 +766,8 @@
 		83A25C622D1E014B00C8B349 /* support_files.xcfilelist */ = {isa = PBXFileReference; lastKnownFileType = text.xcfilelist; path = support_files.xcfilelist; sourceTree = "<group>"; };
 		83A25C692D1E055000C8B349 /* touch_files.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = touch_files.sh; sourceTree = "<group>"; };
 		83ABC9BA2D1BF61900CF8972 /* Syntax Hightlight Shortcut Action.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.extensionkit-extension"; includeInIndex = 0; path = "Syntax Hightlight Shortcut Action.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		83B3CBA12F8E65640021057D /* entitlements.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = entitlements.entitlements; sourceTree = "<group>"; };
+		83B3CBA22F8E67480021057D /* entitlements.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = entitlements.entitlements; sourceTree = "<group>"; };
 		83B4642925A7198B00DE0CF4 /* UTIInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UTIInfoViewController.swift; sourceTree = "<group>"; };
 		83B4644325A76D9700DE0CF4 /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		83B4646825A779FD00DE0CF4 /* highlight-wrapper.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = "highlight-wrapper.xcodeproj"; sourceTree = "<group>"; };
@@ -821,13 +779,10 @@
 		83C981F2238B04BC00718132 /* custom_css.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = custom_css.png; sourceTree = "<group>"; };
 		83C981F4238B0C6100718132 /* theme_editor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = theme_editor.png; sourceTree = "<group>"; };
 		83D33410263A96C3003CEEFD /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
-		83D8BEBA2CA2B37400AEB012 /* relaunch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = relaunch.entitlements; sourceTree = "<group>"; };
 		83E5E67925AE1FF900FAF5E2 /* SaveAsFormatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveAsFormatView.swift; sourceTree = "<group>"; };
 		83E5E67B25AE1FF900FAF5E2 /* SaveAsFormatView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SaveAsFormatView.xib; sourceTree = "<group>"; };
 		83EAEE842740FD2F0093B9B7 /* vcs_preview.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vcs_preview.png; sourceTree = "<group>"; };
 		83EDC92C25F6E23100B1621E /* FontSelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontSelectorViewController.swift; sourceTree = "<group>"; };
-		83FD6ED0246B061600F5BDF3 /* relaunch */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = relaunch; sourceTree = BUILT_PRODUCTS_DIR; };
-		83FD6ED2246B061600F5BDF3 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		83FD6EED246C71C600F5BDF3 /* Syntax Highlight XPC Render.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Syntax Highlight XPC Render.entitlements"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -872,6 +827,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83632E812F8E2BA5008B95DE /* Yams in Frameworks */,
 				8359235F23559A2B001506B6 /* Quartz.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -905,13 +861,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				83ABC9CC2D1BF64700CF8972 /* Yams in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		83FD6ECD246B061600F5BDF3 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1263,6 +1212,7 @@
 		832580C3263812C800A8888F /* dos2unix */ = {
 			isa = PBXGroup;
 			children = (
+				83B3CBA22F8E67480021057D /* entitlements.entitlements */,
 				83D33410263A96C3003CEEFD /* .gitignore */,
 				83258038263812C800A8888F /* man */,
 				83258039263812C800A8888F /* COPYING.txt */,
@@ -1318,7 +1268,6 @@
 				8359236023559A2B001506B6 /* QLExtension */,
 				8359237C23563BDF001506B6 /* XPCService */,
 				838F465B238D813500268B4A /* SyntaxHighlightRenderXPC */,
-				83FD6ED1246B061600F5BDF3 /* relaunch */,
 				8373D5C42716161800B43140 /* syntax_highlight_cli */,
 				83ABC9BB2D1BF61900CF8972 /* ShortcutCommand */,
 				832F7E572E054B8E0015DBBC /* settings_chk */,
@@ -1335,7 +1284,6 @@
 				8359235C23559A2B001506B6 /* Syntax Highlight Quick Look Extension.appex */,
 				8359237B23563BDF001506B6 /* Syntax Highlight XPC Service.xpc */,
 				838F465A238D813500268B4A /* Syntax Highlight XPC Render.xpc */,
-				83FD6ED0246B061600F5BDF3 /* relaunch */,
 				83A25C512D1DD91700C8B349 /* highlight */,
 				8373D5C32716161800B43140 /* syntax_highlight_cli */,
 				83A25C4B2D1DD7DB00C8B349 /* highlight */,
@@ -1504,6 +1452,7 @@
 		83B4646725A779FD00DE0CF4 /* highlight-wrapper */ = {
 			isa = PBXGroup;
 			children = (
+				83B3CBA12F8E65640021057D /* entitlements.entitlements */,
 				8361B16E263A962300B85467 /* .gitignore */,
 				83B4646825A779FD00DE0CF4 /* highlight-wrapper.xcodeproj */,
 				83B47B9C25A77A5600DE0CF4 /* wrapper_highlight.h */,
@@ -1535,15 +1484,6 @@
 			name = Themes;
 			sourceTree = "<group>";
 		};
-		83FD6ED1246B061600F5BDF3 /* relaunch */ = {
-			isa = PBXGroup;
-			children = (
-				83D8BEBA2CA2B37400AEB012 /* relaunch.entitlements */,
-				83FD6ED2246B061600F5BDF3 /* main.swift */,
-			);
-			path = relaunch;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXLegacyTarget section */
@@ -1565,12 +1505,12 @@
 		};
 		83FDB5322D10493D00D55608 /* yaml checker */ = {
 			isa = PBXLegacyTarget;
-			buildArgumentsString = "\"$(PROJECT_DIR)/Application/resources/settings.yaml\"";
+			buildArgumentsString = "${SRCROOT}/settings_chk/check.sh";
 			buildConfigurationList = 83FDB5332D10493D00D55608 /* Build configuration list for PBXLegacyTarget "yaml checker" */;
 			buildPhases = (
 			);
-			buildToolPath = "$(BUILT_PRODUCTS_DIR)/settings_chk";
-			buildWorkingDirectory = "$(PROJECT_DIR)";
+			buildToolPath = /bin/sh;
+			buildWorkingDirectory = "";
 			dependencies = (
 				832F7E602E05510C0015DBBC /* PBXTargetDependency */,
 			);
@@ -1626,9 +1566,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				837B88EB2E12672F009FE273 /* PBXTargetDependency */,
 				83A25C752D1E08D000C8B349 /* PBXTargetDependency */,
-				83FDB5372D104AA200D55608 /* PBXTargetDependency */,
 				836B55CE272E92D9008297D5 /* PBXTargetDependency */,
 				1F39AA712741F97600569E96 /* PBXTargetDependency */,
 				8319450F26394445002E5B86 /* PBXTargetDependency */,
@@ -1675,7 +1613,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				83FDB53B2D104AB600D55608 /* PBXTargetDependency */,
 			);
 			name = "Syntax Highlight XPC Service";
 			packageProductDependencies = (
@@ -1717,7 +1654,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				83FDB5392D104AAF00D55608 /* PBXTargetDependency */,
 			);
 			name = "Syntax Highlight XPC Render";
 			packageProductDependencies = (
@@ -1744,7 +1680,6 @@
 				83A25C792D1E08E900C8B349 /* PBXTargetDependency */,
 				83A25C772D1E08DF00C8B349 /* PBXTargetDependency */,
 				83A25C712D1E08B000C8B349 /* PBXTargetDependency */,
-				83A25C732D1E08C200C8B349 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				83ABC9BB2D1BF61900CF8972 /* ShortcutCommand */,
@@ -1756,23 +1691,6 @@
 			productName = ShortcutCommand;
 			productReference = 83ABC9BA2D1BF61900CF8972 /* Syntax Hightlight Shortcut Action.appex */;
 			productType = "com.apple.product-type.extensionkit-extension";
-		};
-		83FD6ECF246B061600F5BDF3 /* relaunch */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 83FD6EDA246B061600F5BDF3 /* Build configuration list for PBXNativeTarget "relaunch" */;
-			buildPhases = (
-				83FD6ECC246B061600F5BDF3 /* Sources */,
-				83FD6ECD246B061600F5BDF3 /* Frameworks */,
-				83FD6ECE246B061600F5BDF3 /* CopyFiles */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = relaunch;
-			productName = relaunch;
-			productReference = 83FD6ED0246B061600F5BDF3 /* relaunch */;
-			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
 
@@ -1809,9 +1727,6 @@
 					};
 					83ABC9B92D1BF61900CF8972 = {
 						CreatedOnToolsVersion = 16.2;
-					};
-					83FD6ECF246B061600F5BDF3 = {
-						CreatedOnToolsVersion = 11.4.1;
 					};
 					83FDB5322D10493D00D55608 = {
 						CreatedOnToolsVersion = 16.2;
@@ -1855,11 +1770,10 @@
 				8359237A23563BDF001506B6 /* Syntax Highlight XPC Service */,
 				838F4659238D813500268B4A /* Syntax Highlight XPC Render */,
 				83ABC9B92D1BF61900CF8972 /* Syntax Hightlight Shortcut Action */,
-				83FD6ECF246B061600F5BDF3 /* relaunch */,
+				832F7E552E054B8E0015DBBC /* settings_chk */,
 				8373D5C22716161800B43140 /* syntax_highlight_cli */,
 				83FDB5322D10493D00D55608 /* yaml checker */,
 				83A25C6C2D1E06CC00C8B349 /* extra_resources */,
-				832F7E552E054B8E0015DBBC /* settings_chk */,
 			);
 		};
 /* End PBXProject section */
@@ -2097,14 +2011,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		83FD6ECC246B061600F5BDF3 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				83FD6ED3246B061600F5BDF3 /* main.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -2148,11 +2054,6 @@
 			target = 8373D5C22716161800B43140 /* syntax_highlight_cli */;
 			targetProxy = 836B55CD272E92D9008297D5 /* PBXContainerItemProxy */;
 		};
-		837B88EB2E12672F009FE273 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 832F7E552E054B8E0015DBBC /* settings_chk */;
-			targetProxy = 837B88EA2E12672F009FE273 /* PBXContainerItemProxy */;
-		};
 		838F4664238D813500268B4A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 838F4659238D813500268B4A /* Syntax Highlight XPC Render */;
@@ -2162,11 +2063,6 @@
 			isa = PBXTargetDependency;
 			target = 83A25C6C2D1E06CC00C8B349 /* extra_resources */;
 			targetProxy = 83A25C702D1E08B000C8B349 /* PBXContainerItemProxy */;
-		};
-		83A25C732D1E08C200C8B349 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 83FDB5322D10493D00D55608 /* yaml checker */;
-			targetProxy = 83A25C722D1E08C200C8B349 /* PBXContainerItemProxy */;
 		};
 		83A25C752D1E08D000C8B349 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -2188,21 +2084,6 @@
 			target = 83ABC9B92D1BF61900CF8972 /* Syntax Hightlight Shortcut Action */;
 			targetProxy = 83ABC9C22D1BF61900CF8972 /* PBXContainerItemProxy */;
 		};
-		83FDB5372D104AA200D55608 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 83FDB5322D10493D00D55608 /* yaml checker */;
-			targetProxy = 83FDB5362D104AA200D55608 /* PBXContainerItemProxy */;
-		};
-		83FDB5392D104AAF00D55608 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 83FDB5322D10493D00D55608 /* yaml checker */;
-			targetProxy = 83FDB5382D104AAF00D55608 /* PBXContainerItemProxy */;
-		};
-		83FDB53B2D104AB600D55608 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 83FDB5322D10493D00D55608 /* yaml checker */;
-			targetProxy = 83FDB53A2D104AB600D55608 /* PBXContainerItemProxy */;
-		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -2220,12 +2101,29 @@
 		832F7E5B2E054B8E0015DBBC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				AUTOMATION_APPLE_EVENTS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = D5VMCLD3ZK;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
+				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
+				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
+				ENABLE_RESOURCE_ACCESS_PHOTO_LIBRARY = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
+				INSTALL_PATH = "";
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.sbarex.SourceCodeSyntaxHighlight.settings-check";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				RUNTIME_EXCEPTION_ALLOW_DYLD_ENVIRONMENT_VARIABLES = NO;
+				RUNTIME_EXCEPTION_ALLOW_JIT = NO;
+				RUNTIME_EXCEPTION_ALLOW_UNSIGNED_EXECUTABLE_MEMORY = NO;
+				RUNTIME_EXCEPTION_DEBUGGING_TOOL = NO;
+				RUNTIME_EXCEPTION_DISABLE_EXECUTABLE_PAGE_PROTECTION = NO;
+				RUNTIME_EXCEPTION_DISABLE_LIBRARY_VALIDATION = NO;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_VERSION = 5.0;
 			};
@@ -2234,12 +2132,29 @@
 		832F7E5C2E054B8E0015DBBC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				AUTOMATION_APPLE_EVENTS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = D5VMCLD3ZK;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
+				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
+				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
+				ENABLE_RESOURCE_ACCESS_PHOTO_LIBRARY = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
+				INSTALL_PATH = "";
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.sbarex.SourceCodeSyntaxHighlight.settings-check";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				RUNTIME_EXCEPTION_ALLOW_DYLD_ENVIRONMENT_VARIABLES = NO;
+				RUNTIME_EXCEPTION_ALLOW_JIT = NO;
+				RUNTIME_EXCEPTION_ALLOW_UNSIGNED_EXECUTABLE_MEMORY = NO;
+				RUNTIME_EXCEPTION_DEBUGGING_TOOL = NO;
+				RUNTIME_EXCEPTION_DISABLE_EXECUTABLE_PAGE_PROTECTION = NO;
+				RUNTIME_EXCEPTION_DISABLE_LIBRARY_VALIDATION = NO;
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
@@ -2378,12 +2293,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Application/SCSHApp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 77;
+				CURRENT_PROJECT_VERSION = 79;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = D5VMCLD3ZK;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2402,10 +2316,11 @@
 					"\"$(BUILT_PRODUCTS_DIR)/highlight\"",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 2.1.28;
+				MARKETING_VERSION = 2.1.30;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				REGISTER_APP_GROUPS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "Application/SourceCodeSyntaxHighlight-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
@@ -2417,13 +2332,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Application/SCSHApp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 77;
+				CURRENT_PROJECT_VERSION = 79;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = D5VMCLD3ZK;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2442,11 +2356,12 @@
 					"\"$(BUILT_PRODUCTS_DIR)/highlight\"",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 2.1.28;
+				MARKETING_VERSION = 2.1.30;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				REGISTER_APP_GROUPS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "Application/SourceCodeSyntaxHighlight-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
@@ -2457,11 +2372,10 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = QLExtension/QLExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
-				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 77;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 79;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = D5VMCLD3ZK;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2474,10 +2388,11 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 2.1.28;
+				MARKETING_VERSION = 2.1.30;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.QuickLookExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				REGISTER_APP_GROUPS = YES;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -2488,12 +2403,11 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = QLExtension/QLExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
-				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 77;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 79;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = D5VMCLD3ZK;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2506,11 +2420,12 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 2.1.28;
+				MARKETING_VERSION = 2.1.30;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.QuickLookExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				REGISTER_APP_GROUPS = YES;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -2521,12 +2436,11 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = XPCService/XPCServiceRelease.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 77;
+				CURRENT_PROJECT_VERSION = 79;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = D5VMCLD3ZK;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = XPCService/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -2535,10 +2449,11 @@
 				);
 				LIBRARY_SEARCH_PATHS = "\"$(BUILT_PRODUCTS_DIR)/highlight\"";
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 2.1.28;
+				MARKETING_VERSION = 2.1.30;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.XPCService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				REGISTER_APP_GROUPS = YES;
 				SKIP_INSTALL = YES;
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = "";
@@ -2551,13 +2466,12 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = XPCService/XPCServiceRelease.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 77;
+				CURRENT_PROJECT_VERSION = 79;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = D5VMCLD3ZK;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = XPCService/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -2566,11 +2480,12 @@
 				);
 				LIBRARY_SEARCH_PATHS = "\"$(BUILT_PRODUCTS_DIR)/highlight\"";
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 2.1.28;
+				MARKETING_VERSION = 2.1.30;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.XPCService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				REGISTER_APP_GROUPS = YES;
 				SKIP_INSTALL = YES;
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = "";
@@ -2581,18 +2496,32 @@
 		8373D5C72716161800B43140 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				AUTOMATION_APPLE_EVENTS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_ENTITLEMENTS = syntax_highlight_cli/syntax_highlight_cli.entitlements;
-				CODE_SIGN_IDENTITY = "-";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = D5VMCLD3ZK;
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
+				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
+				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
+				ENABLE_RESOURCE_ACCESS_PHOTO_LIBRARY = NO;
+				INSTALL_PATH = "\"$(BUILT_PRODUCTS_DIR)/Syntax Highlight.app/Contents/Resources\"";
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.cli;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				RUNTIME_EXCEPTION_ALLOW_DYLD_ENVIRONMENT_VARIABLES = NO;
+				RUNTIME_EXCEPTION_ALLOW_JIT = NO;
+				RUNTIME_EXCEPTION_ALLOW_UNSIGNED_EXECUTABLE_MEMORY = NO;
+				RUNTIME_EXCEPTION_DEBUGGING_TOOL = NO;
+				RUNTIME_EXCEPTION_DISABLE_EXECUTABLE_PAGE_PROTECTION = NO;
+				RUNTIME_EXCEPTION_DISABLE_LIBRARY_VALIDATION = YES;
+				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -2600,18 +2529,32 @@
 		8373D5C82716161800B43140 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				AUTOMATION_APPLE_EVENTS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_ENTITLEMENTS = syntax_highlight_cli/syntax_highlight_cli.entitlements;
-				CODE_SIGN_IDENTITY = "-";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = D5VMCLD3ZK;
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
+				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
+				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
+				ENABLE_RESOURCE_ACCESS_PHOTO_LIBRARY = NO;
+				INSTALL_PATH = "\"$(BUILT_PRODUCTS_DIR)/Syntax Highlight.app/Contents/Resources\"";
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.cli;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				RUNTIME_EXCEPTION_ALLOW_DYLD_ENVIRONMENT_VARIABLES = NO;
+				RUNTIME_EXCEPTION_ALLOW_JIT = NO;
+				RUNTIME_EXCEPTION_ALLOW_UNSIGNED_EXECUTABLE_MEMORY = NO;
+				RUNTIME_EXCEPTION_DEBUGGING_TOOL = NO;
+				RUNTIME_EXCEPTION_DISABLE_EXECUTABLE_PAGE_PROTECTION = NO;
+				RUNTIME_EXCEPTION_DISABLE_LIBRARY_VALIDATION = YES;
+				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
@@ -2622,12 +2565,11 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "SyntaxHighlightRenderXPC/Syntax Highlight XPC Render.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 77;
+				CURRENT_PROJECT_VERSION = 79;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = D5VMCLD3ZK;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2639,10 +2581,11 @@
 					"@loader_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 2.1.28;
+				MARKETING_VERSION = 2.1.30;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.XPCRender;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				REGISTER_APP_GROUPS = YES;
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "SyntaxHighlightRenderXPC/Syntax Highlight XPC Render-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -2656,13 +2599,12 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "SyntaxHighlightRenderXPC/Syntax Highlight XPC Render.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 77;
+				CURRENT_PROJECT_VERSION = 79;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = D5VMCLD3ZK;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2674,11 +2616,12 @@
 					"@loader_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 2.1.28;
+				MARKETING_VERSION = 2.1.30;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.XPCRender;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				REGISTER_APP_GROUPS = YES;
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "SyntaxHighlightRenderXPC/Syntax Highlight XPC Render-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -2724,10 +2667,10 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_ENTITLEMENTS = ShortcutCommand/ShortcutCommand.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 77;
-				DEVELOPMENT_TEAM = "";
+				CURRENT_PROJECT_VERSION = 79;
+				DEVELOPMENT_TEAM = D5VMCLD3ZK;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -2741,9 +2684,10 @@
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 15.2;
-				MARKETING_VERSION = 2.1.28;
+				MARKETING_VERSION = 2.1.30;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.ShortcutCommand;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -2757,10 +2701,10 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_ENTITLEMENTS = ShortcutCommand/ShortcutCommand.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 77;
-				DEVELOPMENT_TEAM = "";
+				CURRENT_PROJECT_VERSION = 79;
+				DEVELOPMENT_TEAM = D5VMCLD3ZK;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -2774,47 +2718,12 @@
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 15.2;
-				MARKETING_VERSION = 2.1.28;
+				MARKETING_VERSION = 2.1.30;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.ShortcutCommand;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-			};
-			name = Release;
-		};
-		83FD6ED4246B061600F5BDF3 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = relaunch/relaunch.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
-				CODE_SIGN_STYLE = Manual;
-				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = "";
-				ENABLE_HARDENED_RUNTIME = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.relaunch;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 5.0;
-			};
-			name = Debug;
-		};
-		83FD6ED5246B061600F5BDF3 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = relaunch/relaunch.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
-				CODE_SIGN_STYLE = Manual;
-				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = "";
-				ENABLE_HARDENED_RUNTIME = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.relaunch;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
@@ -2936,15 +2845,6 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		83FD6EDA246B061600F5BDF3 /* Build configuration list for PBXNativeTarget "relaunch" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				83FD6ED4246B061600F5BDF3 /* Debug */,
-				83FD6ED5246B061600F5BDF3 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		83FDB5332D10493D00D55608 /* Build configuration list for PBXLegacyTarget "yaml checker" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -2961,8 +2861,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/sparkle-project/Sparkle";
 			requirement = {
-				branch = 2.x;
-				kind = branch;
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.9.0;
 			};
 		};
 		836CD77E283024BF00F074CB /* XCRemoteSwiftPackageReference "Yams" */ = {
@@ -2970,7 +2870,7 @@
 			repositoryURL = "https://github.com/jpsim/Yams";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 5.0.0;
+				minimumVersion = 6.0.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -2985,6 +2885,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 8342C90C277EF4340018FCD8 /* XCRemoteSwiftPackageReference "Sparkle" */;
 			productName = Sparkle;
+		};
+		83632E802F8E2BA5008B95DE /* Yams */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 836CD77E283024BF00F074CB /* XCRemoteSwiftPackageReference "Yams" */;
+			productName = Yams;
 		};
 		836CD77F283024BF00F074CB /* Yams */ = {
 			isa = XCSwiftPackageProductDependency;

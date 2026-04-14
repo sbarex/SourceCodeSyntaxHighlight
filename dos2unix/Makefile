@@ -6,10 +6,11 @@ CURRENT_DIR := $(subst $(SPACE),"\\ ",$(CURDIR))
 
 
 ifeq ($(BUILT_PRODUCTS_DIR),)
-	BUILD_DIR :="${CURRENT_DIR}/build"
+	BUILD_DIR :=${CURRENT_DIR}/build
 else
 	BUILD_DIR :=${BUILT_PRODUCTS_DIR}
 endif
+BUILD_DIR_ESCAPED := $(subst $(SPACE),\ ,$(BUILD_DIR))
 
 ifeq ($(ONLY_ACTIVE_ARCH),)
 	ONLY_ACTIVE_ARCH=NO
@@ -42,18 +43,18 @@ VALID_ARCHS:=x86_64 arm64
 dos2unix_cli :=
 
 ifeq ($(NATIVE_ARCH),x86_64)
-	dos2unix_cli += ${BUILD_DIR}/dos2unix-x86_64
+	dos2unix_cli += ${BUILD_DIR_ESCAPED}/dos2unix-x86_64
 else
-	dos2unix_cli += ${BUILD_DIR}/dos2unix-arm64
+	dos2unix_cli += ${BUILD_DIR_ESCAPED}/dos2unix-arm64
 endif
 
 ifeq ($(ONLY_ACTIVE_ARCH),NO)
 ifeq ($(NATIVE_ARCH),x86_64)
 		# build arm code
-		dos2unix_cli += ${BUILD_DIR}/dos2unix-arm64
+		dos2unix_cli += ${BUILD_DIR_ESCAPED}/dos2unix-arm64
 else
 		# build intel code
-		dos2unix_cli += ${BUILD_DIR}/dos2unix-x86_64
+		dos2unix_cli += ${BUILD_DIR_ESCAPED}/dos2unix-x86_64
 endif
 endif
 
@@ -69,52 +70,60 @@ else
 endif
 	@echo ""
 	
-#dos2unix_arm: ${BUILD_DIR}/arm/dos2unix
-#dos2unix_intel: ${BUILD_DIR}/intel/dos2unix
-cli: ${BUILD_DIR}/dos2unix
+#dos2unix_arm: ${BUILD_DIR_ESCAPED}/arm/dos2unix
+#dos2unix_intel: ${BUILD_DIR_ESCAPED}/intel/dos2unix
+cli: ${BUILD_DIR_ESCAPED}/dos2unix
 
-install: ${BUILD_DIR}/dos2unix
+install: ${BUILD_DIR_ESCAPED}/dos2unix
 
 clean_dos2unix:
 	@echo "${bold}Cleaning dos2unix...${normal}"
 	${MAKE} -e "Makefile" clean
 	@echo ""
 
-${BUILD_DIR}/dos2unix-arm64: | $(BUILD_DIR)
-	@echo "${bold}Building dos2unix for arm64 platform...${normal}"
+$(BUILD_DIR_ESCAPED)/dos2unix-arm64: | $(BUILD_DIR_ESCAPED)
+	@echo "${bold}Building dos2unix for arm64 platform...${normal} to \"$@\""
 	@#${MAKE} -e "Makefile" clean
 	${MAKE} BUILD_DIR="build-arm-$(CONFIGURATION)" ENABLE_NLS= CC="gcc -std=gnu99 -target arm64-apple-macos11" CFLAGS="$(CFLAGS_arm64)" LDFLAGS="$(LDFLAGS_arm64)" -f "$(CURRENT_DIR)/build.makefile"
-	cp "build-arm-$(CONFIGURATION)/dos2unix" $@
+	cp "build-arm-$(CONFIGURATION)/dos2unix" "$@"
 	@echo "${bold}... OK${normal}"
 	@echo ""
 
-${BUILD_DIR}/dos2unix-x86_64: | $(BUILD_DIR)
-	@echo "${bold}Building dos2unix for intel platform...${normal}"
+${BUILD_DIR_ESCAPED}/dos2unix-x86_64: | $(BUILD_DIR_ESCAPED)
+	@echo "${bold}Building dos2unix for intel platform...${normal} to \"$@\""
 	@#${MAKE} -e "Makefile" clean
 	${MAKE} BUILD_DIR="build-intel-$(CONFIGURATION)" ENABLE_NLS= CFLAGS="$(CFLAGS_x86_64)" LDFLAGS="$(LDFLAGS_x86_64)" -f "$(CURRENT_DIR)/build.makefile"
-	cp "build-intel-$(CONFIGURATION)/dos2unix" $@
+	cp "build-intel-$(CONFIGURATION)/dos2unix" "$@"
 	@echo "${bold}... OK${normal}"
 	@echo ""
 
-${BUILD_DIR}/dos2unix: $(BUILD_DIR) ${dos2unix_cli}
+${BUILD_DIR_ESCAPED}/dos2unix: ${dos2unix_cli} | $(BUILD_DIR_ESCAPED)
 ifeq ($(ONLY_ACTIVE_ARCH),NO)
-	@#echo $(dos2unix_cli)
+	@#echo "$(dos2unix_cli)"
 	@echo "${bold}Creating universal dos2unix...${normal}"
-	lipo -create -output $@ "${BUILD_DIR}/dos2unix-x86_64" "${BUILD_DIR}/dos2unix-arm64"
+	lipo -create -output "$@" ${BUILD_DIR_ESCAPED}/dos2unix-x86_64 ${BUILD_DIR_ESCAPED}/dos2unix-arm64
 else
 	@echo "${bold}Creating dos2unix for ${NATIVE_ARCH}...${normal}"
 	@rm -f $@ > /dev/null
 ifeq ($(NATIVE_ARCH),x86_64)
-		ln -f "${BUILD_DIR}/dos2unix-x86_64" $@
+		ln -f ${BUILD_DIR_ESCAPED}/dos2unix-x86_64 "$@"
 else
-		ln -f "${BUILD_DIR}/dos2unix-arm64" $@
+		ln -f ${BUILD_DIR_ESCAPED}/dos2unix-arm64 "$@"
 endif
 endif
 	@echo "${bold}... OK${normal}"
+	@echo "Code signing the dos2unix app"
+	/usr/bin/codesign --force --deep --sign "$(CODE_SIGN_IDENTITY)" \
+	--options runtime \
+	--entitlements $(CURRENT_DIR)/entitlements.entitlements \
+	${OTHER_CODE_SIGN_FLAGS} \
+	"$@"
+	@echo ""
 
-$(BUILD_DIR):
-	@echo "Current dir: $(CURRENT_DIR)."
+$(BUILD_DIR_ESCAPED):
+	@echo "Current dir: $(CURRENT_DIR)"
+	@echo "Build dir: $(BUILD_DIR_ESCAPED)"
 
-	@echo "Creating build dir $(BUILD_DIR) ..."
-	mkdir -p $(BUILD_DIR)
+	@echo "Creating build dir \"$(BUILD_DIR)\" ..."
+	mkdir -p "$(BUILD_DIR)"
 	@echo ""
