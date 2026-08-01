@@ -85,7 +85,7 @@ struct PlainSettings {
                 guard let regex = self.mimeRegExp else {
                     return false
                 }
-                guard regex.firstMatch(in: mimeType, options: [], range: NSRange(filename.startIndex..., in: filename)) != nil else {
+                guard regex.firstMatch(in: mimeType, options: [], range: NSRange(mimeType.startIndex..., in: mimeType)) != nil else {
                     return false
                 }
                 valid = true
