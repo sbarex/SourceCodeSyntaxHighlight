@@ -2371,6 +2371,24 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
+				<string>public.text</string>
+				<string>public.source-code</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Robot Framework File</string>
+			<key>UTTypeIdentifier</key>
+			<string>org.robotframework.robot</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>robot</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
 				<string>public.xml</string>
 				<string>dyn.ah62d4rv4ge81s65eru</string>
 			</array>

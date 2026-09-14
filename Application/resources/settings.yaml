@@ -265,6 +265,8 @@ UTIs:
     
     org.pddl.pddl:
         syntax: lisp
+    org.robotframework.robot:
+        syntax: python
     dyn.ah62d4rv4ge81a3deru:
         syntqx: lisp
         
@@ -796,6 +798,9 @@ extensions:
         
     sage:
         syntax: py
+        
+    robot:
+        syntax: python
             
     # dyn.ah62d4rv4ge81g22
     # dyn.ah62d4rv4ge81g25brvuu
