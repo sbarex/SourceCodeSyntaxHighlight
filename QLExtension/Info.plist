@@ -218,6 +218,7 @@
 				<string>org.ruby-lang.erb</string>
 				<string>org.ruby-lang.eruby</string>
 				<string>org.rubyonrails.erb-sql</string>
+				<string>org.robotframework.robot</string>
 				<string>org.rust-lang.rust</string>
 				<string>org.rust-lang.source</string>
 				<string>org.sagemath.source</string>
