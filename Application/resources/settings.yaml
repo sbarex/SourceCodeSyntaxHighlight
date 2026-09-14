@@ -164,9 +164,9 @@ UTIs:
         syntax: yaml
         
     dev.svelte.source:
-        syntax: html
+        syntax: svelte
     dyn.ah62d4rv4ge81g7xfrv4gn:
-        syntax: html
+        syntax: svelte
         
     dev.nix.source:
         syntax: nix
