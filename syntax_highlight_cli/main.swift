@@ -9,7 +9,22 @@
 import Cocoa
 import OSLog
 
-let cliUrl = URL(fileURLWithPath: CommandLine.arguments[0])
+func getCliUrl() -> URL {
+    let fileManager = FileManager.default
+    let currentExecutablePath = URL(fileURLWithPath: CommandLine.arguments[0])
+    
+    let attributes = try? fileManager.attributesOfItem(atPath: currentExecutablePath.path)
+    
+    if let fileType = attributes?[.type] as? FileAttributeType, fileType == .typeSymbolicLink {
+        if let originalPath = try? fileManager.destinationOfSymbolicLink(atPath: currentExecutablePath.path) {
+            return URL(fileURLWithPath: originalPath)
+        }
+    }
+    
+    return currentExecutablePath
+}
+
+let cliUrl = getCliUrl()
 
 var standardError = FileHandle.standardError
 
