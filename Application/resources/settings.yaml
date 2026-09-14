@@ -265,8 +265,12 @@ UTIs:
     
     org.pddl.pddl:
         syntax: lisp
+    
     org.robotframework.robot:
         syntax: python
+    dyn.ah62d4rv4ge81e55cr74g8:
+        syntax: python
+        
     dyn.ah62d4rv4ge81a3deru:
         syntqx: lisp
         
