@@ -64,6 +64,10 @@ class DropSensor: NSView {
         registerForDraggedTypes(acceptableTypes)
     }
     
+    override func hitTest(_ point: NSPoint) -> NSView? {
+        return nil
+    }
+    
     override func draggingEntered(_ sender: NSDraggingInfo) -> NSDragOperation {
         self.dropDelegate?.enterDrag(sender)
         return .every
