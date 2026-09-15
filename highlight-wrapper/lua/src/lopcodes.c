@@ -13,6 +13,10 @@
 #include "lopcodes.h"
 
 
+#define opmode(mm,ot,it,t,a,m)  \
+    (((mm) << 7) | ((ot) << 6) | ((it) << 5) | ((t) << 4) | ((a) << 3) | (m))
+
+
 /* ORDER OP */
 
 LUAI_DDEF const lu_byte luaP_opmodes[NUM_OPCODES] = {
@@ -36,7 +40,7 @@ LUAI_DDEF const lu_byte luaP_opmodes[NUM_OPCODES] = {
  ,opmode(0, 0, 0, 0, 0, iABC)		/* OP_SETTABLE */
  ,opmode(0, 0, 0, 0, 0, iABC)		/* OP_SETI */
  ,opmode(0, 0, 0, 0, 0, iABC)		/* OP_SETFIELD */
- ,opmode(0, 0, 0, 0, 1, iABC)		/* OP_NEWTABLE */
+ ,opmode(0, 0, 0, 0, 1, ivABC)		/* OP_NEWTABLE */
  ,opmode(0, 0, 0, 0, 1, iABC)		/* OP_SELF */
  ,opmode(0, 0, 0, 0, 1, iABC)		/* OP_ADDI */
  ,opmode(0, 0, 0, 0, 1, iABC)		/* OP_ADDK */
@@ -49,8 +53,8 @@ LUAI_DDEF const lu_byte luaP_opmodes[NUM_OPCODES] = {
  ,opmode(0, 0, 0, 0, 1, iABC)		/* OP_BANDK */
  ,opmode(0, 0, 0, 0, 1, iABC)		/* OP_BORK */
  ,opmode(0, 0, 0, 0, 1, iABC)		/* OP_BXORK */
- ,opmode(0, 0, 0, 0, 1, iABC)		/* OP_SHRI */
  ,opmode(0, 0, 0, 0, 1, iABC)		/* OP_SHLI */
+ ,opmode(0, 0, 0, 0, 1, iABC)		/* OP_SHRI */
  ,opmode(0, 0, 0, 0, 1, iABC)		/* OP_ADD */
  ,opmode(0, 0, 0, 0, 1, iABC)		/* OP_SUB */
  ,opmode(0, 0, 0, 0, 1, iABC)		/* OP_MUL */
@@ -64,8 +68,8 @@ LUAI_DDEF const lu_byte luaP_opmodes[NUM_OPCODES] = {
  ,opmode(0, 0, 0, 0, 1, iABC)		/* OP_SHL */
  ,opmode(0, 0, 0, 0, 1, iABC)		/* OP_SHR */
  ,opmode(1, 0, 0, 0, 0, iABC)		/* OP_MMBIN */
- ,opmode(1, 0, 0, 0, 0, iABC)		/* OP_MMBINI*/
- ,opmode(1, 0, 0, 0, 0, iABC)		/* OP_MMBINK*/
+ ,opmode(1, 0, 0, 0, 0, iABC)		/* OP_MMBINI */
+ ,opmode(1, 0, 0, 0, 0, iABC)		/* OP_MMBINK */
  ,opmode(0, 0, 0, 0, 1, iABC)		/* OP_UNM */
  ,opmode(0, 0, 0, 0, 1, iABC)		/* OP_BNOT */
  ,opmode(0, 0, 0, 0, 1, iABC)		/* OP_NOT */
@@ -95,10 +99,33 @@ LUAI_DDEF const lu_byte luaP_opmodes[NUM_OPCODES] = {
  ,opmode(0, 0, 0, 0, 0, iABx)		/* OP_TFORPREP */
  ,opmode(0, 0, 0, 0, 0, iABC)		/* OP_TFORCALL */
  ,opmode(0, 0, 0, 0, 1, iABx)		/* OP_TFORLOOP */
- ,opmode(0, 0, 1, 0, 0, iABC)		/* OP_SETLIST */
+ ,opmode(0, 0, 1, 0, 0, ivABC)		/* OP_SETLIST */
  ,opmode(0, 0, 0, 0, 1, iABx)		/* OP_CLOSURE */
  ,opmode(0, 1, 0, 0, 1, iABC)		/* OP_VARARG */
- ,opmode(0, 0, 1, 0, 1, iABC)		/* OP_VARARGPREP */
+ ,opmode(0, 0, 0, 0, 1, iABC)		/* OP_GETVARG */
+ ,opmode(0, 0, 0, 0, 0, iABx)		/* OP_ERRNNIL */
+ ,opmode(0, 0, 0, 0, 0, iABC)		/* OP_VARARGPREP */
  ,opmode(0, 0, 0, 0, 0, iAx)		/* OP_EXTRAARG */
 };
+
+
+#define testITMode(m)	(luaP_opmodes[m] & (1 << 5))
+
+
+/*
+** Check whether instruction uses top. That happens for OP_VARARGPREP
+** and for instructions that use multiple values set by the previous
+** instruction.
+*/
+int luaP_isIT (Instruction i) {
+  OpCode op = GET_OPCODE(i);
+  switch (op) {
+    case OP_SETLIST:
+      return GETARG_vB(i) == 0;
+    case OP_VARARGPREP:
+      return 1;
+    default:
+      return testITMode(GET_OPCODE(i)) && GETARG_B(i) == 0;
+  }
+}
 

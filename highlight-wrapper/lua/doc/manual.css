@@ -7,6 +7,10 @@ pre, code {
 	font-size: 12pt ;
 }
 
+pre.api {
+	white-space: normal ;
+}
+
 span.apii {
 	color: gray ;
 	float: right ;

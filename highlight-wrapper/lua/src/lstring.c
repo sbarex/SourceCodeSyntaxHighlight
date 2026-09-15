@@ -25,22 +25,32 @@
 /*
 ** Maximum size for string table.
 */
-#define MAXSTRTB	cast_int(luaM_limitN(MAX_INT, TString*))
+#define MAXSTRTB	cast_int(luaM_limitN(INT_MAX, TString*))
+
+/*
+** Initial size for the string table (must be power of 2).
+** The Lua core alone registers ~50 strings (reserved words +
+** metaevent keys + a few others). Libraries would typically add
+** a few dozens more.
+*/
+#if !defined(MINSTRTABSIZE)
+#define MINSTRTABSIZE   128
+#endif
 
 
 /*
-** equality for long strings
+** generic equality for strings
 */
-int luaS_eqlngstr (TString *a, TString *b) {
-  size_t len = a->u.lnglen;
-  lua_assert(a->tt == LUA_VLNGSTR && b->tt == LUA_VLNGSTR);
-  return (a == b) ||  /* same instance or... */
-    ((len == b->u.lnglen) &&  /* equal length and ... */
-     (memcmp(getlngstr(a), getlngstr(b), len) == 0));  /* equal contents */
+int luaS_eqstr (TString *a, TString *b) {
+  size_t len1, len2;
+  const char *s1 = getlstr(a, len1);
+  const char *s2 = getlstr(b, len2);
+  return ((len1 == len2) &&  /* equal length and ... */
+          (memcmp(s1, s2, len1) == 0));  /* equal contents */
 }
 
 
-unsigned int luaS_hash (const char *str, size_t l, unsigned int seed) {
+static unsigned luaS_hash (const char *str, size_t l, unsigned seed) {
   unsigned int h = seed ^ cast_uint(l);
   for (; l > 0; l--)
     h ^= ((h<<5) + (h>>2) + cast_byte(str[l - 1]));
@@ -48,7 +58,7 @@ unsigned int luaS_hash (const char *str, size_t l, unsigned int seed) {
 }
 
 
-unsigned int luaS_hashlongstr (TString *ts) {
+unsigned luaS_hashlongstr (TString *ts) {
   lua_assert(ts->tt == LUA_VLNGSTR);
   if (ts->extra == 0) {  /* no hash? */
     size_t len = ts->u.lnglen;
@@ -136,28 +146,43 @@ void luaS_init (lua_State *L) {
 }
 
 
+size_t luaS_sizelngstr (size_t len, int kind) {
+  switch (kind) {
+    case LSTRREG:  /* regular long string */
+      /* don't need 'falloc'/'ud', but need space for content */
+      return offsetof(TString, falloc) + (len + 1) * sizeof(char);
+    case LSTRFIX:  /* fixed external long string */
+      /* don't need 'falloc'/'ud' */
+      return offsetof(TString, falloc);
+    default:  /* external long string with deallocation */
+      lua_assert(kind == LSTRMEM);
+      return sizeof(TString);
+  }
+}
+
 
 /*
 ** creates a new string object
 */
-static TString *createstrobj (lua_State *L, size_t l, int tag, unsigned int h) {
+static TString *createstrobj (lua_State *L, size_t totalsize, lu_byte tag,
+                              unsigned h) {
   TString *ts;
   GCObject *o;
-  size_t totalsize;  /* total size of TString object */
-  totalsize = sizelstring(l);
   o = luaC_newobj(L, tag, totalsize);
   ts = gco2ts(o);
   ts->hash = h;
   ts->extra = 0;
-  getstr(ts)[l] = '\0';  /* ending 0 */
   return ts;
 }
 
 
 TString *luaS_createlngstrobj (lua_State *L, size_t l) {
-  TString *ts = createstrobj(L, l, LUA_VLNGSTR, G(L)->seed);
+  size_t totalsize = luaS_sizelngstr(l, LSTRREG);
+  TString *ts = createstrobj(L, totalsize, LUA_VLNGSTR, G(L)->seed);
   ts->u.lnglen = l;
-  ts->shrlen = 0xFF;  /* signals that it is a long string */
+  ts->shrlen = LSTRREG;  /* signals that it is a regular long string */
+  ts->contents = cast_charp(ts) + offsetof(TString, falloc);
+  ts->contents[l] = '\0';  /* ending 0 */
   return ts;
 }
 
@@ -173,9 +198,9 @@ void luaS_remove (lua_State *L, TString *ts) {
 
 
 static void growstrtab (lua_State *L, stringtable *tb) {
-  if (l_unlikely(tb->nuse == MAX_INT)) {  /* too many strings? */
+  if (l_unlikely(tb->nuse == INT_MAX)) {  /* too many strings? */
     luaC_fullgc(L, 1);  /* try to free some... */
-    if (tb->nuse == MAX_INT)  /* still too many? */
+    if (tb->nuse == INT_MAX)  /* still too many? */
       luaM_error(L);  /* cannot even create a message... */
   }
   if (tb->size <= MAXSTRTB / 2)  /* can grow string table? */
@@ -194,7 +219,8 @@ static TString *internshrstr (lua_State *L, const char *str, size_t l) {
   TString **list = &tb->hash[lmod(h, tb->size)];
   lua_assert(str != NULL);  /* otherwise 'memcmp'/'memcpy' are undefined */
   for (ts = *list; ts != NULL; ts = ts->u.hnext) {
-    if (l == ts->shrlen && (memcmp(str, getshrstr(ts), l * sizeof(char)) == 0)) {
+    if (l == cast_uint(ts->shrlen) &&
+        (memcmp(str, getshrstr(ts), l * sizeof(char)) == 0)) {
       /* found! */
       if (isdead(g, ts))  /* dead (but not collected yet)? */
         changewhite(ts);  /* resurrect it */
@@ -206,8 +232,9 @@ static TString *internshrstr (lua_State *L, const char *str, size_t l) {
     growstrtab(L, tb);
     list = &tb->hash[lmod(h, tb->size)];  /* rehash with new size */
   }
-  ts = createstrobj(L, l, LUA_VSHRSTR, h);
-  ts->shrlen = cast_byte(l);
+  ts = createstrobj(L, sizestrshr(l), LUA_VSHRSTR, h);
+  ts->shrlen = cast(ls_byte, l);
+  getshrstr(ts)[l] = '\0';  /* ending 0 */
   memcpy(getshrstr(ts), str, l * sizeof(char));
   ts->u.hnext = *list;
   *list = ts;
@@ -256,7 +283,7 @@ TString *luaS_new (lua_State *L, const char *str) {
 }
 
 
-Udata *luaS_newudata (lua_State *L, size_t s, int nuvalue) {
+Udata *luaS_newudata (lua_State *L, size_t s, unsigned short nuvalue) {
   Udata *u;
   int i;
   GCObject *o;
@@ -270,5 +297,57 @@ Udata *luaS_newudata (lua_State *L, size_t s, int nuvalue) {
   for (i = 0; i < nuvalue; i++)
     setnilvalue(&u->uv[i].uv);
   return u;
+}
+
+
+struct NewExt {
+  ls_byte kind;
+  const char *s;
+   size_t len;
+  TString *ts;  /* output */
+};
+
+
+static void f_newext (lua_State *L, void *ud) {
+  struct NewExt *ne = cast(struct NewExt *, ud);
+  size_t size = luaS_sizelngstr(0, ne->kind);
+  ne->ts = createstrobj(L, size, LUA_VLNGSTR, G(L)->seed);
+}
+
+
+TString *luaS_newextlstr (lua_State *L,
+	          const char *s, size_t len, lua_Alloc falloc, void *ud) {
+  struct NewExt ne;
+  if (!falloc) {
+    ne.kind = LSTRFIX;
+    f_newext(L, &ne);  /* just create header */
+  }
+  else {
+    ne.kind = LSTRMEM;
+    if (luaD_rawrunprotected(L, f_newext, &ne) != LUA_OK) {  /* mem. error? */
+      (*falloc)(ud, cast_voidp(s), len + 1, 0);  /* free external string */
+      luaM_error(L);  /* re-raise memory error */
+    }
+    ne.ts->falloc = falloc;
+    ne.ts->ud = ud;
+  }
+  ne.ts->shrlen = ne.kind;
+  ne.ts->u.lnglen = len;
+  ne.ts->contents = cast_charp(s);
+  return ne.ts;
+}
+
+
+/*
+** Normalize an external string: If it is short, internalize it.
+*/
+TString *luaS_normstr (lua_State *L, TString *ts) {
+  size_t len = ts->u.lnglen;
+  if (len > LUAI_MAXSHORTLEN)
+    return ts;  /* long string; keep the original */
+  else {
+    const char *str = getlngstr(ts);
+    return internshrstr(L, str, len);
+  }
 }
 

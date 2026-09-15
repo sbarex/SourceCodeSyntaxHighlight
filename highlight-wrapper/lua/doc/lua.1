@@ -1,5 +1,5 @@
-.\" $Id: lua.man,v 1.14 2024/05/08 18:48:27 lhf Exp $
-.TH LUA 1 "$Date: 2024/05/08 18:48:27 $"
+.\" $Id: lua.man,v 1.14 2024/03/18 06:57:32 lhf Exp $
+.TH LUA 1 "$Date: 2024/03/18 06:57:32 $"
 .SH NAME
 lua \- Lua interpreter
 .SH SYNOPSIS
@@ -61,7 +61,7 @@ a syntax error is found.
 Before handling command line options and scripts,
 .B lua
 checks the contents of the environment variables
-.B LUA_INIT_5_4
+.B LUA_INIT_5_5
 and
 .BR LUA_INIT ,
 in that order.
@@ -72,7 +72,7 @@ then
 is executed.
 Otherwise, the contents are assumed to be a Lua statement and is executed.
 When
-.B LUA_INIT_5_4
+.B LUA_INIT_5_5
 is defined,
 .B LUA_INIT
 is ignored.
@@ -119,14 +119,14 @@ When defined,
 the version-specific variants take priority
 and the version-neutral variants are ignored.
 .TP
-.B LUA_INIT, LUA_INIT_5_4
+.B LUA_INIT, LUA_INIT_5_5
 Code to be executed before command line options and scripts.
 .TP
-.B LUA_PATH, LUA_PATH_5_4
+.B LUA_PATH, LUA_PATH_5_5
 Initial value of package.path,
 the path used by require to search for Lua loaders.
 .TP
-.B LUA_CPATH, LUA_CPATH_5_4
+.B LUA_CPATH, LUA_CPATH_5_5
 Initial value of package.cpath,
 the path used by require to search for C loaders.
 .SH EXIT STATUS

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <HTML>
 <HEAD>
-<TITLE>Lua 5.4 readme</TITLE>
+<TITLE>Lua 5.5 readme</TITLE>
 <LINK REL="stylesheet" TYPE="text/css" HREF="lua.css">
 <META HTTP-EQUIV="content-type" CONTENT="text/html; charset=iso-8859-1">
 <STYLE TYPE="text/css">
@@ -29,8 +29,8 @@ tt, kbd, code {
 <BODY>
 
 <H1>
-<A HREF="https://www.lua.org/"><IMG SRC="logo.gif" ALT="Lua"></A>
-Welcome to Lua 5.4
+<A HREF="https://www.lua.org/"><IMG SRC="logo.png" ALT="Lua"></A>
+Welcome to Lua 5.5
 </H1>
 
 <DIV CLASS="menubar">
@@ -73,7 +73,7 @@ and
 updated
 <A HREF="https://www.lua.org/docs.html">documentation</A>,
 especially the
-<A HREF="https://www.lua.org/manual/5.4/">reference manual</A>,
+<A HREF="https://www.lua.org/manual/5.5/">reference manual</A>,
 which may differ slightly from the
 <A HREF="contents.html">local copy</A>
 distributed in this package.
@@ -86,8 +86,8 @@ form.
 You need to build it before using it.
 Building Lua should be straightforward
 because
-Lua is implemented in pure ANSI C and compiles unmodified in all known
-platforms that have an ANSI C compiler.
+Lua is implemented in pure ISO C and compiles unmodified in all known
+platforms that have an ISO C compiler.
 Lua also compiles unmodified as C++.
 The instructions given below for building Lua are for Unix-like platforms,
 such as Linux and macOS.
@@ -109,7 +109,7 @@ Here are the details.
 <OL>
 <LI>
 Open a terminal window and move to
-the top-level directory, which is named <TT>lua-5.4.7</TT>.
+the top-level directory, which is named <TT>lua-5.5.1</TT>.
 The <TT>Makefile</TT> there controls both the build process and the installation process.
 <P>
 <LI>
@@ -120,7 +120,7 @@ The <TT>Makefile</TT> there controls both the build process and the installation
   The platforms currently supported are:
 <P>
 <P CLASS="display">
-   guess aix bsd c89 freebsd generic ios linux linux-readline macosx mingw posix solaris
+   guess aix bsd c89 freebsd generic ios linux macosx mingw posix solaris
 </P>
 <P>
   If your platform is listed, just do "<KBD>make xxx</KBD>", where xxx
@@ -141,12 +141,6 @@ and liblua.a (the library).
   after building Lua. This will run the interpreter and print its version.
 </OL>
 <P>
-If you're running Linux, try "<KBD>make linux-readline</KBD>" to build the interactive Lua interpreter with handy line-editing and history capabilities.
-If you get compilation errors,
-make sure you have installed the <TT>readline</TT> development package
-(which is probably named <TT>libreadline-dev</TT> or <TT>readline-devel</TT>).
-If you get link errors after that,
-then try "<KBD>make linux-readline MYLIBS=-ltermcap</KBD>".
 
 <H3>Installing Lua</H3>
 <P>
@@ -258,9 +252,9 @@ compiler:
   As mentioned above, you may edit <TT>src/luaconf.h</TT> to customize
   some features before building Lua.
 
-<H2><A NAME="changes">Changes since Lua 5.3</A></H2>
+<H2><A NAME="changes">Changes since Lua 5.4</A></H2>
 <P>
-Here are the main changes introduced in Lua 5.4.
+Here are the main changes introduced in Lua 5.5.
 The
 <A HREF="contents.html">reference manual</A>
 lists the
@@ -268,26 +262,27 @@ lists the
 
 <H3>Main changes</H3>
 <UL>
-<LI> new generational mode for garbage collection
-<LI> to-be-closed variables
-<LI> const variables
-<LI> userdata can have multiple user values
-<LI> new implementation for math.random
-<LI> warning system
-<LI> debug information about function arguments and returns
-<LI> new semantics for the integer 'for' loop
-<LI> optional 'init' argument to 'string.gmatch'
-<LI> new functions 'lua_resetthread' and 'coroutine.close'
-<LI> string-to-number coercions moved to the string library
-<LI> allocation function allowed to fail when shrinking a memory block
-<LI> new format '%p' in 'string.format'
-<LI> utf8 library accepts codepoints up to 2^31
+<LI> declarations for global variables
+<LI> named vararg tables
+<LI> for-loop variables are read only
+<LI> floats are printed in decimal with enough digits to be read back correctly.
+<LI> more levels for constructors
+<LI> table.create
+<LI> utf8.offset returns also final position of character
+<LI> external strings (that use memory not managed by Lua)
+<LI> new functions luaL_openselectedlibs and luaL_makeseed
+<LI> major garbage collections done incrementally
+<LI> more compact arrays (large arrays use about 60% less memory)
+<LI> lua.c loads 'readline' dynamically
+<LI> static (fixed) binaries (when loading a binary chunk in memory, Lua can reuse its original memory in some of the internal structures)
+<LI> dump and undump reuse all strings
+<LI> auxiliary buffer reuses buffer when it creates final string
 </UL>
 
 <H2><A NAME="license">License</A></H2>
 <P>
 <A HREF="https://opensource.org/osd">
-<IMG SRC="OSIApproved_100X125.png" ALIGN="right" ALT="[Open Source Initiative Approved License]" STYLE="padding-left: 1em" WIDTH=50>
+<IMG SRC="OSIApproved.png" ALIGN="right" ALT="[Open Source Initiative Approved License]" STYLE="padding-left: 1em" WIDTH=50>
 </A>
 Lua is free software distributed under the terms of the
 <A HREF="https://opensource.org/license/mit">MIT license</A>
@@ -302,7 +297,7 @@ For details, see the
 <A HREF="https://www.lua.org/license.html">license page</A>.
 
 <BLOCKQUOTE STYLE="padding-bottom: 0em">
-Copyright &copy; 1994&ndash;2024 Lua.org, PUC-Rio.
+Copyright &copy; 1994&ndash;2026 Lua.org, PUC-Rio.
 
 <P>
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -329,10 +324,10 @@ THE SOFTWARE.
 
 <P CLASS="footer">
 Last update:
-Wed May  8 21:56:16 UTC 2024
+Mon Jul 13 21:20:24 UTC 2026
 </P>
 <!--
-Last change: revised for Lua 5.4.7
+Last change: revised for Lua 5.5.1
 -->
 
 </BODY>
