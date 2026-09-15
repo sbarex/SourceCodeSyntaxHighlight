@@ -9,8 +9,8 @@
 
 #  Syntax Highlight
 
-The application offers a Quick Look Extension for macOS 10.15 Catalina and later for previewing source files.
-Inside it uses [Highlight](http://www.andre-simon.de/doku/highlight/en/highlight.php) to render source code with syntax highlighting.
+The application offers a Quick Look Extension for macOS 12.0 and later for previewing source files.
+Inside it uses [Highlight](http://www.andre-simon.de/doku/highlight/en/highlight.php) to render source code with syntax highlighting. (For macOS 11 and 10.15, the latest compatible version is 2.1.30).
 
 > **`Syntax Highlight` is distributed in the hope that it will be useful but WITHOUT ANY WARRANTY.**
 
@@ -115,6 +115,7 @@ The application can also handle some [plain files](#plain-files) **without exten
 - Azkaban flow files (`.flow`) as _`YAML`_
 - ATL files (`.atl`)
 - (G)AWK files (`.awk`)
+- Babashka (`.bb`) files _as `Clojure`_.
 - Bash Script files (`.bash`)
 - Bezel (`.bezel`) as _plain text_
 - BibTex (`.bib`)
@@ -145,6 +146,7 @@ The application can also handle some [plain files](#plain-files) **without exten
 - Eiffel project files (`.ecf`) _as `XML`_
 - Eiffel source files (`.e`, `.ex`, `.exs`)
 - Elixir files (`.ex`, `.exs`, `.heex`)
+- Enviroment files (`.env`) _as `INI`_
 - ePub [Navigation Center eXtended](https://idpf.org/epub/20/spec/OPF_2.0_latest.htm#Section2.4.1) (`.ncx`) _as XML_.
 - ePub [Open Packaging Format](https://idpf.org/epub/20/spec/OPF_2.0_latest.htm) (`.opf`) files _as XML_.
 - Erlang source files (`.erl`, `.hri`)
@@ -157,6 +159,7 @@ The application can also handle some [plain files](#plain-files) **without exten
 - Gleam (`.gleam`)
 - Golang source files (`.go`)
 - Google Earth KML Document files (`.kml`) _as `XML`_
+- GPS eXchange Format) (`.gpx`) _as `XML`_
 - Gradle source files (`.gradle`)
 - Graphics Language Transmission Format (`.gltf`) _as `JSON`_
 - Groovy source files (`.groovy`)
@@ -207,6 +210,7 @@ The application can also handle some [plain files](#plain-files) **without exten
 - Objective-C source files (`.m`)
 - Objective-C++ source files (`.mm`)
 - OCaml source files (`.ml`, `.mll`, `.mly`)
+- OpenSCAD files (`.scad`) _as `CPP`_.
 - OpenSSH RSA public key (`.pub`) _as plain text_
 - OpenTimelineIO files (`.otio`) _as JSON_
 - OpenType feature file specification (`.fea`)
@@ -231,6 +235,7 @@ The application can also handle some [plain files](#plain-files) **without exten
 - README files (`.readme`) _as plain text_
 - reStructuredText document (`.rst`)
 - Rez files (`.r`)
+- Robot framework (`.robot`) _as `python`_.
 - Ruby on Rails files (`.rhtml`, `.erb`, `.rjs`)
 - Ruby Gems file (`.gemfile`)
 - Ruby script (`.rb`, `.rbw`)
@@ -238,7 +243,7 @@ The application can also handle some [plain files](#plain-files) **without exten
 - SageMath files (`.sage`) _as `Python`_
 - SAS files (`.sas`)
 - SASS/SCSS files (`.scss`)
-- Scala source files (`.sc`, `.sbt`, `.scala`)
+- Scala source files (`.sc`, `.sbt`, `.scala`, `.mill`)
 - [Scala scale file format](https://huygens-fokker.org/scala/scl_format.html) (`.scl`) _as plain text_
 - Scheme source files (`.scm`, `.ss`, `.sls`, `.sps`, `.sld`, `.sch`) _as `Lisp`_
 - Shell script files (`.bashrc`, `.zshrc`, `.sh`)
@@ -248,7 +253,7 @@ The application can also handle some [plain files](#plain-files) **without exten
 - Standard ML source files (`.ml`)
 - Stata files (`.do`, `.ado`) _as plain text_
 - Steam app manifest files (`.acf`) _as plain text_.
-- Svelte (`.svelte`) _as `HTML`_
+- Svelte (`.svelte`)
 - Swift source files (`.swift`)
 - Symfony Twig files (`.twig`)
 - TCL source files (`.tcl`)

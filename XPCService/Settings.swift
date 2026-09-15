@@ -47,6 +47,8 @@ class SettingsBase: NSObject {
         
         static let tabSpaces = "tab-spaces"
         
+        static let indentGuides = "indent-guides"
+                
         static let extraArguments = "extra"
         
         static let fontFamily = "font-family"
@@ -240,6 +242,21 @@ class SettingsBase: NSObject {
         }
     }
     
+    // MARK: Indentation guides
+    
+    dynamic var isIndentGuidesDefined: Bool {
+        didSet {
+            requestRefreshOnChanged(oldValue: oldValue, newValue: isIndentGuidesDefined)
+        }
+    }
+    
+    /// Show the indentation guides.
+    dynamic var indentGuides: Bool {
+        didSet {
+            requestRefreshOnChanged(oldValue: oldValue, newValue: indentGuides)
+        }
+    }
+    
     // MARK: CSS
     
     dynamic var isCSSDefined: Bool {
@@ -367,7 +384,7 @@ class SettingsBase: NSObject {
     
     var isCustomized: Bool {
         get {
-            let state = isFormatDefined || isLightThemeNameDefined || isDarkThemeNameDefined || isLineNumbersDefined || isWordWrapDefined || isLineLengthDefined || isTabSpacesDefined || isArgumentsDefined || isCSSDefined || isFontSizeDefined || isVCSDefined
+            let state = isFormatDefined || isLightThemeNameDefined || isDarkThemeNameDefined || isLineNumbersDefined || isWordWrapDefined || isLineLengthDefined || isTabSpacesDefined || isIndentGuidesDefined || isArgumentsDefined || isCSSDefined || isFontSizeDefined || isVCSDefined
             
             guard !state else {
                 return true
@@ -419,6 +436,9 @@ class SettingsBase: NSObject {
         
         self.tabSpaces = 4
         self.isTabSpacesDefined = false
+        
+        self.indentGuides = false
+        self.isIndentGuidesDefined = false
         
         self.css = ""
         self.isCSSDefined = false
@@ -519,6 +539,11 @@ class SettingsBase: NSObject {
             self.isTabSpacesDefined = true
         }
         
+        if let s = settings[Settings.Key.indentGuides] as? Bool {
+            self.indentGuides = s
+            self.isIndentGuidesDefined = true
+        }
+        
         if let css = settings[SettingsBase.Key.customCSS] as? String {
             self.css = css
             self.isCSSDefined = !css.isEmpty
@@ -612,6 +637,9 @@ class SettingsBase: NSObject {
         }
         if isTabSpacesDefined {
             r[SettingsBase.Key.tabSpaces] = tabSpaces
+        }
+        if isIndentGuidesDefined {
+            r[Settings.Key.indentGuides] = indentGuides
         }
         
         if isArgumentsDefined {
@@ -990,23 +1018,31 @@ class Settings: SettingsBase {
     
     internal var plainSettings: [PlainSettings] = []
     
-    var app_version: String {
-        var title: String = "<a href='https://github.com/sbarex/SourceCodeSyntaxHighlight'>";
-        if let info = Bundle.main.infoDictionary {
-            title += (info["CFBundleExecutable"] as? String ?? "Syntax Highlight") + "</a>"
-            if let version = info["CFBundleShortVersionString"] as? String,
-                let build = info["CFBundleVersion"] as? String {
-                title += ", version \(version) (\(build))"
-            }
-            if let copy = info["NSHumanReadableCopyright"] as? String {
-                title += ".<br />\n\(copy.trimmingCharacters(in: CharacterSet(charactersIn: ". ")) + " with <span style='font-style: normal'>❤️</span>")"
-            }
+    static let appName: String = {
+        if let info = Bundle.main.infoDictionary, let name = info["CFBundleExecutable"] as? String {
+            return name
         } else {
-            title += "Syntax Highlight</a>"
+            return "Syntax Highlight"
         }
-        title += ".<br/>\nIf you like this app, <a href='https://www.buymeacoffee.com/sbarex'><strong>buy me a coffee</strong></a>!"
-        return title
-    }
+    }()
+    
+    static let appVersion: String = {
+        if let info = Bundle.main.infoDictionary, let version = info["CFBundleShortVersionString"] as? String, let build = info["CFBundleVersion"] as? String {
+            return "\(version) [\(build)]"
+        } else {
+            return ""
+        }
+    }()
+    
+    static let appCopyright: String = {
+        if let info = Bundle.main.infoDictionary, let copy = info["NSHumanReadableCopyright"] as? String {
+            return copy.trimmingCharacters(in: CharacterSet(charactersIn: ". "))
+        } else {
+            return "Developed by Sbarex"
+        }
+    }()
+    
+    static let appLink = "https://github.com/sbarex/SourceCodeSyntaxHighlight"
     
     dynamic var isAboutVisible: Bool = true {
         didSet {
@@ -1199,6 +1235,7 @@ class Settings: SettingsBase {
         self.isLineLengthDefined = true
         self.isLineNumbersDefined = true
         self.isTabSpacesDefined = true
+        self.isIndentGuidesDefined = true
         self.isArgumentsDefined = true
         self.isCSSDefined = true
         self.isVCSDefined = true
@@ -1557,6 +1594,10 @@ class Settings: SettingsBase {
         // Convert tab to spaces.
         if self.isTabSpacesDefined && self.tabSpaces > 0 {
             extraHLFlags.append("--replace-tabs=\(self.tabSpaces)")
+        }
+        
+        if self.isIndentGuidesDefined && self.indentGuides {
+            extraHLFlags.append("--indent-guide")
         }
         
         // Font family.

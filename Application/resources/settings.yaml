@@ -158,6 +158,8 @@ UTIs:
     com.symfony.twig:
         syntax: html
         
+    com.topografix.gpx: *xml
+        
     dyn.ah62d4rv4ge81n5xmsv6u:
         syntax: yaml
     com.unity.document:
@@ -195,6 +197,11 @@ UTIs:
         syntax: assembler
     dyn.ah62d4rv4ge80c65r:
         syntax: assembler
+        
+    org.babashka.source:
+        syntax: clj
+    dyn.ah62d4rv4ge80e2u:
+        syntax: clj
         
     org.bash.source:
         extra: --plug-in bash_functions
@@ -262,6 +269,11 @@ UTIs:
     org.opml.opml: *xml
     org.opml.source: *xml
     dyn.ah62d4rv4ge8086drru: *xml
+    
+    org.openscad.source:
+        syntax: cpp
+    dyn.ah62d4rv4ge81g25bqu:
+        syntax: cpp
     
     org.pddl.pddl:
         syntax: lisp
@@ -578,6 +590,14 @@ UTIs:
         syntax: gleam
     run.gleam.source:
         syntax: gleam
+        
+    # .mill
+    dyn.ah62d4rv4ge8044pqru:
+        syntax: scala
+        
+    # .env
+    dyn.ah62d4rv4ge80n5x0:
+        syntax: ini
 
         
 extensions:
@@ -608,6 +628,10 @@ extensions:
         
     astro:
         syntax: jsx
+    
+    #dyn.ah62d4rv4ge80e2u
+    bb:
+        syntax: clj
     
     bazel:
         syntax: txt
@@ -656,6 +680,10 @@ extensions:
     edl:
         syntax: txt
     
+    # dyn.ah62d4rv4ge80n5x0
+    env:
+        syntax: ini
+
     ex:
         syntax: elixir
     exs:
@@ -675,6 +703,8 @@ extensions:
         syntax: gleam
     
     gltf: *json
+    
+    gpx: *xml
     
     hcl:
         syntax: yaml
@@ -712,6 +742,10 @@ extensions:
     # dyn.ah62d4rv4ge8044dq
     mhl:
         syntax: txt
+    
+    #dyn.ah62d4rv4ge8044pqru
+    mill:
+        syntax: scala
     
     mjs:
         syntax: javascript
@@ -814,6 +848,9 @@ extensions:
     # dyn.ah62d4rv4ge81g22
     sc:
         syntax: scala
+        
+    scad:
+        syntax: cpp
         
     sch:
         syntax: lisp

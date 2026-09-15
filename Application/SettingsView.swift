@@ -39,6 +39,9 @@ class SettingsView: NSView, SettingsSplitViewElement {
     @IBOutlet weak var spacesCheckBox: NSButton!
     @IBOutlet weak var spacesSliderView: SliderView!
     
+    @IBOutlet weak var indentGuideCheckBox: NSButton!
+    @IBOutlet weak var indentGuideSwitch: NSSwitch!
+    
     @IBOutlet weak var argumentsCheckBox: NSButton!
     @IBOutlet weak var argumentsTextField: NSTextField!
     @IBOutlet weak var arguments2CheckBox: NSButton!
@@ -348,6 +351,9 @@ class SettingsView: NSView, SettingsSplitViewElement {
         updateCheckbox(spacesCheckBox, settings.isTabSpacesDefined, [spacesSliderView])
         spacesSliderView.integerValue = settings.tabSpaces
         
+        updateCheckbox(indentGuideCheckBox, settings.isIndentGuidesDefined, [indentGuideSwitch])
+        indentGuideSwitch.state = settings.indentGuides ? .on : .off
+        
         updateCheckbox(argumentsCheckBox, settings.isArgumentsDefined, [argumentsTextField])
         argumentsTextField.stringValue = settings.arguments
         if let s = settings as? SettingsFormat {
@@ -604,6 +610,10 @@ class SettingsView: NSView, SettingsSplitViewElement {
         settings?.tabSpaces = self.spacesSliderView.integerValue
     }
     
+    @IBAction func onIndentGuideChanged(_ sender: Any) {
+        settings?.indentGuides = self.indentGuideSwitch.state == .on
+    }
+    
     @IBAction func onArgumentsChanged(_ sender: Any) {
         settings?.arguments = self.argumentsTextField.stringValue
     }
@@ -805,6 +815,11 @@ class SettingsView: NSView, SettingsSplitViewElement {
     @IBAction func handleTabSpacesCheckbox(_ sender: NSButton) {
         guard let _ = self.settings as? SettingsFormat else { return }
         settings?.isTabSpacesDefined = sender.state == .on
+        handleCheckbox(sender)
+    }
+    @IBAction func handleIndentGuideCheckbox(_ sender: NSButton) {
+        guard let settings = self.settings as? SettingsFormat else { return }
+        settings.isIndentGuidesDefined = sender.state == .on
         handleCheckbox(sender)
     }
     @IBAction func handleArgumentsCheckbox(_ sender: NSButton) {

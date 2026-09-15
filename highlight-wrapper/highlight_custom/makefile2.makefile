@@ -7,7 +7,12 @@
 DESTDIR =
 
 # Root directory for final installation
-PREFIX = /usr
+PREFIX = ${BUILD_DIR}
+
+BUILD_DIR ?= build
+OBJ_DIR := $(BUILD_DIR)/obj
+LIB_DIR := $(BUILD_DIR)/lib
+BIN_DIR := $(BUILD_DIR)/bin
 
 # Data file directory
 data_dir = ${PREFIX}/share/
@@ -57,20 +62,20 @@ desktop_apps = ${data_dir}applications/
 desktop_icons = ${data_dir}icons/hicolor/256x256/apps/
 
 # Commands:
-GZIP=gzip -9f
+GZIP=gzip -9fn
 INSTALL_DATA=install -m644
 INSTALL_PROGRAM=install -m755
 MKDIR=mkdir -p -m 755
 RMDIR=rm -r -f
 
 all cli:
-	${MAKE} -C ./src -f ./makefile2.makefile HL_DATA_DIR=${hl_data_dir} HL_CONFIG_DIR=${hl_conf_dir}
+	${MAKE} -C ./src -f ./makefile2.makefile HL_DATA_DIR="${hl_data_dir}" HL_CONFIG_DIR="${hl_conf_dir}"
 
-lib lib-static:
-	${MAKE} -C ./src -f ./makefile2.makefile HL_DATA_DIR=${hl_data_dir} HL_CONFIG_DIR=${hl_conf_dir} lib-static
+lib lib-static libhighlight.a:
+	${MAKE} -C ./src -f ./makefile2.makefile HL_DATA_DIR="${hl_data_dir}" HL_CONFIG_DIR="${hl_conf_dir}" lib-static
 
 lib-shared:
-	${MAKE} -C ./src -f ./makefile2.makefile HL_DATA_DIR=${hl_data_dir} HL_CONFIG_DIR=${hl_conf_dir} PIC=1 lib-shared
+	${MAKE} -C ./src -f ./makefile2.makefile HL_DATA_DIR="${hl_data_dir}" HL_CONFIG_DIR="${hl_conf_dir}" PIC=1 lib-shared
 
 gui:
 	${MAKE} -C ./src -f ./makefile2.makefile HL_DATA_DIR=\"${hl_data_dir}\" HL_CONFIG_DIR=\"${hl_conf_dir}\" HL_DOC_DIR=\"${hl_doc_dir}\" gui-qt
@@ -145,7 +150,7 @@ install:
 	${INSTALL_DATA} ./extras/themes-resources/css-themes/* ${DESTDIR}${examples_dir}themes-resources/css-themes
 	${INSTALL_DATA} ./extras/highlight_pipe.* ${DESTDIR}${examples_dir}
 	${INSTALL_DATA} ./extras/*.py ${DESTDIR}${examples_dir}
-	${INSTALL_PROGRAM} ./src/${BUILD_DIR}/highlight ${DESTDIR}${bin_dir}
+	${INSTALL_PROGRAM} ${BIN_DIR}/highlight ${DESTDIR}${bin_dir}
 
 	@echo
 	@echo "Done."
@@ -170,7 +175,13 @@ install-gui:
 	${INSTALL_PROGRAM} ./src/highlight-gui ${DESTDIR}${bin_dir}
 
 install-lib-shared:
-	${INSTALL_DATA} ./src/libhighlight.so.4.0 ${DESTDIR}${lib_dir}
+	${MKDIR} ${DESTDIR}${lib_dir}
+	${INSTALL_DATA} $(LIB_DIR)/libhighlight.so.4.0 ${DESTDIR}${lib_dir}
+	${INSTALL_DATA} $(LIB_DIR)/libhighlight.dylib ${DESTDIR}${lib_dir}
+
+install-lib-static:
+	${MKDIR} ${DESTDIR}${lib_dir}
+	${INSTALL_DATA} $(LIB_DIR)/libhighlight.a ${DESTDIR}${lib_dir}
 
 uninstall:
 	@echo "Removing highlight files from system..."
@@ -214,6 +225,10 @@ help:
 	@echo "uninstall        Remove highlight files from system."
 	@echo
 	@echo "See src/makefile for compilation and linking options."
+	@echo
+	@echo "The latest highlight packages also include CMake and Meson"
+	@echo "scripts to compile and install highlight."
+
 
 # Target needed for redhat 9.0 rpmbuild
 install-strip:

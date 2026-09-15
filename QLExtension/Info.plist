@@ -117,6 +117,7 @@
 				<string>com.unknown.lhs</string>
 				<string>com.seriflabs.xmp</string>
 				<string>com.symfony.twig</string>
+				<string>com.topografix.gpx</string>
 				<string>com.unity.document</string>
 				<string>dev.nix.source</string>
 				<string>dev.svelte.source</string>
@@ -132,6 +133,7 @@
 				<string>org.arduino.ino-source</string>
 				<string>org.arduino.source</string>
 				<string>org.asm.source</string>
+				<string>org.babashka.source</string>
 				<string>org.bash.source</string>
 				<string>org.bazel.source</string>
 				<string>org.clojure</string>
@@ -204,6 +206,7 @@
 				<string>org.ocaml.ocaml-interface</string>
 				<string>org.ocaml.ocaml-source</string>
 				<string>org.omg.ecore</string>
+				<string>org.openscad.source</string>
 				<string>org.opml.opml</string>
 				<string>org.opml.source</string>
 				<string>org.perl.test-script</string>
@@ -255,6 +258,7 @@
 				<string>org.vim.pch++-file</string>
 				<string>org.vim.sql-file</string>
 				<string>org.vim.tex-file</string>
+				<string>org.vim.toml-file</string>
 				<string>org.vim.vb-file</string>
 				<string>org.vim.vba-file</string>
 				<string>org.vim.vim-script</string>
@@ -450,6 +454,11 @@
 				<string>dyn.ah62d4rv4ge806252</string>
 				<string>dyn.ah62d4rv4ge81e3p2</string>
 				<string>dyn.ah62d4rv4ge81e3p2ta</string>
+				<string>dyn.ah62d4rv4ge81e55cr74g8</string>
+				<string>dyn.ah62d4rv4ge8044pqru</string>
+				<string>dyn.ah62d4rv4ge80e2u</string>
+				<string>dyn.ah62d4rv4ge81g25bqu</string>
+				<string>dyn.ah62d4rv4ge80n5x0</string>
 			</array>
 			<key>QLSupportsSearchableItems</key>
 			<false/>

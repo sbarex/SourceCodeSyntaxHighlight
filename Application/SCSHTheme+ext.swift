@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import UniformTypeIdentifiers
 
 extension SCSHTheme {
     var attributedDesc: NSAttributedString {
@@ -44,7 +45,11 @@ extension SCSHTheme {
         let savePanel = NSSavePanel()
         savePanel.canCreateDirectories = true
         savePanel.showsTagField = false
-        savePanel.allowedFileTypes = ["theme"]
+        if #available(macOS 12.0, *) {
+            savePanel.allowedContentTypes = [UTType(filenameExtension: "theme")!]
+        } else {
+            savePanel.allowedFileTypes = ["theme"]
+        }
         savePanel.isExtensionHidden = false
         savePanel.nameFieldStringValue = "\(self.name).theme"
         savePanel.level = NSWindow.Level(rawValue: Int(CGWindowLevelForKey(.modalPanelWindow)))

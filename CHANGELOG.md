@@ -1,6 +1,22 @@
 Changelog
 =======
 
+### 2.1.31 (80)
+**This release require macOS 12.0 or later.**
+
+New Features:
+- Update Highlight to release 4.21.
+- Update Lua to release 5.5.1.
+- Support for show indent guide lines.
+- Support for `.robot` _as `python`_.
+- Support for the GPS eXchange Format (`.gpx`) _as `XML`_.
+- Support for files (`.mill`) _as `Scala`_.
+- Support for Babashka files (`.bb`) _as `Clojure`_.
+- Support for OpenSCAD files (`.scad`) _as `CPP`_.
+- Support for `.env` files _as `INI`_.
+- `Svelte` supported with a native language definition.
+
+
 ### 2.1.30 (79)
 New Features:
 - App is now codesigned and notarized. 

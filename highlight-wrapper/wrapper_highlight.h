@@ -68,6 +68,8 @@ typedef struct HTheme {
     HThemeProperty *lineNum;
     HThemeProperty *operatorProp;
     HThemeProperty *interpolation;
+    
+    HThemeProperty *indentGuide;
 
     HThemeProperty *hover;
     HThemeProperty *error;

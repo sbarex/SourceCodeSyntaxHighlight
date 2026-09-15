@@ -96,6 +96,8 @@ public class SCSHTheme: NSObject, Sequence {
         case lspRegexp
         case lspOperator
         
+        case indentGuide
+        
         case keyword(index: Int)
         
         public static var allCases: [PropertyName] {
@@ -130,6 +132,8 @@ public class SCSHTheme: NSObject, Sequence {
                 .lspNumber,
                 .lspRegexp,
                 .lspOperator,
+                
+                .indentGuide,
 
                 .keyword(index: 0),
                 .keyword(index: 1),
@@ -185,6 +189,8 @@ public class SCSHTheme: NSObject, Sequence {
             case .lineNum: return "Line number"
             case .operator: return "Operator"
             case .interpolation: return "Interpolation"
+                
+            case .indentGuide: return "IndentGuide"
             
             case .keyword(let index): return "Keyword \(index+1)"
                 
@@ -226,6 +232,8 @@ public class SCSHTheme: NSObject, Sequence {
             case .lspError: return "Error"
             case .lspErrorMessage: return "ErrorMessage"
                 
+            case .indentGuide: return "IndentGuide"
+                
             case .keyword(let index): return "Keyword \(index+1)"
                 
             case .lspType: return "type"
@@ -262,6 +270,9 @@ public class SCSHTheme: NSObject, Sequence {
             case .interpolation:
                 return ["hl", "ipl"]
                 
+            case .indentGuide:
+                return ["hl", "gui"]
+            
             case .keyword(let index):
                 return ["hl", "kw" + String(UnicodeScalar(UInt8(97 + index)))]
                 
@@ -310,6 +321,9 @@ public class SCSHTheme: NSObject, Sequence {
                 self = .operator
             case "ipl":
                 self = .interpolation
+                
+            case "gui":
+                self = .indentGuide
                 
             case "sta":
                 self = .lspType
@@ -889,6 +903,9 @@ public class SCSHTheme: NSObject, Sequence {
             return self.operatorProp
         case .interpolation:
             return self.interpolation
+            
+        case .indentGuide:
+            return self.indentGuide
                 
         case .lspHover:
             return self.lspHover
@@ -945,6 +962,8 @@ public class SCSHTheme: NSObject, Sequence {
     let operatorProp: Property
     let interpolation: Property
     
+    let indentGuide: CanvasProperty?
+    
     let lspHover: Property
     let lspError: Property
     let lspErrorMessage: Property
@@ -983,7 +1002,7 @@ public class SCSHTheme: NSObject, Sequence {
         }
     }
     
-    public init(name: String, desc: String, categories: Set<String>, plain: Property, canvas: CanvasProperty, number: Property, string: Property, escape: Property, preProcessor: Property, stringPreProc: Property, blockComment: Property, lineComment: Property, lineNum: Property, operatorProp: Property, interpolation: Property, hover: Property, error: Property, errorMessage: Property, lspType: Property, lspClass: Property, lspStruct: Property, lspInterface: Property, lspParameter: Property, lspVariable: Property, lspEnumMember: Property, lspFunction: Property, lspMethod: Property, lspKeyword: Property, lspNumber: Property, lspRegexp: Property, lspOperator: Property, keywords: [Property]) {
+    public init(name: String, desc: String, categories: Set<String>, plain: Property, canvas: CanvasProperty, number: Property, string: Property, escape: Property, preProcessor: Property, stringPreProc: Property, blockComment: Property, lineComment: Property, lineNum: Property, operatorProp: Property, interpolation: Property, hover: Property, error: Property, errorMessage: Property, lspType: Property, lspClass: Property, lspStruct: Property, lspInterface: Property, lspParameter: Property, lspVariable: Property, lspEnumMember: Property, lspFunction: Property, lspMethod: Property, lspKeyword: Property, lspNumber: Property, lspRegexp: Property, lspOperator: Property, keywords: [Property], indentGuide: CanvasProperty? = nil) {
         self.name = name
         self.desc = desc
         self.categories = categories
@@ -1000,6 +1019,8 @@ public class SCSHTheme: NSObject, Sequence {
         self.lineNum = lineNum
         self.operatorProp = operatorProp
         self.interpolation = interpolation
+        
+        self.indentGuide = indentGuide
         
         self.lspHover = hover
         self.lspError = error
@@ -1036,6 +1057,8 @@ public class SCSHTheme: NSObject, Sequence {
         self.operatorProp.theme = self
         self.interpolation.theme = self
         
+        self.indentGuide?.theme = self
+        
         self.lspHover.theme = self
         self.lspError.theme = self
         self.lspErrorMessage.theme = self
@@ -1059,7 +1082,7 @@ public class SCSHTheme: NSObject, Sequence {
     }
     
     convenience public init(name: String) {
-        self.init(name: name, desc: "", categories: ["light"], plain: Property(color: "#000000"), canvas: CanvasProperty(color: "#ffffff"), number: Property(), string: Property(), escape: Property(), preProcessor: Property(), stringPreProc: Property(), blockComment: Property(), lineComment: Property(), lineNum: Property(), operatorProp: Property(), interpolation: Property(), hover: Property(), error: Property(), errorMessage: Property(), lspType: Property(), lspClass: Property(), lspStruct: Property(), lspInterface: Property(), lspParameter: Property(), lspVariable: Property(), lspEnumMember: Property(), lspFunction: Property(), lspMethod: Property(), lspKeyword: Property(), lspNumber: Property(), lspRegexp: Property(), lspOperator: Property(), keywords: [])
+        self.init(name: name, desc: "", categories: ["light"], plain: Property(color: "#000000"), canvas: CanvasProperty(color: "#ffffff"), number: Property(), string: Property(), escape: Property(), preProcessor: Property(), stringPreProc: Property(), blockComment: Property(), lineComment: Property(), lineNum: Property(), operatorProp: Property(), interpolation: Property(), hover: Property(), error: Property(), errorMessage: Property(), lspType: Property(), lspClass: Property(), lspStruct: Property(), lspInterface: Property(), lspParameter: Property(), lspVariable: Property(), lspEnumMember: Property(), lspFunction: Property(), lspMethod: Property(), lspKeyword: Property(), lspNumber: Property(), lspRegexp: Property(), lspOperator: Property(), keywords: [], indentGuide: nil)
     }
     
     convenience public init?(dict dictionary: [String: Any]?) {
@@ -1106,6 +1129,8 @@ public class SCSHTheme: NSObject, Sequence {
         guard let interpolation = Property(dict: dict[PropertyName.interpolation.name] as? [String: Any]) else {
             return nil
         }
+        
+        let indentGuide = CanvasProperty(dict: dict[PropertyName.indentGuide.name] as? [String: Any])
         
         guard let lspHover = Property(dict: dict[PropertyName.lspHover.name] as? [String: Any]) else {
             return nil
@@ -1166,7 +1191,7 @@ public class SCSHTheme: NSObject, Sequence {
             }
         }
         
-        self.init(name: name, desc: desc, categories: categories, plain: plain, canvas: canvas, number: number, string: string, escape: escape, preProcessor: preProcessor, stringPreProc: stringPreProc, blockComment: blockComment, lineComment: lineComment, lineNum: lineNum, operatorProp: operatorProp, interpolation: interpolation, hover: lspHover, error: lspError, errorMessage: lspErrorMessage, lspType: lspType, lspClass: lspClass, lspStruct: lspStruct, lspInterface: lspInterface, lspParameter: lspParameter, lspVariable: lspVariable, lspEnumMember: lspEnumMember, lspFunction: lspFunction, lspMethod: lspMethod, lspKeyword: lspKeyword, lspNumber: lspNumber, lspRegexp: lspRegexp, lspOperator: lspOperator, keywords: keywords)
+        self.init(name: name, desc: desc, categories: categories, plain: plain, canvas: canvas, number: number, string: string, escape: escape, preProcessor: preProcessor, stringPreProc: stringPreProc, blockComment: blockComment, lineComment: lineComment, lineNum: lineNum, operatorProp: operatorProp, interpolation: interpolation, hover: lspHover, error: lspError, errorMessage: lspErrorMessage, lspType: lspType, lspClass: lspClass, lspStruct: lspStruct, lspInterface: lspInterface, lspParameter: lspParameter, lspVariable: lspVariable, lspEnumMember: lspEnumMember, lspFunction: lspFunction, lspMethod: lspMethod, lspKeyword: lspKeyword, lspNumber: lspNumber, lspRegexp: lspRegexp, lspOperator: lspOperator, keywords: keywords, indentGuide: indentGuide)
         
         self.path = dict["path"] as? String ?? ""
         self.isDirty = false
@@ -1176,7 +1201,7 @@ public class SCSHTheme: NSObject, Sequence {
     }
     
     public func toDictionary() -> [String: AnyHashable] {
-        let dict: [String: AnyHashable] = [
+        var dict: [String: AnyHashable] = [
             "name": name,
             "desc": desc,
             "categories": categories,
@@ -1216,6 +1241,10 @@ public class SCSHTheme: NSObject, Sequence {
             
             "standalone": isStandalone,
         ]
+        
+        if let indentGuide {
+            dict[PropertyName.indentGuide.name] = indentGuide.toDictionary()
+        }
         
         return dict
     }
@@ -1269,6 +1298,10 @@ public class SCSHTheme: NSObject, Sequence {
         s += PropertyName.operator.luaName + " = " + operatorProp.output() + "\n"
         s += PropertyName.interpolation.luaName + " = " + interpolation.output() + "\n"
         
+        if let indentGuide {
+            s += PropertyName.indentGuide.luaName + " = " + indentGuide.output() + "\n"
+        }
+        
         s += PropertyName.lspHover.luaName + " = " + lspHover.output() + "\n"
         s += PropertyName.lspError.luaName + " = " + lspError.output() + "\n"
         s += PropertyName.lspErrorMessage.luaName + " = " + lspErrorMessage.output() + "\n"
@@ -1319,6 +1352,10 @@ public class SCSHTheme: NSObject, Sequence {
         css += formatPropertyCss(.lineNum, self.lineNum)
         css += formatPropertyCss(.operator, self.operatorProp)
         css += formatPropertyCss(.interpolation, self.interpolation)
+        
+        if let indentGuide {
+            css += formatPropertyCss(.indentGuide, indentGuide)
+        }
         
         for (i, keyword) in self.keywords.enumerated() {
             css += formatPropertyCss(.keyword(index: i), keyword)

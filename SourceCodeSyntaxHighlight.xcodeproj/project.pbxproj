@@ -14,11 +14,11 @@
 		8304B0B8238FA897007A455C /* TaskResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8304B0B6238FA897007A455C /* TaskResult.swift */; };
 		8304B0B9238FA920007A455C /* SCSHError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8359239C23570C52001506B6 /* SCSHError.swift */; };
 		8304B0BD238FBCC4007A455C /* SCSHBaseXPCService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8304B0BB238FBCC4007A455C /* SCSHBaseXPCService.swift */; };
-		830A2DAF2626C50B00C89F29 /* html_editor.lua in Copy extra plugins */ = {isa = PBXBuildFile; fileRef = 830A2DA82626C39A00C89F29 /* html_editor.lua */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		830A2DAF2626C50B00C89F29 /* html_editor.lua in Copy extra plugins */ = {isa = PBXBuildFile; fileRef = 830A2DA82626C39A00C89F29 /* html_editor.lua */; };
 		830D15542378182800D5535C /* SCSHTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835923EB235A3A85001506B6 /* SCSHTheme.swift */; };
 		830D15552378419F00D5535C /* NSColor+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835923E9235A022C001506B6 /* NSColor+ext.swift */; };
 		830D1559237961C900D5535C /* WarningUTIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830D1558237961C900D5535C /* WarningUTIViewController.swift */; };
-		830E831B273E9EC800B15859 /* debug.lua in Copy extra plugins */ = {isa = PBXBuildFile; fileRef = 830E8318273E9E6C00B15859 /* debug.lua */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		830E831B273E9EC800B15859 /* debug.lua in Copy extra plugins */ = {isa = PBXBuildFile; fileRef = 830E8318273E9E6C00B15859 /* debug.lua */; };
 		8311D9C7235DE6D7006DC138 /* Data+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8311D9C6235DE6D7006DC138 /* Data+Ext.swift */; };
 		8311D9C8235DE6D7006DC138 /* Data+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8311D9C6235DE6D7006DC138 /* Data+Ext.swift */; };
 		8319450926383626002E5B86 /* dos2unix in Resources */ = {isa = PBXBuildFile; fileRef = 8319450826383626002E5B86 /* dos2unix */; };
@@ -38,7 +38,7 @@
 		831FD81E2691FF6400C314CE /* UTI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831D5F5A237F1E87007340E7 /* UTI.swift */; };
 		831FD8202691FF6500C314CE /* UTI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831D5F5A237F1E87007340E7 /* UTI.swift */; };
 		831FD821269203EF00C314CE /* UTI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831D5F5A237F1E87007340E7 /* UTI.swift */; };
-		832700BE2C0EEFAF00DD3E9D /* about.lua in Copy extra plugins */ = {isa = PBXBuildFile; fileRef = 832700BB2C0EE86700DD3E9D /* about.lua */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		832700BE2C0EEFAF00DD3E9D /* about.lua in Copy extra plugins */ = {isa = PBXBuildFile; fileRef = 832700BB2C0EE86700DD3E9D /* about.lua */; };
 		832F7E5E2E054B9F0015DBBC /* Yams in Frameworks */ = {isa = PBXBuildFile; productRef = 832F7E5D2E054B9F0015DBBC /* Yams */; };
 		83408DDE23804A0700128B0C /* examples in Resources */ = {isa = PBXBuildFile; fileRef = 83408DDD23804A0600128B0C /* examples */; };
 		83408DE02380505000128B0C /* CSSControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83408DDF2380505000128B0C /* CSSControlView.swift */; };
@@ -104,7 +104,7 @@
 		8362582925A9F3E100475069 /* Syntax Highlight XPC Render.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = 838F465A238D813500268B4A /* Syntax Highlight XPC Render.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		83632E812F8E2BA5008B95DE /* Yams in Frameworks */ = {isa = PBXBuildFile; productRef = 83632E802F8E2BA5008B95DE /* Yams */; };
 		836A09E0270442F30067AF0D /* languages.json in CopyFiles */ = {isa = PBXBuildFile; fileRef = 836A09DE270441680067AF0D /* languages.json */; };
-		836CBCD92712221600A228AE /* vcs.lua in Copy extra plugins */ = {isa = PBXBuildFile; fileRef = 836DAC07270AD7A900053043 /* vcs.lua */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		836CBCD92712221600A228AE /* vcs.lua in Copy extra plugins */ = {isa = PBXBuildFile; fileRef = 836DAC07270AD7A900053043 /* vcs.lua */; };
 		836CBCDC2712C70200A228AE /* VCSSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836CBCDB2712C70200A228AE /* VCSSettingsViewController.swift */; };
 		836CD780283024BF00F074CB /* Yams in Frameworks */ = {isa = PBXBuildFile; productRef = 836CD77F283024BF00F074CB /* Yams */; };
 		836CD783283024D000F074CB /* Yams in Frameworks */ = {isa = PBXBuildFile; productRef = 836CD782283024D000F074CB /* Yams */; };
@@ -771,7 +771,6 @@
 		83B4642925A7198B00DE0CF4 /* UTIInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UTIInfoViewController.swift; sourceTree = "<group>"; };
 		83B4644325A76D9700DE0CF4 /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		83B4646825A779FD00DE0CF4 /* highlight-wrapper.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = "highlight-wrapper.xcodeproj"; sourceTree = "<group>"; };
-		83B47B9C25A77A5600DE0CF4 /* wrapper_highlight.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wrapper_highlight.h; sourceTree = "<group>"; };
 		83B47BB725A77AEE00DE0CF4 /* highlight-wrapper.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "highlight-wrapper.xcodeproj"; path = "highlight-wrapper/highlight-wrapper.xcodeproj"; sourceTree = "<group>"; };
 		83B47BC225A77C1000DE0CF4 /* SourceCodeSyntaxHighlight-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SourceCodeSyntaxHighlight-Bridging-Header.h"; sourceTree = "<group>"; };
 		83B47BC825A77C6F00DE0CF4 /* libwrapper_highlight.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libwrapper_highlight.dylib; path = highlight/libwrapper_highlight.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1455,7 +1454,6 @@
 				83B3CBA12F8E65640021057D /* entitlements.entitlements */,
 				8361B16E263A962300B85467 /* .gitignore */,
 				83B4646825A779FD00DE0CF4 /* highlight-wrapper.xcodeproj */,
-				83B47B9C25A77A5600DE0CF4 /* wrapper_highlight.h */,
 			);
 			path = "highlight-wrapper";
 			sourceTree = "<group>";
@@ -1700,7 +1698,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1640;
-				LastUpgradeCheck = 1640;
+				LastUpgradeCheck = 2700;
 				ORGANIZATIONNAME = sbarex;
 				TargetAttributes = {
 					832F7E552E054B8E0015DBBC = {
@@ -2115,7 +2113,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				INSTALL_PATH = "";
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.sbarex.SourceCodeSyntaxHighlight.settings-check";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				RUNTIME_EXCEPTION_ALLOW_DYLD_ENVIRONMENT_VARIABLES = NO;
@@ -2146,7 +2144,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				INSTALL_PATH = "";
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.sbarex.SourceCodeSyntaxHighlight.settings-check";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				RUNTIME_EXCEPTION_ALLOW_DYLD_ENVIRONMENT_VARIABLES = NO;
@@ -2220,6 +2218,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_SWIFT_FLAGS = "";
 				SDKROOT = macosx;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -2280,6 +2279,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
@@ -2295,7 +2295,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 79;
+				CURRENT_PROJECT_VERSION = 80;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = D5VMCLD3ZK;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -2304,6 +2304,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
+				HEADER_SEARCH_PATHS = "\"$(PROJECT_DIR)/highlight-wrapper\"";
 				INFOPLIST_FILE = Application/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -2315,8 +2316,8 @@
 					"$(inherited)",
 					"\"$(BUILT_PRODUCTS_DIR)/highlight\"",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 2.1.30;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 2.1.31;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2335,7 +2336,7 @@
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 79;
+				CURRENT_PROJECT_VERSION = 80;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = D5VMCLD3ZK;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -2344,6 +2345,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
+				HEADER_SEARCH_PATHS = "\"$(PROJECT_DIR)/highlight-wrapper\"";
 				INFOPLIST_FILE = Application/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -2355,8 +2357,8 @@
 					"$(inherited)",
 					"\"$(BUILT_PRODUCTS_DIR)/highlight\"",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 2.1.30;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 2.1.31;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2373,7 +2375,7 @@
 				CODE_SIGN_ENTITLEMENTS = QLExtension/QLExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 79;
+				CURRENT_PROJECT_VERSION = 80;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = D5VMCLD3ZK;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -2387,8 +2389,8 @@
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 2.1.30;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 2.1.31;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.QuickLookExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2405,7 +2407,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 79;
+				CURRENT_PROJECT_VERSION = 80;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = D5VMCLD3ZK;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -2419,8 +2421,8 @@
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 2.1.30;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 2.1.31;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.QuickLookExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2438,7 +2440,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 79;
+				CURRENT_PROJECT_VERSION = 80;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = D5VMCLD3ZK;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -2448,8 +2450,8 @@
 					"$(LD_RUNPATH_SEARCH_PATHS_$(IS_MACCATALYST)_$(_BOOL_$(SKIP_INSTALL)))",
 				);
 				LIBRARY_SEARCH_PATHS = "\"$(BUILT_PRODUCTS_DIR)/highlight\"";
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 2.1.30;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 2.1.31;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.XPCService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2469,7 +2471,7 @@
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 79;
+				CURRENT_PROJECT_VERSION = 80;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = D5VMCLD3ZK;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -2479,8 +2481,8 @@
 					"$(LD_RUNPATH_SEARCH_PATHS_$(IS_MACCATALYST)_$(_BOOL_$(SKIP_INSTALL)))",
 				);
 				LIBRARY_SEARCH_PATHS = "\"$(BUILT_PRODUCTS_DIR)/highlight\"";
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 2.1.30;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 2.1.31;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.XPCService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2511,7 +2513,7 @@
 				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
 				ENABLE_RESOURCE_ACCESS_PHOTO_LIBRARY = NO;
 				INSTALL_PATH = "\"$(BUILT_PRODUCTS_DIR)/Syntax Highlight.app/Contents/Resources\"";
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.cli;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2544,7 +2546,7 @@
 				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
 				ENABLE_RESOURCE_ACCESS_PHOTO_LIBRARY = NO;
 				INSTALL_PATH = "\"$(BUILT_PRODUCTS_DIR)/Syntax Highlight.app/Contents/Resources\"";
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.cli;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2567,7 +2569,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 79;
+				CURRENT_PROJECT_VERSION = 80;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = D5VMCLD3ZK;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -2580,8 +2582,8 @@
 					"$(inherited)",
 					"@loader_path/../../../../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 2.1.30;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 2.1.31;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.XPCRender;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2602,7 +2604,7 @@
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 79;
+				CURRENT_PROJECT_VERSION = 80;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = D5VMCLD3ZK;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -2615,8 +2617,8 @@
 					"$(inherited)",
 					"@loader_path/../../../../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 2.1.30;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 2.1.31;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.XPCRender;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2639,7 +2641,7 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2654,7 +2656,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2669,7 +2671,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 79;
+				CURRENT_PROJECT_VERSION = 80;
 				DEVELOPMENT_TEAM = D5VMCLD3ZK;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
@@ -2683,8 +2685,8 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 15.2;
-				MARKETING_VERSION = 2.1.30;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 2.1.31;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.ShortcutCommand;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
@@ -2703,7 +2705,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 79;
+				CURRENT_PROJECT_VERSION = 80;
 				DEVELOPMENT_TEAM = D5VMCLD3ZK;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
@@ -2717,8 +2719,8 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 15.2;
-				MARKETING_VERSION = 2.1.30;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 2.1.31;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.ShortcutCommand;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
@@ -2739,7 +2741,7 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2754,7 +2756,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";

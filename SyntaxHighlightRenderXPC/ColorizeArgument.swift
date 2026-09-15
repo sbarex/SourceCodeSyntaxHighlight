@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import AppKit
 
 struct ColorizeArguments {
     /// Path of the `highlight` executable.
@@ -71,7 +72,11 @@ struct ColorizeArguments {
         }
         
         if custom_settings.isAboutVisible {
-            env["SH_VERSION"] = custom_settings.app_version
+            env["SH_NAME"] = Settings.appName
+            env["SH_VERSION"] = Settings.appVersion
+            env["SH_COPYRIGHT"] = Settings.appCopyright
+            env["SH_URL"] = Settings.appLink
+            
             hlArguments.arguments.append("--plug-in=about")
             try? "Highlight plugin: about.lua".appendLine(to: custom_settings.logFile)
         }

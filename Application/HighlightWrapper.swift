@@ -8,6 +8,7 @@
 
 import Cocoa
 import Syntax_Highlight_XPC_Service
+import UniformTypeIdentifiers
 
 
 enum HighlightWrapperError: Error {
@@ -272,7 +273,11 @@ class HighlightWrapper {
         let openPanel = NSOpenPanel()
         openPanel.canCreateDirectories = false
         openPanel.showsTagField = false
-        openPanel.allowedFileTypes = ["theme"]
+        if #available(macOS 12.0, *) {
+            openPanel.allowedContentTypes = [UTType(filenameExtension: "theme")!]
+        } else {
+            openPanel.allowedFileTypes = ["theme"]
+        }
         openPanel.isExtensionHidden = false
         openPanel.level = NSWindow.Level(rawValue: Int(CGWindowLevelForKey(.modalPanelWindow)))
         

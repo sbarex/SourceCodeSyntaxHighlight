@@ -26,13 +26,13 @@ function syntaxUpdate(desc)
 
     VCS_DIFF = VCS_DIFF .. ' '
     for range_src, range_dst in VCS_DIFF:gmatch("(%-.-) (%+.-) ") do
-        range_src = range_src:sub(2)
-	    if not string.find(range_src, ",") then
-            range_src = range_src .. ",1"
+        local range_src1 = range_src:sub(2)
+	    if not string.find(range_src1, ",") then
+            range_src1 = range_src1 .. ",1"
         end
-        range_src  = range_src .. ","
+        range_src1  = range_src1 .. ","
         local str2 = {}
-        for i in range_src:gmatch("(%d-),") do
+        for i in range_src1:gmatch("(%d-),") do
             str2[#str2 + 1] = tonumber(i)
             
         end 

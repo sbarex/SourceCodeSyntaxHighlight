@@ -250,6 +250,8 @@ extension Settings: SettingsCSS {
         
         updateDomains(SettingsBase.Key.tabSpaces, tabSpaces)
         
+        updateDomains(SettingsBase.Key.indentGuides, indentGuides)
+        
         updateDomains(SettingsBase.Key.extraArguments, arguments)
         
         updateDomains(SettingsBase.Key.fontFamily, fontName)

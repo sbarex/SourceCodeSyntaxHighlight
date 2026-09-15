@@ -18,15 +18,17 @@ endif
 
 BUILD_DIR := $(BUILD_DIR)/highlight
 BUILD_DIR_ESCAPED := $(subst $(SPACE),\ ,$(BUILD_DIR))
+CURRENT_DIR_ESCAPED := $(subst $(SPACE),\ ,$(CURRENT_DIR))
 
 CXX=clang++
-CFLAGS=-Wall -std=c++17 -D_FILE_OFFSET_BITS=64 \
-       -I "${CURRENT_DIR}/${HIGHLIGHT_DIR}/src/include" \
-       -I "${CURRENT_DIR}/${LUA_DIR}/src" \
-       -I "${CURRENT_DIR}" \
+CFLAGS= \
+       -I ${CURRENT_DIR_ESCAPED}/${HIGHLIGHT_DIR}/src/include \
+       -I ${CURRENT_DIR_ESCAPED}/${LUA_DIR}/src \
+       -I ${CURRENT_DIR_ESCAPED} \
        -I ${BUILD_DIR_ESCAPED} \
        -Wno-deprecated-declarations -Wno-unknown-pragmas
-LDFLAGS=-L"${BUILD_DIR}"
+CXXFLAGS += -std=c++17
+LDFLAGS=-L${BUILD_DIR_ESCAPED}
 
 CFLAGS_x86_64=-target x86_64-apple-macos10.15
 CFLAGS_arm64=-target arm64-apple-macos11
@@ -65,46 +67,46 @@ wrapper_lib_static =
 lua_libraries =
 
 ifeq ($(NATIVE_ARCH),x86_64)
-	lua_libraries    += ${BUILD_DIR_ESCAPED}/liblua-x86_64.a
+	lua_libraries        += ${BUILD_DIR_ESCAPED}/liblua-x86_64.a
 
 	highlight_lib_static += ${BUILD_DIR_ESCAPED}/libhighlight-x86_64.a
 	highlight_lib_shared += ${BUILD_DIR_ESCAPED}/libhighlight-x86_64.dylib
 	highlight_cli        += ${BUILD_DIR_ESCAPED}/highlight-x86_64
 
-	wrapper_lib_shared += ${BUILD_DIR_ESCAPED}/libwrapper_highlight-x86_64.dylib
-	wrapper_lib_static += ${BUILD_DIR_ESCAPED}/libwrapper_highlight-x86_64.a
+	wrapper_lib_shared   += ${BUILD_DIR_ESCAPED}/libwrapper_highlight-x86_64.dylib
+	wrapper_lib_static   += ${BUILD_DIR_ESCAPED}/libwrapper_highlight-x86_64.a
 else
-	lua_libraries    += ${BUILD_DIR_ESCAPED}/liblua-arm64.a
+	lua_libraries        += ${BUILD_DIR_ESCAPED}/liblua-arm64.a
 
 	highlight_lib_static += ${BUILD_DIR_ESCAPED}/libhighlight-arm64.a
 	highlight_lib_shared += ${BUILD_DIR_ESCAPED}/libhighlight-arm64.dylib
 	highlight_cli        += ${BUILD_DIR_ESCAPED}/highlight-arm64
 
-	wrapper_lib_shared += ${BUILD_DIR_ESCAPED}/libwrapper_highlight-arm64.dylib
-	wrapper_lib_static += ${BUILD_DIR_ESCAPED}/libwrapper_highlight-arm64.a
+	wrapper_lib_shared   += ${BUILD_DIR_ESCAPED}/libwrapper_highlight-arm64.dylib
+	wrapper_lib_static   += ${BUILD_DIR_ESCAPED}/libwrapper_highlight-arm64.a
 endif
 
 ifeq ($(ONLY_ACTIVE_ARCH),NO)
 ifeq ($(NATIVE_ARCH),x86_64)
 		# build arm code
-		lua_libraries    += ${BUILD_DIR_ESCAPED}/liblua-arm64.a
+		lua_libraries        += ${BUILD_DIR_ESCAPED}/liblua-arm64.a
 
 		highlight_lib_static += ${BUILD_DIR_ESCAPED}/libhighlight-arm64.a
 		highlight_lib_shared += ${BUILD_DIR_ESCAPED}/libhighlight-arm64.dylib
 		highlight_cli        += ${BUILD_DIR_ESCAPED}/highlight-arm64
 
-		wrapper_lib_shared += ${BUILD_DIR_ESCAPED}/libwrapper_highlight-arm64.dylib
-		wrapper_lib_static += ${BUILD_DIR_ESCAPED}/libwrapper_highlight-arm64.a
+		wrapper_lib_shared   += ${BUILD_DIR_ESCAPED}/libwrapper_highlight-arm64.dylib
+		wrapper_lib_static   += ${BUILD_DIR_ESCAPED}/libwrapper_highlight-arm64.a
 else
 		# build intel code
-		lua_libraries    += ${BUILD_DIR_ESCAPED}/liblua-x86_64.a
+		lua_libraries        += ${BUILD_DIR_ESCAPED}/liblua-x86_64.a
 
 		highlight_lib_static += ${BUILD_DIR_ESCAPED}/libhighlight-x86_64.a
 		highlight_lib_shared += ${BUILD_DIR_ESCAPED}/libhighlight-x86_64.dylib
 		highlight_cli        += ${BUILD_DIR_ESCAPED}/highlight-x86_64
 
-		wrapper_lib_shared += ${BUILD_DIR_ESCAPED}/libwrapper_highlight-x86_64.dylib
-		wrapper_lib_static += ${BUILD_DIR_ESCAPED}/libwrapper_highlight-x86_64.a
+		wrapper_lib_shared   += ${BUILD_DIR_ESCAPED}/libwrapper_highlight-x86_64.dylib
+		wrapper_lib_static   += ${BUILD_DIR_ESCAPED}/libwrapper_highlight-x86_64.a
 endif
 endif
 
@@ -114,15 +116,16 @@ ifeq ($(filter $(NATIVE_ARCH),$(VALID_ARCHS)),)
 		$(error "Current arch ${NATIVE_ARCH} is not supported! Valid archs are: ${VALID_ARCHS}.")
 endif
 ifeq ($(ONLY_ACTIVE_ARCH),NO)
-		@echo "${bold}Building universal binary...${normal}"
+		@echo "\n${bold}** BUILDING UNIVERSAL BINARY... ** ${normal}"
 else
-		@echo "${bold}Building $(NATIVE_ARCH) architecture...${normal}"
+		@echo "\n${bold}** BUILDING $(NATIVE_ARCH) ARCHITECTURE... ** ${normal}"
 endif
 	@echo "Build dir: $(BUILD_DIR_ESCAPED)"
 	@echo ""
 
 build_dir:
 	$(shell mkdir build 2> /dev/null)
+
 
 # ################################
 # LUA library
@@ -133,12 +136,12 @@ lua_intel: ${BUILD_DIR_ESCAPED}/liblua-x86_64.a
 lua: ${BUILD_DIR_ESCAPED}/liblua.a
 
 clean_lua:
-	@echo "${bold}Cleaning lua...${normal}"
-	${MAKE} -C ${LUA_DIR} clean
+	@echo "\n${bold}🗑️ CLEANING lua...${normal}"
+	${MAKE} -C "${LUA_DIR}" clean
 	@echo ""
 
 ${BUILD_DIR_ESCAPED}/liblua-arm64.a: | $(BUILD_DIR_ESCAPED)
-	@echo "${bold}Building lua for arm64 platform…${normal}"
+	@echo "\n${bold}🔨 BUILDING lua FOR arm64 PLATFORM...${normal}"
 	${MAKE} -C "${LUA_DIR}" clean
 	${MAKE} CC="gcc -std=gnu99 -target arm64-apple-macos11" MYCFLAGS="$(CFLAGS_arm64)" MYLDFLAGS="$(LDFLAGS_arm64)" -C "${LUA_DIR}"
 	@mkdir -p "${BUILD_DIR}"
@@ -146,7 +149,7 @@ ${BUILD_DIR_ESCAPED}/liblua-arm64.a: | $(BUILD_DIR_ESCAPED)
 	@echo ""
 
 ${BUILD_DIR_ESCAPED}/liblua-x86_64.a: | $(BUILD_DIR_ESCAPED)
-	@echo "${bold}Building lua for x86_64 platform…${normal}"
+	@echo "\n${bold}🔨 BUILDING lua FOR x86_64 PLATFORM...${normal}"
 	${MAKE} -C "${LUA_DIR}" clean
 	${MAKE} MYCFLAGS="$(CFLAGS_x86_64)" MYLDFLAGS="$(LDFLAGS_x86_64)" -C "${LUA_DIR}"
 	@mkdir -p "${BUILD_DIR}"
@@ -155,10 +158,10 @@ ${BUILD_DIR_ESCAPED}/liblua-x86_64.a: | $(BUILD_DIR_ESCAPED)
 
 ${BUILD_DIR_ESCAPED}/liblua.a: $(BUILD_DIR_ESCAPED) ${lua_libraries}
 ifeq ($(ONLY_ACTIVE_ARCH),NO)
-		@echo "${bold}Creating lua universal library...${normal}"
+		@echo "\n${bold}CREATING lua UNIVERSAL LIBRARY...${normal}"
 		lipo -create -output "$@" ${BUILD_DIR_ESCAPED}/liblua-x86_64.a ${BUILD_DIR_ESCAPED}/liblua-arm64.a
 else
-		@echo "${bold}Creating lua library for ${NATIVE_ARCH}...${normal}"
+		@echo "\n${bold}CREATING lua LIBRARY FOR ${NATIVE_ARCH} PLATFORM...${normal}"
 		@rm -f "$@" > /dev/null
 		ln "${BUILD_DIR}/liblua-${NATIVE_ARCH}.a" "$@"
 endif
@@ -172,102 +175,217 @@ endif
 
 highlight_static: ${BUILD_DIR_ESCAPED}/libhighlight.a
 highlight_shared: ${BUILD_DIR_ESCAPED}/libhighlight.dylib
-highlight_cli: ${BUILD_DIR_ESCAPED}/highlight ${BUILD_DIR_ESCAPED}/share
+highlight_cli: highlight_shared ${BUILD_DIR_ESCAPED}/highlight ${BUILD_DIR_ESCAPED}/share
 
 ${BUILD_DIR_ESCAPED}/libhighlight-arm64.a: lua | $(BUILD_DIR_ESCAPED)
-	@echo "${bold}Building static highlight lib for arm64 platform...${normal}"
+	@echo "\n${bold}🔨 BUILDING highlight STATIC LIB FOR arm64 PLATFORM...${normal}"
 	@cp highlight_custom/makefile2.makefile highlight/makefile2.makefile
 	@cp highlight_custom/src/makefile2.makefile highlight/src/makefile2.makefile
-	${MAKE} BUILD_DIR=build_arm-$(CONFIGURATION) LUA_CFLAGS="-I\"$(CURRENT_DIR)/$(LUA_DIR)/src\"" LUA_LIBS="-L\"$(BUILD_DIR)\" -llua -lm" MYCFLAGS="${CFLAGS_arm64} -I$(CURRENT_DIR)/" MYLDFLAGS="$(LDFLAGS_arm64)" -C "${HIGHLIGHT_DIR}" -f makefile2.makefile lib-static
-	cp "${HIGHLIGHT_DIR}/src/build_arm-$(CONFIGURATION)/libhighlight.a" "$@"
+	
+	@if [ -f "${HIGHLIGHT_DIR}/src/htmlgenerator.o" ]; then \
+		if ! lipo -archs "${HIGHLIGHT_DIR}/src/htmlgenerator.o" 2>/dev/null | grep -qw arm64; then \
+			echo "Clean…"; \
+			${MAKE} \
+				-C ${HIGHLIGHT_DIR} \
+				-f makefile2.makefile \
+				clean; \
+		fi; \
+	fi
+	
+	${MAKE} \
+		BUILD_DIR=${BUILD_DIR_ESCAPED}/build_arm64-$(CONFIGURATION) \
+		LUA_CFLAGS="-I$(CURRENT_DIR)/$(LUA_DIR)/src" \
+		LUA_LIBS="-L$(BUILD_DIR_ESCAPED) -llua -lm" \
+		CFLAGS="${CFLAGS} ${CFLAGS_arm64}" \
+		LDFLAGS="$(LDFLAGS) $(LDFLAGS_arm64) -Wl,-rpath,'@loader_path/'" \
+		-C ${HIGHLIGHT_DIR} \
+		-f makefile2.makefile \
+		lib-static install-lib-static
 	@rm highlight/makefile2.makefile
 	@rm highlight/src/makefile2.makefile
 	@echo ""
 
 ${BUILD_DIR_ESCAPED}/libhighlight-arm64.dylib: lua | $(BUILD_DIR_ESCAPED)
-	@echo "${bold}Building shared highlight lib for arm64 platform...${normal}"
+	@echo "\n${bold}🔨 BUILDING highlight SHARED LIB FOR arm64 PLATFORM...${normal}"
 	@cp highlight_custom/makefile2.makefile highlight/makefile2.makefile
 	@cp highlight_custom/src/makefile2.makefile highlight/src/makefile2.makefile
-	${MAKE} BUILD_DIR=build_arm-$(CONFIGURATION) LUA_CFLAGS="-I\"$(CURRENT_DIR)/$(LUA_DIR)/src\"" LUA_LIBS="-L\"$(BUILD_DIR)\" -llua -lm" MYCFLAGS="${CFLAGS_arm64} -I\"$(CURRENT_DIR)/\"" MYLDFLAGS="$(LDFLAGS_arm64)" -C "${HIGHLIGHT_DIR}" -f makefile2.makefile lib-shared
-	cp "${HIGHLIGHT_DIR}/src/build_arm-$(CONFIGURATION)/libhighlight.dylib" "$@"
+	
+	@if [ -f "${HIGHLIGHT_DIR}/src/htmlgenerator.o" ]; then \
+		if ! lipo -archs "${HIGHLIGHT_DIR}/src/htmlgenerator.o" 2>/dev/null | grep -qw arm64; then \
+			echo "Clean…"; \
+			${MAKE} \
+				-C ${HIGHLIGHT_DIR} \
+				-f makefile2.makefile \
+				clean; \
+		fi; \
+	fi
+	
+	${MAKE} \
+		BUILD_DIR="$(BUILD_DIR)/build_arm64-$(CONFIGURATION)" \
+		LUA_CFLAGS="-I$(CURRENT_DIR_ESCAPED)/$(LUA_DIR)/src" \
+		LUA_LIBS="-L$(BUILD_DIR_ESCAPED) -llua -lm" \
+		CFLAGS="${CFLAGS} ${CFLAGS_arm64}" \
+		LDFLAGS="$(LDFLAGS) $(LDFLAGS_arm64) -Wl,-rpath,'@loader_path/'" \
+		-C "${HIGHLIGHT_DIR}" \
+		-f makefile2.makefile \
+		lib-shared install-lib-shared
 	@rm highlight/makefile2.makefile
 	@rm highlight/src/makefile2.makefile
 	@echo ""
 
 ${BUILD_DIR_ESCAPED}/highlight-arm64: lua | $(BUILD_DIR_ESCAPED)
-	@echo "${bold}Building highlight for arm64 platform...${normal}"
+	@echo "\n${bold}🔨 BUILDING highlight FOR arm64 PLATFORM...${normal}"
 	@cp highlight_custom/makefile2.makefile highlight/makefile2.makefile
 	@cp highlight_custom/src/makefile2.makefile highlight/src/makefile2.makefile
-	${MAKE} BUILD_DIR=build_arm-$(CONFIGURATION) LUA_CFLAGS="-I$(CURRENT_DIR)/$(LUA_DIR)/src" LUA_LIBS="-L\"$(BUILD_DIR)\" -llua -lm" MYCFLAGS="${CFLAGS_arm64} -I$(CURRENT_DIR)/" MYLDFLAGS="$(LDFLAGS_arm64)" -C ${HIGHLIGHT_DIR} -f makefile2.makefile cli
-	${MAKE} PREFIX=build-$(CONFIGURATION) BUILD_DIR=build_arm-$(CONFIGURATION) LUA_CFLAGS="-I\"$(CURRENT_DIR)/$(LUA_DIR)/src\"" LUA_LIBS="-L\"$(BUILD_DIR)\" -llua -lm" MYCFLAGS="${LDFLAGS_arm64} -I\"$(CURRENT_DIR)/\"" -C "${HIGHLIGHT_DIR}" -f makefile2.makefile install
-	cp "${HIGHLIGHT_DIR}/src/build_arm-$(CONFIGURATION)/highlight" "$@"
+	
+	@if [ -f "${HIGHLIGHT_DIR}/src/htmlgenerator.o" ]; then \
+		if ! lipo -archs "${HIGHLIGHT_DIR}/src/htmlgenerator.o" 2>/dev/null | grep -qw arm64; then \
+			echo "Clean…"; \
+			${MAKE} \
+				-C ${HIGHLIGHT_DIR} \
+				-f makefile2.makefile \
+				clean; \
+		fi; \
+	fi
+	
+	${MAKE} \
+		BUILD_DIR=${BUILD_DIR_ESCAPED}/build_arm64-$(CONFIGURATION) \
+		LUA_CFLAGS="-I$(CURRENT_DIR)/$(LUA_DIR)/src" \
+		LUA_LIBS="-L$(BUILD_DIR_ESCAPED) -llua -lm" \
+		CFLAGS="${CFLAGS} ${CFLAGS_arm64}" \
+		LDFLAGS="$(LDFLAGS) $(LDFLAGS_arm64) -Wl,-rpath,'@loader_path/'" \
+		-C ${HIGHLIGHT_DIR} \
+		-f makefile2.makefile \
+		cli install
 	@rm highlight/makefile2.makefile
 	@rm highlight/src/makefile2.makefile
 	@echo ""
 
 ${BUILD_DIR_ESCAPED}/libhighlight-x86_64.a: lua | $(BUILD_DIR_ESCAPED)
-	@echo "${bold}Building static highlight lib for x86_64 platform...${normal}"
+	@echo "\n${bold}🔨 BUILDING highlight STATIC LIB FOR X86_64 PLATFORM...${normal}"
 	@cp highlight_custom/makefile2.makefile highlight/makefile2.makefile
 	@cp highlight_custom/src/makefile2.makefile highlight/src/makefile2.makefile
-	${MAKE} BUILD_DIR=build_intel-$(CONFIGURATION) LUA_CFLAGS="-I\"$(CURRENT_DIR)/$(LUA_DIR)/src\"" LUA_LIBS="-L\"$(BUILD_DIR)\" -llua -lm" MYCFLAGS="${CFLAGS_x86_64} -I\"$(CURRENT_DIR)/\"" MYLDFLAGS="$(LDFLAGS_x86_64)" -C "${HIGHLIGHT_DIR}" -f makefile2.makefile lib-static
-	cp "${HIGHLIGHT_DIR}/src/build_intel-$(CONFIGURATION)/libhighlight.a" "$@"
+	
+	@if [ -f "${HIGHLIGHT_DIR}/src/htmlgenerator.o" ]; then \
+		if ! lipo -archs "${HIGHLIGHT_DIR}/src/htmlgenerator.o" 2>/dev/null | grep -qw x86_64; then \
+			echo "Clean…"; \
+			${MAKE} \
+				-C ${HIGHLIGHT_DIR} \
+				-f makefile2.makefile \
+				clean; \
+		fi; \
+	fi
+	
+	${MAKE} \
+		BUILD_DIR=${BUILD_DIR_ESCAPED}/build_intel-$(CONFIGURATION) \
+		LUA_CFLAGS="-I$(CURRENT_DIR)/$(LUA_DIR)/src" \
+		LUA_LIBS="-L$(BUILD_DIR_ESCAPED) -llua -lm" \
+		CFLAGS="${CFLAGS} ${CFLAGS_x86_64}" \
+		LDFLAGS="$(LDFLAGS) $(LDFLAGS_x86_64) -Wl,-rpath,'@loader_path/'" \
+		-C ${HIGHLIGHT_DIR} \
+		-f makefile2.makefile \
+		lib-static install-lib-static
+	
 	@rm highlight/makefile2.makefile
 	@rm highlight/src/makefile2.makefile
 	@echo ""
 
 ${BUILD_DIR_ESCAPED}/libhighlight-x86_64.dylib: lua | $(BUILD_DIR_ESCAPED)
-	@echo "${bold}Building shared highlight lib for x86_64 platform...${normal}"
+	@echo "\n${bold}🔨 BUILDING highlight SHARED LIB FOR x86_64 PLATFORM...${normal}"
 	@cp highlight_custom/makefile2.makefile highlight/makefile2.makefile
 	@cp highlight_custom/src/makefile2.makefile highlight/src/makefile2.makefile
-	${MAKE} BUILD_DIR=build_intel-$(CONFIGURATION) LUA_CFLAGS="-I\"$(CURRENT_DIR)/$(LUA_DIR)/src\"" LUA_LIBS="-L\"$(BUILD_DIR)\" -llua -lm" MYCFLAGS="${CFLAGS_x86_64} -I\"$(CURRENT_DIR)/\"" MYLDFLAGS="$(LDFLAGS_x86_64)" -C "${HIGHLIGHT_DIR}" -f makefile2.makefile lib-shared
-	cp "${HIGHLIGHT_DIR}/src/build_intel-$(CONFIGURATION)/libhighlight.dylib" "$@"
+	
+	@if [ -f "${HIGHLIGHT_DIR}/src/htmlgenerator.o" ]; then \
+		if ! lipo -archs "${HIGHLIGHT_DIR}/src/htmlgenerator.o" 2>/dev/null | grep -qw x86_64; then \
+			echo "Clean…"; \
+			${MAKE} \
+				-C ${HIGHLIGHT_DIR} \
+				-f makefile2.makefile \
+				clean; \
+		fi; \
+	fi
+	
+	${MAKE} \
+		BUILD_DIR=${BUILD_DIR_ESCAPED}/build_intel-$(CONFIGURATION) \
+		LUA_CFLAGS="-I$(CURRENT_DIR)/$(LUA_DIR)/src" \
+		LUA_LIBS="-L$(BUILD_DIR_ESCAPED) -llua -lm" \
+		CFLAGS="${CFLAGS} ${CFLAGS_x86_64}" \
+		LDFLAGS="$(LDFLAGS) $(LDFLAGS_x86_64) -Wl,-rpath,'@loader_path/'" \
+		-C ${HIGHLIGHT_DIR} \
+		-f makefile2.makefile \
+		lib-shared install-lib-shared
+		
 	@rm highlight/makefile2.makefile
 	@rm highlight/src/makefile2.makefile
 	@echo ""
 
 ${BUILD_DIR_ESCAPED}/highlight-x86_64: lua | $(BUILD_DIR_ESCAPED)
-	@echo "${bold}Building highlight for x86_64 platform...${normal}"
+	@echo "\n${bold}🔨 BUILDING highlight FOR x86_64 PLATFORM...${normal}"
 	@cp highlight_custom/makefile2.makefile highlight/makefile2.makefile
 	@cp highlight_custom/src/makefile2.makefile highlight/src/makefile2.makefile
-	${MAKE} BUILD_DIR=build_intel-$(CONFIGURATION) LUA_CFLAGS="-I\"$(CURRENT_DIR)/$(LUA_DIR)/src\"" LUA_LIBS="-L\"$(BUILD_DIR)\" -llua -lm" MYCFLAGS="${CFLAGS_x86_64} -I\"$(CURRENT_DIR)/\"" MYLDFLAGS="$(LDFLAGS_x86_64)" -C "${HIGHLIGHT_DIR}" -f makefile2.makefile cli
-	${MAKE} PREFIX=build-$(CONFIGURATION) BUILD_DIR=build_intel-$(CONFIGURATION) LUA_CFLAGS="-I\"$(CURRENT_DIR)/$(LUA_DIR)/src\"" LUA_LIBS="-L\"$(BUILD_DIR)\" -llua -lm" MYCFLAGS="${CFLAGS_x86_64} -I\"$(CURRENT_DIR)/\"" -C "${HIGHLIGHT_DIR}" -f makefile2.makefile install
-	cp "${HIGHLIGHT_DIR}/src/build_intel-$(CONFIGURATION)/highlight" "$@"
+	
+	@if [ -f "${HIGHLIGHT_DIR}/src/htmlgenerator.o" ]; then \
+		if ! lipo -archs "${HIGHLIGHT_DIR}/src/htmlgenerator.o" 2>/dev/null | grep -qw x86_64; then \
+			echo "Clean…"; \
+			${MAKE} \
+				-C ${HIGHLIGHT_DIR} \
+				-f makefile2.makefile \
+				clean; \
+		fi; \
+	fi
+	
+	${MAKE} \
+		BUILD_DIR=${BUILD_DIR_ESCAPED}/build_intel-$(CONFIGURATION) \
+		LUA_CFLAGS="-I$(CURRENT_DIR)/$(LUA_DIR)/src" \
+		LUA_LIBS="-L$(BUILD_DIR_ESCAPED) -llua -lm" \
+		CFLAGS="${CFLAGS} ${CFLAGS_x86_64}" \
+		LDFLAGS="$(LDFLAGS) $(LDFLAGS_x86_64) -Wl,-rpath,'@loader_path/'" \
+		-C ${HIGHLIGHT_DIR} \
+		-f makefile2.makefile \
+		cli install
+		
 	@rm highlight/makefile2.makefile
 	@rm highlight/src/makefile2.makefile
 	@echo ""
 
 ${BUILD_DIR_ESCAPED}/libhighlight.a: ${highlight_lib_static} lua | $(BUILD_DIR_ESCAPED)
 ifeq ($(ONLY_ACTIVE_ARCH),NO)
-		@echo "${bold}Creating universal static highlight lib...${normal}"
-		lipo -create -output "$@" "${BUILD_DIR}/libhighlight-x86_64.a" "${BUILD_DIR}/libhighlight-arm64.a"
+		@echo "\n${bold}CREATING UNIVERSAL STATIC highlight LIB...${normal}"
+		lipo -create -output "$@" \
+			"${BUILD_DIR}/build_intel-$(CONFIGURATION)/lib/libhighlight.a" \
+			"${BUILD_DIR}/build_arm64-$(CONFIGURATION)/lib/libhighlight.a"
 else
-		@echo "${bold}Creating ${NATIVE_ARCH} static highlight lib...${normal}"
+		@echo "\n${bold}CREATING ${NATIVE_ARCH} STATIC highlight LIB...${normal}"
 		@rm -f "$@" > /dev/null
-		ln "${BUILD_DIR}/libhighlight-${NATIVE_ARCH}.a" "$@"
+		ln "${BUILD_DIR}/build_${NATIVE_ARCH}-$(CONFIGURATION)/lib/libhighlight.a" "$@"
 endif
 	@echo ""
 
 ${BUILD_DIR_ESCAPED}/libhighlight.dylib: ${highlight_lib_shared} lua | $(BUILD_DIR_ESCAPED)
 ifeq ($(ONLY_ACTIVE_ARCH),NO)
-		@echo "${bold}Creating universal shared highlight lib...${normal}"
-		lipo -create -output "$@" "${BUILD_DIR}/libhighlight-x86_64.dylib" "${BUILD_DIR}/libhighlight-arm64.dylib"
+		@echo "\n${bold}CREATING UNIVERSAL SHARED highlight LIB...${normal}"
+		lipo -create -output "$@" \
+			"${BUILD_DIR}/build_intel-$(CONFIGURATION)/lib/libhighlight.dylib" \
+			"${BUILD_DIR}/build_arm64-$(CONFIGURATION)/lib/libhighlight.dylib"
 else
-		@echo "${bold}Creating ${NATIVE_ARCH} shared highlight lib...${normal}"
+		@echo "\n${bold}CREATING ${NATIVE_ARCH} SHARED highlight LIB...${normal}"
 		@rm -f "$@" > /dev/null
-		ln "${BUILD_DIR}/libhighlight-${NATIVE_ARCH}.dylib" "$@"
+		ln "${BUILD_DIR}/build_${NATIVE_ARCH}-$(CONFIGURATION)/lib/libhighlight.dylib" "$@"
 endif
 	@echo ""
 
 ${BUILD_DIR_ESCAPED}/highlight: $(highlight_cli) lua | $(BUILD_DIR_ESCAPED)
 ifeq ($(ONLY_ACTIVE_ARCH),NO)
-		@echo "${bold}Creating universal highlight...${normal}"
-		lipo -create -output "$@" "${BUILD_DIR}/highlight-x86_64" "${BUILD_DIR}/highlight-arm64"
+		@echo "\n${bold}CREATING UNIVERSAL highlight...${normal}"
+		lipo -create -output "$@" \
+			"${BUILD_DIR}/build_intel-$(CONFIGURATION)/bin/highlight" \
+			"${BUILD_DIR}/build_arm64-$(CONFIGURATION)/bin/highlight"
 else
-		@echo "${bold}Creating ${NATIVE_ARCH} highlight...${normal}"
+		@echo "\n${bold}CREATING ${NATIVE_ARCH} highlight...${normal}"
 		@rm -f "$@" > /dev/null
-		ln "${BUILD_DIR}/highlight-${NATIVE_ARCH}" "$@"
+		ln "${BUILD_DIR}/build_${NATIVE_ARCH}-$(CONFIGURATION)/bin/highlight" "$@"
 endif
-	@echo "Code signing the highlight app"
+	@echo "🖋️ CODE SIGNING THE HIGHLIGHT APP"
 	/usr/bin/codesign --force --deep --sign "$(CODE_SIGN_IDENTITY)" \
 	--options runtime \
 	--entitlements $(CURRENT_DIR)/entitlements.entitlements \
@@ -276,11 +394,11 @@ endif
 	@echo ""
 
 ${BUILD_DIR_ESCAPED}/share: ${BUILD_DIR_ESCAPED}/highlight | $(BUILD_DIR_ESCAPED)
-	cp -R "${HIGHLIGHT_DIR}/build-$(CONFIGURATION)/share/highlight/" "${BUILD_DIR}/share/"
-	cp "${HIGHLIGHT_DIR}/build-$(CONFIGURATION)/etc/highlight/filetypes.conf" "${BUILD_DIR}/share/filetypes.conf"
+	cp -R "${BUILD_DIR}/build_${NATIVE_ARCH}-$(CONFIGURATION)/share/highlight/" "${BUILD_DIR}/share/"
+	cp "${BUILD_DIR}/build_${NATIVE_ARCH}-$(CONFIGURATION)/etc/highlight/filetypes.conf" "${BUILD_DIR}/share/filetypes.conf"
 
 clean_highlight:
-	@echo "${bold}Cleaning highlight…${normal}"
+	@echo "\n${bold}🗑️ CLEANING highlight...${normal}"
 	@cp highlight_custom/makefile2.makefile highlight/makefile2.makefile
 	@cp highlight_custom/src/makefile2.makefile highlight/src/makefile2.makefile
 	@${MAKE} -C "${HIGHLIGHT_DIR}" -f makefile2.makefile clean
@@ -298,54 +416,54 @@ highlight-wrapper_arm: ${BUILD_DIR_ESCAPED}/libwrapper_highlight-arm64.dylib
 highlight-wrapper: ${BUILD_DIR_ESCAPED}/libwrapper_highlight.dylib
 
 clean_highlight-wrapper:
-	@echo "${bold}Cleaning highlight wrapper…${normal}"
+	@echo "\n${bold}🗑️ CLEANING highlight wrapper...${normal}"
 	@rm -f "${BUILD_DIR}/wrapper_highlight-x86_64.o"
 	@rm -f "${BUILD_DIR}/wrapper_highlight-arm64.o"
 	@echo ""
 
 ${BUILD_DIR_ESCAPED}/libwrapper_highlight-x86_64.dylib: ${BUILD_DIR_ESCAPED}/liblua.a ${BUILD_DIR_ESCAPED}/libhighlight-x86_64.a wrapper_highlight.cpp | $(BUILD_DIR_ESCAPED)
-	@echo "${bold}Compiling highlight wrapper for x86_64 platform...${normal}"
+	@echo "\n${bold}🔨 BUILDING highlight WRAPPER FOR x86_64 PLATFORM...${normal}"
 	@echo "current dir: ${CURRENT_DIR}"
-	${CXX} ${CFLAGS} ${CFLAGS_x86_64} ${LDFLAGS} ${LDFLAGS_x86_64} \
--static \
--c wrapper_highlight.cpp -o "${BUILD_DIR}/wrapper_highlight-x86_64.o"
+	${CXX} ${CFLAGS} -Wall -O2 -std=c++17 -D_FILE_OFFSET_BITS=64 -MMD -MP ${CFLAGS_x86_64} ${LDFLAGS} ${LDFLAGS_x86_64} \
+		-static \
+		-c wrapper_highlight.cpp -o "${BUILD_DIR}/wrapper_highlight-x86_64.o"
 	@echo ""
 
-	@echo "${bold}Creating highlight wrapper shared library for x86_64 platform...${normal}"
+	@echo "\n${bold}CREATING highlight wrapper SHARED LIBRARY FOR x86_64 PLATFORM...${normal}"
 	${CXX} ${CFLAGS} ${CFLAGS_x86_64} ${LDFLAGS} ${LDFLAGS_x86_64} \
--ldl -lhighlight -llua \
--dynamiclib \
--install_name @rpath/libwrapper_highlight.dylib \
--o "$@" "${BUILD_DIR}/wrapper_highlight-x86_64.o"
+		-ldl -lhighlight -llua \
+		-dynamiclib \
+		-install_name @rpath/libwrapper_highlight.dylib \
+		-o "$@" "${BUILD_DIR}/wrapper_highlight-x86_64.o"
 	@echo ""
 
 ${BUILD_DIR_ESCAPED}/libwrapper_highlight-arm64.dylib: ${BUILD_DIR_ESCAPED}/liblua.a  ${BUILD_DIR_ESCAPED}/libhighlight-arm64.a wrapper_highlight.cpp | $(BUILD_DIR_ESCAPED)
-	@echo "${bold}Compiling highlight wrapper for arm64 platform...${normal}"
-	${CXX} ${CFLAGS} ${CFLAGS_arm64} \
--static \
--c wrapper_highlight.cpp -o "${BUILD_DIR}/wrapper_highlight-arm64.o"
+	@echo "\n${bold}🔨 BUILDING highlight wrapper FOR arm64 PLATFORM...${normal}"
+	${CXX} ${CFLAGS} -Wall -O2 -std=c++17 -D_FILE_OFFSET_BITS=64 -MMD -MP ${CFLAGS_arm64} \
+		-static \
+		-c wrapper_highlight.cpp -o "${BUILD_DIR}/wrapper_highlight-arm64.o"
 	@echo ""
-	@echo "${bold}Creating highlight wrapper shared library for arm64 platform...${normal}"
+	@echo "\n${bold}CREATING highlight wrapper SHARED LIBRARY FOR arm64 PLATFORM...${normal}"
 	${CXX} ${CFLAGS} ${CFLAGS_arm64} ${LDFLAGS} ${LDFLAGS_arm64} \
--ldl -lhighlight -llua -framework CoreFoundation \
--dynamiclib \
--install_name @rpath/libwrapper_highlight.dylib \
--o "$@" "${BUILD_DIR}/wrapper_highlight-arm64.o"
+		-ldl -lhighlight -llua -framework CoreFoundation \
+		-dynamiclib \
+		-install_name @rpath/libwrapper_highlight.dylib \
+		-o "$@" "${BUILD_DIR}/wrapper_highlight-arm64.o"
 	@echo ""
 
 ${BUILD_DIR_ESCAPED}/libwrapper_highlight.dylib: ${wrapper_lib_shared} wrapper_highlight.cpp | $(BUILD_DIR_ESCAPED)
 ifeq ($(ONLY_ACTIVE_ARCH),NO)
-		@echo "${bold}Creating highlight wrapper universal shared library...${normal}"
+		@echo "\n${bold}CREATING highlight wrapper UNIVERSAL SHARED LIBRARY...${normal}"
 		lipo -create -output "$@" "${BUILD_DIR}/libwrapper_highlight-x86_64.dylib" "${BUILD_DIR}/libwrapper_highlight-arm64.dylib"
 		@echo ""
 else
-		@echo "${bold}Creating highlight wrapper library for ${NATIVE_ARCH}...${normal}"
+		@echo "\n${bold}CREATING highlight wrapper LIBRARY FOR ${NATIVE_ARCH} PLATFORM...${normal}"
 		cp "${BUILD_DIR}/libwrapper_highlight-${NATIVE_ARCH}.dylib" "$@"
 endif
 
 
 $(BUILD_DIR_ESCAPED): FORCE
-	@echo "Creating build dir $(BUILD_DIR_ESCAPED)..."
+	@echo "CREATING BUILD DIR $(BUILD_DIR_ESCAPED)..."
 	mkdir -p "$(BUILD_DIR)"
 	
 all: check_arch build_dir lua highlight_cli highlight_shared highlight-wrapper | $(BUILD_DIR_ESCAPED)

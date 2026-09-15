@@ -444,6 +444,7 @@ static HTheme *allocate_theme() {
     theme->lineNum = nullptr;
     theme->operatorProp = nullptr;
     theme->interpolation = nullptr;
+    theme->indentGuide = nullptr;
 
     theme->hover = nullptr;
     theme->error = nullptr;
@@ -507,6 +508,8 @@ static void release_theme(HTheme *theme) {
     theme->operatorProp = nullptr;
     release_theme_property(theme->interpolation);
     theme->interpolation = nullptr;
+    release_theme_property(theme->indentGuide);
+    theme->indentGuide = nullptr;
 
     release_theme_property(theme->hover);
     theme->hover = nullptr;
@@ -691,6 +694,10 @@ HTheme *highlight_get_theme2( const char *theme_name, int *exit_code, ReleaseThe
     if (prop != Diluculum::Nil) {
         theme->interpolation = parse_theme_property(prop.asTable());
     }
+    prop = ls["IndentGuide"].value();
+    if (prop != Diluculum::Nil) {
+        theme->indentGuide = parse_theme_property(prop.asTable());
+    }
 
     prop = ls["Hover"].value();
     if (prop != Diluculum::Nil) {
@@ -849,6 +856,10 @@ __unused int highlight_save_theme( const char *filename, const HTheme *theme) {
     save_theme_property(file, "LineNum", theme->lineNum);
     save_theme_property(file, "Operator", theme->operatorProp);
     save_theme_property(file, "Interpolation", theme->interpolation);
+    
+    if (theme->indentGuide != nullptr) {
+        save_theme_property(file, "IndentGuide", theme->indentGuide);
+    }
 
     save_theme_property(file, "Hover", theme->hover);
     save_theme_property(file, "Error", theme->error);

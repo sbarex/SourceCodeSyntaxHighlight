@@ -666,7 +666,7 @@ img {
         }
         do {
             try? "Getting the git status…".appendLine(to: logFile)
-            try? "\(git) diff -U0 -0 \(url.path)".appendLine(to: logFile)
+            try? "\(git) diff -U0 \(url.path)".appendLine(to: logFile)
             
             let result = try ShellTask.runTask(command: git, arguments: ["diff", "-U0", "-0", url.path], cwd: url.deletingLastPathComponent().path)
             

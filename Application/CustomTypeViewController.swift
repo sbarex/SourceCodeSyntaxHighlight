@@ -22,6 +22,7 @@
 
 import Cocoa
 import Syntax_Highlight_XPC_Service
+import UniformTypeIdentifiers
 
 enum UTISupported {
     case unknown
@@ -227,12 +228,28 @@ class CustomTypeViewController: NSViewController, DropSensorDelegate, NSTableVie
         }
         
         let ext = url.pathExtension
-        if !ext.isEmpty {
-            let tags = UTTypeCreateAllIdentifiersForTag(kUTTagClassFilenameExtension, ext as CFString, nil)
-            if let t = tags?.takeRetainedValue() as? [String] {
-                for u in t {
-                    if UTIs.first(where: { $0.UTI.UTI == u }) == nil {
-                        UTIs.append(UTIStatus(UTI: UTI(u), standard: false))
+        
+        if #available(macOS 12.0, *) {
+            if !ext.isEmpty, let type = UTType(filenameExtension: ext) {
+                let identifier = type.identifier
+                
+                if UTIs.first(where: { $0.UTI.UTI == identifier }) == nil {
+                    UTIs.append(
+                        UTIStatus(
+                            UTI: UTI(identifier),
+                            standard: false
+                        )
+                    )
+                }
+            }
+        } else {
+            if !ext.isEmpty {
+                let tags = UTTypeCreateAllIdentifiersForTag(kUTTagClassFilenameExtension, ext as CFString, nil)
+                if let t = tags?.takeRetainedValue() as? [String] {
+                    for u in t {
+                        if UTIs.first(where: { $0.UTI.UTI == u }) == nil {
+                            UTIs.append(UTIStatus(UTI: UTI(u), standard: false))
+                        }
                     }
                 }
             }

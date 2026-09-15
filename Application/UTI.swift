@@ -23,7 +23,7 @@
 import Cocoa
 import UniformTypeIdentifiers
 
-class UTI: Equatable {
+class UTI: Equatable, Hashable {
     typealias SuppressedExtension = (ext: String, uti: String)
     
     static func == (lhs: UTI, rhs: UTI) -> Bool {
@@ -216,6 +216,10 @@ class UTI: Equatable {
         } else {
             initVars()
         }
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(self.UTI)
     }
 }
 

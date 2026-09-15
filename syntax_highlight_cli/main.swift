@@ -51,6 +51,7 @@ func usage(exitCode: Int = -1) {
     print(" --line-length value         ")
     print(" --line-numbers on|zeros|off ")
     print(" --tab-spaces value          \tNumber of spaces for every tab. Set to zero to disable the tab conversion.")
+    print(" --indent-guide on|off       \tShow/Hide the indent guides.")
     print(" --extra arguments           \tExtra arguments passed to highlight. Protect the arguments inside quotes.")
     print(" --extra-appended arguments  \tExtra arguments passed to highlight. Protect the arguments inside quotes.")
     print(" --css file                  \tExtra css loaded from the specified file.")
@@ -98,6 +99,7 @@ func dump(settings: SettingsRendering) {
     }
     print("  - Line numbers: \(settings.isLineNumbersVisible ? "visible" + (settings.isLineNumbersFillToZeroes ? " filled with zeros" : "") : "disabled")")
     print("  - Tabs: \(settings.tabSpaces > 0 ? "converted to \(settings.tabSpaces) spaces" : "not converted")")
+    print("  - Indent guides: \(settings.indentGuides ? "visible" : "hidden")")
     if !settings.arguments.isEmpty {
         print("  - Extra highlight arguments: \(settings.arguments)")
     }
@@ -153,6 +155,7 @@ func parseArgOnOff(index i: Int) -> Bool {
         return false
     }
 }
+
 func parseArgInt(index i: Int) -> Int {
     guard i+1 < CommandLine.arguments.count else {
         print("\(cliUrl.lastPathComponent): \(CommandLine.arguments[i]) require a numeric argument.\n", to: &standardError)
@@ -168,6 +171,7 @@ func parseArgInt(index i: Int) -> Int {
         return 0
     }
 }
+
 func parseArgFloat(index i: Int) -> Float {
     guard i+1 < CommandLine.arguments.count else {
         print("\(cliUrl.lastPathComponent): \(CommandLine.arguments[i]) require a numeric argument.\n", to: &standardError)
@@ -183,6 +187,7 @@ func parseArgFloat(index i: Int) -> Float {
         return 0
     }
 }
+
 func parseArgString(index i: Int) -> String {
     guard i+1 < CommandLine.arguments.count else {
         print("\(cliUrl.lastPathComponent): \(CommandLine.arguments[i]) require an extra argument.\n", to: &standardError)
@@ -201,6 +206,7 @@ var test = false
 
 var files: [URL] = []
 var dest: URL?
+
 var i = 1
 while i < Int(CommandLine.argc) {
     var arg = CommandLine.arguments[i]
@@ -265,6 +271,9 @@ while i < Int(CommandLine.argc) {
                 overridingSettings[SettingsBase.Key.lineNumbersFillToZeroes] = u != "zeros"
             case "--tab-spaces":
                 overridingSettings[SettingsBase.Key.tabSpaces] = parseArgInt(index: i)
+                i += 1
+            case "--indent-guide":
+                overridingSettings[SettingsBase.Key.indentGuides] = parseArgOnOff(index: i)
                 i += 1
                 
             case "--extra":

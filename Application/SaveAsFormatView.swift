@@ -6,6 +6,7 @@
 //
 
 import Cocoa
+import UniformTypeIdentifiers
 
 class SaveAsFormatView: NSView {
     @IBOutlet weak var popupButton: NSPopUpButton!
@@ -33,6 +34,12 @@ class SaveAsFormatView: NSView {
     }
     
     @IBAction func formatChange(_ sender: NSPopUpButton) {
-        savePanel?.allowedFileTypes =  [sender.indexOfSelectedItem == 0 ? "theme" : "css"]
+        if #available(macOS 15.0, *) {
+            savePanel?.allowedContentTypes = [sender.indexOfSelectedItem == 0 ? UTType(filenameExtension: "theme")! : .css]
+        } else if #available(macOS 12.0, *) {
+            savePanel?.allowedContentTypes = [sender.indexOfSelectedItem == 0 ? UTType(filenameExtension: "theme")! : UTType(filenameExtension: "css")! ]
+        } else {
+            savePanel?.allowedFileTypes =  [sender.indexOfSelectedItem == 0 ? "theme" : "css"]
+        }
     }
 }

@@ -119,6 +119,8 @@ class PreviewViewController: NSViewController, QLPreviewingController, WKNavigat
             self.isDarkMode = change.newValue?.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua
         }
         
+        self.textView?.linkTextAttributes = [:]
+        
         DistributedNotificationCenter.default().addObserver(self, selector: #selector(self.handleSettingsChanged(_:)), name: .SettingsUpdated, object: nil)
     }
 

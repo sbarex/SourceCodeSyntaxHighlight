@@ -888,6 +888,25 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
+				<string>dyn.ah62d4rv4ge80e2u</string>
+				<string>org.clojure.script</string>
+				<string>public.source-code</string>
+				<string>public.plain-text</string>
+				<string>public.text</string>
+			</array>
+			<key>UTTypeIdentifier</key>
+			<string>org.babashka.source</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>bb</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
 				<string>public.source-code</string>
 			</array>
 			<key>UTTypeDescription</key>
@@ -1957,6 +1976,25 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
+				<string>dyn.ah62d4rv4ge81g25bqu</string>
+				<string>public.c-plus-plus-source</string>
+				<string>public.source-code</string>
+				<string>public.plain-text</string>
+				<string>public.text</string>
+			</array>
+			<key>UTTypeIdentifier</key>
+			<string>org.openscad.source</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>scad</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
 				<string>public.item</string>
 				<string>dyn.ah62d4rv4ge8086drru</string>
 			</array>
@@ -2276,6 +2314,7 @@
 				<array>
 					<string>sc</string>
 					<string>sbt</string>
+					<string>mill</string>
 					<string>scala</string>
 				</array>
 			</dict>
@@ -2371,6 +2410,7 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
+				<string>dyn.ah62d4rv4ge81e55cr74g8</string>
 				<string>public.text</string>
 				<string>public.source-code</string>
 			</array>

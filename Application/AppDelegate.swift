@@ -49,6 +49,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
         isAdvancedSettingsVisible = !isAdvancedSettingsVisible
     }
     
+    func applicationSupportsSecureRestorableState(_ app: NSApplication) -> Bool {
+        return true
+    }
+    
     func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
         return SCSHWrapper.shared.applicationShouldTerminate()
     }
