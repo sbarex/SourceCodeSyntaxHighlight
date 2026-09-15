@@ -10,7 +10,7 @@ New Features:
 - Support for show indent guide lines.
 - Support for `.robot` _as `python`_.
 - Support for the GPS eXchange Format (`.gpx`) _as `XML`_.
-- Support for files (`.mill`) _as `Scala`_.
+- Support for Mill files (`.mill`) _as `Scala`_.
 - Support for Babashka files (`.bb`) _as `Clojure`_.
 - Support for OpenSCAD files (`.scad`) _as `CPP`_.
 - Support for `.env` files _as `INI`_.
