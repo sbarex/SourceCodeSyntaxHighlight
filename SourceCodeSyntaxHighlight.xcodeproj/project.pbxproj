@@ -782,6 +782,7 @@
 		83E5E67B25AE1FF900FAF5E2 /* SaveAsFormatView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SaveAsFormatView.xib; sourceTree = "<group>"; };
 		83EAEE842740FD2F0093B9B7 /* vcs_preview.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vcs_preview.png; sourceTree = "<group>"; };
 		83EDC92C25F6E23100B1621E /* FontSelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontSelectorViewController.swift; sourceTree = "<group>"; };
+		83F70DCF305ACC8900D4853F /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
 		83FD6EED246C71C600F5BDF3 /* Syntax Highlight XPC Render.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Syntax Highlight XPC Render.entitlements"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1326,6 +1327,7 @@
 		8359235D23559A2B001506B6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				83F70DCF305ACC8900D4853F /* CoreServices.framework */,
 				83B47BC825A77C6F00DE0CF4 /* libwrapper_highlight.dylib */,
 				8383705825AB7F700048A737 /* libhighlight.dylib */,
 				8359239A23565890001506B6 /* Foundation.framework */,
@@ -2741,7 +2743,7 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2756,7 +2758,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";

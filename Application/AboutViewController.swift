@@ -13,9 +13,24 @@ class AboutViewController: NSViewController, WKNavigationDelegate {
     @IBOutlet weak var titleField: NSTextField!
     @IBOutlet weak var versionField: NSTextField!
     @IBOutlet weak var copyrightField: NSTextField!
-    @IBOutlet weak var infoWebView: WKWebView!
+    @IBOutlet weak var hLine: NSBox!
+    var infoWebView: WKWebView!
     
     override func viewDidLoad() {
+        infoWebView = WKWebView(frame: NSRect.zero)
+        infoWebView.navigationDelegate = self
+        infoWebView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(infoWebView)
+        
+        NSLayoutConstraint.activate([
+            infoWebView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            infoWebView.topAnchor.constraint(equalTo: hLine.bottomAnchor),
+            infoWebView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            infoWebView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+            
+            infoWebView.heightAnchor.constraint(greaterThanOrEqualToConstant: 200)
+        ])
+        
         imageView.image = NSApplication.shared.applicationIconImage
         if let info = Bundle.main.infoDictionary {
             let version = info["CFBundleShortVersionString"] as? String ?? ""

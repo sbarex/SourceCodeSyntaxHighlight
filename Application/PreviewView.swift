@@ -57,9 +57,11 @@ class PreviewView: NSView, SettingsSplitViewElement {
     
     @IBOutlet weak var refreshIndicator: NSProgressIndicator!
     @IBOutlet weak var appearanceButton: NSButton!
-    @IBOutlet weak var webView: WKWebView!
+    var webView: WKWebViewDrop!
     @IBOutlet weak var scrollView: NSScrollView!
     @IBOutlet weak var textView: NSTextView!
+    @IBOutlet weak var hLine: NSBox!
+    @IBOutlet weak var previewBox: NSBox!
     
     var isLocked = false
     fileprivate(set) var isRefreshig = false
@@ -188,6 +190,18 @@ class PreviewView: NSView, SettingsSplitViewElement {
             subview.edges == view.edges
         }*/
         
+        webView = WKWebViewDrop(frame: scrollView.bounds, configuration: WKWebViewConfiguration())
+        webView.translatesAutoresizingMaskIntoConstraints = false
+        
+        previewBox.addSubview(webView)
+        
+        NSLayoutConstraint.activate([
+            webView.leadingAnchor.constraint(equalTo: previewBox.leadingAnchor),
+            webView.topAnchor.constraint(equalTo: previewBox.topAnchor),
+            webView.trailingAnchor.constraint(equalTo: previewBox.trailingAnchor),
+            webView.bottomAnchor.constraint(equalTo: previewBox.bottomAnchor)
+        ])
+                
         // Populate the example files list.
         examples = (NSApplication.shared.delegate as? AppDelegate)?.getAvailableExamples() ?? []
         
