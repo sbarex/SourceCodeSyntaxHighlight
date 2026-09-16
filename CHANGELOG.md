@@ -1,6 +1,14 @@
 Changelog
 =======
 
+
+### 2.1.32 (81)
+**This release require macOS 12.0 or later.**
+
+Bugfix:
+- fix empty settings window bug.
+
+
 ### 2.1.31 (80)
 **This release require macOS 12.0 or later.**
 

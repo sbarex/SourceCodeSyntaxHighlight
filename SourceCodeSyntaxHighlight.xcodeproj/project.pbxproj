@@ -2319,7 +2319,7 @@
 					"\"$(BUILT_PRODUCTS_DIR)/highlight\"",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				MARKETING_VERSION = 2.1.31;
+				MARKETING_VERSION = 2.1.32;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2360,7 +2360,7 @@
 					"\"$(BUILT_PRODUCTS_DIR)/highlight\"",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				MARKETING_VERSION = 2.1.31;
+				MARKETING_VERSION = 2.1.32;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2392,7 +2392,7 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				MARKETING_VERSION = 2.1.31;
+				MARKETING_VERSION = 2.1.32;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.QuickLookExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2424,7 +2424,7 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				MARKETING_VERSION = 2.1.31;
+				MARKETING_VERSION = 2.1.32;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.QuickLookExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2453,7 +2453,7 @@
 				);
 				LIBRARY_SEARCH_PATHS = "\"$(BUILT_PRODUCTS_DIR)/highlight\"";
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				MARKETING_VERSION = 2.1.31;
+				MARKETING_VERSION = 2.1.32;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.XPCService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2484,7 +2484,7 @@
 				);
 				LIBRARY_SEARCH_PATHS = "\"$(BUILT_PRODUCTS_DIR)/highlight\"";
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				MARKETING_VERSION = 2.1.31;
+				MARKETING_VERSION = 2.1.32;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.XPCService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2585,7 +2585,7 @@
 					"@loader_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				MARKETING_VERSION = 2.1.31;
+				MARKETING_VERSION = 2.1.32;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.XPCRender;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2620,7 +2620,7 @@
 					"@loader_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				MARKETING_VERSION = 2.1.31;
+				MARKETING_VERSION = 2.1.32;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.XPCRender;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2688,7 +2688,7 @@
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
-				MARKETING_VERSION = 2.1.31;
+				MARKETING_VERSION = 2.1.32;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.ShortcutCommand;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
@@ -2722,7 +2722,7 @@
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
-				MARKETING_VERSION = 2.1.31;
+				MARKETING_VERSION = 2.1.32;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.SourceCodeSyntaxHighlight.ShortcutCommand;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
