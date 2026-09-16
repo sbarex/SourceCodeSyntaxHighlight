@@ -35,9 +35,9 @@ class SaveAsFormatView: NSView {
     
     @IBAction func formatChange(_ sender: NSPopUpButton) {
         if #available(macOS 15.0, *) {
-            savePanel?.allowedContentTypes = [sender.indexOfSelectedItem == 0 ? UTType(filenameExtension: "theme")! : .css]
-        } else if #available(macOS 12.0, *) {
-            savePanel?.allowedContentTypes = [sender.indexOfSelectedItem == 0 ? UTType(filenameExtension: "theme")! : UTType(filenameExtension: "css")! ]
+            savePanel?.allowedContentTypes = [sender.indexOfSelectedItem == 0 ? UTType(filenameExtension: "theme") ?? .data : .css]
+        } else if #available(macOS 11.0, *) {
+            savePanel?.allowedContentTypes = [sender.indexOfSelectedItem == 0 ? UTType(filenameExtension: "theme") ?? .data : UTType(filenameExtension: "css") ?? .data ]
         } else {
             savePanel?.allowedFileTypes =  [sender.indexOfSelectedItem == 0 ? "theme" : "css"]
         }

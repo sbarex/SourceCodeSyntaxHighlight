@@ -99,7 +99,7 @@ class UTI: Equatable, Hashable {
     }
     
     lazy var conformsTo: [String] = {
-        if #available(macOS 12.0, *) {
+        if #available(macOS 11.0, *) {
             return UTType(UTI)?.supertypes.map { $0.identifier } ?? []
         } else {
             if let info = UTTypeCopyDeclaration(UTI as CFString)?.takeRetainedValue() as? [String: AnyObject] {
@@ -114,7 +114,7 @@ class UTI: Equatable, Hashable {
     }()
     
     lazy var mimeTypes: [String] = {
-        if #available(macOS 12.0, *) {
+        if #available(macOS 11.0, *) {
             if let t = UTType(self.UTI) {
                 return t.tags[.mimeType] ?? []
             } else {
@@ -160,7 +160,7 @@ class UTI: Equatable, Hashable {
     }
     
     lazy var isDynamic: Bool = {
-        if #available(macOS 12.0, *) {
+        if #available(macOS 11.0, *) {
             if let u = UTType(UTI) {
                 return u.isDynamic
             } else {

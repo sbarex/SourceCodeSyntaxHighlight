@@ -45,8 +45,8 @@ extension SCSHTheme {
         let savePanel = NSSavePanel()
         savePanel.canCreateDirectories = true
         savePanel.showsTagField = false
-        if #available(macOS 12.0, *) {
-            savePanel.allowedContentTypes = [UTType(filenameExtension: "theme")!]
+        if #available(macOS 11.0, *) {
+            savePanel.allowedContentTypes = [UTType(filenameExtension: "theme") ?? .data]
         } else {
             savePanel.allowedFileTypes = ["theme"]
         }

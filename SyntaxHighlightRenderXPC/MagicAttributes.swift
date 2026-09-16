@@ -37,7 +37,7 @@ class MagicAttributes {
     }()
     
     func checkMime(conformTo uttype: CFString) -> Bool {
-        if #available(macOS 12.0, *) {
+        if #available(macOS 11.0, *) {
             if let type = UTType(mimeType: mimeType), let t = UTType(uttype as String) {
                 return type.conforms(to: t)
             } else {

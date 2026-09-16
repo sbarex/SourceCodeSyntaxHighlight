@@ -266,8 +266,8 @@ class ThemesListView: NSView, SettingsSplitViewElement {
         let openPanel = NSOpenPanel()
         openPanel.canCreateDirectories = false
         openPanel.showsTagField = false
-        if #available(macOS 12.0, *) {
-            openPanel.allowedContentTypes = [UTType(filenameExtension: "theme")!]
+        if #available(macOS 11.0, *) {
+            openPanel.allowedContentTypes = [UTType(filenameExtension: "theme") ?? .data]
         } else {
             openPanel.allowedFileTypes = ["theme"]
         }

@@ -229,7 +229,7 @@ class CustomTypeViewController: NSViewController, DropSensorDelegate, NSTableVie
         
         let ext = url.pathExtension
         
-        if #available(macOS 12.0, *) {
+        if #available(macOS 11.0, *) {
             if !ext.isEmpty, let type = UTType(filenameExtension: ext) {
                 let identifier = type.identifier
                 

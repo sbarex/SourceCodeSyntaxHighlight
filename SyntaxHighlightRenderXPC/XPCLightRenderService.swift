@@ -29,10 +29,15 @@ import AppKit
 class XPCLightRenderService: SCSHBaseXPCService, XPCLightRenderServiceProtocol {
     lazy var highlightLanguages: [String: [String]] = {
         guard let file = Bundle.main.url(forResource: "languages", withExtension: "json") else {
-            print("missing file")
+            os_log(.error, log: self.log, "Missing languages.json file on the main Bundle!")
             return [:]
         }
-        return (try? type(of: self).parseHighlightLanguages(file: file)) ?? [:]
+        do {
+            return try type(of: self).parseHighlightLanguages(file: file)
+        } catch {
+            os_log(.error, log: self.log, "Unable to parse %{public}@: %{public}@", file.path, error.localizedDescription)
+            return [:]
+        }
     }()
     
     func reloadSettings() {
