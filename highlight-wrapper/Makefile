@@ -277,7 +277,7 @@ ${BUILD_DIR_ESCAPED}/libhighlight-x86_64.a: lua | $(BUILD_DIR_ESCAPED)
 	fi
 	
 	${MAKE} \
-		BUILD_DIR=${BUILD_DIR_ESCAPED}/build_intel-$(CONFIGURATION) \
+		BUILD_DIR=${BUILD_DIR_ESCAPED}/build_x86_64-$(CONFIGURATION) \
 		LUA_CFLAGS="-I$(CURRENT_DIR)/$(LUA_DIR)/src" \
 		LUA_LIBS="-L$(BUILD_DIR_ESCAPED) -llua -lm" \
 		CFLAGS="${CFLAGS} ${CFLAGS_x86_64}" \
@@ -306,7 +306,7 @@ ${BUILD_DIR_ESCAPED}/libhighlight-x86_64.dylib: lua | $(BUILD_DIR_ESCAPED)
 	fi
 	
 	${MAKE} \
-		BUILD_DIR=${BUILD_DIR_ESCAPED}/build_intel-$(CONFIGURATION) \
+		BUILD_DIR=${BUILD_DIR_ESCAPED}/build_x86_64-$(CONFIGURATION) \
 		LUA_CFLAGS="-I$(CURRENT_DIR)/$(LUA_DIR)/src" \
 		LUA_LIBS="-L$(BUILD_DIR_ESCAPED) -llua -lm" \
 		CFLAGS="${CFLAGS} ${CFLAGS_x86_64}" \
@@ -335,7 +335,7 @@ ${BUILD_DIR_ESCAPED}/highlight-x86_64: lua | $(BUILD_DIR_ESCAPED)
 	fi
 	
 	${MAKE} \
-		BUILD_DIR=${BUILD_DIR_ESCAPED}/build_intel-$(CONFIGURATION) \
+		BUILD_DIR=${BUILD_DIR_ESCAPED}/build_x86_64-$(CONFIGURATION) \
 		LUA_CFLAGS="-I$(CURRENT_DIR)/$(LUA_DIR)/src" \
 		LUA_LIBS="-L$(BUILD_DIR_ESCAPED) -llua -lm" \
 		CFLAGS="${CFLAGS} ${CFLAGS_x86_64}" \
@@ -352,7 +352,7 @@ ${BUILD_DIR_ESCAPED}/libhighlight.a: ${highlight_lib_static} lua | $(BUILD_DIR_E
 ifeq ($(ONLY_ACTIVE_ARCH),NO)
 		@echo "\n${bold}CREATING UNIVERSAL STATIC highlight LIB...${normal}"
 		lipo -create -output "$@" \
-			"${BUILD_DIR}/build_intel-$(CONFIGURATION)/lib/libhighlight.a" \
+			"${BUILD_DIR}/build_x86_64-$(CONFIGURATION)/lib/libhighlight.a" \
 			"${BUILD_DIR}/build_arm64-$(CONFIGURATION)/lib/libhighlight.a"
 else
 		@echo "\n${bold}CREATING ${NATIVE_ARCH} STATIC highlight LIB...${normal}"
@@ -365,7 +365,7 @@ ${BUILD_DIR_ESCAPED}/libhighlight.dylib: ${highlight_lib_shared} lua | $(BUILD_D
 ifeq ($(ONLY_ACTIVE_ARCH),NO)
 		@echo "\n${bold}CREATING UNIVERSAL SHARED highlight LIB...${normal}"
 		lipo -create -output "$@" \
-			"${BUILD_DIR}/build_intel-$(CONFIGURATION)/lib/libhighlight.dylib" \
+			"${BUILD_DIR}/build_x86_64-$(CONFIGURATION)/lib/libhighlight.dylib" \
 			"${BUILD_DIR}/build_arm64-$(CONFIGURATION)/lib/libhighlight.dylib"
 else
 		@echo "\n${bold}CREATING ${NATIVE_ARCH} SHARED highlight LIB...${normal}"
@@ -378,7 +378,7 @@ ${BUILD_DIR_ESCAPED}/highlight: $(highlight_cli) lua | $(BUILD_DIR_ESCAPED)
 ifeq ($(ONLY_ACTIVE_ARCH),NO)
 		@echo "\n${bold}CREATING UNIVERSAL highlight...${normal}"
 		lipo -create -output "$@" \
-			"${BUILD_DIR}/build_intel-$(CONFIGURATION)/bin/highlight" \
+			"${BUILD_DIR}/build_x86_64-$(CONFIGURATION)/bin/highlight" \
 			"${BUILD_DIR}/build_arm64-$(CONFIGURATION)/bin/highlight"
 else
 		@echo "\n${bold}CREATING ${NATIVE_ARCH} highlight...${normal}"
