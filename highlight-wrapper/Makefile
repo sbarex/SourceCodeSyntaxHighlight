@@ -30,15 +30,15 @@ CFLAGS= \
 CXXFLAGS += -std=c++17
 LDFLAGS=-L${BUILD_DIR_ESCAPED}
 
-CFLAGS_x86_64=-target x86_64-apple-macos10.15
-CFLAGS_arm64=-target arm64-apple-macos11
+CFLAGS_x86_64=-target x86_64-apple-macos12.0
+CFLAGS_arm64=-target arm64-apple-macos12.0
 
 # ifneq ($(wildcard /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/.*),)
 # 	CFLAGS_x86_64+=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk
 # endif
 
-LDFLAGS_x86_64=-target x86_64-apple-macos10.15
-LDFLAGS_arm64=-target arm64-apple-macos11
+LDFLAGS_x86_64=-target x86_64-apple-macos12.0
+LDFLAGS_arm64=-target arm64-apple-macos12.0
 
 ifeq ($(CONFIGURATION),Debug)
 	CFLAGS_x86_64+= -g
@@ -143,7 +143,7 @@ clean_lua:
 ${BUILD_DIR_ESCAPED}/liblua-arm64.a: | $(BUILD_DIR_ESCAPED)
 	@echo "\n${bold}🔨 BUILDING lua FOR arm64 PLATFORM...${normal}"
 	${MAKE} -C "${LUA_DIR}" clean
-	${MAKE} CC="gcc -std=gnu99 -target arm64-apple-macos11" MYCFLAGS="$(CFLAGS_arm64)" MYLDFLAGS="$(LDFLAGS_arm64)" -C "${LUA_DIR}"
+	${MAKE} CC="gcc -std=gnu99 -target arm64-apple-macos12.0" MYCFLAGS="$(CFLAGS_arm64)" MYLDFLAGS="$(LDFLAGS_arm64)" -C "${LUA_DIR}"
 	@mkdir -p "${BUILD_DIR}"
 	mv "${LUA_DIR}/src/liblua.a" "$@"
 	@echo ""
