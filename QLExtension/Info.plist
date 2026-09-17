@@ -227,6 +227,7 @@
 				<string>org.sagemath.source</string>
 				<string>org.sbarex.conf</string>
 				<string>org.sbarex.dart</string>
+				<string>org.sbarex.m4</string>
 				<string>org.sbarex.ms-powershell</string>
 				<string>org.sbarex.ms-powershell-module</string>
 				<string>org.sbarex.ms-powershell-module-manifest</string>
@@ -454,6 +455,7 @@
 				<string>dyn.ah62d4rv4ge806252</string>
 				<string>dyn.ah62d4rv4ge81e3p2</string>
 				<string>dyn.ah62d4rv4ge81e3p2ta</string>
+				<string>dyn.ah62d4rv4ge804ra</string>
 				<string>dyn.ah62d4rv4ge81e55cr74g8</string>
 				<string>dyn.ah62d4rv4ge8044pqru</string>
 				<string>dyn.ah62d4rv4ge80e2u</string>

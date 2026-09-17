@@ -3253,6 +3253,25 @@
 			</dict>
 		</dict>
 		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.source-code</string>
+				<string>public.plain-text</string>
+				<string>public.text</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>M4 macro file</string>
+			<key>UTTypeIdentifier</key>
+			<string>org.sbarex.m4</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>m4</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
 			<key>UTTypeDescription</key>
 			<string>Python Bytecode Document</string>
 			<key>UTTypeIdentifier</key>

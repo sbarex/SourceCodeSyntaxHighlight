@@ -231,6 +231,12 @@ UTIs:
     
     dyn.ah62d4rv4ge80462:
         syntax: ms
+    
+    dyn.ah62d4rv4ge804ra:
+        syntax: m4
+    org.sbarex.m4:
+        syntax: m4
+        
     org.miniscript.ms:
         syntax: ms
         
@@ -743,6 +749,10 @@ extensions:
     mhl:
         syntax: txt
     
+    # .m4
+    m4:
+        syntax: m4
+        
     #dyn.ah62d4rv4ge8044pqru
     mill:
         syntax: scala
