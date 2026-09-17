@@ -157,6 +157,7 @@
     "MSSQL": ["mssql"],
     "Magic eXtensible Markup": ["mxml"],
     "Notation3 (N3), N-Triples, Turtle, SPARQL": ["n3", "nt", "ttl"],
+    "M4 Macro Processor": ["m4"],
     "Nasal": ["nasal", "nas"],
     "NeXT Byte Codes": ["nbc"],
     "Nemerle": ["nemerle", "n"],
